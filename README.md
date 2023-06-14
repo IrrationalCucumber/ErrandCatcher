@@ -1,7 +1,8 @@
 # ErrandCatcher
 Capstone Project
-Development Team: Unusual Beetles
-Members:
+\n
+Development Team: Unusual Beetles\n
+Members:\n
 Ashley Belle Carcuevas
 Lorry Mae Halina
 Trisha Mae Sasing
