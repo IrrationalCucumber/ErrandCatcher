@@ -1,7 +1,15 @@
 import React, {useState} from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
+import './PostCommission.css'; // Import your CSS file
 
+export const Box = () => {
+  return (
+    <div className="box">
+      <div className="rectangle"/>
+    </div>
+  )
+}
 const PostCommission = () => {
   const [commission,setCommission] = useState({
     comTitle:"",
@@ -34,7 +42,7 @@ const handleClick = async e =>{
   e.preventDefault()
         try{
             //account.dateCreated = getCurrentDate();
-            await(axios.post('http://localhost:8800/commission', commission))
+            await(axios.post('http://192.168.1.47:8800/commission', commission))
             navigate("/commission-list")
         }catch(err){
             console.log(err)
@@ -46,22 +54,23 @@ console.log(commission)
 
   return (
     <div className=''>
+      <nav>
+        <Link to='/accounts'>
+          BACK 
+        </Link>
+        <Link to='/'>HOME </Link>
+      </nav>
       <h1>Post Commission</h1>
-      <label>
-        Commission Title
-        <input type="text" placeholder='Commission Title' onChange={handleChange} name='comTitle'/>
-      </label>     
-      <br />
-      <label>
-        
+      <div className='in'>
+        <label>
+          Commission Title
+          <input type="text" placeholder='Commission Title' onChange={handleChange} name='comTitle'/>
+        </label> 
+        <label>
          <input type="date" placeholder='Deadline' onChange={handleChange} name='comDeadline'/>
-
-      </label>
-      
-      <br />
-      <input type="text" placeholder='Location' onChange={handleChange} name='comLocation'/>
-      <br />
-      <label htmlFor="">
+        </label>
+        <input type="text" placeholder='Location' onChange={handleChange} name='comLocation'/>
+        <label htmlFor="">
         Commission Type
         <select name='comType' onChange={handleChange} value={commission.comType}>
           <option value="">Choose type....</option>
@@ -79,7 +88,7 @@ console.log(commission)
           <input type='number' placeholder='0.00' onChange={handleChange} name='comPay'/>
       </label>
 
-
+      </div>
       <button onClick={handleClick}>POST</button>
 
     </div>

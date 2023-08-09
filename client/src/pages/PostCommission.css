@@ -1,0 +1,18 @@
+.in{
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+   
+}
+div.in{
+    position: relative;
+    width: 369px;
+    height: 810px;
+    top: 247px;
+    left: 968px;
+}
+
+div.button{
+    position: relative;
+    
+}

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
+import NavBar from '../components/Navbar.js'
+//import "./ash-buttton.css"
 
 const CommissionList = () => {
     const [commissions, setCommissions] = useState([])
@@ -9,7 +11,7 @@ const CommissionList = () => {
     useEffect(() =>{
         const fetchAllCommission = async ()=>{
             try{
-                const res = await axios.get("http://localhost:8800/commission")
+                const res = await axios.get("http://192.168.1.47:8800/commission")
                 setCommissions(res.data)
             }
             catch(err){
@@ -21,6 +23,7 @@ const CommissionList = () => {
 
   return (
     <div>
+      <NavBar />
       <h1>Commission List</h1>
       <div className="commissions">
         {commissions.map(Commission=>(
@@ -43,6 +46,9 @@ const CommissionList = () => {
       <button>
         <Link to='/post-commission'>Add Commission</Link>
         </button>
+
+      <button className='delete'>Delete</button>
+      <button className='update'>Update</button>
     </div>
   )
 }

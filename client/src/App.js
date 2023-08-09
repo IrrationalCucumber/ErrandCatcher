@@ -6,13 +6,19 @@ import AccountList from "./pages/AccountList";
 import AddAccount from "./pages/AddAccount";
 import PostCommission from "./pages/PostCommission";
 import CommissionList from "./pages/CommissionList";
+import Home from "./pages/Home";
+import Navbar from "./components/Navbar";
+import "./style.css";
+
 
 function App() {
   return (
     <div className="App">
       <Router>
+        
         <Routes>
-        <Route path='/' exact Component={AccountList}/>
+        <Route path='/' exact Component={Home}/>
+        <Route path="/accounts" exact Component={AccountList}/>
         <Route path="/sign-in" exact Component={SignIn}/>
         <Route path="/sign-up" exact Component={SignUp}/>
         <Route path='/profile' exact Component={Profile}/>
@@ -20,6 +26,7 @@ function App() {
         <Route path='/post-commission' exact Component={PostCommission}/>
         <Route path='/commission-list' exact Component={CommissionList}/>
         </Routes>
+        
       </Router>
     </div>
   );

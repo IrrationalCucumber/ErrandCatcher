@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 const AddAccount = () => {
     const [account,setAccount] = useState({
@@ -27,13 +27,13 @@ const AddAccount = () => {
     //   };
       //get current date
       
-    //   const getCurrentDate = () => {
-    //     const currentDate = new Date();
-    //     const year = currentDate.getFullYear();
-    //     const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed, so add 1
-    //     const day = String(currentDate.getDate()).padStart(2, '0');
-    //     return `${year}-${month}-${day}`;
-    //   };
+       const getCurrentDate = () => {
+         const currentDate = new Date();
+         const year = currentDate.getFullYear();
+         const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed, so add 1
+         const day = String(currentDate.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+       };
 
     const navigate = useNavigate()
 
@@ -60,9 +60,9 @@ const AddAccount = () => {
         //refresh the page when button is clicked
         e.preventDefault()
         try{
-            //account.dateCreated = getCurrentDate();
-            await(axios.post('http://localhost:8800/user', account))
-            navigate("/")
+            account.dateCreated = getCurrentDate();
+            await(axios.post('http://192.168.1.47:8800/user', account))
+            navigate("/accounts")
         }catch(err){
             console.log(err)
         }
@@ -71,6 +71,12 @@ const AddAccount = () => {
     console.log(account)
   return (
     <div className='from'>
+      <nav>
+        <Link to='/accounts'>
+          BACK 
+        </Link>
+        <Link to='/'> HOME</Link>
+      </nav>
       <h1>ADD NEW ACCOUNT</h1>
       <input type="text" placeholder='username' onChange={handleChange} name='username'/>
       <input type="text" placeholder='password' onChange={handleChange} name='password'/>

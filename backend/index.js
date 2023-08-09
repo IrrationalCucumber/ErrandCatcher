@@ -41,7 +41,7 @@ app.get("/commission", (req,res)=>{
 //send data to userAccount
 app.post("/user", (req,res)=>{
     //const q = "INSERT INTO UserAccount (`username`, `password`, `userLastname`, `userFirstname`, `userGender`, `userEmail`, `userContactNum`, `userAge`, `userBirthday`, `userAddress`, `userDesc`, `accountType`, `dateCreated`, `profileImage`) VALUES (?)"
-    const q = "INSERT INTO UserAccount (`username`, `password`, `userLastname`, `userFirstname`, `userGender`, `userEmail`,`userContactNum`, `userAge`, `accountType`, `userAddress` ) VALUES (?)"
+    const q = "INSERT INTO UserAccount (`username`, `password`, `userLastname`, `userFirstname`, `userGender`, `userEmail`,`userContactNum`, `userAge`, `accountType`, `userAddress`, `dateCreated` ) VALUES (?)"
     const values = [
         req.body.username,
         req.body.password,
@@ -55,8 +55,8 @@ app.post("/user", (req,res)=>{
         req.body.address,
         // req.body.desc,
         req.body.type,
-        // req.body.dateCreated,
-        // req.body.profileImage,
+        req.body.dateCreated,
+        //req.body.profileImage,
     ];
 
     db.query(q,[values], (err,data)=>{
@@ -66,7 +66,7 @@ app.post("/user", (req,res)=>{
 })
 //send data to commission table
 app.post("/commission", (req,res) =>{
-    const q = "INSERT INTO commission (`commissionTitle`, `commissionDeadline`, `commissionLocation`,`commissionType`, `commissionDesc`, `cibt `commissonPay`) VALUES (?)"
+    const q = "INSERT INTO commission (`commissionTitle`, `commissionDeadline`, `commissionLocation`,`commissionType`, `commissionDesc`, `commissonPay`) VALUES (?)"
     const values = [
         req.body.comTitle,
         req.body.comDeadline,
