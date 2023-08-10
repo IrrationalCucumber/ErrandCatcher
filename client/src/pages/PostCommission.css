@@ -7,12 +7,15 @@
 div.in{
     position: relative;
     width: 369px;
-    height: 810px;
-    top: 247px;
-    left: 968px;
+    height: 200px;
+    top: 100px;
+    left: 560px;
+    line-height: 1.5;
 }
 
-div.button{
-    position: relative;
-    
+
+.backhome{
+ background-color: lightblue;
+
+
 }
