@@ -61,7 +61,7 @@ const AddAccount = () => {
         e.preventDefault()
         try{
             account.dateCreated = getCurrentDate();
-            await(axios.post('http://192.168.1.47:8800/user', account))
+            await(axios.post('http://localhost:8800/user', account))
             navigate("/accounts")
         }catch(err){
             console.log(err)
@@ -95,8 +95,6 @@ const AddAccount = () => {
       
       <input type="email" placeholder='Email address' onChange={handleChange} name='email'/>
       <input type="text" placeholder='Address' onChange={handleChange} name='address'/>
-      
-
       <select name='type' onChange={handleChange} value={account.type}>
         <option value="">Choose Type</option>
         <option vlaue="Employer">Employer</option>

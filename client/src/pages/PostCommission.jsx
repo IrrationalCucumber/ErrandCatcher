@@ -47,13 +47,13 @@ const handleClick = async e =>{
         }catch(err){
             console.log(err)
         }
-}
+};
 
 
 console.log(commission)
 
   return (
-    <div className=''>
+    <div className='backhome'>
       <nav>
         <Link to='/accounts'>
           BACK 
@@ -66,10 +66,13 @@ console.log(commission)
           Commission Title
           <input type="text" placeholder='Commission Title' onChange={handleChange} name='comTitle'/>
         </label> 
-        <label>
+        <br />
+        <label>Deadline
          <input type="date" placeholder='Deadline' onChange={handleChange} name='comDeadline'/>
         </label>
+        <br />Location
         <input type="text" placeholder='Location' onChange={handleChange} name='comLocation'/>
+        <br />
         <label htmlFor="">
         Commission Type
         <select name='comType' onChange={handleChange} value={commission.comType}>
@@ -87,9 +90,9 @@ console.log(commission)
         Amount: ₱
           <input type='number' placeholder='0.00' onChange={handleChange} name='comPay'/>
       </label>
-
-      </div>
+      <br />
       <button onClick={handleClick}>POST</button>
+      </div>
 
     </div>
   

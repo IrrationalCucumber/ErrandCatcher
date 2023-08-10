@@ -41,7 +41,7 @@ app.get("/commission", (req,res)=>{
 //send data to userAccount
 app.post("/user", (req,res)=>{
     //const q = "INSERT INTO UserAccount (`username`, `password`, `userLastname`, `userFirstname`, `userGender`, `userEmail`, `userContactNum`, `userAge`, `userBirthday`, `userAddress`, `userDesc`, `accountType`, `dateCreated`, `profileImage`) VALUES (?)"
-    const q = "INSERT INTO UserAccount (`username`, `password`, `userLastname`, `userFirstname`, `userGender`, `userEmail`,`userContactNum`, `userAge`, `accountType`, `userAddress`, `dateCreated` ) VALUES (?)"
+    const q = "INSERT INTO UserAccount (`username`, `password`, `userLastname`, `userFirstname`, `userGender`, `userEmail`,`userContactNum`, `userAge`, `userAddress`, `accountType`, `dateCreated` ) VALUES (?)"
     const values = [
         req.body.username,
         req.body.password,
@@ -66,7 +66,7 @@ app.post("/user", (req,res)=>{
 })
 //send data to commission table
 app.post("/commission", (req,res) =>{
-    const q = "INSERT INTO commission (`commissionTitle`, `commissionDeadline`, `commissionLocation`,`commissionType`, `commissionDesc`, `commissonPay`) VALUES (?)"
+    const q = "INSERT INTO commission (`commissionTitle`, `commissionDeadline`, `commissionLocation`,`commissionType`, `commissionDesc`, `commissionPay`) VALUES (?)"
     const values = [
         req.body.comTitle,
         req.body.comDeadline,
@@ -78,7 +78,7 @@ app.post("/commission", (req,res) =>{
         // req.body.catcherID,
         // req.body.DatePosted,
         // req.body.DateCompleted,
-        req.body.Contactno,
+        //req.body.Contactno,
        
     ];
     db.query(q,[values], (err,data)=>{

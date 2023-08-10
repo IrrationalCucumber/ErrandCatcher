@@ -1,21 +1,11 @@
-* {
+/* * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     font-family: 'PT Sans', sans-serif;
   }
+ */
 
-
-.accounts{
-    display: flex;
-}
-
-.accounts{
-    flex:1;
-    flex-direction: column;
-    justify-content: center;
-    padding: 0px 100vh;
-}
 
 .commissions{
     display: flex;

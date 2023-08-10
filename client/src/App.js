@@ -8,7 +8,7 @@ import PostCommission from "./pages/PostCommission";
 import CommissionList from "./pages/CommissionList";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
-import "./style.css";
+//import "./style.css";
 
 
 function App() {
