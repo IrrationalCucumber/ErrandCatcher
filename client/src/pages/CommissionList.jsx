@@ -21,6 +21,16 @@ const CommissionList = () => {
         fetchAllCommission()
     }, [])
 
+    //funtion to delete commission
+    const handleDelete = async (commissionID) =>{
+      try {
+        await axios.delete(`http://192.168.1.47:8800/commission/${commissionID}`)
+        window.location.reload()
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
   return (
     <div>
       <NavBar />
@@ -39,7 +49,7 @@ const CommissionList = () => {
                 <p>{Commission.DatePosted}</p>
                 <p>{Commission.DateCompleted}</p>
                 <p>{Commission.ContactNumber}</p>
-            
+                <button onClick={()=>handleDelete(Commission.commissionID)}>DELETE</button>
             </div>
         ))}
       </div>

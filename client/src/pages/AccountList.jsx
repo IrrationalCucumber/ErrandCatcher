@@ -6,6 +6,7 @@ import './accountlist.css';
 
 const AccountList = () => {
     const [accounts, setAccounts] = useState([])
+    const [searchTerm, setSearchTerm] = useState('');
     //useEffect to handle error
     useEffect(() =>{
         const fetchAllAccount = async ()=>{
@@ -19,6 +20,22 @@ const AccountList = () => {
         }
         fetchAllAccount()
     }, [])
+    //fetch all accounts
+    //triggers when search input is filled
+    const fetchSearchResults = async () => {
+      try {
+          const res = await axios.get('http://192.168.1.47:8800/search-user', {
+              params: { term: searchTerm } // Pass the search term as a query parameter
+          });
+          setAccounts(res.data);
+      } catch (err) {
+          console.log(err);
+      }
+  };
+  
+  useEffect(() => {
+      fetchSearchResults();
+  }, [searchTerm]); // Trigger the search whenever searchTerm changes
         
 //list need to be in a column
 //need filter
@@ -27,8 +44,15 @@ const AccountList = () => {
       <NavBar></NavBar>
       <h1>Account List</h1>
       <div className='search'>
-        <input type='text' placeholder='Search...'/> 
-        <button type="submit"><i class="fa fa-search"></i></button>
+          <input
+              type='text'
+              placeholder='Search...'
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <button type='submit' onClick={fetchSearchResults}>
+              <i className='fa fa-search'></i>
+          </button>
       </div>
       <div className="accounts">
           <table>
@@ -88,3 +112,12 @@ export default AccountList
 //       <td className='date'>{new Date(Account.dateCreated).toLocaleDateString()}</td>
 //   </div>
 // ))}
+
+// const handleChange = async (username) =>{
+//   try {
+//     await axios.get(`http://192.168.1.47:8800/search-user/${username}`)
+//     window.location.reload()
+//   } catch (err) {
+//     console.log(err)
+//   }
+// }
