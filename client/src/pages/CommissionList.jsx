@@ -6,6 +6,7 @@ import NavBar from '../components/Navbar.js'
 
 const CommissionList = () => {
     const [commissions, setCommissions] = useState([])
+    const [searchTerm, setSearchTerm] = useState('');
     //handle error
     //rretrieve data
     useEffect(() =>{
@@ -21,6 +22,23 @@ const CommissionList = () => {
         fetchAllCommission()
     }, [])
 
+    //fetch all accounts
+    //triggers when search input is filled
+    const fetchSearchResults = async () => {
+      try {
+          const res = await axios.get('http://192.168.1.47:8800/search-commission', {
+              params: { term: searchTerm } // Pass the search term as a query parameter
+          });
+          setCommissions(res.data);
+      } catch (err) {
+          console.log(err);
+      }
+  };
+  
+  useEffect(() => {
+      fetchSearchResults();
+  }, [searchTerm]); // Trigger the search whenever searchTerm changes
+
     //funtion to delete commission
     const handleDelete = async (commissionID) =>{
       try {
@@ -30,12 +48,23 @@ const CommissionList = () => {
         console.log(err)
       }
     }
-
+    //need front end
   return (
     <div>
       <NavBar />
       <h1>Commission List</h1>
       <div className="commissions">
+          <div className='search'>
+              <input
+              type='text'
+              placeholder='Search...'
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <button type='submit' >
+                <i className='fa fa-search'></i>
+              </button>
+          </div>
         {commissions.map(Commission=>(
             <div className="commission" key={Commission.commissionID}>
                 
@@ -64,3 +93,15 @@ const CommissionList = () => {
 }
 
 export default CommissionList
+
+// //<div className='search'>
+// <input
+// type='text'
+// placeholder='Search...'
+// value={searchTerm}
+// onChange={(e) => setSearchTerm(e.target.value)}
+// />
+// <button type='submit' onClick={fetchSearchResults}>
+// <i className='fa fa-search'></i>
+// </button>
+// </div>

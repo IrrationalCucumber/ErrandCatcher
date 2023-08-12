@@ -49,6 +49,20 @@ app.get("/search-user", (req, res) => {
         return res.json(data);
     });
 });
+//search function for commission
+app.get("/search-commission", (req, res) => {
+    const searchTerm = req.query.term; // Get the search term from the query parameter
+    const q = "SELECT * FROM commission WHERE commissionTitle LIKE ? OR commissionTitle LIKE ?";
+    const values = [`%${searchTerm}%`, `%${searchTerm}%`];
+
+    db.query(q, values, (err, data) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'An error occurred' });
+        }
+        return res.json(data);
+    });
+});
 
 
 //send data to userAccount
