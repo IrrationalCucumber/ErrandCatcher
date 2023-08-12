@@ -63,6 +63,23 @@ app.get("/search-commission", (req, res) => {
         return res.json(data);
     });
 });
+//sign-in
+app.get("/sign-in", (req, res) =>{
+    const user = req.query.term;
+    const q = "SELECT * FROM UserAccount WHERE (username = ? or WHERE userEmail = ?) AND password = ?"
+    const values = [
+        `%${data}%`,
+         `%${data}%`
+    ]
+
+    db.query(q, values, (err, data) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'An error occurred' });
+        }
+        return res.json(data);
+    });
+})
 
 
 //send data to userAccount
