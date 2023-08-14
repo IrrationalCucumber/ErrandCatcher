@@ -42,7 +42,7 @@ const handleClick = async e =>{
   e.preventDefault()
         try{
             //account.dateCreated = getCurrentDate();
-            await(axios.post('http://192.168.1.47:8800/commission', commission))
+            await(axios.post('http://localhost:8800/commission', commission))
             navigate("/commission-list")
         }catch(err){
             console.log(err)

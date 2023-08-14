@@ -11,7 +11,9 @@ const AccountList = () => {
     useEffect(() =>{
         const fetchAllAccount = async ()=>{
             try{
-                const res = await axios.get("http://192.168.1.47:8800/user")
+                const res = await axios.get("http://localhost:8800/user")
+                //http://localhost:8800/user - local
+                //http://192.168.1.47:8800/user - network
                 setAccounts(res.data)
             }
             catch(err){
@@ -24,7 +26,9 @@ const AccountList = () => {
     //triggers when search input is filled
     const fetchSearchResults = async () => {
       try {
-          const res = await axios.get('http://192.168.1.47:8800/search-user', {
+            //http://localhost:8800/user - local
+            //http://192.168.1.47:8800/user - network
+          const res = await axios.get('http://localhost:8800/search-user', {
               params: { term: searchTerm } // Pass the search term as a query parameter
           });
           setAccounts(res.data);
@@ -51,8 +55,20 @@ const AccountList = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
           />
           <button type='submit' onClick={fetchSearchResults}>
-              <i className='fa fa-search'></i>
+              <i className='fa fa-search' place></i>
           </button>
+          <select name="type" id="">
+            <option value=""></option>
+            <option value="employer">employer</option>
+            <option value="catcher">Catcher</option>
+            <option value="admin">Admin</option>
+          </select>
+          <select name="status" id="">
+            <option value=""></option>
+            <option value="verified">Verified</option>
+            <option value="unverified">Unverified</option>
+            <option value="Suspended">Suspended</option>
+          </select>
       </div>
       <div className="accounts">
           <table>
