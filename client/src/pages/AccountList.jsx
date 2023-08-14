@@ -7,6 +7,9 @@ import './accountlist.css';
 const AccountList = () => {
     const [accounts, setAccounts] = useState([])
     const [searchTerm, setSearchTerm] = useState('');
+    const [selectedType, setSelectedType] = useState('');
+    const [selectedStatus, setSelectedStatus] = useState('');
+
     //useEffect to handle error
     useEffect(() =>{
         const fetchAllAccount = async ()=>{
@@ -26,10 +29,18 @@ const AccountList = () => {
     //triggers when search input is filled
     const fetchSearchResults = async () => {
       try {
+          console.log("Search Term:", searchTerm);
+          console.log("Selected Type:", selectedType);
+          console.log("Selected Status:", selectedStatus);
             //http://localhost:8800/user - local
             //http://192.168.1.47:8800/user - network
           const res = await axios.get('http://localhost:8800/search-user', {
-              params: { term: searchTerm } // Pass the search term as a query parameter
+            params: {
+              type: selectedType,
+              term: searchTerm,
+              //type: selectedType,
+              status: selectedStatus
+          }  // Pass the search term as a query parameter
           });
           setAccounts(res.data);
       } catch (err) {
@@ -38,8 +49,10 @@ const AccountList = () => {
   };
   
   useEffect(() => {
-      fetchSearchResults();
-  }, [searchTerm]); // Trigger the search whenever searchTerm changes
+    fetchSearchResults();
+}, [searchTerm, selectedType, selectedStatus]);
+ // Trigger the search whenever searchTerm changes
+
         
 //list need to be in a column
 //need filter
@@ -54,22 +67,28 @@ const AccountList = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
           />
+
           <button type='submit' onClick={fetchSearchResults}>
               <i className='fa fa-search' place></i>
           </button>
-          <select name="type" id="">
+
+          <select name="type" value={selectedType} onChange={(e) => {
+            console.log('Selected Type:', e.target.value);
+            setSelectedType(e.target.value);
+            }}>
             <option value=""></option>
-            <option value="employer">employer</option>
-            <option value="catcher">Catcher</option>
+            <option value="Employer">employer</option>
+            <option value="Catcher">Catcher</option>
             <option value="admin">Admin</option>
           </select>
-          <select name="status" id="">
+          <select name="status" value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)}>
             <option value=""></option>
             <option value="verified">Verified</option>
             <option value="unverified">Unverified</option>
             <option value="Suspended">Suspended</option>
           </select>
       </div>
+      
       <div className="accounts">
           <table>
             <thead>
@@ -107,33 +126,3 @@ const AccountList = () => {
 
 export default AccountList
 //{Account.profileImage && <img src={Account.profileImage} alt=''/>}
-
-// {/* <p>{Account.userID}</p> 
-//                 <p>{Account.username} {Account.password}</p>
-//                 <p>{Account.userFirstname} {Account.userLastname}</p>
-//                 <p>{Account.userGender}</p>
-//                 <p>{Account.useAddress}</p>
-//                 <p>{Account.accountStatus} {Account.userEmail}</p>
-//                 <p>{Account.accountType} {new Date(Account.dateCreated).toLocaleDateString()}</p>
-//                 <button>Delete</button> */}
-//----------------------------------------------------------
-// {accounts.map(Account=>(
-//   <div className="account" key={Account.userID}>
-//       <td className='userid'>{Account.userID}</td>
-//       <td className='username'>{Account.username}</td>
-//       <td className='firstname'>{Account.userFirstname}</td>
-//       <td className='lastname'>{Account.userLastname}</td>
-//       <td className='Status'>{Account.accountStatus}</td>
-//       <td className='type'>{Account.accountType}</td>
-//       <td className='date'>{new Date(Account.dateCreated).toLocaleDateString()}</td>
-//   </div>
-// ))}
-
-// const handleChange = async (username) =>{
-//   try {
-//     await axios.get(`http://192.168.1.47:8800/search-user/${username}`)
-//     window.location.reload()
-//   } catch (err) {
-//     console.log(err)
-//   }
-// }
