@@ -12,7 +12,9 @@ const CommissionList = () => {
     useEffect(() =>{
         const fetchAllCommission = async ()=>{
             try{
-                const res = await axios.get("http://192.168.1.47:8800/commission")
+                const res = await axios.get("http://localhost:8800/commission")
+                //"http://localhost:8800/commission" - local computer
+                //"http://192.168.1.47:8800/commission" - netwrok
                 setCommissions(res.data)
             }
             catch(err){
@@ -26,7 +28,9 @@ const CommissionList = () => {
     //triggers when search input is filled
     const fetchSearchResults = async () => {
       try {
-          const res = await axios.get('http://192.168.1.47:8800/search-commission', {
+                //"http://localhost:8800/commission" - local computer
+                //"http://192.168.1.47:8800/commission" - netwrok
+          const res = await axios.get('http://localhost:8800/search-commission', {
               params: { term: searchTerm } // Pass the search term as a query parameter
           });
           setCommissions(res.data);
@@ -42,7 +46,9 @@ const CommissionList = () => {
     //funtion to delete commission
     const handleDelete = async (commissionID) =>{
       try {
-        await axios.delete(`http://192.168.1.47:8800/commission/${commissionID}`)
+            //"http://localhost:8800/commission" - local computer
+            //"http://192.168.1.47:8800/commission" - netwrok
+        await axios.delete(`http://localhost:8800/commission/${commissionID}`)
         window.location.reload()
       } catch (err) {
         console.log(err)
