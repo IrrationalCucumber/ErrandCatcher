@@ -38,12 +38,12 @@ app.get("/commission", (req,res)=>{
 //search account
 app.get("/search-user", (req, res) => {
     const searchTerm = req.query.term;
-    const selectedType = req.query.type;
-    const selectedStatus = req.query.status;
+    const selectedType = req.query.accountType;
+    const selectedStatus = req.query.accountStatus;
     
     // Construct the initial query and values array
     let query = "SELECT * FROM UserAccount WHERE username LIKE ? OR userFirstname LIKE ? OR userLastname LIKE ?";
-    let values = [`%${searchTerm}%`, `%${searchTerm}%`, `%${searchTerm}%`];
+    let values = [`%${searchTerm}%`, `%${searchTerm}%`, `%${searchTerm}%`, ];
     
     // Debug logs
     console.log("Search Term:", searchTerm);
@@ -54,16 +54,16 @@ app.get("/search-user", (req, res) => {
     
     // Type filter
     if (selectedType) {
-        query += " AND accountType LIKE ?";
-        values.push(`${selectedType}`);
+        query += " AND accountType = ?";
+        values.push(selectedType);
         console.log("Query after Type Filter:", query);
         console.log("Values after Type Filter:", values);
     }
     
     // Status filter
     if (selectedStatus) {
-        query += " AND accountStatus = ?";
-        values.push(`${selectedStatus}`);
+        query += " and accountStatus = ?"
+        values.push(selectedStatus);
         console.log("Query after Status Filter:", query);
         console.log("Values after Status Filter:", values);
     }

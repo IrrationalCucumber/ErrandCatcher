@@ -36,10 +36,10 @@ const AccountList = () => {
             //http://192.168.1.47:8800/user - network
           const res = await axios.get('http://localhost:8800/search-user', {
             params: {
-              type: selectedType,
+              accountType: selectedType,
               term: searchTerm,
               //type: selectedType,
-              status: selectedStatus
+              accountStatus: selectedStatus
           }  // Pass the search term as a query parameter
           });
           setAccounts(res.data);
@@ -88,7 +88,6 @@ const AccountList = () => {
             <option value="Suspended">Suspended</option>
           </select>
       </div>
-      
       <div className="accounts">
           <table>
             <thead>
@@ -103,6 +102,7 @@ const AccountList = () => {
               </tr>
             </thead>
             <tbody>
+              {console.log("Filtered Accounts:", accounts)}
               {accounts.map(Account=>(
                     <tr className="account" key={Account.userID}>
                         <td className='col1'>{Account.userID}</td>
