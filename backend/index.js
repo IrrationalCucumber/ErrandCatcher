@@ -129,18 +129,33 @@ app.delete("/commission/:commissionID", (req, res)=>{
     })
 })
 
+//retrieve account
+//info based on ID
+app.get("/user/:userID", (req, res) => {
+    const userID = req.params.userID; // Get the search term from the query parameter
+    const q = "SELECT * FROM UserAccount WHERE userID = ?";
+
+    db.query(q, [userID], (err, data) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'An error occurred' });
+        }
+        return res.json(data);
+    });
+});
+
 //upadate account
 app.put("/update-account/:userID", (req, res)=>{
     const userID = req.params.userID;
     //const q = "UPDATE UserAccount SET `username` = ?, `password` = ?, `userLastname` = ?, `userFirstname` = ?, `userGender` =?, `userEmail` = ?,`userContactNum` =?, `userAge` =?, `userAddress` = ? WHERE userID = ?"
-    const q = "UPDATE useraccount set `username` = ? WHERE userID = ?"
+    const q = "UPDATE useraccount set `username` = ?, `password` = ?, `userLastname` = ?, `userFirstname` = ?, `userGender` =?, `userEmail` = ? WHERE userID = ?"
     const values = [
         req.body.username,
-        // req.body.password,
-        // req.body.lname,
-        // req.body.fname,
-        // req.body.gender,
-        // req.body.email,
+        req.body.password,
+        req.body.lname,
+        req.body.fname,
+        req.body.gender,
+        req.body.email,
         // req.body.contact,
         // req.body.age,
         // req.body.bday,

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate, Link, useLocation } from 'react-router-dom'
 import '../style.css'
 
@@ -20,21 +20,6 @@ const UpdateAccount = () => {
         dateCreated:"",
        // profileImage:"",
     })
-    // const formatDate = (dateString) => {
-    //     // Input date format: MM/DD/YYYY
-    //     const [month, day, year] = dateString.split('/');
-    //     // Output date format: YYYY-MM-DD
-    //     return `${year}-${month}-${day}`;
-    //   };
-
-      //get current date for account creation  
-       const getCurrentDate = () => {
-         const currentDate = new Date();
-         const year = currentDate.getFullYear();
-         const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed, so add 1
-         const day = String(currentDate.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-       };
 
     const navigate = useNavigate()
     const location = useLocation()
@@ -59,7 +44,36 @@ const UpdateAccount = () => {
       }
     };
     
-    
+    //pre-fill the fields
+    useEffect(() => {
+        const fetchAccount = async () => {
+            try {
+                const res = await axios.get(`http://localhost:8800/user/${userID}`);
+                const retrievedAccount = res.data[0];
+
+                // Update the state with retrieved account data
+                setAccount({
+                    username: retrievedAccount.username,
+                    password: retrievedAccount.password,
+                    lname: retrievedAccount.userLastname,
+                    fname: retrievedAccount.userFirstname,
+                    gender: retrievedAccount.userGender,
+                    email: retrievedAccount.userEmail,
+                    contact: retrievedAccount.userContactNum,
+                    age: retrievedAccount.userAge,
+                    bday: retrievedAccount.userBirthday,
+                    address: retrievedAccount.userAddress,
+                    type: retrievedAccount.accountType,
+                    dateCreated: retrievedAccount.dateCreated,
+                });
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        fetchAccount();
+    }, [userID]);
+
 
 
     //save the data into db
@@ -92,7 +106,6 @@ const UpdateAccount = () => {
         //refresh the page when button is clicked
         e.preventDefault()
         try{
-            account.dateCreated = getCurrentDate();
             await axios.put(`http://localhost:8800/deactivate-account/${userID}`)
             navigate("/accounts")
         }catch(err){
@@ -110,10 +123,10 @@ const UpdateAccount = () => {
         <Link to='/'> HOME</Link>
       </nav>
       <h1>Update NEW ACCOUNT</h1>
-      <input type="text" placeholder='username' onChange={handleChange} name='username'/>
-      <input type="text" placeholder='password' onChange={handleChange} name='password'/>
-      <input type="text" placeholder='first name' onChange={handleChange} name='fname'/>
-      <input type="text" placeholder='last name' onChange={handleChange} name='lname'/>
+      <input type="text" value={account.username} placeholder='username' onChange={handleChange} name='username'/>
+      <input type="text" value={account.password} placeholder='password' onChange={handleChange} name='password'/>
+      <input type="text" value={account.fname} placeholder='first name' onChange={handleChange} name='fname'/>
+      <input type="text" value={account.lname} placeholder='last name' onChange={handleChange} name='lname'/>
       <label htmlFor="">
         Gender
         <select name='gender' onChange={handleChange} value={account.gender}>
@@ -122,11 +135,11 @@ const UpdateAccount = () => {
           <option value="female">Female</option>
         </select>
       </label>
-      <input type="text" placeholder='contact number' onChange={handleChange} name='contact'/>
-      <input type="number" placeholder='Age' onChange={handleChange} name='age'/>
+      <input type="text" value={account.contact} placeholder='contact number' onChange={handleChange} name='contact'/>
+      <input type="number" value={account.age} placeholder='Age' onChange={handleChange} name='age'/>
       
-      <input type="email" placeholder='Email address' onChange={handleChange} name='email'/>
-      <input type="text" placeholder='Address' onChange={handleChange} name='address'/>
+      <input type="email" value={account.email} placeholder='Email address' onChange={handleChange} name='email'/>
+      <input type="text" value={account.address} placeholder='Address' onChange={handleChange} name='address'/>
 
       <button className='formButton' onClick={handleClick}>Update</button>
       <button className='formButton' onClick={handleDA}>Deactivate</button>
