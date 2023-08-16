@@ -93,6 +93,7 @@ const AccountList = () => {
                         <td className='col5'>{Account.accountType}</td>
                         <td className='col6'>{new Date(Account.dateCreated).toLocaleDateString()}</td>
                         <td className='col7'>{Account.accountStatus}</td>
+                        <td><button className='update'><Link to={`/update-account/${Account.userID}`}>Update</Link></button></td>
                     </tr>
                     ))}
             </tbody>
