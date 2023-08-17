@@ -15,9 +15,9 @@ const UpdateAccount = () => {
         age:"",
         bday:"",
         address:"",
-       // desc:"",
-        type:"",
-        dateCreated:"",
+        desc:"",
+        //type:"",
+        //dateCreated:"",
        // profileImage:"",
     })
 
@@ -35,8 +35,8 @@ const UpdateAccount = () => {
       if (e.target.name === 'gender') {
         setAccount((prev) => ({ ...prev, gender: e.target.value }));
       }
-      else if(e.target.name === 'type'){
-        setAccount((prev) => ({...prev, type: e.target.value}));
+      else if (e.target.name === 'desc'){
+        setAccount((prev) => ({ ...prev, desc: e.target.value }));
       }
       else {
         // For other fields, use spread syntax as before
@@ -50,6 +50,8 @@ const UpdateAccount = () => {
             try {
                 const res = await axios.get(`http://localhost:8800/user/${userID}`);
                 const retrievedAccount = res.data[0];
+                //format date
+                const formattedDate = new Date(retrievedAccount.userBirthday).toISOString().substr(0, 10);
 
                 // Update the state with retrieved account data
                 setAccount({
@@ -61,10 +63,11 @@ const UpdateAccount = () => {
                     email: retrievedAccount.userEmail,
                     contact: retrievedAccount.userContactNum,
                     age: retrievedAccount.userAge,
-                    bday: retrievedAccount.userBirthday,
+                    bday: formattedDate, 
                     address: retrievedAccount.userAddress,
-                    type: retrievedAccount.accountType,
-                    dateCreated: retrievedAccount.dateCreated,
+                    desc: retrievedAccount.userDesc,
+                    //type: retrievedAccount.accountType,
+                    //dateCreated: retrievedAccount.dateCreated,
                 });
             } catch (err) {
                 console.log(err);
@@ -136,10 +139,14 @@ const UpdateAccount = () => {
         </select>
       </label>
       <input type="text" value={account.contact} placeholder='contact number' onChange={handleChange} name='contact'/>
+      <label>Birthday
+         <input type="date" placeholder='Birthdate' onChange={handleChange} name='bday' value={account.bday}/>
+        </label>
       <input type="number" value={account.age} placeholder='Age' onChange={handleChange} name='age'/>
       
       <input type="email" value={account.email} placeholder='Email address' onChange={handleChange} name='email'/>
       <input type="text" value={account.address} placeholder='Address' onChange={handleChange} name='address'/>
+      <textarea name="desc" cols="20" rows="20" placeholder='Describe yourself....' value={account.desc} onChange={handleChange}></textarea>
 
       <button className='formButton' onClick={handleClick}>Update</button>
       <button className='formButton' onClick={handleDA}>Deactivate</button>

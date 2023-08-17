@@ -148,7 +148,7 @@ app.get("/user/:userID", (req, res) => {
 app.put("/update-account/:userID", (req, res)=>{
     const userID = req.params.userID;
     //const q = "UPDATE UserAccount SET `username` = ?, `password` = ?, `userLastname` = ?, `userFirstname` = ?, `userGender` =?, `userEmail` = ?,`userContactNum` =?, `userAge` =?, `userAddress` = ? WHERE userID = ?"
-    const q = "UPDATE useraccount set `username` = ?, `password` = ?, `userLastname` = ?, `userFirstname` = ?, `userGender` =?, `userEmail` = ? WHERE userID = ?"
+    const q = "UPDATE useraccount set `username` = ?, `password` = ?, `userLastname` = ?, `userFirstname` = ?, `userGender` =?, `userEmail` = ?,`userContactNum` =?, `userAge` =?, `userBirthday` = ?, `userAddress` = ?, `userDesc` = ? WHERE userID = ?"
     const values = [
         req.body.username,
         req.body.password,
@@ -156,11 +156,11 @@ app.put("/update-account/:userID", (req, res)=>{
         req.body.fname,
         req.body.gender,
         req.body.email,
-        // req.body.contact,
-        // req.body.age,
-        // req.body.bday,
-        // req.body.address,
-        // req.body.desc,
+        req.body.contact,
+        req.body.age,
+        req.body.bday,
+        req.body.address,
+        req.body.desc,
         //req.body.type,
         //req.body.dateCreated,
         //req.body.profileImage,
