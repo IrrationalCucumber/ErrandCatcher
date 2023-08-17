@@ -94,8 +94,9 @@ app.post("/user", (req,res)=>{
 })
 //send data to commission table
 app.post("/commission", (req,res) =>{
-    const q = "INSERT INTO commission (`commissionTitle`, `commissionDeadline`, `commissionLocation`,`commissionType`, `commissionDesc`, `commissionPay`) VALUES (?)"
+    const q = "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionDeadline`, `commissionLocation`,`commissionType`, `commissionDesc`, `commissionPay`) VALUES (?)"
     const values = [
+        req.body.comEmployer,
         req.body.comTitle,
         req.body.comDeadline,
         req.body.comLocation,
@@ -115,6 +116,49 @@ app.post("/commission", (req,res) =>{
     })
 })
 
+//retrieve commission
+//info based on ID
+app.get("/commission/:commissionID", (req, res) => {
+    const commissionID = req.params.commissionID; // Get the search term from the query parameter
+    const q = "SELECT * FROM commission WHERE commissionID = ?";
+
+    db.query(q, [commissionID], (err, data) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'An error occurred' });
+        }
+        return res.json(data);
+    });
+});
+//update commission
+app.put("/update-commission/:commissionID", (req, res)=>{
+    const commissionID= req.params.commissionID;
+    const q = "UPDATE commission SET `commissionTitle` = ?, `commissionDeadline` = ?, `commissionLocation` = ?,`commissionType` = ?, `commissionDesc` = ?, `commissionPay` = ?, `catcherID` =?, `ContactNumber` = ? WHERE commissionID = ?"
+    //const q = "UPDATE commission SET `commissionTitle` = ? WHERE `commissionID` = ?"
+    const values = [
+        //req.body.comEmployer,
+        req.body.comTitle,
+        req.body.comDeadline,
+        req.body.comLocation,
+        req.body.comType,
+        req.body.comDescription,
+        req.body.comPay,
+        //req.body.comStatus,
+        req.body.catcherID,
+        req.body.ContactNo,
+       
+    ];
+
+    db.query(q,[...values, commissionID], (err,data)=>{
+        if(err) {
+            console.log(err)
+            return res.status(500).json(err)
+        }
+        return res.json("Commission updated")
+    })
+})
+
+//delete commission
 app.delete("/commission/:commissionID", (req, res)=>{
     const commissionID = req.params.commissionID;
     const q = "DELETE FROM commission WHERE commissionID = ?"
@@ -127,6 +171,82 @@ app.delete("/commission/:commissionID", (req, res)=>{
         return res.json("Commission has been deleted")
     })
 })
+
+//retrieve account
+//info based on ID
+app.get("/user/:userID", (req, res) => {
+    const userID = req.params.userID; // Get the search term from the query parameter
+    const q = "SELECT * FROM UserAccount WHERE userID = ?";
+
+    db.query(q, [userID], (err, data) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'An error occurred' });
+        }
+        return res.json(data);
+    });
+});
+
+//upadate account
+app.put("/update-account/:userID", (req, res)=>{
+    const userID = req.params.userID;
+    //const q = "UPDATE UserAccount SET `username` = ?, `password` = ?, `userLastname` = ?, `userFirstname` = ?, `userGender` =?, `userEmail` = ?,`userContactNum` =?, `userAge` =?, `userAddress` = ? WHERE userID = ?"
+    const q = "UPDATE useraccount set `username` = ?, `password` = ?, `userLastname` = ?, `userFirstname` = ?, `userGender` =?, `userEmail` = ?,`userContactNum` =?, `userAge` =?, `userBirthday` = ?, `userAddress` = ?, `userDesc` = ? WHERE userID = ?"
+    const values = [
+        req.body.username,
+        req.body.password,
+        req.body.lname,
+        req.body.fname,
+        req.body.gender,
+        req.body.email,
+        req.body.contact,
+        req.body.age,
+        req.body.bday,
+        req.body.address,
+        req.body.desc,
+        //req.body.type,
+        //req.body.dateCreated,
+        //req.body.profileImage,
+    ];
+
+    db.query(q,[...values, userID], (err,data)=>{
+        if(err) {
+            console.log(err)
+            return res.status(500).json(err)
+        }
+        return res.json("Account updated")
+    })
+})
+
+//verify-account
+app.put("/verify-account/:userID", (req, res)=>{
+    const userID = req.params.userID;
+    const q = "UPDATE UserAccount SET accountStatus = 'Verified' WHERE userID = ?"
+
+    db.query(q,[userID], (err,data)=>{
+        if(err) {
+            console.log(err)
+            return res.status(500).json(err)
+        }
+        return res.json("Account Verified")
+    })
+})
+
+//Deactivate Account
+app.put("/deactivate-account/:userID", (req, res)=>{
+    const userID = req.params.userID;
+    const q = "UPDATE UserAccount SET accountStatus = 'Deactivate' WHERE userID = ?"
+
+    db.query(q,[userID], (err,data)=>{
+        if(err) {
+            console.log(err)
+            return res.status(500).json(err)
+        }
+        return res.json("Account deactivated")
+    })
+})
+
+
 
 app.listen(8800, ()=>{
     console.log("connected to backend!")

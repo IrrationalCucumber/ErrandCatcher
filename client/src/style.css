@@ -23,3 +23,29 @@ img {
     object-fit: cover;
     background-color: aquamarine;
   }
+
+  .form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  input{
+    width: 250px;
+    padding: 10px;
+    border: 1px solid gray;
+  }
+
+  label{
+    width: 250px;
+    padding: 10px;
+  }
+
+  .formButton{
+    border: none;
+    padding: 10px;
+    background-color: lightcoral;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }

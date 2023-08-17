@@ -3,13 +3,7 @@ import axios from 'axios'
 import { useNavigate, Link } from 'react-router-dom'
 import './PostCommission.css'; // Import your CSS file
 
-export const Box = () => {
-  return (
-    <div className="box">
-      <div className="rectangle"/>
-    </div>
-  )
-}
+
 const PostCommission = () => {
   const [commission,setCommission] = useState({
     comTitle:"",

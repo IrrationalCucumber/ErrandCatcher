@@ -7,6 +7,7 @@ import NavBar from '../components/Navbar.js'
 const CommissionList = () => {
     const [commissions, setCommissions] = useState([])
     const [searchTerm, setSearchTerm] = useState('');
+    const [selStatus, setSelStatus] = useState('');
     //handle error
     //rretrieve data
     useEffect(() =>{
@@ -71,29 +72,40 @@ const CommissionList = () => {
                 <i className='fa fa-search'></i>
               </button>
           </div>
-        {commissions.map(Commission=>(
-            <div className="commission" key={Commission.commissionID}>
+          <thead>
+              <tr>
+                <th className='col1'>ID</th>
+                <th className='col2'>Title</th>
+                <th className='col3'>Employer</th>
+                <th className='col4'>Type</th>
+                <th className='col5'>Commission Pay</th>
+                <th className='col6'>Date Posted</th>
+                <th className='col7'>Date Completed</th>
+                <th className='col8'>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {commissions.map(Commission=>(
+            <tr className="commission" key={Commission.commissionID}>
                 
-                <h2>{Commission.commissionTitle}</h2>
-                <p>{Commission.commissionDeadline}</p>
-                <p>{Commission.commissionLocation}</p>
-                <p>{Commission.commissionType}</p>
-                <p>{Commission.commissionDesc}</p>
-                <p>{Commission.commissionPay}</p>
-                <p>{Commission.commissionStatus}</p>
-                <p>{Commission.DatePosted}</p>
-                <p>{Commission.DateCompleted}</p>
-                <p>{Commission.ContactNumber}</p>
+                <td>{Commission.commissionID}</td>
+                <td>{Commission.commissionTitle}</td>
+                <td>{Commission.employerID}</td>
+                <td>{Commission.commissionType}</td>
+                <td>{Commission.commissionPay}</td>
+                <td>{Commission.DatePosted}</td>
+                <td>{Commission.DateCompleted}</td>
+                <td>{Commission.commissionStatus}</td>
                 <button onClick={()=>handleDelete(Commission.commissionID)}>DELETE</button>
-            </div>
+                <button className='update'><Link to={`/update-commission/${Commission.commissionID}`}>View</Link></button>
+            </tr>
         ))}
+            </tbody>
+        
       </div>
       <button>
         <Link to='/post-commission'>Add Commission</Link>
         </button>
-
-      <button className='delete'>Delete</button>
-      <button className='update'>Update</button>
     </div>
   )
 }
