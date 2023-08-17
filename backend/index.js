@@ -115,6 +115,49 @@ app.post("/commission", (req,res) =>{
         return res.json("Commission has been posted")
     })
 })
+
+//retrieve commission
+//info based on ID
+app.get("/commission/:commissionID", (req, res) => {
+    const commissionID = req.params.commissionID; // Get the search term from the query parameter
+    const q = "SELECT * FROM commission WHERE commissionID = ?";
+
+    db.query(q, [commissionID], (err, data) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'An error occurred' });
+        }
+        return res.json(data);
+    });
+});
+//update commission
+app.put("/update-commission/:commissionID", (req, res)=>{
+    const commissionID= req.params.commissionID;
+    const q = "UPDATE commission SET `commissionTitle` = ?, `commissionDeadline` = ?, `commissionLocation` = ?,`commissionType` = ?, `commissionDesc` = ?, `commissionPay` = ?, `catcherID` =?, `ContactNumber` = ? WHERE commissionID = ?"
+    //const q = "UPDATE commission SET `commissionTitle` = ? WHERE `commissionID` = ?"
+    const values = [
+        //req.body.comEmployer,
+        req.body.comTitle,
+        req.body.comDeadline,
+        req.body.comLocation,
+        req.body.comType,
+        req.body.comDescription,
+        req.body.comPay,
+        //req.body.comStatus,
+        req.body.catcherID,
+        req.body.ContactNo,
+       
+    ];
+
+    db.query(q,[...values, commissionID], (err,data)=>{
+        if(err) {
+            console.log(err)
+            return res.status(500).json(err)
+        }
+        return res.json("Commission updated")
+    })
+})
+
 //delete commission
 app.delete("/commission/:commissionID", (req, res)=>{
     const commissionID = req.params.commissionID;

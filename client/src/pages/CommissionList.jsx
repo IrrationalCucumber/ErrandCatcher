@@ -97,6 +97,7 @@ const CommissionList = () => {
                 <td>{Commission.DateCompleted}</td>
                 <td>{Commission.commissionStatus}</td>
                 <button onClick={()=>handleDelete(Commission.commissionID)}>DELETE</button>
+                <button className='update'><Link to={`/update-commission/${Commission.commissionID}`}>View</Link></button>
             </tr>
         ))}
             </tbody>
@@ -105,9 +106,6 @@ const CommissionList = () => {
       <button>
         <Link to='/post-commission'>Add Commission</Link>
         </button>
-
-      <button className='delete'>Delete</button>
-      <button className='update'>Update</button>
     </div>
   )
 }

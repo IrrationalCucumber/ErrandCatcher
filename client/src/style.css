@@ -36,6 +36,11 @@ img {
     border: 1px solid gray;
   }
 
+  label{
+    width: 250px;
+    padding: 10px;
+  }
+
   .formButton{
     border: none;
     padding: 10px;

@@ -9,6 +9,7 @@ import CommissionList from "./pages/CommissionList";
 import Home from "./pages/Home";
 //import Navbar from "./components/Navbar";
 import UpdateAccount from "./pages/UpdateAccount"
+import UpdateCommission from "./pages/UpdateCommission";
 //import "./style.css";
 
 
@@ -27,6 +28,7 @@ function App() {
         <Route path='/post-commission' exact ={PostCommission}/>
         <Route path='/commission-list' exact Component={CommissionList}/>
         <Route path="/update-account/:userID" exact Component={UpdateAccount}/>
+        <Route path="/update-commission/:commissionID" exact Component={UpdateCommission} />
         </Routes>
         
       </Router>
