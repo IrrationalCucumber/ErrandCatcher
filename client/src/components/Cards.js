@@ -1,17 +1,39 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import CardItem from './CardItem'
+import axios from 'axios'
 //import './Cards.css'
 
 function Cards() {
+  const [commissions, setCommissions] = useState([])
+
+  //rretrieve data
+  useEffect(() =>{
+    const fetchAllCommission = async ()=>{
+        try{
+            const res = await axios.get("http://localhost:8800/commission")
+            //"http://localhost:8800/commission" - local computer
+            //"http://192.168.1.47:8800/commission" - netwrok
+            setCommissions(res.data)
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
+    fetchAllCommission()
+}, [])
+
+  
   return (
     <div className='cards'>
       <h1>Check out this epic Destination!</h1>
       <div className='cards__container'>
         <div className='cards__wrapper'>
+        {commissions.map(Commission=>(
+          <div className="commission" key={Commission.commissionID}>
             <ul className='cards__items'>
-                 <CardItem src='images/image-test-1.jpg'
-                 text='Discover a rare creature in its natural habitat'
-                 label='Discover'
+                 <CardItem src='images/hr.png'
+                 text={Commission.commissionTitle}
+                 label={Commission.commissionType}
                  path='/services'
                  />
                  <CardItem src='images/image-test-2.jpg'
@@ -37,6 +59,8 @@ function Cards() {
                  path='/services'
                  />
             </ul>
+            </div>
+            ))}
         </div>
       </div>
     </div>
