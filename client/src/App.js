@@ -11,6 +11,8 @@ import Home from "./pages/Home";
 import UpdateAccount from "./pages/UpdateAccount"
 import UpdateCommission from "./pages/UpdateCommission";
 //import "./style.css";
+import CatcherHome from "./pages/CatcherHome";
+import EmployerHome from "./pages/EmployerHome";
 
 
 function App() {
@@ -29,6 +31,9 @@ function App() {
         <Route path='/commission-list' exact Component={CommissionList}/>
         <Route path="/update-account/:userID" exact Component={UpdateAccount}/>
         <Route path="/update-commission/:commissionID" exact Component={UpdateCommission} />
+        <Route path="/e-home/:userID" element={<EmployerHome />} />
+        <Route path="/admin-home/:userID" element={<Home />} />
+        <Route path="/c-home/:userID" element={<CatcherHome />} />
         </Routes>
         
       </Router>

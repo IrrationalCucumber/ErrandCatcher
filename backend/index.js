@@ -246,6 +246,36 @@ app.put("/deactivate-account/:userID", (req, res)=>{
     })
 })
 
+//sign-in
+app.get("/sign-in", (req, res) => {
+    const username = req.query.username;
+    const password = req.query.password;
+    const q = "SELECT * FROM UserAccount WHERE (username = ? OR userEmail = ?) AND password = ?";
+  
+    db.query(q, [username, username, password], (err, data) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'An error occurred' });
+      }
+      return res.json(data);
+    });
+  });
+  
+
+//home based on id
+app.get("/home/:userID", (req, res) => {
+    const userID = req.params.userID; // Get the search term from the query parameter
+    const q = "SELECT * FROM commission WHERE userID = ?";
+
+    db.query(q, [userID], (err, data) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'An error occurred' });
+        }
+        return res.json(data);
+    });
+});
+
 
 
 app.listen(8800, ()=>{
