@@ -8,6 +8,8 @@ import PostCommission from "./pages/PostCommission";
 import CommissionList from "./pages/CommissionList";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
+import EmployerHome from "./pages/EmployerHome";
+import CatcherHome from "./pages/CatcherHome"
 //import "./style.css";
 
 
@@ -17,7 +19,7 @@ function App() {
       <Router>
         
         <Routes>
-        <Route path='/' exact Component={Home}/>
+        <Route path='/' element={<Home />} />
         <Route path="/accounts" exact Component={AccountList}/>
         <Route path="/sign-in" exact Component={SignIn}/>
         <Route path="/sign-up" exact Component={SignUp}/>
@@ -25,6 +27,9 @@ function App() {
         <Route path='/add' exact Component={AddAccount}/>
         <Route path='/post-commission' exact Component={PostCommission}/>
         <Route path='/commission-list' exact Component={CommissionList}/>
+        <Route path="/e-home/:userID" element={<EmployerHome />} />
+        <Route path="/admin-home/:userID" element={<Home />} />
+        <Route path="/c-home/:userID" element={<CatcherHome />} />
         </Routes>
         
       </Router>

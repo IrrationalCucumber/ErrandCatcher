@@ -2,18 +2,33 @@ import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from './Button';
 import './navbar-employer.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell as regularBell } from '@fortawesome/free-regular-svg-icons';
+import axios from 'axios';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faBell as regularBell } from '@fortawesome/free-regular-svg-icons';
 
 
 
-function Navbar() {
+function NavbarEmployer() {
   //change the state of the menu
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
 //reverse the state of the above funstion
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
+
+//   const [account, setAccount] = useState('')
+//   useEffect(() =>{
+//     const fettchAccount = async ()=>{
+//         try{
+//             const res = await axios.get("http://192.168.1.47:8800/home/")
+//             setAccount(res.data)
+//         }
+//         catch(err){
+//             console.log(err)
+//         }
+//     }
+//     fettchAccount()
+// }, [])
 
   const showButton = () => {
     if(window.innerWidth <= 960){
@@ -64,15 +79,19 @@ window.addEventListener('resize', showButton)
                     </Link>
                   </li>
                 </ul>
-                <FontAwesomeIcon icon={regularBell} />
-                {button && <Button buttonStyle='btn--outline'>profile</Button>}
+                {/* <FontAwesomeIcon icon={regularBell} /> */}
+                {/* {account.map(Account=>(
+                    <div className="account" key={Account.userID}>
+                      {button && <Button buttonStyle='btn--outline'>{Account.username}</Button>}
+                    </div>
+                    ))} */}
             </div>
         </nav>
     </>
   )
 }
 
-export default navbar-employer
+export default NavbarEmployer
 /**
  * <li className='nav-item'>
                     <Link to='/commission' className='nav-links' onClick={closeMobileMenu}>
