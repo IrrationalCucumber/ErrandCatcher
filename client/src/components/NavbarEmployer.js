@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import { Button } from './Button';
 import './navbar-employer.css'
 import axios from 'axios';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faBell as regularBell } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+ import { faBell as regularBell } from '@fortawesome/free-regular-svg-icons';
 
 
 
