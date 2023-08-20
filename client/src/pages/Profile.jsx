@@ -1,9 +1,10 @@
 import React from 'react'
+import NavbarPage from '../components/CatcherPageNavbar'
 
 const Profile = () => {
   return (
     <div className='profile'>
-      Profile
+      <NavbarPage></NavbarPage>
     </div>
   )
 }
