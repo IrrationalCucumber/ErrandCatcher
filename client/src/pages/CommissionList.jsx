@@ -93,8 +93,8 @@ const CommissionList = () => {
                 <td>{Commission.employerID}</td>
                 <td>{Commission.commissionType}</td>
                 <td>{Commission.commissionPay}</td>
-                <td>{Commission.DatePosted}</td>
-                <td>{Commission.DateCompleted}</td>
+                <td>{new Date(Commission.DatePosted).toLocaleDateString()}</td>
+                <td>{new Date(Commission.DateCompleted).toLocaleDateString()}</td>
                 <td>{Commission.commissionStatus}</td>
                 <button onClick={()=>handleDelete(Commission.commissionID)}>DELETE</button>
                 <button className='update'><Link to={`/update-commission/${Commission.commissionID}`}>View</Link></button>

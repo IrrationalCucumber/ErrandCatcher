@@ -94,7 +94,7 @@ app.post("/user", (req,res)=>{
 })
 //send data to commission table
 app.post("/commission", (req,res) =>{
-    const q = "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionDeadline`, `commissionLocation`,`commissionType`, `commissionDesc`, `commissionPay`) VALUES (?)"
+    const q = "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionDeadline`, `commissionLocation`,`commissionType`, `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`) VALUES (?)"
     const values = [
         req.body.comEmployer,
         req.body.comTitle,
@@ -105,9 +105,9 @@ app.post("/commission", (req,res) =>{
         req.body.comPay,
         // req.body.comStatus,
         // req.body.catcherID,
-        // req.body.DatePosted,
+        req.body.DatePosted,
         // req.body.DateCompleted,
-        //req.body.Contactno,
+        req.body.Contactno,
        
     ];
     db.query(q,[values], (err,data)=>{

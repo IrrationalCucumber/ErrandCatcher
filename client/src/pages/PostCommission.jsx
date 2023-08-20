@@ -21,6 +21,16 @@ const PostCommission = () => {
 
 const navigate = useNavigate();
 
+  //get current date
+        
+  const getCurrentDate = () => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed, so add 1
+    const day = String(currentDate.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+  };
+
 const handleChange = (e) => {
   if (e.target.name === 'comType') {
     setCommission((prev) => ({ ...prev, comType: e.target.value }));
@@ -35,7 +45,7 @@ const handleChange = (e) => {
 const handleClick = async e =>{
   e.preventDefault()
         try{
-            //account.dateCreated = getCurrentDate();
+            commission.DatePosted = getCurrentDate();
             await(axios.post('http://localhost:8800/commission', commission))
             navigate("/commission-list")
         }catch(err){
@@ -84,6 +94,7 @@ console.log(commission)
         Amount: ₱
           <input type='number' placeholder='0.00' onChange={handleChange} name='comPay'/>
       </label>
+      <input type="text" placeholder='Contact Number' onChange={handleChange} name='ContactNo'/>
       <br />
       <button onClick={handleClick}>POST</button>
       </div>
