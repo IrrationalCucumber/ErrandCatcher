@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const SignIn = () => {
   const [username, setUsername] = useState('');
@@ -50,7 +50,9 @@ const SignIn = () => {
         type="password"
         placeholder="Password"
       />
+      
       <button onClick={handleClick}>Sign In</button>
+      <Link to="/sign-up" >Don't have an Account? Sign up here!</Link>
     </div>
   );
 };
