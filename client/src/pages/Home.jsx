@@ -1,18 +1,19 @@
 import React from 'react'
 import Navbar from '../components/Navbar';
+import Cards from '../components/Cards';
+
 
 
 const Home = () => {
-     //change the state of the menu
-  //const [click, setClick] = useState(false);
-  //const [button, setButton] = useState(true);
-//reverse the state of the above funstion
-  //const handleClick = () => setClick(!click);
-  //const closeMobileMenu = () => setClick(false);
+     
   return (
+    <>
     <div>
       <Navbar />
+      <img src='images/hr.png' alt="Commission" />
+      <Cards />
     </div>
+    </>
   )
 }
 
