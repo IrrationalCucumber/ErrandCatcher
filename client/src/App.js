@@ -29,6 +29,7 @@ function App() {
         <Route path='/commission-list' exact Component={CommissionList}/>
         <Route path="/update-account/:userID" exact Component={UpdateAccount}/>
         <Route path="/update-commission/:commissionID" exact Component={UpdateCommission} />
+        
         </Routes>
         
       </Router>
