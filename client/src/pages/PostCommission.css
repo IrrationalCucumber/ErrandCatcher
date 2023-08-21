@@ -1,0 +1,21 @@
+.in{
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+   
+}
+div.in{
+    position: relative;
+    width: 369px;
+    height: 200px;
+    top: 100px;
+    left: 560px;
+    line-height: 1.5;
+}
+
+
+.backhome{
+ background-color: lightblue;
+
+
+}

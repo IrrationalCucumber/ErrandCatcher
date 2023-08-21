@@ -1,0 +1,51 @@
+/* * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'PT Sans', sans-serif;
+  }
+ */
+
+
+.commissions{
+    display: flex;
+}
+
+.commissions{
+    flex:1;
+    flex-direction: column;
+}
+
+img {
+    background-image: url('/public/images/img-2.jpg');
+    width: 100px;
+    height: 200px;
+    object-fit: cover;
+    background-color: aquamarine;
+  }
+
+  .form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  input{
+    width: 250px;
+    padding: 10px;
+    border: 1px solid gray;
+  }
+
+  label{
+    width: 250px;
+    padding: 10px;
+  }
+
+  .formButton{
+    border: none;
+    padding: 10px;
+    background-color: lightcoral;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
