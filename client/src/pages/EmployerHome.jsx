@@ -1,11 +1,9 @@
-import React, {useLocation} from 'react'
+import React from 'react'
 import Navbar from '../components/EmployerNavbar'
 
-function EmployerHome() {
-    const location = useLocation()
 
-    const userID = location.pathname.split("/")[2]
-    //pathname to array from
+function EmployerHome() {
+
   return (
     <div>
         <Navbar></Navbar>

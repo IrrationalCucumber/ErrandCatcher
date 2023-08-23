@@ -50,7 +50,7 @@ window.addEventListener('resize', showButton)
                     </Link>
                   </li>
                   <li className='nav-item'>
-                    <Link to={`/post-commission/${userID}`} className='nav-links' onClick={closeMobileMenu}>
+                    <Link to={`/commissions/${userID}`} className='nav-links' onClick={closeMobileMenu}>
                       Commission
                     </Link>
                   </li>
