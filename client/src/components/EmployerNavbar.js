@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Button } from './Button';
 import './Navbar.css'
 
@@ -27,6 +27,12 @@ function EmployerNavbar() {
 //handles the resizing of window
 window.addEventListener('resize', showButton)
 
+//carry id to other page
+  const location = useLocation()
+
+    const userID = location.pathname.split("/")[2]
+    //pathname to array from
+
   return (
     <>
         <nav className="navbar">
@@ -44,7 +50,7 @@ window.addEventListener('resize', showButton)
                     </Link>
                   </li>
                   <li className='nav-item'>
-                    <Link to='/commission' className='nav-links' onClick={closeMobileMenu}>
+                    <Link to={`/commissions/${userID}`} className='nav-links' onClick={closeMobileMenu}>
                       Commission
                     </Link>
                   </li>

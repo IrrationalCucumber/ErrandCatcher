@@ -35,6 +35,15 @@ app.get("/commission", (req,res)=>{
         return res.json(data)
     })
 })
+app.get("/your-commission/:userID", (req, res) => {
+    const userID = req.params.userID; // Use req.params.userID to get the route parameter
+    const q = "Select * from commission where employerID = ?";
+    db.query(q, [userID], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
 //search account
 app.get("/search-user", (req, res) => {
     const searchTerm = req.query.term; // Get the search term from the query parameter
@@ -66,6 +75,24 @@ app.get("/search-commission", (req, res) => {
     });
 });
 
+//employer search
+app.get("/search-employer-commission/:userID", (req, res) => {
+    const userID = req.params.userID; // Get the userID from the route parameter
+    const searchTerm = req.query.term; // Get the search term from the query parameter
+
+    const q = "SELECT * FROM commission WHERE employerID = ? AND (commissionTitle LIKE ? OR commissionType LIKE ? OR commissionLocation LIKE ?)";
+    const values = [userID, `%${searchTerm}%`, `%${searchTerm}%`, `%${searchTerm}%`];
+
+    db.query(q, values, (err, data) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'An error occurred' });
+        }
+        return res.json(data);
+    });
+});
+
+
 //send data to userAccount
 app.post("/user", (req,res)=>{
     //const q = "INSERT INTO UserAccount (`username`, `password`, `userLastname`, `userFirstname`, `userGender`, `userEmail`, `userContactNum`, `userAge`, `userBirthday`, `userAddress`, `userDesc`, `accountType`, `dateCreated`, `profileImage`) VALUES (?)"
@@ -96,6 +123,32 @@ app.post("/user", (req,res)=>{
 app.post("/commission", (req,res) =>{
     const q = "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionDeadline`, `commissionLocation`,`commissionType`, `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`) VALUES (?)"
     const values = [
+        req.body.empID,
+        req.body.comTitle,
+        req.body.comDeadline,
+        req.body.comLocation,
+        req.body.comType,
+        req.body.comDescription,
+        req.body.comPay,
+        // req.body.comStatus,
+        // req.body.catcherID,
+        req.body.DatePosted,
+        // req.body.DateCompleted,
+        req.body.Contactno,
+       
+    ];
+    db.query(q,[values], (err,data)=>{
+        if(err) return res.json(err)
+        return res.json("Commission has been posted")
+    })
+})
+
+//post commission
+//employer
+//send data to commission table
+app.post("/post-commission", (req,res) =>{
+    const q = "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionDeadline`, `commissionLocation`,`commissionType`, `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`) VALUES (?)"
+    const values = [
         req.body.comEmployer,
         req.body.comTitle,
         req.body.comDeadline,
@@ -115,6 +168,9 @@ app.post("/commission", (req,res) =>{
         return res.json("Commission has been posted")
     })
 })
+
+//apply commission
+app.post("/apply-commission/")
 
 //retrieve commission
 //info based on ID

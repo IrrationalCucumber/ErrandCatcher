@@ -1,25 +1,29 @@
 import React, {useState} from 'react'
 import axios from 'axios'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link, useLocation } from 'react-router-dom'
 import './PostCommission.css'; // Import your CSS file
 
 
 const PostCommission = () => {
   const [commission,setCommission] = useState({
+    empID:"",
     comTitle:"",
     comDeadline:"",
     comLocation:"",
     comType:"",
     comDescription:"",
     comPay:"",
-    comStatus:"",
-    catcherID:"",
+    //comStatus:"",
+    //catcherID:"",
     DatePosted:"",
     DateCompleted:"",
     Contactno: "",
    })
 
 const navigate = useNavigate();
+
+const location = useLocation()
+const userID = location.pathname.split("/")[2]
 
 const handleChange = (e) => {
   if (e.target.name === 'comType') {
@@ -32,16 +36,37 @@ const handleChange = (e) => {
 
 };
 
-const handleClick = async e =>{
-  e.preventDefault()
-        try{
-            //account.dateCreated = getCurrentDate();
-            await(axios.post('http://localhost:8800/commission', commission))
-            navigate("/commission-list")
-        }catch(err){
-            console.log(err)
-        }
-};
+  //get current date
+        
+    const getCurrentDate = () => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed, so add 1
+    const day = String(currentDate.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+  };
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    try {
+      console.log(userID); // Check if userID is correct
+  
+      const currentDate = getCurrentDate();
+      const updatedCommission = {
+        ...commission,
+        DatePosted: currentDate,
+        empID: userID,
+      };
+  
+      console.log(updatedCommission); // Check the updated commission object
+  
+      await axios.post('http://localhost:8800/commission', updatedCommission);
+      navigate(`/commissions/${userID}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
 
 
 console.log(commission)
