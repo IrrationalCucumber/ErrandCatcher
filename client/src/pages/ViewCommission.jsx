@@ -7,6 +7,7 @@ import '../style.css'
 
 const ViewCommission = () => {
   const [commission,setCommission] = useState({
+    comID:"",
     comTitle:"",
     comDeadline:"",
     comLocation:"",
@@ -67,6 +68,7 @@ const ViewCommission = () => {
 
                 // Update the state with retrieved account data
                 setCommission({
+                    comID:retrievedCommission.commissionID,
                     comTitle:retrievedCommission.commissionTitle,
                     comDeadline:formattedDate,
                     comLocation:retrievedCommission.commissionLocation,
@@ -138,7 +140,7 @@ const ViewCommission = () => {
                 </label>
                 <input type="text" value={commission.ContactNo} onChange={handleChange} placeholder='Contact Number' name='ContactNo'/>
                   
-                    <button className='formButton' onClick={handleClick}>UPDATE</button>
+                    <button className='formButton' onClick={e=>{navigate(`/update-commission/${commission.commissionID}`)}}>UPDATE</button>
             
 
         </div>
