@@ -34,7 +34,7 @@ function Cards() {
                  <CardItem src='images/hr.png'
                  text={Commission.commissionTitle}
                  label={Commission.commissionType}
-                 path='/services'
+                 path={`/update-commission/${Commission.commissionID}`}
                  />
                  <CardItem src='images/image-test-2.jpg'
                  text='Witness one of the bipedal whom the last of its species'
