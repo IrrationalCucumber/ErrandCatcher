@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import './Error.css'
 
 const SignUp = () => {
     const [account,setAccount] = useState({
@@ -19,14 +20,11 @@ const SignUp = () => {
         dateCreated:"",
        // profileImage:"",
     })
-    // const formatDate = (dateString) => {
-    //     // Input date format: MM/DD/YYYY
-    //     const [month, day, year] = dateString.split('/');
-    //     // Output date format: YYYY-MM-DD
-    //     return `${year}-${month}-${day}`;
-    //   };
-      //get current date
+    //handle state of error message
+    const [errorMessage, setErrorMessage] = useState('')
       
+    //function for getting current date
+    //triggers when  button clicked
        const getCurrentDate = () => {
          const currentDate = new Date();
          const year = currentDate.getFullYear();
@@ -35,6 +33,7 @@ const SignUp = () => {
         return `${year}-${month}-${day}`;
        };
 
+    //function to navigate pages
     const navigate = useNavigate()
 
     const handleChange = (e) => {
@@ -56,6 +55,13 @@ const SignUp = () => {
 
     //save the data into db
     const handleClick = async e =>{
+      //if fileds are empty
+      //error message
+      if (!account.username || !account.password || !account.email || !account.fname || !account.lname || !account.contact || !account.age || !account.bday || !account.gender || !account.type || !account.address) {
+        setErrorMessage('Missing fields.Please try again.');
+        return;
+      }
+  
         //const updatedAccount = { ...account };
         //refresh the page when button is clicked
         e.preventDefault()
@@ -77,11 +83,12 @@ const SignUp = () => {
         </Link>
         <Link to='/'> HOME</Link>
       </nav>
-      <h1>ADD NEW ACCOUNT</h1>
-      <input type="text" placeholder='username' onChange={handleChange} name='username'/>
-      <input type="text" placeholder='password' onChange={handleChange} name='password'/>
-      <input type="text" placeholder='first name' onChange={handleChange} name='fname'/>
-      <input type="text" placeholder='last name' onChange={handleChange} name='lname'/>
+      <p className='em'><i>{errorMessage}</i></p>
+      <h1>SIGN UP</h1>
+      <input className={errorMessage ? 'error' : ''} type="text" placeholder='username' onChange={handleChange} name='username'/>
+      <input className={errorMessage ? 'error' : ''} type="password" placeholder='password' onChange={handleChange} name='password'/>
+      <input className={errorMessage ? 'error' : ''} type="text" placeholder='first name' onChange={handleChange} name='fname'/>
+      <input className={errorMessage ? 'error' : ''} type="text" placeholder='last name' onChange={handleChange} name='lname'/>
       <label htmlFor="">
         Gender
         <select name='gender' onChange={handleChange} value={account.gender}>
@@ -90,18 +97,19 @@ const SignUp = () => {
           <option value="female">Female</option>
         </select>
       </label>
-      <input type="text" placeholder='contact number' onChange={handleChange} name='contact'/>
-      <input type="number" placeholder='Age' onChange={handleChange} name='age'/>
+      <input className={errorMessage ? 'error' : ''} type="text" placeholder='contact number' onChange={handleChange} name='contact'/>
+      <input className={errorMessage ? 'error' : ''} type="number" placeholder='Age' onChange={handleChange} name='age'/>
       
-      <input type="email" placeholder='Email address' onChange={handleChange} name='email'/>
-      <input type="text" placeholder='Address' onChange={handleChange} name='address'/>
+      <input className={errorMessage ? 'error' : ''} type="email" placeholder='Email address' onChange={handleChange} name='email'/>
+      <input className={errorMessage ? 'error' : ''} type="text" placeholder='Address' onChange={handleChange} name='address'/>
       <select name='type' onChange={handleChange} value={account.type}>
         <option value="">Choose Type</option>
         <option vlaue="Employer">Employer</option>
         <option value="Catcher">Catcher</option>
       </select>
 
-      <button onClick={handleClick}>Add Account</button>
+      <button onClick={handleClick}>Sign Up</button>
+      <p><i>Already have an Account?<Link to="/sign-in">Sign in here!</Link></i></p>
     </div>
   )
 }
