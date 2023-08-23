@@ -116,6 +116,35 @@ app.post("/commission", (req,res) =>{
     })
 })
 
+//post commission
+//employer
+//send data to commission table
+app.post("/post-commission", (req,res) =>{
+    const q = "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionDeadline`, `commissionLocation`,`commissionType`, `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`) VALUES (?)"
+    const values = [
+        req.body.comEmployer,
+        req.body.comTitle,
+        req.body.comDeadline,
+        req.body.comLocation,
+        req.body.comType,
+        req.body.comDescription,
+        req.body.comPay,
+        // req.body.comStatus,
+        // req.body.catcherID,
+        req.body.DatePosted,
+        // req.body.DateCompleted,
+        req.body.Contactno,
+       
+    ];
+    db.query(q,[values], (err,data)=>{
+        if(err) return res.json(err)
+        return res.json("Commission has been posted")
+    })
+})
+
+//apply commission
+app.post("/apply-commission/")
+
 //retrieve commission
 //info based on ID
 app.get("/commission/:commissionID", (req, res) => {

@@ -13,6 +13,7 @@ import UpdateCommission from "./pages/UpdateCommission";
 //import "./style.css";
 import CatcherHome from "./pages/CatcherHome"
 import EmployerHome from "./pages/EmployerHome"
+import ViewCommission from "./pages/ViewCommission";
 
 
 function App() {
@@ -21,19 +22,20 @@ function App() {
       <Router>
         
         <Routes>
-        <Route path='/' exact Component={Home}/>
-        <Route path="/accounts" exact Component={AccountList}/>
-        <Route path="/sign-in" exact Component={SignIn}/>
-        <Route path="/sign-up" exact Component={SignUp}/>
-        <Route path='/profile' exact Component={Profile}/>
-        <Route path='/add' exact Component={AddAccount}/>
-        <Route path='/post-commission' exact Component={PostCommission}/>
-        <Route path='/commission-list' exact Component={CommissionList}/>
-        <Route path="/update-account/:userID" exact Component={UpdateAccount}/>
-        <Route path="/update-commission/:commissionID" exact Component={UpdateCommission} />
-        <Route path="/admin-home/:userID" element={<Home />} />
-        <Route path="/e-home/:userID" element={<EmployerHome />} />
-        <Route path="/c-home/:userID" element={<CatcherHome />} />
+          <Route path='/' exact Component={Home}/>
+          <Route path="/accounts" exact Component={AccountList}/>
+          <Route path="/sign-in" element={<SignIn />}/>
+          <Route path="/sign-up" exact Component={SignUp}/>
+          <Route path='/profile' exact Component={Profile}/>
+          <Route path='/add' exact Component={AddAccount}/>
+          <Route path='/post-commission/:userID' exact Component={PostCommission}/>
+          <Route path='/commission-list' exact Component={CommissionList}/>
+          <Route path="/update-account/:userID" exact Component={UpdateAccount}/>
+          <Route path="/update-commission/:commissionID" exact Component={UpdateCommission} />
+          <Route path="/admin-home/:userID" element={<Home />} />
+          <Route path="/e-home/:userID" element={<EmployerHome />} />
+          <Route path="/c-home/:userID" element={<CatcherHome />} />
+          <Route path="/view-commission/:commissionID" exact Component={ViewCommission} />
         </Routes>
         
       </Router>
