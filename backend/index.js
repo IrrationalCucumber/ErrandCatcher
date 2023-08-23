@@ -94,7 +94,7 @@ app.post("/user", (req,res)=>{
 })
 //send data to commission table
 app.post("/commission", (req,res) =>{
-    const q = "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionDeadline`, `commissionLocation`,`commissionType`, `commissionDesc`, `commissionPay`) VALUES (?)"
+    const q = "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionDeadline`, `commissionLocation`,`commissionType`, `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`) VALUES (?)"
     const values = [
         req.body.comEmployer,
         req.body.comTitle,
@@ -105,9 +105,9 @@ app.post("/commission", (req,res) =>{
         req.body.comPay,
         // req.body.comStatus,
         // req.body.catcherID,
-        // req.body.DatePosted,
+        req.body.DatePosted,
         // req.body.DateCompleted,
-        //req.body.Contactno,
+        req.body.Contactno,
        
     ];
     db.query(q,[values], (err,data)=>{
@@ -245,6 +245,36 @@ app.put("/deactivate-account/:userID", (req, res)=>{
         return res.json("Account deactivated")
     })
 })
+
+//sign-in
+app.get("/sign-in", (req, res) => {
+    const username = req.query.username;
+    const password = req.query.password;
+    const q = "SELECT * FROM UserAccount WHERE (username = ? OR userEmail = ?) AND password = ?";
+  
+    db.query(q, [username, username, password], (err, data) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'An error occurred' });
+      }
+      return res.json(data);
+    });
+  });
+  
+
+//home based on id
+app.get("/home/:userID", (req, res) => {
+    const userID = req.params.userID; // Get the search term from the query parameter
+    const q = "SELECT * FROM commission WHERE userID = ?";
+
+    db.query(q, [userID], (err, data) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'An error occurred' });
+        }
+        return res.json(data);
+    });
+});
 
 
 
