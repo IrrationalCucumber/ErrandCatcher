@@ -4,7 +4,8 @@ import { Button } from './Button';
 import './Navbar.css'
 
 
-function Navbar() {
+
+function CatcherPageNavbar() {
   //change the state of the menu
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
@@ -31,11 +32,7 @@ window.addEventListener('resize', showButton)
     <>
         <nav className="navbar">
             <div className="navbar-container">
-                <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
-                    {/* back arrow nga icon
-                    to previous window */}
-                    BACK<i className="fab fa-typo3"></i>
-                </Link>
+              
                 <div className='menu-icon' onClick={handleClick}>
                   <i className={click ? 'fas fa-times' : 'fas fa-bars'}></i>
                 </div>
@@ -46,4 +43,4 @@ window.addEventListener('resize', showButton)
   )
 }
 
-export default Navbar
+export default CatcherPageNavbar

@@ -105,12 +105,7 @@ const ViewCommission = () => {
 
     return (
         <div className='form'>
-            <nav>
-                <Link to='/accounts'>
-                BACK 
-                </Link>
-                <Link to='/'>HOME </Link>
-            </nav>
+
             <h1>Post Commission</h1>
             
                 {/* {imageURL && <img src={imageURL} alt='Commission Type' />} */}

@@ -92,7 +92,7 @@ const EmployerApplicants = () => {
                     <tr className="account" key={Applicant.applicationID}>
                         <td className='col1'>{Applicant.commissionTitle}</td>
                         <td className='col2'>{Applicant.commissionID}</td>
-                        <td className='col3'>{Applicant.userFirstname} {Applicant.userLastname}</td>
+                        <td className='col3'><Link to={`/update-account/${Applicant.catcherID}`}>{Applicant.userFirstname} {Applicant.userLastname}</Link></td>
                         <td className='col4'>{Applicant.userEmail}</td>
                         <td className='col5'>{Applicant.userContactNum}</td>
                         <td className='col6'>{new Date(Applicant.applicationDate).toLocaleDateString()}</td>
