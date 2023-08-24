@@ -15,6 +15,7 @@ import CatcherHome from "./pages/CatcherHome"
 import EmployerHome from "./pages/EmployerHome"
 import ViewCommission from "./pages/ViewCommission";
 import EmployerCommissions from "./pages/EmployerCommissionList"
+import AdminHome from "./pages/AdminHome";
 
 function App() {
   return (
@@ -32,7 +33,7 @@ function App() {
           <Route path='/commission-list' exact Component={CommissionList}/>
           <Route path="/update-account/:userID" exact Component={UpdateAccount}/>
           <Route path="/update-commission/:commissionID" exact Component={UpdateCommission} />
-          <Route path="/admin-home/:userID" element={<Home />} />
+          <Route path="/admin-home/:userID" element={<AdminHome />} />
           <Route path="/e-home/:userID" exact Component={EmployerHome} />
           <Route path="/commissions/:userID" exact Component={EmployerCommissions} />
           <Route path="/c-home/:userID" exact Component={CatcherHome} />

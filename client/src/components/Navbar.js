@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from './Button';
+import { ButtonSI } from './ButtonSI';
 import './Navbar.css'
 
 
@@ -38,24 +39,9 @@ window.addEventListener('resize', showButton)
                   <i className={click ? 'fas fa-times' : 'fas fa-bars'}></i>
                 </div>
                 <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-                  <li className='nav-item'>
-                    <Link to='/' className='nav-links' onClick={closeMobileMenu}>
-                      Home
-                    </Link>
-                  </li>
-                  
-                  <li className='nav-item'>
-                    <Link to='/accounts' className='nav-links' onClick={closeMobileMenu}>
-                      ACCOUNT LIST
-                    </Link>
-                  </li>
-                  <li className='nav-item'>
-                    <Link to='/commission-list' className='nav-links' onClick={closeMobileMenu}>
-                      COMMISSION LIST
-                    </Link>
-                  </li>
                 </ul>
                 {button && <Button buttonStyle='btn--outline'>SIGN UP</Button>}
+                {button && <ButtonSI buttonStyle='btn--outline'>SIGN IN</ButtonSI>}
             </div>
         </nav>
     </>

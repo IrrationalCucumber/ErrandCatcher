@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
-import NavBar from '../components/Navbar.js'
+import NavBar from '../components/AdminNavbar.js'
 //import "./ash-buttton.css"
 
 const CommissionList = () => {
