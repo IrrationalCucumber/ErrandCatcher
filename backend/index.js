@@ -35,9 +35,19 @@ app.get("/commission", (req,res)=>{
         return res.json(data)
     })
 })
+
 app.get("/your-commission/:userID", (req, res) => {
     const userID = req.params.userID; // Use req.params.userID to get the route parameter
     const q = "Select * from commission where employerID = ?";
+    db.query(q, [userID], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+app.get("/applicants/:userID", (req, res) => {
+    const userID = req.params.userID; // Use req.params.userID to get the route parameter
+    const q = "SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname FROM Application a JOIN commission c ON a.commissionID = c.commissionID JOIN useraccount ua ON a.catcherID = ua.userID WHERE a.commissionID IN (SELECT commissionID FROM commission WHERE employerID = ?);"
     db.query(q, [userID], (err, data) => {
         if (err) return res.json(err);
         return res.json(data);

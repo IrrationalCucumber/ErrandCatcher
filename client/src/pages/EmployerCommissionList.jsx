@@ -75,7 +75,7 @@ const fetchSearchResults = async () => {
           </div>
           <thead>
               <tr>
-                <th className='col1'>ID</th>
+                <th className='col1'>Catcher</th>
                 <th className='col2'>Title</th>
                 <th className='col3'>Employer</th>
                 <th className='col4'>Type</th>

@@ -37,7 +37,7 @@ window.addEventListener('resize', showButton)
     <>
         <nav className="navbar">
             <div className="navbar-container">
-                <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
+                <Link to={`/e-home/${userID}`} className="navbar-logo" onClick={closeMobileMenu}>
                     ERRAND CATCHER<i className="fab fa-typo3"></i>
                 </Link>
                 <div className='menu-icon' onClick={handleClick}>
@@ -45,7 +45,7 @@ window.addEventListener('resize', showButton)
                 </div>
                 <ul className={click ? 'nav-menu active' : 'nav-menu'}>
                   <li className='nav-item'>
-                    <Link to='/e-home' className='nav-links' onClick={closeMobileMenu}>
+                    <Link to={`/e-home/${userID}`} className='nav-links' onClick={closeMobileMenu}>
                       Home
                     </Link>
                   </li>
@@ -55,7 +55,7 @@ window.addEventListener('resize', showButton)
                     </Link>
                   </li>
                   <li className='nav-item'>
-                    <Link to='/applicant' className='nav-links' onClick={closeMobileMenu}>
+                    <Link to={`/applicants/${userID}`} className='nav-links' onClick={closeMobileMenu}>
                       Applicants
                     </Link>
                   </li>
