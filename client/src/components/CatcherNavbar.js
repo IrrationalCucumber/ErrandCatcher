@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import { Link } from 'react-router-dom'
-import { Button } from './Button';
+import { Link, useLocation } from 'react-router-dom'
+import { ButtonSI } from './ButtonSI';
 import './Navbar.css'
 
 
@@ -19,6 +19,10 @@ function CatcherNavbar() {
       setButton(true)
     }
   }
+  const location = useLocation()
+    //pathname to array from
+    //get the id
+    const userID = location.pathname.split("/")[2]
 
   useEffect(() => {
     showButton()
@@ -31,7 +35,7 @@ window.addEventListener('resize', showButton)
     <>
         <nav className="navbar">
             <div className="navbar-container">
-                <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
+                <Link to={`/c-home/${userID}`} className="navbar-logo" onClick={closeMobileMenu}>
                     ERRAND CATCHER<i className="fab fa-typo3"></i>
                 </Link>
                 <div className='menu-icon' onClick={handleClick}>
@@ -39,7 +43,7 @@ window.addEventListener('resize', showButton)
                 </div>
                 <ul className={click ? 'nav-menu active' : 'nav-menu'}>
                   <li className='nav-item'>
-                    <Link to='/c-home' className='nav-links' onClick={closeMobileMenu}>
+                    <Link to={`/c-home/${userID}`} className='nav-links' onClick={closeMobileMenu}>
                       Home
                     </Link>
                   </li>
@@ -59,7 +63,7 @@ window.addEventListener('resize', showButton)
                     </Link>
                   </li>
                 </ul>
-                {button && <Button buttonStyle='btn--outline'>SIGN UP</Button>}
+                {button && <ButtonSI buttonStyle='btn--outline'>SIGN OUT</ButtonSI>}
             </div>
         </nav>
     </>

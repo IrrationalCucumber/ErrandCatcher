@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import CardItem from './CardItem'
 import axios from 'axios'
 //import './Cards.css'
@@ -21,6 +22,10 @@ function Cards() {
     }
     fetchAllCommission()
 }, [])
+  const location = useLocation()
+  //pathname to array from
+  //get the id
+  const userID = location.pathname.split("/")[2]
 
   
   return (
@@ -34,7 +39,7 @@ function Cards() {
                  <CardItem src='images/hr.png'
                  text={Commission.commissionTitle}
                  label={Commission.commissionType}
-                 path={`/view-commission/${Commission.commissionID}`}
+                 path={`/apply-commission/${Commission.commissionID}/${userID}`}
                  />
                  <CardItem src='images/image-test-2.jpg'
                  text='Witness one of the bipedal whom the last of its species'

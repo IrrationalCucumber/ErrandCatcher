@@ -143,6 +143,25 @@ app.post("/commission", (req,res) =>{
     })
 })
 
+//catcher application
+//save to Application table
+//send data to commission table
+app.post("/apply", (req,res) =>{
+    const q = "INSERT INTO application (`catcherID`,`commissionID`, `applicationDate`) VALUES (?)"
+    const values = [
+        req.body.catcherID,
+        req.body.comID,
+        req.body.applicationDate,
+       
+    ];
+    db.query(q,[values], (err,data)=>{
+        if(err) return res.json(err)
+        return res.json("Commission has been posted")
+    })
+})
+
+
+
 //post commission
 //employer
 //send data to commission table

@@ -16,6 +16,7 @@ import EmployerHome from "./pages/EmployerHome"
 import ViewCommission from "./pages/ViewCommission";
 import EmployerCommissions from "./pages/EmployerCommissionList"
 import AdminHome from "./pages/AdminHome";
+import ApplyCommission from "./pages/ApplyCommission";
 
 function App() {
   return (
@@ -37,7 +38,8 @@ function App() {
           <Route path="/e-home/:userID" exact Component={EmployerHome} />
           <Route path="/commissions/:userID" exact Component={EmployerCommissions} />
           <Route path="/c-home/:userID" exact Component={CatcherHome} />
-          <Route path="/view-commission/:commissionID" exact Component={ViewCommission} />
+          <Route path="/view-commission/:commissionID/" exact Component={ViewCommission} />
+          <Route path="/apply-commission/:commissionID/:userID" exact Component={ApplyCommission} />
         </Routes>
         
       </Router>
