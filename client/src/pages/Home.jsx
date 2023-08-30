@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import Navbar from '../components/Navbar';
+import Cards from '../components/Cards';
+import HeroSection from '../components/HeroSection';
 
 
 const Home = () => {
@@ -10,9 +12,11 @@ const Home = () => {
   //const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
   return (
-    <div>
+    <>
       <Navbar />
-    </div>
+      <HeroSection />
+        <Cards />
+    </>
   )
 }
 
