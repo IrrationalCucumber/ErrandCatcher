@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { Button } from './Button';
 import { ButtonSI } from './ButtonSI';
 import './Navbar.css'
+import { ReactComponent as CustomIcon } from '../custom-icon.svg';
+
 
 
 function Navbar() {
@@ -33,7 +35,7 @@ window.addEventListener('resize', showButton)
         <nav className="navbar">
             <div className="navbar-container">
                 <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
-                    ERRAND CATCHER<i className="fab fa-typo3"></i>
+                    ERRAND CATCHER
                 </Link>
                 <div className='menu-icon' onClick={handleClick}>
                   <i className={click ? 'fas fa-times' : 'fas fa-bars'}></i>
@@ -49,10 +51,3 @@ window.addEventListener('resize', showButton)
 }
 
 export default Navbar
-/**
- * <li className='nav-item'>
-                    <Link to='/commission' className='nav-links' onClick={closeMobileMenu}>
-                      Commission
-                    </Link>
-                  </li>
- */

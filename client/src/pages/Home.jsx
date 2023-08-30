@@ -1,6 +1,8 @@
 import React from 'react'
 import Navbar from '../components/Navbar';
 import Cards from '../components/Cards';
+import HeroSection from '../components/HeroSection'
+import Footer from '../components/Footer'
 
 
 
@@ -10,8 +12,9 @@ const Home = () => {
     <>
     <div>
       <Navbar />
-      <img src='images/hr.png' alt="Commission" />
+      <HeroSection></HeroSection>
       <Cards />
+      <Footer />
     </div>
     </>
   )

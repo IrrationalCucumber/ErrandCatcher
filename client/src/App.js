@@ -18,6 +18,8 @@ import EmployerCommissions from "./pages/EmployerCommissionList"
 import AdminHome from "./pages/AdminHome";
 import ApplyCommission from "./pages/ApplyCommission";
 import EmployerApplicants from "./pages/EmployerApplicants";
+import Map from "./pages/CommissionMap";
+import CatcherMap from "./pages/CatcherMap";
 
 function App() {
   return (
@@ -34,7 +36,7 @@ function App() {
           <Route path='/post-commission/:userID' exact Component={PostCommission}/>
           <Route path='/commission-list' exact Component={CommissionList}/>
           <Route path="/update-account/:userID" exact Component={UpdateAccount}/>
-          <Route path="/update-commission/:commissionID" exact Component={UpdateCommission} />
+          <Route path="/update-commission/:commissionID/:userID" exact Component={UpdateCommission} />
           <Route path="/admin-home/:userID" element={<AdminHome />} />
           <Route path="/e-home/:userID" exact Component={EmployerHome} />
           <Route path="/commissions/:userID" exact Component={EmployerCommissions} />
@@ -42,6 +44,8 @@ function App() {
           <Route path="/view-commission/:commissionID/" exact Component={ViewCommission} />
           <Route path="/apply-commission/:commissionID/:userID" exact Component={ApplyCommission} />
           <Route path="/applicants/:userID" exact Component={EmployerApplicants} />
+          <Route path="/map" element={<Map/>} />
+          <Route path="/c-map" element={<CatcherMap/>}/>
         </Routes>
         
       </Router>

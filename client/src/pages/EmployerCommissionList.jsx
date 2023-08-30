@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {Link, useLocation} from 'react-router-dom'
 import axios from 'axios'
-import NavBar from '../components/Navbar.js'
+import NavBar from '../components/EmployerNavbar.js'
 //import "./ash-buttton.css"
 
 const CommissionList = () => {
@@ -98,7 +98,7 @@ const fetchSearchResults = async () => {
                 <td>{Commission.DateCompleted}</td>
                 <td>{Commission.commissionStatus}</td>
                 <button onClick={()=>handleDelete(Commission.commissionID)}>DELETE</button>
-                <button className='update'><Link to={`/update-commission/${Commission.commissionID}`}>View</Link></button>
+                <button className='update'><Link to={`/update-commission/${Commission.commissionID}/${userID}`}>View</Link></button>
             </tr>
         ))}
             </tbody>

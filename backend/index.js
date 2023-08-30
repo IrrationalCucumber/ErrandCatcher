@@ -131,7 +131,7 @@ app.post("/user", (req,res)=>{
 })
 //send data to commission table
 app.post("/commission", (req,res) =>{
-    const q = "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionDeadline`, `commissionLocation`,`commissionType`, `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`) VALUES (?)"
+    const q = "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionDeadline`, `commissionLocation`,`commissionType`, `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`, `commissionLong`, `commissionLat`) VALUES (?)"
     const values = [
         req.body.empID,
         req.body.comTitle,
@@ -145,6 +145,8 @@ app.post("/commission", (req,res) =>{
         req.body.DatePosted,
         // req.body.DateCompleted,
         req.body.Contactno,
+        req.body.comLong,
+        req.body.comLat,
        
     ];
     db.query(q,[values], (err,data)=>{
@@ -218,7 +220,7 @@ app.get("/commission/:commissionID", (req, res) => {
 //update commission
 app.put("/update-commission/:commissionID", (req, res)=>{
     const commissionID= req.params.commissionID;
-    const q = "UPDATE commission SET `commissionTitle` = ?, `commissionDeadline` = ?, `commissionLocation` = ?,`commissionType` = ?, `commissionDesc` = ?, `commissionPay` = ?, `catcherID` =?, `ContactNumber` = ? WHERE commissionID = ?"
+    const q = "UPDATE commission SET `commissionTitle` = ?, `commissionDeadline` = ?, `commissionLocation` = ?,`commissionType` = ?, `commissionDesc` = ?, `commissionPay` = ?, `ContactNumber` = ? WHERE commissionID = ?"
     //const q = "UPDATE commission SET `commissionTitle` = ? WHERE `commissionID` = ?"
     const values = [
         //req.body.comEmployer,
@@ -229,7 +231,7 @@ app.put("/update-commission/:commissionID", (req, res)=>{
         req.body.comDescription,
         req.body.comPay,
         //req.body.comStatus,
-        req.body.catcherID,
+        //req.body.catcherID,
         req.body.ContactNo,
        
     ];

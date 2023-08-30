@@ -14,7 +14,7 @@ const UpdateCommission = () => {
     comDescription:"",
     comPay:"",
     comStatus:"",
-    catcherID:"",
+    //catcherID:"",
     //DatePosted:"",
     DateCompleted:"",
     ContactNo:"",
@@ -26,6 +26,7 @@ const UpdateCommission = () => {
     //get the id
     const commissionID = location.pathname.split("/")[2]
     console.log(location.pathname.split("/")[2])
+    const userID = location.pathname.split("/")[3]
     
     //handle changes 
     const handleChange = (e) => {
@@ -93,7 +94,7 @@ const UpdateCommission = () => {
             try{
                 //account.dateCreated = getCurrentDate();
                 await(axios.put("http://localhost:8800/update-commission/"+ commissionID, commission))
-                navigate("/commission-list")
+                navigate(`/commissions/${userID}`)
             }catch(err){
                 console.log(err)
             }
