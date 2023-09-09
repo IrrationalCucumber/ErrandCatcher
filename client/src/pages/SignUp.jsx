@@ -77,12 +77,6 @@ const SignUp = () => {
     console.log(account)
   return (
     <div className='from'>
-      <nav>
-        <Link to='/accounts'>
-          BACK 
-        </Link>
-        <Link to='/'> HOME</Link>
-      </nav>
       <p className='em'><i>{errorMessage}</i></p>
       <h1>SIGN UP</h1>
       <input className={errorMessage ? 'error' : ''} type="text" placeholder='username' onChange={handleChange} name='username'/>
