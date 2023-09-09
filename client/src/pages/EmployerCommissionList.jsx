@@ -66,6 +66,8 @@ const fetchSearchResults = async () => {
         commissionList={`/commissions/${userID}`}
         page3="APPLICANTS"
         applicants={`/applicants/${userID}`}
+        map={`/map/${userID}`}
+        button="SIGN OUT"
       />
       <h1>Commission List</h1>
       <div className="commissions">
