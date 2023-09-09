@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-import './Error.css'; // Import your custom CSS for styling
+//import './Error.css'; // Import your custom CSS for styling
 
 const SignIn = () => {
   const [username, setUsername] = useState('');
@@ -62,6 +62,9 @@ const SignIn = () => {
       />
       
       <button onClick={handleClick}>Sign In</button>
+      <button>
+          <Link to='/'>Submit</Link>
+      </button>
       <p><i>Don't have an Account? Sign-up <Link to="/sign-up">here!</Link></i></p>
     </div>
   );

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom';
 import './Error.css'
 
 const SignUp = () => {
@@ -76,40 +76,92 @@ const SignUp = () => {
 
     console.log(account)
   return (
-    <div className='from'>
-      <nav>
-        <Link to='/accounts'>
-          BACK 
-        </Link>
-        <Link to='/'> HOME</Link>
-      </nav>
-      <p className='em'><i>{errorMessage}</i></p>
-      <h1>SIGN UP</h1>
-      <input className={errorMessage ? 'error' : ''} type="text" placeholder='username' onChange={handleChange} name='username'/>
-      <input className={errorMessage ? 'error' : ''} type="password" placeholder='password' onChange={handleChange} name='password'/>
-      <input className={errorMessage ? 'error' : ''} type="text" placeholder='first name' onChange={handleChange} name='fname'/>
-      <input className={errorMessage ? 'error' : ''} type="text" placeholder='last name' onChange={handleChange} name='lname'/>
-      <label htmlFor="">
-        Gender
-        <select name='gender' onChange={handleChange} value={account.gender}>
-          <option value="">Choose gender....</option>
-          <option value="male" >Male</option>
-          <option value="female">Female</option>
-        </select>
-      </label>
-      <input className={errorMessage ? 'error' : ''} type="text" placeholder='contact number' onChange={handleChange} name='contact'/>
-      <input className={errorMessage ? 'error' : ''} type="number" placeholder='Age' onChange={handleChange} name='age'/>
-      
-      <input className={errorMessage ? 'error' : ''} type="email" placeholder='Email address' onChange={handleChange} name='email'/>
-      <input className={errorMessage ? 'error' : ''} type="text" placeholder='Address' onChange={handleChange} name='address'/>
-      <select name='type' onChange={handleChange} value={account.type}>
-        <option value="">Choose Type</option>
-        <option vlaue="Employer">Employer</option>
-        <option value="Catcher">Catcher</option>
-      </select>
-
-      <button onClick={handleClick}>Sign Up</button>
-      <p><i>Already have an Account?<Link to="/sign-in">Sign in here!</Link></i></p>
+    <div className='container'>
+    <input type='checkbox' id='flip' />
+    <div className='cover'>
+      <div className='front'>
+      <img src="images/tawo.png" alt='' />
+      </div>
+      <div className='back'>
+        <img className='ErrandCatcher' src="" alt=''/>
+      </div>
+    </div>
+    <div>
+        <div className='form-content'>
+          <div>
+            <div>Employer</div>
+            <form action='#'>
+              <div>
+                <div>
+                  
+                  <input type='text' placeholder='Email Address' required /> 
+                  <br />
+                  <input type='text' placeholder='Username' required />
+                  <br />
+                  <input type='text' placeholder='First Name' />
+                  <br />
+                  <input type='text' placeholder='Last Name' />
+                  <br />
+                  <input type='text' placeholder='Birthday' />
+                  <br />
+                  <input
+          type='number' // Use 'number' type for age input
+          placeholder='Age'
+          value={age} // Bind the value to the state variable
+          onChange={handleAgeChange} // Handle changes to the input
+        />
+                  <br />
+                  <input type='text' placeholder='Address' />
+                  <br />
+                  <input type='password' placeholder='Enter Password' required />
+                  <br />
+                  <input type='password' placeholder='Confirm Password' required />
+                  <br />
+                  <button>
+                    <Link to='/Sign-in'>Submit</Link>
+                  </button>
+                  <div>
+                    I am a <label htmlFor="flip">Catcher</label>
+                    <p><i>Sign-in <Link to="/sign-in">here!</Link></i></p>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div>
+            <div>Catcher</div>
+            <form action='#'>
+              <div>
+                <div>
+                  <input type='text' placeholder='Email Address' required />
+                  <br />
+                  <input type='text' placeholder='Username' required />
+                  <br />
+                  <input type='text' placeholder='First Name' />
+                  <br />
+                  <input type='text' placeholder='Last Name' />
+                  <br />
+                  <input type='number' placeholder='Age' />
+                  <br />
+                  <input type='text' placeholder='Address' />
+                  <br />
+                  <input type='password' placeholder='Enter Password' required />
+                  <br />
+                  <input type='password' placeholder='Confirm Password' required />
+                  <br />
+                  <button>
+                    <Link to='/Sign-in'>Submit</Link>
+                  </button>
+                  <div>
+                    Switch to <label htmlFor="flip">Employer</label>
+                    <p><i>Sign-in <Link to="/sign-in">here!</Link></i></p>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
