@@ -66,7 +66,7 @@ window.addEventListener('resize', showButton)
                     </Link>
                   </li>
                 </ul>
-                {button && <Button page='/sign-in' buttonStyle='btn--outline'>SIGN OUT</Button>}
+                {button && <Button page={props.pageButton} buttonStyle='btn--outline'>{props.button}</Button>}
             </div>
         </nav>
     </>
