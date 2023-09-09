@@ -59,7 +59,14 @@ const fetchSearchResults = async () => {
     //need front end
   return (
     <div>
-      <NavBar />
+      <NavBar
+        page1="HOME"
+        home={`/e-home/${userID}`}
+        page2="COMMISSIONS"
+        commissionList={`/commissions/${userID}`}
+        page3="APPLICANTS"
+        applicants={`/applicants/${userID}`}
+      />
       <h1>Commission List</h1>
       <div className="commissions">
           <div className='search'>

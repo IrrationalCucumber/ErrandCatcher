@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Button } from './Button';
+import { Button } from './NavButton';
 import './Navbar.css'
 
 
-function EmployerNavbar() {
+function EmployerNavbar(props) {
   //change the state of the menu
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
@@ -29,7 +29,6 @@ window.addEventListener('resize', showButton)
 
 //carry id to other page
   const location = useLocation()
-
     const userID = location.pathname.split("/")[2]
     //pathname to array from
 
@@ -37,7 +36,7 @@ window.addEventListener('resize', showButton)
     <>
         <nav className="navbar">
             <div className="navbar-container">
-                <Link to={`/e-home/${userID}`} className="navbar-logo" onClick={closeMobileMenu}>
+                <Link to={props.home} className="navbar-logo" onClick={closeMobileMenu}>
                     ERRAND CATCHER<i className="fab fa-typo3"></i>
                 </Link>
                 <div className='menu-icon' onClick={handleClick}>
@@ -45,18 +44,18 @@ window.addEventListener('resize', showButton)
                 </div>
                 <ul className={click ? 'nav-menu active' : 'nav-menu'}>
                   <li className='nav-item'>
-                    <Link to={`/e-home/${userID}`} className='nav-links' onClick={closeMobileMenu}>
-                      Home
+                    <Link to={props.home} className='nav-links' onClick={closeMobileMenu}>
+                     {props.page1}
                     </Link>
                   </li>
                   <li className='nav-item'>
-                    <Link to={`/commissions/${userID}`} className='nav-links' onClick={closeMobileMenu}>
-                      Commission
+                    <Link to={props.commissionList} className='nav-links' onClick={closeMobileMenu}>
+                      {props.page2}
                     </Link>
                   </li>
                   <li className='nav-item'>
-                    <Link to={`/applicants/${userID}`} className='nav-links' onClick={closeMobileMenu}>
-                      Applicants
+                    <Link to={props.applicants} className='nav-links' onClick={closeMobileMenu}>
+                      {props.page3}
                     </Link>
                   </li>
                   <li className='nav-item'>
@@ -65,7 +64,7 @@ window.addEventListener('resize', showButton)
                     </Link>
                   </li>
                 </ul>
-                {button && <Button buttonStyle='btn--outline'>SIGN UP</Button>}
+                {button && <Button page='/sign-in' buttonStyle='btn--outline'>SIGN OUT</Button>}
             </div>
         </nav>
     </>

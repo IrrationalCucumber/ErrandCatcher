@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { Link } from 'react-router-dom'
-import { Button } from './Button';
+import { Button } from './NavButton';
 import './Navbar.css'
 
 
@@ -36,7 +35,7 @@ window.addEventListener('resize', showButton)
                 <div className='menu-icon' onClick={handleClick}>
                   <i className={click ? 'fas fa-times' : 'fas fa-bars'}></i>
                 </div>
-                {/* {button && <Button buttonStyle='btn--outline'>SIGN UP</Button>} */}
+                {button && <Button page='/sign-in' buttonStyle='btn--outline'>SIGN OUT</Button>}
             </div>
         </nav>
     </>

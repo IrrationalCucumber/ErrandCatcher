@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from './Button'
+import { Button } from './NavButton'
 import { ButtonMap } from './ButtonMap'
 import './HeroSection.css'
 import '../App.css'
