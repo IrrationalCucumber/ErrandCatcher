@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 //import Navbar from '../components/Navbar';
 import { useNavigate, Link } from 'react-router-dom';
-import tawo from '../imgs/tawo.png';
 import './SignUp.css';
 
 const SignUp = () => {
@@ -11,7 +10,7 @@ const SignUp = () => {
     <input type='checkbox' id='flip' />
     <div className='cover'>
       <div className='front'>
-      <img src={tawo} alt="Tawo" />
+      <img src='/images/tawo.png' alt="Tawo" />
       </div>
       <div className='back'>
         <img className='ErrandCatcher' src="" alt=''/>
