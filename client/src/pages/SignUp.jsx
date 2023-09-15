@@ -100,15 +100,6 @@ const SignUp = () => {
             setErrorMessage('Missing fields.Please try again.');
             return;
           }
-          // if (isChecked) {
-          //   // Checkbox is checked, store one value
-          //   account.type= 'Catcher'
-          // } else {
-          //   // Checkbox is not checked, store another value
-          //   account.type= 'Emploeyer'
-          // }
-            //const updatedAccount = { ...account };
-            //refresh the page when button is clicked
             e.preventDefault()
             try{
                 account.dateCreated = getCurrentDate();
@@ -163,7 +154,7 @@ const SignUp = () => {
                     <br />
                     <p className='em'><i>{errorMessage}</i></p>
                     <div className="button1">
-                      <button onClick={handleClick}>Sign Up</button>
+                      <button type="button" onClick={handleClick}>Sign Up</button>
                     </div>
                     <div className="text sign-up-text">
                       I am a <label htmlFor="flip">Catcher</label>
@@ -197,7 +188,7 @@ const SignUp = () => {
                     <br />
                     <p className='em'><i>{errorMessage}</i></p>
                     <div className="button1">
-                      <button onClick={handleClick}>Sign Up</button>
+                      <button type="button" onClick={handleClick}>Sign Up</button>
                     </div>
                     <div className="text sign-up-text">
                       Switch to <label htmlFor="flip">Employer</label>

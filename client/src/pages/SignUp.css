@@ -1,9 +1,15 @@
 shesh{
-    position: center;
+    position: flex;
+    flex-direction: column;
     padding-left: 200px;
     padding-top: 200px;
   }
   
+  label{
+    color: blue;
+    font-weight: bold;
+  }
+
   .container {
     position: relative;
     max-width: 850px;
