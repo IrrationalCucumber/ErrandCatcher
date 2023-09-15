@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
 import NavBar from '../components/AdminNavbar.js'
-//import "./ash-buttton.css"
+import "./CommissionList.css"
 
 const CommissionList = () => {
     const [commissions, setCommissions] = useState([])
@@ -72,40 +72,41 @@ const CommissionList = () => {
                 <i className='fa fa-search'></i>
               </button>
           </div>
-          <thead>
+          <div className="commission">
+            <table>
+            <thead>
               <tr>
-                <th className='col1'>ID</th>
-                <th className='col2'>Title</th>
-                <th className='col3'>Employer</th>
-                <th className='col4'>Type</th>
-                <th className='col5'>Commission Pay</th>
-                <th className='col6'>Date Posted</th>
-                <th className='col7'>Date Completed</th>
-                <th className='col8'>Status</th>
+                <th className='colu1'>ID</th>
+                <th className='colu2'>Title</th>
+                <th className='colu3'>Employer</th>
+                <th className='colu4'>Type</th>
+                <th className='colu5'>Commission Pay</th>
+                <th className='colu6'>Date Posted</th>
+                <th className='colu7'>Date Completed</th>
+                <th className='colu8'>Status</th>
+                <th className='colu9'></th>
               </tr>
             </thead>
             <tbody>
               {commissions.map(Commission=>(
             <tr className="commission" key={Commission.commissionID}>
                 
-                <td>{Commission.commissionID}</td>
-                <td>{Commission.commissionTitle}</td>
-                <td>{Commission.employerID}</td>
-                <td>{Commission.commissionType}</td>
-                <td>{Commission.commissionPay}</td>
-                <td>{Commission.DatePosted}</td>
-                <td>{Commission.DateCompleted}</td>
-                <td>{Commission.commissionStatus}</td>
-                <button onClick={()=>handleDelete(Commission.commissionID)}>DELETE</button>
-                <button className='update'><Link to={`/update-commission/${Commission.commissionID}`}>View</Link></button>
+                <td className='colu1'>{Commission.commissionID}</td>
+                <td className='colu2'>{Commission.commissionTitle}</td>
+                <td className='colu3'>{Commission.employerID}</td>
+                <td className='colu4'>{Commission.commissionType}</td>
+                <td className='colu5'>{Commission.commissionPay}</td>
+                <td className='colu6'>{Commission.DatePosted}</td>
+                <td className='colu7'>{Commission.DateCompleted}</td>
+                <td className='colu8'>{Commission.commissionStatus}</td>
+                <td><button onClick={()=>handleDelete(Commission.commissionID)}>DELETE</button>
+                <button className='update'><Link to={`/update-commission/${Commission.commissionID}`}>View</Link></button></td>
             </tr>
         ))}
             </tbody>
-        
+            </table>
+          </div> 
       </div>
-      <button>
-        <Link to='/post-commission'>Add Commission</Link>
-        </button>
     </div>
   )
 }

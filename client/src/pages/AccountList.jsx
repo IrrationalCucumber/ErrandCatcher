@@ -54,17 +54,15 @@ const AccountList = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <button type='submit' onClick={fetchSearchResults}>
-              <i className='fa fa-search' place></i>
-          </button>
+          
           <select name="type" id="">
-            <option value=""></option>
+            <option value="">filter by type...</option>
             <option value="employer">employer</option>
             <option value="catcher">Catcher</option>
             <option value="admin">Admin</option>
           </select>
           <select name="status" id="">
-            <option value=""></option>
+            <option value="">filter by status...</option>
             <option value="verified">Verified</option>
             <option value="unverified">Unverified</option>
             <option value="Suspended">Suspended</option>
@@ -81,6 +79,7 @@ const AccountList = () => {
                 <th className='col5'>Type</th>
                 <th className='col6'>Date Created</th>
                 <th className='col7'>Status</th>
+                <th className='col8'></th>
               </tr>
             </thead>
             <tbody>
@@ -99,9 +98,6 @@ const AccountList = () => {
             </tbody>
           </table>
       </div>
-      <button>
-        <Link to='/add'>Add account</Link>
-        </button>
     </div>
   )
 }

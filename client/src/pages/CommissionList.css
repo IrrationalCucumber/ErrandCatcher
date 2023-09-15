@@ -1,0 +1,50 @@
+table{
+    border-style: none;
+    position: absolute;
+    padding-right: 30px;
+    padding-top: 20px;
+    
+}
+
+h1{
+    padding-top: 30px;
+    padding-left: 30px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 35px;
+}
+
+.search{
+    margin-left: 0;
+    padding-top: 30px;
+    padding-left: 30px;
+}
+
+.search input[type=text]{
+    padding: 6px;
+    margin-top: 8px;
+    font-size: 12px;
+    border: none;
+    background-color: rgb(232, 234, 231);
+}
+
+tr, th, td{
+    background-color: #ccc;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 12px;
+    border-style: none;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.colu2, .colu3, .colu9{
+    width: 250px;
+}
+
+.colu7{
+    width: 150px;
+}
+
+.colu8, .colu1, .colu4, .colu5, .colu6{
+    width: 100px;
+}   
