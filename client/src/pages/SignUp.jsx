@@ -42,7 +42,8 @@ const SignUp = () => {
         };
         
         //handle state of error message
-        const [errorMessage, setErrorMessage] = useState('')
+        const [employerErrorMessage, setEmployerErrorMessage] = useState('');
+        const [catcherErrorMessage, setCatcherErrorMessage] = useState('');
         //state for type checkbox
         const [isChecked, setIsChecked] = useState(false);
         //handle the state event
@@ -97,7 +98,11 @@ const SignUp = () => {
           //if fileds are empty
           //error message
           if (!account.username || !account.password || !account.email || !account.fname || !account.lname || !account.contact || !account.age || !account.bday || !account.gender || !account.type || !account.address) {
-            setErrorMessage('Missing fields.Please try again.');
+            if (account.type === 'Employer') {
+              setEmployerErrorMessage('Missing fields. Please try again.');
+            } else {
+              setCatcherErrorMessage('Missing fields. Please try again.');
+            }
             return;
           }
             e.preventDefault()
@@ -137,22 +142,22 @@ const SignUp = () => {
                 <div className="input-boxes">
                   <div className='input-box'>
                     
-                    <input className={errorMessage ? 'error' : ''} type="text" placeholder='Username' onChange={handleChange} name='username'/>
-                    <input className={errorMessage ? 'error' : ''} type="password" placeholder='Password' onChange={handleChange} name='password'/>
-                    <input className={errorMessage ? 'error' : ''} type="text" placeholder='First name' onChange={handleChange} name='fname'/>
-                    <input className={errorMessage ? 'error' : ''} type="text" placeholder='Last name' onChange={handleChange} name='lname'/>
+                    <input className={employerErrorMessage ? 'error' : ''} type="text" placeholder='Username' onChange={handleChange} name='username'/>
+                    <input className={employerErrorMessage ? 'error' : ''} type="password" placeholder='Password' onChange={handleChange} name='password'/>
+                    <input className={employerErrorMessage ? 'error' : ''} type="text" placeholder='First name' onChange={handleChange} name='fname'/>
+                    <input className={employerErrorMessage ? 'error' : ''} type="text" placeholder='Last name' onChange={handleChange} name='lname'/>
                     <select name='gender' onChange={handleChange} value={account.gender}>
                       <option value="">Choose gender....</option>
                       <option value="male" >Male</option>
                       <option value="female">Female</option>
                     </select>
-                    <input className={errorMessage ? 'error' : ''} type="text" placeholder='contact number' onChange={handleChange} name='contact'/>
-                    <input className={errorMessage ? 'error' : ''} type="date" onChange={handleChange} name='bday'/>  
-                    <input className={errorMessage ? 'error' : ''} type="number" placeholder='Age' onChange={handleChange} name='age'/>     
-                    <input className={errorMessage ? 'error' : ''} type="email" placeholder='Email address' onChange={handleChange} name='email'/>
-                    <input className={errorMessage ? 'error' : ''} type="text" placeholder='Address' onChange={handleChange} name='address'/>
+                    <input className={employerErrorMessage ? 'error' : ''} type="text" placeholder='contact number' onChange={handleChange} name='contact'/>
+                    <input className={employerErrorMessage ? 'error' : ''} type="date" onChange={handleChange} name='bday'/>  
+                    <input className={employerErrorMessage ? 'error' : ''} type="number" placeholder='Age' onChange={handleChange} name='age'/>     
+                    <input className={employerErrorMessage ? 'error' : ''} type="email" placeholder='Email address' onChange={handleChange} name='email'/>
+                    <input className={employerErrorMessage ? 'error' : ''} type="text" placeholder='Address' onChange={handleChange} name='address'/>
                     <br />
-                    <p className='em'><i>{errorMessage}</i></p>
+                    <p className='em'><i>{employerErrorMessage}</i></p>
                     <div className="button1">
                       <button type="button" onClick={handleClick}>Sign Up</button>
                     </div>
@@ -172,21 +177,21 @@ const SignUp = () => {
               <form action='#'>
                 <div className="input-boxes">
                   <div className='input-box'>
-                  <input className={errorMessage ? 'error' : ''} type="text" placeholder='Username' onChange={handleChange} name='username'/>
-                    <input className={errorMessage ? 'error' : ''} type="password" placeholder='Password' onChange={handleChange} name='password'/>
-                    <input className={errorMessage ? 'error' : ''} type="text" placeholder='First name' onChange={handleChange} name='fname'/>
-                    <input className={errorMessage ? 'error' : ''} type="text" placeholder='Last name' onChange={handleChange} name='lname'/>
+                  <input className={catcherErrorMessage ? 'error' : ''} type="text" placeholder='Username' onChange={handleChange} name='username'/>
+                    <input className={catcherErrorMessage ? 'error' : ''} type="password" placeholder='Password' onChange={handleChange} name='password'/>
+                    <input className={catcherErrorMessage ? 'error' : ''} type="text" placeholder='First name' onChange={handleChange} name='fname'/>
+                    <input className={catcherErrorMessage ? 'error' : ''} type="text" placeholder='Last name' onChange={handleChange} name='lname'/>
                     <select name='gender' onChange={handleChange} value={account.gender}>
                       <option value="">Choose gender....</option>
                       <option value="male" >Male</option>
                       <option value="female">Female</option>
                     </select>
-                    <input className={errorMessage ? 'error' : ''} type="text" placeholder='contact number' onChange={handleChange} name='contact'/>
-                    <input className={errorMessage ? 'error' : ''} type="number" placeholder='Age' onChange={handleChange} name='age'/>     
-                    <input className={errorMessage ? 'error' : ''} type="email" placeholder='Email address' onChange={handleChange} name='email'/>
-                    <input className={errorMessage ? 'error' : ''} type="text" placeholder='Address' onChange={handleChange} name='address'/>
+                    <input className={catcherErrorMessage ? 'error' : ''} type="text" placeholder='contact number' onChange={handleChange} name='contact'/>
+                    <input className={catcherErrorMessage ? 'error' : ''} type="number" placeholder='Age' onChange={handleChange} name='age'/>     
+                    <input className={catcherErrorMessage ? 'error' : ''} type="email" placeholder='Email address' onChange={handleChange} name='email'/>
+                    <input className={catcherErrorMessage ? 'error' : ''} type="text" placeholder='Address' onChange={handleChange} name='address'/>
                     <br />
-                    <p className='em'><i>{errorMessage}</i></p>
+                    <p className='em'><i>{catcherErrorMessage}</i></p>
                     <div className="button1">
                       <button type="button" onClick={handleClick}>Sign Up</button>
                     </div>
