@@ -1,9 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 import maplibregl from 'maplibre-gl';
-//import 'maplibre-gl/dist/maplibre-gl.css';
+import 'maplibre-gl/dist/maplibre-gl.css';
 import axios from 'axios';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-//import './PostCommission.css'; // Import your CSS file
+import './PostCommission.css'; // Import your CSS file
 
 const PostCommission = () => {
     const [commission, setCommission] = useState({
@@ -146,6 +146,7 @@ const PostCommission = () => {
   }, [currentLocationMarker]);
 
     return (
+
         <div className='backhome'>
             <nav>
                 <Link to='/accounts'>BACK</Link>
@@ -153,18 +154,17 @@ const PostCommission = () => {
             </nav>
             <h1>Post Commission</h1>
             <div className='in'>
-                <label>
-                    Commission Title
-                    <input type="text" placeholder='Commission Title' onChange={handleChange} name='comTitle'/>
+                <label className='pc'>Commission Title<input type="text" placeholder='Commission Title' onChange={handleChange} name='comTitle'/>
                 </label> 
                 <br />
-                <label>Deadline
-                    <input type="date" placeholder='Deadline' onChange={handleChange} name='comDeadline'/>
+                <label className='pc'>Deadline<input type="date" placeholder='Deadline' onChange={handleChange} name='comDeadline'/>
                 </label>
-                <br />Location
-                <input type="text" placeholder='Location' onChange={handleChange} name='comLocation'/>
                 <br />
-                <label htmlFor="">
+                <label className='pc'>Location
+                    <input type="text" placeholder='Location' onChange={handleChange} name='comLocation'/>
+                </label>
+                <br />
+                <label className='pc' htmlFor="">
                     Commission Type
                     <select name='comType' onChange={handleChange} value={commission.comType}>
                         <option value="">Choose type....</option>
@@ -175,16 +175,23 @@ const PostCommission = () => {
                     </select>
                 </label>
                 <br />
-                <textarea cols='20' rows='11' type="text" placeholder='Description' onChange={handleChange} name='comDescription'/>
+                <div class="textarea-container">
+                <label className='pc'> Description
+                    <textarea cols='20' rows='11' type="text" placeholder='Description' onChange={handleChange} name='comDescription'/>
+                </label>
+                </div>
                 <br />
-                <label>
+                <label className='pc'>
                     Amount: ₱
                     <input type='number' placeholder='0.00' onChange={handleChange} name='comPay'/>
                 </label>
-                <input type="tel" placeholder='Contact Number' onChange={handleChange} name='Contactno'/>
+                <br />
+                <label className='pc'>Contact Number
+                    <input type="tel" placeholder='Contact Number' onChange={handleChange} name='Contactno'/>
+                </label>
                 <br />
                 <div className="map-post-wrap">
-                 <div ref={mapContainer} className="map" />
+                    <div ref={mapContainer} className="map" />
                 </div>
                 <button onClick={handleAddMarkerClick}>Add Marker</button>
                 <label>

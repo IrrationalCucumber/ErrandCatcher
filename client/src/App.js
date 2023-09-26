@@ -33,7 +33,7 @@ function App() {
           <Route path="/sign-up" exact Component={SignUp}/>
           <Route path='/profile' exact Component={Profile}/>
           <Route path='/add' exact Component={AddAccount}/>
-          <Route path='/post-commission/:userID' exact Component={PostCommission}/>
+          <Route path='/post-commission' exact Component={PostCommission}/>
           <Route path='/commission-list' exact Component={CommissionList}/>
           <Route path="/update-account/:userID" exact Component={UpdateAccount}/>
           <Route path="/update-commission/:commissionID/:userID" exact Component={UpdateCommission} />

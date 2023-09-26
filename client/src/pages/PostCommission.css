@@ -1,21 +1,84 @@
-.in{
-    flex: 1;
-    flex-direction: column;
-    justify-content: center;
-   
+h1{
+  padding-left: 30px;
+  padding-bottom: 30px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
-div.in{
-    position: relative;
-    width: 369px;
-    height: 200px;
-    top: 100px;
-    left: 560px;
-    line-height: 1.5;
+
+.pc{
+  padding-left: 30px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 
-.backhome{
- background-color: lightblue;
+.backhome .in {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
+  margin-top: 20px;
+}
 
+.backhome .in label {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+}
 
+.backhome .in input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+}
+
+.backhome .in textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+}
+
+.backhome .in select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.backhome .in button {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.backhome .in .textarea-container {
+  height: 100px;
+}
+
+.backhome .in .map-post-wrap {
+  width: 100%;
+  height: 300px;
+  margin-bottom: 20px;
+}
+
+.backhome .in .map-post-wrap .map {
+  width: 100%;
+  height: 100%;
+}
+
+.backhome .in .map-post-wrap button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
 }
