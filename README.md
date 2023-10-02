@@ -17,3 +17,6 @@ Trisha Mae Sasing
 
 
 Adrean Paul Soroño
+
+After cloning, perform 'npm install' on the directory.
+Perform Pull Request on 'qa' branch if task is done.
