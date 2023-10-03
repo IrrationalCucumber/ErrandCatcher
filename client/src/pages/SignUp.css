@@ -1,7 +1,10 @@
-shesh{
-    position: center;
-    padding-left: 200px;
-    padding-top: 200px;
+.body{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 20px 30px 20px;
   }
   
   .container {
