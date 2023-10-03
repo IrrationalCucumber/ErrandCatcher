@@ -130,3 +130,15 @@
    margin-right: 11px;
    margin-left: 10px;
   }
+
+  /* Sign in design */
+  .si{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 20px 30px 20px;
+  }
+
+  

@@ -1,51 +1,74 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-  import { useNavigate, Link } from 'react-router-dom';
-//import './Error.css'; // Import your custom CSS for styling
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
+import "./SignUp.css";
+import "./Error.css"; // Import your custom CSS for styling
 
 const SignIn = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [userID, setUserID] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-
+  const [username, setUsername] = useState(""); //username
+  const [password, setPassword] = useState(""); //passwod
+  const [userID, setUserID] = useState(""); //var for id
+  const [errorMessage, setErrorMessage] = useState(""); //error message
+  const [rememberMe, setRememberMe] = useState(false); //remember me function
+  //remeber me function
+  const handleRememberMeChange = (e) => {
+    setRememberMe(e.target.checked);
+  };
+  //go-to-page function
   const navigate = useNavigate();
 
   const handleClick = async () => {
+    //error handling
     if (!username || !password) {
-      setErrorMessage('Please fill in both username and password.');
+      setErrorMessage("Please fill in both username and password.");
       return;
     }
 
     try {
-      const res = await axios.get('http://localhost:8800/sign-in', {
+      const res = await axios.get("http://localhost:8800/sign-in", {
         params: { username: username, password: password },
       });
 
       const user = res.data[0];
-
+      // check user type
       if (user) {
         setUserID(user.userID);
-        if (user.accountType === 'Employer') {
+        if (user.accountType === "Employer") {
           navigate(`/e-home/${user.userID}`);
-        } else if (user.accountType === 'admin') {
+        } else if (user.accountType === "admin") {
           navigate(`/admin-home/${user.userID}`);
-        } else if (user.accountType === 'Catcher') {
+        } else if (user.accountType === "Catcher") {
           navigate(`/c-home/${user.userID}`);
         }
       } else {
-        setErrorMessage('Invalid password/username');
+        setErrorMessage("Invalid password/username");
+      }
+      //handle me function
+      if (rememberMe) {
+        localStorage.setItem("rememberMe", "true");
+      } else {
+        localStorage.removeItem("rememberMe");
       }
     } catch (err) {
       console.log(err);
     }
   };
+  //handle rember me if check
+  useEffect(() => {
+    const isRemembered = localStorage.getItem("rememberMe");
+    if (isRemembered) {
+      // Set the checkbox state to true
+      setRememberMe(true);
+    }
+  }, []);
 
   return (
-    <div>
-      <p className='em'><i>{errorMessage}</i></p>
+    <div className="si">
+      <p className="em">
+        <i>{errorMessage}</i>
+      </p>
       <input
-        className={errorMessage ? 'error' : ''}
+        className={errorMessage ? "error" : "in"}
         name="username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
@@ -53,17 +76,31 @@ const SignIn = () => {
         placeholder="Username"
       />
       <input
-        className={errorMessage ? 'error' : ''}
+        className={errorMessage ? "error" : "in"}
         name="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         type="password"
         placeholder="Password"
       />
-      
+      <br />
+      <label htmlFor="rememberMe">
+        Remember Me
+        <input
+          type="checkbox"
+          id="rememberMe"
+          checked={rememberMe}
+          onChange={handleRememberMeChange}
+        />
+      </label>
+
       <button onClick={handleClick}>Sign In</button>
 
-      <p><i>Don't have an Account? Sign-up <Link to="/sign-up">here!</Link></i></p>
+      <p>
+        <i>
+          Don't have an Account? Sign-up <Link to="/sign-up">here!</Link>
+        </i>
+      </p>
     </div>
   );
 };
