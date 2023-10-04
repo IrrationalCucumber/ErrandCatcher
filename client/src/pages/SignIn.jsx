@@ -64,43 +64,47 @@ const SignIn = () => {
 
   return (
     <div className="si">
-      <p className="em">
-        <i>{errorMessage}</i>
-      </p>
-      <input
-        className={errorMessage ? "error" : "in"}
-        name="username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        type="text"
-        placeholder="Username"
-      />
-      <input
-        className={errorMessage ? "error" : "in"}
-        name="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        type="password"
-        placeholder="Password"
-      />
-      <br />
-      <label htmlFor="rememberMe">
-        Remember Me
+      <div className="cont">
+        <p className="em">
+          <i>{errorMessage}</i>
+        </p>
         <input
-          type="checkbox"
-          id="rememberMe"
-          checked={rememberMe}
-          onChange={handleRememberMeChange}
+          className={errorMessage ? "error" : "in"}
+          name="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          type="text"
+          placeholder="Username"
         />
-      </label>
+        <input
+          className={errorMessage ? "error" : "in"}
+          name="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          type="password"
+          placeholder="Password"
+        />
+        <br />
+        <label className="rem" htmlFor="rememberMe">
+          Remember&nbsp;Me
+          <input
+            type="checkbox"
+            id="rememberMe"
+            checked={rememberMe}
+            onChange={handleRememberMeChange}
+          />
+        </label>
 
-      <button onClick={handleClick}>Sign In</button>
+        <button className="in" onClick={handleClick}>
+          Sign In
+        </button>
 
-      <p>
-        <i>
-          Don't have an Account? Sign-up <Link to="/sign-up">here!</Link>
-        </i>
-      </p>
+        <p>
+          <i>
+            Don't have an Account? Sign-up <Link to="/sign-up">here!</Link>
+          </i>
+        </p>
+      </div>
     </div>
   );
 };

@@ -132,13 +132,41 @@
   }
 
   /* Sign in design */
-  .si{
+  .si {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 30px 20px 30px 20px;
+  }
+  
+  .cont {
     position: relative;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    padding: 30px 20px 30px 20px;
+    padding: 150px 30px 150px 30px;
   }
+  
+  .in {
+    margin: 10px;
+  }
+  
+  .rem {
+    padding: 0;
+    margin: 5px 0; /* Adjust margin for spacing between checkbox and label */
+    display: flex;
+    flex-direction: center;
+    align-items: center; /* Align checkbox and label vertically */
+  }
+  
+  /* Additional CSS to style the label text */
+  .rem label {
+    margin-left: 5px; /* Add some spacing between checkbox and label text */
+    vertical-align: middle; /* Vertically align the label with the checkbox */
+    display: inline-block; /* Ensure proper alignment */
+  }
+  
 
   
