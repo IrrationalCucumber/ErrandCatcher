@@ -37,7 +37,7 @@ function App() {
           <Route path='/commission-list' exact Component={CommissionList}/>
           <Route path="/update-account/:userID" exact Component={UpdateAccount}/>
           <Route path="/update-commission/:commissionID/:userID" exact Component={UpdateCommission} />
-          <Route path="/admin-home/:userID" element={<AdminHome />} />
+          <Route path="/admin-home" element={<AdminHome />} />
           <Route path="/e-home/:userID" exact Component={EmployerHome} />
           <Route path="/commissions/:userID" exact Component={EmployerCommissions} />
           <Route path="/c-home/:userID" exact Component={CatcherHome} />

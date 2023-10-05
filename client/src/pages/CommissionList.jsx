@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
-import NavBar from '../components/AdminNavbar.js'
+import NavBar from '../components/Navbar.js'
 //import "./ash-buttton.css"
 
 const CommissionList = () => {
@@ -58,7 +58,17 @@ const CommissionList = () => {
     //need front end
   return (
     <div>
-      <NavBar />
+      <NavBar
+        page1="HOME"
+        home={`/admin-home`}
+        // {`admin-home/${userID}`}
+        page2="ACCOUNT LIST"
+        commissionList={`/accounts`}
+        page3="COMMISSION LIST"
+        applicants={`/commission-list`}
+        pageButton='/sign-in'
+        button='SIGN OUT'
+      />
       <h1>Commission List</h1>
       <div className="commissions">
           <div className='search'>

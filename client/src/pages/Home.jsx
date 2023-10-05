@@ -11,7 +11,10 @@ const Home = () => {
   return (
     <>
     <div>
-      <Navbar />
+    <Navbar
+        button="SIGN IN"
+        pageButton='/sign-in'
+      />
       <HeroSection></HeroSection>
       <Cards />
       <Footer />
