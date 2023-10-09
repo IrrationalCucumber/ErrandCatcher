@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .body{
     position: relative;
     display: flex;
@@ -5,8 +6,20 @@
     flex-direction: column;
     align-items: center;
     padding: 30px 20px 30px 20px;
+=======
+shesh{
+    position: flex;
+    flex-direction: column;
+    padding-left: 200px;
+    padding-top: 200px;
+>>>>>>> account-reg
   }
   
+  label{
+    color: blue;
+    font-weight: bold;
+  }
+
   .container {
     position: relative;
     max-width: 850px;
