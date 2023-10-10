@@ -130,6 +130,8 @@ const SignUp = () => {
       }
       return;
     }
+
+    //save to db if no error
     e.preventDefault();
     try {
       account.dateCreated = getCurrentDate();
@@ -143,11 +145,12 @@ const SignUp = () => {
   console.log(account);
 
   return (
-    <div className="shesh">
+    <div className="body">
       <div className="container">
         <input
           type="checkbox"
           id="flip"
+          className="flip"
           checked={isChecked} // Bind the checkbox to the state variable
           onChange={handleCheckboxChange} // Handle checkbox change
         />
@@ -256,9 +259,11 @@ const SignUp = () => {
                     <div className="text sign-up-text">
                       I am a <label htmlFor="flip">Catcher</label>
                     </div>
-                    <br />
-                    <div>
-                      <Link to="/sign-in">sign in here!</Link>
+                    <div className="toSignIn">
+                      Already got an account? Sign in{" "}
+                      <i>
+                        <Link to="/sign-in">here!</Link>
+                      </i>
                     </div>
                   </div>
                 </div>
@@ -279,14 +284,14 @@ const SignUp = () => {
                     <input
                       className={catcherErrorMessage ? "error" : ""}
                       type="password"
-                      placeholder="Password"
+                      placeholder="Password (8-20 characters)"
                       onChange={handleChange}
                       name="password"
                     />
                     <input
                       className={catcherErrorMessage ? "error" : ""}
                       type="password"
-                      placeholder="Password"
+                      placeholder="Confirm password..."
                       onChange={handleChange}
                       name="password2"
                     />
@@ -322,6 +327,12 @@ const SignUp = () => {
                     />
                     <input
                       className={catcherErrorMessage ? "error" : ""}
+                      type="date"
+                      onChange={handleChange}
+                      name="bday"
+                    />
+                    <input
+                      className={catcherErrorMessage ? "error" : ""}
                       type="number"
                       placeholder="Age"
                       onChange={handleChange}
@@ -353,8 +364,11 @@ const SignUp = () => {
                     <div className="text sign-up-text">
                       Switch to <label htmlFor="flip">Employer</label>
                     </div>
-                    <div>
-                      <Link to="/sign-in">sign in here!</Link>
+                    <div className="toSignIn">
+                      Already got an account? Sign in{" "}
+                      <i>
+                        <Link to="/sign-in">here!</Link>
+                      </i>
                     </div>
                   </div>
                 </div>
