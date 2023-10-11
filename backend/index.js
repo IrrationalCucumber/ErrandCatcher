@@ -390,12 +390,18 @@ app.get("/notification/:userID", (req, res) => {
 //add notification to userID
 app.post("/notify", (req, res) => {
   const q =
-    //"INSERT INTO notification (`catcherID`,`commissionID`, `applicationDate`) VALUES (?)";
-    //const values = [req.body.catcherID, req.body.comID, req.body.applicationDate];
-    db.query(q, [values], (err, data) => {
-      if (err) return res.json(err);
-      return res.json("Notification added");
-    });
+    "INSERT INTO notification (`userID`, `notificationType`, `catcherID`,`employerID`, `commissionID`) VALUES (?)";
+  const values = [
+    req.body.userID,
+    req.body.notificationType,
+    req.body.catcherID,
+    req.body.employerID,
+    req.body.commissionID,
+  ];
+  db.query(q, [values], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("Notification added");
+  });
 });
 
 app.listen(8800, () => {
