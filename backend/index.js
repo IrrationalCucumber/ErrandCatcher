@@ -373,6 +373,19 @@ app.get("/home/:userID", (req, res) => {
 });
 
 //---notification module----
+//display all notification
+app.get("/notifs", (req, res) => {
+  const userID = req.params.userID;
+  const q = "SELECT * FROM notification";
+
+  db.query(q, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
 
 //display notification of user
 app.get("/notification/:userID", (req, res) => {
@@ -387,16 +400,29 @@ app.get("/notification/:userID", (req, res) => {
     return res.json(data);
   });
 });
+
+//retrieve  info of for the notification
+app.get("/show-notif/:userID", (req, res) => {
+  const userID = req.params.userID;
+  const q =
+    "SELECT * FROM notification WHERE `isRead` = 'no' AND `userID` = (?)";
+
+  db.query(q, [userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
 //add notification to userID
 app.post("/notify", (req, res) => {
   const q =
-    "INSERT INTO notification (`userID`, `notificationType`, `catcherID`,`employerID`, `commissionID`) VALUES (?)";
+    "INSERT INTO notification (`userID`, `notificationType`, `notifDesc`) VALUES (?)";
   const values = [
     req.body.userID,
     req.body.notificationType,
-    req.body.catcherID,
-    req.body.employerID,
-    req.body.commissionID,
+    req.body.notifDesc,
   ];
   db.query(q, [values], (err, data) => {
     if (err) return res.json(err);

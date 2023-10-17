@@ -26,8 +26,7 @@ const ApplyCommission = () => {
   const [notif, setNotif] = useState({
     userID: "", //this is the employer/ userID of the commission
     notificationType: "", //notif description
-    catcherID: "", //errand boyyyyyyy
-    commissionID: "", //as the name itself
+    notifDesc: "", //contents of the notif
   });
 
   const navigate = useNavigate();
@@ -109,12 +108,12 @@ const ApplyCommission = () => {
       application.catcherID = userID;
 
       console.log(application); // Check the updated commission object
-
-      notif.catcherID = userID;
-      notif.commissionID = commissionID;
-      notif.userID = commission.employerID;
-      notif.notificationType = "errand application";
       await axios.post("http://localhost:8800/apply", application);
+
+      notif.notifDesc = "A Catcher has applied to on of your errand";
+      notif.userID = commission.employerID;
+      notif.notificationType = "Errand Application";
+
       await axios.post("http://localhost:8800/notify", notif);
       navigate(`/application/${userID}`);
       console.log(notif); // check variables state
