@@ -105,7 +105,7 @@ app.get("/search-employer-commission/:userID", (req, res) => {
     return res.json(data);
   });
 });
-
+//============================================SIGNUP==================================//
 //send data to userAccount
 app.post("/user", (req, res) => {
   //const q = "INSERT INTO UserAccount (`username`, `password`, `userLastname`, `userFirstname`, `userGender`, `userEmail`, `userContactNum`, `userAge`, `userBirthday`, `userAddress`, `userDesc`, `accountType`, `dateCreated`, `profileImage`) VALUES (?)"
@@ -122,10 +122,8 @@ app.post("/user", (req, res) => {
     req.body.age,
     req.body.bday,
     req.body.address,
-    // req.body.desc,
     req.body.type,
     req.body.dateCreated,
-    //req.body.profileImage,
   ];
 
   db.query(q, [values], (err, data) => {
@@ -182,6 +180,7 @@ app.get("/applicants/:userID", (req, res) => {
     return res.json(data);
   });
 });
+//================================================================================================//
 
 //post commission
 //employer
@@ -264,7 +263,7 @@ app.delete("/commission/:commissionID", (req, res) => {
     return res.json("Commission has been deleted");
   });
 });
-
+/**========================UPDATE ACCOUNT=============================== */
 //retrieve account
 //info based on ID
 app.get("/user/:userID", (req, res) => {
@@ -285,7 +284,7 @@ app.put("/update-account/:userID", (req, res) => {
   const userID = req.params.userID;
   //const q = "UPDATE UserAccount SET `username` = ?, `password` = ?, `userLastname` = ?, `userFirstname` = ?, `userGender` =?, `userEmail` = ?,`userContactNum` =?, `userAge` =?, `userAddress` = ? WHERE userID = ?"
   const q =
-    "UPDATE useraccount set `username` = ?, `password` = ?, `userLastname` = ?, `userFirstname` = ?, `userGender` =?, `userEmail` = ?,`userContactNum` =?, `userAge` =?, `userBirthday` = ?, `userAddress` = ?, `userDesc` = ? WHERE userID = ?";
+    "UPDATE useraccount set `username` = ?, `password` = ?, `userLastname` = ?, `userFirstname` = ?, `userGender` =?, `userEmail` = ?,`userContactNum` =?, `userAge` =?, `userBirthday` = ?, `userAddress` = ?, `userDesc` = ?, `profileImage` = ? WHERE userID = ?";
   const values = [
     req.body.username,
     req.body.password,
@@ -300,7 +299,7 @@ app.put("/update-account/:userID", (req, res) => {
     req.body.desc,
     //req.body.type,
     //req.body.dateCreated,
-    //req.body.profileImage,
+    req.body.profileImage,
   ];
 
   db.query(q, [...values, userID], (err, data) => {
@@ -311,7 +310,9 @@ app.put("/update-account/:userID", (req, res) => {
     return res.json("Account updated");
   });
 });
+//=====================================================
 
+/**===========================VERIFICATION====================================== */
 //verify-account
 app.put("/verify-account/:userID", (req, res) => {
   const userID = req.params.userID;
@@ -341,6 +342,8 @@ app.put("/deactivate-account/:userID", (req, res) => {
     return res.json("Account deactivated");
   });
 });
+
+/**==========================SIGN IN MODULE==================================== */
 
 //sign-in
 app.get("/sign-in", (req, res) => {
@@ -372,7 +375,9 @@ app.get("/home/:userID", (req, res) => {
   });
 });
 
-//---notification module----
+//=============================END MODULE=====================================
+
+/**============================NOTIF MODULE================================== */
 //display all notification
 app.get("/notifs", (req, res) => {
   const userID = req.params.userID;
@@ -429,6 +434,23 @@ app.post("/notify", (req, res) => {
     return res.json("Notification added");
   });
 });
+
+//notif have been read
+// update the `isRead` tp "YES"
+app.put("/notif-read/:userID", (req, res) => {
+  const userID = req.params.userID;
+  const q = "UPDATE notification SET isRead = 'yes' WHERE userID = ?";
+
+  db.query(q, [userID], (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+    return res.json("I HAVE REDDIT");
+  });
+});
+
+//=========================END MODULE==============================//
 
 app.listen(8800, () => {
   console.log("connected to backend!");
