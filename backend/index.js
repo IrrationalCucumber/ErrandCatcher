@@ -410,7 +410,7 @@ app.get("/notification/:userID", (req, res) => {
 app.get("/show-notif/:userID", (req, res) => {
   const userID = req.params.userID;
   const q =
-    "SELECT * FROM notification WHERE `isRead` = 'no' AND `userID` = (?)";
+    "SELECT * FROM notification WHERE `isRead` = 'no' AND `userID` = (?) ORDER BY notifDate DESC";
 
   db.query(q, [userID], (err, data) => {
     if (err) {
@@ -420,14 +420,16 @@ app.get("/show-notif/:userID", (req, res) => {
     return res.json(data);
   });
 });
+
 //add notification to userID
 app.post("/notify", (req, res) => {
   const q =
-    "INSERT INTO notification (`userID`, `notificationType`, `notifDesc`) VALUES (?)";
+    "INSERT INTO notification (`userID`, `notificationType`, `notifDesc`, `notifDate`) VALUES (?)";
   const values = [
     req.body.userID,
     req.body.notificationType,
     req.body.notifDesc,
+    req.body.notifDate,
   ];
   db.query(q, [values], (err, data) => {
     if (err) return res.json(err);
@@ -437,11 +439,11 @@ app.post("/notify", (req, res) => {
 
 //notif have been read
 // update the `isRead` tp "YES"
-app.put("/notif-read/:userID", (req, res) => {
-  const userID = req.params.userID;
-  const q = "UPDATE notification SET isRead = 'yes' WHERE userID = ?";
+app.put("/notif-read/:notificationID", (req, res) => {
+  const notificationID = req.params.notificationID;
+  const q = "UPDATE notification SET isRead = 'yes' WHERE notificationID = (?)";
 
-  db.query(q, [userID], (err, data) => {
+  db.query(q, (err, data) => {
     if (err) {
       console.log(err);
       return res.status(500).json(err);
