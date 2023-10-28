@@ -3,10 +3,15 @@ import React from "react";
 function NotificationItem(props) {
   return (
     <>
-      <li>
-        <h1>{props.type}</h1>
-        <p>{props.desc}</p>
-        <p>{props.date}</p>
+      <li className="notif_item">
+        <h3>{props.type}</h3>
+        <div className="notif_item_info">
+          <p className="notif_item_text">{props.desc}</p>
+          <p className="notif_item_date">{props.date}</p>
+        </div>
+        <button className="btn" onClick={props.reddit}>
+          <i className="fa-solid fa-check"></i>
+        </button>
       </li>
     </>
   );

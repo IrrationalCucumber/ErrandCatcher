@@ -393,9 +393,9 @@ app.get("/notifs", (req, res) => {
 });
 
 //display notification of user
-app.get("/notification/:userID", (req, res) => {
+app.get("/notification", (req, res) => {
   const userID = req.params.userID;
-  const q = "SELECT * FROM notification WHERE userID =?";
+  const q = "SELECT * FROM notification";
 
   db.query(q, [userID], (err, data) => {
     if (err) {

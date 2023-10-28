@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Notification from "../components/Notification";
 
-function Notification() {
+function NotificationPage() {
   return (
     <>
       <Notification />
@@ -9,4 +9,4 @@ function Notification() {
   );
 }
 
-export default Notification;
+export default NotificationPage;
