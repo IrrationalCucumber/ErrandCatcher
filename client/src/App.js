@@ -20,7 +20,7 @@ import ApplyCommission from "./pages/ApplyCommission";
 import EmployerApplicants from "./pages/EmployerApplicants";
 import Map from "./pages/CommissionMap";
 import CatcherMap from "./pages/CatcherMap";
-import Notification from "./pages/NotificationPage";
+import NotificationPage from "./pages/NotificationPage";
 
 function App() {
   return (
@@ -74,7 +74,7 @@ function App() {
           />
           <Route path="/map" element={<Map />} />
           <Route path="/c-map" element={<CatcherMap />} />
-          <Route path="/notifications" exact Component={Notification} />
+          <Route path="/notifications" exact Component={NotificationPage} />
         </Routes>
       </Router>
     </div>

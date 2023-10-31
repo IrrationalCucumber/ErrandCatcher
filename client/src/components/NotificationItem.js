@@ -9,9 +9,11 @@ function NotificationItem(props) {
           <p className="notif_item_text">{props.desc}</p>
           <p className="notif_item_date">{props.date}</p>
         </div>
-        <button className="btn" onClick={props.reddit}>
-          <i className="fa-solid fa-check"></i>
-        </button>
+        <div className="button">
+          <button className="btn" onClick={props.reddit}>
+            <i className="fa-solid fa-check"></i>
+          </button>
+        </div>
       </li>
     </>
   );

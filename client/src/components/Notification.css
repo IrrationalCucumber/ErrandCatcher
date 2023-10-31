@@ -1,116 +1,100 @@
 .notifs {
     padding: 4rem;
-    background: #f2f2f2;
+    background-color: #f2f2f2;
 }
 
 .notifs_container{
-display: flex;
-flex-flow: column;
-/*align-items: center;*/
-max-width: 1120px;
-width: 90%;
-margin: 0 auto;
+    display: flex;
+    flex-flow: column;
+    max-width: 1220px;
+    width: 90%;
+    margin: 0 auto;
+    
 }
 
 .notifs_wrapper{
     position: relative;
-    margin: 50px 0 45px;
+    margin: 30px 0 15px;
+    
 }
 
 .notifs_items{
-    margin-bottom: 24px;
+    margin-bottom: 10px;
+    
 }
 
 .notif_item{
-    display: flex;
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
     flex: 1;
     margin: 0 1rem;
     border-radius: 10px;
-    flex-flow: row;
-    width: 100%;
-    box-shadow: 0 6px 20px rgba(56, 125, 255, 0.17);
-    -webkit-filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
-    filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
-    overflow: hidden;
-    text-decoration: none;
-
+    background-color: aquamarine;
+    padding: 20px;
 }
 
 .notif_item_info{
-    padding: 20px 30px 30px;
+    padding: 30px 15rem 30px 30px;
 }
 
 .notif_item_text{
-    color: #252e48;
-    font-size: 18px;
-    line-height: 24px;
+    
 }
 
 .notif_item_date{
-    color: #252e48;
-    font-size: 18px;
-    line-height: 24px;
-}
-
-:root{
-    --primary: #fff;
+    
 }
 
 .btn{
-    padding: 8px 20px;
-    border-radius: 2px;
-    outline: none;
-    border: none;
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
 }
 
-.btn--primary {
-    background-color: var(--primary);
-    color: #242424;
-    border: 1px solid var(--primary);
 
-}
-
-.btn--outline{
-    background-color: transparent;
-    color: #fff;
-    padding: 8px 20px;
-    border: 1px solid var(--primary);
-    transition: all 0.3s ease-out;
-}
-
-.btn--medium {
-    padding: 8px 20px;
-    font-size: 20px;
-}
-
-.btn--target{
-    padding: 12px 26px;
-    font-size: 20px;
-}
-
-.btn--medium:hover, .btn--larger:hover{
-    background:  #fff;
-    color: #242424;
-    transform: 250ms;
-}
 
 
 @media only screen and (min-width: 1200px) {
     .content__blog__container {
-      width: 84%;
+      
     }
   }
   
   @media only screen and (min-width: 1024px) {
     .notifs_items {
-      display: flex;
+      
     }
   }
   
   @media only screen and (max-width: 1024px) {
     .notif_item {
-      margin-bottom: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 0 0 0 ;
+    }
+    h3{
+      padding-left: 25px;
+      justify-content: center;
     }
   }
+    @media only screen and (max-width: 1024px) {
+      .notif_item_info {
+          padding: 40px 30px 30px 30px;
+          justify-content: center;
+          align-items: center;
+      }
+  }
+
+  @media only screen and (max-width: 1024px) {
+    .btn{
+      width: 140px;
+      height: 100px;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+}
 
 

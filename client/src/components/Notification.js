@@ -50,6 +50,9 @@ function Notification() {
                   type={Notif.notificationType}
                   desc={Notif.notifDesc}
                   date={Notif.notifDate}
+                  // type="APPLICATION"
+                  // desc="There is an Catcher that wants to apply on one of your commission"
+                  // date="3:00 11-11-11"
                   reddit={ReadIt}
                 />
               </ul>
