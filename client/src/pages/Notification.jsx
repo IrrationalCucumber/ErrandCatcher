@@ -3,9 +3,9 @@
  */
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import NotificationItem from "./NotificationItem";
+import NotificationItem from "../components/NotificationItem";
 import { useLocation } from "react-router-dom";
-import "./Notification.css";
+import "../components/Notification.css";
 
 function Notification() {
   const [notifs, setNotifs] = useState([]);
@@ -17,7 +17,7 @@ function Notification() {
   useEffect(() => {
     const fetchNotif = async () => {
       try {
-        //await axios.get(`http://localhost:8800/show-notifs/${userID}`);
+        //const res = await axios.get(`http://localhost:8800/show-notifs/${userID}`);
         const res = await axios.get("http://localhost:8800/notification");
         setNotifs(res.data);
       } catch (err) {
@@ -30,10 +30,7 @@ function Notification() {
   //update db notif isRead to Yes
   const ReadIt = async (e) => {
     try {
-      await axios.post(
-        "http://localhost:8800/read-notif/",
-        notifs.notificationID
-      );
+      await axios.post("http://localhost:8800/read-notif/" + notifs, userID);
     } catch (err) {
       console.log(err);
     }
