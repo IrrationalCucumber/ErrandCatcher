@@ -10,7 +10,7 @@ function NotificationItem(props) {
           <p className="notif_item_date">{props.date}</p>
         </div>
         <div className="button">
-          <button className="btn" onClick={props.reddit}>
+          <button className="button" onClick={props.reddit}>
             <i className="fa-solid fa-check"></i>
           </button>
         </div>
