@@ -49,7 +49,7 @@ function App() {
             exact
             Component={UpdateCommission}
           />
-          <Route path="/admin-home" element={<AdminHome />} />
+          <Route path="/admin-home/:userID" element={<AdminHome />} />
           <Route path="/e-home/:userID" exact Component={EmployerHome} />
           <Route
             path="/commissions/:userID"
