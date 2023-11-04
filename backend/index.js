@@ -393,9 +393,9 @@ app.get("/notifs", (req, res) => {
 });
 
 //display notification of user
-app.get("/notification/:userID", (req, res) => {
+app.get("/notification", (req, res) => {
   const userID = req.params.userID;
-  const q = "SELECT * FROM notification WHERE userID =?";
+  const q = "SELECT * FROM notification";
 
   db.query(q, [userID], (err, data) => {
     if (err) {
@@ -439,9 +439,11 @@ app.post("/notify", (req, res) => {
 
 //notif have been read
 // update the `isRead` tp "YES"
-app.put("/notif-read/:notificationID", (req, res) => {
+app.put("/notif-read/:notificationID/:userID/", (req, res) => {
   const notificationID = req.params.notificationID;
-  const q = "UPDATE notification SET isRead = 'yes' WHERE notificationID = (?)";
+  const userID = req.params.userID;
+  const q =
+    "UPDATE notification SET isRead = 'yes' WHERE notificationID = (?) AND userID = (?)";
 
   db.query(q, (err, data) => {
     if (err) {
