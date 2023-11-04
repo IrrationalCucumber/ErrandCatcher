@@ -11,7 +11,7 @@ function NotificationItem(props) {
         </div>
         <div className="button">
           <button className="button" onClick={props.reddit}>
-            <i className="fa-solid fa-check"></i>
+            <i className="fa-solid fa-check" />
           </button>
         </div>
       </li>
