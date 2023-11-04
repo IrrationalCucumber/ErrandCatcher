@@ -145,234 +145,317 @@ const SignUp = () => {
   console.log(account);
 
   return (
-    <div className="body">
-      <div className="container">
-        <input
-          type="checkbox"
-          id="flip"
-          className="flip"
-          checked={isChecked} // Bind the checkbox to the state variable
-          onChange={handleCheckboxChange} // Handle checkbox change
-        />
-        <div className="cover">
-          <div className="front">
-            <img src="/images/tawo.png" alt="Tawo" />
-          </div>
-          <div className="back">
-            <img className="ErrandCatcher" src="" alt="" />
-          </div>
-        </div>
-        <div className="forms">
-          <div className="form-content">
-            <div className="employer-form">
-              <div className="title">Employer</div>
-              <form action="#">
-                <div className="input-boxes">
-                  <div className="input-box">
-                    <input
-                      className={employerErrorMessage ? "error" : ""}
-                      type="text"
-                      placeholder="Username"
-                      onChange={handleChange}
-                      name="username"
-                    />
-                    <input
-                      className={employerErrorMessage ? "error" : ""}
-                      type="password"
-                      placeholder="Password (8-20)"
-                      onChange={handleChange}
-                      name="password"
-                    />
-                    <input
-                      className={employerErrorMessage ? "error" : ""}
-                      type="password"
-                      placeholder="Confirm password.."
-                      onChange={handleChange}
-                      name="password2"
-                    />
-                    <input
-                      className={employerErrorMessage ? "error" : ""}
-                      type="text"
-                      placeholder="First name"
-                      onChange={handleChange}
-                      name="fname"
-                    />
-                    <input
-                      className={employerErrorMessage ? "error" : ""}
-                      type="text"
-                      placeholder="Last name"
-                      onChange={handleChange}
-                      name="lname"
-                    />
-                    <select
-                      name="gender"
-                      onChange={handleChange}
-                      value={account.gender}
-                    >
-                      <option value="">Choose gender....</option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                    </select>
-                    <input
-                      className={employerErrorMessage ? "error" : ""}
-                      type="text"
-                      placeholder="contact number"
-                      onChange={handleChange}
-                      name="contact"
-                    />
-                    <input
-                      className={employerErrorMessage ? "error" : ""}
-                      type="date"
-                      onChange={handleChange}
-                      name="bday"
-                    />
-                    <input
-                      className={employerErrorMessage ? "error" : ""}
-                      type="number"
-                      placeholder="Age"
-                      onChange={handleChange}
-                      name="age"
-                    />
-                    <input
-                      className={employerErrorMessage ? "error" : ""}
-                      type="email"
-                      placeholder="Email address"
-                      onChange={handleChange}
-                      name="email"
-                    />
-                    <input
-                      className={employerErrorMessage ? "error" : ""}
-                      type="text"
-                      placeholder="Address"
-                      onChange={handleChange}
-                      name="address"
-                    />
-                    <br />
-                    <p className="em">
-                      <i>{employerErrorMessage}</i>
-                    </p>
-                    <div className="button1">
-                      <button type="button" onClick={handleClick}>
-                        Sign Up
-                      </button>
-                    </div>
-                    <div className="text sign-up-text">
-                      I am a <label htmlFor="flip">Catcher</label>
-                    </div>
-                    <div className="toSignIn">
-                      Already got an account? Sign in{" "}
-                      <i>
-                        <Link to="/sign-in">here!</Link>
-                      </i>
-                    </div>
-                  </div>
-                </div>
-              </form>
+    <div className="from">
+      <p className="em">
+        <i>{errorMessage}</i>
+      </p>
+      <h1>SIGN UP</h1>
+      <input
+        className={errorMessage ? "error" : ""}
+        type="text"
+        placeholder="username"
+        onChange={handleChange}
+        name="username"
+      />
+      <input
+        className={errorMessage ? "error" : ""}
+        type="password"
+        placeholder="password"
+        onChange={handleChange}
+        name="password"
+      />
+      <input
+        className={errorMessage ? "error" : ""}
+        type="text"
+        placeholder="first name"
+        onChange={handleChange}
+        name="fname"
+      />
+      <input
+        className={errorMessage ? "error" : ""}
+        type="text"
+        placeholder="last name"
+        onChange={handleChange}
+        name="lname"
+      />
+      <label htmlFor="">
+        Gender
+        <select name="gender" onChange={handleChange} value={account.gender}>
+          <option value="">Choose gender....</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </label>
+      <input
+        className={errorMessage ? "error" : ""}
+        type="text"
+        placeholder="contact number"
+        onChange={handleChange}
+        name="contact"
+      />
+      <input
+        className={errorMessage ? "error" : ""}
+        type="number"
+        placeholder="Age"
+        onChange={handleChange}
+        name="age"
+      />
+
+      <input
+        className={errorMessage ? "error" : ""}
+        type="email"
+        placeholder="Email address"
+        onChange={handleChange}
+        name="email"
+      />
+      <input
+        className={errorMessage ? "error" : ""}
+        type="text"
+        placeholder="Address"
+        onChange={handleChange}
+        name="address"
+      />
+      <select name="type" onChange={handleChange} value={account.type}>
+        <option value="">Choose Type</option>
+        <option vlaue="Employer">Employer</option>
+        <option value="Catcher">Catcher</option>
+      </select>
+
+      <button onClick={handleClick}>Sign Up</button>
+      <p>
+        <i>
+          Already have an Account?<Link to="/sign-in">Sign in here!</Link>
+        </i>
+      </p>
+      <div className="body">
+        <div className="container">
+          <input
+            type="checkbox"
+            id="flip"
+            className="flip"
+            checked={isChecked} // Bind the checkbox to the state variable
+            onChange={handleCheckboxChange} // Handle checkbox change
+          />
+          <div className="cover">
+            <div className="front">
+              <img src="/images/tawo.png" alt="Tawo" />
             </div>
-            <div className="Catcher-form">
-              <div className="title">Catcher</div>
-              <form action="#">
-                <div className="input-boxes">
-                  <div className="input-box">
-                    <input
-                      className={catcherErrorMessage ? "error" : ""}
-                      type="text"
-                      placeholder="Username"
-                      onChange={handleChange}
-                      name="username"
-                    />
-                    <input
-                      className={catcherErrorMessage ? "error" : ""}
-                      type="password"
-                      placeholder="Password (8-20 characters)"
-                      onChange={handleChange}
-                      name="password"
-                    />
-                    <input
-                      className={catcherErrorMessage ? "error" : ""}
-                      type="password"
-                      placeholder="Confirm password..."
-                      onChange={handleChange}
-                      name="password2"
-                    />
-                    <input
-                      className={catcherErrorMessage ? "error" : ""}
-                      type="text"
-                      placeholder="First name"
-                      onChange={handleChange}
-                      name="fname"
-                    />
-                    <input
-                      className={catcherErrorMessage ? "error" : ""}
-                      type="text"
-                      placeholder="Last name"
-                      onChange={handleChange}
-                      name="lname"
-                    />
-                    <select
-                      name="gender"
-                      onChange={handleChange}
-                      value={account.gender}
-                    >
-                      <option value="">Choose gender....</option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                    </select>
-                    <input
-                      className={catcherErrorMessage ? "error" : ""}
-                      type="text"
-                      placeholder="contact number"
-                      onChange={handleChange}
-                      name="contact"
-                    />
-                    <input
-                      className={catcherErrorMessage ? "error" : ""}
-                      type="date"
-                      onChange={handleChange}
-                      name="bday"
-                    />
-                    <input
-                      className={catcherErrorMessage ? "error" : ""}
-                      type="number"
-                      placeholder="Age"
-                      onChange={handleChange}
-                      name="age"
-                    />
-                    <input
-                      className={catcherErrorMessage ? "error" : ""}
-                      type="email"
-                      placeholder="Email address"
-                      onChange={handleChange}
-                      name="email"
-                    />
-                    <input
-                      className={catcherErrorMessage ? "error" : ""}
-                      type="text"
-                      placeholder="Address"
-                      onChange={handleChange}
-                      name="address"
-                    />
-                    <br />
-                    <p className="em">
-                      <i>{catcherErrorMessage}</i>
-                    </p>
-                    <div className="button1">
-                      <button type="button" onClick={handleClick}>
-                        Sign Up
-                      </button>
-                    </div>
-                    <div className="text sign-up-text">
-                      Switch to <label htmlFor="flip">Employer</label>
-                    </div>
-                    <div className="toSignIn">
-                      Already got an account? Sign in{" "}
-                      <i>
-                        <Link to="/sign-in">here!</Link>
-                      </i>
+            <div className="back">
+              <img className="ErrandCatcher" src="" alt="" />
+            </div>
+          </div>
+          <div className="forms">
+            <div className="form-content">
+              <div className="employer-form">
+                <div className="title">Employer</div>
+                <form action="#">
+                  <div className="input-boxes">
+                    <div className="input-box">
+                      <input
+                        className={employerErrorMessage ? "error" : ""}
+                        type="text"
+                        placeholder="Username"
+                        onChange={handleChange}
+                        name="username"
+                      />
+                      <input
+                        className={employerErrorMessage ? "error" : ""}
+                        type="password"
+                        placeholder="Password (8-20)"
+                        onChange={handleChange}
+                        name="password"
+                      />
+                      <input
+                        className={employerErrorMessage ? "error" : ""}
+                        type="password"
+                        placeholder="Confirm password.."
+                        onChange={handleChange}
+                        name="password2"
+                      />
+                      <input
+                        className={employerErrorMessage ? "error" : ""}
+                        type="text"
+                        placeholder="First name"
+                        onChange={handleChange}
+                        name="fname"
+                      />
+                      <input
+                        className={employerErrorMessage ? "error" : ""}
+                        type="text"
+                        placeholder="Last name"
+                        onChange={handleChange}
+                        name="lname"
+                      />
+                      <select
+                        name="gender"
+                        onChange={handleChange}
+                        value={account.gender}
+                      >
+                        <option value="">Choose gender....</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                      </select>
+                      <input
+                        className={employerErrorMessage ? "error" : ""}
+                        type="text"
+                        placeholder="contact number"
+                        onChange={handleChange}
+                        name="contact"
+                      />
+                      <input
+                        className={employerErrorMessage ? "error" : ""}
+                        type="date"
+                        onChange={handleChange}
+                        name="bday"
+                      />
+                      <input
+                        className={employerErrorMessage ? "error" : ""}
+                        type="number"
+                        placeholder="Age"
+                        onChange={handleChange}
+                        name="age"
+                      />
+                      <input
+                        className={employerErrorMessage ? "error" : ""}
+                        type="email"
+                        placeholder="Email address"
+                        onChange={handleChange}
+                        name="email"
+                      />
+                      <input
+                        className={employerErrorMessage ? "error" : ""}
+                        type="text"
+                        placeholder="Address"
+                        onChange={handleChange}
+                        name="address"
+                      />
+                      <br />
+                      <p className="em">
+                        <i>{employerErrorMessage}</i>
+                      </p>
+                      <div className="button1">
+                        <button type="button" onClick={handleClick}>
+                          Sign Up
+                        </button>
+                      </div>
+                      <div className="text sign-up-text">
+                        I am a <label htmlFor="flip">Catcher</label>
+                      </div>
+                      <div className="toSignIn">
+                        Already got an account? Sign in{" "}
+                        <i>
+                          <Link to="/sign-in">here!</Link>
+                        </i>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </form>
+                </form>
+              </div>
+              <div className="Catcher-form">
+                <div className="title">Catcher</div>
+                <form action="#">
+                  <div className="input-boxes">
+                    <div className="input-box">
+                      <input
+                        className={catcherErrorMessage ? "error" : ""}
+                        type="text"
+                        placeholder="Username"
+                        onChange={handleChange}
+                        name="username"
+                      />
+                      <input
+                        className={catcherErrorMessage ? "error" : ""}
+                        type="password"
+                        placeholder="Password (8-20 characters)"
+                        onChange={handleChange}
+                        name="password"
+                      />
+                      <input
+                        className={catcherErrorMessage ? "error" : ""}
+                        type="password"
+                        placeholder="Confirm password..."
+                        onChange={handleChange}
+                        name="password2"
+                      />
+                      <input
+                        className={catcherErrorMessage ? "error" : ""}
+                        type="text"
+                        placeholder="First name"
+                        onChange={handleChange}
+                        name="fname"
+                      />
+                      <input
+                        className={catcherErrorMessage ? "error" : ""}
+                        type="text"
+                        placeholder="Last name"
+                        onChange={handleChange}
+                        name="lname"
+                      />
+                      <select
+                        name="gender"
+                        onChange={handleChange}
+                        value={account.gender}
+                      >
+                        <option value="">Choose gender....</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                      </select>
+                      <input
+                        className={catcherErrorMessage ? "error" : ""}
+                        type="text"
+                        placeholder="contact number"
+                        onChange={handleChange}
+                        name="contact"
+                      />
+                      <input
+                        className={catcherErrorMessage ? "error" : ""}
+                        type="date"
+                        onChange={handleChange}
+                        name="bday"
+                      />
+                      <input
+                        className={catcherErrorMessage ? "error" : ""}
+                        type="number"
+                        placeholder="Age"
+                        onChange={handleChange}
+                        name="age"
+                      />
+                      <input
+                        className={catcherErrorMessage ? "error" : ""}
+                        type="email"
+                        placeholder="Email address"
+                        onChange={handleChange}
+                        name="email"
+                      />
+                      <input
+                        className={catcherErrorMessage ? "error" : ""}
+                        type="text"
+                        placeholder="Address"
+                        onChange={handleChange}
+                        name="address"
+                      />
+                      <br />
+                      <p className="em">
+                        <i>{catcherErrorMessage}</i>
+                      </p>
+                      <div className="button1">
+                        <button type="button" onClick={handleClick}>
+                          Sign Up
+                        </button>
+                      </div>
+                      <div className="text sign-up-text">
+                        Switch to <label htmlFor="flip">Employer</label>
+                      </div>
+                      <div className="toSignIn">
+                        Already got an account? Sign in{" "}
+                        <i>
+                          <Link to="/sign-in">here!</Link>
+                        </i>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>

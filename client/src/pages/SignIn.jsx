@@ -36,7 +36,7 @@ const SignIn = () => {
         if (user.accountType === "Employer") {
           navigate(`/e-home/${user.userID}`);
         } else if (user.accountType === "admin") {
-          navigate(`/admin-home/${user.userID}`);
+          navigate(`/admin-home`);
         } else if (user.accountType === "Catcher") {
           navigate(`/c-home/${user.userID}`);
         }

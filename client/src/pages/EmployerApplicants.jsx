@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {Link, useLocation} from 'react-router-dom'
 import axios from 'axios'
-import NavBar from '../components/AdminNavbar'
+import NavBar from '../components/Navbar'
 import './accountlist.css';
 
 const EmployerApplicants = () => {
@@ -50,6 +50,16 @@ const EmployerApplicants = () => {
 //need filter
   return (
     <div>
+      <NavBar
+        page1="HOME"
+        home={`/e-home/${userID}`}
+        page2="COMMISSIONS"
+        commissionList={`/commissions/${userID}`}
+        page3="APPLICANTS"
+        applicants={`/applicants/${userID}`}
+        map={`/map/${userID}`}
+        button="SIGN OUT"
+      />
       <h1>APPLICANTS</h1>
       <div className='search'>
           <input

@@ -2,6 +2,14 @@ import React from 'react'
 import Map from '../components/Map'
 import Navbar from '../components/Navbar'
 
+
+/** update navbar for map
+ * fix navbar map for:
+ *  catcher
+ *  admin
+ *  employer
+ */
+
 function CommissionMap() {
   return (
     <div>

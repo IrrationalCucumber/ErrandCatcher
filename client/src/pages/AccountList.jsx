@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
-import NavBar from '../components/AdminNavbar'
+import NavBar from '../components/Navbar'
 import './accountlist.css';
 
 const AccountList = () => {
@@ -45,7 +45,17 @@ const AccountList = () => {
 //need filter
   return (
     <div>
-      <NavBar></NavBar>
+      <NavBar
+        page1="HOME"
+        home={`/admin-home`}
+        // {`admin-home/${userID}`}
+        page2="ACCOUNT LIST"
+        commissionList={`/accounts`}
+        page3="COMMISSION LIST"
+        applicants={`/commission-list`}
+        pageButton='/sign-in'
+        button='SIGN OUT'
+      />
       <h1>Account List</h1>
       <div className='search'>
           <input
