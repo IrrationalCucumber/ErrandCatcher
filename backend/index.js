@@ -454,6 +454,22 @@ app.put("/notif-read/:notificationID/:userID/", (req, res) => {
   });
 });
 
+//notif counter
+//show the user how much unread notif he/she have
+app.get("/notif-count/:userID", (req, res) => {
+  const userID = req.params.userID;
+  const q =
+    "SELECT COUNT(*) FROM notification WHERE isRead 'No' AND userID = (?)";
+
+  db.query(q, [userID], (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+    return res.json("you have mail!");
+  });
+});
+
 //=========================END MODULE==============================//
 
 app.listen(8800, () => {
