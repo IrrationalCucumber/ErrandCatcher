@@ -163,8 +163,9 @@
     padding: 150px 30px 150px 30px;
     width: 400px;
     height: 540px;
-
-    background-color: aquamarine;
+    border-radius: 10px;
+    background-color: #ffff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   }
   
   .in {
