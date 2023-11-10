@@ -66,9 +66,6 @@ const SignIn = () => {
     <div className="si">
       <form>
         <div className="cont">
-          <p className="em">
-            <i>{errorMessage}</i>
-          </p>
           <input
             className={errorMessage ? "error" : "in"}
             name="username"
@@ -85,6 +82,11 @@ const SignIn = () => {
             type="password"
             placeholder="Password"
           />
+          <br />
+          <p className="em">
+            <i>{errorMessage}</i>
+          </p>
+          <br />
           <br />
           <label className="rem" htmlFor="rememberMe">
             Remember&nbsp;Me
