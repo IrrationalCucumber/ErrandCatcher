@@ -66,6 +66,8 @@ const SignIn = () => {
     <div className="si">
       <form>
         <div className="cont">
+          <h1>WELCOME TO ERRAND CATCHER</h1>
+          <p>Sign-in now to get in</p>
           <input
             className={errorMessage ? "error" : "in"}
             name="username"
