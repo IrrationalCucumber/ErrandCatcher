@@ -9,10 +9,13 @@ import "../components/Notification.css";
 
 function Notification() {
   const [notifs, setNotifs] = useState([]);
+  const [readButton, setReadButton] = useState("Show All");
+  const [notifCount, setNotifCount] = useState([""]);
 
   //get the id from address bar
   const location = useLocation();
   const userID = location.pathname.split("/")[2];
+  console.log(userID);
   //display all notification
   useEffect(() => {
     const fetchNotif = async () => {
@@ -26,6 +29,21 @@ function Notification() {
     };
     fetchNotif();
   }, []);
+  //get notif count
+  useEffect(() => {
+    const fetchCount = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:8800/notif-count/",
+          userID
+        );
+        setNotifCount(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchCount();
+  }, []);
   //when user click 'mark as read'
   //update db notif isRead to Yes
   const ReadIt = async (e) => {
@@ -35,9 +53,42 @@ function Notification() {
       console.log(err);
     }
   };
+  /**REMIDNER:
+   *  USE THIS IN NAVBAR
+   * */
+  //when user click the read it all
+  //change all unread notif to read
+  const RedditAll = async (e) => {
+    try {
+      await axios.post("http://localhost:8800/notif-readall/:userID/" + userID);
+      alert("All Notification has been read");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const ShowAll = async (e) => {
+    try {
+      useEffect(() => {
+        const fetchAllnotif = async () => {
+          try {
+            const res = await axios.get("http://localhost:8800/notification");
+            setNotifs(res.data);
+            setReadButton = "Show Unread";
+          } catch (error) {
+            console.log(error);
+          }
+        };
+        fetchAllnotif();
+      }, []);
+    } catch (err) {}
+  };
 
   return (
     <div className="notifs">
+      <h1>Your Notifications</h1>
+      <button onClick={RedditAll}>MARK AS READ</button>
+      <button onClick={ShowAll}>{readButton}</button>
       <div className="notifs_container">
         <div className="notifs_wrapper">
           {notifs.map((Notif) => (

@@ -74,7 +74,7 @@ function App() {
           />
           <Route path="/map" element={<Map />} />
           <Route path="/c-map" element={<CatcherMap />} />
-          <Route path="/notifications" exact Component={Notification} />
+          <Route path="/notifications/:userID" exact Component={Notification} />
         </Routes>
       </Router>
     </div>
