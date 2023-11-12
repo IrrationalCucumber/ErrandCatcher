@@ -10,7 +10,7 @@ import "../components/Notification.css";
 function Notification() {
   const [notifs, setNotifs] = useState([]);
   const [readButton, setReadButton] = useState("Show All");
-  const [notifCount, setNotifCount] = useState([""]);
+  const [notifCount, setNotifCount] = useState([]);
 
   //get the id from address bar
   const location = useLocation();
@@ -20,8 +20,10 @@ function Notification() {
   useEffect(() => {
     const fetchNotif = async () => {
       try {
-        //const res = await axios.get(`http://localhost:8800/show-notifs/${userID}`);
-        const res = await axios.get("http://localhost:8800/notification");
+        const res = await axios.get(
+          `http://localhost:8800/show-notifs/${userID}`
+        );
+        //const res = await axios.get("http://localhost:8800/notification");
         setNotifs(res.data);
       } catch (err) {
         console.log(err);
@@ -29,6 +31,9 @@ function Notification() {
     };
     fetchNotif();
   }, []);
+  /**REMIDNER:
+   *  USE THIS IN NAVBAR
+   * */
   //get notif count
   useEffect(() => {
     const fetchCount = async () => {
@@ -53,9 +58,6 @@ function Notification() {
       console.log(err);
     }
   };
-  /**REMIDNER:
-   *  USE THIS IN NAVBAR
-   * */
   //when user click the read it all
   //change all unread notif to read
   const RedditAll = async (e) => {
@@ -66,29 +68,28 @@ function Notification() {
       console.log(err);
     }
   };
-
-  const ShowAll = async (e) => {
-    try {
-      useEffect(() => {
-        const fetchAllnotif = async () => {
-          try {
-            const res = await axios.get("http://localhost:8800/notification");
-            setNotifs(res.data);
-            setReadButton = "Show Unread";
-          } catch (error) {
-            console.log(error);
-          }
-        };
-        fetchAllnotif();
-      }, []);
-    } catch (err) {}
-  };
+  //show all notif
+  useEffect(() => {
+    const showAll = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8800/showall-notif/${userID}`
+        );
+        //const res = await axios.get("http://localhost:8800/notification");
+        setNotifs(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    showAll();
+  }, []);
 
   return (
     <div className="notifs">
       <h1>Your Notifications</h1>
       <button onClick={RedditAll}>MARK AS READ</button>
-      <button onClick={ShowAll}>{readButton}</button>
+      <button>{readButton}</button>
+      <p>notif{notifCount}</p>
       <div className="notifs_container">
         <div className="notifs_wrapper">
           {notifs.map((Notif) => (

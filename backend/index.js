@@ -408,11 +408,27 @@ app.get("/notification", (req, res) => {
 });
 
 //retrieve  info of for the notification
+//only unread notif
 //TESTED AND WORKING
 app.get("/show-notif/:userID", (req, res) => {
   const userID = req.params.userID;
   const q =
     "SELECT * FROM notification WHERE `isRead` = 'no' AND `notifUserID` = (?) ORDER BY notifDate DESC";
+
+  db.query(q, [userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+//retrieve  all notif of the user
+//TESTED AND WORKING
+app.get("/showall-notif/:userID", (req, res) => {
+  const userID = req.params.userID;
+  const q =
+    "SELECT * FROM notification WHERE `notifUserID` = (?) ORDER BY notifDate DESC";
 
   db.query(q, [userID], (err, data) => {
     if (err) {
