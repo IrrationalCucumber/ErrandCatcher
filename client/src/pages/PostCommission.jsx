@@ -42,6 +42,7 @@ const PostCommission = () => {
   // Add a state to track the marker's longitude and latitude
   const [markerLngLat, setMarkerLngLat] = useState([123.8854, 10.3157]); // Default values
 
+  //update the info that will be stored
   const handleChange = (e) => {
     if (e.target.name === "comType") {
       setCommission((prev) => ({ ...prev, comType: e.target.value }));
@@ -50,6 +51,7 @@ const PostCommission = () => {
     }
   };
 
+  //pull the local time of the pc
   const getCurrentDate = () => {
     const currentDate = new Date();
     const year = currentDate.getFullYear();
@@ -183,6 +185,7 @@ const PostCommission = () => {
         // comLong: "",
         // comLat: "",
       />
+      <button onClick={handleAddMarkerClick}>Add Marker</button>
       <button onClick={handleClick}>POST</button>
     </>
   );

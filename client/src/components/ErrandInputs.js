@@ -22,13 +22,15 @@ function ErrandInputs(props) {
         />
       </label>
       <br />
-      Location
-      <input
-        type="text"
-        placeholder="Location"
-        onChange={props.handleChange}
-        name={props.location}
-      />
+      <label>
+        Location
+        <input
+          type="text"
+          placeholder="Location"
+          onChange={props.handleChange}
+          name={props.location}
+        />
+      </label>
       <br />
       <label htmlFor="">
         Commission Type
@@ -45,14 +47,17 @@ function ErrandInputs(props) {
         </select>
       </label>
       <br />
-      <textarea
-        cols="20"
-        rows="11"
-        type="text"
-        placeholder="Description"
-        onChange={props.handleChange}
-        name={props.desc}
-      />
+      <label>
+        Description
+        <textarea
+          cols="20"
+          rows="11"
+          type="text"
+          placeholder="Description"
+          onChange={props.handleChange}
+          name={props.desc}
+        />
+      </label>
       <br />
       <label>
         Amount: ₱
@@ -63,12 +68,16 @@ function ErrandInputs(props) {
           name={props.pay}
         />
       </label>
-      <input
-        type="tel"
-        placeholder="Contact Number"
-        onChange={props.handleChange}
-        name={props.number}
-      />
+      <label>
+        Contact Number
+        <input
+          type="tel"
+          placeholder="Phone/Telephone number"
+          onChange={props.handleChange}
+          name={props.number}
+        />
+      </label>
+
       <br />
       <div className="map-post-wrap">
         <div ref={props.mapContainer} className="map" />
