@@ -174,16 +174,6 @@ const PostCommission = () => {
         handleAddMarkerClick={handleAddMarkerClick}
         long={commission.comLong}
         lat={commission.comLat}
-        // comDeadline: "",
-        // comLocation: "",
-        // comType: "",
-        // comDescription: "",
-        // comPay: "",
-        // DatePosted: "",
-        // DateCompleted: "",
-        // Contactno: "",
-        // comLong: "",
-        // comLat: "",
       />
       <button onClick={handleAddMarkerClick}>Add Marker</button>
       <button onClick={handleClick}>POST</button>
