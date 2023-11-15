@@ -64,47 +64,53 @@ const SignIn = () => {
 
   return (
     <div className="si">
-      <div className="cont">
-        <p className="em">
-          <i>{errorMessage}</i>
-        </p>
-        <input
-          className={errorMessage ? "error" : "in"}
-          name="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          type="text"
-          placeholder="Username"
-        />
-        <input
-          className={errorMessage ? "error" : "in"}
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          type="password"
-          placeholder="Password"
-        />
-        <br />
-        <label className="rem" htmlFor="rememberMe">
-          Remember&nbsp;Me
+      <form>
+        <div className="cont">
+          <h1>WELCOME TO ERRAND CATCHER</h1>
+          <p>Sign-in now to get in</p>
           <input
-            type="checkbox"
-            id="rememberMe"
-            checked={rememberMe}
-            onChange={handleRememberMeChange}
+            className={errorMessage ? "error" : "in"}
+            name="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            type="text"
+            placeholder="Username"
           />
-        </label>
+          <input
+            className={errorMessage ? "error" : "in"}
+            name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            placeholder="Password"
+          />
+          <br />
+          <p className="em">
+            <i>{errorMessage}</i>
+          </p>
+          <br />
+          <br />
+          <label className="rem" htmlFor="rememberMe">
+            Remember&nbsp;Me
+            <input
+              type="checkbox"
+              id="rememberMe"
+              checked={rememberMe}
+              onChange={handleRememberMeChange}
+            />
+          </label>
 
-        <button className="in" onClick={handleClick}>
-          Sign In
-        </button>
+          <button className="in" onClick={handleClick}>
+            Sign In
+          </button>
 
-        <p>
-          <i>
-            Don't have an Account? Sign-up <Link to="/sign-up">here!</Link>
-          </i>
-        </p>
-      </div>
+          <p>
+            <i>
+              Don't have an Account? Sign-up <Link to="/sign-up">here!</Link>
+            </i>
+          </p>
+        </div>
+      </form>
     </div>
   );
 };
