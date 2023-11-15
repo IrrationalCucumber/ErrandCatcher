@@ -185,6 +185,7 @@ app.get("/applicants/:userID", (req, res) => {
 //post commission
 //employer
 //send data to commission table
+//NOTE: UNUSED ENDPOINT?
 app.post("/post-commission", (req, res) => {
   const q =
     "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionDeadline`, `commissionLocation`,`commissionType`, `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`) VALUES (?)";
@@ -226,7 +227,7 @@ app.get("/commission/:commissionID", (req, res) => {
 app.put("/update-commission/:commissionID", (req, res) => {
   const commissionID = req.params.commissionID;
   const q =
-    "UPDATE commission SET `commissionTitle` = ?, `commissionDeadline` = ?, `commissionLocation` = ?,`commissionType` = ?, `commissionDesc` = ?, `commissionPay` = ?, `ContactNumber` = ? WHERE commissionID = ?";
+    "UPDATE commission SET `commissionTitle` = ?, `commissionDeadline` = ?, `commissionLocation` = ?,`commissionType` = ?, `commissionDesc` = ?, `commissionPay` = ?, `ContactNumber` = ?, `commissionLong` = ?, `commissionLat` = ? WHERE commissionID = ?";
   //const q = "UPDATE commission SET `commissionTitle` = ? WHERE `commissionID` = ?"
   const values = [
     //req.body.comEmployer,
@@ -239,6 +240,8 @@ app.put("/update-commission/:commissionID", (req, res) => {
     //req.body.comStatus,
     //req.body.catcherID,
     req.body.ContactNo,
+    req.body.comLong,
+    req.body.comLat,
   ];
 
   db.query(q, [...values, commissionID], (err, data) => {

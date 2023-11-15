@@ -1,5 +1,5 @@
 import React from "react";
-import "ErrandInput.css";
+import "./ErrandInput.css";
 
 function ErrandInputs(props) {
   return (
@@ -11,6 +11,7 @@ function ErrandInputs(props) {
           placeholder="Errand Title"
           onChange={props.handleChange}
           name={props.title}
+          value={props.titleValue}
         />
       </label>
       <label>
@@ -20,6 +21,7 @@ function ErrandInputs(props) {
           placeholder="Deadline"
           onChange={props.handleChange}
           name={props.deadline}
+          value={props.dlValue}
         />
       </label>
       <br />
@@ -30,6 +32,7 @@ function ErrandInputs(props) {
           placeholder="Location"
           onChange={props.handleChange}
           name={props.location}
+          value={props.locValue}
         />
       </label>
       <br />
@@ -57,6 +60,7 @@ function ErrandInputs(props) {
           placeholder="Description"
           onChange={props.handleChange}
           name={props.desc}
+          value={props.descValue}
         />
       </label>
       <br />
@@ -67,6 +71,7 @@ function ErrandInputs(props) {
           placeholder="0.00"
           onChange={props.handleChange}
           name={props.pay}
+          value={props.payValue}
         />
       </label>
       <label>
@@ -76,6 +81,7 @@ function ErrandInputs(props) {
           placeholder="Phone/Telephone number"
           onChange={props.handleChange}
           name={props.number}
+          value={props.numValue}
         />
       </label>
 

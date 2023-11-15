@@ -28,14 +28,6 @@ const PostCommission = () => {
   const userID = location.pathname.split("/")[2];
   //use state for adding marker
   const [addingMarker, setAddingMarker] = useState(false);
-  const [lng, setLng] = useState(123.8854);
-  const [lat, setLat] = useState(10.3157);
-
-  // Event handler to toggle marker adding mode
-  const handleAddMarkerClick = () => {
-    console.log("Add Marker button clicked");
-    setAddingMarker(!addingMarker); // Toggle the mode
-  };
 
   const [currentLocationMarker, setCurrentLocationMarker] = useState(null);
 
@@ -78,27 +70,8 @@ const PostCommission = () => {
     }
   };
   //event handler when user add marker
-  const handleMapClick = (e) => {
-    if (addingMarker) {
-      const { lng, lat } = e.lngLat;
 
-      // If there's no existing marker, create a new marker
-      if (!markerLngLat) {
-        setMarkerLngLat([lng, lat]);
-      } else {
-        // Move the existing marker to the new location
-        setMarkerLngLat([lng, lat]);
-      }
-
-      // Log the longitude and latitude
-      console.log("Clicked at Longitude:", lng);
-      console.log("Clicked at Latitude:", lat);
-
-      setCommission((prev) => ({ ...prev, comLong: lng, comLat: lat }));
-      setAddingMarker(false); // Disable marker adding mode after adding or moving the marker
-    }
-  };
-
+  //variables for map
   const mapContainer = useRef(null);
   const map = useRef(null);
   const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
@@ -171,11 +144,9 @@ const PostCommission = () => {
         pay="comPay"
         number="Contactno"
         mapContainer={mapContainer}
-        handleAddMarkerClick={handleAddMarkerClick}
         long={commission.comLong}
         lat={commission.comLat}
       />
-      <button onClick={handleAddMarkerClick}>Add Marker</button>
       <button onClick={handleClick}>POST</button>
     </>
   );
