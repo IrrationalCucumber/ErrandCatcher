@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import "./SignUp.css";
 import "./Error.css"; // Import your custom CSS for styling
+import "./signin.css";
 
 const SignIn = () => {
   const [username, setUsername] = useState(""); //username
@@ -15,10 +15,10 @@ const SignIn = () => {
     setRememberMe(e.target.checked);
   };
   //go-to-page function
+
   const navigate = useNavigate();
 
   const handleClick = async () => {
-    //error handling
     if (!username || !password) {
       setErrorMessage("Please fill in both username and password.");
       return;
@@ -30,7 +30,7 @@ const SignIn = () => {
       });
 
       const user = res.data[0];
-      // check user type
+
       if (user) {
         setUserID(user.userID);
         if (user.accountType === "Employer") {
@@ -64,32 +64,33 @@ const SignIn = () => {
 
   return (
     <div className="si">
-      <form>
-        <div className="cont">
+      <div className="cont">
+        <div className="si-txt">
           <h1>WELCOME TO ERRAND CATCHER</h1>
-          <p>Sign-in now to get in</p>
-          <input
-            className={errorMessage ? "error" : "in"}
-            name="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            type="text"
-            placeholder="Username"
-          />
-          <input
-            className={errorMessage ? "error" : "in"}
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-            placeholder="Password"
-          />
-          <br />
-          <p className="em">
-            <i>{errorMessage}</i>
-          </p>
-          <br />
-          <br />
+          <h3>Sign-in now to blah blah blah</h3>
+        </div>
+
+        <input
+          className={errorMessage ? "error" : ""}
+          name="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          type="text"
+          placeholder="Username"
+        />
+        <input
+          className={errorMessage ? "error" : ""}
+          name="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          type="password"
+          placeholder="Password"
+        />
+        <p className="em">
+          <i>{errorMessage}</i>
+        </p>
+        <button onClick={handleClick}>Sign In</button>
+        <p>
           <label className="rem" htmlFor="rememberMe">
             Remember&nbsp;Me
             <input
@@ -100,17 +101,11 @@ const SignIn = () => {
             />
           </label>
 
-          <button className="in" onClick={handleClick}>
-            Sign In
-          </button>
-
-          <p>
-            <i>
-              Don't have an Account? Sign-up <Link to="/sign-up">here!</Link>
-            </i>
-          </p>
-        </div>
-      </form>
+          <i>
+            Don't have an Account? Sign-up <Link to="/sign-up">here!</Link>
+          </i>
+        </p>
+      </div>
     </div>
   );
 };
