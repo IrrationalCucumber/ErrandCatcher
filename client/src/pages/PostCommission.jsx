@@ -3,7 +3,7 @@ import maplibregl from "maplibre-gl";
 //import 'maplibre-gl/dist/maplibre-gl.css';
 import axios from "axios";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-//import './PostCommission.css'; // Import your CSS file
+//import "./PostCommission.css"; // Import your CSS file
 import ErrandInputs from "../components/ErrandInputs";
 
 const PostCommission = () => {
@@ -133,20 +133,23 @@ const PostCommission = () => {
 
   return (
     <>
-      <ErrandInputs
-        handleChange={handleChange}
-        title="comTitle"
-        deadline="comDeadline"
-        location="comLocation"
-        type="comType"
-        typeValue={commission.comType}
-        desc="comDescription"
-        pay="comPay"
-        number="Contactno"
-        mapContainer={mapContainer}
-        long={commission.comLong}
-        lat={commission.comLat}
-      />
+      <div className="errand-cont">
+        <ErrandInputs
+          handleChange={handleChange}
+          title="comTitle"
+          deadline="comDeadline"
+          location="comLocation"
+          type="comType"
+          typeValue={commission.comType}
+          desc="comDescription"
+          pay="comPay"
+          number="Contactno"
+          mapContainer={mapContainer}
+          long={commission.comLong}
+          lat={commission.comLat}
+        />
+      </div>
+
       <button onClick={handleClick}>POST</button>
     </>
   );

@@ -161,7 +161,7 @@ const UpdateCommission = () => {
   console.log(commission);
 
   return (
-    <div className="form">
+    <div className="errand-cont">
       <ErrandInputs
         handleChange={handleChange}
         title="comTitle"
@@ -182,6 +182,7 @@ const UpdateCommission = () => {
         long={commission.comLong}
         lat={commission.comLat}
       />
+      <br />
       <button
         className="formButton"
         onClick={() => handleDelete(commission.commissionID)}
