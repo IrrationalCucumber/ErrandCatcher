@@ -1,21 +1,24 @@
-.in{
-    flex: 1;
-    flex-direction: column;
-    justify-content: center;
-   
-}
-div.in{
+.errand-cont{
     position: relative;
-    width: 369px;
-    height: 200px;
-    top: 100px;
-    left: 560px;
-    line-height: 1.5;
 }
 
+.input-cont{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    border: solid 2px;
+}
 
-.backhome{
- background-color: lightblue;
+.errand-inputs{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
 
+.map--wrap{
+    border: 5px solid;
+    border-color: brown;
+    width: 500;
+    height: 400px;
 
 }

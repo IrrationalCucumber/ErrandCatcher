@@ -3,7 +3,7 @@ import maplibregl from "maplibre-gl";
 //import 'maplibre-gl/dist/maplibre-gl.css';
 import axios from "axios";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-//import "./PostCommission.css"; // Import your CSS file
+import "./PostCommission.css"; // Import your CSS file
 import ErrandInputs from "../components/ErrandInputs";
 
 const PostCommission = () => {

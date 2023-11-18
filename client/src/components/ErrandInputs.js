@@ -1,10 +1,10 @@
 import React from "react";
-import "./ErrandInput.css";
+//import "./ErrandInput.css";
 
 function ErrandInputs(props) {
   return (
     <>
-      <div className="errand-cont">
+      <div className="input-cont">
         <div className="errand-inputs">
           <label>
             Commission Title
@@ -101,9 +101,12 @@ function ErrandInputs(props) {
             <p>Y: {props.lat}</p>
           </label>
         </div>
-      </div>
-      <div className="map-post-wrap">
-        <div ref={props.mapContainer} className="map" />
+        <div className="map--wrap">
+          <div ref={props.mapContainer} className="map" />
+        </div>
+        <button className="" onClick={props.onClick}>
+          {props.buttonName}
+        </button>
       </div>
     </>
   );
