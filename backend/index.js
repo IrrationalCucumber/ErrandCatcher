@@ -35,11 +35,20 @@ app.get("/commission", (req, res) => {
     return res.json(data);
   });
 });
+//========================DIPSLAY ENPOIN=============================
 //commission list based on user id
 app.get("/your-commission/:userID", (req, res) => {
   const userID = req.params.userID; // Use req.params.userID to get the route parameter
   const q = "Select * from commission where employerID = ?";
   db.query(q, [userID], (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+});
+//display 10 recent posted commissino
+app.get("/recent-commission", (req, res) => {
+  const q = "Select * from commission order by DatePosted DESC LIMIT 10";
+  db.query(q, (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
   });
