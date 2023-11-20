@@ -60,6 +60,20 @@ const UpdateCommission = () => {
     }
   };
 
+  //get the coordinates of the cerrand
+  const fetchLoc = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8800/commission/${commissionID}`
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  };
+
   //pre-fill the fields
   useEffect(() => {
     const fetchCommission = async () => {
@@ -116,17 +130,44 @@ const UpdateCommission = () => {
 
     map.current.addControl(new maplibregl.NavigationControl(), "top-right");
 
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const currentLng = position.coords.longitude;
-        const currentLat = position.coords.latitude;
+    //if ("geolocation" in navigator) {
+    //   navigator.geolocation.getCurrentPosition((position) => {
+    //     const currentLng = position.coords.longitude;
+    //     const currentLat = position.coords.latitude;
+    //     const marker = new maplibregl.Marker({
+    //       color: "#00FF00",
+    //       draggable: true,
+    //     }) // Set draggable to true
+    //       .setLngLat([currentLng, currentLat])
+    //       .setPopup(new maplibregl.Popup().setHTML("<h3>Add location</h3>"))
+    //       .addTo(map.current);
+    //     setCurrentLocationMarker(marker);
+    //     // Event listener for marker dragend event
+    //     marker.on("dragend", () => {
+    //       const newLngLat = marker.getLngLat();
+    //       setCommission((prev) => ({
+    //         ...prev,
+    //         comLong: newLngLat.lng,
+    //         comLat: newLngLat.lat,
+    //       }));
+    //     });
+    //   });
 
+    //display the current coordinate of the errand
+    fetchLoc().then((commissions) => {
+      commissions.forEach((commission) => {
+        const currentLng = commission.commissionLong;
+        const currentLat = commission.commissionLat;
         const marker = new maplibregl.Marker({
-          color: "#00FF00",
+          color: "#FF0000",
           draggable: true,
-        }) // Set draggable to true
+        }) // Red marker for commissions
           .setLngLat([currentLng, currentLat])
-          .setPopup(new maplibregl.Popup().setHTML("<h3>Add location</h3>"))
+          .setPopup(
+            new maplibregl.Popup().setHTML(
+              `<h3>${commission.commissionTitle}</h3><p>${commission.commissionDesc}</p>`
+            )
+          )
           .addTo(map.current);
 
         setCurrentLocationMarker(marker);
@@ -141,8 +182,29 @@ const UpdateCommission = () => {
           }));
         });
       });
-    }
+    });
   }, [API_KEY, zoom]);
+
+  // Handle dragend event of the marker to update coordinates
+  useEffect(() => {
+    if (currentLocationMarker) {
+      const updateLngLat = () => {
+        const newLngLat = currentLocationMarker.getLngLat();
+        setCommission((prev) => ({
+          ...prev,
+          comLong: newLngLat.lng,
+          comLat: newLngLat.lat,
+        }));
+      };
+
+      currentLocationMarker.on("dragend", updateLngLat);
+
+      return () => {
+        // Remove the event listener when the component unmounts
+        currentLocationMarker.off("dragend", updateLngLat);
+      };
+    }
+  }, [currentLocationMarker]);
 
   const handleClick = async (e) => {
     e.preventDefault();

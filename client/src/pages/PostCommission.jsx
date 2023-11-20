@@ -27,7 +27,7 @@ const PostCommission = () => {
   const location = useLocation();
   const userID = location.pathname.split("/")[2];
   //use state for adding marker
-  const [addingMarker, setAddingMarker] = useState(false);
+  //const [addingMarker, setAddingMarker] = useState(false);
 
   const [currentLocationMarker, setCurrentLocationMarker] = useState(null);
 

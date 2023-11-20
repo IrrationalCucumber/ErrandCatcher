@@ -94,19 +94,15 @@ function ErrandInputs(props) {
           <br />
 
           <button onClick={props.handleAddMarkerClick}>Add Marker</button>
-          <label>
-            <p>X: {props.long}</p>
-          </label>
-          <label>
-            <p>Y: {props.lat}</p>
-          </label>
         </div>
         <div className="map--wrap">
-          <div ref={props.mapContainer} className="map" />
+          <label>
+            <p>
+              X: {props.long} Y: {props.lat}
+            </p>
+          </label>
+          <div ref={props.mapContainer} className="map-small" />
         </div>
-        <button className="" onClick={props.onClick}>
-          {props.buttonName}
-        </button>
       </div>
     </>
   );
