@@ -29,6 +29,7 @@ const SignIn = () => {
         params: { username: username, password: password },
       });
 
+      console.log("Response from server:", res.data); //debug
       const user = res.data[0];
 
       if (user) {
@@ -50,7 +51,7 @@ const SignIn = () => {
         localStorage.removeItem("rememberMe");
       }
     } catch (err) {
-      console.log(err);
+      console.error("Error during sign-in:", err);
     }
   };
   //handle rember me if check
