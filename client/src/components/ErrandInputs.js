@@ -92,7 +92,7 @@ function ErrandInputs(props) {
             </div>
             <div className="col2">
               <textarea
-                cols="20"
+                cols="26"
                 rows="11"
                 type="text"
                 placeholder="Description"
@@ -104,12 +104,10 @@ function ErrandInputs(props) {
           </div>
         </div>
         <div className="map--wrap">
-          <label>
-            <p>
-              X: {props.long} Y: {props.lat}
-            </p>
-          </label>
           <div ref={props.mapContainer} className="map-small" />
+          <p className="coord">
+            X: {props.long} Y: {props.lat}
+          </p>
         </div>
       </div>
     </>

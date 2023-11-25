@@ -8,7 +8,7 @@
     flex-direction: row;
     position: relative;
     border: solid 2px;
-    padding: 0px 20px 0px 20px;
+    padding: 0px 0px 0px 0px;
 }
 
 .errand-inputs{
@@ -18,7 +18,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 40%;
+  width: 50%;
 }
 
 .rowan{
@@ -29,25 +29,31 @@
 
 .col1{
     float: left;
-    width: 30%;
+    width: 40%;
     margin-top: 6px;
 }
     
 .col2{
     float: left;
-    width: 70%;
+    width: 60%;
     margin-top: 6px;
 }
 
 .map--wrap{
-    border: 5px solid;
-    border-color: brown;
-    width: 400px;
-    height: 400px;
+
+    margin: 5px;
+    width: 700px;
+    height: 500px;
+    font-size: small;
+
+}
+
+.coord{
+    display: none;
 }
 
 .map-small{
-    width: 500px;
-    height: 400px;
+    width: 700px;
+    height: 490px;
     position: relative;
 }
