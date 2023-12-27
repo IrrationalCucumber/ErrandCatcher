@@ -1,5 +1,6 @@
 .errand-cont{
     position: relative;
+    padding: 20px;
 }
 
 .input-cont{
@@ -7,18 +8,52 @@
     flex-direction: row;
     position: relative;
     border: solid 2px;
+    padding: 0px 0px 0px 0px;
 }
 
 .errand-inputs{
-    position: relative;
-    display: flex;
-    flex-direction: column;
+    border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px 30px 20px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 50%;
+}
+
+.rowan{
+        content: "";
+        display: table;
+        clear: both;
+}
+
+.col1{
+    float: left;
+    width: 40%;
+    margin-top: 6px;
+}
+    
+.col2{
+    float: left;
+    width: 60%;
+    margin-top: 6px;
 }
 
 .map--wrap{
-    border: 5px solid;
-    border-color: brown;
-    width: 500;
-    height: 400px;
 
+    margin: 5px;
+    width: 700px;
+    height: 500px;
+    font-size: small;
+
+}
+
+.coord{
+    display: none;
+}
+
+.map-small{
+    width: 700px;
+    height: 490px;
+    position: relative;
 }
