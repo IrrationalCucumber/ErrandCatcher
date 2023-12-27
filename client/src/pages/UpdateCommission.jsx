@@ -4,7 +4,7 @@ import maplibregl from "maplibre-gl";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 //import "../style.css";
 import ErrandInputs from "../components/ErrandInputs";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/NavBarPage";
 
 const UpdateCommission = () => {
   const [commission, setCommission] = useState({
