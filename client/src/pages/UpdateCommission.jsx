@@ -4,6 +4,7 @@ import maplibregl from "maplibre-gl";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 //import "../style.css";
 import ErrandInputs from "../components/ErrandInputs";
+import Navbar from "../components/Navbar";
 
 const UpdateCommission = () => {
   const [commission, setCommission] = useState({
@@ -223,37 +224,50 @@ const UpdateCommission = () => {
   console.log(commission);
 
   return (
-    <div className="errand-cont">
-      <ErrandInputs
-        handleChange={handleChange}
-        title="comTitle"
-        titleValue={commission.comTitle}
-        deadline="comDeadline"
-        dlValue={commission.comDeadline}
-        location="comLocation"
-        locValue={commission.comLocation}
-        type="comType"
-        typeValue={commission.comType}
-        desc="comDescription"
-        descValue={commission.comDescription}
-        pay="comPay"
-        payValue={commission.comPay}
-        number="Contactno"
-        numValue={commission.ContactNo}
-        mapContainer={mapContainer}
-        long={commission.comLong}
-        lat={commission.comLat}
+    <div>
+      <Navbar
+        page1="HOME"
+        home={`/e-home/${userID}`}
+        page2="COMMISSIONS"
+        commissionList={`/commissions/${userID}`}
+        page3="APPLICANTS"
+        applicants={`/applicants/${userID}`}
+        map={`/map/${userID}`}
+        button="SIGN OUT"
+        pageButton="/sign-in"
       />
-      <br />
-      <button
-        className="formButton"
-        onClick={() => handleDelete(commission.commissionID)}
-      >
-        DELETE
-      </button>
-      <button className="formButton" onClick={handleClick}>
-        UPDATE
-      </button>
+      <div className="errand-cont">
+        <ErrandInputs
+          handleChange={handleChange}
+          title="comTitle"
+          titleValue={commission.comTitle}
+          deadline="comDeadline"
+          dlValue={commission.comDeadline}
+          location="comLocation"
+          locValue={commission.comLocation}
+          type="comType"
+          typeValue={commission.comType}
+          desc="comDescription"
+          descValue={commission.comDescription}
+          pay="comPay"
+          payValue={commission.comPay}
+          number="Contactno"
+          numValue={commission.ContactNo}
+          mapContainer={mapContainer}
+          long={commission.comLong}
+          lat={commission.comLat}
+        />
+        <br />
+        <button
+          className="formButton"
+          onClick={() => handleDelete(commission.commissionID)}
+        >
+          DELETE
+        </button>
+        <button className="formButton" onClick={handleClick}>
+          UPDATE
+        </button>
+      </div>
     </div>
   );
 };
