@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "./NavButton";
 import "./Navbar.css";
-import { ReactComponent as CustomIcon } from "../custom-icon.svg";
+import { useAuth } from "./AuthContext";
 
 function Navbar(props) {
   //change the state of the menu
@@ -28,9 +28,16 @@ function Navbar(props) {
   window.addEventListener("resize", showButton);
 
   //carry id to other page
+  //pathname to array from
   const location = useLocation();
   const userID = location.pathname.split("/")[2];
-  //pathname to array from
+  // log uot user
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <>

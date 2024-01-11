@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import "./Error.css"; // Import your custom CSS for styling
 import "./signin.css";
+import { useAuth } from "../components/AuthContext";
 
 const SignIn = () => {
   const [username, setUsername] = useState(""); //username
@@ -10,6 +11,8 @@ const SignIn = () => {
   const [userID, setUserID] = useState(""); //var for id
   const [errorMessage, setErrorMessage] = useState(""); //error message
   const [rememberMe, setRememberMe] = useState(false); //remember me function
+  const { login } = useAuth(); // Get the login function from useAuth
+
   //remeber me function
   const handleRememberMeChange = (e) => {
     setRememberMe(e.target.checked);
@@ -36,10 +39,13 @@ const SignIn = () => {
         setUserID(user.userID);
         if (user.accountType === "Employer") {
           navigate(`/e-home/${user.userID}`);
+          login();
         } else if (user.accountType === "admin") {
           navigate(`/admin-home`);
+          login();
         } else if (user.accountType === "Catcher") {
           navigate(`/c-home/${user.userID}`);
+          login();
         }
       } else {
         setErrorMessage("Invalid password/username");
