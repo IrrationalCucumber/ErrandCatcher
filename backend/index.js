@@ -53,7 +53,23 @@ app.get("/recent-commission", (req, res) => {
     return res.json(data);
   });
 });
+//==========================================CATEGORY=================================================================//
+//select type
+app.get("/type", (req, res) => {
+  const type = req.query.term; // Get the type from the query parameter
+  const q = "SELECT * FROM commission WHERE commissionType LIKE ?";
+  const values = [`%${type}%`];
 
+  db.query(q, values, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+//===================================================================================================================//
+//==========================================SEARCH FUNCTION==========================================================//
 //search account
 app.get("/search-user", (req, res) => {
   const searchTerm = req.query.term; // Get the search term from the query parameter
@@ -114,6 +130,8 @@ app.get("/search-employer-commission/:userID", (req, res) => {
     return res.json(data);
   });
 });
+//========================================================================================//
+
 //============================================SIGNUP==================================//
 //send data to userAccount
 app.post("/user", (req, res) => {
