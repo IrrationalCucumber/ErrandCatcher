@@ -56,7 +56,7 @@ app.get("/recent-commission", (req, res) => {
 //==========================================CATEGORY=================================================================//
 //select type
 app.get("/type", (req, res) => {
-  const type = req.query.term; // Get the type from the query parameter
+  const type = req.query.type; // Get the type from the query parameter
   const q = "SELECT * FROM commission WHERE commissionType LIKE ?";
   const values = [`%${type}%`];
 
