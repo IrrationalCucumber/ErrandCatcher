@@ -264,8 +264,6 @@ app.put("/update-commission/:commissionID", (req, res) => {
     req.body.comType,
     req.body.comDescription,
     req.body.comPay,
-    //req.body.comStatus,
-    //req.body.catcherID,
     req.body.ContactNo,
     req.body.comLong,
     req.body.comLat,
@@ -291,6 +289,23 @@ app.delete("/commission/:commissionID", (req, res) => {
       return res.status(500).json(err);
     }
     return res.json("Commission has been deleted");
+  });
+});
+
+//delete commission
+//with user id
+//check if user id is poster
+app.delete("/commission/:userID/:commissionID", (req, res) => {
+  const commissionID = req.params.commissionID;
+  const userID = req.params.userID;
+  const q = "DELETE FROM commission WHERE commissionID = ? AND userID = (?)";
+
+  db.query(q, [userID, commissionID], (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+    return res.json("I HAVE REDDIT");
   });
 });
 /**========================UPDATE ACCOUNT=============================== */
