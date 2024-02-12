@@ -83,12 +83,10 @@ function App() {
               exact
               Component={Notification}
             />
+            <Route path="/" exact Component={Home} />
           </Routes>
           <PrivateRoute path="/admin-home" element={<AdminHome />} />
         </AuthProvider>
-        <Routes>
-          <Route path="/" exact Component={Home} />
-        </Routes>
       </Router>
     </div>
   );
