@@ -1,0 +1,161 @@
+.profile{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  background-color: aqua;
+  padding: 20px 30px;
+  flex-wrap: wrap;
+}
+
+.profile-info{
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+}
+
+
+.description-form{
+  background-color: white;
+  padding: 30px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 20px;
+  flex-basis: 40%;
+}
+
+.description{
+  width: 100%;
+  height: 100px;
+  margin-bottom: 20px;
+}
+
+.info-form{
+  background-color: white;
+  padding: 30px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 20px;
+  flex-basis: 60%;
+}
+
+.profile label{
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  width: 200px;
+  display: inline-block;
+}
+
+.profile input,
+.profile select,
+.profile textarea:not(.description){
+  width: calc(100% - 22px);
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.profile button{
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #569bdc;
+  color: #fff;
+  border: none;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.profile button:last-child{
+  margin-right: 0;
+}
+
+.profile-info label.display-data{
+  color: blue;
+}
+
+.input-row {
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.PP{
+  display: inline-block;
+  width: 10px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  
+}
+
+.display-data{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.file{
+  display: none;
+}
+
+.File {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  width: 50px;
+  border: 1px dashed;
+  margin: 0 auto 20px; /* Center horizontally and add margin-bottom */
+}
+
+.File label {
+  color: #888; /* Initial color: gray */
+}
+
+.File label:hover {
+  color: #de0611; /* Hover color: red */
+}
+
+.File input[type="file"]:focus + label,
+.File input[type="file"]:active + label {
+  color: #de0611; /* Clicked color: red */
+}
+
+.FileContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.rating-box {
+  width: 150px;
+  height: 25px; 
+  background-color: transparent; 
+  border-style: ridge;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  padding-top: 5px;
+  padding-left: 5px;
+}
+
+.rating-box label{
+  font-size: small;
+}
+
+.username-container {
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  margin: 0 auto;
+}
+
+
