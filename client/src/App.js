@@ -29,64 +29,61 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <AuthProvider>
-          <Routes>
-            <Route path="/accounts" exact Component={AccountList} />
-            <Route path="/sign-in" element={<SignIn />} />
-            <Route path="/sign-up" exact Component={SignUp} />
-            <Route path="/profile" exact Component={Profile} />
-            <Route path="/add" exact Component={AddAccount} />
-            <Route
-              path="/post-commission/:userID"
-              exact
-              Component={PostCommission}
-            />
-            <Route path="/commission-list" exact Component={CommissionList} />
-            <Route
-              path="/update-account/:userID"
-              exact
-              Component={UpdateAccount}
-            />
-            <Route
-              path="/update-commission/:commissionID/:userID"
-              exact
-              Component={UpdateCommission}
-            />
-            {/* <Route path="/admin-home/:userID" element={<AdminHome />} /> */}
+        {/**<AuthProvider> */}
 
-            <Route path="/e-home/:userID" exact Component={EmployerHome} />
-            <Route
-              path="/commissions/:userID"
-              exact
-              Component={EmployerCommissions}
-            />
-            <Route path="/c-home/:userID" exact Component={CatcherHome} />
-            <Route
-              path="/view-commission/:commissionID/"
-              exact
-              Component={ViewCommission}
-            />
-            <Route
-              path="/apply-commission/:commissionID/:userID"
-              exact
-              Component={ApplyCommission}
-            />
-            <Route
-              path="/applicants/:userID"
-              exact
-              Component={EmployerApplicants}
-            />
-            <Route path="/map" element={<Map />} />
-            <Route path="/c-map" element={<CatcherMap />} />
-            <Route
-              path="/notifications/:userID"
-              exact
-              Component={Notification}
-            />
-            <Route path="/" exact Component={Home} />
-          </Routes>
-          <PrivateRoute path="/admin-home" element={<AdminHome />} />
-        </AuthProvider>
+        <Routes>
+          <Route path="/accounts" exact Component={AccountList} />
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/sign-up" exact Component={SignUp} />
+          <Route path="/profile" exact Component={Profile} />
+          <Route path="/add" exact Component={AddAccount} />
+          <Route
+            path="/post-commission/:userID"
+            exact
+            Component={PostCommission}
+          />
+          <Route path="/commission-list" exact Component={CommissionList} />
+          <Route
+            path="/update-account/:userID"
+            exact
+            Component={UpdateAccount}
+          />
+          <Route
+            path="/update-commission/:commissionID/:userID"
+            exact
+            Component={UpdateCommission}
+          />
+          {/* <Route path="/admin-home/:userID" element={<AdminHome />} /> */}
+
+          <Route path="/e-home/:userID" exact Component={EmployerHome} />
+          <Route
+            path="/commissions/:userID"
+            exact
+            Component={EmployerCommissions}
+          />
+          <Route path="/c-home/:userID" exact Component={CatcherHome} />
+          <Route
+            path="/view-commission/:commissionID/"
+            exact
+            Component={ViewCommission}
+          />
+          <Route
+            path="/apply-commission/:commissionID/:userID"
+            exact
+            Component={ApplyCommission}
+          />
+          <Route
+            path="/applicants/:userID"
+            exact
+            Component={EmployerApplicants}
+          />
+          <Route path="/map" element={<Map />} />
+          <Route path="/c-map" element={<CatcherMap />} />
+          <Route path="/notifications/:userID" exact Component={Notification} />
+          <Route path="/" exact Component={Home} />
+        </Routes>
+        {/**<PrivateRoute path="/admin-home" element={<AdminHome />} />
+        </AuthProvider>*/}
       </Router>
     </div>
   );

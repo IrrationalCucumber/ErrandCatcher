@@ -11,7 +11,7 @@ const SignIn = () => {
   const [userID, setUserID] = useState(""); //var for id
   const [errorMessage, setErrorMessage] = useState(""); //error message
   const [rememberMe, setRememberMe] = useState(false); //remember me function
-  const { login } = useAuth(); // Get the login function from useAuth
+  // const { login } = useAuth(); // Get the login function from useAuth
 
   //remeber me function
   const handleRememberMeChange = (e) => {
@@ -35,17 +35,18 @@ const SignIn = () => {
       console.log("Response from server:", res.data); //debug
       const user = res.data[0];
 
+      //revert login() function for PrivateBrowser
       if (user) {
         setUserID(user.userID);
         if (user.accountType === "Employer") {
           navigate(`/e-home/${user.userID}`);
-          login();
+          //login();
         } else if (user.accountType === "admin") {
           navigate(`/admin-home`);
-          login();
+          //login();
         } else if (user.accountType === "Catcher") {
           navigate(`/c-home/${user.userID}`);
-          login();
+          //login();
         }
       } else {
         setErrorMessage("Invalid password/username");

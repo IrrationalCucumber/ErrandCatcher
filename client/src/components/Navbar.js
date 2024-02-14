@@ -31,13 +31,14 @@ function Navbar(props) {
   //pathname to array from
   const location = useLocation();
   const userID = location.pathname.split("/")[2];
+  //REVERT THIS FOR PRIVATEROUTE
   // log uot user
-  const { logout } = useAuth();
-  const navigate = useNavigate();
-  const handleLogout = () => {
-    logout();
-    navigate("/");
-  };
+  // const { logout } = useAuth();
+  // const navigate = useNavigate();
+  // const handleLogout = () => {
+  //   logout();
+  //   navigate("/");
+  // };
 
   return (
     <>
