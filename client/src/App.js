@@ -81,6 +81,7 @@ function App() {
           <Route path="/c-map" element={<CatcherMap />} />
           <Route path="/notifications/:userID" exact Component={Notification} />
           <Route path="/" exact Component={Home} />
+          <Route path="/admin-home" element={<AdminHome />} />
         </Routes>
         {/**<PrivateRoute path="/admin-home" element={<AdminHome />} />
         </AuthProvider>*/}
