@@ -79,13 +79,3 @@ const Profile = () => {
 }
 
 export default Profile;
-
-//                    <select
-//name="gender"
-//onChange={handleChange}
-//value={account.gender}
-//>
-//<option value="">Choose gender....</option>
-//<option value="male">Male</option>
-//<option value="female">Female</option>
-//</select>
