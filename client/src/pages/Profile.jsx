@@ -3,6 +3,8 @@ import NavbarPage from '../components/CatcherPageNavbar';
 import './Profile.css';
 
 const Profile = () => {
+
+//design only
   return (
     <div>
       <NavbarPage /> 
@@ -80,7 +82,7 @@ const Profile = () => {
 
 export default Profile;
 
-/* toggle
+/* toggle if possible
 const [activeSection, setActiveSection] = useState('about');
 
 const toggleSection = (section) => {
