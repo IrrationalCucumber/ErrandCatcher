@@ -65,15 +65,28 @@
 }
 
 .profile button{
-  width: 100px;
-  height: 40px;
-  border-radius: 10px;
+  width: 200px;
+  height: 50px;
+  border-radius: 40px;
+  padding: 10px 0 5px 0;
   background-color:  #eca763;
   color: #fff;
   border: none;
   margin-top: 10px;
   margin-right: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
 }
+
+.profile button:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+.profile button:hover {
+  background-color: #e88c30;
+  border-color: #8e651b;
+}
+
 
 .profile button:last-child{
   margin-right: 0;
@@ -90,7 +103,9 @@
   font-size: 12px;
 }
 
-
+.toggle{
+  color: #3D342F;
+}
 
 .input-row {
   display: flex;

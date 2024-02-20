@@ -29,8 +29,8 @@ const Profile = () => {
         {/* User Information */}
           <div className='info-form'>
             <form>
-            <label>About</label>
-            <label>History</label>
+            <label className='toggle'>About</label>
+            <label className='toggle'>History</label>
             <div className='input-row'>
                   <label className='PP'>Name:</label>
                   <textarea type='text' className='display-data' placeholder='Name'></textarea>
@@ -79,3 +79,57 @@ const Profile = () => {
 }
 
 export default Profile;
+
+/* toggle
+const [activeSection, setActiveSection] = useState('about');
+
+const toggleSection = (section) => {
+    setActiveSection(section);
+
+/* About section */
+          //<div className='username-container'>
+          //<label className='username' onClick={() => toggleSection('about')}>About</label>
+          //{activeSection === 'about' && (
+            //<div className='info-form'>
+              //<label>About</label>
+              //<div className='input-row'>
+                //<label className='PP'>Name:</label>
+                //<textarea type='text' className='display-data' placeholder='Name'></textarea>
+              //</div>
+              //<div className='input-row'>
+                //<label className='PP'>Email Address:</label>
+                //<textarea type='text' className='display-data' placeholder='Email Address'></textarea>
+              //</div>
+              //<div className='input-row'>
+                //<label className='PP'>Contact Number:</label>
+                //<textarea type='number' className='display-data' placeholder='Contact Number'></textarea>
+              //</div>
+              //<div className='input-row'>
+                //<label className='PP'>Address:</label>
+                //<textarea type='text' className='display-data' placeholder='Address'></textarea>
+              //</div>  
+              //<div className='input-row'>
+                //<label className='PP'>Birth Date</label>
+                //<textarea type='number' className='display-data1' placeholder='Date of birth'></textarea>
+              //</div>
+              //<div className='input-row'>
+                //<label className='PP'>Age</label>
+                //<textarea type='number' className='display-data1' placeholder='Age'> 00</textarea>
+              //</div>
+              //<div className='input-row'>
+                //<label className='PP'>Gender</label>
+                //<select className='display-data1'> gender
+                  //<option value="">Choose gender....</option>
+                  //<option value="male">Male</option>
+                  //<option value="female">Female</option>
+                //</select>
+              //</div>
+              //<button>Save</button>
+              //<button>Edit</button>
+            //</div>
+//History section
+//<div className='username-container'>
+//<label className='history' onClick={() => toggleSection('history')}>History</label>
+//{activeSection === 'history' && (
+//  <div>
+//  </div>
