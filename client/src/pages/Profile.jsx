@@ -1,6 +1,6 @@
 import React from 'react';
 import NavbarPage from '../components/CatcherPageNavbar';
-import './profile.css';
+import './Profile.css';
 
 const Profile = () => {
   return (
@@ -22,7 +22,6 @@ const Profile = () => {
                 <label className='Rating'>Rating</label>
                 <label className='RateNo'>00 / 05</label>
               </div>
-  
               <textarea className='description' placeholder='Description'></textarea>
             </form>
           </div>
@@ -34,31 +33,39 @@ const Profile = () => {
             <label>History</label>
             <div className='input-row'>
                   <label className='PP'>Name:</label>
-                  <label type='text' className='display-data'>hello</label>
+                  <textarea type='text' className='display-data' placeholder='Name'></textarea>
+                  <div className='textarea-container'>
+                  {/*<label htmlFor="name" className='username'>Name</label> */}
+
+                  </div>  
             </div>
             <div className='input-row'>
                   <label className='PP'>Email Address:</label>
-                  <label type='text' className='display-data'>hello</label>
+                  <textarea type='text' className='display-data' placeholder='Email Address'></textarea>
             </div>
             <div className='input-row'>
                   <label className='PP'>Contact Number:</label>
-                  <label type='number' className='display-data'>hello</label>
+                  <textarea type='number' className='display-data' placeholder='Contact Number'></textarea>
             </div>
             <div className='input-row'>
                   <label className='PP'>Address:</label>
-                  <label type='text' className='display-data'> hello</label>
-            </div>
-            <div className='input-row1'>
+                  <textarea type='text' className='display-data' placeholder='Address'></textarea>
+            </div>  
+            <div className='input-row'>
                   <label className='PP'>Birth Date</label>
-                  <label type='number' className='display-data1'> 00-00-0000</label>
+                  <textarea type='number' className='display-data1' placeholder='Date of birth'></textarea>
             </div>
-            <div className='input-row1'>
+            <div className='input-row'>
                   <label className='PP'>Age</label>
-                  <label type='number' className='display-data1'> 00</label>
+                  <textarea type='number' className='display-data1' placeholder='Age'> 00</textarea>
             </div>
-            <div className='input-row1'>
+            <div className='input-row'>
                   <label className='PP'>Gender</label>
-                  <label className='display-data1'> gender</label>
+                  <select className='display-data1'> gender
+                  <option value="">Choose gender....</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
             </div>
             
               <button>Save</button>
@@ -72,3 +79,13 @@ const Profile = () => {
 }
 
 export default Profile;
+
+//                    <select
+//name="gender"
+//onChange={handleChange}
+//value={account.gender}
+//>
+//<option value="">Choose gender....</option>
+//<option value="male">Male</option>
+//<option value="female">Female</option>
+//</select>
