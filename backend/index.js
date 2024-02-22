@@ -519,9 +519,25 @@ app.put("/notif-read/:notificationID/:userID/", (req, res) => {
 //=========================END MODULE==============================//
 //===========================RATING================================//
 //ADS - 22/02/24
+
+//Retrieve all saved Feedback
+//ALTER FOR ADMIN USE
+// NEED TESTING
+app.get("/user-feedbacks/", (req, res) => {
+  const q = "SELECT * FROM feedback ORDER BY notifDate DESC";
+
+  db.query(q, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+
 //Retrieve feedback data of Catcher
-//
-app.get("/user-rating/:userID", (req, res) => {
+//NEED TESTING
+app.get("/user-feedbacks/:userID", (req, res) => {
   const userID = req.params.userID;
   const q =
     "SELECT * FROM feedback WHERE `userID` = (?) ORDER BY notifDate DESC";
@@ -534,6 +550,27 @@ app.get("/user-rating/:userID", (req, res) => {
     return res.json(data);
   });
 });
+
+//Save feedback of the Epmloyer
+//VARIABLES SUBJECT TO CHANGE BASED ON ERD AND DB
+app.post("/rate", (req, res) => {
+  const q =
+    "INSERT INTO feedback (`catcherID`, `feedbackComment`, `feedbackCount`, `feedbackDate`, employerID) VALUES (?)";
+  const values = [
+    req.body.catcherID,
+    req.body.feedbackComment,
+    req.body.feedbackCount,
+    req.body.feedbackDate,
+    req.body.employerID,
+  ];
+  db.query(q, [values], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("Feedback added");
+  });
+});
+
+//=========================END MODULE==============================//
+
 app.listen(8800, () => {
   console.log("connected to backend!");
 });
