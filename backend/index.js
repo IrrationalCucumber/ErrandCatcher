@@ -517,7 +517,23 @@ app.put("/notif-read/:notificationID/:userID/", (req, res) => {
 });
 
 //=========================END MODULE==============================//
+//===========================RATING================================//
+//ADS - 22/02/24
+//Retrieve feedback data of Catcher
+//
+app.get("/user-rating/:userID", (req, res) => {
+  const userID = req.params.userID;
+  const q =
+    "SELECT * FROM feedback WHERE `userID` = (?) ORDER BY notifDate DESC";
 
+  db.query(q, [userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
 app.listen(8800, () => {
   console.log("connected to backend!");
 });
