@@ -551,6 +551,21 @@ app.get("/user-feedbacks/:userID", (req, res) => {
   });
 });
 
+//Display the average rating of feedbackCount of the Catcher
+//NEED TESTING
+app.get("/user-feedbacks/:userID", (req, res) => {
+  const userID = req.params.userID;
+  const q = "select avg(*) as 'a' from feedbackCount where catcherID = (?)";
+
+  db.query(q, [userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+
 //Save feedback of the Epmloyer
 //VARIABLES SUBJECT TO CHANGE BASED ON ERD AND DB
 app.post("/rate", (req, res) => {
