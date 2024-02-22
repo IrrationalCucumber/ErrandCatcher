@@ -6,8 +6,11 @@
 
 #### Ashley Belle Carcuevas
 #### Lorry Mae Halina
+#### Angel Diane Ocier
 #### Trisha Mae Sasing
 #### Adrean Paul Soroño
+#### Raymund Valeroso
+
 
 ## REMINDERS:
 ##### After cloning, perform 'npm install' on the directory.
