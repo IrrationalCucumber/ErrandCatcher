@@ -472,7 +472,22 @@ app.get("/notification", (req, res) => {
 app.get("/show-notif/:userID", (req, res) => {
   const userID = req.params.userID;
   const q =
-    "SELECT * FROM notification WHERE `isRead` = 'no' AND `userID` = (?) ORDER BY notifDate DESC";
+    "SELECT * FROM notification WHERE `isRead` = 'no' AND `notifUserID` = (?) ORDER BY notifDate DESC";
+
+  db.query(q, [userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+// ADS 24/02/24
+//retrieve number of unread notif of user
+app.get("/show-notif/:userID", (req, res) => {
+  const notifUserID = req.params.userID;
+  const q =
+    "select count(*) as 'c' from notification where notifUserID = (?) AND isRead = 'No' ORDER BY notifDate ASC";
 
   db.query(q, [userID], (err, data) => {
     if (err) {
