@@ -178,6 +178,13 @@ const SignUp = () => {
                     />
                     <input
                       className={employerErrorMessage ? "error" : ""}
+                      type="email"
+                      placeholder="Email address"
+                      onChange={handleChange}
+                      name="email"
+                    />
+                    <input
+                      className={employerErrorMessage ? "error" : ""}
                       type="password"
                       placeholder="Password (8-20)"
                       onChange={handleChange}
@@ -190,63 +197,7 @@ const SignUp = () => {
                       onChange={handleChange}
                       name="password2"
                     />
-                    <input
-                      className={employerErrorMessage ? "error" : ""}
-                      type="text"
-                      placeholder="First name"
-                      onChange={handleChange}
-                      name="fname"
-                    />
-                    <input
-                      className={employerErrorMessage ? "error" : ""}
-                      type="text"
-                      placeholder="Last name"
-                      onChange={handleChange}
-                      name="lname"
-                    />
-                    <select
-                      name="gender"
-                      onChange={handleChange}
-                      value={account.gender}
-                    >
-                      <option value="">Choose gender....</option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                    </select>
-                    <input
-                      className={employerErrorMessage ? "error" : ""}
-                      type="text"
-                      placeholder="contact number"
-                      onChange={handleChange}
-                      name="contact"
-                    />
-                    <input
-                      className={employerErrorMessage ? "error" : ""}
-                      type="date"
-                      onChange={handleChange}
-                      name="bday"
-                    />
-                    <input
-                      className={employerErrorMessage ? "error" : ""}
-                      type="number"
-                      placeholder="Age"
-                      onChange={handleChange}
-                      name="age"
-                    />
-                    <input
-                      className={employerErrorMessage ? "error" : ""}
-                      type="email"
-                      placeholder="Email address"
-                      onChange={handleChange}
-                      name="email"
-                    />
-                    <input
-                      className={employerErrorMessage ? "error" : ""}
-                      type="text"
-                      placeholder="Address"
-                      onChange={handleChange}
-                      name="address"
-                    />
+                    
                     <br />
                     <p className="em">
                       <i>{employerErrorMessage}</i>
@@ -283,6 +234,13 @@ const SignUp = () => {
                     />
                     <input
                       className={catcherErrorMessage ? "error" : ""}
+                      type="email"
+                      placeholder="Email address"
+                      onChange={handleChange}
+                      name="email"
+                    />
+                    <input
+                      className={catcherErrorMessage ? "error" : ""}
                       type="password"
                       placeholder="Password (8-20 characters)"
                       onChange={handleChange}
@@ -295,63 +253,7 @@ const SignUp = () => {
                       onChange={handleChange}
                       name="password2"
                     />
-                    <input
-                      className={catcherErrorMessage ? "error" : ""}
-                      type="text"
-                      placeholder="First name"
-                      onChange={handleChange}
-                      name="fname"
-                    />
-                    <input
-                      className={catcherErrorMessage ? "error" : ""}
-                      type="text"
-                      placeholder="Last name"
-                      onChange={handleChange}
-                      name="lname"
-                    />
-                    <select
-                      name="gender"
-                      onChange={handleChange}
-                      value={account.gender}
-                    >
-                      <option value="">Choose gender....</option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                    </select>
-                    <input
-                      className={catcherErrorMessage ? "error" : ""}
-                      type="text"
-                      placeholder="contact number"
-                      onChange={handleChange}
-                      name="contact"
-                    />
-                    <input
-                      className={catcherErrorMessage ? "error" : ""}
-                      type="date"
-                      onChange={handleChange}
-                      name="bday"
-                    />
-                    <input
-                      className={catcherErrorMessage ? "error" : ""}
-                      type="number"
-                      placeholder="Age"
-                      onChange={handleChange}
-                      name="age"
-                    />
-                    <input
-                      className={catcherErrorMessage ? "error" : ""}
-                      type="email"
-                      placeholder="Email address"
-                      onChange={handleChange}
-                      name="email"
-                    />
-                    <input
-                      className={catcherErrorMessage ? "error" : ""}
-                      type="text"
-                      placeholder="Address"
-                      onChange={handleChange}
-                      name="address"
-                    />
+                    
                     <br />
                     <p className="em">
                       <i>{catcherErrorMessage}</i>

@@ -4,7 +4,7 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    /* padding: 30px 20px 30px 20px; */
+    padding: 60px; 
   }
   
   label{
@@ -101,16 +101,19 @@
     font-weight: 600;
     color: #fff;
     text-align: center;
+    padding:20px 0 5px 0;
   }
   
   .cover .text .text-2 {
     font-size: 15px;
     font-weight: 500;
+    
   }
   
   .container .forms {
     height: 100%;
     width: 100%;
+    padding:20px 0 5px 0;
     background: #fff;
   }
   
@@ -118,29 +121,69 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    height: 500px;
   }
   
-  .form-content .Catcher-form,
+  .form-content .Catcher-form{
+    width: calc(100% / 2 - 25px);
+    height: 50;
+    padding: 20px 0 5px 0;
+
+  }
+
+
   .form-content .employer-form {
     width: calc(100% / 2 - 25px);
+    height: 50;
+    padding: 20px 0 5px 10;
+    position: center;
+ 
   }
   
   .forms .form-content .title {
     position: relative;
-    font-size: 24px;
+    font-size: 25px;
     font-weight: 500;
     color: #333;
+    font-weight: bold;
   }
   .input-boxes{
-   line-height-step: 2%;
-   margin-top: 10px;
+   line-height-step: 5%;
+   margin-top: 20px;
    margin-bottom: 10px;
-   margin-right: 11px;
+   margin-right: 10px;
    margin-left: 10px;
+   text-align: center;
   }
 
   .toSignIn {
-    padding: 15px 0 5px 0;
+    padding: 20px 0 5px 0;
+  }
+
+  .text{
+    padding:20px 0 5px 0;
+  }
+
+  .button1 button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 50px;
+    padding:10px 0 5px 0;
+    background-color: #eca763;
+    color: #fff;
+    border-radius: 40px;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  
+  .input-box{
+    margin: 55px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 
   
