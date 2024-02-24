@@ -566,11 +566,10 @@ app.get("/user-feedbacks/:userID", (req, res) => {
 });
 
 //Display the average rating of feedbackCount of the Catcher
-//NEED TESTING -OK
-app.get("/user-feedbacks/:userID", (req, res) => {
+app.get("/user-rating/:userID", (req, res) => {
   const userID = req.params.userID;
   const q =
-    "select avg(*) as 'a' from feedbackcommission where catcherID = (?)";
+    "select avg(feedbackRate) as 'c' from feedbackcommission where feedbackCatcherID = (?)";
 
   db.query(q, [userID], (err, data) => {
     if (err) {
