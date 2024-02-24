@@ -524,7 +524,7 @@ app.put("/notif-read/:notificationID/:userID/", (req, res) => {
 //ALTER FOR ADMIN USE
 // NEED TESTING
 app.get("/user-feedbacks/", (req, res) => {
-  const q = "SELECT * FROM feedback ORDER BY notifDate DESC";
+  const q = "SELECT * FROM feedbackcommission ORDER BY notifDate DESC";
 
   db.query(q, (err, data) => {
     if (err) {
@@ -540,7 +540,7 @@ app.get("/user-feedbacks/", (req, res) => {
 app.get("/user-feedbacks/:userID", (req, res) => {
   const userID = req.params.userID;
   const q =
-    "SELECT * FROM feedback WHERE `userID` = (?) ORDER BY notifDate DESC";
+    "SELECT * FROM feedbackcommission WHERE `userID` = (?) ORDER BY notifDate DESC";
 
   db.query(q, [userID], (err, data) => {
     if (err) {
@@ -555,7 +555,8 @@ app.get("/user-feedbacks/:userID", (req, res) => {
 //NEED TESTING
 app.get("/user-feedbacks/:userID", (req, res) => {
   const userID = req.params.userID;
-  const q = "select avg(*) as 'a' from feedbackCount where catcherID = (?)";
+  const q =
+    "select avg(*) as 'a' from feedbackcommission where catcherID = (?)";
 
   db.query(q, [userID], (err, data) => {
     if (err) {
@@ -570,7 +571,7 @@ app.get("/user-feedbacks/:userID", (req, res) => {
 //VARIABLES SUBJECT TO CHANGE BASED ON ERD AND DB
 app.post("/rate", (req, res) => {
   const q =
-    "INSERT INTO feedback (`catcherID`, `commissionID`, `feedbackComment`, `feedbackCount`, `feedbackDate`, `employerID`) VALUES (?)";
+    "INSERT INTO feedbackcommission (`catcherID`, `commissionID`, `feedbackComment`, `feedbackCount`, `feedbackDate`, `employerID`) VALUES (?)";
   const values = [
     req.body.catcherID,
     req.body.commissionID,
