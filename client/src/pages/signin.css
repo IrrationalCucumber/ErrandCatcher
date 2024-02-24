@@ -5,54 +5,118 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    padding: 0px 20px 0px 20px;
-    height: 605px;
+    height: 750px;
     background: url('../../public/images/tawo.png') center;
-    background-size: 460px 620px;
+    background-size: 560px 620px;
   }
   
   .cont {
     position: relative;
-    display: flex;
+    max-width: 850px;
     justify-content: center;
     flex-direction: column;
     align-items: center;
     padding: 150px 0px 150px 0px;
-    width: 460px;
-    height: 605px;
+    width: 500px;
+    height: 600px;
     border-radius: 10px;
     background-color: #ffff;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      margin: 55px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    
+  }
+
+  .container {
+    position: relative;
+    width: 400px;
+    height: 250px;
+    transform-style: preserve-3d;
+    transition: transform 0.8s;
   }
   
-  .in {
-    margin: 10px;
+  .container.flip {
+    transform: rotateY(180deg);
   }
+  
+    .button1 button{
+      width: 200px;
+      height: 50px;
+      padding: 10px 0 5px 0;
+      background-color: #eca763;
+      color: #fff;
+      border: none;
+      margin-top: 0;
+      margin-bottom: 50px;
+      margin-right: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .button2{
+      transform: translateY(1px);
+      box-shadow: none;
+    }
+
+    .button2:hover{
+      background-color: #e88c30;
+      border-color: #8e651b;
+    }
   
   .rem {
     padding: 0;
-    margin: 5px 0; /* Adjust margin for spacing between checkbox and label */
+    margin: 3px 5; /* Adjust margin for spacing between checkbox and label */
     display: flex;
     flex-direction: center;
-    align-items: center; /* Align checkbox and label vertically */
+    align-items: center; 
+    width: 150px;
+    height: 100px;
+    margin-top: 0px;
+    margin-right: 150px;
+    margin-bottom: 0px;
+    padding:10px 0 50px 0;
+    color: #292828;
+    font-size: 13px;
+  }
+
+  .sign{
+    margin-bottom: 60px;
+    margin-top: 50px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 60px;
   }
   
   /* Additional CSS to style the label text */
   .rem label {
-    margin-left: 5px; /* Add some spacing between checkbox and label text */
+    margin-left: 10  px; /* Add some spacing between checkbox and label text */
     vertical-align: middle; /* Vertically align the label with the checkbox */
     display: inline-block; /* Ensure proper alignment */
+    font-family: 'Times New Roman', Times, serif;
+
   }
 
   .si-txt{
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
+    position: center;
+    font-size: 17px;
+    color: #0b0b0b;
+    font-weight: bold;
+      margin-left: 90px;
+      margin-bottom: 30px;
+      display: center;
+      flex-direction: column; 
+  }
+
+  .text{
+    position: center;
+    font-size: 15px;
+    color: #0b0b0b;
+    font-weight: bold;
+      flex-direction: column; 
   }
 
   h1{
     position: relative;
     justify-content: center;
-    
+
   }
