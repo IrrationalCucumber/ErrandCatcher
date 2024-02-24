@@ -147,10 +147,13 @@ const PostCommission = () => {
           mapContainer={mapContainer}
           long={commission.comLong}
           lat={commission.comLat}
+          handlePostClick={handleClick} // Pass the handleClick function as a prop
+          
+          
         />
+
       </div>
 
-      <button onClick={handleClick}>POST</button>
     </>
   );
 };

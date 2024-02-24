@@ -90,7 +90,8 @@ function ErrandInputs(props) {
             <div className="col1">
               <label>Description</label>
             </div>
-            <div className="col2">
+      
+      <div className="col2">
               <textarea
                 cols="26"
                 rows="11"
@@ -100,7 +101,11 @@ function ErrandInputs(props) {
                 name={props.desc}
                 value={props.descValue}
               />
-            </div>
+          </div>
+          <div className="button">
+          <button className="button1" onClick={props.handlePostClick}>POST</button>
+          </div>
+          
           </div>
         </div>
         <div className="map--wrap">
@@ -108,6 +113,7 @@ function ErrandInputs(props) {
           <p className="coord">
             X: {props.long} Y: {props.lat}
           </p>
+
         </div>
       </div>
     </>
