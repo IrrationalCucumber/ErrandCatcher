@@ -484,7 +484,7 @@ app.get("/show-notif/:userID", (req, res) => {
 });
 // ADS 24/02/24
 //retrieve number of unread notif of user
-app.get("/your-notif/:userID", (req, res) => {
+app.get("/notif-count/:userID", (req, res) => {
   const notifUserID = req.params.userID;
   const q =
     "select count(*) as 'c' from notification where notifUserID = (?) AND isRead = 'No' ORDER BY notifDate ASC";
