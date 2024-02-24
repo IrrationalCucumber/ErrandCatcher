@@ -472,9 +472,24 @@ app.get("/notification", (req, res) => {
 app.get("/show-notif/:userID", (req, res) => {
   const userID = req.params.userID;
   const q =
-    "SELECT * FROM notification WHERE `isRead` = 'no' AND `userID` = (?) ORDER BY notifDate DESC";
+    "SELECT * FROM notification WHERE `isRead` = 'no' AND `notifUserID` = (?) ORDER BY notifDate DESC";
 
   db.query(q, [userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+// ADS 24/02/24
+//retrieve number of unread notif of user
+app.get("/notif-count/:userID", (req, res) => {
+  const notifUserID = req.params.userID;
+  const q =
+    "select count(*) as 'c' from notification where notifUserID = (?) AND isRead = 'No' ORDER BY notifDate ASC";
+
+  db.query(q, [notifUserID], (err, data) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: "An error occurred" });
@@ -507,12 +522,80 @@ app.put("/notif-read/:notificationID/:userID/", (req, res) => {
   const q =
     "UPDATE notification SET isRead = 'yes' WHERE notificationID = (?) AND userID = (?)";
 
-  db.query(q, (err, data) => {
+  db.query(q, [notificationID, userID], (err, data) => {
     if (err) {
       console.log(err);
       return res.status(500).json(err);
     }
     return res.json("I HAVE REDDIT");
+  });
+});
+
+//=========================END MODULE==============================//
+//===========================RATING================================//
+//ADS - 22/02/24
+
+//Retrieve all saved Feedback
+//ALTER FOR ADMIN USE
+// NEED TESTING
+app.get("/user-feedbacks/", (req, res) => {
+  const q = "SELECT * FROM feedbackcommission ORDER BY feedbackDate DESC";
+
+  db.query(q, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+
+//Retrieve feedback data of Catcher
+app.get("/user-feedbacks/:userID", (req, res) => {
+  const userID = req.params.userID;
+  const q =
+    "SELECT * FROM feedbackcommission WHERE `feedbackCatcherID` = (?) ORDER BY feedbackDate DESC";
+
+  db.query(q, [userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+
+//Display the average rating of feedbackCount of the Catcher
+app.get("/user-rating/:userID", (req, res) => {
+  const userID = req.params.userID;
+  const q =
+    "select avg(feedbackRate) as 'c' from feedbackcommission where feedbackCatcherID = (?)";
+
+  db.query(q, [userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+
+//Save feedback of the Epmloyer
+//VARIABLES SUBJECT TO CHANGE BASED ON ERD AND DB
+app.post("/rate", (req, res) => {
+  const q =
+    "INSERT INTO feedbackcommission (`feedbackCatcherID`, `feedbackCommissionID`, `feedbackComment`, `feedbackCount`, `feedbackDate`, `feedbackPosterID`) VALUES (?)";
+  const values = [
+    req.body.catcherID,
+    req.body.commissionID,
+    req.body.feedbackComment,
+    req.body.feedbackCount,
+    req.body.feedbackDate,
+    req.body.employerID,
+  ];
+  db.query(q, [values], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("Feedback added");
   });
 });
 
