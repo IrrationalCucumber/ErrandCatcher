@@ -522,7 +522,7 @@ app.put("/notif-read/:notificationID/:userID/", (req, res) => {
   const q =
     "UPDATE notification SET isRead = 'yes' WHERE notificationID = (?) AND userID = (?)";
 
-  db.query(q, (err, data) => {
+  db.query(q, [notificationID, userID], (err, data) => {
     if (err) {
       console.log(err);
       return res.status(500).json(err);
@@ -566,7 +566,7 @@ app.get("/user-feedbacks/:userID", (req, res) => {
 });
 
 //Display the average rating of feedbackCount of the Catcher
-//NEED TESTING
+//NEED TESTING -OK
 app.get("/user-feedbacks/:userID", (req, res) => {
   const userID = req.params.userID;
   const q =
