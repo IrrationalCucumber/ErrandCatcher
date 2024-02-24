@@ -570,9 +570,10 @@ app.get("/user-feedbacks/:userID", (req, res) => {
 //VARIABLES SUBJECT TO CHANGE BASED ON ERD AND DB
 app.post("/rate", (req, res) => {
   const q =
-    "INSERT INTO feedback (`catcherID`, `feedbackComment`, `feedbackCount`, `feedbackDate`, employerID) VALUES (?)";
+    "INSERT INTO feedback (`catcherID`, `commissionID`, `feedbackComment`, `feedbackCount`, `feedbackDate`, `employerID`) VALUES (?)";
   const values = [
     req.body.catcherID,
+    req.body.commissionID,
     req.body.feedbackComment,
     req.body.feedbackCount,
     req.body.feedbackDate,
