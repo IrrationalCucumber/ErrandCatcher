@@ -600,6 +600,39 @@ app.post("/rate", (req, res) => {
 });
 
 //=========================END MODULE==============================//
+//=========================VERIFICATION============================//
+//APS - 25/02/24
+//to save verification requset of user
+app.post("/verify-request", (req, res) => {
+  const q =
+    "INSERT INTO verification_request (`requestUserID`, `id_pic_front`, `id_pic_back`, `docu_1`, `docu_2`) VALUES (?)";
+  const values = [
+    req.body.userID,
+    req.body.front_pic,
+    req.body.back_pic,
+    req.body.docu1,
+    req.body.docu2,
+  ];
+  db.query(q, [values], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("Feedback added");
+  });
+});
+
+//Display all verification request
+app.get("/user-rating", (req, res) => {
+  const q = "SELECT * FROM verification_request";
+
+  db.query(q, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+
+//=================================================================//
 
 app.listen(8800, () => {
   console.log("connected to backend!");
