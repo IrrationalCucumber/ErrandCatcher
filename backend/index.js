@@ -149,6 +149,23 @@ app.get("/search-employer-commission/:userID", (req, res) => {
 //========================================================================================//
 
 //============================================SIGNUP==================================//
+//regester account
+app.post("/signup", (req, res) => {
+  const q =
+    "INSERT INTO UserAccount (`username`, `password`, `userEmail`, `accountType`, `dateCreated` ) VALUES (?)";
+  const values = [
+    req.body.username,
+    req.body.password,
+    req.body.email,
+    req.body.type,
+    req.body.dateCreated,
+  ];
+
+  db.query(q, [values], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("Account has been added");
+  });
+});
 //send data to userAccount
 app.post("/user", (req, res) => {
   //const q = "INSERT INTO UserAccount (`username`, `password`, `userLastname`, `userFirstname`, `userGender`, `userEmail`, `userContactNum`, `userAge`, `userBirthday`, `userAddress`, `userDesc`, `accountType`, `dateCreated`, `profileImage`) VALUES (?)"

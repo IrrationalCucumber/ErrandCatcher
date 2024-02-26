@@ -11,37 +11,10 @@ const SignUp = () => {
     username: "",
     password: "",
     password2: "",
-    lname: "",
-    fname: "",
-    gender: "",
     email: "",
-    contact: "",
-    age: "",
-    bday: "",
-    address: "",
-    // desc:"",
-    type: "Employer",
+    type: "",
     dateCreated: "",
-    // profileImage:"",
   });
-  //resets when changing forms
-  const resetForm = () => {
-    setAccount({
-      username: "",
-      password: "",
-      password2: "",
-      lname: "",
-      fname: "",
-      gender: "",
-      email: "",
-      contact: "",
-      age: "",
-      bday: "",
-      address: "",
-      type: "Employer", // Set the default type here
-      dateCreated: "",
-    });
-  };
 
   //handle state of error message
   const [employerErrorMessage, setEmployerErrorMessage] = useState("");
@@ -51,13 +24,15 @@ const SignUp = () => {
   //handle the state event
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked); // Toggle the checkbox status
+
+    // Update the type field of the account state based on the checked status
     setAccount((prevAccount) => ({
       ...prevAccount,
       type: isChecked ? "Employer" : "Catcher", // update type if checked/unchecked
     }));
 
     // Call resetForm to reset the form fields
-    resetForm();
+    // resetForm();
   };
 
   //function for getting current date
@@ -100,14 +75,7 @@ const SignUp = () => {
       !account.username ||
       !account.password ||
       !account.email ||
-      !account.fname ||
-      !account.lname ||
-      !account.contact ||
-      !account.age ||
-      !account.bday ||
-      !account.gender ||
-      !account.type ||
-      !account.address
+      !account.type
     ) {
       if (account.type === "Employer") {
         setEmployerErrorMessage("Missing fields. Please try again.");
@@ -135,8 +103,8 @@ const SignUp = () => {
     e.preventDefault();
     try {
       account.dateCreated = getCurrentDate();
-      await axios.post("http://localhost:8800/user", account);
-      navigate("/sign-in");
+      await axios.post("http://localhost:8800/signup", account); // new enpoint
+      //navigate("/sign-in");
     } catch (err) {
       console.log(err);
     }
@@ -197,7 +165,7 @@ const SignUp = () => {
                       onChange={handleChange}
                       name="password2"
                     />
-                    
+
                     <br />
                     <p className="em">
                       <i>{employerErrorMessage}</i>
@@ -253,7 +221,7 @@ const SignUp = () => {
                       onChange={handleChange}
                       name="password2"
                     />
-                    
+
                     <br />
                     <p className="em">
                       <i>{catcherErrorMessage}</i>
