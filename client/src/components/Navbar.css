@@ -1,5 +1,5 @@
 .navbar {
-    background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
+    background: #3d342f;
     height: 80px;
     display: flex;
     justify-content: center;
@@ -12,7 +12,7 @@
   
   .navbar-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     height: 80px;
     max-width: 1500px;
@@ -35,7 +35,7 @@
   }
   
   .nav-menu {
-    display: grid;
+    display: flex;
     grid-template-columns: repeat(4, auto);
     grid-gap: 10px;
     list-style: none;
@@ -56,6 +56,7 @@
     text-decoration: none;
     padding: 0.5rem 1rem;
     height: 100%;
+    margin-right: 20px;
   }
   
   .nav-links:hover {
@@ -101,16 +102,21 @@
     }
   
     .nav-links {
-      text-align: center;
-      padding: 2rem;
-      width: 100%;
-      display: table;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      height: 100%;
+      font-size: 1.2rem; 
     }
   
     .nav-links:hover {
       background-color: #fff;
       color: #242424;
       border-radius: 0;
+      border-bottom: 4px solid #fff;
+      transition: all 0.2s ease-out;
     }
   
     .navbar-logo {
@@ -157,3 +163,40 @@
     }
   }
   
+  .notification-icon {
+    margin-right: 20px; /* Add margin between notification icon and dropdown */
+  }
+  
+  .dropdown-container {
+    position: relative;
+  }
+  
+  .dropdown-content {
+    position: absolute;
+    top: 100%; /* Position dropdown below the icon */
+    right: 0; /* Align dropdown to the right */
+    min-width: 160px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    text-align: left;
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+    padding: 10px; /* Add padding as needed */
+  }
+  
+  .logo-image {
+    height: 40px; /* Adjust the height of the image */
+    margin-right: 10px; /* Add margin between the image and text */
+  }
+
+
+  .logo-text {
+    font-size: 1.3rem; 
+    margin-left: 10px; 
+    font-weight: bold;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
