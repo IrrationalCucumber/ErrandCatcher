@@ -12,7 +12,7 @@ const SignUp = () => {
     password: "",
     password2: "",
     email: "",
-    type: "",
+    type: "Employer",
     dateCreated: "",
   });
 
@@ -22,19 +22,23 @@ const SignUp = () => {
   //state for type checkbox
   const [isChecked, setIsChecked] = useState(false);
   //handle the state event
-  const handleCheckboxChange = () => {
-    setIsChecked(!isChecked); // Toggle the checkbox status
-
-    // Update the type field of the account state based on the checked status
-    setAccount((prevAccount) => ({
-      ...prevAccount,
-      type: isChecked ? "Employer" : "Catcher", // update type if checked/unchecked
-    }));
-
-    // Call resetForm to reset the form fields
-    // resetForm();
+  const resetForm = () => {
+    setAccount({
+      username: "",
+      password: "",
+      password2: "",
+      email: "",
+      type: isChecked ? "Employer" : "Catcher",
+      dateCreated: "",
+    });
+    setEmployerErrorMessage("");
+    setCatcherErrorMessage("");
   };
 
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+    resetForm();
+  };
   //function for getting current date
   //triggers when  button clicked
   const getCurrentDate = () => {
@@ -143,6 +147,7 @@ const SignUp = () => {
                       placeholder="Username"
                       onChange={handleChange}
                       name="username"
+                      value={account.username}
                     />
                     <input
                       className={employerErrorMessage ? "error" : ""}
@@ -150,6 +155,7 @@ const SignUp = () => {
                       placeholder="Email address"
                       onChange={handleChange}
                       name="email"
+                      value={account.email}
                     />
                     <input
                       className={employerErrorMessage ? "error" : ""}
@@ -157,6 +163,7 @@ const SignUp = () => {
                       placeholder="Password (8-20)"
                       onChange={handleChange}
                       name="password"
+                      value={account.password}
                     />
                     <input
                       className={employerErrorMessage ? "error" : ""}
@@ -164,6 +171,7 @@ const SignUp = () => {
                       placeholder="Confirm password.."
                       onChange={handleChange}
                       name="password2"
+                      value={account.password2}
                     />
 
                     <br />
@@ -199,6 +207,7 @@ const SignUp = () => {
                       placeholder="Username"
                       onChange={handleChange}
                       name="username"
+                      value={account.username}
                     />
                     <input
                       className={catcherErrorMessage ? "error" : ""}
@@ -206,6 +215,7 @@ const SignUp = () => {
                       placeholder="Email address"
                       onChange={handleChange}
                       name="email"
+                      value={account.email}
                     />
                     <input
                       className={catcherErrorMessage ? "error" : ""}
@@ -213,6 +223,7 @@ const SignUp = () => {
                       placeholder="Password (8-20 characters)"
                       onChange={handleChange}
                       name="password"
+                      value={account.password}
                     />
                     <input
                       className={catcherErrorMessage ? "error" : ""}
@@ -220,6 +231,7 @@ const SignUp = () => {
                       placeholder="Confirm password..."
                       onChange={handleChange}
                       name="password2"
+                      value={account.password2}
                     />
 
                     <br />
