@@ -5,7 +5,6 @@ import "./Navbar.css";
 import { useAuth } from "./AuthContext";
 import NotificationIcon from './notif-icon';
 import NavDropdown from "./NavDropdown";
-//import ERicon from 'public/images/ERicon.png'
 
 function Navbar(props) {
   //change the state of the menu
@@ -61,6 +60,7 @@ function Navbar(props) {
                 <img 
                   src="/ERicon.png" 
                   alt="ERRAND CATCHER Icon" 
+                  className="logo-image"
                   style={{ width: '50px', height: '50px' }} // Adjust the width and height as needed
                   />
                   <span className="logo-text">Errand Catcher</span>

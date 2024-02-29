@@ -43,6 +43,8 @@
     width: 60vw;
     justify-content: end;
     margin-right: 2rem;
+      margin: 0;
+  padding: 0;
   }
   
   .nav-item {
@@ -185,7 +187,7 @@
   .logo-container {
     display: flex;
     align-items: center;
-    padding: 10px; /* Add padding as needed */
+    /*padding: 10px; /* Add padding as needed */
   }
   
   .logo-image {
