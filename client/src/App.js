@@ -21,6 +21,7 @@ import EmployerApplicants from "./pages/EmployerApplicants";
 import Map from "./pages/CommissionMap";
 import CatcherMap from "./pages/CatcherMap";
 import Notification from "./pages/Notification";
+import Landing from "./pages/Landing";
 //private route
 import { AuthProvider } from "./components/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
@@ -37,6 +38,7 @@ function App() {
           <Route path="/sign-up" exact Component={SignUp} />
           <Route path="/profile" exact Component={Profile} />
           <Route path="/add" exact Component={AddAccount} />
+          <Route path="/Landing" exact Component={Landing}/> 
           <Route
             path="/post-commission/:userID"
             exact

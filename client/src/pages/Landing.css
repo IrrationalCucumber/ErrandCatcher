@@ -1,0 +1,251 @@
+.home{
+   width: 100%;
+   height: 90vh;
+   background-image: linear-gradient(rgba(247, 8, 8, 0.3),rgba(25, 71, 27, 0.255),rgba(241, 233, 69, 0.37),rgba(3, 3, 3, 0.414));
+   background-repeat: no-repeat;
+   background-size: cover;
+}
+
+.home .content{
+   text-align: center;
+   padding-top: 20px;
+}
+
+.home .content h1{
+   color: rgb(49, 49, 49);
+   font-size: 50px;
+   font-weight: 550;
+   text-shadow: 0px 1px 1px rgb(234, 237, 168);
+   letter-spacing: 3px;
+   
+}
+.home .content h1 span{
+   color: bisque;
+   text-shadow: 0px 1px 1px rgb(5, 5, 5);
+   letter-spacing: 3px;
+}
+.home .content p {
+   color: rgb(62, 62, 62);
+   font-size: 15px;
+   font-weight: 600;
+   text-shadow: rgb(28, 26, 23);
+   margin-bottom: 30px;
+   margin-top: 5px;
+   padding: 0 20px; 
+   text-align: center;
+   text-align-last:auto;  
+}
+
+.home .content a{
+   padding: .5px;
+   background: rgb(6, 6, 6);
+   color: rgb(255, 250, 250);
+   letter-spacing: 3px;
+   font-weight: 550;
+   border-radius: 2px;
+   text-decoration: none;
+   transition: 0.5s;
+   font-size: 20px;
+
+}
+
+.home .content a:hover{
+   background: #f4f6fc;
+   color: rgb(8, 8, 8);
+
+}
+@media (max-width:850px){
+   .home{
+       background-position: 50%;
+   }
+}
+@media (max-width:450px){
+   .home .content h5{
+       font-size: 25px;
+   }
+   .home .content h1{
+       font-size: 38px;
+   }
+   .home .content p{
+       font-size: 13px;
+   }
+}
+
+.Services{
+   margin: 50px;
+}
+
+.Services h1 {
+   text-align: center;
+   letter-spacing: 3px;
+   margin-top: 30px;
+   font-weight: 600;
+   font-size: 40px;
+   color: rgb(28, 26, 23);
+   text-shadow: 0px 1px 1px rgb(234, 237, 168);
+}
+
+.Services h1 span {
+   color: bisque;
+   text-shadow: 0px 1px 1px black;
+}
+
+.Services .box-container {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 2rem;
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   max-width: 3000px;
+   margin: 0 auto;
+}
+
+.Services .box-container .box {
+   flex: 1 1 30rem;
+   border-radius: .5rem;
+   overflow: hidden;
+   border: none;
+   box-shadow: 0 1rem 1rem rgba(0, 0, 0, .1);
+   border-radius: 10px;
+   margin-bottom: 20px;
+   margin-top: 20px;
+   display: flex;
+   flex-direction: column;
+   box-sizing: border-box;
+   scroll-behavior: smooth;
+   align-items: flex-start; 
+   background-color: beige; 
+   align-items:center;
+}
+
+.Services .box-container .box img {
+   height: 15rem;
+   width: 85%;
+   object-fit: contain;
+   transition: 0.5s;
+   border-radius: 10px;
+   padding-top: 1rem;
+}
+
+.Services .box-container .box .content {
+   padding: 1.5rem;
+   background: transparent;
+}
+
+.Services .box-container .box .content h3 {
+   font-size: 1rem;
+   color: rgb(17, 16, 16);
+   padding-top: 3px;
+   padding-bottom: 10px;
+}
+
+.Services .box-container .box .content h3 i {
+   color: rgb(79, 83, 83);
+}
+
+.Services .box-container .box .content p {
+   font-size: 1.5rem;
+   color: rgb(27, 25, 25);
+   padding: .5rem 0;
+   font-weight: 600;
+}
+
+.Services .box-container .box .content .stars i {
+   font-size: 1.2rem;
+   color: rgb(246, 159, 52);
+}
+
+.Services .box-container .box .content .price {
+   font-size: 1.5rem;
+   color: rgb(17, 16, 16);
+   padding-top: .5rem;
+   padding-bottom: 1rem;
+}
+
+.Services .box-container .box .content .price span {
+   color: rgb(69, 69, 69);
+   font-size: 1rem;
+   text-decoration: line-through;
+}
+
+.Services .box-container a {
+   font-size: 1rem;
+   padding: .5rem 1;
+   width: 1rem;
+   font-weight: 550;
+   background: #ffa500;
+   color: white;
+   margin-top: 50px;
+   transition: 0.5s;
+}
+.Services .box-container a:hover{
+   background: rgb(217, 165, 87);
+   color: rgb(8, 8, 8);
+}
+
+@media (max-width:765px){
+   .Services{
+       padding: 0;
+   }
+   .Services h1{
+       padding: 20px;
+   }
+}
+
+
+.People{
+   margin: 50px;
+}
+
+.People h1 {
+   text-align: center;
+   letter-spacing: 3px;
+   margin-top: 30px;
+   font-weight: 600;
+   font-size: 40px;
+   color: rgb(28, 26, 23);
+   text-shadow: 0px 1px 1px rgb(234, 237, 168);
+}
+
+.People h1 span {
+   color: bisque;
+   text-shadow: 0px 1px 1px black;
+}
+
+.People .box-container {
+   display: grid;
+   grid-template-columns: repeat(2, 1fr);
+   gap: 10px;
+   margin-top: 30px;
+   margin-left: 350px;
+   align-items: center;
+}
+
+.People .box-container .box {
+   width: 50%;
+}
+
+.People .box-container .box img {
+   width: 65%;
+   border-radius: 50%; 
+   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3); 
+}
+.People .box-container img:hover {
+   transform: scale(1.1);
+}
+
+.People .box-container .box .content h3 {
+   font-size: 2rem;
+   color: rgb(17, 16, 16);
+   padding-top: 10px;
+   padding-bottom: 10px;
+}
+
+@media (max-width:765px){
+   .People{
+       padding: 0;
+   }
+   .People .content h1{
+       padding: 20px;
+   }
+}
