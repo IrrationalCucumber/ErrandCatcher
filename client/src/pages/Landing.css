@@ -8,15 +8,24 @@
 
 .home .content{
    text-align: center;
-   padding-top: 20px;
+   padding-top: 1px;
 }
 
+.home .content img{
+   height: 50%;
+   width: 150%;
+   margin-left: 80px;
+   border-radius: 300px;
+}
 .home .content h1{
    color: rgb(49, 49, 49);
    font-size: 50px;
    font-weight: 550;
    text-shadow: 0px 1px 1px rgb(234, 237, 168);
    letter-spacing: 3px;
+   margin-left: 250px;
+   margin-right: 20px;
+   padding-bottom: 5px;
    
 }
 .home .content h1 span{
@@ -29,11 +38,16 @@
    font-size: 15px;
    font-weight: 600;
    text-shadow: rgb(28, 26, 23);
-   margin-bottom: 30px;
-   margin-top: 5px;
+   margin-bottom: 10px;
+   margin-top: 10px;
    padding: 0 20px; 
-   text-align: center;
+   text-align: left;
    text-align-last:auto;  
+   margin-left:250px;
+   margin-right: 20px;
+   text-align: justify;
+   padding-top: 5px;
+   line-height: 1.5;
 }
 
 .home .content a{
@@ -46,6 +60,8 @@
    text-decoration: none;
    transition: 0.5s;
    font-size: 20px;
+   margin-left: 200px;
+   padding: 5px;
 
 }
 
@@ -245,7 +261,7 @@
    .People{
        padding: 0;
    }
-   .People .content h1{
+   .People .box img h1{
        padding: 20px;
    }
 }

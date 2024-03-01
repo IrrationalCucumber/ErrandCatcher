@@ -14,12 +14,14 @@ const Landing = () => {
 
             <div className="home">
                 <div className="content">
+                    <img src="./images/tawo.png" alt=""/>
+                </div>
+                <div className="content">
                     <h1>Your <span>Errand Service</span> Website</h1>
                  <p>Errand Catchers offer a convenient solution for individuals requiring assistance with various tasks and chores. Whether it involves grocery shopping, picking up prescriptions, mailing packages, or managing daily errands, these services focus on saving time and streamlining life. Additionally, Errand Catchers frequently provide a flexible and customized approach to cater to the specific needs of their clients, establishing themselves as an invaluable resource for those seeking convenience and time optimization amid their hectic schedules.</p>
-                 <a href="#Services" id="getStartedLink" className="btn">Get Started</a>
-                 <div><a href="#">View here</a></div>
+                 <a href="sign-in" id="getStartedLink" className="btn">Get Started</a>
+                 <div><a href="map">View here</a></div>
                  
-
                 </div>
             </div>
 
