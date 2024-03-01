@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: center;
     margin: 0 auto;
-    background-color: #F8E8C2;
+    background-color: #e7e1c7;
     padding: 20px 30px;
     flex-wrap: wrap;
   }
@@ -219,7 +219,7 @@
     display: flex;
     align-items: center; 
     justify-content: center; 
-    margin: 0 auto;
+    margin-bottom: 10px;
     color: black;
   }
   
@@ -228,7 +228,7 @@
   }
   
   .username {
-    margin-right: 10px;
+    margin-right: 5px;
   }
   
   .textarea-container {

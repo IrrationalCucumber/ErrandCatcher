@@ -1,23 +1,37 @@
 import React, { useState } from 'react';
 import NavbarPage from '../components/Navbar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCertificate } from '@fortawesome/free-solid-svg-icons';
 import './profile.css';
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState('about');
+  const [verified, setVerified] = useState(false);
 
   return (
     <div>
-      <NavbarPage /> 
-      <div className='profile'> 
+      <NavbarPage />
+      <div className='profile'>
         <div className='profile-info'>
           <div className='description-form'>
             <form>
               <div className='FileContainer'>
-                <label htmlFor="file" className='File'>Upload Image</label>
-                <input type="file" id="file" className='file'/>
+                <label htmlFor='file' className='File'>
+                  Upload Image
+                </label>
+                <input type='file' id='file' className='file' />
               </div>
+              {/*username changed when user sign up*/}
               <div className='username-container'>
                 <label className='username'>Username</label>
+                {/* Verification Icon */}
+                <FontAwesomeIcon
+                  icon={faCertificate}
+                  style={{
+                    marginLeft: '5px',
+                    color: verified ? 'green' : 'gray',
+                  }}
+                />
               </div>
               <div className='rating-box'>
                 <label className='Rating'>Rating</label>
@@ -29,16 +43,14 @@ const Profile = () => {
           <div className='info-form'>
             <form>
               <div className='toggle-button'>
-                <span 
+                <span
                   className={activeTab === 'about' ? 'active about-label' : ''}
-                  onClick={() => setActiveTab('about')}
-                >
+                  onClick={() => setActiveTab('about')}>
                   About
                 </span>
-                <span 
+                <span
                   className={activeTab === 'history' ? 'active history-label' : ''}
-                  onClick={() => setActiveTab('history')}
-                >
+                  onClick={() => setActiveTab('history')}>
                   History
                 </span>
               </div>
@@ -52,17 +64,18 @@ const Profile = () => {
                   <div className='input-row'>
                     <label className='PP'>Age</label>
                     <textarea type='number' className='display-data1' placeholder='Age'></textarea>
-                  </div> 
+                  </div>
                   <div className='input-row'>
                     <label className='PP'>Birth Date</label>
                     <textarea type='number' className='display-data1' placeholder='Date of birth'></textarea>
                   </div>
                   <div className='input-row'>
                     <label className='PP'>Gender</label>
-                    <select className='display-data1'> gender
-                      <option value="">Choose gender....</option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
+                    <select className='display-data1'>
+                      gender
+                      <option value=''>Choose gender....</option>
+                      <option value='male'>Male</option>
+                      <option value='female'>Female</option>
                     </select>
                   </div>
                   <div className='input-row'>
@@ -76,7 +89,7 @@ const Profile = () => {
                   <div className='input-row'>
                     <label className='PP'>Address:</label>
                     <textarea type='text' className='display-data' placeholder='Address'></textarea>
-                  </div> 
+                  </div>
                   <button>Save</button>
                   <button>Edit</button>
                 </div>
@@ -91,7 +104,7 @@ const Profile = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Profile;
