@@ -47,11 +47,13 @@ function NavDropdown() {
                                     display: 'block', 
                                     padding: '12px 16px', 
                                     textDecoration: 'none', 
+                                    fontSize: 16,
                                     color: 'black' }}>My Profile</Link>
           <Link to={signOutLink} style={{ 
                                     display: 'block', 
                                     padding: '12px 16px', 
-                                    textDecoration: 'none', 
+                                    textDecoration: 'none',
+                                    fontSize: 16, 
                                     color: 'black' }}>Sign Out</Link>
         </div>
       )}

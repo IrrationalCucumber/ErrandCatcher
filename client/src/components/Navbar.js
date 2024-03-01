@@ -111,15 +111,20 @@ function Navbar(props) {
                 MAP
               </Link>
             </li>
+            <li className="nav-item">
+              <div className="notification-icon" style={{marginTop: "1.7rem", }}>
+              <NotificationIcon hasNotification={true} onClick={() => console.log('Notification clicked!')} />
+              </div>
+            </li>
+            <li className="nav-item">
+              <div className="dropdown-container" style={{ marginRight: "1rem", marginTop: "1rem", marginLeft:"1rem" }}>
+              <NavDropdown/>
+              </div>
+            </li>
           </ul>
           {/*Added by --Ash for notification */}
-          <div className="notification-icon" style={{marginRight: "3rem"}}>
-            <NotificationIcon hasNotification={true} onClick={() => console.log('Notification clicked!')} />
-          </div>
-          <div className="dropdown-container" style={{ marginRight: "1rem" }}>
-            <NavDropdown/>
-          </div>
-          
+
+
         </div>
       </nav>
     </>
