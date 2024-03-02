@@ -7,8 +7,8 @@ function Footer() {
   return (
     <div className='footer-container'>
         <section className='footer-subscription'>
+
             
-           
             <div className='input-areas'>
 
             </div>
@@ -16,24 +16,26 @@ function Footer() {
         <div className='footer-links'>
             <div className='footer-link-wrapper'>
                 <div className='footer-link-items'>
-                    <h2>Errand Catcher</h2>
+                
                 
                 </div>
             </div>
         </div>
         <section className='social-media'>
             <div className='social-media-wrap'>
+                {/* About Us */}
                 <div className='footer-logo'>
                     <Link to='/' className='social-logo'>
                         About Us <i fab fab-typo3></i>
                     </Link>
                 </div>
+                {/* Contact Us */}
                 <div className='footer-logo'>
                     <Link to='/' className='social-logo'>
                         Contact Us <i fab fab-typo3></i>
                     </Link>
                 </div>
-                <small className='website-rights'>ERRAND CATCHER</small>
+                <small className='website-rights'>© ERRAND CATCHER</small>
                 <div className='social-icons'>
                     <Link className='social-icon-link facebook'
                     to='/'
