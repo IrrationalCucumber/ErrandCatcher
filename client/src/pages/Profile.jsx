@@ -117,13 +117,26 @@ const Profile = () => {
               <div className="username-container">
                 <label className="username">Username</label>
                 {/* Verification Icon */}
-                <FontAwesomeIcon
+                <i
+                  class={
+                    verified
+                      ? "fa-solid fa-circle-check"
+                      : "fa-regular fa-circle-check"
+                  }
+                  style={{
+                    marginLeft: "5px",
+                    color: verified ? "green" : "gray",
+                  }}
+                >
+                  {status}
+                </i>
+                {/* <FontAwesomeIcon
                   icon={faCertificate}
                   style={{
                     marginLeft: "5px",
                     color: verified ? "green" : "gray",
                   }}
-                />
+                /> */}
               </div>
               <div className="rating-box">
                 <label className="Rating">Rating</label>
