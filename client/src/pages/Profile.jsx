@@ -72,15 +72,33 @@ const Profile = () => {
         );
         console.log(res.data[0].accountStatus);
         setStatus(res.data[0].accountStatus);
-        if (status.toUpperCase == "UNVERIFIED") {
+        if (status.toUpperCase == "VERIFIED" || status == "Verified") {
           setVerified(true);
+          console.log(verified);
         }
       } catch (err) {
         console.log(err);
       }
     };
     fetchStatus();
-  }, []);
+  }, [verified]);
+  //APS - 03/03/24
+  //get the rating of the user
+  const [rating, setRating] = useState("");
+  useEffect(() => {
+    const fetchRating = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8800/user-rating/${userID}`
+        );
+        //console.log(res.data[0].c);
+        setRating(res.data[0].c);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchRating();
+  }, [userID]);
 
   return (
     <div>
@@ -109,7 +127,7 @@ const Profile = () => {
               </div>
               <div className="rating-box">
                 <label className="Rating">Rating</label>
-                <label className="RateNo">00 / 05</label>
+                <label className="RateNo">{rating} /5</label>
               </div>
               <textarea
                 className="description"
