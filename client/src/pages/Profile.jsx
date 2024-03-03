@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import NavbarPage from "../components/Navbar";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faCertificate } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCertificate } from "@fortawesome/free-solid-svg-icons";
 import "./profile.css";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
@@ -99,13 +99,13 @@ const Profile = () => {
               <div className="username-container">
                 <label className="username">Username</label>
                 {/* Verification Icon */}
-                {/* <FontAwesomeIcon
+                <FontAwesomeIcon
                   icon={faCertificate}
                   style={{
                     marginLeft: "5px",
                     color: verified ? "green" : "gray",
                   }}
-                /> */}
+                />
               </div>
               <div className="rating-box">
                 <label className="Rating">Rating</label>
