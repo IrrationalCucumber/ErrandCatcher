@@ -81,7 +81,7 @@ const Profile = () => {
       }
     };
     fetchStatus();
-  }, [verified]);
+  }, [status]);
   //APS - 03/03/24
   //get the rating of the user
   const [rating, setRating] = useState("");
