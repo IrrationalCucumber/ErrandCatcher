@@ -5,9 +5,9 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    height: 750px;
+    height: 740px;
     background: url('../../public/images/tawo.png') center;
-    background-size: 560px 620px;
+    background-size: 570px 750px;
   }
   
   .cont {
@@ -21,7 +21,7 @@
     height: 600px;
     border-radius: 10px;
     background-color: #ffff;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 10 15px 10px rgba(0, 0, 0, 0.2);
       margin: 55px;
       display: flex;
       flex-direction: column;
@@ -42,15 +42,15 @@
   }
   
     .button1 button{
-      width: 200px;
-      height: 50px;
+      width: 190px;
+      height: 45px;
       padding: 10px 0 5px 0;
       background-color: #eca763;
       color: #fff;
       border: none;
       margin-top: 0;
       margin-bottom: 50px;
-      margin-right: 10px;
+      margin-right: 50px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
 
