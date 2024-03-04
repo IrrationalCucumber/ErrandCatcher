@@ -35,7 +35,7 @@ function App() {
           <Route path="/accounts" exact Component={AccountList} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" exact Component={SignUp} />
-          <Route path="/profile" exact Component={Profile} />
+          <Route path="/profile/:userID" exact Component={Profile} />
           <Route path="/add" exact Component={AddAccount} />
           <Route
             path="/post-commission/:userID"
@@ -81,7 +81,6 @@ function App() {
           <Route path="/c-map" element={<CatcherMap />} />
           <Route path="/notifications/:userID" exact Component={Notification} />
           <Route path="/" exact Component={Home} />
-          <Route path="/admin-home" element={<AdminHome />} />
         </Routes>
         {/**<PrivateRoute path="/admin-home" element={<AdminHome />} />
         </AuthProvider>*/}
