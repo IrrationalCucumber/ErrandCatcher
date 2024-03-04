@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import NavbarPage from "../components/Navbar";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCertificate } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faCertificate } from "@fortawesome/free-solid-svg-icons";
 import "./profile.css";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
