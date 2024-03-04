@@ -18,9 +18,14 @@ const Landing = () => {
                 </div>
                 <div className="content">
                     <h1>Your <span>Errand Service</span> Website</h1>
-                 <p>Errand Catchers offer a convenient solution for individuals requiring assistance with various tasks and chores. Whether it involves grocery shopping, picking up prescriptions, mailing packages, or managing daily errands, these services focus on saving time and streamlining life. Additionally, Errand Catchers frequently provide a flexible and customized approach to cater to the specific needs of their clients, establishing themselves as an invaluable resource for those seeking convenience and time optimization amid their hectic schedules.</p>
-                 <a href="sign-in" id="getStartedLink" className="btn">Get Started</a>
-                 <div><a href="map">View here</a></div>
+                 <p>Errand Catchers offer a convenient solution for individuals requiring assistance with various tasks and chores. Whether it involves grocery shopping, picking up prescriptions, mailing packages, or managing daily errands, these services focus on saving time and streamlining life.</p>
+                
+                 <div className="btn">
+                    <a href="sign-in" id="getStartedLink"><i className="fa-solid fa-house"></i> GET STARTED</a>
+                 </div>
+                 <div className="btns">
+                    <a href="map"><i className="fa fa-eye"></i> VIEW HERE </a>
+                 </div>
                  
                 </div>
             </div>
@@ -32,21 +37,14 @@ const Landing = () => {
                     <div className="box">
                         <img src="/images/img1.png" alt="" />
                         <div className="content">
-                            <p>Title</p>
+                            <p>Transportation</p>
                             <h3>
                                 {' '}
                                 <i className="fas fa-map-marker-alt"></i> Mandaue City{' '}
                             </h3>
-                            <div className="stars">
-                                <i className="fas fa-star"></i>
-                                <i className="fas fa-star"></i>
-                                <i className="fas fa-star"></i>
-                                <i className="fas fa-star"></i>
-                                <i className="far fa-star"></i>
-                            </div>
                             <div className="price">
                                 {' '}
-                                ₱80.00 <span>₱120.00</span>{' '}
+                                ₱80.00{' '}
                             </div>
                             <a href="#" className="btn">
                                 Book now
@@ -57,21 +55,15 @@ const Landing = () => {
                     <div className="box">
                         <img src="/images/img2.png" alt="" />
                         <div className="content">
-                            <p>Title</p>
+                            <p>Delivery</p>
                             <h3>
                                 {' '}
                                 <i className="fas fa-map-marker-alt"></i> Lapu-Lapu City{' '}
                             </h3>
-                            <div className="stars">
-                                <i className="fas fa-star"></i>
-                                <i className="fas fa-star"></i>
-                                <i className="fas fa-star"></i>
-                                <i className="fas fa-star"></i>
-                                <i className="far fa-star"></i>
-                            </div>
+                        
                             <div className="price">
                                 {' '}
-                                ₱200.00 <span>₱250.00</span>{' '}
+                                ₱200.00{' '}
                             </div>
                             <a href="#" className="btn">
                                 Book now
@@ -82,105 +74,42 @@ const Landing = () => {
                     <div className="box">
                         <img src="/images/img3.png" alt="" />
                         <div className="content">
-                            <p>Title</p>
+                            <p>Home Service</p>
                             <h3>
                                 {' '}
                                 <i className="fas fa-map-marker-alt"></i> Cebu City{' '}
                             </h3>
-                            <div className="stars">
-                                <i className="fas fa-star"></i>
-                                <i className="fas fa-star"></i>
-                                <i className="fas fa-star"></i>
-                                <i className="fas fa-star"></i>
-                                <i className="far fa-star"></i>
-                            </div>
+                            
                             <div className="price">
                                 {' '}
-                                ₱450.00 <span>₱500.00</span>{' '}
+                                ₱450.00
                             </div>
                             <a href="#" className="btn">
                                 Book now
                             </a>
                         </div>
+                        
+                    </div>
+                    <div className="box">
+                        <img src="/images/img1.png" alt="" />
+                        <div className="content">
+                            <p>Transportation</p>
+                            <h3>
+                                {' '}
+                                <i className="fas fa-map-marker-alt"></i> Cebu City{' '}
+                            </h3>
+                            
+                            <div className="price">
+                                {' '}
+                                ₱450.00
+                            </div>
+                            <a href="#" className="btn">
+                                Book now
+                            </a>
+                        </div>
+                        
                     </div>
 
-                </div>
-
-                   <div className="box-container">
-                    <div className="box">
-                        <img src="/images/img6.png" alt="" />
-                        <div className="content">
-                            <p>Title</p>
-                            <h3>
-                                {' '}
-                                <i className="fas fa-map-marker-alt"></i> Toledo City{' '}
-                            </h3>
-                            <div className="stars">
-                                <i className="fas fa-star"></i>
-                                <i className="fas fa-star"></i>
-                                <i className="fas fa-star"></i>
-                                <i className="fas fa-star"></i>
-                                <i className="far fa-star"></i>
-                            </div>
-                            <div className="price">
-                                {' '}
-                                ₱100.00 <span>₱150.00</span>{' '}
-                            </div>
-                            <a href="#" className="btn">
-                                Book now
-                            </a>
-                        </div>
-                    </div>
-              
-                    <div className="box">
-                        <img src="/images/img4.png" alt="" />
-                        <div className="content">
-                            <p>Title</p>
-                            <h3>
-                                {' '}
-                                <i className="fas fa-map-marker-alt"></i> Carcar City{' '}
-                            </h3>
-                            <div className="stars">
-                                <i className="fas fa-star"></i>
-                                <i className="fas fa-star"></i>
-                                <i className="fas fa-star"></i>
-                                <i className="fas fa-star"></i>
-                                <i className="far fa-star"></i>
-                            </div>
-                            <div className="price">
-                                {' '}
-                                ₱300.00 <span>₱350.00</span>{' '}
-                            </div>
-                            <a href="#" className="btn">
-                                Book now
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <div className="box">
-                        <img src="/images/img5.png" alt="" />
-                        <div className="content">
-                            <p>Title</p>
-                            <h3>
-                                {' '}
-                                <i className="fas fa-map-marker-alt"></i> Danao City{' '}
-                            </h3>
-                            <div className="stars">
-                                <i className="fas fa-star"></i>
-                                <i className="fas fa-star"></i>
-                                <i className="fas fa-star"></i>
-                                <i className="fas fa-star"></i>
-                                <i className="far fa-star"></i>
-                            </div>
-                            <div className="price">
-                                {' '}
-                                ₱130.00 <span>₱180.00</span>{' '}
-                            </div>
-                            <a href="#" className="btn">
-                                Book now
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </section>
 
