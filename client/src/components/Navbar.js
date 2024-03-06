@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Button } from "./NavButton";
+//import { Button } from "./NavButton";
 import "./Navbar.css";
 import { useAuth } from "./AuthContext";
+import NotificationIcon from './notif-icon';
+import NavDropdown from "./NavDropdown";
 
 function Navbar(props) {
   //change the state of the menu
@@ -49,7 +51,22 @@ function Navbar(props) {
             className="navbar-logo"
             onClick={closeMobileMenu}
           >
-            ERRAND CATCHER<i className="fab fa-typo3"></i>
+            <Link
+                to={props.home}
+                className="navbar-logo"
+                onClick={closeMobileMenu}
+              >
+                <div className="logo-container" style={{ backgroundColor: "#3d342f" }}>
+                <img 
+                  src="/ERicon.png" 
+                  alt="ERRAND CATCHER Icon" 
+                  className="logo-image"
+                  style={{ width: '50px', height: '50px' }} // Adjust the width and height as needed
+                  />
+                  <span className="logo-text">Errand Catcher</span>
+                </div>
+
+              </Link> 
           </Link>
           <div className="menu-icon" onClick={handleClick}>
             <i className={click ? "fas fa-times" : "fas fa-bars"}></i>
@@ -60,6 +77,7 @@ function Navbar(props) {
                 to={props.home}
                 className="nav-links"
                 onClick={closeMobileMenu}
+                style={{fontSize:"16px"}}
               >
                 {props.page1}
               </Link>
@@ -69,6 +87,7 @@ function Navbar(props) {
                 to={props.commissionList}
                 className="nav-links"
                 onClick={closeMobileMenu}
+                style={{fontSize:"16px"}}
               >
                 {props.page2}
               </Link>
@@ -78,21 +97,29 @@ function Navbar(props) {
                 to={props.applicants}
                 className="nav-links"
                 onClick={closeMobileMenu}
+                style={{fontSize:"16px"}}
               >
                 {props.page3}
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/map" className="nav-links" onClick={closeMobileMenu}>
+              <Link 
+                  to="/map" 
+                  className="nav-links" 
+                  onClick={closeMobileMenu}
+                  style={{fontSize:"16px"}}>
                 MAP
               </Link>
             </li>
           </ul>
-          {button && (
-            <Button page={props.pageButton} buttonStyle="btn--outline">
-              {props.button}
-            </Button>
-          )}
+          {/*Added by --Ash for notification */}
+          <div className="notification-icon" style={{marginRight: "3rem"}}>
+            <NotificationIcon hasNotification={true} onClick={() => console.log('Notification clicked!')} />
+          </div>
+          <div className="dropdown-container" style={{ marginRight: "1rem" }}>
+            <NavDropdown/>
+          </div>
+          
         </div>
       </nav>
     </>
@@ -100,3 +127,9 @@ function Navbar(props) {
 }
 
 export default Navbar;
+
+// {button && (
+//<Button page={props.pageButton} buttonStyle="btn--outline">
+//{props.button}
+//</Button>
+//)}
