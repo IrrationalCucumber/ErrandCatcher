@@ -1,7 +1,6 @@
 //intended to see the catchers who applied for the errand posted by the employer
 //03-06-24 updated the applicant page for employer --ash
-//03-06-24 added pagination and table. logic and contents are only modifed --ash
-
+//added pagination and table. contents for the td are based on the old code --ash
 
 import React, { useEffect, useState } from 'react'
 import {Link, useLocation} from 'react-router-dom'
@@ -10,8 +9,6 @@ import NavBar from '../components/Navbar'
 import Table from '../components/Table'
 import './applicant.css';
 import Pagination from '../components/Pagination'
-
-const headers = ['DATE', 'CATCHER', 'ERRAND TITLE', 'ACTION'];
 
 
 const EmployerApplicants = () => {
@@ -107,19 +104,23 @@ const EmployerApplicants = () => {
           </select>*/}
       </div>
       
-        <Table headers={headers} data={currentItems.map(applicant => {
-          const actions = applicant.map((action, cellIndex) => {
-            if (cellIndex === 3) {
-              return (
-                <button key={cellIndex} className="action-btn">
-                  {action === 'Accept' && 'Accept'}
-                  {action === 'Decline' && 'Decline'}
+        <Table 
+          headers={['DATE', 'CATCHER', 'ERRAND TITLE', 'ACTION']} 
+          data={currentItems.map(applicant => {
+            <tr key={applicant.applicationID}>
+            <td>{new Date(applicant.applicationDate).toLocaleDateString()}</td>
+            <td>
+                <Link to={`/update-account/${applicant.catcherID}`}>
+                    {applicant.userFirstname} {applicant.userLastname}
+                </Link>
+            </td>
+            <td>{applicant.commissionTitle}</td>
+            <td>
+                <button className="action-btn">
+                    {applicant.applicationStatus === 'Accept' ? 'Accept' : 'Decline'}
                 </button>
-              );
-            }
-            return <td key={cellIndex}>{action}</td>;
-          });
-          return <tr>{actions}</tr>;
+            </td>
+        </tr>
         })} />
                   {/* Pagination controls */}
                   {applicants.length > 0 && (
