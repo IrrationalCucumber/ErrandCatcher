@@ -3,12 +3,14 @@ import NavbarPage from "../components/Navbar";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faCertificate } from "@fortawesome/free-solid-svg-icons";
 import "./profile.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("about");
   const [verified, setVerified] = useState(false);
+  //check if user type
+  const [isCatcher, setIsCatcher] = useState(false);
   //APS - 03/03/24
   //get userID from url
   const location = useLocation();
@@ -26,7 +28,8 @@ const Profile = () => {
     bday: "",
     address: "",
     desc: "",
-    // profileImage:"",
+    type: "",
+    profileImage: "",
   });
   //pre-fill the fields
   useEffect(() => {
@@ -38,7 +41,11 @@ const Profile = () => {
         const formattedDate = new Date(retrievedAccount.userBirthday)
           .toISOString()
           .substr(0, 10);
-
+        if (account.type == "Catcher") {
+          setIsCatcher(true);
+          console.log(account.type);
+        }
+        console.log(retrievedAccount);
         // Update the state with retrieved account data
         setAccount({
           username: retrievedAccount.username,
@@ -52,9 +59,11 @@ const Profile = () => {
           bday: formattedDate,
           address: retrievedAccount.userAddress,
           desc: retrievedAccount.userDesc,
+          type: retrievedAccount.accountType,
+          // profileImage: retrievedAccount.profileImage,
         });
       } catch (err) {
-        console.log(err);
+        console.log(err); //ss
       }
     };
 
@@ -70,11 +79,11 @@ const Profile = () => {
         const res = await axios.get(
           `http://localhost:8800/user-verify/${userID}`
         );
-        console.log(res.data[0].accountStatus);
+        //console.log(res.data[0].accountStatus);
         setStatus(res.data[0].accountStatus);
         if (status.toUpperCase == "VERIFIED" || status == "Verified") {
           setVerified(true);
-          console.log(verified);
+          //console.log(verified);
         }
       } catch (err) {
         console.log(err);
@@ -98,8 +107,50 @@ const Profile = () => {
       }
     };
     fetchRating();
-  }, [userID]);
+  }, [status]);
+  //console.log(account);
 
+  //APS - 07/03/24
+  //Checl the account type of user
+  //If cathcer, show rating
+  useEffect(() => {
+    if (account.type == "Catcher") {
+      setIsCatcher(true);
+      console.log(account.type);
+    }
+  }, [isCatcher]);
+  //RV 07/03/24
+  // Initial method for upload image
+  const [file, setFile] = useState("");
+  const handleChange = (e) => {
+    // For the 'gender' field, directly set the value without using spread syntax
+    if (e.target.name === "gender") {
+      setAccount((prev) => ({ ...prev, gender: e.target.value }));
+    } else if (e.target.name === "desc") {
+      setAccount((prev) => ({ ...prev, desc: e.target.value }));
+    } else {
+      // For other fields, use spread syntax as before
+      setAccount((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    }
+    setFile(e.target.files[0]);
+  };
+  //APS - 07/03/24
+  //save the data into db
+  const navigate = useNavigate();
+  const handleClick = async (e) => {
+    //const updatedAccount = { ...account };
+    //refresh the page when button is clicked
+    e.preventDefault();
+    try {
+      await axios.put(
+        "http://localhost:8800/update-account/" + userID,
+        account
+      );
+      navigate(`/profile/${userID}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div>
       <NavbarPage />
@@ -111,11 +162,25 @@ const Profile = () => {
                 <label htmlFor="file" className="File">
                   Upload Image
                 </label>
-                <input type="file" id="file" className="file" />
+                <input
+                  type="file"
+                  id="file"
+                  name="profileImage"
+                  className="file"
+                  onChange={handleChange}
+                  value={account.profileImage}
+                />
+                {account.profileImage && (
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt="Preview"
+                    width={20}
+                  ></img>
+                )}
               </div>
               {/*username changed when user sign up*/}
               <div className="username-container">
-                <label className="username">Username</label>
+                <label className="username">{account.username}</label>
                 {/* Verification Icon */}
                 <i
                   class={
@@ -138,10 +203,16 @@ const Profile = () => {
                   }}
                 /> */}
               </div>
-              <div className="rating-box">
+              {isCatcher && (
+                <div className="rating-box">
+                  <label className="Rating">Rating</label>
+                  <label className="RateNo">{rating} /5</label>
+                </div>
+              )}
+              {/* <div className="rating-box">
                 <label className="Rating">Rating</label>
                 <label className="RateNo">{rating} /5</label>
-              </div>
+              </div> */}
               <textarea
                 className="description"
                 placeholder="Description"
@@ -188,6 +259,7 @@ const Profile = () => {
                       type="number"
                       className="display-data1"
                       placeholder="Age"
+                      name="age"
                       value={account.age}
                     ></textarea>
                   </div>
@@ -232,7 +304,7 @@ const Profile = () => {
                       placeholder="Address"
                     ></textarea>
                   </div>
-                  <button>Save</button>
+                  <button onClick={handleClick}>Save</button>
                   <button>Edit</button>
                 </div>
               )}
