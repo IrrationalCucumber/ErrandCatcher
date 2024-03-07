@@ -10,9 +10,10 @@ const Landing = () => {
     return (
         <>
             <NavBar />
+            
+            <div className="home">
             <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 
-            <div className="home">
                 <div className="content">
                     <img src="./images/tawo.png" alt=""/>
                 </div>
