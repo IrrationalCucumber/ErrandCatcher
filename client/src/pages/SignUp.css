@@ -165,28 +165,33 @@ label{
   padding:20px 0 5px 0;
 }
 
-  .button1 button{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 200px;
-    height: 50px;
-    padding:10px 0 5px 0;
-    background-color: #eca763;
-    color: #fff;
-    border-radius: 40px;
-    font-size: 20px;
-    font-weight: 500;
-    cursor: pointer;
-  }
+.button1 button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 50px;
+  padding:10px 0 5px 0;
+  background-color: #eca763;
+  color: #fff;
+  border-radius: 40px;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+}
   
-  .input-box{
-    margin: 55px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
+.input-box{
+  margin: 55px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
+@media(max-width:1440px){
+  .container .cover{
+    display: none !important;
+  }
+}
   
   
 
