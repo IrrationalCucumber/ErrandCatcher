@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import "./Error.css"; // Import your custom CSS for styling
+import "./Error.css"; // Import your custom CSS for stylin
 import "./signin.css";
 import { useAuth } from "../components/AuthContext";
 
