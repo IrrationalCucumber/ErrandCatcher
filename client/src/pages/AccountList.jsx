@@ -78,9 +78,9 @@ const AccountList = () => {
         page1="HOME"
         home={`/admin-home`}
         // {`admin-home/${userID}`}
-        page2="ACCOUNT LIST"
+        page2="ACCOUNTS"
         commissionList={`/accounts`}
-        page3="COMMISSION LIST"
+        page3="COMMISSIONS"
         applicants={`/commission-list`}
         pageButton='/sign-in'
         button='SIGN OUT'
@@ -99,7 +99,7 @@ const AccountList = () => {
           </button>
           <select name="type" id="">
             <option value="">Type</option>
-            <option value="employer">employer</option>
+            <option value="employer">Employer</option>
             <option value="catcher">Catcher</option>
             <option value="admin">Admin</option>
           </select>
