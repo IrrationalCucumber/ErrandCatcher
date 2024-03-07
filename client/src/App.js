@@ -22,6 +22,7 @@ import Map from "./pages/CommissionMap";
 import CatcherMap from "./pages/CatcherMap";
 import Notification from "./pages/Notification";
 import Landing from "./pages/Landing";
+import Menu from "./pages/Menu";
 //private route
 import { AuthProvider } from "./components/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
@@ -38,7 +39,8 @@ function App() {
           <Route path="/sign-up" exact Component={SignUp} />
           <Route path="/profile" exact Component={Profile} />
           <Route path="/add" exact Component={AddAccount} />
-          <Route path="/Landing" exact Component={Landing}/> 
+          <Route path="/" exact Component={Landing}/> 
+          <Route path="/Menu" exact Component={Menu}/> 
           <Route
             path="/post-commission/:userID"
             exact
@@ -82,7 +84,7 @@ function App() {
           <Route path="/map" element={<Map />} />
           <Route path="/c-map" element={<CatcherMap />} />
           <Route path="/notifications/:userID" exact Component={Notification} />
-          <Route path="/" exact Component={Home} />
+          {/* <Route path="/" exact Component={Home} /> */}
           <Route path="/admin-home" element={<AdminHome />} />
         </Routes>
         {/**<PrivateRoute path="/admin-home" element={<AdminHome />} />
