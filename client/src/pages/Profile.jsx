@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import NavbarPage from "../components/Navbar";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faCertificate } from "@fortawesome/free-solid-svg-icons";
 import "./profile.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -41,11 +39,10 @@ const Profile = () => {
         const formattedDate = new Date(retrievedAccount.userBirthday)
           .toISOString()
           .substr(0, 10);
-        if (account.type == "Catcher") {
+        if (retrievedAccount.accountType === "Catcher") {
           setIsCatcher(true);
-          console.log(account.type);
         }
-        console.log(retrievedAccount);
+        // console.log(retrievedAccount);
         // Update the state with retrieved account data
         setAccount({
           username: retrievedAccount.username,
@@ -60,13 +57,23 @@ const Profile = () => {
           address: retrievedAccount.userAddress,
           desc: retrievedAccount.userDesc,
           type: retrievedAccount.accountType,
-          // profileImage: retrievedAccount.profileImage,
+          //profileImage: retrievedAccount.profileImage, //this
         });
+        // Set profileImage after retrieving the file from the server
+        const profileImageRes = await axios.get(
+          `http://localhost:8800/user/${userID}`
+        );
+        const profileImageBlob = new Blob([profileImageRes.data], {
+          type: "image/jpeg",
+        });
+        setAccount((prevState) => ({
+          ...prevState,
+          profileImage: profileImageBlob,
+        }));
       } catch (err) {
-        console.log(err); //ss
+        console.log(err);
       }
     };
-
     fetchAccount();
   }, [userID]);
   //RV & APS 02/03/24
@@ -79,12 +86,8 @@ const Profile = () => {
         const res = await axios.get(
           `http://localhost:8800/user-verify/${userID}`
         );
-        //console.log(res.data[0].accountStatus);
         setStatus(res.data[0].accountStatus);
-        if (status.toUpperCase == "VERIFIED" || status == "Verified") {
-          setVerified(true);
-          //console.log(verified);
-        }
+        setVerified(res.data[0].accountStatus.toUpperCase() === "VERIFIED");
       } catch (err) {
         console.log(err);
       }
@@ -94,45 +97,32 @@ const Profile = () => {
   //APS - 03/03/24
   //get the rating of the user
   const [rating, setRating] = useState("");
+
   useEffect(() => {
     const fetchRating = async () => {
       try {
         const res = await axios.get(
           `http://localhost:8800/user-rating/${userID}`
         );
-        //console.log(res.data[0].c);
         setRating(res.data[0].c);
       } catch (err) {
         console.log(err);
       }
     };
     fetchRating();
-  }, [status]);
-  //console.log(account);
+  }, [userID]);
 
-  //APS - 07/03/24
-  //Checl the account type of user
-  //If cathcer, show rating
-  useEffect(() => {
-    if (account.type == "Catcher") {
-      setIsCatcher(true);
-      console.log(account.type);
-    }
-  }, [isCatcher]);
-  //RV 07/03/24
-  // Initial method for upload image
-  const [file, setFile] = useState("");
   const handleChange = (e) => {
-    // For the 'gender' field, directly set the value without using spread syntax
-    if (e.target.name === "gender") {
+    // For file input, update profileImage directly
+    if (e.target.name === "profileImage") {
+      setAccount((prev) => ({ ...prev, profileImage: e.target.files[0] }));
+    } else if (e.target.name === "gender") {
       setAccount((prev) => ({ ...prev, gender: e.target.value }));
     } else if (e.target.name === "desc") {
       setAccount((prev) => ({ ...prev, desc: e.target.value }));
     } else {
-      // For other fields, use spread syntax as before
       setAccount((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     }
-    setFile(e.target.files[0]);
   };
   //APS - 07/03/24
   //save the data into db
@@ -143,7 +133,7 @@ const Profile = () => {
     e.preventDefault();
     try {
       await axios.put(
-        "http://localhost:8800/update-account/" + userID,
+        `http://localhost:8800/update-account/${userID}`,
         account
       );
       navigate(`/profile/${userID}`);
@@ -151,6 +141,7 @@ const Profile = () => {
       console.log(err);
     }
   };
+
   return (
     <div>
       <NavbarPage />
@@ -168,14 +159,12 @@ const Profile = () => {
                   name="profileImage"
                   className="file"
                   onChange={handleChange}
-                  value={account.profileImage}
                 />
                 {account.profileImage && (
                   <img
-                    src={URL.createObjectURL(file)}
-                    alt="Preview"
+                    src={URL.createObjectURL(account.profileImage)}
                     width={20}
-                  ></img>
+                  />
                 )}
               </div>
               {/*username changed when user sign up*/}
@@ -183,25 +172,11 @@ const Profile = () => {
                 <label className="username">{account.username}</label>
                 {/* Verification Icon */}
                 <i
-                  class={
-                    verified
-                      ? "fa-solid fa-circle-check"
-                      : "fa-regular fa-circle-check"
-                  }
-                  style={{
-                    marginLeft: "5px",
-                    color: verified ? "green" : "gray",
-                  }}
-                >
-                  {status}
-                </i>
-                {/* <FontAwesomeIcon
-                  icon={faCertificate}
-                  style={{
-                    marginLeft: "5px",
-                    color: verified ? "green" : "gray",
-                  }}
-                /> */}
+                  className={`fa-solid fa-circle-check ${
+                    verified ? "verified" : ""
+                  }`}
+                  style={{ marginLeft: "5px" }}
+                ></i>
               </div>
               {isCatcher && (
                 <div className="rating-box">
@@ -251,7 +226,7 @@ const Profile = () => {
                       className="display-data"
                       placeholder="Name"
                       value={account.fname + " " + account.lname}
-                    ></textarea>
+                    />
                   </div>
                   <div className="input-row">
                     <label className="PP">Age</label>
@@ -261,7 +236,8 @@ const Profile = () => {
                       placeholder="Age"
                       name="age"
                       value={account.age}
-                    ></textarea>
+                      onChange={handleChange}
+                    />
                   </div>
                   <div className="input-row">
                     <label className="PP">Birth Date</label>
@@ -269,7 +245,7 @@ const Profile = () => {
                       type="number"
                       className="display-data1"
                       placeholder="Date of birth"
-                    ></textarea>
+                    />
                   </div>
                   <div className="input-row">
                     <label className="PP">Gender</label>
@@ -286,7 +262,7 @@ const Profile = () => {
                       type="number"
                       className="display-data"
                       placeholder="Contact Number"
-                    ></textarea>
+                    />
                   </div>
                   <div className="input-row">
                     <label className="PP">Email Address:</label>
@@ -294,7 +270,7 @@ const Profile = () => {
                       type="text"
                       className="display-data"
                       placeholder="Email Address"
-                    ></textarea>
+                    />
                   </div>
                   <div className="input-row">
                     <label className="PP">Address:</label>
@@ -302,7 +278,7 @@ const Profile = () => {
                       type="text"
                       className="display-data"
                       placeholder="Address"
-                    ></textarea>
+                    />
                   </div>
                   <button onClick={handleClick}>Save</button>
                   <button>Edit</button>
