@@ -123,7 +123,7 @@ const SignUp = () => {
           type="checkbox"
           id="flip"
           className="flip"
-          checked={isChecked} // Bind the checkbox to the state variable
+          checked={isChecked} 
           onChange={handleCheckboxChange} // Handle checkbox change
         />
         <div className="cover">
