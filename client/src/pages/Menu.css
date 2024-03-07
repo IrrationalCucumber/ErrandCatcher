@@ -81,6 +81,9 @@
    padding-top: 20px;
 }
 
+.Menu1 .box-container :hover{
+    transform: scale(1.1);
+}
 .Menu1 .box img {
     height: 50%;
     width: 75%;
