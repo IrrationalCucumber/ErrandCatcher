@@ -1,0 +1,311 @@
+
+.home{
+   width: 100%;
+   height: 90vh;
+   background-image: linear-gradient(rgba(254, 194, 150, 0.682),rgba(220, 216, 214, 0.414));
+   background-repeat: no-repeat;
+   background-size: cover;
+}
+.home .content{
+   text-align: center;
+   padding-top: 1px;
+}
+
+.home .content img{
+   height: 50%;
+   width: 100%;
+   margin-left: 80px;
+   border-radius: 300px;
+}
+.home .content h1{
+   color: rgb(49, 49, 49);
+   font-size: 50px;
+   font-weight: 550;
+   text-shadow: 0px 1px 1px rgb(234, 237, 168);
+   letter-spacing: 3px;
+   margin-left: 100px;
+   margin-right: 25px;
+   padding-bottom: 5px;
+   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+   
+}
+.home .content h1 span{
+   color: #f9f9f9;   
+   text-shadow: 0px 2px 5px rgb(58, 58, 58);
+   letter-spacing: 3px;
+}
+.home .content p {
+   color: rgb(62, 62, 62);
+   font-size: 13px;
+   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+   font-weight: 600;
+   text-shadow: rgb(28, 26, 23);
+   margin-bottom: 10px;
+   margin-top: 10px;
+   padding: 0 20px; 
+   text-align: left;
+   text-align-last:auto;  
+   margin-left: 180px;
+   margin-right: 100px;
+   text-align: center;
+   padding-top: 5px;
+   line-height: 1.5;
+}
+
+.btn a{
+   background-color:transparent;
+   color: #1a1919;
+   letter-spacing: 3px;
+   font-weight: 550;
+   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+   border-radius: 2px;
+   border: solid var(--primary);
+   text-decoration: none;
+   transition: all 0.3s ease-out;
+   font-size: 12px;
+   margin-left: 100px;
+   padding: 8px 100px;
+   width: 100%;
+}
+.btns a{
+   background-color:#f4f6fc;
+   color: #1a1919;
+   letter-spacing: 3px;
+   font-weight: 550;
+   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+   border-radius: 2px;
+   border: solid var(--primary);
+   text-decoration: none;
+   transition: all 0.3s ease-out;
+   font-size: 12px;
+   margin-left: 100px;
+   padding: 8px 113.5px;
+   width: 100%;
+}
+
+.btn a:hover{
+   background: #f4f6fc;
+   color: rgb(8, 8, 8);
+}
+
+.btns a:hover{
+   background-color:transparent;
+   color: #1a1919;
+ 
+}
+
+.Services{
+   margin: 50px;
+}
+
+.Services h1 {
+   text-align: center;
+   letter-spacing: 3px;
+   margin-top: 30px;
+   padding-bottom: 30px;
+   font-weight: 600;
+   font-size: 40px;
+   color: rgb(28, 26, 23);
+   text-shadow: 0px 1px 1px rgb(234, 237, 168);
+   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
+.Services h1 span {
+   color: bisque;
+   text-shadow: 0px 1px 1px black;
+}
+
+.Services .box-container {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 2rem;
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   max-width: 90rem;
+   height: 25rem;
+   margin: 0 auto;
+   background: transparent;
+   margin-bottom: 6rem;
+}
+
+.Services .box-container .box {
+   flex: 1 1 0rem;
+   border-radius: .5rem;
+   overflow: hidden;
+   border: none;
+   box-shadow: 2rem 1rem 2rem 2rem rgba(0, 0, 0, .1);
+   border-radius: 10px;
+   margin-bottom: 25px;
+   margin-top: 0px;
+   display: flex;
+   flex-direction: column;
+   box-sizing: border-box;
+   scroll-behavior: smooth;
+   align-items: flex-start; 
+   background-color:transparent; 
+   align-items:center;
+   padding-top: 20px;
+   padding-bottom: 40px;
+}  
+
+.Services .box-container .box img {
+   height: 54%;
+   width: 53%;
+   object-fit: contain;
+   transition: 0.5s;
+   border-radius: 10px;
+   padding-top: 1rem;
+   background: white;
+}
+.Services .box-container .box .content {
+   padding: 1rem 0 1.5rem 0;
+   background: transparent;
+   margin-right: 15px;
+   
+}
+
+.Services .box-container .box .content h3 {
+   font-size: 1rem;
+   color: rgb(17, 16, 16);
+   padding-top: 3px;
+   padding-bottom: 10px;
+   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
+.Services .box-container .box .content h3 i {
+   color: rgb(79, 83, 83);
+}
+
+.Services .box-container .box .content p {
+   font-size:1.5rem ;
+   color: rgb(27, 25, 25);
+   padding: .5rem 0;
+   font-weight: 600;
+   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
+.Services .box-container .box .content .price {
+   font-size: 1.2rem;
+   color: rgb(17, 16, 16);
+   padding-top: .2rem;
+   padding-bottom: 1.2rem;
+   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
+.Services .box-container a {
+   font-size: 1rem;
+   padding: 10px 30px;
+   width: 1rem;
+   font-weight: 550;
+   background: #ffa500;
+   border-radius: 20px;
+   color: white;
+   margin-top: 50px;
+   transition: 0.5s;
+   text-decoration: none;
+   margin-left: 30px;
+   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+.Services .box-container a:hover{
+   background: rgb(217, 165, 87);
+   color: rgb(8, 8, 8);
+}
+
+@media (max-width:500px){
+   .Services{
+       padding: 0;
+   }
+   .Services h1{
+       padding: 20px;
+   }
+   .Services .box-container .box .content p{
+      padding:0%;
+      margin-left: 10px;
+      font-size: 5px;
+  }
+  .Services .box-container .box .content h3{
+   padding:3%;
+   margin-left: 10px;
+   font-size: 3.5px;
+   }
+   .Services .box-container .box .content .price{
+   padding-top:10%;
+   margin-left: 10px;
+   font-size: 8px;
+   }
+   .Services .box-container .box .content .btn{
+      padding:0%;
+      margin-left: 10px;
+      font-size: 7px;
+      }
+}
+
+
+.People{
+   margin: 50px;
+}
+
+.People h1 {
+   text-align: center;
+   letter-spacing: 3px;
+   margin-top: 30px;
+   font-weight: 600;
+   font-size: 40px;
+   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+   color: rgb(28, 26, 23);
+   text-shadow: 0px 1px 1px rgb(234, 237, 168);
+}
+
+.People h1 span {
+   color: bisque;
+   text-shadow: 0px 1px 1px black;
+}
+
+.People .box-container {
+   display: grid;
+   grid-template-columns: repeat(2, 1fr);
+   gap: 10px;
+   margin-top: 30px;
+   margin-left: 350px;
+   align-items: center;
+   margin-bottom: 15rem;
+   
+}
+
+.People .box-container .box {
+   width: 50%;
+}
+
+.People .box-container .box img {
+   width: 65%;
+   border-radius: 50%; 
+   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3); 
+}
+.People .box-container img:hover {
+   transform: scale(1.1);
+}
+
+.People .box-container .box .content h3 {
+   font-size: 2rem;
+   color: rgb(17, 16, 16);
+   padding-top: 10px;
+   padding-bottom: 10px;
+   padding-left: 25px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
+@media (max-width:765px){
+   .People{
+       padding: 0;
+   }
+   .People .box img h1{
+       padding: 20px;
+   }
+}
