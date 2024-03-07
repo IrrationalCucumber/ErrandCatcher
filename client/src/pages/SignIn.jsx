@@ -6,7 +6,7 @@ import "./signin.css";
 import { useAuth } from "../components/AuthContext";
 
 const SignIn = () => {
-  const [username, setUsername] = useState(""); //username
+  const[username, setUsername] = useState(""); //username
   const [password, setPassword] = useState(""); //passwod
   const [userID, setUserID] = useState(""); //var for id
   const [errorMessage, setErrorMessage] = useState(""); //error message
@@ -74,10 +74,11 @@ const SignIn = () => {
     <div className="si">
       <div className="cont">
         <div className="si-txt">
-          <h1>WELCOME TO ERRAND CATCHER</h1>
-          <h3>Sign-in now to blah blah blah</h3>
-        </div>
-
+          <h1>welcome back to ERRAND CATCHER</h1>
+          <div className="text">
+          <div className="sign"></div><h3>Sign-in Now</h3>
+          </div>
+          </div>
         <input
           className={errorMessage ? "error" : ""}
           name="username"
@@ -96,10 +97,8 @@ const SignIn = () => {
         />
         <p className="em">
           <i>{errorMessage}</i>
-        </p>
-        <button onClick={handleClick}>Sign In</button>
-        <p>
-          <label className="rem" htmlFor="rememberMe">
+       
+          <label className="rem" htmlFor="remember Me">
             Remember&nbsp;Me
             <input
               type="checkbox"
@@ -108,6 +107,14 @@ const SignIn = () => {
               onChange={handleRememberMeChange}
             />
           </label>
+          </p>
+        <div className="button1">
+          <div className="button2"></div>
+                      <button type="button" onClick={handleClick}>
+                        Sign In
+                      </button>
+                      </div>
+        <p>
 
           <i>
             Don't have an Account? Sign-up <Link to="/sign-up">here!</Link>

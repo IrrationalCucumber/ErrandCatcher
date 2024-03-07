@@ -11,37 +11,10 @@ const SignUp = () => {
     username: "",
     password: "",
     password2: "",
-    lname: "",
-    fname: "",
-    gender: "",
     email: "",
-    contact: "",
-    age: "",
-    bday: "",
-    address: "",
-    // desc:"",
     type: "Employer",
     dateCreated: "",
-    // profileImage:"",
   });
-  //resets when changing forms
-  const resetForm = () => {
-    setAccount({
-      username: "",
-      password: "",
-      password2: "",
-      lname: "",
-      fname: "",
-      gender: "",
-      email: "",
-      contact: "",
-      age: "",
-      bday: "",
-      address: "",
-      type: "Employer", // Set the default type here
-      dateCreated: "",
-    });
-  };
 
   //handle state of error message
   const [employerErrorMessage, setEmployerErrorMessage] = useState("");
@@ -49,17 +22,23 @@ const SignUp = () => {
   //state for type checkbox
   const [isChecked, setIsChecked] = useState(false);
   //handle the state event
-  const handleCheckboxChange = () => {
-    setIsChecked(!isChecked); // Toggle the checkbox status
-    setAccount((prevAccount) => ({
-      ...prevAccount,
-      type: isChecked ? "Employer" : "Catcher", // update type if checked/unchecked
-    }));
-
-    // Call resetForm to reset the form fields
-    resetForm();
+  const resetForm = () => {
+    setAccount({
+      username: "",
+      password: "",
+      password2: "",
+      email: "",
+      type: isChecked ? "Employer" : "Catcher",
+      dateCreated: "",
+    });
+    setEmployerErrorMessage("");
+    setCatcherErrorMessage("");
   };
 
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+    resetForm();
+  };
   //function for getting current date
   //triggers when  button clicked
   const getCurrentDate = () => {
@@ -100,14 +79,7 @@ const SignUp = () => {
       !account.username ||
       !account.password ||
       !account.email ||
-      !account.fname ||
-      !account.lname ||
-      !account.contact ||
-      !account.age ||
-      !account.bday ||
-      !account.gender ||
-      !account.type ||
-      !account.address
+      !account.type
     ) {
       if (account.type === "Employer") {
         setEmployerErrorMessage("Missing fields. Please try again.");
@@ -135,8 +107,8 @@ const SignUp = () => {
     e.preventDefault();
     try {
       account.dateCreated = getCurrentDate();
-      await axios.post("http://localhost:8800/user", account);
-      navigate("/sign-in");
+      await axios.post("http://localhost:8800/signup", account); // new enpoint
+      //navigate("/sign-in");
     } catch (err) {
       console.log(err);
     }
@@ -175,6 +147,7 @@ const SignUp = () => {
                       placeholder="Username"
                       onChange={handleChange}
                       name="username"
+                      value={account.username}
                     />
                     <input
                       className={employerErrorMessage ? "error" : ""}
@@ -182,6 +155,7 @@ const SignUp = () => {
                       placeholder="Email address"
                       onChange={handleChange}
                       name="email"
+                      value={account.email}
                     />
                     <input
                       className={employerErrorMessage ? "error" : ""}
@@ -189,6 +163,7 @@ const SignUp = () => {
                       placeholder="Password (8-20)"
                       onChange={handleChange}
                       name="password"
+                      value={account.password}
                     />
                     <input
                       className={employerErrorMessage ? "error" : ""}
@@ -196,8 +171,9 @@ const SignUp = () => {
                       placeholder="Confirm password.."
                       onChange={handleChange}
                       name="password2"
+                      value={account.password2}
                     />
-                    
+
                     <br />
                     <p className="em">
                       <i>{employerErrorMessage}</i>
@@ -231,6 +207,7 @@ const SignUp = () => {
                       placeholder="Username"
                       onChange={handleChange}
                       name="username"
+                      value={account.username}
                     />
                     <input
                       className={catcherErrorMessage ? "error" : ""}
@@ -238,6 +215,7 @@ const SignUp = () => {
                       placeholder="Email address"
                       onChange={handleChange}
                       name="email"
+                      value={account.email}
                     />
                     <input
                       className={catcherErrorMessage ? "error" : ""}
@@ -245,6 +223,7 @@ const SignUp = () => {
                       placeholder="Password (8-20 characters)"
                       onChange={handleChange}
                       name="password"
+                      value={account.password}
                     />
                     <input
                       className={catcherErrorMessage ? "error" : ""}
@@ -252,8 +231,9 @@ const SignUp = () => {
                       placeholder="Confirm password..."
                       onChange={handleChange}
                       name="password2"
+                      value={account.password2}
                     />
-                    
+
                     <br />
                     <p className="em">
                       <i>{catcherErrorMessage}</i>
