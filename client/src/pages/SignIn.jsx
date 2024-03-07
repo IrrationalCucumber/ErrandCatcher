@@ -72,7 +72,7 @@ const SignIn = () => {
 
   return (
     <div className="si">
-      <div className="cont">
+      <div className="cont contman">
         <div className="si-txt">
           <h1>welcome back to ERRAND CATCHER</h1>
           <div className="text">
@@ -114,12 +114,14 @@ const SignIn = () => {
                         Sign In
                       </button>
                       </div>
-        <p>
-
+        <p className="cont2">
           <i>
             Don't have an Account? Sign-up <Link to="/sign-up">here!</Link>
           </i>
         </p>
+      </div>
+      <div className="contman cont-tawo">
+        <img src="http://localhost:3000/images/tawo.png" alt="" />
       </div>
     </div>
   );
