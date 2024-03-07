@@ -649,6 +649,21 @@ app.get("/user-rating", (req, res) => {
   });
 });
 
+//APS - 02/03/24
+//Return the accountStatus of user based on UserID
+app.get("/user-verify/:userID", (req, res) => {
+  const userID = req.params.userID;
+  const q = "Select accountStatus FROM useraccount WHERE userID = (?)";
+
+  db.query(q, [userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+
 //=================================================================//
 
 app.listen(8800, () => {
