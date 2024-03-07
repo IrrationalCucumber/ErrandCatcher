@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -6,11 +6,26 @@ import axios from 'axios';
 import "./Menu.css";
 
 const Menu = () => {
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const handleSearchChange = (event) => {
+        setSearchQuery(event.target.value);
+    };
 
     return (
-         <>
+        <>
             <NavBar />
 
+            <div className="search-bar">
+                <input
+                    type="text"
+                    placeholder="Search..."
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                />
+                <button>Search</button>
+            </div>
+            
             <section className="Menu" id="Menu">
             <div className="box-container">
                     <div className="box">
@@ -31,11 +46,10 @@ const Menu = () => {
                             <p>Delivery</p>
                         </div>     
                     </div>  
-            </div> 
-               
-    </section>
+                                </div> 
+            </section>
 
-    <section className="Menu1" id="Menu1">
+            <section className="Menu1" id="Menu1">
                 <div className="box-container">
                     <div className="box">
                         <img src="/images/img1.png" alt="" />
@@ -83,4 +97,4 @@ const Menu = () => {
         </>
     );
 };
-export default Menu;
+export default Menu; 
