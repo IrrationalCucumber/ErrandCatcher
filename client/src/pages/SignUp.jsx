@@ -1,117 +1,266 @@
-import axios from 'axios'
-import React, { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import React, { useState } from "react";
+//import EmployerForm from '../components/EmployerForm.js';
+import { useNavigate, Link } from "react-router-dom";
+//import tawo from '../imgs/tawo.png';
+import "./SignUp.css";
+import axios from "axios";
+import "./Error.css";
 
 const SignUp = () => {
-    const [account,setAccount] = useState({
-        username:"",
-        password:"",
-        lname:"",
-        fname:"",
-        gender:"",
-        email:"",
-        contact:"",
-        age:"",
-        bday:"",
-        address:"",
-       // desc:"",
-        type:"",
-        dateCreated:"",
-       // profileImage:"",
-    })
-    // const formatDate = (dateString) => {
-    //     // Input date format: MM/DD/YYYY
-    //     const [month, day, year] = dateString.split('/');
-    //     // Output date format: YYYY-MM-DD
-    //     return `${year}-${month}-${day}`;
-    //   };
-      //get current date
-      
-       const getCurrentDate = () => {
-         const currentDate = new Date();
-         const year = currentDate.getFullYear();
-         const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed, so add 1
-         const day = String(currentDate.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-       };
+  const [account, setAccount] = useState({
+    username: "",
+    password: "",
+    password2: "",
+    email: "",
+    type: "Employer",
+    dateCreated: "",
+  });
 
-    const navigate = useNavigate()
+  //handle state of error message
+  const [employerErrorMessage, setEmployerErrorMessage] = useState("");
+  const [catcherErrorMessage, setCatcherErrorMessage] = useState("");
+  //state for type checkbox
+  const [isChecked, setIsChecked] = useState(false);
+  //handle the state event
+  const resetForm = () => {
+    setAccount({
+      username: "",
+      password: "",
+      password2: "",
+      email: "",
+      type: isChecked ? "Employer" : "Catcher",
+      dateCreated: "",
+    });
+    setEmployerErrorMessage("");
+    setCatcherErrorMessage("");
+  };
 
-    const handleChange = (e) => {
-      // For the 'gender' field, directly set the value without using spread syntax
-      if (e.target.name === 'gender') {
-        setAccount((prev) => ({ ...prev, gender: e.target.value }));
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+    resetForm();
+  };
+  //function for getting current date
+  //triggers when  button clicked
+  const getCurrentDate = () => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed, so add 1
+    const day = String(currentDate.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  //function to navigate pages
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    // For the 'gender' field, directly set the value without using spread syntax
+    if (e.target.name === "gender") {
+      setAccount((prev) => ({ ...prev, gender: e.target.value }));
+    }
+    if (e.target.name === "type") {
+      if (isChecked) {
+        // Checkbox is checked, store one value
+        setAccount((prev) => ({ ...prev, type: "Catcher" }));
+      } else {
+        // Checkbox is not checked, store another value
+        setAccount((prev) => ({ ...prev, type: "Employer" }));
       }
-      else if(e.target.name === 'type'){
-        setAccount((prev) => ({...prev, type: e.target.value}));
-      }
-      else {
-        // For other fields, use spread syntax as before
-        setAccount((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-      }
-    };
-    
-    
+    } else {
+      // For other fields, use spread syntax as before
+      setAccount((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    }
+  };
 
-
-    //save the data into db
-    const handleClick = async e =>{
-        //const updatedAccount = { ...account };
-        //refresh the page when button is clicked
-        e.preventDefault()
-        try{
-            account.dateCreated = getCurrentDate();
-            await(axios.post('http://localhost:8800/user', account))
-            navigate("/accounts")
-        }catch(err){
-            console.log(err)
-        }
+  //save the data into db
+  const handleClick = async (e) => {
+    //if fileds are empty
+    //error message
+    if (
+      !account.username ||
+      !account.password ||
+      !account.email ||
+      !account.type
+    ) {
+      if (account.type === "Employer") {
+        setEmployerErrorMessage("Missing fields. Please try again.");
+      } else {
+        setCatcherErrorMessage("Missing fields. Please try again.");
+      }
+      return;
+    } else if (account.password.length < 8) {
+      if (account.type === "Employer") {
+        setEmployerErrorMessage("Password is too short.");
+      } else {
+        setCatcherErrorMessage("Password is too short.");
+      }
+      return;
+    } else if (account.password !== account.password2) {
+      if (account.type === "Employer") {
+        setEmployerErrorMessage("Password does not match.");
+      } else {
+        setCatcherErrorMessage("Password does not match.");
+      }
+      return;
     }
 
-    console.log(account)
+    //save to db if no error
+    e.preventDefault();
+    try {
+      account.dateCreated = getCurrentDate();
+      await axios.post("http://localhost:8800/signup", account); // new enpoint
+      //navigate("/sign-in");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  console.log(account);
+
   return (
-    <div className='from'>
-      <nav>
-        <Link to='/accounts'>
-          BACK 
-        </Link>
-        <Link to='/'> HOME</Link>
-      </nav>
-      <h1>ADD NEW ACCOUNT</h1>
-      <input type="text" placeholder='username' onChange={handleChange} name='username'/>
-      <input type="text" placeholder='password' onChange={handleChange} name='password'/>
-      <input type="text" placeholder='first name' onChange={handleChange} name='fname'/>
-      <input type="text" placeholder='last name' onChange={handleChange} name='lname'/>
-      <label htmlFor="">
-        Gender
-        <select name='gender' onChange={handleChange} value={account.gender}>
-          <option value="">Choose gender....</option>
-          <option value="male" >Male</option>
-          <option value="female">Female</option>
-        </select>
-      </label>
-      <input type="text" placeholder='contact number' onChange={handleChange} name='contact'/>
-      <input type="number" placeholder='Age' onChange={handleChange} name='age'/>
-      
-      <input type="email" placeholder='Email address' onChange={handleChange} name='email'/>
-      <input type="text" placeholder='Address' onChange={handleChange} name='address'/>
-      <select name='type' onChange={handleChange} value={account.type}>
-        <option value="">Choose Type</option>
-        <option vlaue="Employer">Employer</option>
-        <option value="Catcher">Catcher</option>
-      </select>
+    <div className="body">
+      <div className="container">
+        <input
+          type="checkbox"
+          id="flip"
+          className="flip"
+          checked={isChecked} // Bind the checkbox to the state variable
+          onChange={handleCheckboxChange} // Handle checkbox change
+        />
+        <div className="cover">
+          <div className="front">
+            <img src="/images/tawo.png" alt="Tawo" />
+          </div>
+          <div className="back">
+            <img className="ErrandCatcher" src="" alt="" />
+          </div>
+        </div>
+        <div className="forms">
+          <div className="form-content">
+            <div className="employer-form">
+              <div className="title">Employer</div>
+              <form action="#">
+                <div className="input-boxes">
+                  <div className="input-box">
+                    <input
+                      className={employerErrorMessage ? "error" : ""}
+                      type="text"
+                      placeholder="Username"
+                      onChange={handleChange}
+                      name="username"
+                      value={account.username}
+                    />
+                    <input
+                      className={employerErrorMessage ? "error" : ""}
+                      type="email"
+                      placeholder="Email address"
+                      onChange={handleChange}
+                      name="email"
+                      value={account.email}
+                    />
+                    <input
+                      className={employerErrorMessage ? "error" : ""}
+                      type="password"
+                      placeholder="Password (8-20)"
+                      onChange={handleChange}
+                      name="password"
+                      value={account.password}
+                    />
+                    <input
+                      className={employerErrorMessage ? "error" : ""}
+                      type="password"
+                      placeholder="Confirm password.."
+                      onChange={handleChange}
+                      name="password2"
+                      value={account.password2}
+                    />
 
-      <button onClick={handleClick}>Add Account</button>
+                    <br />
+                    <p className="em">
+                      <i>{employerErrorMessage}</i>
+                    </p>
+                    <div className="button1">
+                      <button type="button" onClick={handleClick}>
+                        Sign Up
+                      </button>
+                    </div>
+                    <div className="text sign-up-text">
+                      I am a <label htmlFor="flip">Catcher</label>
+                    </div>
+                    <div className="toSignIn">
+                      Already got an account? Sign in{" "}
+                      <i>
+                        <Link to="/sign-in">here!</Link>
+                      </i>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div className="Catcher-form">
+              <div className="title">Catcher</div>
+              <form action="#">
+                <div className="input-boxes">
+                  <div className="input-box">
+                    <input
+                      className={catcherErrorMessage ? "error" : ""}
+                      type="text"
+                      placeholder="Username"
+                      onChange={handleChange}
+                      name="username"
+                      value={account.username}
+                    />
+                    <input
+                      className={catcherErrorMessage ? "error" : ""}
+                      type="email"
+                      placeholder="Email address"
+                      onChange={handleChange}
+                      name="email"
+                      value={account.email}
+                    />
+                    <input
+                      className={catcherErrorMessage ? "error" : ""}
+                      type="password"
+                      placeholder="Password (8-20 characters)"
+                      onChange={handleChange}
+                      name="password"
+                      value={account.password}
+                    />
+                    <input
+                      className={catcherErrorMessage ? "error" : ""}
+                      type="password"
+                      placeholder="Confirm password..."
+                      onChange={handleChange}
+                      name="password2"
+                      value={account.password2}
+                    />
+
+                    <br />
+                    <p className="em">
+                      <i>{catcherErrorMessage}</i>
+                    </p>
+                    <div className="button1">
+                      <button type="button" onClick={handleClick}>
+                        Sign Up
+                      </button>
+                    </div>
+                    <div className="text sign-up-text">
+                      Switch to <label htmlFor="flip">Employer</label>
+                    </div>
+                    <div className="toSignIn">
+                      Already got an account? Sign in{" "}
+                      <i>
+                        <Link to="/sign-in">here!</Link>
+                      </i>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default SignUp
-/**
- *      <input type="text" placeholder='first name' onChange={handleChange} name='fname'/>
-      <input type="text" placeholder='last name' onChange={handleChange} name='lname'/>
-      <input type="text" placeholder='email' onChange={handleChange} name='email'/>
-      <input type="text" placeholder='gender' onChange={handleChange} name='gender'/>
-
-      <input type="text" placeholder='Account type' onChange={handleChange} name='type'/>
- */
+export default SignUp;

@@ -1,19 +1,18 @@
 # ErrandCatcher
-Capstone Project
+## Capstone Project
 
-Development Team: Unusual Beetles
+### Development Team: Unusual Beetles
+## Members:
 
-
-
-Members:
-
-Ashley Belle Carcuevas
-
-
-Lorry Mae Halina
-
-
-Trisha Mae Sasing
+#### Ashley Belle Carcuevas
+#### Lorry Mae Halina
+#### Angel Diane Ocier
+#### Trisha Mae Sasing
+#### Adrean Paul Soroño
+#### Raymund Valeroso
 
 
-Adrean Paul Soroño
+## REMINDERS:
+##### After cloning, perform 'npm install' on the directory.
+##### Perform Pull Request on 'qa' branch if task is done. 
+##### Merge working branch from Default branch for Present build

@@ -1,13 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
-import { Button } from './Button';
-import './navbar-employer.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell as regularBell } from '@fortawesome/free-regular-svg-icons';
+import { SignOutButton } from './SignOutButton';
+import './Navbar.css'
 
 
-
-function Navbar() {
+function AdminNavbar() {
   //change the state of the menu
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
@@ -30,7 +27,6 @@ function Navbar() {
 //handles the resizing of window
 window.addEventListener('resize', showButton)
 
-//fontawsome icon notification
   return (
     <>
         <nav className="navbar">
@@ -43,48 +39,34 @@ window.addEventListener('resize', showButton)
                 </div>
                 <ul className={click ? 'nav-menu active' : 'nav-menu'}>
                   <li className='nav-item'>
-                    <Link to='/' className='nav-links' onClick={closeMobileMenu}>
+                    <Link to='/admin-home' className='nav-links' onClick={closeMobileMenu}>
                       Home
                     </Link>
                   </li>
                   
                   <li className='nav-item'>
-                    <Link to='/Map' className='nav-links' onClick={closeMobileMenu}>
-                      Map
+                    <Link to='/accounts' className='nav-links' onClick={closeMobileMenu}>
+                      ACCOUNT LIST
                     </Link>
                   </li>
                   <li className='nav-item'>
-                    <Link to='/' className='nav-links' onClick={closeMobileMenu}>
-                      Applicant
-                    </Link>
-                  </li>
-                  <li className='nav-item'>
-                    <Link to='/' className='nav-links' onClick={closeMobileMenu}>
-                      Commission
+                    <Link to='/commission-list' className='nav-links' onClick={closeMobileMenu}>
+                      COMMISSION LIST
                     </Link>
                   </li>
                 </ul>
-                <FontAwesomeIcon icon={regularBell} />
-                {button && <Button buttonStyle='btn--outline'>profile</Button>}
+                {button && <SignOutButton buttonStyle='btn--outline'>SIGN OUT</SignOutButton>}
             </div>
         </nav>
     </>
   )
 }
 
-export default navbar-employer
+export default AdminNavbar
 /**
  * <li className='nav-item'>
                     <Link to='/commission' className='nav-links' onClick={closeMobileMenu}>
                       Commission
                     </Link>
                   </li>
-
-
-notification
- <a href="#" class="notification">
-  <span>Inbox</span>
-  <span class="badge">3</span>
-</a>
  */
-

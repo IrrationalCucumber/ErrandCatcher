@@ -1,116 +1,173 @@
-import React, { useEffect, useState } from 'react'
-import {Link} from 'react-router-dom'
-import axios from 'axios'
-import NavBar from '../components/Navbar.js'
-//import "./ash-buttton.css"
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import NavBar from "../components/Navbar.js";
+import "./commissionlist.css";
+import Pagination from "../components/Pagination";
+import Table from "../components/Table";
 
 const CommissionList = () => {
-    const [commissions, setCommissions] = useState([])
-    const [searchTerm, setSearchTerm] = useState('');
-    const [selStatus, setSelStatus] = useState('');
-    //handle error
-    //rretrieve data
-    useEffect(() =>{
-        const fetchAllCommission = async ()=>{
-            try{
-                const res = await axios.get("http://localhost:8800/commission")
-                //"http://localhost:8800/commission" - local computer
-                //"http://192.168.1.47:8800/commission" - netwrok
-                setCommissions(res.data)
-            }
-            catch(err){
-                console.log(err)
-            }
-        }
-        fetchAllCommission()
-    }, [])
+  const [commissions, setCommissions] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selStatus, setSelStatus] = useState("");
 
-    //fetch all accounts
-    //triggers when search input is filled
-    const fetchSearchResults = async () => {
-      try {
-                //"http://localhost:8800/commission" - local computer
-                //"http://192.168.1.47:8800/commission" - netwrok
-          const res = await axios.get('http://localhost:8800/search-commission', {
-              params: { term: searchTerm } // Pass the search term as a query parameter
-          });
-          setCommissions(res.data);
-      } catch (err) {
-          console.log(err);
-      }
-  };
-  
+  //current page state --Ash
+  const [currentPage, setCurrentPage] = useState(1);
+
+  //Pagination --Ash
+  //display data per page
+  const [itemsPerPage] = useState(10);
+
+  //handle error
+  //rretrieve data
   useEffect(() => {
-      fetchSearchResults();
+    const fetchAllCommission = async () => {
+      try {
+        const res = await axios.get("http://localhost:8800/commission");
+        //"http://localhost:8800/commission" - local computer
+        //"http://192.168.1.47:8800/commission" - netwrok
+        setCommissions(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAllCommission();
+  }, []);
+
+  //fetch all accounts
+  //triggers when search input is filled
+  const fetchSearchResults = async () => {
+    try {
+      //"http://localhost:8800/commission" - local computer
+      //"http://192.168.1.47:8800/commission" - netwrok
+      const res = await axios.get("http://localhost:8800/search-commission", {
+        params: { term: searchTerm }, // Pass the search term as a query parameter
+      });
+      setCommissions(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchSearchResults();
   }, [searchTerm]); // Trigger the search whenever searchTerm changes
 
-    //funtion to delete commission
-    const handleDelete = async (commissionID) =>{
-      try {
-            //"http://localhost:8800/commission" - local computer
-            //"http://192.168.1.47:8800/commission" - netwrok
-        await axios.delete(`http://localhost:8800/commission/${commissionID}`)
-        window.location.reload()
-      } catch (err) {
-        console.log(err)
-      }
+  //funtion to delete commission
+  const handleDelete = async (commissionID) => {
+    try {
+      //"http://localhost:8800/commission" - local computer
+      //"http://192.168.1.47:8800/commission" - netwrok
+      await axios.delete(`http://localhost:8800/commission/${commissionID}`);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
     }
-    //need front end
+  };
+
+  //Logic of Pagination
+  const indexOfLastItem = currentPage + itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = commissions.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  //need front end
   return (
     <div>
-      <NavBar />
-      <h1>Commission List</h1>
+      <NavBar
+        page1="HOME"
+        home={`/admin-home`}
+        // {`admin-home/${userID}`}
+        page2="ACCOUNT LIST"
+        commissionList={`/accounts`}
+        page3="COMMISSION LIST"
+        applicants={`/commission-list`}
+        pageButton="/sign-in"
+        button="SIGN OUT"
+      />
+
       <div className="commissions">
-          <div className='search'>
-              <input
-              type='text'
-              placeholder='Search...'
+        <h1>Commission List</h1>
+        <div className="search-filter">
+          <div className="search">
+            <input
+              type="text"
+              placeholder="Search..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              <button type='submit' >
-                <i className='fa fa-search'></i>
-              </button>
+            />
+            <button type="submit" onClick={fetchSearchResults}>
+              <i className="fa fa-search"></i>
+            </button>
           </div>
-          <thead>
-              <tr>
-                <th className='col1'>ID</th>
-                <th className='col2'>Title</th>
-                <th className='col3'>Employer</th>
-                <th className='col4'>Type</th>
-                <th className='col5'>Commission Pay</th>
-                <th className='col6'>Date Posted</th>
-                <th className='col7'>Date Completed</th>
-                <th className='col8'>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {commissions.map(Commission=>(
-            <tr className="commission" key={Commission.commissionID}>
-                
-                <td>{Commission.commissionID}</td>
-                <td>{Commission.commissionTitle}</td>
-                <td>{Commission.employerID}</td>
-                <td>{Commission.commissionType}</td>
-                <td>{Commission.commissionPay}</td>
-                <td>{new Date(Commission.DatePosted).toLocaleDateString()}</td>
-                <td>{new Date(Commission.DateCompleted).toLocaleDateString()}</td>
-                <td>{Commission.commissionStatus}</td>
-                <button onClick={()=>handleDelete(Commission.commissionID)}>DELETE</button>
-                <button className='update'><Link to={`/update-commission/${Commission.commissionID}`}>View</Link></button>
-            </tr>
-        ))}
-            </tbody>
-        
-      </div>
-      <button>
-        <Link to='/post-commission'>Add Commission</Link>
-        </button>
-    </div>
-  )
-}
+          <div className="filter">
+            <select>
+              <option value="">All Status</option>
+              <option value="Pending">Pending</option>
+              <option value="Completed">Completed</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+            <select>
+              <option value="">All Types</option>
+              <option value="Home">Home</option>
+              <option value="Transportation">Transportation</option>
+              <option value="Delivery">Delivery</option>
+            </select>
+          </div>
+        </div>
 
-export default CommissionList
+        <Table
+          headers={[
+            "ID",
+            "Title",
+            "Employer",
+            "Type",
+            "Payment",
+            "Posted",
+            "Completed",
+            "Status",
+            "Action",
+          ]}
+          data={currentItems.map((Commission) => [
+            Commission.commissionID,
+            Commission.commissionTitle,
+            Commission.employerID,
+            Commission.commissionType,
+            Commission.commissionPay,
+            Commission.DatePosted,
+            Commission.DateCompleted,
+            Commission.commissionStatus,
+            <>
+              <button onClick={() => handleDelete(Commission.commissionID)}>
+                X
+              </button>
+              <button className="update">
+                <Link to={`/update-commission/${Commission.commissionID}`}>
+                  View
+                </Link>
+              </button>
+            </>,
+          ])}
+        />
+        {/* Pagination controls */}
+        {commissions.length > 0 && (
+          <Pagination
+            itemsPerPage={itemsPerPage}
+            totalItems={commissions.length}
+            paginate={paginate}
+          />
+        )}
+      </div>
+      {/* onClick={handleAddCommission} logic for the button since this is a link inside a button */}
+      <button className="add-commission">
+        <Link to="/post-commission">Add Commission</Link>
+      </button>
+    </div>
+  );
+};
+
+export default CommissionList;
 
 // //<div className='search'>
 // <input
@@ -123,3 +180,21 @@ export default CommissionList
 // <i className='fa fa-search'></i>
 // </button>
 // </div>
+
+//  const headers = ['ID', 'Title', 'Employer', 'Type', 'Commission Pay', 'Date Posted', 'Date Completed', 'Status'];
+/*
+  const commissionData = commissions.map(commission => ([
+    commission.commissionID,
+    commission.commissionTitle,
+    commission.employerID,
+    commission.commissionType,
+    commission.commissionPay,
+    commission.DatePosted,
+    commission.DateCompleted,
+    commission.commissionStatus
+  ]));*/
+/*
+        <div className="commissions">
+          <Table headers={headers} data={commissionData} />
+        </div>
+*/

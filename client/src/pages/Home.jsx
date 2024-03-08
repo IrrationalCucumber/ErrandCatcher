@@ -1,18 +1,25 @@
 import React from 'react'
 import Navbar from '../components/Navbar';
+import Cards from '../components/Cards';
+import HeroSection from '../components/HeroSection'
+import Footer from '../components/Footer'
+
 
 
 const Home = () => {
-     //change the state of the menu
-  //const [click, setClick] = useState(false);
-  //const [button, setButton] = useState(true);
-//reverse the state of the above funstion
-  //const handleClick = () => setClick(!click);
-  //const closeMobileMenu = () => setClick(false);
+     
   return (
+    <>
     <div>
-      <Navbar />
+    <Navbar
+        button="SIGN IN"
+        pageButton='/sign-in'
+      />
+      <HeroSection></HeroSection>
+      <Cards />
+      <Footer />
     </div>
+    </>
   )
 }
 

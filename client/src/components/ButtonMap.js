@@ -7,7 +7,7 @@ const STYLES = ['btn--primary', 'btn--outline']
 const SIZES = ['btn--medium', 'btn--large']
 
 //render anything inside the button
-export const Button = ({
+export const ButtonMap = ({
     children,
      type, 
      onClick, 
@@ -19,7 +19,7 @@ export const Button = ({
         const checkButtonSize = SIZES.includes(buttonSize) ?  buttonSize : SIZES[0];
 
         return (
-            <Link to='/sign-up' className='btn--mobile'>
+            <Link to='/map' className='btn--mobile'>
                 <button
                 className={`btn ${checkButtonStyle} ${checkButtonSize}`}
                 onClick={onClick}

@@ -3,10 +3,21 @@ import {Link} from 'react-router-dom'
 import axios from 'axios'
 import NavBar from '../components/Navbar'
 import './accountlist.css';
+import Pagination from '../components/Pagination';
+import Table from '../components/Table';
+
 
 const AccountList = () => {
     const [accounts, setAccounts] = useState([])
     const [searchTerm, setSearchTerm] = useState('');
+
+    //pagination --Ash
+    const [currentPage, setCurrentPage] = useState(1);
+    
+    //Pagination --Ash
+    //display data per page
+    const [itemsPerPage] = useState(10);
+
     //useEffect to handle error
     useEffect(() =>{
         const fetchAllAccount = async ()=>{
@@ -40,12 +51,41 @@ const AccountList = () => {
   useEffect(() => {
       fetchSearchResults();
   }, [searchTerm]); // Trigger the search whenever searchTerm changes
+
+  //Logic of Pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentAccounts = accounts.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const headers = ['ID', 'Username', 'Name', 'Email', 'Type', 'Date Created', 'Status'];
+  const accountData = currentAccounts.map(account => ([
+      account.userID,
+      account.username,
+      `${account.userFirstname} ${account.userLastname}`,
+      account.userEmail,
+      account.accountType,
+      new Date(account.dateCreated).toLocaleDateString(),
+      account.accountStatus
+  ]));
         
 //list need to be in a column
 //need filter
   return (
     <div>
-      <NavBar></NavBar>
+      <NavBar
+        page1="HOME"
+        home={`/admin-home`}
+        // {`admin-home/${userID}`}
+        page2="ACCOUNTS"
+        commissionList={`/accounts`}
+        page3="COMMISSIONS"
+        applicants={`/commission-list`}
+        pageButton='/sign-in'
+        button='SIGN OUT'
+      />
+      
       <h1>Account List</h1>
       <div className='search'>
           <input
@@ -58,46 +98,27 @@ const AccountList = () => {
               <i className='fa fa-search' place></i>
           </button>
           <select name="type" id="">
-            <option value=""></option>
-            <option value="employer">employer</option>
+            <option value="">Type</option>
+            <option value="employer">Employer</option>
             <option value="catcher">Catcher</option>
             <option value="admin">Admin</option>
           </select>
           <select name="status" id="">
-            <option value=""></option>
+            <option value="">Status</option>
             <option value="verified">Verified</option>
             <option value="unverified">Unverified</option>
             <option value="Suspended">Suspended</option>
           </select>
       </div>
       <div className="accounts">
-          <table>
-            <thead>
-              <tr>
-                <th className='col1'>ID</th>
-                <th className='col2'>Username</th>
-                <th className='col3'>Name</th>
-                <th className='col4'>Email</th>
-                <th className='col5'>Type</th>
-                <th className='col6'>Date Created</th>
-                <th className='col7'>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {accounts.map(Account=>(
-                    <tr className="account" key={Account.userID}>
-                        <td className='col1'>{Account.userID}</td>
-                        <td className='col2'>{Account.username}</td>
-                        <td className='col3'>{Account.userFirstname} {Account.userLastname}</td>
-                        <td className='col4'>{Account.userEmail}</td>
-                        <td className='col5'>{Account.accountType}</td>
-                        <td className='col6'>{new Date(Account.dateCreated).toLocaleDateString()}</td>
-                        <td className='col7'>{Account.accountStatus}</td>
-                        <td><button className='update'><Link to={`/update-account/${Account.userID}`}>Update</Link></button></td>
-                    </tr>
-                    ))}
-            </tbody>
-          </table>
+      {/*table*/}
+      <Table headers={headers} data={accountData} />
+      
+      <Pagination
+                    itemsPerPage={itemsPerPage}
+                    totalItems={accounts.length}
+                    paginate={paginate}
+                />
       </div>
       <button>
         <Link to='/add'>Add account</Link>
