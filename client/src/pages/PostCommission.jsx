@@ -3,7 +3,7 @@ import maplibregl from "maplibre-gl";
 //import 'maplibre-gl/dist/maplibre-gl.css';
 import axios from "axios";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import "./PostCommission.css"; // Import your CSS file
+import "./Commission.css"; // Import your CSS file
 import ErrandInputs from "../components/ErrandInputs";
 
 const PostCommission = () => {
@@ -147,13 +147,11 @@ const PostCommission = () => {
           mapContainer={mapContainer}
           long={commission.comLong}
           lat={commission.comLat}
-          handlePostClick={handleClick} // Pass the handleClick function as a prop
-          
-          
         />
-
+          <div className="btn-container">
+            <button onClick={handleClick} className="btn btn-yellow">POST</button>
+          </div>
       </div>
-
     </>
   );
 };
