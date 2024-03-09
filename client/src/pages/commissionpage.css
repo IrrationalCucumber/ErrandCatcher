@@ -10,9 +10,11 @@
     flex-direction: column;
 }
 
-.Commission-page h1 {
+.Commission-page h1,
+.Commission-page h6 {
     margin-right: 10px;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; /* Font family */
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin-bottom: 20px;
 }
 
 .Commission-page-divider {
