@@ -1,6 +1,7 @@
 //intended to see the catchers who applied for the errand posted by the employer
 //03-06-24 updated the applicant page for employer --ash
 //added pagination and table. contents for the td are based on the old code --ash
+//03-10-24  <Route path="/e-applicants" exact Component={EmployerApplicants}/>
 
 import React, { useEffect, useState } from 'react'
 import {Link, useLocation} from 'react-router-dom'
