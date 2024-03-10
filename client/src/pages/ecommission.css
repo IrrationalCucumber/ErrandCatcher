@@ -1,4 +1,4 @@
-/*commissionpage.css*/
+/*For the EmployerCommissionList UI*/
 .Commission-page-container {
     display: flex;
     justify-content: space-between; /* Center content horizontally */
@@ -72,3 +72,27 @@
     transform: translateY(1px);
     box-shadow: none;
   }
+
+  .search-filter {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Adjust margin as needed */
+  }
+  
+  .search,
+  .filter {
+    display: flex;
+    align-items: center;
+  }
+  
+  .filter {
+    margin-left: 10px; /* Adjust margin between search and filter */
+  }
+  
+  .filter select {
+    width: 150px; /* Adjust width as needed */
+  }
+  
+  
+  
+  
