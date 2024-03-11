@@ -3,9 +3,9 @@ import { Button } from './NavButton';
 import './Navbar.css'
 import NavBar from '../components/Navbar'
 
-//only for CATCHER
+//only for EMPLOYER
 
-function CatcherPageNavbar() {
+function EmployerPageNavbar() {
   //change the state of the menu
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
@@ -36,7 +36,7 @@ window.addEventListener('resize', showButton)
         // {`admin-home/${userID}`}
         page2="COMMISSION"
         commissionList={`/`}
-        page3="APPLICATION"
+        page3="APPLICANTS"
         applicants={`/`}
       />
         {/*<nav className="navbar">
@@ -52,4 +52,4 @@ window.addEventListener('resize', showButton)
   )
 }
 
-export default CatcherPageNavbar
+export default EmployerPageNavbar

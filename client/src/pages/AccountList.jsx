@@ -96,9 +96,9 @@ const AccountList = () => {
         page1="HOME"
         home={`/admin-home`}
         // {`admin-home/${userID}`}
-        page2="ACCOUNT LIST"
+        page2="ACCOUNTS"
         commissionList={`/accounts`}
-        page3="COMMISSION LIST"
+        page3="COMMISSIONS"
         applicants={`/commission-list`}
         pageButton='/sign-in'
         button='SIGN OUT'

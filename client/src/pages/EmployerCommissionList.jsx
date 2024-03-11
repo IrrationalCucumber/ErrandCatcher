@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import NavBar from "../components/Navbar.js";
-//import "./ash-buttton.css"
+import "./ecommission.css"
+import Table from "../components/Table.js";
+import Pagination from "../components/Pagination.js";
 
 const CommissionList = () => {
   const [commissions, setCommissions] = useState([]);
@@ -10,6 +12,10 @@ const CommissionList = () => {
 
   const location = useLocation();
 
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+  
   const userID = location.pathname.split("/")[2];
   //pathname to array from
 
@@ -60,6 +66,13 @@ const CommissionList = () => {
       console.log(err);
     }
   };
+  
+  // Pagination functions
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = commissions.slice(indexOfFirstItem, indexOfLastItem);
+
   //need front end
   return (
     <div>
@@ -73,6 +86,8 @@ const CommissionList = () => {
         map={`/map/${userID}`}
         button="SIGN OUT"
       />
+      <div className='Commission-page-container'>
+      <div className='Commission-page'>
       <h1>Commission List</h1>
       <div className="commissions">
         <div className="search">
@@ -86,46 +101,39 @@ const CommissionList = () => {
             <i className="fa fa-search"></i>
           </button>
         </div>
-        <thead>
-          <tr>
-            <th className="col1">Catcher</th>
-            <th className="col2">Title</th>
-            <th className="col3">Employer</th>
-            <th className="col4">Type</th>
-            <th className="col5">Commission Pay</th>
-            <th className="col6">Date Posted</th>
-            <th className="col7">Date Completed</th>
-            <th className="col8">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {commissions.map((Commission) => (
-            <tr className="commission" key={Commission.commissionID}>
-              <td>{Commission.commissionID}</td>
-              <td>{Commission.commissionTitle}</td>
-              <td>{Commission.employerID}</td>
-              <td>{Commission.commissionType}</td>
-              <td>{Commission.commissionPay}</td>
-              <td>{new Date(Commission.DatePosted).toLocaleDateString()}</td>
-              <td>{Commission.DateCompleted}</td>
-              <td>{Commission.commissionStatus}</td>
-              <button onClick={() => handleDelete(Commission.commissionID)}>
-                DELETE
-              </button>
-              <button className="update">
-                <Link
-                  to={`/update-commission/${Commission.commissionID}/${userID}`}
-                >
-                  View
-                </Link>
-              </button>
-            </tr>
-          ))}
-        </tbody>
+        <Table
+            headers={['ID', 'CATCHER', 'ERRAND TITLE', 'DATE POSTED', 'STATUS', 'ACTION']}
+            data={currentItems.map((commissionItem) => ([
+              commissionItem.commissionID,
+              commissionItem.employerID,
+              commissionItem.commissionTitle,
+              commissionItem.DatePosted,
+              commissionItem.commissionStatus,
+              <React.Fragment>
+                <button onClick={() => handleDelete(commissionItem.commissionID)}>DELETE</button>
+                <button className="update">
+                  <Link to={`/update-commission/${commissionItem.commissionID}/${userID}`}>View</Link>
+                </button>
+              </React.Fragment>
+         ]))}
+        />
       </div>
-      <button>
-        <Link to={`/post-commission/${userID}`}>Add Commission</Link>
+      </div>
+            {/* Pagination controls */}
+            {commissions.length > 0 && (
+        <Pagination
+          itemsPerPage={itemsPerPage}
+          totalItems={commissions.length}
+          paginate={paginate}
+        />
+      )}
+      </div>
+      <button className="add-errand">
+        <Link to={`/post-commission/${userID}`}>
+          <i className="fa-solid fa-plus"></i> Add Errand
+        </Link>
       </button>
+
     </div>
   );
 };
