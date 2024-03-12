@@ -10,6 +10,8 @@ import Table from '../components/Table';
 const AccountList = () => {
     const [accounts, setAccounts] = useState([])
     const [searchTerm, setSearchTerm] = useState('');
+    const [type, setType] = useState('');
+    const [status, setStatus] = useState('');
 
     //pagination --Ash
     const [currentPage, setCurrentPage] = useState(1);
@@ -40,7 +42,7 @@ const AccountList = () => {
             //http://localhost:8800/user - local
             //http://192.168.1.47:8800/user - network
           const res = await axios.get('http://localhost:8800/search-user', {
-              params: { term: searchTerm } // Pass the search term as a query parameter
+              params: { term: searchTerm, type: type, status: status} // Pass the search term as a query parameter
           });
           setAccounts(res.data);
       } catch (err) {
@@ -50,7 +52,23 @@ const AccountList = () => {
   
   useEffect(() => {
       fetchSearchResults();
-  }, [searchTerm]); // Trigger the search whenever searchTerm changes
+  }, [searchTerm, type, status]); // Trigger the search whenever searchTerm changes
+  
+  // // filter type // 
+  // const fetchType = async () => {
+  //   try{
+  //     const res = await axios.get('http://localhost:8800/filter-type', {
+  //       params: { type: type, status: status } // Pass the search term as a query parameter
+  //   });
+  //     setAccounts(res.data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchType(); 
+  // }, [type, status]); // reflect changes
 
   //Logic of Pagination
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -97,16 +115,16 @@ const AccountList = () => {
           <button type='submit' onClick={fetchSearchResults}>
               <i className='fa fa-search' place></i>
           </button>
-          <select name="type" id="">
+          <select name="type" onChange={(e) => setType(e.target.value)} value={type}>
             <option value="">Type</option>
-            <option value="employer">Employer</option>
-            <option value="catcher">Catcher</option>
+            <option value="Employer">employer</option>
+            <option value="Catcher">Catcher</option>
             <option value="admin">Admin</option>
           </select>
-          <select name="status" id="">
+          <select name="status" onChange={(e) => setStatus(e.target.value)} value={status}  id="">
             <option value="">Status</option>
-            <option value="verified">Verified</option>
-            <option value="unverified">Unverified</option>
+            <option value="Verified">Verified</option>
+            <option value="Unverified">Unverified</option>
             <option value="Suspended">Suspended</option>
           </select>
       </div>
