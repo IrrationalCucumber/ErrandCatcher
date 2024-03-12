@@ -1,3 +1,4 @@
+//03-10-24 updated w/ filter
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
@@ -90,17 +91,28 @@ const CommissionList = () => {
       <div className='Commission-page'>
       <h1>Commission List</h1>
       <div className="commissions">
-        <div className="search">
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <button type="submit">
-            <i className="fa fa-search"></i>
-          </button>
+      <div className="search-filter">
+          <div className="search">
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <button type="submit">
+              <i className="fa fa-search"></i>
+            </button>
+          </div>
+          <div className="filter">
+            <select>
+              <option value="">All Status</option>
+              <option value="Pending">Pending</option>
+              <option value="Completed">Completed</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </div>
         </div>
+
         <Table
             headers={['ID', 'CATCHER', 'ERRAND TITLE', 'DATE POSTED', 'STATUS', 'ACTION']}
             data={currentItems.map((commissionItem) => ([
