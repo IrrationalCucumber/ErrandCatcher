@@ -1,12 +1,31 @@
+//intended to see the catchers who applied for the errand posted by the employer
+//03-06-24 updated the applicant page for employer --ash
+//added pagination and table. contents for the td are based on the old code --ash
+
 import React, { useEffect, useState } from 'react'
 import {Link, useLocation} from 'react-router-dom'
 import axios from 'axios'
 import NavBar from '../components/Navbar'
-import './accountlist.css';
+import Table from '../components/Table'
+import './applicant.css';
+import Pagination from '../components/Pagination'
+
 
 const EmployerApplicants = () => {
-    const [applicants, setApplicants] = useState([])
+    const location = useLocation();
+    //pathname to array from
+    //get the id
+    const userID = location.pathname.split("/")[2];
     //const [searchTerm, setSearchTerm] = useState('');
+    const [applicants, setApplicants] = useState([])
+    //Pagination
+    //current page state --Ash
+    const [currentPage, setCurrentPage] = useState(1);
+    //Pagination --Ash
+    //display data per page
+    const [itemsPerPage] = useState(10);
+
+
     //useEffect to handle error
     useEffect(() =>{
         const fetchAllAccount = async ()=>{
@@ -21,7 +40,7 @@ const EmployerApplicants = () => {
             }
         }
         fetchAllAccount()
-    }, [])
+    }, [userID]);
     //fetch all accounts
     //triggers when search input is filled
 //     const fetchSearchResults = async () => {
@@ -36,18 +55,19 @@ const EmployerApplicants = () => {
 //           console.log(err);
 //       }
 //   };
-
-  const location = useLocation()
-    //pathname to array from
-    //get the id
-    const userID = location.pathname.split("/")[2]
-  
 //   useEffect(() => {
 //       fetchSearchResults();
 //   }, [searchTerm]); // Trigger the search whenever searchTerm changes
         
 //list need to be in a column
 //need filter
+
+    // Pagination
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const indexOfLastItem = currentPage + itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = applicants.slice(indexOfFirstItem, indexOfLastItem);
+ 
   return (
     <div>
       <NavBar
@@ -60,20 +80,19 @@ const EmployerApplicants = () => {
         map={`/map/${userID}`}
         button="SIGN OUT"
       />
+      <div className='applicants'>
       <h1>APPLICANTS</h1>
       <div className='search'>
           <input
               type='text'
-              placeholder='Search...'
-              
-              
+              placeholder='Search...'  
           />
           <button type='submit'>
               <i className='fa fa-search' place></i>
           </button>
-          <select name="type" id="">
+          {/*<select name="type" id="">
             <option value=""></option>
-            <option value="employer">employer</option>
+            <option value="employer">Employer</option>
             <option value="catcher">Catcher</option>
             <option value="admin">Admin</option>
           </select>
@@ -82,9 +101,43 @@ const EmployerApplicants = () => {
             <option value="verified">Verified</option>
             <option value="unverified">Unverified</option>
             <option value="Suspended">Suspended</option>
-          </select>
+          </select>*/}
       </div>
-      <div className="accounts">
+      
+        <Table 
+          headers={['DATE', 'CATCHER', 'ERRAND TITLE', 'ACTION']} 
+          data={currentItems.map(applicant => {
+            <tr key={applicant.applicationID}>
+            <td>{new Date(applicant.applicationDate).toLocaleDateString()}</td>
+            <td>
+                <Link to={`/update-account/${applicant.catcherID}`}>
+                    {applicant.userFirstname} {applicant.userLastname}
+                </Link>
+            </td>
+            <td>{applicant.commissionTitle}</td>
+            <td>
+                <button className="action-btn">
+                    {applicant.applicationStatus === 'Accept' ? 'Accept' : 'Decline'}
+                </button>
+            </td>
+        </tr>
+        })} />
+                  {/* Pagination controls */}
+                  {applicants.length > 0 && (
+                <Pagination
+                    itemsPerPage={itemsPerPage}
+                    totalItems={applicants.length}
+                    paginate={paginate}
+                />
+            )}
+      </div>
+      </div>
+  )
+}
+
+export default EmployerApplicants
+{/*
+        <div className="accounts">
           <table>
             <thead>
               <tr>
@@ -113,8 +166,4 @@ const EmployerApplicants = () => {
             </tbody>
           </table>
       </div>
-    </div>
-  )
-}
-
-export default EmployerApplicants
+*/}
