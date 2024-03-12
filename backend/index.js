@@ -132,7 +132,7 @@ app.get("/search-commission", (req, res) => {
 //employer search
 app.get("/search-employer-commission/:userID", (req, res) => {
   const userID = req.params.userID; // Get the userID from the route parameter
-  const searchTerm = req.query.term; // Get the search term from the query parameter
+  const searchTerm = req.query.term || ""; // Get the search term from the query parameter
 
   const q =
     "SELECT * FROM commission WHERE employerID = ? AND (commissionTitle LIKE ? OR commissionType LIKE ? OR commissionLocation LIKE ?)";
@@ -180,8 +180,25 @@ app.get("/filter-my-errand/:userID", (req, res) => {
 
   // const searchTerm = req.query.term;
   const q =
-    "SELECT * FROM commission WHERE employerID = ? AND (commissionStatus = ?)";
+    "SELECT * FROM commission WHERE employerID = ? AND commissionStatus = ?";
   const values = [status];
+
+  db.query(q, [userID, values], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+//APS - 12/03/24
+//Experimental search function
+app.get("/search-my-errand/:userID", (req, res) => {
+  const userID = req.params.userID;
+  // const searchTerm = req.query.term;
+  const q =
+    "SELECT * FROM commission WHERE employerID = ? AND (commissionTitle = ? AND commissionStatus = ?)";
+  const values = [req.body.search, req.body.status];
 
   db.query(q, [userID, values], (err, data) => {
     if (err) {

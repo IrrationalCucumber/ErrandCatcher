@@ -15,6 +15,12 @@ const CommissionList = () => {
   // state for Filter%search
   const [type, setType] = useState("");
   const [status, setStatus] = useState("");
+  //search query
+  const [search, setSearch] = useState({
+    search: "",
+    //type: "",
+    status: "",
+  });
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -64,7 +70,7 @@ const CommissionList = () => {
   const fetchType = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8800/filter-type/${userID}`,
+        `http://localhost:8800/filter-my-errand/${userID}`,
         {
           params: {
             //type: type,
@@ -72,15 +78,25 @@ const CommissionList = () => {
           }, // Pass the search term as a query parameter
         }
       );
-      setAccounts(res.data);
+      setCommissions(res.data);
     } catch (err) {
       console.log(err);
     }
   };
+  // const fetchSearch = async () => {
+  //   try {
+  //     const res = await axios.get(
+  //       `http://localhost:8800/filter-my-errand/${userID}` + search
+  //     );
+  //     setCommissions(res.data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   useEffect(() => {
     fetchType();
-  }, [type, status]); // reflect changes
+  }, [status]); // reflect changes
 
   //funtion to delete commission
   const handleDelete = async (commissionID) => {
@@ -130,11 +146,17 @@ const CommissionList = () => {
                 </button>
               </div>
               <div className="filter">
-                <select>
-                  <option value="">All Status</option>
+                <select
+                  onChange={(e) => setStatus(e.target.value)}
+                  value={status}
+                  name="status"
+                >
+                  <option>All Status</option>
                   <option value="Pending">Pending</option>
                   <option value="Completed">Completed</option>
                   <option value="Cancelled">Cancelled</option>
+                  <option value="Unavailable">Unavailable</option>
+                  <option value="Available">Available</option>
                 </select>
               </div>
             </div>
@@ -148,21 +170,19 @@ const CommissionList = () => {
                 "STATUS",
                 "ACTION",
               ]}
-              data={currentItems.map((commissionItem) => [
-                commissionItem.commissionID,
-                commissionItem.employerID,
-                commissionItem.commissionTitle,
-                commissionItem.DatePosted,
-                commissionItem.commissionStatus,
+              data={currentItems.map((commission) => [
+                commission.commissionID,
+                commission.catcherID,
+                commission.commissionTitle,
+                commission.DatePosted,
+                commission.commissionStatus,
                 <React.Fragment>
-                  <button
-                    onClick={() => handleDelete(commissionItem.commissionID)}
-                  >
+                  <button onClick={() => handleDelete(commission.commissionID)}>
                     DELETE
                   </button>
                   <button className="update">
                     <Link
-                      to={`/update-commission/${commissionItem.commissionID}/${userID}`}
+                      to={`/update-commission/${commission.commissionID}/${userID}`}
                     >
                       View
                     </Link>
