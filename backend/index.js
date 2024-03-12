@@ -171,6 +171,27 @@ app.get("/filter-type", (req, res) => {
   });
 });
 
+// APS - 12/03/24
+//Return errand list based on filter
+app.get("/filter-my-errand/:userID", (req, res) => {
+  const userID = req.params.userID;
+  //const type = req.query.type || "";
+  const status = req.query.status || "";
+
+  // const searchTerm = req.query.term;
+  const q =
+    "SELECT * FROM commission WHERE employerID = ? AND (commissionStatus = ?)";
+  const values = [status];
+
+  db.query(q, [userID, values], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+
 //========================================================================================//
 
 //============================================SIGNUP==================================//
