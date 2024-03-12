@@ -7,8 +7,8 @@ const app = express();
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "valeroso",   //"SethNL99*",
-  database: "sys",  //"errandcatcher",
+  password: "SethNL99*",
+  database: "errandcatcher",
 });
 //auth problem
 //ALTER USER 'your_username'@'your_host' IDENTIFIED WITH mysql_native_password BY 'your_password';
@@ -88,11 +88,10 @@ app.get("/type", (req, res) => {
 //==========================================SEARCH FUNCTION==========================================================//
 //search account
 app.get("/search-user", (req, res) => {
-  const searchTerm = req.query.term || ''; // Get the search term from the query parameter
-  const type = req.query.type || '';
-  const status = req.query.status || '';
+  const searchTerm = req.query.term || ""; // Get the search term from the query parameter
+  const type = req.query.type || "";
+  const status = req.query.status || "";
 
-  
   const q =
     "SELECT * FROM UserAccount WHERE username LIKE ?  AND accountType = ? AND accountStatus = ?";
   const values = [
@@ -102,7 +101,7 @@ app.get("/search-user", (req, res) => {
     `%${searchTerm}%`,
     type,
     status,
-  ];  
+  ];
 
   db.query(q, values, (err, data) => {
     if (err) {
@@ -155,26 +154,22 @@ app.get("/search-employer-commission/:userID", (req, res) => {
 
 // fiter user-type  //
 app.get("/filter-type", (req, res) => {
-  const type = req.query.type || '';
-  const status = req.query.status || '';
+  const type = req.query.type || "";
+  const status = req.query.status || "";
 
   // const searchTerm = req.query.term;
-  const q = "SELECT * FROM UserAccount WHERE accountType = ? AND accountStatus = ?";
-   const values = [
-      type,
-      status,
-    ]; 
+  const q =
+    "SELECT * FROM UserAccount WHERE accountType = ? AND accountStatus = ?";
+  const values = [type, status];
 
-    db.query(q, values, (err, data) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ error: "An error occurred"});
-      }
-      return res.json(data);
-    })
-
-
-})
+  db.query(q, values, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
 
 //========================================================================================//
 
