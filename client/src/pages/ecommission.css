@@ -1,4 +1,4 @@
-/*commissionpage.css*/
+/*For the EmployerCommissionList UI*/
 .Commission-page-container {
     display: flex;
     justify-content: space-between; /* Center content horizontally */
@@ -55,3 +55,44 @@
 .Commission-page tr:hover {
     background-color: #ddd;
 }
+
+.add-errand{
+    width: 200px;
+    height: 50px;
+    border-radius: 40px;
+    padding: 10px 0 5px 0;
+    background-color:  #eca763;
+    color: #fff;
+    border: none;
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
+}
+
+.add-errand:active{
+    transform: translateY(1px);
+    box-shadow: none;
+  }
+
+  .search-filter {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Adjust margin as needed */
+  }
+  
+  .search,
+  .filter {
+    display: flex;
+    align-items: center;
+  }
+  
+  .filter {
+    margin-left: 10px; /* Adjust margin between search and filter */
+  }
+  
+  .filter select {
+    width: 150px; /* Adjust width as needed */
+  }
+  
+  
+  
+  

@@ -1,9 +1,9 @@
 //navdropdown for the profile and signout
 //css/style combined here
+//03-05-24 fetch&pulled, added the /:userID
+
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { Link, useLocation } from "react-router-dom";
 
 function NavDropdown() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -12,7 +12,10 @@ function NavDropdown() {
     setDropdownOpen(!dropdownOpen);
   };
 
-  const profileLink = "/profile"; // URL for the profile page
+  const location = useLocation();
+  const userID = location.pathname.split("/")[2];
+
+  const profileLink = `/profile/${userID}`; // URL for the profile page
   const signOutLink = "/sign-in"; // URL for the sign out page
 
   return (
@@ -40,7 +43,6 @@ function NavDropdown() {
           }}
         >
           Profile&nbsp;
-          {/* <FontAwesomeIcon icon={faUser} /> */}
           <i className="fa-regular fa-user"></i>
         </button>
       </div>
