@@ -2,10 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faBell } from '@fortawesome/free-regular-svg-icons';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-const NotificationIcon = ({ hasNotification, notificationCount, onClick }) => (
-  <Link to="/notifications" style={{ textDecoration: "none" }}>
+const NotificationIcon = ({
+  hasNotification,
+  notificationCount,
+  onClick,
+  to,
+}) => (
+  <Link to={to} style={{ textDecoration: "none" }}>
     <div
       style={{
         cursor: "pointer",

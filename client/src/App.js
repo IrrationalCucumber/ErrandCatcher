@@ -20,7 +20,7 @@ import ApplyCommission from "./pages/ApplyCommission";
 import EmployerApplicants from "./pages/EmployerApplicants";
 import Map from "./pages/CommissionMap";
 import CatcherMap from "./pages/CatcherMap";
-import Notification from "./pages/Notification";
+import Notification from "./pages/Notification2";
 import Landing from "./pages/Landing";
 // import Menu from "./pages/Menu";
 //private route
@@ -39,7 +39,7 @@ function App() {
           <Route path="/sign-up" exact Component={SignUp} />
           <Route path="/profile/:userID" exact Component={Profile} />
           <Route path="/add" exact Component={AddAccount} />
-          <Route path="/" exact Component={Landing}/> 
+          <Route path="/" exact Component={Landing} />
           {/* <Route path="/Menu" exact Component={Menu}/>  */}
           <Route
             path="/post-commission/:userID"
