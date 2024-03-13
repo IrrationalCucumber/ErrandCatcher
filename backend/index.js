@@ -298,6 +298,24 @@ app.put("/cancel-apply/:userID/:applyID", (req, res) => {
   });
 });
 
+// APS - 13/03/2024
+//Deny Applicant
+//needs commission and application ID
+app.put("/deny-apply/:comID/:applyID", (req, res) => {
+  const comId = req.params.comID;
+  const applicationID = req.params.applyID;
+  const q =
+    "UPDATE application SET `applicationStatus` = 'Denied' WHERE applicationErrandID = ? AND applicationID = ?";
+
+  db.query(q, [comId, applicationID], (err) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+    return res.json("Application Denied");
+  });
+});
+
 //================================================================================================//
 
 //post commission
