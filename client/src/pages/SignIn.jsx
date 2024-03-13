@@ -11,7 +11,7 @@ const SignIn = () => {
   const [userID, setUserID] = useState(""); //var for id
   const [errorMessage, setErrorMessage] = useState(""); //error message
   const [rememberMe, setRememberMe] = useState(false); //remember me function
-  // const { login } = useAuth(); // Get the login function from useAuth
+  // const { login } = useAuth(); // Get the login function from useAut
 
   //remeber me function
   const handleRememberMeChange = (e) => {
