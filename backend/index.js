@@ -280,16 +280,16 @@ app.get("/your-application/:userID", (req, res) => {
     return res.json(data);
   });
 });
-
+// APS - 13/03/2024
 //Cancel Application
 //needs catcherID and application ID
-app.put("/cancel-apply/:applyID", (req, res) => {
-  //const userID = req.params.userID;
+app.put("/cancel-apply/:userID/:applyID", (req, res) => {
+  const userID = req.params.userID;
   const applicationID = req.params.applyID;
   const q =
-    "UPDATE application SET applicationStatus = 'Cancelled' WHERE applicationID = ?";
+    "UPDATE application SET `applicationStatus` = 'Cancelled' WHERE catcherID = ? AND applicationID = ?";
 
-  db.query(q, [applicationID], (err) => {
+  db.query(q, [userID, applicationID], (err) => {
     if (err) {
       console.log(err);
       return res.status(500).json(err);
