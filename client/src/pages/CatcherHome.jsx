@@ -13,11 +13,10 @@ function CatcherHome() {
         page1="HOME"
         home={`/c-home/${userID}`}
         page2="COMMISSIONS"
-        commissionList={`/commissions/${userID}`}
+        commissionList={`/catcher-errands/${userID}`}
         page3="APPLICATIONS"
         applicants={`/my-application/${userID}`}
         map={`/map/${userID}`}
-        button="SIGN OUT"
       />
       <Cards></Cards>
     </div>
