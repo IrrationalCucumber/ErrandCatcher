@@ -7,8 +7,8 @@ const app = express();
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "valeroso",   //"SethNL99*",
-  database: "sys",  //"errandcatcher",
+  password: "SethNL99*",
+  database: "errandcatcher",
 });
 //auth problem
 //ALTER USER 'your_username'@'your_host' IDENTIFIED WITH mysql_native_password BY 'your_password';
@@ -88,11 +88,10 @@ app.get("/type", (req, res) => {
 //==========================================SEARCH FUNCTION==========================================================//
 //search account
 app.get("/search-user", (req, res) => {
-  const searchTerm = req.query.term || ''; // Get the search term from the query parameter
-  const type = req.query.type || '';
-  const status = req.query.status || '';
+  const searchTerm = req.query.term || ""; // Get the search term from the query parameter
+  const type = req.query.type || "";
+  const status = req.query.status || "";
 
-  
   const q =
     "SELECT * FROM UserAccount WHERE username LIKE ?  AND accountType = ? AND accountStatus = ?";
   const values = [
@@ -102,7 +101,7 @@ app.get("/search-user", (req, res) => {
     `%${searchTerm}%`,
     type,
     status,
-  ];  
+  ];
 
   db.query(q, values, (err, data) => {
     if (err) {
@@ -155,26 +154,22 @@ app.get("/search-employer-commission/:userID", (req, res) => {
 
 // fiter user-type  //
 app.get("/filter-type", (req, res) => {
-  const type = req.query.type || '';
-  const status = req.query.status || '';
+  const type = req.query.type || "";
+  const status = req.query.status || "";
 
   // const searchTerm = req.query.term;
-  const q = "SELECT * FROM UserAccount WHERE accountType = ? AND accountStatus = ?";
-   const values = [
-      type,
-      status,
-    ]; 
+  const q =
+    "SELECT * FROM UserAccount WHERE accountType = ? AND accountStatus = ?";
+  const values = [type, status];
 
-    db.query(q, values, (err, data) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ error: "An error occurred"});
-      }
-      return res.json(data);
-    })
-
-
-})
+  db.query(q, values, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
 
 //========================================================================================//
 
@@ -246,13 +241,13 @@ app.post("/commission", (req, res) => {
     return res.json("Commission has been posted");
   });
 });
-
+//=============================================APPLICATION=====================================//
 //catcher application
 //save to Application table
 //send data to commission table
 app.post("/apply", (req, res) => {
   const q =
-    "INSERT INTO application (`catcherID`,`commissionID`, `applicationDate`) VALUES (?)";
+    "INSERT INTO application (`catcherID`,`applicationErrandId`, `applicationDate`) VALUES (?)";
   const values = [req.body.catcherID, req.body.comID, req.body.applicationDate];
   db.query(q, [values], (err, data) => {
     if (err) return res.json(err);
@@ -264,12 +259,45 @@ app.post("/apply", (req, res) => {
 app.get("/applicants/:userID", (req, res) => {
   const userID = req.params.userID; // Use req.params.userID to get the route parameter
   const q =
-    "SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname FROM Application a JOIN commission c ON a.commissionID = c.commissionID JOIN useraccount ua ON a.catcherID = ua.userID WHERE a.commissionID IN (SELECT commissionID FROM commission WHERE employerID = ?);";
+    "SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname FROM Application a JOIN commission c ON a.applicationErrandID = c.commissionID JOIN useraccount ua ON a.catcherID = ua.userID WHERE a.applicationErrandID IN (SELECT commissionID FROM commission WHERE employerID = ?);";
   db.query(q, [userID], (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
   });
 });
+//APS - 13/03/24
+//retrieve catcher errand application
+app.get("/your-application/:userID", (req, res) => {
+  const userID = req.params.userID; // Use req.params.userID to get the route parameter
+  const q =
+    "SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname" +
+    " FROM Application a " +
+    " JOIN commission c ON a.applicationErrandID = c.commissionID" +
+    " JOIN useraccount ua ON c.employerID = ua.userID" +
+    " WHERE a.catcherID IN (SELECT userID FROM useraccount WHERE userID = 29)";
+  db.query(q, [userID], (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+});
+
+//Cancel Application
+//needs catcherID and application ID
+app.put("/cancel-apply/:applyID", (req, res) => {
+  //const userID = req.params.userID;
+  const applicationID = req.params.applyID;
+  const q =
+    "UPDATE application SET applicationStatus = 'Cancelled' WHERE applicationID = ?";
+
+  db.query(q, [applicationID], (err) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+    return res.json("Application Cancelled");
+  });
+});
+
 //================================================================================================//
 
 //post commission
