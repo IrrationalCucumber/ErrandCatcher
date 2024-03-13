@@ -315,6 +315,22 @@ app.put("/deny-apply/:comID/:applyID", (req, res) => {
     return res.json("Application Denied");
   });
 });
+//APS - 03/03/24
+//delete application
+//requires catcherID and applicationID
+app.delete("/delete-apply/:userID/:applyID", (req, res) => {
+  const userID = req.params.userID;
+  const applicationID = req.params.applyID;
+  const q = "DELETE FROM application WHERE catcherID = ? AND applicationID = ?";
+
+  db.query(q, [userID, applicationID], (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+    return res.json("Application Deleted");
+  });
+});
 
 //================================================================================================//
 
