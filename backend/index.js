@@ -331,6 +331,23 @@ app.delete("/delete-apply/:userID/:applyID", (req, res) => {
     return res.json("Application Deleted");
   });
 });
+//APS - 13/03/24
+//retrieve catcher errand application
+//returns boolean
+app.get("/check-apply/:userID/:applyID", (req, res) => {
+  const userID = req.params.userID;
+  const applicationID = req.params.applyID;
+  const q =
+    "SELECT CASE " +
+    "WHEN catcherID = ? AND applicationErrandID = ? THEN 'true' " +
+    "ELSE 'false' " +
+    "END AS result " +
+    "FROM application WHERE catcherID = ? AND applicationErrandID = ?";
+  db.query(q, [userID, applicationID, userID, applicationID], (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data[0].result);
+  });
+});
 
 //================================================================================================//
 
