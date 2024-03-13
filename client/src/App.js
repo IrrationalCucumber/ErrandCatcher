@@ -22,7 +22,7 @@ import Map from "./pages/CommissionMap";
 import CatcherMap from "./pages/CatcherMap";
 import Notification from "./pages/Notification";
 import Landing from "./pages/Landing";
-import Application from "./pages/Application";
+import Application from "./pages/CatcherApplication";
 // import Menu from "./pages/Menu";
 //private route
 import { AuthProvider } from "./components/AuthContext";

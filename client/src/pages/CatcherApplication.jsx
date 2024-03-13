@@ -4,71 +4,68 @@
 //03-10-24 dara copied from employer applicant.jsx
 // <Route path="/c-application" exact Component={Application}/>
 
-import React, {useEffect, useState} from 'react'
-import { useLocation} from 'react-router-dom'
-import axios from 'axios'
-import Navbar from '../components/Navbar';
-import Table from '../components/Table';
-import Pagination from '../components/Pagination';
-import './application.css'
-
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+import Navbar from "../components/Navbar";
+import Table from "../components/Table";
+import Pagination from "../components/Pagination";
+import "./application.css";
 
 function Application() {
-
-  const headers = ['DATE', 'EMPLOYER', 'ERRAND TITLE', 'ACTION'];
+  const headers = ["DATE", "EMPLOYER", "ERRAND TITLE", "ACTION"];
   const application = [];
 
   const location = useLocation();
   const userID = location.pathname.split("/")[2];
-  const [applicants, setApplicants] = useState([])
+  const [applicants, setApplicants] = useState([]);
   //pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
 
   //data
-    //useEffect to handle error
-    useEffect(() =>{
-      const fetchAllAccount = async ()=>{
-          try{
-              const res = await axios.get(`http://localhost:8800/applicants/${userID}`)
-              //http://localhost:8800/user - local
-              //http://192.168.1.47:8800/user - network
-              setApplicants(res.data)
-          }
-          catch(err){
-              console.log(err)
-          }
+  //useEffect to handle error
+  useEffect(() => {
+    const fetchAllAccount = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8800/applicants/${userID}`
+        );
+        //http://localhost:8800/user - local
+        //http://192.168.1.47:8800/user - network
+        setApplicants(res.data);
+      } catch (err) {
+        console.log(err);
       }
-      fetchAllAccount()
+    };
+    fetchAllAccount();
   }, [userID]);
 
-      // Pagination
-      const paginate = (pageNumber) => setCurrentPage(pageNumber);
-      const indexOfLastItem = currentPage * itemsPerPage;
-      const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-      const currentItems = application.slice(indexOfFirstItem, indexOfLastItem);
+  // Pagination
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = application.slice(indexOfFirstItem, indexOfLastItem);
   return (
     <div>
       <Navbar
         page1="HOME"
-        home={`/c-home/${userID}`} // 
-        page2="APPLICATION"
-        Application={`/c-application`}
-        page3="COMMISSIONS"
-        Commission={`/`}
+        home={`/c-home/${userID}`}
+        page2="COMMISSIONS"
+        commissionList={`/commissions/${userID}`}
+        page3="APPLICATIONS"
+        applicants={`/my-application/${userID}`}
+        map={`/map/${userID}`}
       />
-       <div className='application-container'>
-        <div className='application'>
+      <div className="application-container">
+        <div className="application">
           <h1>Application</h1>
-          <div className='search'>
-          <input
-              type='text'
-              placeholder='Search...'  
-          />
-          <button type='submit'>
-              <i className='fa fa-search' place></i>
-          </button>
-          {/*<select name="type" id="">
+          <div className="search">
+            <input type="text" placeholder="Search..." />
+            <button type="submit">
+              <i className="fa fa-search" place></i>
+            </button>
+            {/*<select name="type" id="">
             <option value=""></option>
             <option value="employer">Employer</option>
             <option value="catcher">Catcher</option>
@@ -80,7 +77,7 @@ function Application() {
             <option value="unverified">Unverified</option>
             <option value="Suspended">Suspended</option>
           </select>*/}
-      </div>
+          </div>
           <Table
             headers={headers}
             data={currentItems.map((application, rowIndex) => {
@@ -88,7 +85,7 @@ function Application() {
                 if (cellIndex === 3) {
                   return (
                     <button key={cellIndex} className="cancel action-btn">
-                      {action === 'Cancel' && 'Cancel'}
+                      {action === "Cancel" && "Cancel"}
                     </button>
                   );
                 }
@@ -109,7 +106,7 @@ function Application() {
         />
       )}
     </div>
-  )
+  );
 }
 
-export default Application
+export default Application;
