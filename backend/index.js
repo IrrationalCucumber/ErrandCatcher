@@ -1,15 +1,14 @@
 import express from "express";
 import mysql from "mysql";
 import cors from "cors";
+import createDBConnection from "./dbConfig.js";
 
 const app = express();
 //connect to database
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "SethNL99*",
-  database: "errandcatcher",
-});
+
+// Create the database connection
+const db = createDBConnection();
+
 //auth problem
 //ALTER USER 'your_username'@'your_host' IDENTIFIED WITH mysql_native_password BY 'your_password';
 app.use(express.json());
@@ -163,44 +162,6 @@ app.get("/filter-type", (req, res) => {
   const values = [type, status];
 
   db.query(q, values, (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "An error occurred" });
-    }
-    return res.json(data);
-  });
-});
-
-// APS - 12/03/24
-//Return errand list based on filter
-app.get("/filter-my-errand/:userID", (req, res) => {
-  const userID = req.params.userID;
-  //const type = req.query.type || "";
-  const status = req.query.status || "";
-
-  // const searchTerm = req.query.term;
-  const q =
-    "SELECT * FROM commission WHERE employerID = ? AND commissionStatus = ?";
-  const values = [status];
-
-  db.query(q, [userID, values], (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "An error occurred" });
-    }
-    return res.json(data);
-  });
-});
-//APS - 12/03/24
-//Experimental search function
-app.get("/search-my-errand/:userID", (req, res) => {
-  const userID = req.params.userID;
-  // const searchTerm = req.query.term;
-  const q =
-    "SELECT * FROM commission WHERE employerID = ? AND (commissionTitle = ? AND commissionStatus = ?)";
-  const values = [req.body.search, req.body.status];
-
-  db.query(q, [userID, values], (err, data) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: "An error occurred" });
