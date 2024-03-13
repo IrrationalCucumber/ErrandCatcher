@@ -1,15 +1,14 @@
 import express from "express";
 import mysql from "mysql";
 import cors from "cors";
+import createDBConnection from "./dbConfig.js";
 
 const app = express();
 //connect to database
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "SethNL99*",
-  database: "errandcatcher",
-});
+
+// Create the database connection
+const db = createDBConnection();
+
 //auth problem
 //ALTER USER 'your_username'@'your_host' IDENTIFIED WITH mysql_native_password BY 'your_password';
 app.use(express.json());
