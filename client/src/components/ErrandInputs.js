@@ -4,9 +4,10 @@ import React from "react";
 function ErrandInputs(props) {
   return (
     <>
-      <div className="input-cont">
-        <div className="errand-inputs">
-          <div className="rowan">
+    <div className="input-cont">
+      <div className="errand-inputs">
+          {/* commission title */}
+          <div className="input-group">
             <div className="col1">
               <label>Commission Title</label>
             </div>
@@ -19,6 +20,9 @@ function ErrandInputs(props) {
                 value={props.titleValue}
               />
             </div>
+          </div>
+          {/* deadline */}
+          <div className="input-group">
             <div className="col1">
               <label>DeadLine</label>
             </div>
@@ -31,6 +35,9 @@ function ErrandInputs(props) {
                 value={props.dlValue}
               />
             </div>
+          </div>
+          {/* location */}
+          <div className="input-group">
             <div className="col1">
               <label>Location</label>
             </div>
@@ -43,6 +50,9 @@ function ErrandInputs(props) {
                 value={props.locValue}
               />
             </div>
+          </div>
+          {/* commission type */}
+          <div className="input-group">
             <div className="col1">
               <label htmlFor="">Commission Type</label>
             </div>
@@ -63,6 +73,9 @@ function ErrandInputs(props) {
                 <option value="Transport">Transport Service</option>
               </select>
             </div>
+          </div>
+          {/* Amount */}
+          <div className="input-group">
             <div className="col1">
               <label>Amount: ₱</label>
             </div>
@@ -75,6 +88,9 @@ function ErrandInputs(props) {
                 value={props.payValue}
               />
             </div>
+          </div>
+          {/* contact number */}
+          <div className="input-group">
             <div className="col1">
               <label>Contact Number</label>
             </div>
@@ -87,11 +103,12 @@ function ErrandInputs(props) {
                 value={props.numValue}
               />
             </div>
+          </div>
+          <div className="input-group">
             <div className="col1">
               <label>Description</label>
             </div>
-      
-      <div className="col2">
+            <div className="col2">
               <textarea
                 cols="26"
                 rows="11"
@@ -101,23 +118,18 @@ function ErrandInputs(props) {
                 name={props.desc}
                 value={props.descValue}
               />
+            </div>
           </div>
-          <div className="button">
-          <button className="button1" onClick={props.handlePostClick}>POST</button>
-          </div>
-          
-          </div>
-        </div>
-        <div className="map--wrap">
-          <div ref={props.mapContainer} className="map-small" />
-          <p className="coord">
-            X: {props.long} Y: {props.lat}
-          </p>
-
-        </div>
       </div>
-    </>
-  );
+      <div className="map--wrap">
+        <div ref={props.mapContainer} className="map-small" />
+        <p className="coord">
+          X: {props.long} Y: {props.lat}
+        </p>
+      </div>
+    </div>
+  </>
+);
 }
 
 export default ErrandInputs;

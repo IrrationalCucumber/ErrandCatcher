@@ -3,9 +3,10 @@ import maplibregl from "maplibre-gl";
 //import 'maplibre-gl/dist/maplibre-gl.css';
 import axios from "axios";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import "./PostCommission.css"; // Import your CSS file
+//import "./PostCommission.css"; // Import your CSS file
 import ErrandInputs from "../components/ErrandInputs";
 import Navbar from "../components/NavBarPage";
+import "./Commission.css"; // Import your CSS file
 
 const PostCommission = () => {
   const [commission, setCommission] = useState({
@@ -153,6 +154,9 @@ const PostCommission = () => {
           
           
         />
+        <div className="btn-container">
+            <button onClick={handleClick} className="btn btn-yellow">POST</button>
+          </div>
 
       </div>
 
