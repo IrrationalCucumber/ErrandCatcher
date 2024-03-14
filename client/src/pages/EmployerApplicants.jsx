@@ -2,9 +2,10 @@
 //03-06-24 updated the applicant page for employer --ash
 //added pagination and table. contents for the td are based on the old code --ash
 //03-10-24  <Route path="/e-applicants" exact Component={EmployerApplicants}/>
+//03-14-24 inital fix
 
 import React, { useEffect, useState } from 'react'
-import {Link, useLocation} from 'react-router-dom'
+import { useLocation} from 'react-router-dom'
 import axios from 'axios'
 import NavBar from '../components/Navbar'
 import Table from '../components/Table'
@@ -68,6 +69,16 @@ const EmployerApplicants = () => {
     const indexOfLastItem = currentPage + itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = applicants.slice(indexOfFirstItem, indexOfLastItem);
+
+    const handleAccept = (applicationId) => {
+      console.log('Accepted application with id:', applicationId);
+      // Add logic to handle accepting the application
+    };
+  
+    const handleDecline = (applicationId) => {
+      console.log('Declined application with id:', applicationId);
+      // Add logic to handle declining the application
+    };
  
   return (
     <div>
@@ -105,24 +116,32 @@ const EmployerApplicants = () => {
           </select>*/}
       </div>
       
-        <Table 
-          headers={['DATE', 'CATCHER', 'ERRAND TITLE', 'ACTION']} 
-          data={currentItems.map(applicant => {
-            <tr key={applicant.applicationID}>
-            <td>{new Date(applicant.applicationDate).toLocaleDateString()}</td>
-            <td>
-                <Link to={`/update-account/${applicant.catcherID}`}>
-                    {applicant.userFirstname} {applicant.userLastname}
-                </Link>
-            </td>
-            <td>{applicant.commissionTitle}</td>
-            <td>
-                <button className="action-btn">
-                    {applicant.applicationStatus === 'Accept' ? 'Accept' : 'Decline'}
-                </button>
-            </td>
-        </tr>
-        })} />
+      <Table
+          headers={['DATE', 'EMPLOYER', 'ERRAND TITLE', 'ACTION']}
+          data={currentItems.map((application, rowIndex) => {
+            return (
+              <tr key={rowIndex}>
+                <td>{application.date}</td>
+                <td>{application.employer}</td>
+                <td>{application.errandTitle}</td>
+                <td>
+                  {application.action === 'Pending' && (
+                    <>
+                      <button className="accept action-btn" onClick={() => handleAccept(application.id)}>Accept</button>
+                      <button className="decline action-btn" onClick={() => handleDecline(application.id)}>Decline</button>
+                    </>
+                  )}
+                  {application.action === 'Accepted' && (
+                    <button className="accepted action-btn">Accepted</button>
+                  )}
+                  {application.action === 'Declined' && (
+                    <button className="declined action-btn">Declined</button>
+                  )}
+                </td>
+              </tr>
+            );
+          })}
+        />
                   {/* Pagination controls */}
                   {applicants.length > 0 && (
                 <Pagination
