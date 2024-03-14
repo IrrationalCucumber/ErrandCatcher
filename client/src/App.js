@@ -24,6 +24,7 @@ import CatcherMap from "./pages/CatcherMap";
 import EmployerMap from "./pages/EmployerMap";
 import Notification from "./pages/Notification";
 import Landing from "./pages/Landing";
+import CatcherCommission from "./pages/CatcherCommissionPage";
 // import Menu from "./pages/Menu";
 //private route
 import { AuthProvider } from "./components/AuthContext";
@@ -82,6 +83,10 @@ function App() {
             path="/applicants/:userID"
             exact
             Component={EmployerApplicants}
+          />
+          <Route
+            path="/catcher-errands/:userID"
+            element={<CatcherCommission />}
           />
           {/* MAP ROUTES */}
           <Route path="/map" element={<Map />} />

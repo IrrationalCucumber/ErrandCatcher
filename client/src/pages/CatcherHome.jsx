@@ -11,13 +11,13 @@ function CatcherHome() {
     <div>
       <NavBar
         page1="HOME"
-        home={`/e-home/${userID}`}
+        home={`/c-home/${userID}`}
         page2="COMMISSIONS"
-        commissionList={`/commissions/${userID}`}
-        page3="APPLICANTS"
-        applicants={`/applicants/${userID}`}
-        map={`/map/${userID}`}
-        button="SIGN OUT"
+        commissionList={`/catcher-errands/${userID}`}
+        page3="APPLICANTIONS"
+        //applicants={`/applicants/${userID}`}
+        map={`/c-map/${userID}`}
+        page4="MAP"
       />
       <Cards></Cards>
     </div>
