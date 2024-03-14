@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from '../components/Navbar';
 import Footer from '../components/Footer';
-import axios from 'axios';
+import axios from 'axios'; 
 import "./Menu.css";
 
 const Menu = () => {
@@ -16,7 +16,7 @@ const Menu = () => {
         <>
             <NavBar />
 
-            <div className="search-bar">
+            <div className="search-bar"> 
                 <input
                     type="text"
                     placeholder="Search..."
