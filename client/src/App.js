@@ -18,8 +18,10 @@ import EmployerCommissions from "./pages/EmployerCommissionList";
 import AdminHome from "./pages/AdminHome";
 import ApplyCommission from "./pages/ApplyCommission";
 import EmployerApplicants from "./pages/EmployerApplicants";
+//MAP ROUTES
 import Map from "./pages/CommissionMap";
 import CatcherMap from "./pages/CatcherMap";
+import EmployerMap from "./pages/EmployerMap";
 import Notification from "./pages/Notification";
 import Landing from "./pages/Landing";
 import Application from "./pages/CatcherApplication";
@@ -41,6 +43,7 @@ function App() {
           <Route path="/sign-up" exact Component={SignUp} />
           <Route path="/profile/:userID" exact Component={Profile} />
           <Route path="/add" exact Component={AddAccount} />
+          <Route path="/" exact Component={Landing} />
           <Route path="/" exact Component={Landing} />
           {/* <Route path="/Menu" exact Component={Menu}/>  */}
           <Route
@@ -88,8 +91,10 @@ function App() {
             path="/catcher-errands/:userID"
             element={<CatcherCommission />}
           />
+          {/* MAP ROUTES */}
           <Route path="/map" element={<Map />} />
-          <Route path="/c-map" element={<CatcherMap />} />
+          <Route path="/c-map/:userID" element={<CatcherMap />} />
+          <Route path="/e-map/:userID" element={<EmployerMap />} />
           <Route path="/notifications/:userID" exact Component={Notification} />
           {/* <Route path="/" exact Component={Home} /> */}
           <Route path="/admin-home" element={<AdminHome />} />

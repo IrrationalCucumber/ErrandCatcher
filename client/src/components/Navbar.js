@@ -3,8 +3,9 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 //import { Button } from "./NavButton";
 import "./Navbar.css";
 import { useAuth } from "./AuthContext";
-import NotificationIcon from './notif-icon';
+import NotificationIcon from "./notif-icon";
 import NavDropdown from "./NavDropdown";
+import axios from "axios";
 
 function Navbar(props) {
   //change the state of the menu
@@ -42,6 +43,23 @@ function Navbar(props) {
   //   navigate("/");
   // };
 
+  //APS - 14/03/2024
+  //display username
+  const [username, setUsername] = useState("");
+  useEffect(() => {
+    const fetchName = async () => {
+      axios
+        .get(`http://localhost:8800/username/${userID}`)
+        .then((response) => {
+          console.log(response.data[0].username);
+          setUsername(response.data[0].username);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
+    fetchName();
+  }, [userID]);
   return (
     <>
       <nav className="navbar">
@@ -52,42 +70,44 @@ function Navbar(props) {
             onClick={closeMobileMenu}
           >
             <Link
-                to={props.home}
-                className="navbar-logo"
-                onClick={closeMobileMenu}
+              to={props.home}
+              className="navbar-logo"
+              onClick={closeMobileMenu}
+            >
+              <div
+                className="logo-container"
+                style={{ backgroundColor: "#3d342f" }}
               >
-                <div className="logo-container" style={{ backgroundColor: "#3d342f" }}>
-                <img 
-                  src="/ERicon.png" 
-                  alt="ERRAND CATCHER Icon" 
+                <img
+                  src="/ERicon.png"
+                  alt="ERRAND CATCHER Icon"
                   className="logo-image"
-                  style={{ width: '50px', height: '50px' }} // Adjust the width and height as needed
-                  />
-                  <span className="logo-text">Errand Catcher</span>
-                </div>
-
-              </Link> 
+                  style={{ width: "50px", height: "50px" }} // Adjust the width and height as needed
+                />
+                <span className="logo-text">Errand Catcher</span>
+              </div>
+            </Link>
           </Link>
           <div className="menu-icon" onClick={handleClick}>
             <i className={click ? "fas fa-times" : "fas fa-bars"}></i>
           </div>
           <ul className={click ? "nav-menu active" : "nav-menu"}>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link
                 to={props.home}
                 className="nav-links"
                 onClick={closeMobileMenu}
-                style={{fontSize:"16px"}}
+                style={{ fontSize: "16px" }}
               >
                 {props.page1}
               </Link>
-            </li>
+            </li> */}
             <li className="nav-item">
               <Link
                 to={props.commissionList}
                 className="nav-links"
                 onClick={closeMobileMenu}
-                style={{fontSize:"16px"}}
+                style={{ fontSize: "16px" }}
               >
                 {props.page2}
               </Link>
@@ -97,34 +117,47 @@ function Navbar(props) {
                 to={props.applicants}
                 className="nav-links"
                 onClick={closeMobileMenu}
-                style={{fontSize:"16px"}}
+                style={{ fontSize: "16px" }}
               >
                 {props.page3}
               </Link>
             </li>
             <li className="nav-item">
-              <Link 
-                  to="/map" 
-                  className="nav-links" 
-                  onClick={closeMobileMenu}
-                  style={{fontSize:"16px"}}>
-                MAP
+              <Link
+                to={props.map}
+                className="nav-links"
+                onClick={closeMobileMenu}
+                style={{ fontSize: "16px" }}
+              >
+                {props.page4}
               </Link>
             </li>
             <li className="nav-item">
-              <div className="notification-icon" style={{marginTop: "1.7rem", }}>
-              <NotificationIcon hasNotification={true} onClick={() => console.log('Notification clicked!')} />
+              <div
+                className="notification-icon"
+                style={{ marginTop: "1.7rem" }}
+              >
+                <NotificationIcon
+                  to={`/notifications/${userID}`}
+                  hasNotification={true}
+                  onClick={() => console.log("Notification clicked!")}
+                />
               </div>
             </li>
             <li className="nav-item">
-              <div className="dropdown-container" style={{ marginRight: "1rem", marginTop: "1rem", marginLeft:"1rem" }}>
-              <NavDropdown/>
+              <div
+                className="dropdown-container"
+                style={{
+                  marginRight: "1rem",
+                  marginTop: "1rem",
+                  marginLeft: "1rem",
+                }}
+              >
+                <NavDropdown name={username.toUpperCase()} />
               </div>
             </li>
           </ul>
           {/*Added by --Ash for notification */}
-
-
         </div>
       </nav>
     </>

@@ -18,7 +18,7 @@ function Application() {
 
   const location = useLocation();
   const userID = location.pathname.split("/")[2];
-  const [applicants, setApplicants] = useState([]);
+  const [apply, setApply] = useState([]);
   //pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
@@ -29,11 +29,12 @@ function Application() {
     const fetchAllAccount = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/applicants/${userID}`
+          `http://localhost:8800/your-application/${userID}`
         );
         //http://localhost:8800/user - local
         //http://192.168.1.47:8800/user - network
-        setApplicants(res.data);
+        setApply(res.data);
+        console.log(res.data);
       } catch (err) {
         console.log(err);
       }
@@ -55,7 +56,8 @@ function Application() {
         commissionList={`/catcher-errands/${userID}`}
         page3="APPLICATIONS"
         applicants={`/my-application/${userID}`}
-        map={`/map/${userID}`}
+        map={`/c-map/${userID}`}
+        page4="MAP"
       />
       <div className="application-container">
         <div className="application">

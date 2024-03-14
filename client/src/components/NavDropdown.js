@@ -5,7 +5,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-function NavDropdown() {
+function NavDropdown(props) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -42,7 +42,7 @@ function NavDropdown() {
             margin: "0",
           }}
         >
-          Profile&nbsp;
+          {props.name}&nbsp;
           <i className="fa-regular fa-user"></i>
         </button>
       </div>

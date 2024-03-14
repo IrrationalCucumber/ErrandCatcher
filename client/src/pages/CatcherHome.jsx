@@ -16,7 +16,8 @@ function CatcherHome() {
         commissionList={`/catcher-errands/${userID}`}
         page3="APPLICATIONS"
         applicants={`/my-application/${userID}`}
-        map={`/map/${userID}`}
+        map={`/c-map/${userID}`}
+        page4="MAP"
       />
       <Cards></Cards>
     </div>

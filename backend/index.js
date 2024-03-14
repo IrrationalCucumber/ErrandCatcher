@@ -52,6 +52,16 @@ app.get("/recent-commission", (req, res) => {
     return res.json(data);
   });
 });
+//APS - 14/03/24
+//retrieve username
+app.get("/username/:userID", (req, res) => {
+  const userID = req.params.userID; // Use req.params.userID to get the route parameter
+  const q = "Select username from useraccount where userID = ?";
+  db.query(q, [userID], (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+});
 //==========================================CATEGORY=================================================================//
 //select type
 app.get("/type", (req, res) => {
