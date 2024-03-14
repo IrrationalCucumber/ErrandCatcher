@@ -2,72 +2,71 @@
 //03-06-24 updated the applicant page for employer --ash
 //added pagination and table. contents for the td are based on the old code --ash
 
-import React, { useEffect, useState } from 'react'
-import {Link, useLocation} from 'react-router-dom'
-import axios from 'axios'
-import NavBar from '../components/Navbar'
-import Table from '../components/Table'
-import './applicant.css';
-import Pagination from '../components/Pagination'
-
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
+import NavBar from "../components/Navbar";
+import Table from "../components/Table";
+import "./applicant.css";
+import Pagination from "../components/Pagination";
 
 const EmployerApplicants = () => {
-    const location = useLocation();
-    //pathname to array from
-    //get the id
-    const userID = location.pathname.split("/")[2];
-    //const [searchTerm, setSearchTerm] = useState('');
-    const [applicants, setApplicants] = useState([])
-    //Pagination
-    //current page state --Ash
-    const [currentPage, setCurrentPage] = useState(1);
-    //Pagination --Ash
-    //display data per page
-    const [itemsPerPage] = useState(10);
+  const location = useLocation();
+  //pathname to array from
+  //get the id
+  const userID = location.pathname.split("/")[2];
+  //const [searchTerm, setSearchTerm] = useState('');
+  const [applicants, setApplicants] = useState([]);
+  //Pagination
+  //current page state --Ash
+  const [currentPage, setCurrentPage] = useState(1);
+  //Pagination --Ash
+  //display data per page
+  const [itemsPerPage] = useState(10);
 
+  //useEffect to handle error
+  useEffect(() => {
+    const fetchAllAccount = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8800/applicants/${userID}`
+        );
+        //http://localhost:8800/user - local
+        //http://192.168.1.47:8800/user - network
+        setApplicants(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAllAccount();
+  }, [userID]);
+  //fetch all accounts
+  //triggers when search input is filled
+  //     const fetchSearchResults = async () => {
+  //       try {
+  //             //http://localhost:8800/user - local
+  //             //http://192.168.1.47:8800/user - network
+  //           const res = await axios.get('http://localhost:8800/search-user', {
+  //               params: { term: searchTerm } // Pass the search term as a query parameter
+  //           });
+  //           setApplicants(res.data);
+  //       } catch (err) {
+  //           console.log(err);
+  //       }
+  //   };
+  //   useEffect(() => {
+  //       fetchSearchResults();
+  //   }, [searchTerm]); // Trigger the search whenever searchTerm changes
 
-    //useEffect to handle error
-    useEffect(() =>{
-        const fetchAllAccount = async ()=>{
-            try{
-                const res = await axios.get(`http://localhost:8800/applicants/${userID}`)
-                //http://localhost:8800/user - local
-                //http://192.168.1.47:8800/user - network
-                setApplicants(res.data)
-            }
-            catch(err){
-                console.log(err)
-            }
-        }
-        fetchAllAccount()
-    }, [userID]);
-    //fetch all accounts
-    //triggers when search input is filled
-//     const fetchSearchResults = async () => {
-//       try {
-//             //http://localhost:8800/user - local
-//             //http://192.168.1.47:8800/user - network
-//           const res = await axios.get('http://localhost:8800/search-user', {
-//               params: { term: searchTerm } // Pass the search term as a query parameter
-//           });
-//           setApplicants(res.data);
-//       } catch (err) {
-//           console.log(err);
-//       }
-//   };
-//   useEffect(() => {
-//       fetchSearchResults();
-//   }, [searchTerm]); // Trigger the search whenever searchTerm changes
-        
-//list need to be in a column
-//need filter
+  //list need to be in a column
+  //need filter
 
-    // Pagination
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
-    const indexOfLastItem = currentPage + itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = applicants.slice(indexOfFirstItem, indexOfLastItem);
- 
+  // Pagination
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const indexOfLastItem = currentPage + itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = applicants.slice(indexOfFirstItem, indexOfLastItem);
+
   return (
     <div>
       <NavBar
@@ -77,18 +76,15 @@ const EmployerApplicants = () => {
         commissionList={`/commissions/${userID}`}
         page3="APPLICANTS"
         applicants={`/applicants/${userID}`}
-        map={`/map/${userID}`}
-        button="SIGN OUT"
+        // map={`/e-map/${userID}`}
+        page4="MAP"
       />
-      <div className='applicants'>
-      <h1>APPLICANTS</h1>
-      <div className='search'>
-          <input
-              type='text'
-              placeholder='Search...'  
-          />
-          <button type='submit'>
-              <i className='fa fa-search' place></i>
+      <div className="applicants">
+        <h1>APPLICANTS</h1>
+        <div className="search">
+          <input type="text" placeholder="Search..." />
+          <button type="submit">
+            <i className="fa fa-search" place></i>
           </button>
           {/*<select name="type" id="">
             <option value=""></option>
@@ -102,41 +98,47 @@ const EmployerApplicants = () => {
             <option value="unverified">Unverified</option>
             <option value="Suspended">Suspended</option>
           </select>*/}
-      </div>
-      
-        <Table 
-          headers={['DATE', 'CATCHER', 'ERRAND TITLE', 'ACTION']} 
-          data={currentItems.map(applicant => {
-            <tr key={applicant.applicationID}>
-            <td>{new Date(applicant.applicationDate).toLocaleDateString()}</td>
-            <td>
-                <Link to={`/update-account/${applicant.catcherID}`}>
-                    {applicant.userFirstname} {applicant.userLastname}
-                </Link>
-            </td>
-            <td>{applicant.commissionTitle}</td>
-            <td>
-                <button className="action-btn">
-                    {applicant.applicationStatus === 'Accept' ? 'Accept' : 'Decline'}
-                </button>
-            </td>
-        </tr>
-        })} />
-                  {/* Pagination controls */}
-                  {applicants.length > 0 && (
-                <Pagination
-                    itemsPerPage={itemsPerPage}
-                    totalItems={applicants.length}
-                    paginate={paginate}
-                />
-            )}
-      </div>
-      </div>
-  )
-}
+        </div>
 
-export default EmployerApplicants
-{/*
+        <Table
+          headers={["DATE", "CATCHER", "ERRAND TITLE", "ACTION"]}
+          data={currentItems.map((applicant) => {
+            <tr key={applicant.applicationID}>
+              <td>
+                {new Date(applicant.applicationDate).toLocaleDateString()}
+              </td>
+              <td>
+                <Link to={`/update-account/${applicant.catcherID}`}>
+                  {applicant.userFirstname} {applicant.userLastname}
+                </Link>
+              </td>
+              <td>{applicant.commissionTitle}</td>
+              <td>
+                <button className="action-btn">
+                  {applicant.applicationStatus === "Accept"
+                    ? "Accept"
+                    : "Decline"}
+                </button>
+              </td>
+            </tr>;
+          })}
+        />
+        {/* Pagination controls */}
+        {applicants.length > 0 && (
+          <Pagination
+            itemsPerPage={itemsPerPage}
+            totalItems={applicants.length}
+            paginate={paginate}
+          />
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default EmployerApplicants;
+{
+  /*
         <div className="accounts">
           <table>
             <thead>
@@ -166,4 +168,5 @@ export default EmployerApplicants
             </tbody>
           </table>
       </div>
-*/}
+*/
+}

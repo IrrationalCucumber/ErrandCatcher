@@ -74,7 +74,7 @@ function Navbar(props) {
             <i className={click ? "fas fa-times" : "fas fa-bars"}></i>
           </div>
           <ul className={click ? "nav-menu active" : "nav-menu"}>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link
                 to={props.home}
                 className="nav-links"
@@ -83,7 +83,7 @@ function Navbar(props) {
               >
                 {props.page1}
               </Link>
-            </li>
+            </li> */}
             <li className="nav-item">
               <Link
                 to={props.commissionList}
@@ -106,12 +106,12 @@ function Navbar(props) {
             </li>
             <li className="nav-item">
               <Link
-                to="/map"
+                to={props.map}
                 className="nav-links"
                 onClick={closeMobileMenu}
                 style={{ fontSize: "16px" }}
               >
-                MAP
+                {props.page4}
               </Link>
             </li>
             <li className="nav-item">
