@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import "./PostCommission.css"; // Import your CSS file
 import ErrandInputs from "../components/ErrandInputs";
+import Navbar from "../components/NavBarPage";
 
 const PostCommission = () => {
   const [commission, setCommission] = useState({
@@ -133,6 +134,7 @@ const PostCommission = () => {
 
   return (
     <>
+      <Navbar />
       <div className="errand-cont">
         <ErrandInputs
           handleChange={handleChange}
