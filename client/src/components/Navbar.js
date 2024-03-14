@@ -5,6 +5,7 @@ import "./Navbar.css";
 import { useAuth } from "./AuthContext";
 import NotificationIcon from "./notif-icon";
 import NavDropdown from "./NavDropdown";
+import axios from "axios";
 
 function Navbar(props) {
   //change the state of the menu
@@ -42,6 +43,23 @@ function Navbar(props) {
   //   navigate("/");
   // };
 
+  //APS - 14/03/2024
+  //display username
+  const [username, setUsername] = useState("");
+  useEffect(() => {
+    const fetchName = async () => {
+      axios
+        .get(`http://localhost:8800/username/${userID}`)
+        .then((response) => {
+          console.log(response.data[0].username);
+          setUsername(response.data[0].username);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
+    fetchName();
+  }, [userID]);
   return (
     <>
       <nav className="navbar">
@@ -135,7 +153,7 @@ function Navbar(props) {
                   marginLeft: "1rem",
                 }}
               >
-                <NavDropdown />
+                <NavDropdown name={username.toUpperCase()} />
               </div>
             </li>
           </ul>
