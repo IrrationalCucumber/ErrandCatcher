@@ -14,8 +14,8 @@ function CatcherMap() {
         home={`/c-home/${userID}`}
         page2="COMMISSIONS"
         commissionList={`/catcher-errands/${userID}`}
-        page3="APPLICANTIONS"
-        //applicants={`/applicants/${userID}`}
+        page3="APPLICATIONS"
+        applicants={`/my-application/${userID}`}
         map={`/c-map/${userID}`}
         page4="MAP"
       />

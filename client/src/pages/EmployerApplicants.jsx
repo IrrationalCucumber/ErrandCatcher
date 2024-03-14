@@ -1,6 +1,8 @@
 //intended to see the catchers who applied for the errand posted by the employer
 //03-06-24 updated the applicant page for employer --ash
 //added pagination and table. contents for the td are based on the old code --ash
+//03-10-24  <Route path="/e-applicants" exact Component={EmployerApplicants}/>
+//03-14-24 inital fixing. 4:56pm fixed the error
 
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -17,7 +19,7 @@ const EmployerApplicants = () => {
   const userID = location.pathname.split("/")[2];
   //const [searchTerm, setSearchTerm] = useState('');
   const [applicants, setApplicants] = useState([]);
-  //Pagination
+
   //current page state --Ash
   const [currentPage, setCurrentPage] = useState(1);
   //Pagination --Ash
@@ -67,6 +69,43 @@ const EmployerApplicants = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = applicants.slice(indexOfFirstItem, indexOfLastItem);
 
+  const headers = ["DATE", "CATCHER", "ERRAND TITLE", "ACTION"];
+  const applicantData = currentItems.map((applicant) => [
+    new Date(applicant.applicationDate).toLocaleDateString(),
+    `${applicant.userFirstname} ${applicant.userLastname}`,
+    applicant.commissionTitle,
+    applicant.status === "Pending" ? (
+      <>
+        <button
+          className="accept action-btn"
+          onClick={() => handleAccept(applicant.id)}
+        >
+          Accept
+        </button>
+        <button
+          className="decline action-btn"
+          onClick={() => handleDecline(applicant.id)}
+        >
+          Decline
+        </button>
+      </>
+    ) : applicant.status === "Accepted" ? (
+      <button className="accepted action-btn">Accepted</button>
+    ) : (
+      <button className="declined action-btn">Declined</button>
+    ),
+  ]);
+
+  const handleAccept = (applicationId) => {
+    console.log("Accepted application with id:", applicationId);
+    // Add logic to handle accepting the application
+  };
+
+  const handleDecline = (applicationId) => {
+    console.log("Declined application with id:", applicationId);
+    // Add logic to handle declining the application
+  };
+
   return (
     <div>
       <NavBar
@@ -99,30 +138,8 @@ const EmployerApplicants = () => {
             <option value="Suspended">Suspended</option>
           </select>*/}
         </div>
+        <Table headers={headers} data={applicantData} />
 
-        <Table
-          headers={["DATE", "CATCHER", "ERRAND TITLE", "ACTION"]}
-          data={currentItems.map((applicant) => {
-            <tr key={applicant.applicationID}>
-              <td>
-                {new Date(applicant.applicationDate).toLocaleDateString()}
-              </td>
-              <td>
-                <Link to={`/update-account/${applicant.catcherID}`}>
-                  {applicant.userFirstname} {applicant.userLastname}
-                </Link>
-              </td>
-              <td>{applicant.commissionTitle}</td>
-              <td>
-                <button className="action-btn">
-                  {applicant.applicationStatus === "Accept"
-                    ? "Accept"
-                    : "Decline"}
-                </button>
-              </td>
-            </tr>;
-          })}
-        />
         {/* Pagination controls */}
         {applicants.length > 0 && (
           <Pagination
@@ -168,5 +185,43 @@ export default EmployerApplicants;
             </tbody>
           </table>
       </div>
+
+
+          const handleAccept = (applicationId) => {
+      console.log('Accepted application with id:', applicationId);
+      // Add logic to handle accepting the application
+    };
+  
+    const handleDecline = (applicationId) => {
+      console.log('Declined application with id:', applicationId);
+      // Add logic to handle declining the application
+    };
+
+      <Table
+          headers={['DATE', 'EMPLOYER', 'ERRAND TITLE', 'ACTION']}
+          data={currentItems.map((application, rowIndex) => {
+            return (
+              <tr key={rowIndex}>
+                <td>{application.date}</td>
+                <td>{application.employer}</td>
+                <td>{application.errandTitle}</td>
+                <td>
+                  {application.action === 'Pending' && (
+                    <>
+                      <button className="accept action-btn" onClick={() => handleAccept(application.id)}>Accept</button>
+                      <button className="decline action-btn" onClick={() => handleDecline(application.id)}>Decline</button>
+                    </>
+                  )}
+                  {application.action === 'Accepted' && (
+                    <button className="accepted action-btn">Accepted</button>
+                  )}
+                  {application.action === 'Declined' && (
+                    <button className="declined action-btn">Declined</button>
+                  )}
+                </td>
+              </tr>
+            );
+          })}
+        />
 */
 }

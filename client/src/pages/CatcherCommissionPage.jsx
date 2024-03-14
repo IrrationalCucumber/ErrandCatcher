@@ -16,7 +16,7 @@ function CommissionPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
 
-  //get the id from the address bar
+  //getuserID
   const location = useLocation();
   const userID = location.pathname.split("/")[2];
 
@@ -47,9 +47,9 @@ function CommissionPage() {
         home={`/c-home/${userID}`}
         page2="COMMISSIONS"
         commissionList={`/catcher-errands/${userID}`}
-        page3="APPLICANTIONS"
-        //applicants={`/applicants/${userID}`}
-        map={`/c-map/${userID}`}
+        page3="APPLICATIONS"
+        applicants={`/my-application/${userID}`}
+        map={`/map/${userID}`}
         page4="MAP"
       />
       <div className="Commission-page-container">

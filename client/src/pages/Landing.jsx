@@ -56,9 +56,7 @@ const Landing = () => {
                 <i className="fas fa-map-marker-alt"></i> Mandaue City{" "}
               </h3>
               <div className="price"> ₱80.00 </div>
-              <a href="#" className="btn">
-                Book now
-              </a>
+              <Link className="btn">Book now</Link>
             </div>
           </div>
 
@@ -72,9 +70,7 @@ const Landing = () => {
               </h3>
 
               <div className="price"> ₱200.00 </div>
-              <a href="#" className="btn">
-                Book now
-              </a>
+              <Link className="btn">Book now</Link>
             </div>
           </div>
 
@@ -88,9 +84,7 @@ const Landing = () => {
               </h3>
 
               <div className="price"> ₱450.00</div>
-              <a href="#" className="btn">
-                Book now
-              </a>
+              <Link className="btn">Book now</Link>
             </div>
           </div>
           <div className="box">
@@ -103,9 +97,7 @@ const Landing = () => {
               </h3>
 
               <div className="price"> ₱450.00</div>
-              <a href="#" className="btn">
-                Book now
-              </a>
+              <Link className="btn">Book now</Link>
             </div>
           </div>
         </div>
