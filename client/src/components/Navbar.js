@@ -1,3 +1,6 @@
+//03-16-24 to make the design responsive
+
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 //import { Button } from "./NavButton";
@@ -14,6 +17,7 @@ function Navbar(props) {
   //reverse the state of the above funstion
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
+  const navigate = useNavigate();
 
   const showButton = () => {
     if (window.innerWidth <= 960) {
@@ -60,6 +64,13 @@ function Navbar(props) {
     };
     fetchName();
   }, [userID]);
+
+  const handleLogout = () => {
+    // Perform logout logic here
+    console.log("Logging out...");
+    // Redirect to the sign-in page
+    navigate("/sign-in");
+  };
   return (
     <>
       <nav className="navbar">
@@ -76,13 +87,13 @@ function Navbar(props) {
             >
               <div
                 className="logo-container"
-                style={{ backgroundColor: "#3d342f" }}
+                style={{ backgroundColor: "transparent" }}
               >
                 <img
                   src="/ERicon.png"
                   alt="ERRAND CATCHER Icon"
                   className="logo-image"
-                  style={{ width: "50px", height: "50px" }} // Adjust the width and height as needed
+                  style={{ width: "50px", height: "50px", background:"transparent" }} // Adjust the width and height as needed
                 />
                 <span className="logo-text">Errand Catcher</span>
               </div>
@@ -137,25 +148,52 @@ function Navbar(props) {
                 className="notification-icon"
                 style={{ marginTop: "1.7rem" }}
               >
+              {button ? (
                 <NotificationIcon
                   to={`/notifications/${userID}`}
                   hasNotification={true}
                   onClick={() => console.log("Notification clicked!")}
+                  style={{color:"white"}}
                 />
+              ) : (
+                <div>
+                  <Link
+                    to={`/notifications/${userID}`}
+                    className="nav-links"
+                    onClick={closeMobileMenu}
+                    style={{fontSize: "16px" }}
+                  >
+                    NOTIFICATION
+                  </Link>
+                </div>
+              )}
               </div>
             </li>
             <li className="nav-item">
-              <div
-                className="dropdown-container"
-                style={{
-                  marginRight: "1rem",
-                  marginTop: "1rem",
-                  marginLeft: "1rem",
-                }}
-              >
-                <NavDropdown name={username.toUpperCase()} />
-              </div>
-            </li>
+                  {button ? (
+                    <div className="dropdown-container">
+                      <NavDropdown name={username.toUpperCase()} />
+                    </div>
+                  ) : (
+                      <div className="profile-signout-container">
+                        <Link
+                          to={`/profile/${userID}`}
+                          className="nav-links"
+                          onClick={closeMobileMenu}
+                          style={{fontSize: "16px" }}
+                        >
+                          PROFILE
+                        </Link>
+                        <div className="sign-out-container">
+                            <button className="sign-out-button" onClick={handleLogout}>
+                              <i className="fa-solid fa-arrow-right-from-bracket"></i>
+                            </button>
+                          </div>
+                      </div>
+                    
+                  )}
+                </li>
+
           </ul>
           {/*Added by --Ash for notification */}
         </div>
