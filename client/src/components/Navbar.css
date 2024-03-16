@@ -8,7 +8,7 @@
   position: sticky;
   top: 0;
   z-index: 999;
-} 
+}
 
 .navbar-container {
   display: flex;
@@ -21,7 +21,7 @@
 .navbar-logo {
   color: #fff;
   justify-self: start;
-  margin-left: none;
+  margin-left: 20px;
   cursor: pointer;
   text-decoration: none;
   font-size: 2rem;
@@ -168,14 +168,11 @@ padding: 0;
 
 
 .notification-icon {
-  margin-right: 20px; 
-  color: #fff;
+  margin-right: 20px; /* Add margin between notification icon and dropdown */
 }
 
 .dropdown-container {
   position: relative;
-  margin-top: 15px;
-  
 }
 
 .dropdown-content {
@@ -206,34 +203,4 @@ padding: 0;
   margin-left: 10px; 
   font-weight: bold;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
-
-.profile-signout-container {
-  display: flex;
-  align-items: center;
-  
-}
-
-.sign-out-container {
-  margin-right: 40px;
-  margin-left: auto; /* Pushes the sign-out button to the right */
-}
-
-.sign-out-button {
-  border: none;
-  background-color: transparent;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  padding: 0;
-  margin-left: auto;
-}
-
-.sign-out-button:hover {
-  background-color: #ddd; /* Change the background color on hover */
-  border-radius: 5px; /* Make the button circular on hover */
-  width: 30px;
-  height: 30px;
-  color: #242424;
-  transition: 250ms;
 }
