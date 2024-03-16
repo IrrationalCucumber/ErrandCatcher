@@ -22,7 +22,7 @@ import Map from "./pages/CommissionMap";
 import CatcherMap from "./pages/CatcherMap";
 import Notification from "./pages/Notification";
 import Landing from "./pages/Landing";
-// import Menu from "./pages/Menu";
+import Menu from "./pages/Menu";
 //private route
 import { AuthProvider } from "./components/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
@@ -40,7 +40,7 @@ function App() {
           <Route path="/profile/:userID" exact Component={Profile} />
           <Route path="/add" exact Component={AddAccount} />
           <Route path="/" exact Component={Landing}/> 
-          {/* <Route path="/Menu" exact Component={Menu}/>  */}
+          <Route path="/Menu" exact Component={Menu}/>  
           <Route
             path="/post-commission/:userID"
             exact
