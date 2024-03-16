@@ -23,7 +23,6 @@ import Map from "./pages/CommissionMap";
 import CatcherMap from "./pages/CatcherMap";
 import EmployerMap from "./pages/EmployerMap";
 import Notification from "./pages/Notification";
-import Notification2 from "./pages/Notification2";
 import Landing from "./pages/Landing";
 import Application from "./pages/CatcherApplication";
 import CatcherCommission from "./pages/CatcherCommissionPage";
@@ -97,7 +96,6 @@ function App() {
           <Route path="/c-map/:userID" element={<CatcherMap />} />
           <Route path="/e-map/:userID" element={<EmployerMap />} />
           <Route path="/notifications/:userID" exact Component={Notification} />
-          <Route path="/notifications2" exact Component={Notification2} />
           {/* <Route path="/" exact Component={Home} /> */}
           <Route path="/admin-home" element={<AdminHome />} />
         </Routes>
