@@ -49,7 +49,7 @@ function App() {
             Component={UpdateAccount}
           />
           <Route
-            path="/update-commission/:commissionID/:userID"
+            path="/update-commission"
             exact
             Component={UpdateCommission}
           />
@@ -63,7 +63,7 @@ function App() {
           />
           <Route path="/c-home/:userID" exact Component={CatcherHome} />
           <Route
-            path="/view-commission/:commissionID/"
+            path="/view-commission"
             exact
             Component={ViewCommission}
           />

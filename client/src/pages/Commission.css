@@ -105,11 +105,12 @@ label{
     .input-cont{
         flex-direction: row;
         max-width: none;
+        gap: 20px;
     }
     .errand-inputs{
         width: 50%;
     }
-    .map--wrap{
+    .map--wrap, .map-wrap{
         height: 490px !important;
         z-index: 10;
         display: block;
