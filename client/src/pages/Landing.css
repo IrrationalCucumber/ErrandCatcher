@@ -193,7 +193,7 @@
    padding: 10px 30px;
    width: 100%;
    font-weight: 550;
-   background: #ffa500;
+   background: #eca763;
    border-radius: 20px;
    color: white;
    transition: 0.5s;
@@ -203,7 +203,7 @@
 
 }
 .Services .box-container a:hover{
-   background: rgb(217, 165, 87);
+   background:#eca763;
    color: rgb(8, 8, 8);
 }
 

@@ -30,7 +30,7 @@ const Landing = () => {
           </p>
 
           <div className="btn">
-            <a href="sign-in" id="getStartedLink">
+            <a href="sign-up" id="getStartedLink">
               <i className="fa-solid fa-house"></i> GET STARTED
             </a>
           </div>
@@ -55,7 +55,11 @@ const Landing = () => {
                 {" "}
                 <i className="fas fa-map-marker-alt"></i> Mandaue City{" "}
               </h3>
-              <Link className="btn">Apply</Link>
+              <div className="btn">
+                <a href="sign-up">
+                  <i></i> Apply{" "}
+                </a>
+              </div>
             </div>
           </div>
 
@@ -68,7 +72,12 @@ const Landing = () => {
                 <i className="fas fa-map-marker-alt"></i> Lapu-Lapu City{" "}
               </h3>
 
-              <Link className="btn">Apply</Link>
+              <div className="btn">
+                <a href="sign-up">
+                  <i></i> Apply{" "}
+                </a>
+              </div>
+
             </div>
           </div>
 
@@ -80,7 +89,11 @@ const Landing = () => {
                 {" "}
                 <i className="fas fa-map-marker-alt"></i> Cebu City{" "}
               </h3>
-              <Link className="btn">Apply</Link>
+              <div className="btn">
+            <a href="sign-up">
+              <i></i> Apply{" "}
+            </a>
+          </div>
             </div>
           </div>
           <div className="box">
@@ -92,7 +105,12 @@ const Landing = () => {
                 <i className="fas fa-map-marker-alt"></i> Cebu City{" "}
               </h3>
 
-              <Link className="btn">Apply</Link>
+              <div className="btn">
+                <a href="sign-up">
+                  <i></i> Apply{" "}
+                </a>
+              </div>
+
             </div>
           </div>
         </div>
