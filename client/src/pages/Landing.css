@@ -289,7 +289,7 @@
 
  .People .box-container .box .content {
    text-align: center;
-   position: absolute; /* Add this line */
+   position: absolute; /* Ad this line */
    bottom: 0; /* Add this line */
    width: 100%; /* Add this line */
    padding: 2rem; /* Add this line */

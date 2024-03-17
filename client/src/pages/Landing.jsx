@@ -23,7 +23,7 @@ const Landing = () => {
           </h1>
           <p>
             Errand Catchers offer a convenient solution for individuals
-            requiring assistance with various tasks and chores. Whether it
+            requiring assistance with various task and chores. Whether it
             involves grocery shopping, picking up prescriptions, mailing
             packages, or managing daily errands, these services focus on saving
             time and streamlining life.
