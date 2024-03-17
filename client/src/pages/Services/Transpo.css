@@ -1,0 +1,10 @@
+h1{
+    padding-top:  50px;
+}
+
+.search-bar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 45px 5%;
+}

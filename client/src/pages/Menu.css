@@ -50,14 +50,22 @@
     flex-direction: column;
     box-sizing: border-box;
     scroll-behavior: smooth;
-    background-color: transparent;
     overflow: hidden;
-    padding-top: 1px ;
     max-width: 14rem;
     height: 4rem;
   
 }
 
+.Menu .box button {
+    width: 14rem;
+    background: #cdcdd5;
+
+}
+.Menu .box button:hover {
+    background: #a0a0a0;
+    color: rgb(8, 8, 8);
+
+}
 .Menu .box img {
     height: 50px;
     width:70px;
@@ -66,14 +74,14 @@
     border-radius: 10px;
     background: transparent;
     float: left;
-    margin: 5px 2px 5px 5px;
+    margin: 5px 0 5px 5px;
 }
 
 .Menu .content p {
         font-size: 15px;
         font-weight: 1000;
-        text-align:center;
-        margin-left: 5px;
+        text-align: justify;
+        padding-left: 5.5rem;
         padding-top: 19px;
         padding-bottom: 5px;
         color: rgb(17, 16, 16);

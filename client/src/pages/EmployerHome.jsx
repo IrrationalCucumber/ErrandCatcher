@@ -1,7 +1,8 @@
 import React from 'react'
 import NavBar from '../components/Navbar'
-import HeroSection from '../components/HeroSection'
+//import HeroSection from '../components/HeroSection'
 import { useLocation } from 'react-router-dom'
+import Menu from './Menu'
 
 function EmployerHome() {
 
@@ -23,7 +24,8 @@ const userID = location.pathname.split("/")[2]
         button="SIGN OUT"
         pageButton='/sign-in'
       />
-        <HeroSection />
+       
+        <Menu/>
     </div>
   )
 }

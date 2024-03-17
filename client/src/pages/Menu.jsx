@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import NavBar from '../components/Navbar';
+import Cards from '../components/Cards';
+//  import NavBar from '../components/Navbar';
 import Footer from '../components/Footer';
 import axios from 'axios'; 
 import "./Menu.css";
+//import CardItem from '../components/CardItem';
 
 const Menu = () => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -14,7 +16,7 @@ const Menu = () => {
 
     return (
         <>
-            <NavBar />
+           
 
             <div className="search-bar"> 
                 <input
@@ -29,22 +31,35 @@ const Menu = () => {
             <section className="Menu" id="Menu">
             <div className="box-container">
                     <div className="box">
-                        <img src="/images/img6.png" alt="" />
-                        <div className="content">
-                            <p>Home Services</p>
-                        </div>
+                        <Link to="/HomeService">
+                        <button>
+                            <img src="/images/img6.png" alt="" />
+                            <div className="content">
+                                <p>Home Services</p>
+                            </div>
+                        </button>
+                        </Link>
                     </div>
                     <div className="box">
-                        <img src="/images/img4.png" alt="" />
-                        <div className="content">
-                            <p>Transportation</p>
-                        </div>
+                        <Link to="/Transpo">
+                            <button>
+                                <img src="/images/img4.png" alt="" />
+                                <div className="content">
+                                    <p>Transportation</p>
+                                </div>
+                            </button>
+                        </Link>
                     </div>
                     <div className="box">
-                        <img src="/images/img5.png" alt="" />
-                        <div className="content">
-                            <p>Delivery</p>
-                        </div>     
+                       <Link to="/Delivery">
+                            <button>
+                                <img src="/images/img5.png" alt="" />
+                                <div className="content">
+                                    <p>Delivery</p>
+                                </div>  
+                            </button>
+                        </Link>
+   
                     </div>  
                                 </div> 
             </section>
@@ -93,6 +108,8 @@ const Menu = () => {
 
                 </div>
             </section>
+            <Cards/>
+           
             <Footer />
         </>
     );

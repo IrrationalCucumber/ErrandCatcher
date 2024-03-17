@@ -1,6 +1,8 @@
 import React from 'react'
 import NavBar from '../components/Navbar'
 import { useLocation } from 'react-router-dom'
+import Menu from './Menu'
+//import Footer from '../components/Footer'
 
 function AdminHome() {
 
@@ -22,6 +24,9 @@ const userID = location.pathname.split("/")[2]
         pageButton='/sign-in'
         button='SIGN OUT'
       />
+      
+      <Menu/>
+      
     </div>
   )
 }
