@@ -5,6 +5,7 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 //import "../style.css";
 import ErrandInputs from "../components/ErrandInputs";
 import Navbar from "../components/NavBarPage";
+import "./Commission.css"; // Import your CSS file
 
 const UpdateCommission = () => {
   const [commission, setCommission] = useState({
