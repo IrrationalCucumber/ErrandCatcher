@@ -2,6 +2,8 @@
 //itemsPerPage items displayed per page
 //totalItems total number of items in the list
 //added by ash
+
+//03-05-24 styling of the pagination is updated
 import React from 'react';
 
 const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
@@ -12,11 +14,13 @@ const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
     }
 
     return (
-        <nav>
+        <nav style={{display: 'flex', justifyContent: 'center'}}>
             <ul className='pagination'>
                 {pageNumbers.map(number => (
                     <li key={number} className='page-item'>
-                        <button onClick={() => paginate(number)} className='page-link'>
+                        <button onClick={() => paginate(number)} 
+                        className='page-link'
+                        style={{borderRadius: '30px', margin: '10px'}}>
                             {number}
                         </button>
                     </li>

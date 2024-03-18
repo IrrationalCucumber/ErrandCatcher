@@ -1,13 +1,12 @@
-import React from 'react'
-import NavBar from '../components/Navbar'
-import { useLocation } from 'react-router-dom'
+import React from "react";
+import NavBar from "../components/Navbar";
+import { useLocation } from "react-router-dom";
 
 function AdminHome() {
-
   //carry id to other page
-const location = useLocation()
-const userID = location.pathname.split("/")[2]
-//pathname to array from
+  const location = useLocation();
+  const userID = location.pathname.split("/")[2];
+  //pathname to array from
 
   return (
     <div>
@@ -19,11 +18,11 @@ const userID = location.pathname.split("/")[2]
         commissionList={`/accounts`}
         page3="COMMISSION LIST"
         applicants={`/commission-list`}
-        pageButton='/sign-in'
-        button='SIGN OUT'
+        page4="MAP"
+        map={`/map`}
       />
     </div>
-  )
+  );
 }
 
-export default AdminHome
+export default AdminHome;
