@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import NotificationItem from "../components/NotificationItem";
 import { useLocation } from "react-router-dom";
 import "../components/Notification.css";
+import Navbar from "../components/NavBarPage";
 
 function Notification() {
   const [notifs, setNotifs] = useState([]);
@@ -37,27 +38,30 @@ function Notification() {
   };
 
   return (
-    <div className="notifs">
-      <div className="notifs_container">
-        <div className="notifs_wrapper">
-          {notifs.map((Notif) => (
-            <div className="notif" key={Notif.notificationID}>
-              <ul className="notifs_items">
-                <NotificationItem
-                  type={Notif.notificationType}
-                  desc={Notif.notifDesc}
-                  date={Notif.notifDate}
-                  // type="APPLICATION"
-                  // desc="There is an Catcher that wants to apply on one of your commission"
-                  // date="3:00 11-11-11"
-                  reddit={ReadIt}
-                />
-              </ul>
-            </div>
-          ))}
+    <>
+      <Navbar />
+      <div className="notifs">
+        <div className="notifs_container">
+          <div className="notifs_wrapper">
+            {notifs.map((Notif) => (
+              <div className="notif" key={Notif.notificationID}>
+                <ul className="notifs_items">
+                  <NotificationItem
+                    type={Notif.notificationType}
+                    desc={Notif.notifDesc}
+                    date={Notif.notifDate}
+                    // type="APPLICATION"
+                    // desc="There is an Catcher that wants to apply on one of your commission"
+                    // date="3:00 11-11-11"
+                    reddit={ReadIt}
+                  />
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

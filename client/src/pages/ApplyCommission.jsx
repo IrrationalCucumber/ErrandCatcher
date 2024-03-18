@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import "../style.css";
+import Navbar from "../components/NavBarPage";
 
 const ApplyCommission = () => {
   const [commission, setCommission] = useState({
@@ -145,10 +146,7 @@ const ApplyCommission = () => {
 
   return (
     <div className="form">
-      <nav>
-        <Link to="/accounts">BACK</Link>
-        <Link to="/">HOME </Link>
-      </nav>
+      <Navbar />
       <h1>Post Commission</h1>
       {/* {imageURL && <img src={imageURL} alt='Commission Type' />} */}
       <label>

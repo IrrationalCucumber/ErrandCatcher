@@ -1,7 +1,6 @@
-import React from 'react'
-import Map from '../components/Map'
-import Navbar from '../components/Navbar'
-
+import React from "react";
+import Map from "../components/Map";
+import Navbar from "../components/Navbar";
 
 /** update navbar for map
  * fix navbar map for:
@@ -13,15 +12,26 @@ import Navbar from '../components/Navbar'
 function CommissionMap() {
   return (
     <div>
-      <Navbar />
+      <Navbar
+        page1="HOME"
+        home={`/admin-home`}
+        // {`admin-home/${userID}`}
+        page2="ACCOUNT LIST"
+        commissionList={`/accounts`}
+        page3="COMMISSION LIST"
+        applicants={`/commission-list`}
+        page4="MAP"
+        map={`/map`}
+      />
       <Map />
     </div>
-  )
+  );
 }
 
-export default CommissionMap
+export default CommissionMap;
 
-{/* <iframe width="500" height="300" src="https://api.maptiler.com/maps/streets-v2/?key=ZQyqv6eWtI6zNE29SPDd#0.2/-36.82166/14.10913"></iframe>
+{
+  /* <iframe width="500" height="300" src="https://api.maptiler.com/maps/streets-v2/?key=ZQyqv6eWtI6zNE29SPDd#0.2/-36.82166/14.10913"></iframe>
         <Map mapLib={maplibregl}
             initialViewState={{
                 longitude: 16.62662018,
@@ -31,4 +41,5 @@ export default CommissionMap
         style={{width: "100%", height: "100vh"}}
         mapStyle="https://api.maptiler.com/maps/streets-v2/style.json?key=ZQyqv6eWtI6zNE29SPDd ">
 
-    </Map> */}
+    </Map> */
+}

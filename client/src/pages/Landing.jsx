@@ -28,8 +28,7 @@ const Landing = () => {
             packages, or managing daily errands, these services focus on saving
             time and streamlining life.
           </p>
-
-          <div className="btn">
+<div className="btn">
             <a href="sign-up" id="getStartedLink">
               <i className="fa-solid fa-house"></i> GET STARTED
             </a>
@@ -140,7 +139,6 @@ const Landing = () => {
     </div>
   </div>
 </section>
-
 
       <Footer />
     </>
