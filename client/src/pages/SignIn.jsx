@@ -74,7 +74,9 @@ const SignIn = () => {
     <div className="si">
       <div className="cont contman">
         <div className="si-txt">
-          <h1>welcome back to ERRAND CATCHER</h1>
+        <h1>
+        <span class="welcome">Welcome</span> to <span class="errand-catcher">ERRAND CATCHER</span>
+      </h1>
           <div className="text">
           <div className="sign"></div><h3>Sign-in Now</h3>
           </div>
@@ -116,7 +118,7 @@ const SignIn = () => {
                       </div>
         <p className="cont2">
           <i>
-            Don't have an Account? Sign-up <Link to="/sign-up">here!</Link>
+            Don't have an Account? <Link to="/sign-up"> Sign-up!</Link>
           </i>
         </p>
       </div>
