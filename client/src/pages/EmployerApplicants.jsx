@@ -115,7 +115,7 @@ const EmployerApplicants = () => {
         commissionList={`/commissions/${userID}`}
         page3="APPLICANTS"
         applicants={`/applicants/${userID}`}
-        // map={`/e-map/${userID}`}
+         map={`/e-map/${userID}`}
         page4="MAP"
       />
       <div className="applicants">

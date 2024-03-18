@@ -1,11 +1,23 @@
 import React from "react";
 import Map from "../components/Map";
 import Navbar from "../components/Navbar";
+import { useLocation } from "react-router-dom";
 
 function CommissionMap() {
+  const location = useLocation()
+  const userID = location.pathname.split("/")[2]
   return (
     <div>
-      <Navbar />
+       <Navbar
+        page1="HOME"
+        home={`/e-home/${userID}`}
+        page2="COMMISSIONS"
+        commissionList={`/commissions/${userID}`}
+        page3="APPLICANTS"
+        applicants={`/applicants/${userID}`}
+        page4="MAP"
+        map={`/e-map/${userID}`}
+      />
       <Map />
     </div>
   );

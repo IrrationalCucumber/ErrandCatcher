@@ -1,29 +1,32 @@
-import React from "react";
-import NavBar from "../components/Navbar";
-import HeroSection from "../components/HeroSection";
-import { useLocation } from "react-router-dom";
+import React from 'react'
+import NavBar from '../components/Navbar'
+//import HeroSection from '../components/HeroSection'
+import { useLocation } from 'react-router-dom'
+import Menu from './Menu'
 
 function EmployerHome() {
-  //carry id to other page
-  const location = useLocation();
-  const userID = location.pathname.split("/")[2];
-  //pathname to array from
+
+//carry id to other page
+const location = useLocation()
+const userID = location.pathname.split("/")[2]
+//pathname to array from
 
   return (
     <div>
-      <NavBar
+        <NavBar
         page1="HOME"
         home={`/e-home/${userID}`}
         page2="COMMISSIONS"
         commissionList={`/commissions/${userID}`}
         page3="APPLICANTS"
         applicants={`/applicants/${userID}`}
-        // map={`/e-map/${userID}`}
         page4="MAP"
+        map={`/e-map/${userID}`}
       />
-      <HeroSection />
+       
+        <Menu/>
     </div>
-  );
+  )
 }
 
-export default EmployerHome;
+export default EmployerHome

@@ -7,7 +7,6 @@ import AddAccount from "./pages/AddAccount";
 import PostCommission from "./pages/PostCommission";
 import CommissionList from "./pages/CommissionList";
 import Home from "./pages/Home";
-//import Navbar from "./components/Navbar";
 import UpdateAccount from "./pages/UpdateAccount";
 import UpdateCommission from "./pages/UpdateCommission";
 //import "./style.css";
@@ -24,12 +23,17 @@ import CatcherMap from "./pages/CatcherMap";
 import EmployerMap from "./pages/EmployerMap";
 import Notification from "./pages/Notification";
 import Landing from "./pages/Landing";
+import Menu from "./pages/Menu";
+import testpage from "./pages/testpage";
 import Application from "./pages/CatcherApplication";
 import CatcherCommission from "./pages/CatcherCommissionPage";
-// import Menu from "./pages/Menu";
 //private route
 import { AuthProvider } from "./components/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
+
+import Transportation from "./pages/Services/Transpo";
+import HomeServices from "./pages/Services/HomeServices";
+import Delivery from "./pages/Services/Delivery";
 
 function App() {
   return (
@@ -44,8 +48,11 @@ function App() {
           <Route path="/profile/:userID" exact Component={Profile} />
           <Route path="/add" exact Component={AddAccount} />
           <Route path="/" exact Component={Landing} />
-          <Route path="/" exact Component={Landing} />
-          {/* <Route path="/Menu" exact Component={Menu}/>  */}
+          <Route path="/Menu" exact Component={Menu} />
+          <Route path="/testpage" exact Component={testpage} />
+          <Route path="/Transpo" exact Component={Transportation} />
+          <Route path="/HomeService" exact Component={HomeServices} />
+          <Route path="/Delivery" exact Component={Delivery} />
           <Route
             path="/post-commission/:userID"
             exact
