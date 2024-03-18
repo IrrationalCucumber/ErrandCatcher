@@ -2,13 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import NavBar from "../components/Navbar";
 import Footer from "../components/Footer";
+import axios from "axios";
 import "./Landing.css";
 
 const Landing = () => {
   return (
     <>
-      <NavBar />
-
       <div className="home">
         <meta
           name="viewport"

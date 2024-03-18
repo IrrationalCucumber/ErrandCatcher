@@ -50,6 +50,7 @@ function CommissionPage() {
         page3="APPLICATIONS"
         applicants={`/my-application/${userID}`}
         map={`/map/${userID}`}
+        page4="MAP"
       />
       <div className="Commission-page-container">
         <div className="Commission-page">

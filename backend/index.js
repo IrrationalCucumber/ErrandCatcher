@@ -52,6 +52,16 @@ app.get("/recent-commission", (req, res) => {
     return res.json(data);
   });
 });
+//APS - 14/03/24
+//retrieve username
+app.get("/username/:userID", (req, res) => {
+  const userID = req.params.userID; // Use req.params.userID to get the route parameter
+  const q = "Select username from useraccount where userID = ?";
+  db.query(q, [userID], (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+});
 //==========================================CATEGORY=================================================================//
 //select type
 app.get("/type", (req, res) => {
@@ -240,13 +250,13 @@ app.post("/commission", (req, res) => {
     return res.json("Commission has been posted");
   });
 });
-
+//=============================================APPLICATION=====================================//
 //catcher application
 //save to Application table
 //send data to commission table
 app.post("/apply", (req, res) => {
   const q =
-    "INSERT INTO application (`catcherID`,`commissionID`, `applicationDate`) VALUES (?)";
+    "INSERT INTO application (`catcherID`,`applicationErrandId`, `applicationDate`) VALUES (?)";
   const values = [req.body.catcherID, req.body.comID, req.body.applicationDate];
   db.query(q, [values], (err, data) => {
     if (err) return res.json(err);
@@ -258,12 +268,96 @@ app.post("/apply", (req, res) => {
 app.get("/applicants/:userID", (req, res) => {
   const userID = req.params.userID; // Use req.params.userID to get the route parameter
   const q =
-    "SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname FROM Application a JOIN commission c ON a.commissionID = c.commissionID JOIN useraccount ua ON a.catcherID = ua.userID WHERE a.commissionID IN (SELECT commissionID FROM commission WHERE employerID = ?);";
+    "SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname FROM Application a JOIN commission c ON a.applicationErrandID = c.commissionID JOIN useraccount ua ON a.catcherID = ua.userID WHERE a.applicationErrandID IN (SELECT commissionID FROM commission WHERE employerID = ?);";
   db.query(q, [userID], (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
   });
 });
+//APS - 13/03/24
+//retrieve catcher errand application
+app.get("/your-application/:userID", (req, res) => {
+  const userID = req.params.userID; // Use req.params.userID to get the route parameter
+  const q =
+    "SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname" +
+    " FROM Application a " +
+    " JOIN commission c ON a.applicationErrandID = c.commissionID" +
+    " JOIN useraccount ua ON c.employerID = ua.userID" +
+    " WHERE a.catcherID IN (SELECT userID FROM useraccount WHERE userID = 29)";
+  db.query(q, [userID], (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+});
+// APS - 13/03/2024
+//Cancel Application
+//needs catcherID and application ID
+app.put("/cancel-apply/:userID/:applyID", (req, res) => {
+  const userID = req.params.userID;
+  const applicationID = req.params.applyID;
+  const q =
+    "UPDATE application SET `applicationStatus` = 'Cancelled' WHERE catcherID = ? AND applicationID = ?";
+
+  db.query(q, [userID, applicationID], (err) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+    return res.json("Application Cancelled");
+  });
+});
+
+// APS - 13/03/2024
+//Deny Applicant
+//needs commission and application ID
+app.put("/deny-apply/:comID/:applyID", (req, res) => {
+  const comId = req.params.comID;
+  const applicationID = req.params.applyID;
+  const q =
+    "UPDATE application SET `applicationStatus` = 'Denied' WHERE applicationErrandID = ? AND applicationID = ?";
+
+  db.query(q, [comId, applicationID], (err) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+    return res.json("Application Denied");
+  });
+});
+//APS - 03/03/24
+//delete application
+//requires catcherID and applicationID
+app.delete("/delete-apply/:userID/:applyID", (req, res) => {
+  const userID = req.params.userID;
+  const applicationID = req.params.applyID;
+  const q = "DELETE FROM application WHERE catcherID = ? AND applicationID = ?";
+
+  db.query(q, [userID, applicationID], (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+    return res.json("Application Deleted");
+  });
+});
+//APS - 13/03/24
+//retrieve catcher errand application
+//returns boolean
+// app.get("/check-apply/:userID/:applyID", (req, res) => {
+//   const userID = req.params.userID;
+//   const applicationID = req.params.applyID;
+//   const q =
+//     "SELECT CASE " +
+//     "WHEN catcherID = ? AND applicationErrandID = ? THEN 'true' " +
+//     "ELSE 'false' " +
+//     "END AS result " +
+//     "FROM application WHERE catcherID = ?";
+//   db.query(q, [userID, applicationID, userID], (err, data) => {
+//     if (err) return res.json(err);
+//     return res.json(data[0].result);
+//   });
+// });
+
 //================================================================================================//
 
 //post commission
