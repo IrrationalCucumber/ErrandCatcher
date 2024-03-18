@@ -20,9 +20,8 @@ const userID = location.pathname.split("/")[2]
         commissionList={`/commissions/${userID}`}
         page3="APPLICANTS"
         applicants={`/applicants/${userID}`}
-        map={`/map/${userID}`}
-        button="SIGN OUT"
-        pageButton='/sign-in'
+        page4="MAP"
+        map={`/e-map/${userID}`}
       />
        
         <Menu/>

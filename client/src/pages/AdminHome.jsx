@@ -21,6 +21,8 @@ const userID = location.pathname.split("/")[2]
         commissionList={`/accounts`}
         page3="COMMISSION LIST"
         applicants={`/commission-list`}
+        page4="MAP"
+        map={`/map`}
         pageButton='/sign-in'
         button='SIGN OUT'
       />
