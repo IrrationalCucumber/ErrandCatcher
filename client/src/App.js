@@ -25,6 +25,8 @@ import Notification from "./pages/Notification";
 import Landing from "./pages/Landing";
 import Menu from "./pages/Menu";
 import testpage from "./pages/testpage";
+import Application from "./pages/CatcherApplication";
+import CatcherCommission from "./pages/CatcherCommissionPage";
 //private route
 import { AuthProvider } from "./components/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
@@ -45,12 +47,12 @@ function App() {
           <Route path="/sign-up" exact Component={SignUp} />
           <Route path="/profile/:userID" exact Component={Profile} />
           <Route path="/add" exact Component={AddAccount} />
-          <Route path="/" exact Component={Landing}/> 
-          <Route path="/Menu" exact Component={Menu}/>  
-          <Route path="/testpage" exact Component={testpage}/>
-          <Route path="/Transpo" exact Component={Transportation}/>
-          <Route path="/HomeService" exact Component={HomeServices}/>
-          <Route path="/Delivery" exact Component={Delivery}/>
+          <Route path="/" exact Component={Landing} />
+          <Route path="/Menu" exact Component={Menu} />
+          <Route path="/testpage" exact Component={testpage} />
+          <Route path="/Transpo" exact Component={Transportation} />
+          <Route path="/HomeService" exact Component={HomeServices} />
+          <Route path="/Delivery" exact Component={Delivery} />
           <Route
             path="/post-commission/:userID"
             exact
@@ -102,7 +104,7 @@ function App() {
           <Route path="/e-map/:userID" element={<EmployerMap />} />
           <Route path="/notifications/:userID" exact Component={Notification} />
           {/* <Route path="/" exact Component={Home} /> */}
-         <Route path="/admin-home" element={<AdminHome />} />
+          <Route path="/admin-home" element={<AdminHome />} />
         </Routes>
         {/**<PrivateRoute path="/admin-home" element={<AdminHome />} />
         </AuthProvider>*/}
