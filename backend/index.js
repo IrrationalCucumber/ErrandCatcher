@@ -256,7 +256,7 @@ app.post("/commission", (req, res) => {
 //send data to commission table
 app.post("/apply", (req, res) => {
   const q =
-    "INSERT INTO application (`catcherID`,`applicationErrandId`, `applicationDate`) VALUES (?)";
+    "INSERT INTO application (`catcherID`,`applicationErrandID`, `applicationDate`) VALUES (?)";
   const values = [req.body.catcherID, req.body.comID, req.body.applicationDate];
   db.query(q, [values], (err, data) => {
     if (err) return res.json(err);
@@ -268,7 +268,7 @@ app.post("/apply", (req, res) => {
 app.get("/applicants/:userID", (req, res) => {
   const userID = req.params.userID; // Use req.params.userID to get the route parameter
   const q =
-    "SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname FROM Application a JOIN commission c ON a.applicationErrandID = c.commissionID JOIN useraccount ua ON a.catcherID = ua.userID WHERE a.applicationErrandID IN (SELECT commissionID FROM commission WHERE employerID = ?);";
+    "SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname FROM Application a JOIN commission c ON a.applicationErrandID = c.commissionID JOIN useraccount ua ON a.catcherID = ua.userID WHERE a.applicationErrandID IN (SELECT commissionID FROM commission WHERE employerID = ?)";
   db.query(q, [userID], (err, data) => {
     if (err) return res.json(err);
     return res.json(data);

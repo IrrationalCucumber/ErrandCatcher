@@ -28,7 +28,7 @@ const Landing = () => {
             packages, or managing daily errands, these services focus on saving
             time and streamlining life.
           </p>
-<div className="btn">
+          <div className="ld_btn">
             <a href="sign-up" id="getStartedLink">
               <i className="fa-solid fa-house"></i> GET STARTED
             </a>
@@ -76,7 +76,6 @@ const Landing = () => {
                   <i></i> Apply{" "}
                 </a>
               </div>
-
             </div>
           </div>
 
@@ -89,10 +88,10 @@ const Landing = () => {
                 <i className="fas fa-map-marker-alt"></i> Cebu City{" "}
               </h3>
               <div className="btn">
-            <a href="sign-up">
-              <i></i> Apply{" "}
-            </a>
-          </div>
+                <a href="sign-up">
+                  <i></i> Apply{" "}
+                </a>
+              </div>
             </div>
           </div>
           <div className="box">
@@ -109,36 +108,39 @@ const Landing = () => {
                   <i></i> Apply{" "}
                 </a>
               </div>
-
             </div>
           </div>
         </div>
       </section>
 
       <section className="People" id="People">
-  <h1>
-    <span>P</span>eople
-  </h1>
-  <div className="box-container">
-    <div className="box">
-      <div className="content">
-                <h3>Employer</h3>
-                <p>The individuals that seeks assistance from the
-                   catcher to complete an errand</p>
-      </div>
-      <img src="/images/employers.png" alt="" />
-    </div>
+        <h1>
+          <span>P</span>eople
+        </h1>
+        <div className="box-container">
+          <div className="box">
+            <div className="content">
+              <h3>Employer</h3>
+              <p>
+                The individuals that seeks assistance from the catcher to
+                complete an errand
+              </p>
+            </div>
+            <img src="/images/employer.png" alt="" />
+          </div>
 
-    <div className="box">
-      <div className="content">
-               <h3>Catcher</h3>
-               <p>The service providers that offers their service and 
-                   skill to the employer's errands</p>
-      </div>
-      <img src="/images/catcher.png" alt="" />
-    </div>
-  </div>
-</section>
+          <div className="box">
+            <div className="content">
+              <h3>Catcher</h3>
+              <p>
+                The service providers that offers their service and skill to the
+                employer's errands
+              </p>
+            </div>
+            <img src="/images/employee.png" alt="" />
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </>

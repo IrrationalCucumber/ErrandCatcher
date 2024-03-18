@@ -52,7 +52,7 @@
    line-height: 1.5;
 }
 
-.btn a{
+.ld_btn a{
    background-color:transparent;
    color: #1a1919;
    letter-spacing: 3px;
@@ -83,7 +83,7 @@
    width: 100%;
 }
 
-.btn a:hover{
+.ld_btn a:hover{
    background: #f4f6fc;
    color: rgb(8, 8, 8);
 }
@@ -229,7 +229,7 @@
    margin-left: 10px;
    font-size: 8px;
    }
-   .Services .box-container .box .content .btn{
+   .Services .box-container .box .content .ld_btn{
       padding:0%;
       margin-left: 10px;
       font-size: 7px;

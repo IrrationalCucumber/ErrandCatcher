@@ -71,6 +71,7 @@ const EmployerApplicants = () => {
 
   const headers = ["DATE", "CATCHER", "ERRAND TITLE", "ACTION"];
   const applicantData = currentItems.map((applicant) => [
+    //applicant.applicationID,
     new Date(applicant.applicationDate).toLocaleDateString(),
     `${applicant.userFirstname} ${applicant.userLastname}`,
     applicant.commissionTitle,
@@ -78,13 +79,13 @@ const EmployerApplicants = () => {
       <>
         <button
           className="accept action-btn"
-          onClick={() => handleAccept(applicant.id)}
+          onClick={() => handleAccept(applicant.applicationID)}
         >
           Accept
         </button>
         <button
           className="decline action-btn"
-          onClick={() => handleDecline(applicant.id)}
+          onClick={() => handleDecline(applicant.applicationID)}
         >
           Decline
         </button>
@@ -96,13 +97,13 @@ const EmployerApplicants = () => {
     ),
   ]);
 
-  const handleAccept = (applicationId) => {
-    console.log("Accepted application with id:", applicationId);
+  const handleAccept = (applicationID) => {
+    console.log("Accepted application with id:", applicationID);
     // Add logic to handle accepting the application
   };
 
-  const handleDecline = (applicationId) => {
-    console.log("Declined application with id:", applicationId);
+  const handleDecline = (applicationID) => {
+    console.log("Declined application with id:", applicationID);
     // Add logic to handle declining the application
   };
 
@@ -115,7 +116,7 @@ const EmployerApplicants = () => {
         commissionList={`/commissions/${userID}`}
         page3="APPLICANTS"
         applicants={`/applicants/${userID}`}
-         map={`/e-map/${userID}`}
+        map={`/e-map/${userID}`}
         page4="MAP"
       />
       <div className="applicants">
