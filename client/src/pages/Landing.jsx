@@ -23,20 +23,19 @@ const Landing = () => {
           </h1>
           <p>
             Errand Catchers offer a convenient solution for individuals
-            requiring assistance with various tasks and chores. Whether it
+            requiring assistance with various task and chores. Whether it
             involves grocery shopping, picking up prescriptions, mailing
             packages, or managing daily errands, these services focus on saving
             time and streamlining life.
           </p>
-
-          <div className="btn">
-            <a href="sign-in" id="getStartedLink">
+<div className="btn">
+            <a href="sign-up" id="getStartedLink">
               <i className="fa-solid fa-house"></i> GET STARTED
             </a>
           </div>
           <div className="btns">
             <a href="map">
-              <i className="fa fa-eye"></i> VIEW HERE{" "}
+              <i className="fa fa-eye"></i> VIEW ERRANDS{" "}
             </a>
           </div>
         </div>
@@ -55,8 +54,11 @@ const Landing = () => {
                 {" "}
                 <i className="fas fa-map-marker-alt"></i> Mandaue City{" "}
               </h3>
-              <div className="price"> ₱80.00 </div>
-              <Link className="btn">Book now</Link>
+              <div className="btn">
+                <a href="sign-up">
+                  <i></i> Apply{" "}
+                </a>
+              </div>
             </div>
           </div>
 
@@ -69,8 +71,12 @@ const Landing = () => {
                 <i className="fas fa-map-marker-alt"></i> Lapu-Lapu City{" "}
               </h3>
 
-              <div className="price"> ₱200.00 </div>
-              <Link className="btn">Book now</Link>
+              <div className="btn">
+                <a href="sign-up">
+                  <i></i> Apply{" "}
+                </a>
+              </div>
+
             </div>
           </div>
 
@@ -82,9 +88,11 @@ const Landing = () => {
                 {" "}
                 <i className="fas fa-map-marker-alt"></i> Cebu City{" "}
               </h3>
-
-              <div className="price"> ₱450.00</div>
-              <Link className="btn">Book now</Link>
+              <div className="btn">
+            <a href="sign-up">
+              <i></i> Apply{" "}
+            </a>
+          </div>
             </div>
           </div>
           <div className="box">
@@ -96,33 +104,41 @@ const Landing = () => {
                 <i className="fas fa-map-marker-alt"></i> Cebu City{" "}
               </h3>
 
-              <div className="price"> ₱450.00</div>
-              <Link className="btn">Book now</Link>
+              <div className="btn">
+                <a href="sign-up">
+                  <i></i> Apply{" "}
+                </a>
+              </div>
+
             </div>
           </div>
         </div>
       </section>
 
       <section className="People" id="People">
-        <h1>
-          <span>P</span>eople
-        </h1>
-        <div className="box-container">
-          <div className="box">
-            <img src="/images/employer.png" alt="" />
-            <div className="content">
-              <h3>Employer</h3>
-            </div>
-          </div>
+  <h1>
+    <span>P</span>eople
+  </h1>
+  <div className="box-container">
+    <div className="box">
+      <div className="content">
+                <h3>Employer</h3>
+                <p>The individuals that seeks assistance from the
+                   catcher to complete an errand</p>
+      </div>
+      <img src="/images/employers.png" alt="" />
+    </div>
 
-          <div className="box">
-            <img src="/images/employee.png" alt="" />
-            <div className="content">
-              <h3>Catcher</h3>
-            </div>
-          </div>
-        </div>
-      </section>
+    <div className="box">
+      <div className="content">
+               <h3>Catcher</h3>
+               <p>The service providers that offers their service and 
+                   skill to the employer's errands</p>
+      </div>
+      <img src="/images/catcher.png" alt="" />
+    </div>
+  </div>
+</section>
 
       <Footer />
     </>
