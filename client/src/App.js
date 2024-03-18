@@ -17,8 +17,10 @@ import EmployerCommissions from "./pages/EmployerCommissionList";
 import AdminHome from "./pages/AdminHome";
 import ApplyCommission from "./pages/ApplyCommission";
 import EmployerApplicants from "./pages/EmployerApplicants";
+//MAP ROUTES
 import Map from "./pages/CommissionMap";
 import CatcherMap from "./pages/CatcherMap";
+import EmployerMap from "./pages/EmployerMap";
 import Notification from "./pages/Notification";
 import Landing from "./pages/Landing";
 import Menu from "./pages/Menu";
@@ -89,8 +91,15 @@ function App() {
             exact
             Component={EmployerApplicants}
           />
+          <Route path="/my-application/:userID" element={<Application />} />
+          <Route
+            path="/catcher-errands/:userID"
+            element={<CatcherCommission />}
+          />
+          {/* MAP ROUTES */}
           <Route path="/map" element={<Map />} />
-          <Route path="/c-map" element={<CatcherMap />} />
+          <Route path="/c-map/:userID" element={<CatcherMap />} />
+          <Route path="/e-map/:userID" element={<EmployerMap />} />
           <Route path="/notifications/:userID" exact Component={Notification} />
           {/* <Route path="/" exact Component={Home} /> */}
          <Route path="/admin-home" element={<AdminHome />} />

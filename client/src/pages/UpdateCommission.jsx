@@ -5,6 +5,7 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 //import "../style.css";
 import ErrandInputs from "../components/ErrandInputs";
 import Navbar from "../components/NavBarPage";
+import "./Commission.css"; // Import your CSS file
 
 const UpdateCommission = () => {
   const [commission, setCommission] = useState({
@@ -225,17 +226,7 @@ const UpdateCommission = () => {
 
   return (
     <div>
-      <Navbar
-        page1="HOME"
-        home={`/e-home/${userID}`}
-        page2="COMMISSIONS"
-        commissionList={`/commissions/${userID}`}
-        page3="APPLICANTS"
-        applicants={`/applicants/${userID}`}
-        map={`/map/${userID}`}
-        button="SIGN OUT"
-        pageButton="/sign-in"
-      />
+      <Navbar />
       <div className="errand-cont">
         <ErrandInputs
           handleChange={handleChange}
