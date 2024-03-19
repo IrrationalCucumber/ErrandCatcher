@@ -23,6 +23,12 @@
   font-size: 20px;
   font-weight: bold;
 }
+.notification-date, notification-item-info{
+  color: rgb(52, 52, 52);
+}
+.notification-date{
+  font-size: 12px;
+}
 
 .icon, .check-icon {
   height: 20px;
@@ -58,6 +64,9 @@
 .notification-type {
   margin: 0;
 }
+.notification-type{
+  size: 14px;
+}
 
 .notification-desc, .notification-date {
   margin: 0;
@@ -65,6 +74,7 @@
 
 .notification-button {
   text-align: right;
+  margin-top: -50px;
 }
 
 .button {
