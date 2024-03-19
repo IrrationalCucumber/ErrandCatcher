@@ -646,7 +646,7 @@ app.get("/notif-count/:userID", (req, res) => {
 //add notification to userID
 app.post("/notify", (req, res) => {
   const q =
-    "INSERT INTO notification (`userID`, `notificationType`, `notifDesc`, `notifDate`) VALUES (?)";
+    "INSERT INTO notification (`notifUserID`, `notificationType`, `notifDesc`, `notifDate`) VALUES (?)";
   const values = [
     req.body.userID,
     req.body.notificationType,
