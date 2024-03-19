@@ -23,7 +23,6 @@ const UpdateCommission = () => {
     comLong: "",
     comLat: "",
   });
-
   const navigate = useNavigate();
   const location = useLocation();
   //pathname to array from
@@ -34,7 +33,6 @@ const UpdateCommission = () => {
 
   // Add a state to track the marker's longitude and latitude
   const [markerLngLat, setMarkerLngLat] = useState([123.8854, 10.3157]); // Default values
-
   const [currentLocationMarker, setCurrentLocationMarker] = useState(null);
 
   //handle changes
@@ -249,12 +247,6 @@ const UpdateCommission = () => {
           lat={commission.comLat}
         />
         <br />
-        <button
-          className="formButton"
-          onClick={() => handleDelete(commission.commissionID)}
-        >
-          DELETE
-        </button>
         <button className="formButton" onClick={handleClick}>
           UPDATE
         </button>
