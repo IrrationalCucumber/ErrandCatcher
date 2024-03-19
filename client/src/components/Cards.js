@@ -65,7 +65,7 @@ function Cards() {
                 src="images/hr.png"
                 text={commission.commissionTitle}
                 label={commission.commissionType}
-                path={`/update-commission/${commission.commissionID}/${userID}`}
+                path={`/view-errand/${userID}/${commission.commissionID}`}
               />
             ))}
           </div>
