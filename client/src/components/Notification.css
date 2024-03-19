@@ -71,6 +71,9 @@
 .notification-desc, .notification-date {
   margin: 0;
 }
+.notification-desc, .notification-type{
+  margin: -3px;
+}
 
 .notification-button {
   text-align: right;
