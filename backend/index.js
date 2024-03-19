@@ -46,7 +46,7 @@ app.get("/your-commission/:userID", (req, res) => {
 });
 //display 10 recent posted commissino
 app.get("/recent-commission", (req, res) => {
-  const q = "Select * from commission order by DatePosted DESC LIMIT 10";
+  const q = "Select * from commission order by DatePosted DESC LIMIT 3";
   db.query(q, (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
@@ -60,6 +60,16 @@ app.get("/username/:userID", (req, res) => {
   db.query(q, [userID], (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
+  });
+});
+//APS - 19/03/24
+//Retrieve the accountType of User
+app.get("/get-type/:userID", (req, res) => {
+  const userID = req.params.userID; // Use req.params.userID to get the route parameter
+  const q = "Select accountType from useraccount where userID = ?";
+  db.query(q, [userID], (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data[0].accountType);
   });
 });
 //==========================================CATEGORY=================================================================//
@@ -260,7 +270,7 @@ app.post("/apply", (req, res) => {
   const values = [req.body.catcherID, req.body.comID, req.body.applicationDate];
   db.query(q, [values], (err, data) => {
     if (err) return res.json(err);
-    return res.json("Commission has been posted");
+    return res.json("Application Saved");
   });
 });
 
