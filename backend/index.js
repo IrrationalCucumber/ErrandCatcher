@@ -367,6 +367,19 @@ app.delete("/delete-apply/:userID/:applyID", (req, res) => {
 //     return res.json(data[0].result);
 //   });
 // });
+//APS - 19/03/24
+// return the application id of the Catcher
+//pair with check apply
+app.get("/get-apply/:userID/:comID", (req, res) => {
+  const userID = req.params.userID;
+  const comID = req.params.comID;
+  const q =
+    "SELECT applicationID FROM application WHERE catcherID = ? AND applicationErrandID = ?";
+  db.query(q, [userID, comID], (err, data) => {
+    if (err) return res.status(500).json(err);
+    return res.json(data[0]);
+  });
+});
 
 //================================================================================================//
 

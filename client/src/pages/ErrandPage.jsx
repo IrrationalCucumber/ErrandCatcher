@@ -1,3 +1,6 @@
+/**
+ *
+ */
 import axios from "axios";
 import React, { useRef, useEffect, useState } from "react";
 import maplibregl from "maplibre-gl";
@@ -40,20 +43,39 @@ const ErrandPage = () => {
         //console.log(res.data);
         setType(res.data);
         console.log(type);
-        // if (status.toUpperCase == "VERIFIED" || status == "Verified") {
-        //   setVerified(true);
-        //   console.log(verified);
-        // }
       } catch (err) {
         console.log(err);
       }
     };
     fetchType();
   }, [type]);
+  //APS - 19/03/24
+  //CHeck if Catcher already applied
+  //setState if applies
+  const [isApplied, setIsApplied] = useState(false);
+  // const [appID, setAppID] = useState("");
+  useEffect(() => {
+    if (type == "Catcher") {
+      const fetchApp = async () => {
+        try {
+          const res = await axios.get(
+            `http://localhost:8800/get-apply/${userID}/${commissionID}`
+          );
+          console.log(res.data[0]);
+          if (!res.data[0]) {
+            setIsApplied(true);
+          }
+          console.log(isApplied);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      fetchApp();
+    }
+  }, [isApplied]);
 
   // Add a state to track the marker's longitude and latitude
   const [markerLngLat, setMarkerLngLat] = useState([123.8854, 10.3157]); // Default values
-
   const [currentLocationMarker, setCurrentLocationMarker] = useState(null);
 
   //handle changes
@@ -215,15 +237,15 @@ const ErrandPage = () => {
   const handleApply = async (e) => {
     e.preventDefault();
     try {
-      console.log(userID); // Check if userID is correct
+      //console.log(userID); // Check if userID is correct
 
-      //   //assign values to the variables in application
-      //   application.applicationDate = getCurrentDate();
-      //   application.comID = commissionID;
-      //   application.catcherID = userID;
+      //assign values to the variables in application
+      application.applicationDate = getCurrentDate();
+      application.comID = commissionID;
+      application.catcherID = userID;
 
-      //   console.log(application); // Check the updated commission object
-      //   await axios.post("http://localhost:8800/apply", application);
+      console.log(application); // Check the updated commission object
+      await axios.post("http://localhost:8800/apply", application);
 
       //add a notification to the commission's employer
       notif.notifDesc = "A Catcher has applied to on of your errand";
@@ -239,14 +261,14 @@ const ErrandPage = () => {
       console.log(err);
     }
   };
-
   return (
     <div>
       <Navbar />
       <div className="errand-cont">
         <ErrandInputs
           handleChange={handleChange}
-          //   title="comTitle"
+          title="comTitle"
+          disable="true"
           titleValue={commission.comTitle}
           //   deadline="comDeadline"
           dlValue={commission.comDeadline}
@@ -271,7 +293,13 @@ const ErrandPage = () => {
           </button>
         )}
         {type === "Catcher" && (
-          <button className="formButton" onClick={handleApply}>
+          <button
+            className="formButton"
+            onClick={handleApply}
+            style={{
+              backgroundColor: isApplied ? "none" : "",
+            }}
+          >
             APPLY
           </button>
         )}

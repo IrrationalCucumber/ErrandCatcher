@@ -91,6 +91,9 @@ function ErrandInputs(props) {
                 name={props.pay}
                 value={props.payValue}
                 disabled={props.disable}
+                style={{
+                  content: ".00",
+                }}
               />
             </div>
           </div>
