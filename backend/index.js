@@ -1,15 +1,14 @@
 import express from "express";
 import mysql from "mysql";
 import cors from "cors";
+import createDBConnection from "./dbConfig.js";
 
 const app = express();
 //connect to database
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "SethNL99*",
-  database: "errandcatcher",
-});
+
+// Create the database connection
+const db = createDBConnection();
+
 //auth problem
 //ALTER USER 'your_username'@'your_host' IDENTIFIED WITH mysql_native_password BY 'your_password';
 app.use(express.json());
@@ -53,6 +52,16 @@ app.get("/recent-commission", (req, res) => {
     return res.json(data);
   });
 });
+//APS - 14/03/24
+//retrieve username
+app.get("/username/:userID", (req, res) => {
+  const userID = req.params.userID; // Use req.params.userID to get the route parameter
+  const q = "Select username from useraccount where userID = ?";
+  db.query(q, [userID], (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+});
 //==========================================CATEGORY=================================================================//
 //select type
 app.get("/type", (req, res) => {
@@ -88,14 +97,19 @@ app.get("/type", (req, res) => {
 //==========================================SEARCH FUNCTION==========================================================//
 //search account
 app.get("/search-user", (req, res) => {
-  const searchTerm = req.query.term; // Get the search term from the query parameter
+  const searchTerm = req.query.term || ""; // Get the search term from the query parameter
+  const type = req.query.type || "";
+  const status = req.query.status || "";
+
   const q =
-    "SELECT * FROM UserAccount WHERE username LIKE ? OR userFirstname LIKE ? OR userLastname LIKE ? OR userEmail LIKE ?";
+    "SELECT * FROM UserAccount WHERE username LIKE ?  AND accountType = ? AND accountStatus = ?";
   const values = [
     `%${searchTerm}%`,
     `%${searchTerm}%`,
     `%${searchTerm}%`,
     `%${searchTerm}%`,
+    type,
+    status,
   ];
 
   db.query(q, values, (err, data) => {
@@ -146,9 +160,46 @@ app.get("/search-employer-commission/:userID", (req, res) => {
     return res.json(data);
   });
 });
+
+// fiter user-type  //
+app.get("/filter-type", (req, res) => {
+  const type = req.query.type || "";
+  const status = req.query.status || "";
+
+  // const searchTerm = req.query.term;
+  const q =
+    "SELECT * FROM UserAccount WHERE accountType = ? AND accountStatus = ?";
+  const values = [type, status];
+
+  db.query(q, values, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+
 //========================================================================================//
 
 //============================================SIGNUP==================================//
+//regester account
+app.post("/signup", (req, res) => {
+  const q =
+    "INSERT INTO UserAccount (`username`, `password`, `userEmail`, `accountType`, `dateCreated` ) VALUES (?)";
+  const values = [
+    req.body.username,
+    req.body.password,
+    req.body.email,
+    req.body.type,
+    req.body.dateCreated,
+  ];
+
+  db.query(q, [values], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("Account has been added");
+  });
+});
 //send data to userAccount
 app.post("/user", (req, res) => {
   //const q = "INSERT INTO UserAccount (`username`, `password`, `userLastname`, `userFirstname`, `userGender`, `userEmail`, `userContactNum`, `userAge`, `userBirthday`, `userAddress`, `userDesc`, `accountType`, `dateCreated`, `profileImage`) VALUES (?)"
@@ -199,13 +250,13 @@ app.post("/commission", (req, res) => {
     return res.json("Commission has been posted");
   });
 });
-
+//=============================================APPLICATION=====================================//
 //catcher application
 //save to Application table
 //send data to commission table
 app.post("/apply", (req, res) => {
   const q =
-    "INSERT INTO application (`catcherID`,`commissionID`, `applicationDate`) VALUES (?)";
+    "INSERT INTO application (`catcherID`,`applicationErrandID`, `applicationDate`) VALUES (?)";
   const values = [req.body.catcherID, req.body.comID, req.body.applicationDate];
   db.query(q, [values], (err, data) => {
     if (err) return res.json(err);
@@ -217,12 +268,96 @@ app.post("/apply", (req, res) => {
 app.get("/applicants/:userID", (req, res) => {
   const userID = req.params.userID; // Use req.params.userID to get the route parameter
   const q =
-    "SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname FROM Application a JOIN commission c ON a.commissionID = c.commissionID JOIN useraccount ua ON a.catcherID = ua.userID WHERE a.commissionID IN (SELECT commissionID FROM commission WHERE employerID = ?);";
+    "SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname FROM Application a JOIN commission c ON a.applicationErrandID = c.commissionID JOIN useraccount ua ON a.catcherID = ua.userID WHERE a.applicationErrandID IN (SELECT commissionID FROM commission WHERE employerID = ?)";
   db.query(q, [userID], (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
   });
 });
+//APS - 13/03/24
+//retrieve catcher errand application
+app.get("/your-application/:userID", (req, res) => {
+  const userID = req.params.userID; // Use req.params.userID to get the route parameter
+  const q =
+    "SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname" +
+    " FROM Application a " +
+    " JOIN commission c ON a.applicationErrandID = c.commissionID" +
+    " JOIN useraccount ua ON c.employerID = ua.userID" +
+    " WHERE a.catcherID IN (SELECT userID FROM useraccount WHERE userID = 29)";
+  db.query(q, [userID], (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+});
+// APS - 13/03/2024
+//Cancel Application
+//needs catcherID and application ID
+app.put("/cancel-apply/:userID/:applyID", (req, res) => {
+  const userID = req.params.userID;
+  const applicationID = req.params.applyID;
+  const q =
+    "UPDATE application SET `applicationStatus` = 'Cancelled' WHERE catcherID = ? AND applicationID = ?";
+
+  db.query(q, [userID, applicationID], (err) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+    return res.json("Application Cancelled");
+  });
+});
+
+// APS - 13/03/2024
+//Deny Applicant
+//needs commission and application ID
+app.put("/deny-apply/:comID/:applyID", (req, res) => {
+  const comId = req.params.comID;
+  const applicationID = req.params.applyID;
+  const q =
+    "UPDATE application SET `applicationStatus` = 'Denied' WHERE applicationErrandID = ? AND applicationID = ?";
+
+  db.query(q, [comId, applicationID], (err) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+    return res.json("Application Denied");
+  });
+});
+//APS - 03/03/24
+//delete application
+//requires catcherID and applicationID
+app.delete("/delete-apply/:userID/:applyID", (req, res) => {
+  const userID = req.params.userID;
+  const applicationID = req.params.applyID;
+  const q = "DELETE FROM application WHERE catcherID = ? AND applicationID = ?";
+
+  db.query(q, [userID, applicationID], (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+    return res.json("Application Deleted");
+  });
+});
+//APS - 13/03/24
+//retrieve catcher errand application
+//returns boolean
+// app.get("/check-apply/:userID/:applyID", (req, res) => {
+//   const userID = req.params.userID;
+//   const applicationID = req.params.applyID;
+//   const q =
+//     "SELECT CASE " +
+//     "WHEN catcherID = ? AND applicationErrandID = ? THEN 'true' " +
+//     "ELSE 'false' " +
+//     "END AS result " +
+//     "FROM application WHERE catcherID = ?";
+//   db.query(q, [userID, applicationID, userID], (err, data) => {
+//     if (err) return res.json(err);
+//     return res.json(data[0].result);
+//   });
+// });
+
 //================================================================================================//
 
 //post commission
@@ -472,9 +607,24 @@ app.get("/notification", (req, res) => {
 app.get("/show-notif/:userID", (req, res) => {
   const userID = req.params.userID;
   const q =
-    "SELECT * FROM notification WHERE `isRead` = 'no' AND `userID` = (?) ORDER BY notifDate DESC";
+    "SELECT * FROM notification WHERE `isRead` = 'no' AND `notifUserID` = (?) ORDER BY notifDate DESC";
 
   db.query(q, [userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+// ADS 24/02/24
+//retrieve number of unread notif of user
+app.get("/notif-count/:userID", (req, res) => {
+  const notifUserID = req.params.userID;
+  const q =
+    "select count(*) as 'c' from notification where notifUserID = (?) AND isRead = 'No' ORDER BY notifDate ASC";
+
+  db.query(q, [notifUserID], (err, data) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: "An error occurred" });
@@ -507,7 +657,7 @@ app.put("/notif-read/:notificationID/:userID/", (req, res) => {
   const q =
     "UPDATE notification SET isRead = 'yes' WHERE notificationID = (?) AND userID = (?)";
 
-  db.query(q, (err, data) => {
+  db.query(q, [notificationID, userID], (err, data) => {
     if (err) {
       console.log(err);
       return res.status(500).json(err);
@@ -517,6 +667,122 @@ app.put("/notif-read/:notificationID/:userID/", (req, res) => {
 });
 
 //=========================END MODULE==============================//
+//===========================RATING================================//
+//ADS - 22/02/24
+
+//Retrieve all saved Feedback
+//ALTER FOR ADMIN USE
+// NEED TESTING
+app.get("/user-feedbacks/", (req, res) => {
+  const q = "SELECT * FROM feedbackcommission ORDER BY feedbackDate DESC";
+
+  db.query(q, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+
+//Retrieve feedback data of Catcher
+app.get("/user-feedbacks/:userID", (req, res) => {
+  const userID = req.params.userID;
+  const q =
+    "SELECT * FROM feedbackcommission WHERE `feedbackCatcherID` = (?) ORDER BY feedbackDate DESC";
+
+  db.query(q, [userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+
+//Display the average rating of feedbackCount of the Catcher
+app.get("/user-rating/:userID", (req, res) => {
+  const userID = req.params.userID;
+  const q =
+    "select avg(feedbackRate) as 'c' from feedbackcommission where feedbackCatcherID = (?)";
+
+  db.query(q, [userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+
+//Save feedback of the Epmloyer
+//VARIABLES SUBJECT TO CHANGE BASED ON ERD AND DB
+app.post("/rate", (req, res) => {
+  const q =
+    "INSERT INTO feedbackcommission (`feedbackCatcherID`, `feedbackCommissionID`, `feedbackComment`, `feedbackCount`, `feedbackDate`, `feedbackPosterID`) VALUES (?)";
+  const values = [
+    req.body.catcherID,
+    req.body.commissionID,
+    req.body.feedbackComment,
+    req.body.feedbackCount,
+    req.body.feedbackDate,
+    req.body.employerID,
+  ];
+  db.query(q, [values], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("Feedback added");
+  });
+});
+
+//=========================END MODULE==============================//
+//=========================VERIFICATION============================//
+//APS - 25/02/24
+//to save verification requset of user
+app.post("/verify-request", (req, res) => {
+  const q =
+    "INSERT INTO verification_request (`requestUserID`, `id_pic_front`, `id_pic_back`, `docu_1`, `docu_2`) VALUES (?)";
+  const values = [
+    req.body.userID,
+    req.body.front_pic,
+    req.body.back_pic,
+    req.body.docu1,
+    req.body.docu2,
+  ];
+  db.query(q, [values], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("Feedback added");
+  });
+});
+
+//Display all verification request
+app.get("/user-rating", (req, res) => {
+  const q = "SELECT * FROM verification_request";
+
+  db.query(q, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+
+//APS - 02/03/24
+//Return the accountStatus of user based on UserID
+app.get("/user-verify/:userID", (req, res) => {
+  const userID = req.params.userID;
+  const q = "Select accountStatus FROM useraccount WHERE userID = (?)";
+
+  db.query(q, [userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+
+//=================================================================//
 
 app.listen(8800, () => {
   console.log("connected to backend!");

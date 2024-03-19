@@ -1,58 +1,64 @@
-/* Sign in design */
-.si {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    padding: 0px 20px 0px 20px;
-    height: 605px;
-    background: url('../../public/images/tawo.png') center;
-    background-size: 460px 620px;
-  }
-  
-  .cont {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    padding: 150px 0px 150px 0px;
-    width: 460px;
-    height: 605px;
-    border-radius: 10px;
-    background-color: #ffff;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  .in {
-    margin: 10px;
-  }
-  
-  .rem {
-    padding: 0;
-    margin: 5px 0; /* Adjust margin for spacing between checkbox and label */
-    display: flex;
-    flex-direction: center;
-    align-items: center; /* Align checkbox and label vertically */
-  }
-  
-  /* Additional CSS to style the label text */
-  .rem label {
-    margin-left: 5px; /* Add some spacing between checkbox and label text */
-    vertical-align: middle; /* Vertically align the label with the checkbox */
-    display: inline-block; /* Ensure proper alignment */
-  }
+body .App .si{
+  display: block;
+  max-width: 850px;
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: aliceblue;
+  margin-top: 60px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+.contman{
+  display: inline-block;
+  vertical-align:top;
+  width:50%
+}
+.cont h1{
+  font-size: 26px;
+  font-weight: 500;
+  color: #333;
+  font-weight: bold;
+  padding: 40px 30px;
+}
 
-  .si-txt{
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-  }
-
-  h1{
-    position: relative;
-    justify-content: center;
-    
-  }
+.cont h3{
+  font-size: 16px;
+  max-width: 250px;
+  width: 100%;
+  margin: 0 auto;
+}
+.cont input{
+  font-size: 13px;
+  max-width: 250px;
+  width: 100%;
+  margin: 8px auto;
+  display: block;
+  font-family: 'PT Sans', sans-serif;
+}
+.cont input[type="checkbox"]{
+  display: inline-block;
+  max-width: 43px;
+  position: relative;
+  top: 2px;
+}
+.cont p.em, .cont .button1{
+  max-width: 250px;
+  width: 100%;
+  margin: 8px auto;
+  display: block;
+  margin-top: 20px;
+}
+.cont .cont2{
+  max-width: 250px;
+  width: 100%;
+  margin: 40px auto 8px auto;
+  display: block;
+  text-align: center;
+}
+.cont-tawo{
+  height: 605px;
+}
+.cont-tawo img{
+  width: 425px;
+  height: 606px;
+  object-fit: cover;
+}
