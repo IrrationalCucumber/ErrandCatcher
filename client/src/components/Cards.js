@@ -38,7 +38,7 @@ function Cards() {
   useEffect(() => {
     const fetchAllCommission = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/commission");
+        const res = await axios.get("http://localhost:8800/recent-commission");
         //"http://localhost:8800/commission" - local computer
         //"http://192.168.1.47:8800/commission" - netwrok
         setCommissions(res.data);
@@ -65,7 +65,7 @@ function Cards() {
                 src="images/hr.png"
                 text={commission.commissionTitle}
                 label={commission.commissionType}
-                path={`/update-commission/${commission.commissionID}/${userID}`}
+                path={`/view-errand/${userID}/${commission.commissionID}`}
               />
             ))}
           </div>

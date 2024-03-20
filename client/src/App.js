@@ -34,6 +34,8 @@ import PrivateRoute from "./components/PrivateRoute";
 import Transportation from "./pages/Services/Transpo";
 import HomeServices from "./pages/Services/HomeServices";
 import Delivery from "./pages/Services/Delivery";
+//Errand Page
+import ErrandPage from "./pages/ErrandPage";
 
 function App() {
   return (
@@ -105,6 +107,16 @@ function App() {
           <Route path="/notifications/:userID" exact Component={Notification} />
           {/* <Route path="/" exact Component={Home} /> */}
           <Route path="/admin-home" element={<AdminHome />} />
+          {/* Errand Page */}
+          <Route
+            path="/view-errand/:userID/:commissionID/"
+            element={<ErrandPage />}
+          />
+          <Route
+            path="/view-commission/:userID/:commissionID/"
+            exact
+            Component={ViewCommission}
+          />
         </Routes>
         {/**<PrivateRoute path="/admin-home" element={<AdminHome />} />
         </AuthProvider>*/}

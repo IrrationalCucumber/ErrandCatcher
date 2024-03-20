@@ -1,3 +1,6 @@
+/**
+ *
+ */
 import axios from "axios";
 import React, { useRef, useEffect, useState } from "react";
 import maplibregl from "maplibre-gl";
@@ -7,8 +10,9 @@ import ErrandInputs from "../components/ErrandInputs";
 import Navbar from "../components/NavBarPage";
 import "./Commission.css"; // Import your CSS file
 
-const UpdateCommission = () => {
+const ErrandPage = () => {
   const [commission, setCommission] = useState({
+    employerID: "",
     comTitle: "",
     comDeadline: "",
     comLocation: "",
@@ -16,20 +20,59 @@ const UpdateCommission = () => {
     comDescription: "",
     comPay: "",
     comStatus: "",
-    //catcherID:"",
-    //DatePosted:"",
     DateCompleted: "",
     ContactNo: "",
     comLong: "",
     comLat: "",
   });
+
   const navigate = useNavigate();
   const location = useLocation();
   //pathname to array from
   //get the id
-  const commissionID = location.pathname.split("/")[2];
-  console.log(location.pathname.split("/")[2]);
-  const userID = location.pathname.split("/")[3];
+  const commissionID = location.pathname.split("/")[3];
+  //console.log(location.pathname.split("/")[2]);
+  const userID = location.pathname.split("/")[2];
+
+  //setState for account type
+  const [type, setType] = useState("");
+  useEffect(() => {
+    const fetchType = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/get-type/${userID}`);
+        //console.log(res.data);
+        setType(res.data);
+        console.log(type);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchType();
+  }, [type]);
+  //APS - 19/03/24
+  //CHeck if Catcher already applied
+  //setState if applies
+  const [isApplied, setIsApplied] = useState(false);
+  // const [appID, setAppID] = useState("");
+  useEffect(() => {
+    if (type == "Catcher") {
+      const fetchApp = async () => {
+        try {
+          const res = await axios.get(
+            `http://localhost:8800/get-apply/${userID}/${commissionID}`
+          );
+          console.log(res.data[0]);
+          if (!res.data[0]) {
+            setIsApplied(true);
+          }
+          console.log(isApplied);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      fetchApp();
+    }
+  }, [isApplied]);
 
   // Add a state to track the marker's longitude and latitude
   const [markerLngLat, setMarkerLngLat] = useState([123.8854, 10.3157]); // Default values
@@ -45,18 +88,6 @@ const UpdateCommission = () => {
     } else {
       // For other fields, use spread syntax as before
       setCommission((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-    }
-  };
-
-  //funtion to delete commission
-  const handleDelete = async (commissionID) => {
-    try {
-      //"http://localhost:8800/commission" - local computer
-      //"http://192.168.1.47:8800/commission" - netwrok
-      await axios.delete(`http://localhost:8800/commission/${commissionID}`);
-      window.location.reload();
-    } catch (err) {
-      console.log(err);
     }
   };
 
@@ -89,6 +120,7 @@ const UpdateCommission = () => {
 
         // Update the state with retrieved account data
         setCommission({
+          employerID: retrievedCommission.employerID,
           comTitle: retrievedCommission.commissionTitle,
           comDeadline: formattedDate,
           comLocation: retrievedCommission.commissionLocation,
@@ -130,29 +162,6 @@ const UpdateCommission = () => {
 
     map.current.addControl(new maplibregl.NavigationControl(), "top-right");
 
-    //if ("geolocation" in navigator) {
-    //   navigator.geolocation.getCurrentPosition((position) => {
-    //     const currentLng = position.coords.longitude;
-    //     const currentLat = position.coords.latitude;
-    //     const marker = new maplibregl.Marker({
-    //       color: "#00FF00",
-    //       draggable: true,
-    //     }) // Set draggable to true
-    //       .setLngLat([currentLng, currentLat])
-    //       .setPopup(new maplibregl.Popup().setHTML("<h3>Add location</h3>"))
-    //       .addTo(map.current);
-    //     setCurrentLocationMarker(marker);
-    //     // Event listener for marker dragend event
-    //     marker.on("dragend", () => {
-    //       const newLngLat = marker.getLngLat();
-    //       setCommission((prev) => ({
-    //         ...prev,
-    //         comLong: newLngLat.lng,
-    //         comLat: newLngLat.lat,
-    //       }));
-    //     });
-    //   });
-
     //display the current coordinate of the errand
     fetchLoc().then((commissions) => {
       commissions.forEach((commission) => {
@@ -160,7 +169,7 @@ const UpdateCommission = () => {
         const currentLat = commission.commissionLat;
         const marker = new maplibregl.Marker({
           color: "#FF0000",
-          draggable: true,
+          //draggable: true,
         }) // Red marker for commissions
           .setLngLat([currentLng, currentLat])
           .setPopup(
@@ -171,57 +180,87 @@ const UpdateCommission = () => {
           .addTo(map.current);
 
         setCurrentLocationMarker(marker);
-
-        // Event listener for marker dragend event
-        marker.on("dragend", () => {
-          const newLngLat = marker.getLngLat();
-          setCommission((prev) => ({
-            ...prev,
-            comLong: newLngLat.lng,
-            comLat: newLngLat.lat,
-          }));
-        });
       });
     });
   }, [API_KEY, zoom]);
-
-  // Handle dragend event of the marker to update coordinates
-  useEffect(() => {
-    if (currentLocationMarker) {
-      const updateLngLat = () => {
-        const newLngLat = currentLocationMarker.getLngLat();
-        setCommission((prev) => ({
-          ...prev,
-          comLong: newLngLat.lng,
-          comLat: newLngLat.lat,
-        }));
-      };
-
-      currentLocationMarker.on("dragend", updateLngLat);
-
-      return () => {
-        // Remove the event listener when the component unmounts
-        currentLocationMarker.off("dragend", updateLngLat);
-      };
-    }
-  }, [currentLocationMarker]);
-
-  const handleClick = async (e) => {
+  //Transfer to update page
+  const handleClick = (e) => {
     e.preventDefault();
     try {
-      //account.dateCreated = getCurrentDate();
-      await axios.put(
-        "http://localhost:8800/update-commission/" + commissionID,
-        commission
-      );
-      navigate(`/commissions/${userID}`);
+      //alert("You have updated your Errand");
+      navigate(`/update-commission/${commissionID}/${userID}`);
     } catch (err) {
       console.log(err);
     }
   };
 
-  console.log(commission);
+  //console.log(commission);
+  //APS - 19/03/2024
+  //funtion to apply as Catcher
+  //setSate object for apply
+  const [application, setApplication] = useState({
+    catcherID: "",
+    comID: "",
+    applicationDate: "",
+  });
+  //set variables for notification
+  const [notif, setNotif] = useState({
+    userID: "", //this is the employer/ userID of the commission
+    notificationType: "", //notif description
+    notifDesc: "", //contents of the notif
+    notifDate: "", //time and date notif is added
+  });
+  //get current date
+  const getCurrentDate = () => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed, so add 1
+    const day = String(currentDate.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+  //get current time and date for notif
+  const getTimeAndDate = () => {
+    const currentDate = new Date();
+    // Get the date components
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(currentDate.getDate()).padStart(2, "0");
+    // Get the time components
+    const hours = String(currentDate.getHours()).padStart(2, "0");
+    const minutes = String(currentDate.getMinutes()).padStart(2, "0");
+    const seconds = String(currentDate.getSeconds()).padStart(2, "0");
 
+    // Create a string representing the current date and time
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  };
+  //click event for apply
+  const handleApply = async (e) => {
+    e.preventDefault();
+    try {
+      //console.log(userID); // Check if userID is correct
+
+      //assign values to the variables in application
+      application.applicationDate = getCurrentDate();
+      application.comID = commissionID;
+      application.catcherID = userID;
+
+      console.log(application); // Check the updated commission object
+      await axios.post("http://localhost:8800/apply", application);
+
+      //add a notification to the commission's employer
+      notif.notifDesc = "A Catcher has applied to on of your errand";
+      notif.userID = commission.employerID;
+      notif.notificationType = "Errand Application";
+      notif.notifDate = getTimeAndDate();
+
+      await axios.post("http://localhost:8800/notify", notif);
+      alert("You have applied to this Errand!");
+      //navigate(`/application/${userID}`);
+      console.log(notif); // check variables state
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div>
       <Navbar />
@@ -229,100 +268,47 @@ const UpdateCommission = () => {
         <ErrandInputs
           handleChange={handleChange}
           title="comTitle"
+          disable="true"
           titleValue={commission.comTitle}
-          deadline="comDeadline"
+          //   deadline="comDeadline"
           dlValue={commission.comDeadline}
-          location="comLocation"
+          //   location="comLocation"
           locValue={commission.comLocation}
-          type="comType"
+          //   type="comType"
           typeValue={commission.comType}
-          desc="comDescription"
+          //   desc="comDescription"
           descValue={commission.comDescription}
-          pay="comPay"
+          //   pay="comPay"
           payValue={commission.comPay}
-          number="Contactno"
+          //   number="Contactno"
           numValue={commission.ContactNo}
           mapContainer={mapContainer}
           long={commission.comLong}
           lat={commission.comLat}
         />
         <br />
-        <button className="formButton" onClick={handleClick}>
+        {type === "Employer" && (
+          <button className="formButton" onClick={handleClick}>
+            UPDATE
+          </button>
+        )}
+        {type === "Catcher" && (
+          <button
+            className="formButton"
+            onClick={handleApply}
+            style={{
+              backgroundColor: isApplied ? "none" : "",
+            }}
+          >
+            APPLY
+          </button>
+        )}
+        {/* <button className="formButton" onClick={handleClick}>
           UPDATE
-        </button>
+        </button> */}
       </div>
     </div>
   );
 };
 
-export default UpdateCommission;
-/**
- * <label>
-        Commission Title
-        <input
-          type="text"
-          placeholder="Commission Title"
-          onChange={handleChange}
-          name="comTitle"
-          value={commission.comTitle}
-        />
-      </label>
-      <label>
-        Deadline
-        <input
-          type="date"
-          placeholder="Deadline"
-          onChange={handleChange}
-          name="comDeadline"
-          value={commission.comDeadline}
-        />
-      </label>
-      Location
-      <input
-        type="text"
-        placeholder="Location"
-        onChange={handleChange}
-        name="comLocation"
-        value={commission.comLocation}
-      />
-      <label htmlFor="">
-        Commission Type
-        <select
-          name="comType"
-          onChange={handleChange}
-          value={commission.comType}
-        >
-          <option value="">Choose type....</option>
-          <option value="HomeService - Indoor">Home Service - Indoor</option>
-          <option value="HomeService - Outdoor">Home Service - Outdoor</option>
-          <option value="Delivery">Delivery Service</option>
-          <option value="Transport">Transport Service</option>
-        </select>
-      </label>
-      <textarea
-        cols="20"
-        rows="11"
-        type="text"
-        placeholder="Description"
-        onChange={handleChange}
-        name="comDescription"
-        value={commission.comDescription}
-      />
-      <label>
-        Amount: ₱
-        <input
-          type="number"
-          placeholder="0.00"
-          onChange={handleChange}
-          name="comPay"
-          value={commission.comPay}
-        />
-      </label>
-      <input
-        type="text"
-        value={commission.ContactNo}
-        onChange={handleChange}
-        placeholder="Contact Number"
-        name="ContactNo"
-      />{" "}
-      */
+export default ErrandPage;

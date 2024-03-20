@@ -18,6 +18,7 @@ function ErrandInputs(props) {
                 onChange={props.handleChange}
                 name={props.title}
                 value={props.titleValue}
+                readOnly={props.disable}
               />
             </div>
           </div>
@@ -33,6 +34,7 @@ function ErrandInputs(props) {
                 onChange={props.handleChange}
                 name={props.deadline}
                 value={props.dlValue}
+                readOnly={props.disable}
               />
             </div>
           </div>
@@ -48,6 +50,7 @@ function ErrandInputs(props) {
                 onChange={props.handleChange}
                 name={props.location}
                 value={props.locValue}
+                readOnly={props.disable}
               />
             </div>
           </div>
@@ -61,6 +64,7 @@ function ErrandInputs(props) {
                 name={props.type}
                 onChange={props.handleChange}
                 value={props.typeValue}
+                readOnly={props.disable}
               >
                 <option value="">Choose type....</option>
                 <option value="HomeService - Indoor">
@@ -86,6 +90,10 @@ function ErrandInputs(props) {
                 onChange={props.handleChange}
                 name={props.pay}
                 value={props.payValue}
+                readOnly={props.disable}
+                style={{
+                  content: ".00",
+                }}
               />
             </div>
           </div>
@@ -101,6 +109,7 @@ function ErrandInputs(props) {
                 onChange={props.handleChange}
                 name={props.number}
                 value={props.numValue}
+                readOnly={props.disable}
               />
             </div>
           </div>
@@ -117,6 +126,7 @@ function ErrandInputs(props) {
                 onChange={props.handleChange}
                 name={props.desc}
                 value={props.descValue}
+                readOnly={props.disable}
               />
             </div>
           </div>
