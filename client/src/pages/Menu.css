@@ -17,7 +17,7 @@
 .search-bar button {
     padding: 7px 15px;
     font-size: 16px;
-    background-color:darkgray;
+    background-color:#ce9251;
     color: #fff;
     box-shadow: 0 0 0 .2rem rgba(0, 0, 0, .1);
     border: none;
@@ -30,9 +30,9 @@
     background-color:#ccc
 }
 
-.Menu{
+/* .Menu{
     margin:50px;
- }
+ } */
  .Menu .box-container{
     grid-template-columns: repeat(3, 1fr);  
     display:grid;
