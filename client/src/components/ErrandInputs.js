@@ -138,6 +138,77 @@ function ErrandInputs(props) {
                 />
               </div>
             </div>
+            <div className="col2">
+              <select
+                name={props.type}
+                onChange={props.handleChange}
+                value={props.typeValue}
+                disabled={props.disable}
+              >
+                <option value="">Choose type....</option>
+                <option value="HomeService - Indoor">
+                  Home Service - Indoor
+                </option>
+                <option value="HomeService - Outdoor">
+                  Home Service - Outdoor
+                </option>
+                <option value="Delivery">Delivery Service</option>
+                <option value="Transport">Transport Service</option>
+              </select>
+            </div>
+          </div>
+          {/* Amount */}
+          <div className="input-group">
+            <div className="col1">
+              <label>Amount: ₱</label>
+            </div>
+            <div className="col2">
+              <input
+                type="number"
+                placeholder="0.00"
+                onChange={props.handleChange}
+                name={props.pay}
+                value={props.payValue}
+                disabled={props.disable}
+                style={{
+                  content: ".00",
+                }}
+              />
+            </div>
+          </div>
+          {/* contact number */}
+          <div className="input-group">
+            <div className="col1">
+              <label>Contact Number</label>
+            </div>
+            <div className="col2">
+              <input
+                type="tel"
+                placeholder="Phone/Telephone number"
+                onChange={props.handleChange}
+                name={props.number}
+                value={props.numValue}
+                disabled={props.disable}
+              />
+            </div>
+          </div>
+          <div className="input-group">
+            <div className="col1">
+              <label>Description</label>
+            </div>
+            <div className="col2">
+              <textarea
+                cols="26"
+                rows="11"
+                type="text"
+                placeholder="Description"
+                onChange={props.handleChange}
+                name={props.desc}
+                value={props.descValue}
+                disabled={props.disable}
+              />
+            </div>
+          </div>
         </div>
         <div className="map--wrap">
           <div ref={props.mapContainer} className="map-small" />
