@@ -1,12 +1,13 @@
 import React from "react";
-//import "./ErrandInput.css";
+// import "./ErrandInput.css";
 
 function ErrandInputs(props) {
   return (
     <>
       <div className="input-cont">
         <div className="errand-inputs">
-          <div className="rowan">
+          {/* commission title */}
+          <div className="input-group">
             <div className="col1">
               <label>Commission Title</label>
             </div>
@@ -17,8 +18,12 @@ function ErrandInputs(props) {
                 onChange={props.handleChange}
                 name={props.title}
                 value={props.titleValue}
+                disabled={props.disable}
               />
             </div>
+          </div>
+          {/* deadline */}
+          <div className="input-group">
             <div className="col1">
               <label>DeadLine</label>
             </div>
@@ -29,8 +34,12 @@ function ErrandInputs(props) {
                 onChange={props.handleChange}
                 name={props.deadline}
                 value={props.dlValue}
+                disabled={props.disable}
               />
             </div>
+          </div>
+          {/* location */}
+          <div className="input-group">
             <div className="col1">
               <label>Location</label>
             </div>
@@ -41,8 +50,12 @@ function ErrandInputs(props) {
                 onChange={props.handleChange}
                 name={props.location}
                 value={props.locValue}
+                disabled={props.disable}
               />
             </div>
+          </div>
+          {/* commission type */}
+          <div className="input-group">
             <div className="col1">
               <label htmlFor="">Commission Type</label>
             </div>
@@ -51,6 +64,7 @@ function ErrandInputs(props) {
                 name={props.type}
                 onChange={props.handleChange}
                 value={props.typeValue}
+                disabled={props.disable}
               >
                 <option value="">Choose type....</option>
                 <option value="HomeService - Indoor">
@@ -63,6 +77,9 @@ function ErrandInputs(props) {
                 <option value="Transport">Transport Service</option>
               </select>
             </div>
+          </div>
+          {/* Amount */}
+          <div className="input-group">
             <div className="col1">
               <label>Amount: ₱</label>
             </div>
@@ -73,8 +90,15 @@ function ErrandInputs(props) {
                 onChange={props.handleChange}
                 name={props.pay}
                 value={props.payValue}
+                disabled={props.disable}
+                style={{
+                  content: ".00",
+                }}
               />
             </div>
+          </div>
+          {/* contact number */}
+          <div className="input-group">
             <div className="col1">
               <label>Contact Number</label>
             </div>
@@ -85,8 +109,11 @@ function ErrandInputs(props) {
                 onChange={props.handleChange}
                 name={props.number}
                 value={props.numValue}
+                disabled={props.disable}
               />
             </div>
+          </div>
+          <div className="input-group">
             <div className="col1">
               <label>Description</label>
             </div>
@@ -99,6 +126,7 @@ function ErrandInputs(props) {
                 onChange={props.handleChange}
                 name={props.desc}
                 value={props.descValue}
+                disabled={props.disable}
               />
             </div>
           </div>
