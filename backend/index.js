@@ -148,6 +148,28 @@ app.get("/search-commission", (req, res) => {
   });
 });
 
+// filter status and types Commission List // 
+app.get("/type-commilist", (req, res) => {
+  // Get the search term from the query parameter
+   const type = req.query.type || '';
+   const status = req.query.status || '';
+   // commissionStatus AND commissionType 
+   const q =
+     "SELECT * FROM commission WHERE commissionStatus = ? OR commissionType = ?";
+   const values = [
+     status,
+     type,
+   ];  
+ 
+   db.query(q, values, (err, data) => {
+     if (err) {
+       console.error(err);
+       return res.status(500).json({ error: "An error occurred" });
+     }
+     return res.json(data);
+   });
+ });
+
 //employer search
 app.get("/search-employer-commission/:userID", (req, res) => {
   const userID = req.params.userID; // Get the userID from the route parameter
