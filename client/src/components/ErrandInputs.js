@@ -1,3 +1,5 @@
+//03-21-24 start date is already included needed db
+
 import React from "react";
 // import "./ErrandInput.css";
 
@@ -9,7 +11,7 @@ function ErrandInputs(props) {
             {/* commission title */}
             <div className="input-group">
               <div className="col1">
-                <label>Commission Title</label>
+                <label style={{color:"black"}}>Commission Title</label>
               </div>
               <div className="col2">
                 <input
@@ -21,10 +23,26 @@ function ErrandInputs(props) {
                 />
               </div>
             </div>
+            {/*start date*/}
+            <div className="input-group">
+              <div className="col1">
+                <label style={{color:"black"}}>Start Date</label>
+              </div>
+              <div className="col2">
+                <input
+                  type="date"
+                  placeholder="Start Date"
+                  onChange={props.handleChange}
+                  // name={props.deadline}
+                  // value={props.dlValue}
+                />
+              </div>
+            </div>
+
             {/* deadline */}
             <div className="input-group">
               <div className="col1">
-                <label>DeadLine</label>
+                <label style={{color:"black"}}>Deadline</label>
               </div>
               <div className="col2">
                 <input
@@ -39,7 +57,7 @@ function ErrandInputs(props) {
             {/* location */}
             <div className="input-group">
               <div className="col1">
-                <label>Location</label>
+                <label style={{color:"black"}}>Location</label>
               </div>
               <div className="col2">
                 <input
@@ -54,7 +72,7 @@ function ErrandInputs(props) {
             {/* commission type */}
             <div className="input-group">
               <div className="col1">
-                <label htmlFor="">Commission Type</label>
+                <label htmlFor="" style={{color:"black"}}>Commission Type</label>
               </div>
               <div className="col2">
                 <select
@@ -77,7 +95,7 @@ function ErrandInputs(props) {
             {/* Amount */}
             <div className="input-group">
               <div className="col1">
-                <label>Amount: ₱</label>
+                <label style={{color:"black"}}>Amount: ₱</label>
               </div>
               <div className="col2">
                 <input
@@ -92,7 +110,7 @@ function ErrandInputs(props) {
             {/* contact number */}
             <div className="input-group">
               <div className="col1">
-                <label>Contact Number</label>
+                <label style={{color:"black"}}>Contact Number</label>
               </div>
               <div className="col2">
                 <input
@@ -106,7 +124,7 @@ function ErrandInputs(props) {
             </div>
             <div className="input-group">
               <div className="col1">
-                <label>Description</label>
+                <label style={{color:"black"}}>Description</label>
               </div>
               <div className="col2">
                 <textarea
