@@ -13,8 +13,6 @@ import Pagination from "../components/Pagination";
 import "./application.css";
 
 function Application() {
-
-
   const location = useLocation();
   const userID = location.pathname.split("/")[2];
   const [apply, setApply] = useState([]);
@@ -28,9 +26,7 @@ function Application() {
     const fetchAllAccount = async () => {
       try {
         const res = await axios.get(
-
-          `http://localhost:8800/your-application/${userID}`, res.data
-
+          `http://localhost:8800/your-application/${userID}`
         );
         //http://localhost:8800/user - local
         //http://192.168.1.47:8800/user - network
@@ -59,19 +55,19 @@ function Application() {
         className="cancel action-btn"
         onClick={() => handleCancel(applicant.id)}
       >
-        Cancel 
+        Cancel
       </button>
     ) : applicant.status === "Cancel" ? (
-      <button className="cancel action-btn" disabled>Cancelled</button>
-    ) : null // handle other statuses or add a default action
+      <button className="cancel action-btn" disabled>
+        Cancelled
+      </button>
+    ) : null, // handle other statuses or add a default action
   ]);
-  
 
   const handleCancel = (applicationId) => {
     console.log("Cancel application with id:", applicationId);
     // Add logic to handle accepting the application
   };
-
 
   return (
     <div>
@@ -106,10 +102,7 @@ function Application() {
             <option value="Suspended">Suspended</option>
           </select>*/}
           </div>
-          <Table
-            headers={headers}
-            data={applicationData}
-          />
+          <Table headers={headers} data={applicationData} />
         </div>
       </div>
       {/* Pagination controls */}
