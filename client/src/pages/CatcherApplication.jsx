@@ -13,8 +13,7 @@ import Pagination from "../components/Pagination";
 import "./application.css";
 
 function Application() {
-  const headers = ["DATE", "EMPLOYER", "ERRAND TITLE", "ACTION"];
-  const application = [];
+
 
   const location = useLocation();
   const userID = location.pathname.split("/")[2];
@@ -29,7 +28,9 @@ function Application() {
     const fetchAllAccount = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/your-application/${userID}`
+
+          `http://localhost:8800/your-application/${userID}`, res.data
+
         );
         //http://localhost:8800/user - local
         //http://192.168.1.47:8800/user - network
@@ -46,7 +47,32 @@ function Application() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = application.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = apply.slice(indexOfFirstItem, indexOfLastItem);
+
+  const headers = ["DATE", "EMPLOYER", "ERRAND TITLE", "ACTION"];
+  const applicationData = currentItems.map((applicant) => [
+    new Date(applicant.applicationDate).toLocaleDateString(),
+    `${applicant.userFirstname} ${applicant.userLastname}`,
+    applicant.commissionTitle,
+    applicant.status === "Pending" ? (
+      <button
+        className="cancel action-btn"
+        onClick={() => handleCancel(applicant.id)}
+      >
+        Cancel 
+      </button>
+    ) : applicant.status === "Cancel" ? (
+      <button className="cancel action-btn" disabled>Cancelled</button>
+    ) : null // handle other statuses or add a default action
+  ]);
+  
+
+  const handleCancel = (applicationId) => {
+    console.log("Cancel application with id:", applicationId);
+    // Add logic to handle accepting the application
+  };
+
+
   return (
     <div>
       <Navbar
@@ -82,28 +108,15 @@ function Application() {
           </div>
           <Table
             headers={headers}
-            data={currentItems.map((application, rowIndex) => {
-              const actions = application.map((action, cellIndex) => {
-                if (cellIndex === 3) {
-                  return (
-                    <button key={cellIndex} className="cancel action-btn">
-                      {action === "Cancel" && "Cancel"}
-                    </button>
-                  );
-                }
-                return <td key={cellIndex}>{action}</td>;
-              });
-
-              return <tr key={rowIndex}>{actions}</tr>;
-            })}
+            data={applicationData}
           />
         </div>
       </div>
       {/* Pagination controls */}
-      {application.length > 0 && (
+      {apply.length > 0 && (
         <Pagination
           itemsPerPage={itemsPerPage}
-          totalItems={application.length}
+          totalItems={apply.length}
           paginate={paginate}
         />
       )}
