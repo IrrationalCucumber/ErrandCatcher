@@ -62,7 +62,8 @@ label{
 }
 
 .btn-yellow{
-    background-color: rgb(251, 216, 75);
+    background-color: #ECA763;
+    color: #fff;
 }
 .btn{
     margin-top: 20px;
