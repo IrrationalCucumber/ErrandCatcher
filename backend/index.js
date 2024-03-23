@@ -148,27 +148,24 @@ app.get("/search-commission", (req, res) => {
   });
 });
 
-// filter status and types Commission List // 
+// filter status and types Commission List //
 app.get("/type-commilist", (req, res) => {
   // Get the search term from the query parameter
-   const type = req.query.type || '';
-   const status = req.query.status || '';
-   // commissionStatus AND commissionType 
-   const q =
-     "SELECT * FROM commission WHERE commissionStatus = ? OR commissionType = ?";
-   const values = [
-     status,
-     type,
-   ];  
- 
-   db.query(q, values, (err, data) => {
-     if (err) {
-       console.error(err);
-       return res.status(500).json({ error: "An error occurred" });
-     }
-     return res.json(data);
-   });
- });
+  const type = req.query.type || "";
+  const status = req.query.status || "";
+  // commissionStatus AND commissionType
+  const q =
+    "SELECT * FROM commission WHERE commissionStatus = ? OR commissionType = ?";
+  const values = [status, type];
+
+  db.query(q, values, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
 
 //employer search
 app.get("/search-employer-commission/:userID", (req, res) => {
@@ -315,7 +312,7 @@ app.get("/your-application/:userID", (req, res) => {
     " FROM Application a " +
     " JOIN commission c ON a.applicationErrandID = c.commissionID" +
     " JOIN useraccount ua ON c.employerID = ua.userID" +
-    " WHERE a.catcherID IN (SELECT userID FROM useraccount WHERE userID = 29)";
+    " WHERE a.catcherID IN (SELECT userID FROM useraccount WHERE userID = ?)";
   db.query(q, [userID], (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
@@ -354,6 +351,20 @@ app.put("/deny-apply/:comID/:applyID", (req, res) => {
       return res.status(500).json(err);
     }
     return res.json("Application Denied");
+  });
+});
+app.put("/accept-apply/:comID/:applyID", (req, res) => {
+  const comId = req.params.comID;
+  const applicationID = req.params.applyID;
+  const q =
+    "UPDATE application SET `applicationStatus` = 'Approved' WHERE applicationErrandID = ? AND applicationID = ?";
+
+  db.query(q, [comId, applicationID], (err) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+    return res.json("Application Approved");
   });
 });
 //APS - 03/03/24
