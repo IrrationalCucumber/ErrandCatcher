@@ -79,13 +79,20 @@ const EmployerApplicants = () => {
       <>
         <button
           className="accept action-btn"
-          onClick={() => handleAccept(applicant.applicationID)}
+          onClick={() =>
+            handleAccept(applicant.applicationID, applicant.applicationErrandID)
+          }
         >
           Accept
         </button>
         <button
           className="decline action-btn"
-          onClick={() => handleDecline(applicant.applicationID)}
+          onClick={() =>
+            handleDecline(
+              applicant.applicationID,
+              applicant.applicationErrandID
+            )
+          }
         >
           Decline
         </button>
@@ -120,12 +127,16 @@ const EmployerApplicants = () => {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   };
 
-  const handleAccept = async (applicationID) => {
-    console.log("Accepted application with id:", applicationID);
+  const handleAccept = async (applicationID, applicationErrandID) => {
+    console.log(
+      "Accepted application with id:",
+      applicationID,
+      applicationErrandID
+    );
     // Add logic to handle accepting the application
     try {
       await axios.put(
-        `http://localhost:8800/accept-apply/${userID}/${applicationID}`
+        `http://localhost:8800/accept-apply/${applicationErrandID}/${applicationID}`
       );
       //add a notification to the commission's applicant
       notif.notifDesc = "Your Errand application has been Accepted";
@@ -142,12 +153,12 @@ const EmployerApplicants = () => {
     }
   };
 
-  const handleDecline = async (applicationID) => {
+  const handleDecline = async (applicationID, applicationErrandID) => {
     console.log("Declined application with id:", applicationID);
     // Add logic to handle declining the application
     try {
       await axios.put(
-        `http://localhost:8800/deny-apply/${userID}/${applicationID}`
+        `http://localhost:8800/deny-apply/${applicationErrandID}/${applicationID}`
       );
       //add a notification to the commission's applicant
       notif.notifDesc = "Your Errand application has been Denied";
@@ -162,7 +173,7 @@ const EmployerApplicants = () => {
       console.log(err);
     }
   };
-
+  console.log(applicants);
   return (
     <div>
       <NavBar
