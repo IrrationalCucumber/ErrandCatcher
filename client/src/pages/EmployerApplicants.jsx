@@ -123,28 +123,44 @@ const EmployerApplicants = () => {
   const handleAccept = async (applicationID) => {
     console.log("Accepted application with id:", applicationID);
     // Add logic to handle accepting the application
+    try {
+      await axios.put(
+        `http://localhost:8800/accept-apply/${userID}/${applicationID}`
+      );
+      //add a notification to the commission's applicant
+      notif.notifDesc = "Your Errand application has been Accepted";
+      notif.userID = applicants.catcherID;
+      notif.notificationType = "Application";
+      notif.notifDate = getTimeAndDate();
 
-    //add a notification to the commission's applicant
-    notif.notifDesc = "Your Errand application has been Accepted";
-    notif.userID = applicants.catcherID;
-    notif.notificationType = "Application";
-    notif.notifDate = getTimeAndDate();
-
-    await axios.post("http://localhost:8800/notify", notif);
-    //  alert("You have Posted an Errand!");
+      await axios.post("http://localhost:8800/notify", notif);
+      //  alert("You have Posted an Errand!");
+      window.location.reload();
+      //navigate(`/my-application/${userID}`);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleDecline = async (applicationID) => {
     console.log("Declined application with id:", applicationID);
     // Add logic to handle declining the application
-
-    //add a notification to the commission's applicant
-    notif.notifDesc = "Your Errand application has been Denied";
-    notif.userID = applicants.catcherID;
-    notif.notificationType = "Application";
-    notif.notifDate = getTimeAndDate();
-    await axios.post("http://localhost:8800/notify", notif);
-    //  alert("You have Posted an Errand!");
+    try {
+      await axios.put(
+        `http://localhost:8800/deny-apply/${userID}/${applicationID}`
+      );
+      //add a notification to the commission's applicant
+      notif.notifDesc = "Your Errand application has been Denied";
+      notif.userID = applicants.catcherID;
+      notif.notificationType = "Application";
+      notif.notifDate = getTimeAndDate();
+      await axios.post("http://localhost:8800/notify", notif);
+      //  alert("You have Posted an Errand!");
+      window.location.reload();
+      //navigate(`/my-application/${userID}`);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
