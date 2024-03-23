@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom'
 import './sticky.css';
 
 function StickyButton(props) {
@@ -20,23 +21,20 @@ function StickyButton(props) {
     };
   }, [props.scrollThreshold]);
 
-  const handleClick = () => {
-    // Add your button click functionality here
-    console.log('Button clicked!');
-  };
 
   return (
-    <button
-      className={`sticky-button ${scrolled ? 'scrolled' : ''}`}
-      style={{
-        backgroundColor: props.buttonColor,
-        color: props.buttonTextColor,
-        borderRadius: props.buttonRadius
-      }}
-      onClick={handleClick}
-    >
-      {props.buttonText}
-    </button>
+    <Link to={props.destination}> {/* Use Link component */}
+      <button
+        className={`sticky-button ${scrolled ? 'scrolled' : ''}`}
+        style={{
+          backgroundColor: props.buttonColor,
+          color: props.buttonTextColor,
+          borderRadius: props.buttonRadius
+        }}
+      >
+        {props.buttonText}
+      </button>
+    </Link>
   );
 }
 

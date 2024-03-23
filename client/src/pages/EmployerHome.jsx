@@ -28,7 +28,7 @@ const userID = location.pathname.split("/")[2]
        
         <Menu/>
         {/*destination is post commission */}
-        <StickyButton buttonText="Post Errand" destination=""/>
+        <StickyButton buttonText="Post Errand" destination="/"/>
     </div>
   )
 }
