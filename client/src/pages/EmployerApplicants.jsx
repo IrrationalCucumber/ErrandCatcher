@@ -80,7 +80,11 @@ const EmployerApplicants = () => {
         <button
           className="accept action-btn"
           onClick={() =>
-            handleAccept(applicant.applicationID, applicant.applicationErrandID)
+            handleAccept(
+              applicant.applicationID,
+              applicant.applicationErrandID,
+              applicant.catcherID
+            )
           }
         >
           Accept
@@ -90,7 +94,8 @@ const EmployerApplicants = () => {
           onClick={() =>
             handleDecline(
               applicant.applicationID,
-              applicant.applicationErrandID
+              applicant.applicationErrandID,
+              applicant.catcherID
             )
           }
         >
@@ -126,8 +131,20 @@ const EmployerApplicants = () => {
     // Create a string representing the current date and time
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   };
-
-  const handleAccept = async (applicationID, applicationErrandID) => {
+  //ADD TRANSACTION RECORD - 24/03/24
+  //set variable fro trans
+  const [trans, setTrans] = useState({
+    comID: "",
+    catcherID: "",
+    dateAccepted: "",
+    //dateCompleted: "",
+    //reciept: "",
+  });
+  const handleAccept = async (
+    applicationID,
+    applicationErrandID,
+    catcherID
+  ) => {
     console.log(
       "Accepted application with id:",
       applicationID,
@@ -138,14 +155,20 @@ const EmployerApplicants = () => {
       await axios.put(
         `http://localhost:8800/accept-apply/${applicationErrandID}/${applicationID}`
       );
+      //transaction
+      trans.comID = applicationErrandID;
+      trans.catcherID = catcherID;
+      trans.dateAccepted = getTimeAndDate();
+      console.log(catcherID);
+      await axios.post("http://localhost:8800/add-trans/", trans);
       //add a notification to the commission's applicant
       notif.notifDesc = "Your Errand application has been Accepted";
       notif.userID = applicants.catcherID;
       notif.notificationType = "Application";
       notif.notifDate = getTimeAndDate();
-
       await axios.post("http://localhost:8800/notify", notif);
-      //  alert("You have Posted an Errand!");
+      //replace modular
+      alert("You have accepted a Cather!");
       window.location.reload();
       //navigate(`/my-application/${userID}`);
     } catch (err) {
@@ -153,7 +176,11 @@ const EmployerApplicants = () => {
     }
   };
 
-  const handleDecline = async (applicationID, applicationErrandID) => {
+  const handleDecline = async (
+    applicationID,
+    applicationErrandID,
+    catcherID
+  ) => {
     console.log("Declined application with id:", applicationID);
     // Add logic to handle declining the application
     try {
@@ -162,7 +189,7 @@ const EmployerApplicants = () => {
       );
       //add a notification to the commission's applicant
       notif.notifDesc = "Your Errand application has been Denied";
-      notif.userID = applicants.catcherID;
+      notif.userID = catcherID;
       notif.notificationType = "Application";
       notif.notifDate = getTimeAndDate();
       await axios.post("http://localhost:8800/notify", notif);
