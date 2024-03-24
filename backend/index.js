@@ -839,6 +839,26 @@ app.get("/user-verify/:userID", (req, res) => {
 });
 
 //=================================================================//
+/**
+ * TRANSACTION
+ * APS - 24/03/24
+ */
+//Add transaction
+app.post("/add-trans", (req, res) => {
+  const q =
+    "INSERT INTO errandtransaction (`transErrandID`, `transCatcherID`, `transDateAccepted`, `transDateCompleted`, `transReciept`) VALUES (?)";
+  const values = [
+    req.body.comID,
+    req.body.catcherID,
+    req.body.dateAccepted,
+    req.body.dateCompleted,
+    req.body.reciept,
+  ];
+  db.query(q, [values], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("Transaction added");
+  });
+});
 
 app.listen(8800, () => {
   console.log("connected to backend!");
