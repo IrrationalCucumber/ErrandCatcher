@@ -1,3 +1,5 @@
+//03-21-24 logic for the image is in here but needed testing
+
 import React, { useRef, useEffect, useState } from "react";
 import maplibregl from "maplibre-gl";
 //import 'maplibre-gl/dist/maplibre-gl.css';
@@ -6,6 +8,11 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import Navbar from "../components/NavBarPage";
 import "./Commission.css"; // Import your CSS file
 import ErrandInputs from "../components/ErrandInputs";
+//image --ash
+import deliveryImage from "./PostServices/img1.png";
+import homeImage from "./PostServices/img3.png";
+import transpoImage from "./PostServices/img2.png"
+
 
 const PostCommission = () => {
   const [commission, setCommission] = useState({
@@ -132,6 +139,25 @@ const PostCommission = () => {
     }
   }, [currentLocationMarker]);
 
+  // --ash
+  const getErrandImage = (type) => {
+    switch (type) {
+      case "delivery":
+        return deliveryImage;
+      case "home":
+        return homeImage;
+      case "transpo":
+        return transpoImage;
+
+      default:
+        return null;
+    }
+  };
+  
+
+ 
+
+
   return (
     <>
           <Navbar />
@@ -150,6 +176,27 @@ const PostCommission = () => {
           long={commission.comLong}
           lat={commission.comLat}
         />
+        
+          {commission.comType && (
+          <div className="errand-image" style={{display:"hidden"}}>
+            <img
+              src={getErrandImage(commission.comType)}
+              alt={`${commission.comType} Errand`}
+            />
+          </div>
+        )}
+        {/* --ash */}
+          {commission.comType === "delivery" && (
+            <img src={deliveryImage} alt="Delivery" />
+          )}
+          {commission.comType === "home" && (
+            <img src={homeImage} alt="Home" />
+          )}
+          {commission.comType === "transpo" && (
+            <img src={transpoImage} alt="Transpo" />
+          )}
+          
+
           <div className="btn-container">
             <button onClick={handleClick} className="btn btn-yellow">POST</button>
           </div>

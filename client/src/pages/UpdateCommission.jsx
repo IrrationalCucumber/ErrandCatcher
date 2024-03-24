@@ -107,7 +107,6 @@ const UpdateCommission = () => {
 
   // Add a state to track the marker's longitude and latitude
   const [markerLngLat, setMarkerLngLat] = useState([123.8854, 10.3157]); // Default values
-
   const [currentLocationMarker, setCurrentLocationMarker] = useState(null);
 
   //handle changes
@@ -324,11 +323,10 @@ const UpdateCommission = () => {
         <br />
         <button
           className="formButton"
-          onClick={() => handleDelete(commission.commissionID)}
-        >
+          onClick={() => handleDelete(commission.commissionID)}>
           DELETE
         </button>
-        <button className="formButton" onClick={handleClick}> 
+        <button className="formButton" onClick={handleClick}>
           UPDATE
         </button>
         <button className="formButton" onClick= {handleOpenModal}> 
