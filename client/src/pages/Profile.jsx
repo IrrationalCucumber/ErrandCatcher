@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, } from "react";
 import NavbarPage from "../components/NavBarPage";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faCertificate } from "@fortawesome/free-solid-svg-icons";
 import "./profile.css";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
-
+import { Link } from "react-router-dom";
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("about");
   const [verified, setVerified] = useState(false);
-  //check if user type
-  const [isCatcher, setIsCatcher] = useState(false);
   //APS - 03/03/24
   //get userID from url
   const location = useLocation();
@@ -28,8 +26,7 @@ const Profile = () => {
     bday: "",
     address: "",
     desc: "",
-    type: "",
-    profileImage: "",
+    // profileImage:"",
   });
   //pre-fill the fields
   useEffect(() => {
@@ -41,10 +38,7 @@ const Profile = () => {
         const formattedDate = new Date(retrievedAccount.userBirthday)
           .toISOString()
           .substr(0, 10);
-        if (retrievedAccount.accountType === "Catcher") {
-          setIsCatcher(true);
-        }
-        // console.log(retrievedAccount);
+
         // Update the state with retrieved account data
         setAccount({
           username: retrievedAccount.username,
@@ -58,24 +52,12 @@ const Profile = () => {
           bday: formattedDate,
           address: retrievedAccount.userAddress,
           desc: retrievedAccount.userDesc,
-          type: retrievedAccount.accountType,
-          //profileImage: retrievedAccount.profileImage, //this
         });
-        // Set profileImage after retrieving the file from the server
-        const profileImageRes = await axios.get(
-          `http://localhost:8800/user/${userID}`
-        );
-        const profileImageBlob = new Blob([profileImageRes.data], {
-          type: "image/jpeg",
-        });
-        setAccount((prevState) => ({
-          ...prevState,
-          profileImage: profileImageBlob,
-        }));
       } catch (err) {
         console.log(err);
       }
     };
+
     fetchAccount();
   }, [userID]);
   //RV & APS 02/03/24
@@ -88,8 +70,12 @@ const Profile = () => {
         const res = await axios.get(
           `http://localhost:8800/user-verify/${userID}`
         );
+        console.log(res.data[0].accountStatus);
         setStatus(res.data[0].accountStatus);
-        setVerified(res.data[0].accountStatus.toUpperCase() === "VERIFIED");
+        if (status.toUpperCase == "VERIFIED" || status == "Verified") {
+          setVerified(true);
+          console.log(verified);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -99,13 +85,13 @@ const Profile = () => {
   //APS - 03/03/24
   //get the rating of the user
   const [rating, setRating] = useState("");
-
   useEffect(() => {
     const fetchRating = async () => {
       try {
         const res = await axios.get(
           `http://localhost:8800/user-rating/${userID}`
         );
+        //console.log(res.data[0].c);
         setRating(res.data[0].c);
       } catch (err) {
         console.log(err);
@@ -113,36 +99,6 @@ const Profile = () => {
     };
     fetchRating();
   }, [userID]);
-
-  const handleChange = (e) => {
-    // For file input, update profileImage directly
-    if (e.target.name === "profileImage") {
-      setAccount((prev) => ({ ...prev, profileImage: e.target.files[0] }));
-    } else if (e.target.name === "gender") {
-      setAccount((prev) => ({ ...prev, gender: e.target.value }));
-    } else if (e.target.name === "desc") {
-      setAccount((prev) => ({ ...prev, desc: e.target.value }));
-    } else {
-      setAccount((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-    }
-  };
-  //APS - 07/03/24
-  //save the data into db
-  const navigate = useNavigate();
-  const handleClick = async (e) => {
-    //const updatedAccount = { ...account };
-    //refresh the page when button is clicked
-    e.preventDefault();
-    try {
-      await axios.put(
-        `http://localhost:8800/update-account/${userID}`,
-        account
-      );
-      navigate(`/profile/${userID}`);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   return (
     <div>
@@ -155,41 +111,44 @@ const Profile = () => {
                 <label htmlFor="file" className="File">
                   Upload Image
                 </label>
-                <input
-                  type="file"
-                  id="file"
-                  name="profileImage"
-                  className="file"
-                  onChange={handleChange}
-                />
-                {account.profileImage && (
-                  <img
-                    src={URL.createObjectURL(account.profileImage)}
-                    width={20}
-                  />
-                )}
+                <input type="file" id="file" className="file" />
               </div>
               {/*username changed when user sign up*/}
               <div className="username-container">
-                <label className="username">{account.username}</label>
+                <label className="username">Username</label>
                 {/* Verification Icon */}
-                <i
-                  className={`fa-solid fa-circle-check ${
-                    verified ? "verified" : ""
-                  }`}
-                  style={{ marginLeft: "5px" }}
-                ></i>
+                {/* Verification Icon */}
+                <p>
+        Click 
+        <Link to="/verification">
+          <i
+            className={
+              verified
+                ? "fa-solid fa-circle-check"
+                : "fa-regular fa-circle-check"
+            }
+            style={{
+              marginLeft: "5px",
+              color: verified ? "green" : "gray",
+              cursor: "pointer" // Make the cursor change to a pointer to indicate it's clickable
+            }}
+          ></i>
+        </Link> 
+      UNVERIFIED
+      </p>
+
+                {/* <FontAwesomeIcon
+                  icon={faCertificate}
+                  style={{
+                    marginLeft: "5px",
+                    color: verified ? "green" : "gray",
+                  }}
+                /> */}
               </div>
-              {isCatcher && (
-                <div className="rating-box">
-                  <label className="Rating">Rating</label>
-                  <label className="RateNo">{rating} /5</label>
-                </div>
-              )}
-              {/* <div className="rating-box">
+              <div className="rating-box">
                 <label className="Rating">Rating</label>
                 <label className="RateNo">{rating} /5</label>
-              </div> */}
+              </div>
               <textarea
                 className="description"
                 placeholder="Description"
@@ -213,6 +172,7 @@ const Profile = () => {
                 >
                   History
                 </span>
+
               </div>
               {activeTab === "about" && (
                 <div
@@ -228,7 +188,7 @@ const Profile = () => {
                       className="display-data"
                       placeholder="Name"
                       value={account.fname + " " + account.lname}
-                    />
+                    ></textarea>
                   </div>
                   <div className="input-row">
                     <label className="PP">Age</label>
@@ -236,10 +196,8 @@ const Profile = () => {
                       type="number"
                       className="display-data1"
                       placeholder="Age"
-                      name="age"
                       value={account.age}
-                      onChange={handleChange}
-                    />
+                    ></textarea>
                   </div>
                   <div className="input-row">
                     <label className="PP">Birth Date</label>
@@ -247,7 +205,7 @@ const Profile = () => {
                       type="number"
                       className="display-data1"
                       placeholder="Date of birth"
-                    />
+                    ></textarea>
                   </div>
                   <div className="input-row">
                     <label className="PP">Gender</label>
@@ -264,7 +222,7 @@ const Profile = () => {
                       type="number"
                       className="display-data"
                       placeholder="Contact Number"
-                    />
+                    ></textarea>
                   </div>
                   <div className="input-row">
                     <label className="PP">Email Address:</label>
@@ -272,7 +230,7 @@ const Profile = () => {
                       type="text"
                       className="display-data"
                       placeholder="Email Address"
-                    />
+                    ></textarea>
                   </div>
                   <div className="input-row">
                     <label className="PP">Address:</label>
@@ -280,9 +238,9 @@ const Profile = () => {
                       type="text"
                       className="display-data"
                       placeholder="Address"
-                    />
+                    ></textarea>
                   </div>
-                  <button onClick={handleClick}>Save</button>
+                  <button>Save</button>
                   <button>Edit</button>
                 </div>
               )}
