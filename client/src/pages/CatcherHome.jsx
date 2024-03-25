@@ -25,7 +25,7 @@ function CatcherHome() {
       />
       
       <Menu />
-      <Footer/>
+      {/* <Footer/> */}
     </div>
   );
 }

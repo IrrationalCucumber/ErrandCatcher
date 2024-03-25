@@ -7,6 +7,30 @@ body .App .si{
   margin-top: 60px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
+
+.si-txt {
+  text-align: center;
+  color: #333;
+}
+
+.welcome {
+  text-transform: uppercase;
+}
+
+.errand-catcher {
+  font-size: 2rem; /* Adjust font size as needed */
+  font-weight: bold; /* Optionally, adjust font weight */
+}
+
+.text{
+  text-align: left;
+}
+
+.rem{
+  color: #333;
+  padding-left: 0rem;
+}
+
 .contman{
   display: inline-block;
   vertical-align:top;
@@ -17,7 +41,7 @@ body .App .si{
   font-weight: 500;
   color: #333;
   font-weight: bold;
-  padding: 40px 30px;
+  padding: 45px 30px;
 }
 
 .cont h3{
@@ -30,7 +54,7 @@ body .App .si{
   font-size: 13px;
   max-width: 250px;
   width: 100%;
-  margin: 8px auto;
+  margin: 13px auto;
   display: block;
   font-family: 'PT Sans', sans-serif;
 }
@@ -50,7 +74,7 @@ body .App .si{
 .cont .cont2{
   max-width: 250px;
   width: 100%;
-  margin: 40px auto 8px auto;
+  margin: 60px auto 8px auto;
   display: block;
   text-align: center;
 }

@@ -23,7 +23,9 @@ function CommissionPage() {
   useEffect(() => {
     const fetchAllCommission = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/commission");
+        const res = await axios.get(
+          `http://localhost:8800/accepted-errands/${userID}`
+        );
         //"http://localhost:8800/commission" - local computer
         //"http://192.168.1.47:8800/commission" - netwrok
         setCommissions(res.data);
@@ -69,11 +71,11 @@ function CommissionPage() {
             ]}
             data={currentItems.map((commission, rowIndex) => [
               commission.commissionID,
-              commission.employerID,
+              `${commission.userFirstname} ${commission.userLastname}`,
               commission.commissionTitle,
               commission.commissionStart,
               commission.commissionDeadline,
-              commission.commissionStatus,
+              commission.errandStatus,
             ])}
           />
         </div>

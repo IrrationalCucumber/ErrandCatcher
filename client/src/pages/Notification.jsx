@@ -1,24 +1,21 @@
-/**------------NOTE--------------------
- * this could be tranferred to/chaanged as 'Notification' page
- */
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import NotificationItem from "../components/NotificationItem";
 import { useLocation } from "react-router-dom";
-import "../components/Notification.css";
 import Navbar from "../components/NavBarPage";
+import "../components//Notification.css"; // Combined CSS styles
 
 function Notification() {
   const [notifs, setNotifs] = useState([]);
 
-  //get the id from address bar
+  // Get the id from the address bar
   const location = useLocation();
   const userID = location.pathname.split("/")[2];
-  //display all notification
+  
+  // Display all notifications
   useEffect(() => {
     const fetchNotif = async () => {
       try {
-        //const res = await axios.get(`http://localhost:8800/show-notifs/${userID}`);
         const res = await axios.get("http://localhost:8800/notification");
         setNotifs(res.data);
       } catch (err) {
@@ -27,9 +24,15 @@ function Notification() {
     };
     fetchNotif();
   }, []);
-  //when user click 'mark as read'
-  //update db notif isRead to Yes
-  const ReadIt = async (e) => {
+
+  // Function to format date
+  const formatDate = (dateString) => {
+    const options = { month: "long", day: "numeric", year: "numeric" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+  // When user clicks 'mark as read', update db notif isRead to Yes
+  const markAsRead = async () => {
     try {
       await axios.post("http://localhost:8800/read-notif/" + notifs, userID);
     } catch (err) {
@@ -40,26 +43,29 @@ function Notification() {
   return (
     <>
       <Navbar />
-      <div className="notifs">
-        <div className="notifs_container">
-          <div className="notifs_wrapper">
-            {notifs.map((Notif) => (
-              <div className="notif" key={Notif.notificationID}>
-                <ul className="notifs_items">
-                  <NotificationItem
-                    type={Notif.notificationType}
-                    desc={Notif.notifDesc}
-                    date={Notif.notifDate}
-                    // type="APPLICATION"
-                    // desc="There is an Catcher that wants to apply on one of your commission"
-                    // date="3:00 11-11-11"
-                    reddit={ReadIt}
-                  />
-                </ul>
+      <div className="notification-container">
+        <main className="notification-main">
+          <div className="notification-header">
+            <p className="notification-title">Notifications</p>
+            <img src="/images/notification_icon.svg" className="icon" alt="notification_icon" />
+            <button onClick={markAsRead} className="mark-read-button">
+              Mark All as Read
+              <img src="/images/check_icon.svg" className="check-icon" alt="check_icon" />
+            </button>
+          </div>
+          <div className="notification-list">
+            {notifs.map((notif) => (
+              <div className="notification-item" key={notif.notificationID}>
+                <NotificationItem
+                  type={notif.notificationType}
+                  desc={notif.notifDesc}
+                  date={formatDate(notif.notifDate)} // Format the date
+                  markAsRead={markAsRead}
+                />
               </div>
             ))}
           </div>
-        </div>
+        </main>
       </div>
     </>
   );

@@ -2,20 +2,18 @@ import React from "react";
 
 function NotificationItem(props) {
   return (
-    <>
-      <li className="notif_item">
-        <h3>{props.type}</h3>
-        <div className="notif_item_info">
-          <p className="notif_item_text">{props.desc}</p>
-          <p className="notif_item_date">{props.date}</p>
-        </div>
-        <div className="button">
-          <button className="button" onClick={props.reddit}>
-            <i className="fa-solid fa-check"></i>
-          </button>
-        </div>
-      </li>
-    </>
+    <div className="notification-item-container">
+      <h3 className="notification-type">{props.type}</h3>
+      <div className="notification-item-info">
+        <p className="notification-desc">{props.desc}</p>
+        <p className="notification-date">{props.date}</p>
+      <div className="notification-button">
+        <button onClick={props.markAsRead} className="button">
+          <i className="fa-solid fa-check"></i>
+        </button>
+      </div>
+    </div>
+    </div>
   );
 }
 
