@@ -5,7 +5,7 @@
 // <Route path="/c-application" exact Component={Application}/>
 
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import Table from "../components/Table";
@@ -50,10 +50,10 @@ function Application() {
     new Date(applicant.applicationDate).toLocaleDateString(),
     `${applicant.userFirstname} ${applicant.userLastname}`,
     applicant.commissionTitle,
-    applicant.status === "Pending" ? (
+    applicant.applicationStatus === "Pending" ? (
       <button
         className="cancel action-btn"
-        onClick={() => handleCancel(applicant.id)}
+        onClick={() => handleCancel(applicant.applicationID)}
       >
         Cancel
       </button>
@@ -63,10 +63,51 @@ function Application() {
       </button>
     ) : null, // handle other statuses or add a default action
   ]);
+  //set variables for notification
+  const [notif, setNotif] = useState({
+    userID: "", //this is the employer/ userID of the commission
+    notificationType: "", //notif description
+    notifDesc: "", //contents of the notif
+    notifDate: "", //time and date notif is added
+  });
+  //get current time and date for notif
+  const getTimeAndDate = () => {
+    const currentDate = new Date();
+    // Get the date components
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(currentDate.getDate()).padStart(2, "0");
+    // Get the time components
+    const hours = String(currentDate.getHours()).padStart(2, "0");
+    const minutes = String(currentDate.getMinutes()).padStart(2, "0");
+    const seconds = String(currentDate.getSeconds()).padStart(2, "0");
 
-  const handleCancel = (applicationId) => {
-    console.log("Cancel application with id:", applicationId);
+    // Create a string representing the current date and time
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  };
+  const handleCancel = async (applicationID) => {
+    console.log("Cancel application with id:", applicationID);
     // Add logic to handle accepting the application
+    //e.preventDefault();
+
+    try {
+      await axios.put(
+        `http://localhost:8800/cancel-apply/${userID}/${applicationID}`
+      );
+      alert("You have cancelled your Application");
+      //add a notification to the commission's employer
+      notif.notifDesc =
+        "A Catcher has cancelled their application on of your errand";
+      notif.userID = apply.employerID;
+      notif.notificationType = "Errand Application Cancelled";
+      notif.notifDate = getTimeAndDate();
+
+      await axios.post("http://localhost:8800/notify", notif);
+      window.location.reload();
+      //navigate(`/my-application/${userID}`);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

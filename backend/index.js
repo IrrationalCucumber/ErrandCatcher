@@ -148,27 +148,24 @@ app.get("/search-commission", (req, res) => {
   });
 });
 
-// filter status and types Commission List // 
+// filter status and types Commission List //
 app.get("/type-commilist", (req, res) => {
   // Get the search term from the query parameter
-   const type = req.query.type || '';
-   const status = req.query.status || '';
-   // commissionStatus AND commissionType 
-   const q =
-     "SELECT * FROM commission WHERE commissionStatus = ? OR commissionType = ?";
-   const values = [
-     status,
-     type,
-   ];  
- 
-   db.query(q, values, (err, data) => {
-     if (err) {
-       console.error(err);
-       return res.status(500).json({ error: "An error occurred" });
-     }
-     return res.json(data);
-   });
- });
+  const type = req.query.type || "";
+  const status = req.query.status || "";
+  // commissionStatus AND commissionType
+  const q =
+    "SELECT * FROM commission WHERE commissionStatus = ? OR commissionType = ?";
+  const values = [status, type];
+
+  db.query(q, values, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
 
 //employer search
 app.get("/search-employer-commission/:userID", (req, res) => {
@@ -311,11 +308,13 @@ app.get("/applicants/:userID", (req, res) => {
 app.get("/your-application/:userID", (req, res) => {
   const userID = req.params.userID; // Use req.params.userID to get the route parameter
   const q =
-    "SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname" +
+    "SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname, c.employerID" +
     " FROM Application a " +
     " JOIN commission c ON a.applicationErrandID = c.commissionID" +
     " JOIN useraccount ua ON c.employerID = ua.userID" +
     " WHERE a.catcherID IN (SELECT userID FROM useraccount WHERE userID = 29)";
+  //Add condition to retrieve Pending only
+  // AND applicationStatus = 'Pending'
   db.query(q, [userID], (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
