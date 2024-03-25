@@ -180,6 +180,14 @@ const SignUp = () => {
                       name="email"
                       value={account.email}
                     />
+                     <input
+                      className={employerErrorMessage ? "error" : ""}
+                      type="text"
+                      placeholder="Contact Number"
+                      onChange={handleChange}
+                      name="contactNumber"
+                      value={account.contactNumber}
+                      />
                     <input
                       className={employerErrorMessage ? "error" : ""}
                       type="password"
@@ -196,14 +204,6 @@ const SignUp = () => {
                       name="password2"
                       value={account.password2}
                     />
-                     <input
-                      className={employerErrorMessage ? "error" : ""}
-                      type="text"
-                      placeholder="Contact Number"
-                      onChange={handleChange}
-                      name="contactNumber"
-                      value={account.contactNumber}
-                      />
                     <br />
                     <p className="em">
                       <i>{employerErrorMessage}</i>
@@ -213,7 +213,7 @@ const SignUp = () => {
                         Sign Up
                       </button>
                     </div>
-                    <div className="text sign-up-text">
+                    <div className="sign-up-text">
                       Switch to <label htmlFor="flip">Catcher</label>
                     </div>
                     <div className="toSignIn">
@@ -265,6 +265,14 @@ const SignUp = () => {
                       value={account.email}
                     />
                     <input
+                      className={employerErrorMessage ? "error" : ""}
+                      type="text"
+                      placeholder="Contact Number"
+                      onChange={handleChange}
+                      name="contactNumber"
+                      value={account.contactNumber}
+                    />
+                    <input
                       className={catcherErrorMessage ? "error" : ""}
                       type="password"
                       placeholder="Password (8-20 characters)"
@@ -280,14 +288,6 @@ const SignUp = () => {
                       name="password2"
                       value={account.password2}
                     />
-                    <input
-                      className={employerErrorMessage ? "error" : ""}
-                      type="text"
-                      placeholder="Contact Number"
-                      onChange={handleChange}
-                      name="contactNumber"
-                      value={account.contactNumber}
-                    />
                     <br />
                     <p className="em">
                       <i>{catcherErrorMessage}</i>
@@ -297,7 +297,7 @@ const SignUp = () => {
                         Sign Up
                       </button>
                     </div>
-                    <div className="text sign-up-text">
+                    <div className="sign-up-text">
                       Switch to <label htmlFor="flip">Employer</label>
                     </div>
                     <div className="toSignIn">

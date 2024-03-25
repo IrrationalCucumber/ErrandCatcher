@@ -308,11 +308,13 @@ app.get("/applicants/:userID", (req, res) => {
 app.get("/your-application/:userID", (req, res) => {
   const userID = req.params.userID; // Use req.params.userID to get the route parameter
   const q =
-    "SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname" +
+    "SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname, c.employerID" +
     " FROM Application a " +
     " JOIN commission c ON a.applicationErrandID = c.commissionID" +
     " JOIN useraccount ua ON c.employerID = ua.userID" +
     " WHERE a.catcherID IN (SELECT userID FROM useraccount WHERE userID = ?)";
+  //Add condition to retrieve Pending only
+  // AND applicationStatus = 'Pending'
   db.query(q, [userID], (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
