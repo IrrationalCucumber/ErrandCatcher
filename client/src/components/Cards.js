@@ -62,9 +62,10 @@ function Cards() {
             {commissions.map((commission) => (
               <CardItem
                 key={commission.commissionID}
-                src="images/hr.png"
+                src="/images/hr.png"
                 text={commission.commissionTitle}
                 label={commission.commissionType}
+                location={commission.commissionLocation}
                 path={`/view-errand/${userID}/${commission.commissionID}`}
               />
             ))}

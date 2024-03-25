@@ -32,7 +32,7 @@ const Menu = () => {
             <div className="box-container">
                     <div className="box">
                         <Link to="/HomeService">
-                        <button>
+                        <button style={{backgroundColor:'white'}}>
                             <img src="/images/img6.png" alt="" />
                             <div className="content">
                                 <p>Home Services</p>
@@ -42,7 +42,7 @@ const Menu = () => {
                     </div>
                     <div className="box">
                         <Link to="/Transpo">
-                            <button>
+                            <button style={{backgroundColor:'white'}}>
                                 <img src="/images/img4.png" alt="" />
                                 <div className="content">
                                     <p>Transportation</p>
@@ -52,7 +52,7 @@ const Menu = () => {
                     </div>
                     <div className="box">
                        <Link to="/Delivery">
-                            <button>
+                            <button style={{backgroundColor:'white'}}>
                                 <img src="/images/img5.png" alt="" />
                                 <div className="content">
                                     <p>Delivery</p>
@@ -64,7 +64,7 @@ const Menu = () => {
                                 </div> 
             </section>
 
-            <section className="Menu1" id="Menu1">
+            {/* <section className="Menu1" id="Menu1">
                 <div className="box-container">
                     <div className="box">
                         <img src="/images/img1.png" alt="" />
@@ -107,7 +107,7 @@ const Menu = () => {
                     </div>
 
                 </div>
-            </section>
+            </section> */}
             <Cards/>
            
             <Footer />
