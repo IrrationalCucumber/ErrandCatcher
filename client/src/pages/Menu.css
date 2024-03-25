@@ -1,0 +1,150 @@
+.search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 45px 5%;
+}
+
+.search-bar input {
+    padding: 7px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 3px;
+    border: 2px solid black;
+}
+
+.search-bar button {
+    padding: 7px 15px;
+    font-size: 16px;
+    background-color:darkgray;
+    color: #fff;
+    box-shadow: 0 0 0 .2rem rgba(0, 0, 0, .1);
+    border: none;
+    border-radius: 5px;
+    margin-right: 65%;
+    cursor: pointer;
+}
+
+.search-bar button:hover {
+    background-color:#ccc
+}
+
+.Menu{
+    margin:50px;
+ }
+ .Menu .box-container{
+    grid-template-columns: repeat(3, 1fr);  
+    display:grid;
+    flex-wrap: wrap;
+    gap:none;
+    margin-left: 11rem;
+ 
+ }
+
+ .Menu .box {
+    border: 2px solid black;
+    border-radius: 10px;
+    box-shadow: 0 0 0 .5rem rgba(0, 0, 0, .1);    
+    margin-bottom: 10px;
+    flex-direction: column;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    overflow: hidden;
+    max-width: 14rem;
+    height: 4rem;
+  
+}
+
+.Menu .box button {
+    width: 14rem;
+    background: #cdcdd5;
+
+}
+.Menu .box button:hover {
+    background: #a0a0a0;
+    color: rgb(8, 8, 8);
+
+}
+.Menu .box img {
+    height: 50px;
+    width:70px;
+    object-fit:contain;
+    transition: 0.5s;
+    border-radius: 10px;
+    background: transparent;
+    float: left;
+    margin: 5px 0 5px 5px;
+}
+
+.Menu .content p {
+        font-size: 15px;
+        font-weight: 1000;
+        text-align: justify;
+        padding-left: 5.5rem;
+        padding-top: 19px;
+        padding-bottom: 5px;
+        color: rgb(17, 16, 16);
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+
+.Menu1{
+    margin: 50px;
+}
+.Menu1 .box-container {
+    flex-wrap: wrap;
+    gap: 2rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 80rem;
+    height: 18rem;
+    background: transparent;
+    padding-left: 100px;
+}
+
+.Menu1 .box{
+   flex: 1 1 0rem;
+   border-radius: .5rem;
+   border: 2px solid black;
+   box-shadow: 0 0 0 .5rem rgba(0, 0, 0, .1);
+   overflow: hidden;
+   padding-bottom: 2px;
+   border-radius: 10px;
+   margin-bottom: 25px;
+   margin-top: 0px;
+   display: flex;
+   flex-direction: column;
+   box-sizing: border-box;
+   scroll-behavior: smooth; 
+   background-color:transparent;    
+   align-items:center;
+   padding-top: 20px;
+}
+
+.Menu1 .box-container :hover{
+    transform: scale(1.1);
+}
+.Menu1 .box img {
+    height: 50%;
+    width: 75%;
+    object-fit: contain;
+    transition: 0.5s;
+    border-radius: 10px; 
+    padding-top: .2rem;
+    background:transparent;
+}
+
+.Menu1 .box-container .box .content p{
+    font-size: 25px;
+    font-weight: 600;
+    text-align:center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    padding-top:1rem ;
+}
+.Menu1 .box-container .box .content h3{
+    font-size: 15px;
+    font-weight: 600;
+    text-align:left;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    padding-top:.5rem ;
+}

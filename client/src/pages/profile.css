@@ -194,6 +194,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+  }
+  /* Positioning the image inside the label */
+  .FileContainer Img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 100%;
   }
   
   

@@ -110,7 +110,7 @@ const SignUp = () => {
       return;
     }
 
-    //save to db if no error
+   //save to db if no error
     e.preventDefault();
     try {
       account.dateCreated = getCurrentDate();

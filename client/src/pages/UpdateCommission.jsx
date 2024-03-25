@@ -5,6 +5,7 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 //import "../style.css";
 import ErrandInputs from "../components/ErrandInputs";
 import Navbar from "../components/NavBarPage";
+import "./Commission.css"; // Import your CSS file
 
 const UpdateCommission = () => {
   const [commission, setCommission] = useState({
@@ -22,7 +23,6 @@ const UpdateCommission = () => {
     comLong: "",
     comLat: "",
   });
-
   const navigate = useNavigate();
   const location = useLocation();
   //pathname to array from
@@ -33,7 +33,6 @@ const UpdateCommission = () => {
 
   // Add a state to track the marker's longitude and latitude
   const [markerLngLat, setMarkerLngLat] = useState([123.8854, 10.3157]); // Default values
-
   const [currentLocationMarker, setCurrentLocationMarker] = useState(null);
 
   //handle changes
@@ -225,17 +224,7 @@ const UpdateCommission = () => {
 
   return (
     <div>
-      <Navbar
-        page1="HOME"
-        home={`/e-home/${userID}`}
-        page2="COMMISSIONS"
-        commissionList={`/commissions/${userID}`}
-        page3="APPLICANTS"
-        applicants={`/applicants/${userID}`}
-        map={`/map/${userID}`}
-        button="SIGN OUT"
-        pageButton="/sign-in"
-      />
+      <Navbar />
       <div className="errand-cont">
         <ErrandInputs
           handleChange={handleChange}
@@ -258,12 +247,6 @@ const UpdateCommission = () => {
           lat={commission.comLat}
         />
         <br />
-        <button
-          className="formButton"
-          onClick={() => handleDelete(commission.commissionID)}
-        >
-          DELETE
-        </button>
         <button className="formButton" onClick={handleClick}>
           UPDATE
         </button>
