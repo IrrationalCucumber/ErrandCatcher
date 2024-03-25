@@ -797,14 +797,14 @@ app.get("/user-rating/:userID", (req, res) => {
 //VARIABLES SUBJECT TO CHANGE BASED ON ERD AND DB
 app.post("/rate", (req, res) => {
   const q =
-    "INSERT INTO feedbackcommission (`feedbackCatcherID`, `feedbackCommissionID`, `feedbackComment`, `feedbackCount`, `feedbackDate`, `feedbackPosterID`) VALUES (?)";
+    "INSERT INTO feedbackcommission (`feedbackCommissionID`, `feedbackCatcherID` , `feedbackComment`, `feedbackCount`, `feedbackDate`, `feedbackPosterID`) VALUES (?)";
   const values = [
-    req.body.catcherID,
     req.body.commissionID,
+    req.body.catcherID,
     req.body.feedbackComment,
     req.body.feedbackCount,
     req.body.feedbackDate,
-    req.body.employerID,
+    req.body.feedbackPosterID,
   ];
   db.query(q, [values], (err, data) => {
     if (err) return res.json(err);
