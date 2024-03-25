@@ -410,10 +410,12 @@ app.get("/get-apply/:userID/:comID", (req, res) => {
 //NOTE: UNUSED ENDPOINT?
 app.post("/post-commission", (req, res) => {
   const q =
+    //`commissionStartDate`,
     "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionDeadline`, `commissionLocation`,`commissionType`, `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`) VALUES (?)";
   const values = [
     req.body.comEmployer,
     req.body.comTitle,
+    //req.body.comStart,
     req.body.comDeadline,
     req.body.comLocation,
     req.body.comType,
@@ -449,12 +451,14 @@ app.get("/commission/:commissionID", (req, res) => {
 app.put("/update-commission/:commissionID", (req, res) => {
   const commissionID = req.params.commissionID;
   const q =
+    //`commissionStartDate` = ?,
     "UPDATE commission SET `commissionTitle` = ?, `commissionDeadline` = ?, `commissionLocation` = ?,`commissionType` = ?, `commissionDesc` = ?, `commissionPay` = ?, `ContactNumber` = ?, `commissionLong` = ?, `commissionLat` = ? WHERE commissionID = ?";
   //const q = "UPDATE commission SET `commissionTitle` = ? WHERE `commissionID` = ?"
   const values = [
     //req.body.comEmployer,
     req.body.comTitle,
     req.body.comDeadline,
+    //req.body.comStart,
     req.body.comLocation,
     req.body.comType,
     req.body.comDescription,
