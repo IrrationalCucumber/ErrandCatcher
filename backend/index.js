@@ -312,7 +312,7 @@ app.get("/your-application/:userID", (req, res) => {
     " FROM Application a " +
     " JOIN commission c ON a.applicationErrandID = c.commissionID" +
     " JOIN useraccount ua ON c.employerID = ua.userID" +
-    " WHERE a.catcherID IN (SELECT userID FROM useraccount WHERE userID = 29)";
+    " WHERE a.catcherID IN (SELECT userID FROM useraccount WHERE userID = ?)";
   //Add condition to retrieve Pending only
   // AND applicationStatus = 'Pending'
   db.query(q, [userID], (err, data) => {
@@ -353,6 +353,20 @@ app.put("/deny-apply/:comID/:applyID", (req, res) => {
       return res.status(500).json(err);
     }
     return res.json("Application Denied");
+  });
+});
+app.put("/accept-apply/:comID/:applyID", (req, res) => {
+  const comId = req.params.comID;
+  const applicationID = req.params.applyID;
+  const q =
+    "UPDATE application SET `applicationStatus` = 'Approved' WHERE applicationErrandID = ? AND applicationID = ?";
+
+  db.query(q, [comId, applicationID], (err) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+    return res.json("Application Approved");
   });
 });
 //APS - 03/03/24
@@ -438,6 +452,26 @@ app.get("/commission/:commissionID", (req, res) => {
   const q = "SELECT * FROM commission WHERE commissionID = ?";
 
   db.query(q, [commissionID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+
+//retrieve commission FOR Catcher
+//info based on ID
+app.get("/accepted-errands/:userID", (req, res) => {
+  const userID = req.params.userID; // Get the search term from the query parameter
+  const q =
+    "SELECT c.*, t.errandStatus, t.transDateAccepted,ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname" +
+    " FROM errandtransaction t" +
+    " JOIN commission c ON t.transErrandID = c.commissionID" +
+    " JOIN useraccount ua ON c.employerID = ua.userID" +
+    " WHERE t.transCatcherID IN (SELECT userID FROM useraccount WHERE userID = ?)";
+
+  db.query(q, [userID], (err, data) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: "An error occurred" });
@@ -827,6 +861,26 @@ app.get("/user-verify/:userID", (req, res) => {
 });
 
 //=================================================================//
+/**
+ * TRANSACTION
+ * APS - 24/03/24
+ */
+//Add transaction
+app.post("/add-trans", (req, res) => {
+  const q =
+    "INSERT INTO errandtransaction (`transErrandID`, `transCatcherID`, `transDateAccepted`) VALUES (?)";
+  const values = [
+    req.body.comID,
+    req.body.catcherID,
+    req.body.dateAccepted,
+    // req.body.dateCompleted,
+    //  req.body.reciept,
+  ];
+  db.query(q, [values], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("Transaction added");
+  });
+});
 
 app.listen(8800, () => {
   console.log("connected to backend!");
