@@ -11,6 +11,10 @@ function CardItem(props) {
                 </figure>
                 <div className='cards__item__info'>
                     <h5 className='cards__item__text' >{props.text}</h5>
+                    <p className='cards__item__location' style={{color:'black', fontSize:'12'}}>
+                    <i className="fas fa-map-marker-alt" style={{ marginRight: '5px' }}></i>
+                    {props.location}
+                    </p>
                 </div>
             </Link>
         </li>

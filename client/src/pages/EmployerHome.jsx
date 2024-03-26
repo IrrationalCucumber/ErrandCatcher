@@ -1,7 +1,10 @@
+//added Sticky button
 import React from "react";
 import NavBar from "../components/Navbar";
-import HeroSection from "../components/HeroSection";
+//import HeroSection from '../components/HeroSection'
 import { useLocation } from "react-router-dom";
+import Menu from "./Menu";
+import StickyButton from "../components/Sticky Button/StickyButton";
 
 function EmployerHome() {
   //carry id to other page
@@ -18,11 +21,16 @@ function EmployerHome() {
         commissionList={`/commissions/${userID}`}
         page3="APPLICANTS"
         applicants={`/applicants/${userID}`}
-        map={`/map/${userID}`}
-        button="SIGN OUT"
-        pageButton="/sign-in"
+        page4="MAP"
+        map={`/e-map/${userID}`}
       />
-      <HeroSection />
+
+      <Menu />
+      {/*destination is post commission */}
+      <StickyButton
+        buttonText="Post Errand"
+        destination={`/post-commission/${userID}`}
+      />
     </div>
   );
 }

@@ -10,13 +10,15 @@ const CommissionList = () => {
   const [commissions, setCommissions] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selStatus, setSelStatus] = useState("");
-
-  //current page state --Ash
-  const [currentPage, setCurrentPage] = useState(1);
+  const [type, setType] = useState("");
+  const [status, setStatus] = useState("");
 
   //Pagination --Ash
   //display data per page
   const [itemsPerPage] = useState(10);
+
+  //current page state --Ash
+  const [currentPage, setCurrentPage] = useState(1);
 
   //handle error
   //rretrieve data
@@ -53,6 +55,24 @@ const CommissionList = () => {
     fetchSearchResults();
   }, [searchTerm]); // Trigger the search whenever searchTerm changes
 
+  // filter type
+  const fetchTypeResultses = async () => {
+    try {
+      //http://localhost:8800/user - local
+      //http://192.168.1.47:8800/user - network
+      const res = await axios.get("http://localhost:8800/type-commilist", {
+        params: { status: status, type: type }, // Pass the search term as a query parameter
+      });
+      setCommissions(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchTypeResultses();
+  }, [status, type]);
+
   //funtion to delete commission
   const handleDelete = async (commissionID) => {
     try {
@@ -83,8 +103,8 @@ const CommissionList = () => {
         commissionList={`/accounts`}
         page3="COMMISSION LIST"
         applicants={`/commission-list`}
-        pageButton="/sign-in"
-        button="SIGN OUT"
+        page4="MAP"
+        map={`/map`}
       />
 
       <div className="commissions">
@@ -102,13 +122,13 @@ const CommissionList = () => {
             </button>
           </div>
           <div className="filter">
-            <select>
+            <select onChange={(e) => setStatus(e.target.value)} value={status}>
               <option value="">All Status</option>
               <option value="Pending">Pending</option>
               <option value="Completed">Completed</option>
               <option value="Cancelled">Cancelled</option>
             </select>
-            <select>
+            <select onChange={(e) => setType(e.target.value)} value={type}>
               <option value="">All Types</option>
               <option value="Home">Home</option>
               <option value="Transportation">Transportation</option>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import "./Error.css"; // Import your custom CSS for styling
+import "./Error.css"; // Import your custom CSS for stylin
 import "./signin.css";
 import { useAuth } from "../components/AuthContext";
 
@@ -11,7 +11,7 @@ const SignIn = () => {
   const [userID, setUserID] = useState(""); //var for id
   const [errorMessage, setErrorMessage] = useState(""); //error message
   const [rememberMe, setRememberMe] = useState(false); //remember me function
-  // const { login } = useAuth(); // Get the login function from useAuth
+  // const { login } = useAuth(); // Get the login function from useAut
 
   //remeber me function
   const handleRememberMeChange = (e) => {
@@ -72,9 +72,12 @@ const SignIn = () => {
 
   return (
     <div className="si">
-      <div className="cont">
+      <div className="cont contman">
         <div className="si-txt">
-          <h1>welcome back to ERRAND CATCHER</h1>
+          <h1>
+            <span class="welcome">Welcome</span> to{" "}
+            <span class="errand-catcher">ERRAND CATCHER</span>
+          </h1>
           <div className="text">
             <div className="sign"></div>
             <h3>Sign-in Now</h3>
@@ -115,11 +118,14 @@ const SignIn = () => {
             Sign In
           </button>
         </div>
-        <p>
+        <p className="cont2">
           <i>
-            Don't have an Account? Sign-up <Link to="/sign-up">here!</Link>
+            Don't have an Account? <Link to="/sign-up"> Sign-up!</Link>
           </i>
         </p>
+      </div>
+      <div className="contman cont-tawo">
+        <img src="http://localhost:3000/images/tawo.png" alt="" />
       </div>
     </div>
   );

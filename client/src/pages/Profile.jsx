@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import NavbarPage from "../components/Navbar";
+import React, { useEffect, useState, } from "react";
+import NavbarPage from "../components/NavBarPage";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faCertificate } from "@fortawesome/free-solid-svg-icons";
 import "./profile.css";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-
+import { Link } from "react-router-dom";
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("about");
   const [verified, setVerified] = useState(false);
@@ -117,19 +117,26 @@ const Profile = () => {
               <div className="username-container">
                 <label className="username">Username</label>
                 {/* Verification Icon */}
-                <i
-                  class={
-                    verified
-                      ? "fa-solid fa-circle-check"
-                      : "fa-regular fa-circle-check"
-                  }
-                  style={{
-                    marginLeft: "5px",
-                    color: verified ? "green" : "gray",
-                  }}
-                >
-                  {status}
-                </i>
+                {/* Verification Icon */}
+                <p>
+        Click 
+        <Link to="/verification">
+          <i
+            className={
+              verified
+                ? "fa-solid fa-circle-check"
+                : "fa-regular fa-circle-check"
+            }
+            style={{
+              marginLeft: "5px",
+              color: verified ? "green" : "gray",
+              cursor: "pointer" // Make the cursor change to a pointer to indicate it's clickable
+            }}
+          ></i>
+        </Link> 
+      UNVERIFIED
+      </p>
+
                 {/* <FontAwesomeIcon
                   icon={faCertificate}
                   style={{
@@ -165,6 +172,7 @@ const Profile = () => {
                 >
                   History
                 </span>
+
               </div>
               {activeTab === "about" && (
                 <div

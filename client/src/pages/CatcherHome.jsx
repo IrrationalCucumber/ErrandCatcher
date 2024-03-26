@@ -1,7 +1,11 @@
+//gi tangtang nako ang herosection for homepageee
+
 import React from "react";
 import NavBar from "../components/Navbar";
-import Cards from "../components/Cards";
+//import HeroSection from "../components/HeroSection";
 import { useLocation } from "react-router-dom";
+import Menu from "./Menu";
+import Footer from "../components/Footer";
 
 function CatcherHome() {
   //get the id from the address bar
@@ -11,15 +15,17 @@ function CatcherHome() {
     <div>
       <NavBar
         page1="HOME"
-        home={`/e-home/${userID}`}
+        home={`/c-home/${userID}`}
         page2="COMMISSIONS"
-        commissionList={`/commissions/${userID}`}
-        page3="APPLICANTS"
-        applicants={`/applicants/${userID}`}
-        map={`/map/${userID}`}
-        button="SIGN OUT"
+        commissionList={`/catcher-errands/${userID}`}
+        page3="APPLICATIONS"
+        applicants={`/my-application/${userID}`}
+        map={`/c-map/${userID}`}
+        page4="MAP"
       />
-      <Cards></Cards>
+      
+      <Menu />
+      {/* <Footer/> */}
     </div>
   );
 }
