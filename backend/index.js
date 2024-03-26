@@ -190,6 +190,23 @@ app.get("/search-employer-commission/:userID", (req, res) => {
   });
 });
 
+// Employer Commission List filter //
+app.get("/employer-commilist", (req, res) => {
+  // Get the search term from the query parameter
+  const status = req.query.status || "";
+  const q =
+    "SELECT * FROM commission WHERE commissionStatus = ?";
+  const values = [status];
+
+  db.query(q, values, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+
 // fiter user-type  //
 app.get("/filter-type", (req, res) => {
   const type = req.query.type || "";
