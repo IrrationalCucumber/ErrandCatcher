@@ -32,9 +32,9 @@ const UpdateCommission = () => {
     feedbackCount: 0,
     feebackDate: "",
     employerID: "",
-  })
+  });
 
-  const [successMsg, setSuccessMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState("");
   const [error, setError] = useState(null);
 
   const getCurrentDate = () => {
@@ -44,26 +44,26 @@ const UpdateCommission = () => {
     const day = String(currentDate.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
-  // modal state // 
+  // modal state //
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [inputValue, setInputValue] = useState({feedbacks: ''});
-  // rating // 
+  const [inputValue, setInputValue] = useState({ feedbacks: "" });
+  // rating //
   const [rating, setRating] = useState(0);
 
-  // modal handle // 
+  // modal handle //
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
 
-  const handleCloseModal = () => { 
+  const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-  // update changes 
+  // update changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setInputValue({ ...inputValue, [name]: value });
-    setFeedback({ ...feedback, feedbackCount: value }); 
-    setFeedback({ ...feedback, feedbackComment: value });  
+    setFeedback({ ...feedback, feedbackCount: value });
+    setFeedback({ ...feedback, feedbackComment: value });
     //setInputValue(e.target.value);
   };
 
@@ -74,20 +74,19 @@ const UpdateCommission = () => {
       //"http://192.168.1.47:8800/commission" - netwrok
       feedback.feebackDate = getCurrentDate();
       //feedback.employerID = commission.
-    
+
       //feedback.commissionID = fetchLoc().commissionID;
       const response = await axios.post("http://localhost:8800/rate", feedback);
       setSuccessMsg(response.data);
-
     } catch (err) {
       console.log(err);
     }
-    
-    console.log('Submitted value:', inputValue);
+
+    console.log("Submitted value:", inputValue);
     handleCloseModal();
   };
-  
-  // rating // 
+
+  // rating //
   /*const handleStarClick = (value) => {
     setRating(value === rating ? 0 : value);
   }; */
@@ -321,49 +320,51 @@ const UpdateCommission = () => {
           lat={commission.comLat}
         />
         <br />
-        <button
-          className="formButton"
-          onClick={() => handleDelete(commission.commissionID)}>
-          DELETE
-        </button>
         <button className="formButton" onClick={handleClick}>
           UPDATE
         </button>
-        <button className="formButton" onClick= {handleOpenModal}> 
+        <button className="formButton" onClick={handleOpenModal}>
           FEEDBACK
-        </button> 
+        </button>
 
         <Modals isOpen={isModalOpen} onClose={handleCloseModal}>
-        
-        <h4>Rate Catcher:</h4>
-        {[1, 2, 3, 4, 5].map((value) => (
+          <h4>Rate Catcher:</h4>
+          {[1, 2, 3, 4, 5].map((value) => (
             <span
               key={value}
               style={{
-                cursor: 'pointer',
-                fontSize: '24px',
-                color: value <= feedback.feedbackCount ? 'gold' : 'gray',
+                cursor: "pointer",
+                fontSize: "24px",
+                color: value <= feedback.feedbackCount ? "gold" : "gray",
               }}
               onClick={() => handleStarClick(value)}
             >
               ★
             </span>
           ))}
-        <h4>Feedback:</h4>
-        <input
-          type="text"
-          value={inputValue.feedbackComment}
-          onChange={handleInputChange}
-          placeholder="Enter your comment here...."
-          style={{ marginBottom: '10px', width: '100%', padding: '10px', fontSize: '16px',}}
-        />
-        
-        <div style={styles.buttonContainer}>
-        <button style={styles.button} onClick={handleSubmit}>Post</button>
-        <button style={styles.button} onClick={handleCloseModal}>Close</button>
-        </div>
-      </Modals>
-      
+          <h4>Feedback:</h4>
+          <input
+            type="text"
+            value={inputValue.feedbackComment}
+            onChange={handleInputChange}
+            placeholder="Enter your comment here...."
+            style={{
+              marginBottom: "10px",
+              width: "100%",
+              padding: "10px",
+              fontSize: "16px",
+            }}
+          />
+
+          <div style={styles.buttonContainer}>
+            <button style={styles.button} onClick={handleSubmit}>
+              Post
+            </button>
+            <button style={styles.button} onClick={handleCloseModal}>
+              Close
+            </button>
+          </div>
+        </Modals>
       </div>
     </div>
   );
@@ -371,90 +372,20 @@ const UpdateCommission = () => {
 
 const styles = {
   button: {
-    padding: '10px 20px',
-    fontSize: '16px',
-    backgroundColor: 'lightcoral',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    marginRight: '10px',
-    textAlign: 'center',
+    padding: "10px 20px",
+    fontSize: "16px",
+    backgroundColor: "lightcoral",
+    color: "#fff",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    marginRight: "10px",
+    textAlign: "center",
   },
   buttonContainer: {
-    marginTop: '20px',
-    textAlign: 'center',
+    marginTop: "20px",
+    textAlign: "center",
   },
 };
 
 export default UpdateCommission;
-/**
- * <label>
-        Commission Title
-        <input
-          type="text"
-          placeholder="Commission Title"
-          onChange={handleChange}
-          name="comTitle"
-          value={commission.comTitle}
-        />
-      </label>
-      <label>
-        Deadline
-        <input
-          type="date"
-          placeholder="Deadline"
-          onChange={handleChange}
-          name="comDeadline"
-          value={commission.comDeadline}
-        />
-      </label>
-      Location
-      <input
-        type="text"
-        placeholder="Location"
-        onChange={handleChange}
-        name="comLocation"
-        value={commission.comLocation}
-      />
-      <label htmlFor="">
-        Commission Type
-        <select
-          name="comType"
-          onChange={handleChange}
-          value={commission.comType}
-        >
-          <option value="">Choose type....</option>
-          <option value="HomeService - Indoor">Home Service - Indoor</option>
-          <option value="HomeService - Outdoor">Home Service - Outdoor</option>
-          <option value="Delivery">Delivery Service</option>
-          <option value="Transport">Transport Service</option>
-        </select>
-      </label>
-      <textarea
-        cols="20"
-        rows="11"
-        type="text"
-        placeholder="Description"
-        onChange={handleChange}
-        name="comDescription"
-        value={commission.comDescription}
-      />
-      <label>
-        Amount: ₱
-        <input
-          type="number"
-          placeholder="0.00"
-          onChange={handleChange}
-          name="comPay"
-          value={commission.comPay}
-        />
-      </label>
-      <input
-        type="text"
-        value={commission.ContactNo}
-        onChange={handleChange}
-        placeholder="Contact Number"
-        name="ContactNo"
-      />{" "}
-      */

@@ -481,6 +481,26 @@ app.get("/accepted-errands/:userID", (req, res) => {
     return res.json(data);
   });
 });
+
+//retrieve commission FOR Employer
+//info based on ID
+app.get("/pending-errands/:userID", (req, res) => {
+  const userID = req.params.userID; // Get the search term from the query parameter
+  const q =
+    "SELECT c.*, t.errandStatus, t.transDateAccepted,ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname" +
+    " FROM errandtransaction t" +
+    " JOIN commission c ON t.transErrandID = c.commissionID" +
+    " JOIN useraccount ua ON t.transCatcherID = ua.userID" +
+    " WHERE t.transErrandID IN (SELECT commissionID FROM commission WHERE employerID = ?)";
+
+  db.query(q, [userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
 //update commission
 app.put("/update-commission/:commissionID", (req, res) => {
   const commissionID = req.params.commissionID;

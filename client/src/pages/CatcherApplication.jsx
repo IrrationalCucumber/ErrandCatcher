@@ -99,7 +99,7 @@ function Application() {
       notif.notifDesc =
         "A Catcher has cancelled their application on of your errand";
       notif.userID = apply.employerID;
-      notif.notificationType = "Errand Application Cancelled";
+      notif.notificationType = "Application Cancelled";
       notif.notifDate = getTimeAndDate();
 
       await axios.post("http://localhost:8800/notify", notif);
