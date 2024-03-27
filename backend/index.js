@@ -2,6 +2,7 @@ import express from "express";
 import mysql from "mysql";
 import cors from "cors";
 import createDBConnection from "./dbConfig.js";
+import cron from "node-cron";
 
 const app = express();
 //connect to database
@@ -18,6 +19,72 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.json("hello this is the backend");
 });
+
+//=====================================SCHDULER========================================
+// Define the cron job to update expired commissions
+cron.schedule(
+  "0 0 * * *",
+  () => {
+    console.log("Running cron job to update expired commissions...");
+
+    // Update query to set commissionStatus to 'Expired' for commissions with past deadline
+    const query = `
+    UPDATE commission
+    SET commissionStatus = 'Expired'
+    WHERE commissionDeadline < CURDATE()
+    AND commissionStatus = 'Available';
+  `;
+
+    // Execute the query
+    db.query(query, (err, result) => {
+      if (err) {
+        console.error("Error updating expired commissions:", err);
+      } else {
+        console.log(
+          "Successfully updated expired commissions:",
+          result.affectedRows,
+          "rows updated"
+        );
+      }
+    });
+  },
+  {
+    scheduled: true,
+    timezone: "Asia/Kolkata",
+  }
+);
+/**
+ * NEW METHOD FOR SCHEDULER
+ * WORKING AS OF NOW
+ */
+
+// Function to update records with expired deadlines
+const updateExpiredRecords = () => {
+  const currentTime = new Date().toISOString().slice(0, 19).replace("T", " ");
+  const query = `
+    UPDATE commission
+    SET commissionStatus = 'Expired'
+    WHERE commissionDeadline < '${currentTime}' AND commissionStatus = 'Available'
+  `;
+
+  db.query(query, (error, results) => {
+    if (error) {
+      console.error("Error updating records:", error);
+    } else {
+      console.log(`${results.affectedRows} records updated.`);
+    }
+  });
+};
+
+// Schedule the update function to run every minute
+const scheduler = setInterval(updateExpiredRecords, 60 * 1000);
+
+// Stop the scheduler after a certain duration (optional)
+// setTimeout(() => {
+//   clearInterval(scheduler);
+//   console.log('Scheduler stopped.');
+// }, 3600000); // Stop after 1 hour (3600 seconds * 1000 milliseconds)
+//========================================================================
 //return data from database
 app.get("/user", (req, res) => {
   const q = "SELECT * from useraccount";
@@ -44,9 +111,19 @@ app.get("/your-commission/:userID", (req, res) => {
     return res.json(data);
   });
 });
+
+//return data from all available errands
+app.get("/errands", (req, res) => {
+  const q = "Select * from commission WHERE commissionStatus = 'Available'";
+  db.query(q, (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+});
 //display 10 recent posted commissino
 app.get("/recent-commission", (req, res) => {
-  const q = "Select * from commission order by DatePosted DESC LIMIT 3";
+  const q =
+    "Select * from commission order by DatePosted DESC LIMIT 3 AND commissionStatus = 'Available'";
   db.query(q, (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
