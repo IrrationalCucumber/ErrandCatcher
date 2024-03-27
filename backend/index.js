@@ -417,7 +417,7 @@ app.get("/get-apply/:userID/:comID", (req, res) => {
 });
 
 //================================================================================================//
-
+//===========================================ERRAND=================================================//
 //post commission
 //employer
 //send data to commission table
@@ -903,6 +903,56 @@ app.post("/add-trans", (req, res) => {
   db.query(q, [values], (err, data) => {
     if (err) return res.json(err);
     return res.json("Transaction added");
+  });
+});
+
+//================================================COUNT==========================================//
+/**
+ * Retrieve count of Posted errands, applicants, and completed errands
+ * APS - 27/03/24
+ */
+//get posted errand count
+app.get("/post-count/:userID", (req, res) => {
+  const userID = req.params.userID;
+  const q = "select count(*) as 'c' from commission where employerID = (?) ";
+
+  db.query(q, [userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+//get applicant count
+app.get("/applicant-count/:userID", (req, res) => {
+  const userID = req.params.userID;
+  const q =
+    "select count(*) as 'c' " +
+    "from commission e " +
+    "JOIN application a ON a.applicationErrandID = e.commissionID " +
+    "where employerID = ?";
+
+  db.query(q, [userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+
+app.get("/complete-count/:userID", (req, res) => {
+  const userID = req.params.userID;
+  const q =
+    "select count(*) as 'c' from commission where employerID = (?) AND commissionStatus = 'Complete";
+
+  db.query(q, [userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
   });
 });
 
