@@ -123,7 +123,7 @@ app.get("/errands", (req, res) => {
 //display 10 recent posted commissino
 app.get("/recent-commission", (req, res) => {
   const q =
-    "Select * from commission order by DatePosted DESC LIMIT 3 AND commissionStatus = 'Available'";
+    "Select * from commission order by DatePosted AND commissionStatus = 'Available' DESC LIMIT 3 ";
   db.query(q, (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
