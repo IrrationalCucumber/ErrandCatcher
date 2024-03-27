@@ -37,7 +37,6 @@ import Delivery from "./pages/Services/Delivery";
 import Verification from "./pages/Verification";
 import ErrandPage from "./pages/ErrandPage";
 
-
 function App() {
   return (
     <div className="App">
@@ -65,14 +64,10 @@ function App() {
 
           <Route path="/Menu" exact Component={Menu} />
           <Route path="/testpage" exact Component={testpage} />
-          <Route path="/Transpo" exact Component={Transportation} />
-          <Route path="/HomeService" exact Component={HomeServices} />
-          <Route path="/Delivery" exact Component={Delivery} />
-          <Route
-            path="/update-account/:userID"
-            exact
-            Component={UpdateAccount}
-          />
+          <Route path="/Transpo/:userID/:type" element={<Transportation />} />
+          <Route path="/HomeService/:userID/:type" element={<HomeServices />} />
+          <Route path="/Delivery/:userID/:type" element={<Delivery />} />
+          <Route path="/update-account/:userID" element={<UpdateAccount />} />
           {/* <Route path="/admin-home/:userID" element={<AdminHome />} /> */}
           {/* <Route path="/" exact Component={Home} /> */}
           {/* ADMIN */}
