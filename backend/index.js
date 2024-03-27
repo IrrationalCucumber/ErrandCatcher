@@ -238,17 +238,17 @@ app.post("/user", (req, res) => {
 //send data to commission table
 app.post("/commission", (req, res) => {
   const q =
-    "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionDeadline`, `commissionLocation`,`commissionType`, `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`, `commissionLong`, `commissionLat`) VALUES (?)";
+    "INSERT INTO commission (`employerID`,`commissionTitle`,`commissionStartDate`, `commissionDeadline`, `commissionLocation`,`commissionTo`,`commissionType`, `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`, `commissionLong`, `commissionLat`) VALUES (?)";
   const values = [
     req.body.empID,
     req.body.comTitle,
+    req.body.comStartDate,
     req.body.comDeadline,
     req.body.comLocation,
+    req.body.comTo,
     req.body.comType,
     req.body.comDescription,
     req.body.comPay,
-    // req.body.comStatus,
-    // req.body.catcherID,
     req.body.DatePosted,
     // req.body.DateCompleted,
     req.body.Contactno,
@@ -389,12 +389,14 @@ app.get("/get-apply/:userID/:comID", (req, res) => {
 //NOTE: UNUSED ENDPOINT?
 app.post("/post-commission", (req, res) => {
   const q =
-    "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionDeadline`, `commissionLocation`,`commissionType`, `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`) VALUES (?)";
+    "INSERT INTO commission (`employerID`,`commissionTitle`,`commissionStartDate`, `commissionDeadline`, `commissionLocation`,`commissionTo`, `commissionType`, `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`) VALUES (?)";
   const values = [
     req.body.comEmployer,
     req.body.comTitle,
+    req.body.comStartDate,
     req.body.comDeadline,
     req.body.comLocation,
+    req.body.comTo,
     req.body.comType,
     req.body.comDescription,
     req.body.comPay,
@@ -428,13 +430,15 @@ app.get("/commission/:commissionID", (req, res) => {
 app.put("/update-commission/:commissionID", (req, res) => {
   const commissionID = req.params.commissionID;
   const q =
-    "UPDATE commission SET `commissionTitle` = ?, `commissionDeadline` = ?, `commissionLocation` = ?,`commissionType` = ?, `commissionDesc` = ?, `commissionPay` = ?, `ContactNumber` = ?, `commissionLong` = ?, `commissionLat` = ? WHERE commissionID = ?";
+    "UPDATE commission SET `commissionTitle` = ?, `commissionStartDate` = ? ,`commissionDeadline` = ?, `commissionLocation` = ?, `commissionTo` = ?,`commissionType` = ?, `commissionDesc` = ?, `commissionPay` = ?, `ContactNumber` = ?, `commissionLong` = ?, `commissionLat` = ? WHERE commissionID = ?";
   //const q = "UPDATE commission SET `commissionTitle` = ? WHERE `commissionID` = ?"
   const values = [
     //req.body.comEmployer,
     req.body.comTitle,
+    req.body.comStartDate,
     req.body.comDeadline,
     req.body.comLocation,
+    req.body.comTo,
     req.body.comType,
     req.body.comDescription,
     req.body.comPay,
