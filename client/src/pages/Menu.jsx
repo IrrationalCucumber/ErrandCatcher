@@ -3,9 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import Cards from "../components/Cards";
 //  import NavBar from '../components/Navbar';
 import Footer from "../components/Footer";
-import axios from "axios";
 import "./Menu.css";
-import HomeServices from "./Services/HomeServices";
 //import CardItem from '../components/CardItem';
 
 const Menu = () => {

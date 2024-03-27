@@ -6,7 +6,7 @@ import AccountList from "./pages/AccountList";
 import AddAccount from "./pages/AddAccount";
 import PostCommission from "./pages/PostCommission";
 import CommissionList from "./pages/CommissionList";
-import Home from "./pages/Home";
+// import Home from "./pages/Home";
 import UpdateAccount from "./pages/UpdateAccount";
 import UpdateCommission from "./pages/UpdateCommission";
 //import "./style.css";
@@ -28,8 +28,8 @@ import testpage from "./pages/testpage";
 import Application from "./pages/CatcherApplication";
 import CatcherCommission from "./pages/CatcherCommissionPage";
 //private route
-import { AuthProvider } from "./components/AuthContext";
-import PrivateRoute from "./components/PrivateRoute";
+// import { AuthProvider } from "./components/AuthContext";
+// import PrivateRoute from "./components/PrivateRoute";
 
 import Transportation from "./pages/Services/Transpo";
 import HomeServices from "./pages/Services/HomeServices";

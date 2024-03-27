@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-//import Footer from '../components/Footer';
-import axios from "axios";
 import "../Services/Transpo.css";
 import Cards from "../../components/CatCards";
 import Navbar from "../../components/Navbar";

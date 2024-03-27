@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 //import { Button } from "./NavButton";
 //import "./Navbar.css";
-import { useAuth } from "./AuthContext";
+//import { useAuth } from "./AuthContext";
 import NotificationIcon from "./notif-icon";
 import NavDropdown from "./NavDropdown";
 import axios from "axios";

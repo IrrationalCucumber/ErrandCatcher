@@ -24,7 +24,7 @@ function CatCards() {
       }
     };
     fetchAllCommission();
-  }, []);
+  }, [type]);
 
   return (
     <div className="cards">
