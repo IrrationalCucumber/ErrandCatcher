@@ -11,12 +11,7 @@ import HomeServices from "./Services/HomeServices";
 const Menu = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const location = useLocation();
-  const userID = location.split("/")[2];
-  const [cat, setCat] = useState("");
-
-  const getCat = (e) => {
-    setCat(e);
-  };
+  const userID = location.pathname.split("/")[2];
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
@@ -37,7 +32,7 @@ const Menu = () => {
       <section className="Menu" id="Menu">
         <div className="box-container">
           <div className="box">
-            <Link to={`/HomeService/${userID}/${(e) => getCat(HomeServices)}`}>
+            <Link to={`/HomeService/${userID}/${"HomeService"}`}>
               <button style={{ backgroundColor: "white" }}>
                 <img src="/images/img6.png" alt="" />
                 <div className="content">
@@ -47,7 +42,7 @@ const Menu = () => {
             </Link>
           </div>
           <div className="box">
-            <Link to={`/Transpo/${userID}`}>
+            <Link to={`/Transpo/${userID}/${"Transportation"}`}>
               <button style={{ backgroundColor: "white" }}>
                 <img src="/images/img4.png" alt="" />
                 <div className="content">
@@ -57,7 +52,7 @@ const Menu = () => {
             </Link>
           </div>
           <div className="box">
-            <Link to={`/Delivery/${userID}`}>
+            <Link to={`/Delivery/${userID}/${"Delivery"}`}>
               <button style={{ backgroundColor: "white" }}>
                 <img src="/images/img5.png" alt="" />
                 <div className="content">
