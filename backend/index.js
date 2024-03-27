@@ -74,12 +74,12 @@ app.get("/get-type/:userID", (req, res) => {
 });
 //==========================================CATEGORY=================================================================//
 //select type
-app.get("/type", (req, res) => {
-  const type = req.query.type; // Get the type from the query parameter
+app.get("/type/:type", (req, res) => {
+  const type = req.params.type; // Get the type from the query parameter
   const q = "SELECT * FROM commission WHERE commissionType LIKE ?";
   const values = [`%${type}%`];
 
-  db.query(q, values, (err, data) => {
+  db.query(q, [values], (err, data) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: "An error occurred" });
@@ -87,22 +87,23 @@ app.get("/type", (req, res) => {
     return res.json(data);
   });
 });
-//static query for type
-//select type
-//UNTESTED
-app.get("/type", (req, res) => {
-  //const type = req.query.type; // Get the type from the query parameter
-  const q = "SELECT * FROM commission WHERE commissionType LIKE 'Household'";
-  //const values = [`%${type}%`];
+// static query for type
+// select type
+// UNTESTED
+// app.get("/type", (req, res) => {
+//   //const type = req.query.type; // Get the type from the query parameter
+//   const q =
+//     "SELECT * FROM commission WHERE commissionType LIKE '%HomeService%'";
+//   //const values = [`%${type}%`];
 
-  db.query(q, (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "An error occurred" });
-    }
-    return res.json(data);
-  });
-});
+//   db.query(q, (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ error: "An error occurred" });
+//     }
+//     return res.json(data);
+//   });
+// });
 //===================================================================================================================//
 //==========================================SEARCH FUNCTION==========================================================//
 //search account
@@ -138,6 +139,25 @@ app.get("/search-commission", (req, res) => {
   const q =
     "SELECT * FROM commission WHERE commissionTitle LIKE ? OR commissionType LIKE ? OR commissionLocation LIKE ?";
   const values = [`%${searchTerm}%`, `%${searchTerm}%`, `%${searchTerm}%`];
+
+  db.query(q, values, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+
+// filter status and types Commission List //
+app.get("/type-commilist", (req, res) => {
+  // Get the search term from the query parameter
+  const type = req.query.type || "";
+  const status = req.query.status || "";
+  // commissionStatus AND commissionType
+  const q =
+    "SELECT * FROM commission WHERE commissionStatus = ? OR commissionType = ?";
+  const values = [status, type];
 
   db.query(q, values, (err, data) => {
     if (err) {
@@ -289,11 +309,13 @@ app.get("/applicants/:userID", (req, res) => {
 app.get("/your-application/:userID", (req, res) => {
   const userID = req.params.userID; // Use req.params.userID to get the route parameter
   const q =
-    "SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname" +
+    "SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname, c.employerID" +
     " FROM Application a " +
     " JOIN commission c ON a.applicationErrandID = c.commissionID" +
     " JOIN useraccount ua ON c.employerID = ua.userID" +
-    " WHERE a.catcherID IN (SELECT userID FROM useraccount WHERE userID = 29)";
+    " WHERE a.catcherID IN (SELECT userID FROM useraccount WHERE userID = ?)";
+  //Add condition to retrieve Pending only
+  // AND applicationStatus = 'Pending'
   db.query(q, [userID], (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
@@ -332,6 +354,20 @@ app.put("/deny-apply/:comID/:applyID", (req, res) => {
       return res.status(500).json(err);
     }
     return res.json("Application Denied");
+  });
+});
+app.put("/accept-apply/:comID/:applyID", (req, res) => {
+  const comId = req.params.comID;
+  const applicationID = req.params.applyID;
+  const q =
+    "UPDATE application SET `applicationStatus` = 'Approved' WHERE applicationErrandID = ? AND applicationID = ?";
+
+  db.query(q, [comId, applicationID], (err) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+    return res.json("Application Approved");
   });
 });
 //APS - 03/03/24
@@ -426,6 +462,46 @@ app.get("/commission/:commissionID", (req, res) => {
     return res.json(data);
   });
 });
+
+//retrieve commission FOR Catcher
+//info based on ID
+app.get("/accepted-errands/:userID", (req, res) => {
+  const userID = req.params.userID; // Get the search term from the query parameter
+  const q =
+    "SELECT c.*, t.errandStatus, t.transDateAccepted,ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname" +
+    " FROM errandtransaction t" +
+    " JOIN commission c ON t.transErrandID = c.commissionID" +
+    " JOIN useraccount ua ON c.employerID = ua.userID" +
+    " WHERE t.transCatcherID IN (SELECT userID FROM useraccount WHERE userID = ?)";
+
+  db.query(q, [userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+
+//retrieve commission FOR Employer
+//info based on ID
+app.get("/pending-errands/:userID", (req, res) => {
+  const userID = req.params.userID; // Get the search term from the query parameter
+  const q =
+    "SELECT c.*, t.errandStatus, t.transDateAccepted,ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname" +
+    " FROM errandtransaction t" +
+    " JOIN commission c ON t.transErrandID = c.commissionID" +
+    " JOIN useraccount ua ON t.transCatcherID = ua.userID" +
+    " WHERE t.transErrandID IN (SELECT commissionID FROM commission WHERE employerID = ?)";
+
+  db.query(q, [userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
 //update commission
 app.put("/update-commission/:commissionID", (req, res) => {
   const commissionID = req.params.commissionID;
@@ -437,6 +513,7 @@ app.put("/update-commission/:commissionID", (req, res) => {
     req.body.comTitle,
     req.body.comStartDate,
     req.body.comDeadline,
+    //req.body.comStart,
     req.body.comLocation,
     req.body.comTo,
     req.body.comType,
@@ -746,14 +823,14 @@ app.get("/user-rating/:userID", (req, res) => {
 //VARIABLES SUBJECT TO CHANGE BASED ON ERD AND DB
 app.post("/rate", (req, res) => {
   const q =
-    "INSERT INTO feedbackcommission (`feedbackCatcherID`, `feedbackCommissionID`, `feedbackComment`, `feedbackCount`, `feedbackDate`, `feedbackPosterID`) VALUES (?)";
+    "INSERT INTO feedbackcommission (`feedbackCommissionID`, `feedbackCatcherID` , `feedbackComment`, `feedbackCount`, `feedbackDate`, `feedbackPosterID`) VALUES (?)";
   const values = [
-    req.body.catcherID,
     req.body.commissionID,
+    req.body.catcherID,
     req.body.feedbackComment,
     req.body.feedbackCount,
     req.body.feedbackDate,
-    req.body.employerID,
+    req.body.feedbackPosterID,
   ];
   db.query(q, [values], (err, data) => {
     if (err) return res.json(err);
@@ -810,6 +887,26 @@ app.get("/user-verify/:userID", (req, res) => {
 });
 
 //=================================================================//
+/**
+ * TRANSACTION
+ * APS - 24/03/24
+ */
+//Add transaction
+app.post("/add-trans", (req, res) => {
+  const q =
+    "INSERT INTO errandtransaction (`transErrandID`, `transCatcherID`, `transDateAccepted`) VALUES (?)";
+  const values = [
+    req.body.comID,
+    req.body.catcherID,
+    req.body.dateAccepted,
+    // req.body.dateCompleted,
+    //  req.body.reciept,
+  ];
+  db.query(q, [values], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("Transaction added");
+  });
+});
 
 app.listen(8800, () => {
   console.log("connected to backend!");
