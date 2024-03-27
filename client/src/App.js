@@ -89,7 +89,7 @@ function App() {
             element={<EmployerCommissions />}
           />
           <Route path="/e-home/:userID" exact Component={EmployerHome} />
-          <Route path="/post-commission/:userID" elemnt={<PostCommission />} />
+          <Route path="/post-commission/:userID" element={<PostCommission />} />
           <Route
             path="/update-commission/:commissionID/:userID"
             elemnt={<UpdateCommission />}
