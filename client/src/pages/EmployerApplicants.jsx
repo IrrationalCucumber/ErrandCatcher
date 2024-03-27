@@ -163,7 +163,7 @@ const EmployerApplicants = () => {
       await axios.post("http://localhost:8800/add-trans/", trans);
       //add a notification to the commission's applicant
       notif.notifDesc = "Your Errand application has been Accepted";
-      notif.userID = applicants.catcherID;
+      notif.userID = catcherID;
       notif.notificationType = "Application";
       notif.notifDate = getTimeAndDate();
       await axios.post("http://localhost:8800/notify", notif);
