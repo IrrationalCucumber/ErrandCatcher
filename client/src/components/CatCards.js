@@ -4,14 +4,18 @@ import CardItem from "./CardItem";
 import axios from "axios";
 import "./Cards.css";
 
-function Cards() {
+function CatCards() {
   const [commissions, setCommissions] = useState([]);
-
+  const location = useLocation();
+  //pathname to array from
+  //get the id
+  const userID = location.pathname.split("/")[2];
+  const type = location.pathname.split("/")[3];
   //rretrieve data
   useEffect(() => {
     const fetchAllCommission = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/recent-commission");
+        const res = await axios.get(`http://localhost:8800/type/${type}`);
         //"http://localhost:8800/commission" - local computer
         //"http://192.168.1.47:8800/commission" - netwrok
         setCommissions(res.data);
@@ -21,10 +25,6 @@ function Cards() {
     };
     fetchAllCommission();
   }, []);
-  const location = useLocation();
-  //pathname to array from
-  //get the id
-  const userID = location.pathname.split("/")[2];
 
   return (
     <div className="cards">
@@ -49,4 +49,4 @@ function Cards() {
   );
 }
 
-export default Cards;
+export default CatCards;

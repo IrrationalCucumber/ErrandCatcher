@@ -54,7 +54,7 @@ function Navbar(props) {
       axios
         .get(`http://localhost:8800/username/${userID}`)
         .then((response) => {
-          console.log(response.data[0].username);
+          //console.log(response.data[0].username);
           setUsername(response.data[0].username);
         })
         .catch(function (error) {

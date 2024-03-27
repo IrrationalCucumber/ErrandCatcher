@@ -74,12 +74,12 @@ app.get("/get-type/:userID", (req, res) => {
 });
 //==========================================CATEGORY=================================================================//
 //select type
-app.get("/type", (req, res) => {
-  const type = req.query.type; // Get the type from the query parameter
+app.get("/type/:type", (req, res) => {
+  const type = req.params.type; // Get the type from the query parameter
   const q = "SELECT * FROM commission WHERE commissionType LIKE ?";
   const values = [`%${type}%`];
 
-  db.query(q, values, (err, data) => {
+  db.query(q, [values], (err, data) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: "An error occurred" });
@@ -87,22 +87,23 @@ app.get("/type", (req, res) => {
     return res.json(data);
   });
 });
-//static query for type
-//select type
-//UNTESTED
-app.get("/type", (req, res) => {
-  //const type = req.query.type; // Get the type from the query parameter
-  const q = "SELECT * FROM commission WHERE commissionType LIKE 'Household'";
-  //const values = [`%${type}%`];
+// static query for type
+// select type
+// UNTESTED
+// app.get("/type", (req, res) => {
+//   //const type = req.query.type; // Get the type from the query parameter
+//   const q =
+//     "SELECT * FROM commission WHERE commissionType LIKE '%HomeService%'";
+//   //const values = [`%${type}%`];
 
-  db.query(q, (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "An error occurred" });
-    }
-    return res.json(data);
-  });
-});
+//   db.query(q, (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ error: "An error occurred" });
+//     }
+//     return res.json(data);
+//   });
+// });
 //===================================================================================================================//
 //==========================================SEARCH FUNCTION==========================================================//
 //search account
