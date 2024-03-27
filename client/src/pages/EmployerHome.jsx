@@ -31,7 +31,7 @@ function EmployerHome() {
       />
       <EmployerCard/>
       <div>
-        <h2 className="recently-posted" style={{borderBottom: "1px solid black", fontSize:"18px", paddingTop:"60px", paddingLeft: "20px"}}>Recently Posted</h2>
+        <h2 className="recently-posted" style={{borderBottom: "1px solid gray", fontSize:"18px", paddingTop:"60px", paddingLeft: "20px", color:"Black"}}>Recently Posted</h2>
         {/* Add your component or content for displaying recently posted items here */}
         <Cards/>
       </div>
