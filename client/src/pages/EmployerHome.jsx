@@ -1,4 +1,5 @@
 //added Sticky button
+//03-27-24 updated the design
 import React from "react";
 import NavBar from "../components/Navbar";
 //import HeroSection from '../components/HeroSection'
@@ -7,6 +8,7 @@ import Menu from "./Menu";
 import StickyButton from "../components/Sticky Button/StickyButton";
 import EmployerCard from '../Employer Cards/EmployerCards'
 import Cards from '../components/Cards'
+import Footer from "../components/Footer";
 
 
 function EmployerHome() {
@@ -29,7 +31,7 @@ function EmployerHome() {
       />
       <EmployerCard/>
       <div>
-        <h2 style={{padding:"20px"}}>Recently Posted</h2>
+        <h2 className="recently-posted" style={{borderBottom: "1px solid black", fontSize:"18px", paddingTop:"60px", paddingLeft: "20px"}}>Recently Posted</h2>
         {/* Add your component or content for displaying recently posted items here */}
         <Cards/>
       </div>
@@ -41,6 +43,7 @@ function EmployerHome() {
         buttonText="Post Errand"
         destination={`/post-commission/${userID}`}
       />
+      <Footer/>
     </div>
   );
 }
