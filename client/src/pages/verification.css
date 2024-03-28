@@ -62,7 +62,7 @@
     background-color: skyblue;
   }
   
-  .input-row {
+  .input-rows {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
@@ -75,30 +75,30 @@
   }
 
   
-  .input-row .label {
+  .input-rows .label {
     margin-right: 10px; /* Adjust margin between label and input */
     flex-shrink: 0;
   }
   
-  .input-row input[type='text'],
-  .input-row input[type='number'],
-  .input-row select,
-  .input-row input[type='date'] {
+  .input-rows input[type='text'],
+  .input-rows input[type='number'],
+  .input-rows select,
+  .input-rows input[type='date'] {
     flex: 1; /* Let the input fill the remaining space */
     height: 40px; /* Set input height */
   }
   
-  .input-row input[type='number'],
-  .input-row input[type='date'] {
+  .input-rows input[type='number'],
+  .input-rows input[type='date'] {
     margin-right: 10px; /* Adjust as needed */
   }
   
-  .input-row .select {
+  .input-rows .select {
     flex-grow: 1; /* Let the select fill the remaining space */
     height: 40px; /* Set the select height */
   }
 
-  .form-group1.input-row {
+  .form-group1.input-rows {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
