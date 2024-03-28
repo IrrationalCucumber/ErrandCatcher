@@ -76,7 +76,8 @@ app.get("/get-type/:userID", (req, res) => {
 //select type
 app.get("/type/:type", (req, res) => {
   const type = req.params.type; // Get the type from the query parameter
-  const q = "SELECT * FROM commission WHERE commissionType LIKE ?";
+  const q =
+    "SELECT * FROM commission WHERE commissionType LIKE ? AND commissionStatus = 'Available'";
   const values = [`%${type}%`];
 
   db.query(q, [values], (err, data) => {
@@ -137,7 +138,7 @@ app.get("/search-user", (req, res) => {
 app.get("/search-commission", (req, res) => {
   const searchTerm = req.query.term; // Get the search term from the query parameter
   const q =
-    "SELECT * FROM commission WHERE commissionTitle LIKE ? OR commissionType LIKE ? OR commissionLocation LIKE ?";
+    "SELECT * FROM commission WHERE commissionTitle LIKE ? OR commissionType LIKE ? OR commissionLocation LIKE ? AND commissionStatus = 'Available'";
   const values = [`%${searchTerm}%`, `%${searchTerm}%`, `%${searchTerm}%`];
 
   db.query(q, values, (err, data) => {
