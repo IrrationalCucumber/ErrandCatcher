@@ -1,10 +1,10 @@
-.App {
+/* .App {
     font-family: sans-serif;
     text-align: center;
-  }
+  } */
 
   body {
-    background-color: #e7e1c7; /* Set the background color for the entire page */
+    background-color: white; /* Set the background color for the entire page */
   }
   
   .form-container {
@@ -50,7 +50,7 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: gray;
+    background-color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
