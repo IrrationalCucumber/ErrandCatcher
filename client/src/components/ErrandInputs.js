@@ -6,6 +6,9 @@ function ErrandInputs(props) {
     <>
       <div className="input-cont">
         <div className="errand-inputs">
+          <div>
+            <p>{props.status}</p>
+          </div>
           {/* commission title */}
           <div className="input-group">
             <div className="col1">
