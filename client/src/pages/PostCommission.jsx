@@ -17,8 +17,10 @@ const PostCommission = () => {
   const [commission, setCommission] = useState({
     empID: "",
     comTitle: "",
+    comStart: "",
     comDeadline: "",
     comLocation: "",
+    comTo: "",
     comType: "",
     comDescription: "",
     comPay: "",
@@ -185,6 +187,7 @@ const PostCommission = () => {
         return null;
     }
   };
+  console.log(commission);
 
   return (
     <>
@@ -193,8 +196,10 @@ const PostCommission = () => {
         <ErrandInputs
           handleChange={handleChange}
           title="comTitle"
+          start="comStart"
           deadline="comDeadline"
           location="comLocation"
+          to="comTo"
           type="comType"
           typeValue={commission.comType}
           desc="comDescription"
