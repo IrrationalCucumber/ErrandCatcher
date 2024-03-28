@@ -1,0 +1,38 @@
+import React from "react";
+import "./profileModal.css"; // You can define custom styles for your profile modal if needed
+
+const ProfileModal = ({ applicant, closeModal, handleAccept,handleDecline }) => {
+  return (
+    <div className="profile-modal-container">
+      <div className="profile-modal">
+        <div className="profile-modal-header">
+          <i
+            className="fa fa-times-circle-o close-icon"
+            aria-hidden="true"
+            onClick={closeModal}
+          ></i>
+        </div>
+        <div className="profile-modal-content">
+          <h2>Username</h2>
+          <p>Name: </p>
+          <p>Age:</p>
+          <p>Email: </p>
+          <p>Contact Number: </p>
+          <p>Rating: </p>
+          <button onClick={() => handleAccept(applicant)}>
+            Accept
+          </button>
+          <button onClick={() => handleDecline(applicant)}>
+            Decline
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProfileModal;
+
+//{`${applicant.userFirstname} ${applicant.userLastname}'s Profile`}
+//{applicant.userEmail}
+//{applicant.userContactNum}

@@ -3,6 +3,7 @@
 //added pagination and table. contents for the td are based on the old code --ash
 //03-10-24  <Route path="/e-applicants" exact Component={EmployerApplicants}/>
 //03-14-24 inital fixing. 4:56pm fixed the error
+//03-28-24 added view profile but modal doesnt have data
 
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -11,6 +12,7 @@ import NavBar from "../components/Navbar";
 import Table from "../components/Table";
 import "./applicant.css";
 import Pagination from "../components/Pagination";
+import ProfileModal from "../components/Profile Modal/ProfileModal"
 
 const EmployerApplicants = () => {
   const location = useLocation();
@@ -25,6 +27,18 @@ const EmployerApplicants = () => {
   //Pagination --Ash
   //display data per page
   const [itemsPerPage] = useState(10);
+  //ash
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [selectedApplicant, setSelectedApplicant] = useState(null);
+
+  const handleViewProfile = (applicant) => {
+    setSelectedApplicant(applicant);
+    setShowProfileModal(true);
+  };
+
+  const handleCloseProfileModal = () => {
+    setShowProfileModal(false);
+  };
 
   //useEffect to handle error
   useEffect(() => {
@@ -234,6 +248,24 @@ const EmployerApplicants = () => {
           </select>*/}
         </div>
         <Table headers={headers} data={applicantData} />
+
+{/* added  by ash */}
+      <ul>
+        {applicants.map(applicant => (
+          <li key={applicant.id}>
+            {applicant.userFirstname} {applicant.userLastname} -{" "}
+            <button onClick={() => handleViewProfile(applicant)}>View Profile</button>
+          </li>
+        ))}
+      </ul>
+
+      
+      {showProfileModal && (
+        <ProfileModal
+          applicant={selectedApplicant}
+          closeModal={handleCloseProfileModal}
+        />
+      )}
 
         {/* Pagination controls */}
         {applicants.length > 0 && (
