@@ -4,7 +4,7 @@ import CardItem from "./CardItem";
 import axios from "axios";
 import "./Cards.css";
 
-function Cards() {
+function Cards({ commissions }) {
   //Simulated commission data
   // const commissions = [
   //   {
@@ -32,7 +32,8 @@ function Cards() {
 
   // const userID = 123; // Example userID
 
-  const [commissions, setCommissions] = useState([]);
+  const [commissionslist, setCommissionslist] = useState([]);
+  const [searchQuery, setSearchQuery] = useState();
 
   //rretrieve data
   useEffect(() => {
@@ -41,13 +42,31 @@ function Cards() {
         const res = await axios.get("http://localhost:8800/recent-commission");
         //"http://localhost:8800/commission" - local computer
         //"http://192.168.1.47:8800/commission" - netwrok
-        setCommissions(res.data);
+        setCommissionslist(res.data);
       } catch (err) {
         console.log(err);
       }
     };
     fetchAllCommission();
   }, []);
+  
+  const fetchSearchResults = async () => {
+    try {
+      //http://localhost:8800/user - local
+      //http://192.168.1.47:8800/user - network
+      const res = await axios.get("http://localhost:8800/search-commission", {
+        params: { term: searchQuery}, // Pass the search term as a query parameter
+      });
+      setCommissionslist(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchSearchResults();
+  }, [searchQuery]); // Trigger the search whenever searchTerm changes */
+
   const location = useLocation();
   //pathname to array from
   //get the id

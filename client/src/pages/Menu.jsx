@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Cards from '../components/Cards';
 //  import NavBar from '../components/Navbar';
@@ -9,11 +9,30 @@ import "./Menu.css";
 
 const Menu = () => {
     const [searchQuery, setSearchQuery] = useState('');
+    const [commissions, setCommissions] = useState([]);
 
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
     };
 
+    useEffect(() => {
+        const fetchAllCommission = async () => {
+            try {
+                const res = await axios.get("http://localhost:8800/recent-commission");
+                setCommissions(res.data);
+              } catch (err) {
+                console.log(err);
+              }
+            };
+    fetchAllCommission();
+    }, []);
+    
+    // Filter commmissions based on search Query //
+    const filteredCommissions = commissions.filter(commission =>
+        commission.commissionTitle.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+          
     return (
         <>
            
@@ -108,7 +127,7 @@ const Menu = () => {
 
                 </div>
             </section> */}
-            <Cards/>
+            <Cards commissions={filteredCommissions} />
            
             <Footer />
         </>
