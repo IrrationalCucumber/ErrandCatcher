@@ -10,6 +10,7 @@ import Pagination from "../components/Pagination.js";
 const CommissionList = () => {
   const [commissions, setCommissions] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [status, setStatus] = useState("");
 
   const location = useLocation();
 
@@ -55,6 +56,24 @@ const CommissionList = () => {
   useEffect(() => {
     fetchSearchResults();
   }, [searchTerm]); // Trigger the search whenever searchTerm changes
+
+   // filter type
+   const fetchTypeResults = async () => {
+    try {
+          //http://localhost:8800/user - local
+          //http://192.168.1.47:8800/user - network
+        const res = await axios.get('http://localhost:8800/employer-commilist', {
+            params: { status: status } // Pass the search term as a query parameter
+        });
+        setCommissions(res.data);
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+useEffect(() => {
+  fetchTypeResults();
+}, [status]);
 
   //funtion to delete commission
   const handleDelete = async (commissionID) => {
@@ -104,7 +123,7 @@ const CommissionList = () => {
                 </button>
               </div>
               <div className="filter">
-                <select>
+                <select onChange={(e) => setStatus(e.target.value)} value={status}>
                   <option value="">All Status</option>
                   <option value="Pending">Pending</option>
                   <option value="Completed">Completed</option>
