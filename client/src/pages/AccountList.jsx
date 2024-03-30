@@ -124,7 +124,7 @@ const AccountList = () => {
         />
         <button
           style={{ padding: "8px", fontSize: "12px", cursor: "pointer", border: "none", backgroundColor: "#CE9251", color: "white", borderRadius: "4px", marginBottom:"10px", marginRight:"10px" }}>
-          Search
+          <i className="fa fa-search"></i>
         </button>
         <select
           className="ALtype"
