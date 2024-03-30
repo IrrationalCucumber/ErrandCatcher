@@ -266,6 +266,7 @@ const ErrandPage = () => {
       <Navbar />
       <div className="errand-cont">
         <ErrandInputs
+          status={commission.comStatus}
           handleChange={handleChange}
           title="comTitle"
           disable="true"
