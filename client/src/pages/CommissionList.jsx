@@ -208,7 +208,7 @@ useEffect(() => {
             lineHeight: "1.5",
             fontFamily: "'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif"
           }}>
-          Add Commission
+          Add Errand
         </button>
       </Link>
     </div>
