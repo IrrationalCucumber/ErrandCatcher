@@ -273,8 +273,7 @@ app.get("/search-employer-commission/:userID", (req, res) => {
 app.get("/employer-commilist", (req, res) => {
   // Get the search term from the query parameter
   const status = req.query.status || "";
-  const q =
-    "SELECT * FROM commission WHERE commissionStatus = ?";
+  const q = "SELECT * FROM commission WHERE commissionStatus = ?";
   const values = [status];
 
   db.query(q, values, (err, data) => {
@@ -1037,6 +1036,23 @@ app.get("/applicant-count/:userID", (req, res) => {
       return res.status(500).json({ error: "An error occurred" });
     }
     return res.json(data);
+  });
+});
+//combiniation
+app.get("/post-and-applicant-count/:userID", (req, res) => {
+  const userID = req.params.userID;
+  const q = `
+    SELECT 
+      (SELECT COUNT(*) FROM commission WHERE employerID = ?) AS postCount,
+      (SELECT COUNT(*) FROM commission e JOIN application a ON a.applicationErrandID = e.commissionID WHERE e.employerID = ?) AS applicantCount
+  `;
+
+  db.query(q, [userID, userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data); // Assuming you only expect one row of results
   });
 });
 
