@@ -22,37 +22,37 @@ app.get("/", (req, res) => {
 
 //=====================================SCHDULER========================================
 // Define the cron job to update expired commissions
-cron.schedule(
-  "0 0 * * *",
-  () => {
-    console.log("Running cron job to update expired commissions...");
+// cron.schedule(
+//   "0 0 * * *",
+//   () => {
+//     console.log("Running cron job to update expired commissions...");
 
-    // Update query to set commissionStatus to 'Expired' for commissions with past deadline
-    const query = `
-    UPDATE commission
-    SET commissionStatus = 'Expired'
-    WHERE commissionDeadline < CURDATE()
-    AND commissionStatus = 'Available';
-  `;
+//     // Update query to set commissionStatus to 'Expired' for commissions with past deadline
+//     const query = `
+//     UPDATE commission
+//     SET commissionStatus = 'Expired'
+//     WHERE commissionDeadline < CURDATE()
+//     AND commissionStatus = 'Available';
+//   `;
 
-    // Execute the query
-    db.query(query, (err, result) => {
-      if (err) {
-        console.error("Error updating expired commissions:", err);
-      } else {
-        console.log(
-          "Successfully updated expired commissions:",
-          result.affectedRows,
-          "rows updated"
-        );
-      }
-    });
-  },
-  {
-    scheduled: true,
-    timezone: "Asia/Kolkata",
-  }
-);
+//     // Execute the query
+//     db.query(query, (err, result) => {
+//       if (err) {
+//         console.error("Error updating expired commissions:", err);
+//       } else {
+//         console.log(
+//           "Successfully updated expired commissions:",
+//           result.affectedRows,
+//           "rows updated"
+//         );
+//       }
+//     });
+//   },
+//   {
+//     scheduled: true,
+//     timezone: "Asia/Kolkata",
+//   }
+// );
 /**
  * NEW METHOD FOR SCHEDULER
  * WORKING AS OF NOW
@@ -71,13 +71,13 @@ const updateExpiredRecords = () => {
     if (error) {
       console.error("Error updating records:", error);
     } else {
-      console.log(`${results.affectedRows} records updated.`);
+      console.log(`${results.affectedRows} errand updated.`);
     }
   });
 };
 
 // Schedule the update function to run every minute
-const scheduler = setInterval(updateExpiredRecords, 60 * 1000);
+const scheduler = setInterval(updateExpiredRecords, 10000);
 
 // Stop the scheduler after a certain duration (optional)
 // setTimeout(() => {
@@ -462,6 +462,24 @@ app.put("/accept-apply/:comID/:applyID", (req, res) => {
       return res.status(500).json(err);
     }
     return res.json("Application Approved");
+  });
+});
+/**
+ * DENY other applicatns after accepting an applicatn
+ * APS - 30/03/24
+ */
+app.put("/deny-other-apply/:comID/:catcherID", (req, res) => {
+  const comId = req.params.comID;
+  const catcherID = req.params.catcherID;
+  const q =
+    "UPDATE application SET applicationStatus = 'Denied' WHERE applicationErrandID = ? AND catcherID != ?";
+
+  db.query(q, [comId, catcherID], (err) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+    return res.json("Other Applications Denied");
   });
 });
 //APS - 03/03/24
