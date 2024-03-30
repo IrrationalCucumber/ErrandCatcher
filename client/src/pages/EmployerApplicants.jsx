@@ -12,7 +12,7 @@ import NavBar from "../components/Navbar";
 import Table from "../components/Table";
 import "./applicant.css";
 import Pagination from "../components/Pagination";
-import ProfileModal from "../components/Profile Modal/ProfileModal"
+import ProfileModal from "../components/Profile Modal/ProfileModal";
 
 const EmployerApplicants = () => {
   const location = useLocation();
@@ -33,6 +33,7 @@ const EmployerApplicants = () => {
 
   const handleViewProfile = (applicant) => {
     setSelectedApplicant(applicant);
+    //console.log(selectedApplicant.userFirstname);
     setShowProfileModal(true);
   };
 
@@ -214,7 +215,7 @@ const EmployerApplicants = () => {
       console.log(err);
     }
   };
-  console.log(applicants);
+  //console.log(applicants);
   return (
     <div>
       <NavBar
@@ -249,23 +250,32 @@ const EmployerApplicants = () => {
         </div>
         <Table headers={headers} data={applicantData} />
 
-{/* added  by ash */}
-      <ul>
-        {applicants.map(applicant => (
-          <li key={applicant.id}>
-            {applicant.userFirstname} {applicant.userLastname} -{" "}
-            <button onClick={() => handleViewProfile(applicant)}>View Profile</button>
-          </li>
-        ))}
-      </ul>
+        {/* added  by ash */}
+        <ul>
+          {applicants.map((applicant) => (
+            <li key={applicant.id}>
+              {applicant.userFirstname} {applicant.userLastname} -{" "}
+              <button
+                onClick={() => handleViewProfile(applicant, applicant.username)}
+              >
+                View Profile
+              </button>
+            </li>
+          ))}
+        </ul>
 
-      
-      {showProfileModal && (
-        <ProfileModal
-          applicant={selectedApplicant}
-          closeModal={handleCloseProfileModal}
-        />
-      )}
+        {showProfileModal && (
+          <ProfileModal
+            username={selectedApplicant.username}
+            fname={selectedApplicant.userFirstname}
+            lname={selectedApplicant.userLastname}
+            email={selectedApplicant.userEmail}
+            num={selectedApplicant.userContactNum}
+            age={selectedApplicant.userAge}
+            applicant={selectedApplicant}
+            closeModal={handleCloseProfileModal}
+          />
+        )}
 
         {/* Pagination controls */}
         {applicants.length > 0 && (
