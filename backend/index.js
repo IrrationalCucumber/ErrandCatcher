@@ -1044,10 +1044,11 @@ app.get("/post-and-applicant-count/:userID", (req, res) => {
   const q = `
     SELECT 
       (SELECT COUNT(*) FROM commission WHERE employerID = ?) AS postCount,
-      (SELECT COUNT(*) FROM commission e JOIN application a ON a.applicationErrandID = e.commissionID WHERE e.employerID = ?) AS applicantCount
+      (SELECT COUNT(*) FROM commission e JOIN application a ON a.applicationErrandID = e.commissionID WHERE e.employerID = ?) AS applicantCount,
+      (SELECT COUNT(*) FROM errandtransaction t JOIN commission c ON t.transErrandID = c.commissionID WHERE c.employerID = ? AND errandStatus = 'Ongoing' ) AS pending
   `;
 
-  db.query(q, [userID, userID], (err, data) => {
+  db.query(q, [userID, userID, userID], (err, data) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: "An error occurred" });
