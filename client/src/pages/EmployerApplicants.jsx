@@ -5,7 +5,7 @@
 //03-14-24 inital fixing. 4:56pm fixed the error
 
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import NavBar from "../components/Navbar";
 import Table from "../components/Table";
@@ -13,6 +13,7 @@ import "./applicant.css";
 import Pagination from "../components/Pagination";
 
 const EmployerApplicants = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   //pathname to array from
   //get the id
@@ -69,12 +70,18 @@ const EmployerApplicants = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = applicants.slice(indexOfFirstItem, indexOfLastItem);
 
-  const headers = ["DATE", "CATCHER", "ERRAND TITLE", "ACTION"];
+  const headers = ["DATE", "CATCHER", "ERRAND TITLE", "ACTION", ""];
   const applicantData = currentItems.map((applicant) => [
     //applicant.applicationID,
     new Date(applicant.applicationDate).toLocaleDateString(),
     `${applicant.userFirstname} ${applicant.userLastname}`,
     applicant.commissionTitle,
+    <button
+      onClick={() => navigate(`/view-profile/${userID}/${applicant.catcherID}`)}
+      //`/view-profile/${applicant.catcherID}`
+    >
+      <i className="fa-regular fa-user"></i>
+    </button>,
     applicant.status === "Pending" ? (
       <>
         <button

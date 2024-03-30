@@ -36,6 +36,7 @@ import HomeServices from "./pages/Services/HomeServices";
 import Delivery from "./pages/Services/Delivery";
 //Errand Page
 import ErrandPage from "./pages/ErrandPage";
+import ViewProfile from "./pages/ViewProfile";
 
 function App() {
   return (
@@ -48,6 +49,10 @@ function App() {
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" exact Component={SignUp} />
           <Route path="/profile/:userID" exact Component={Profile} />
+          <Route
+            path="/view-profile/:userID/:catcherID"
+            element={<ViewProfile />}
+          />
           <Route path="/add" exact Component={AddAccount} />
           <Route path="/" exact Component={Landing} />
           <Route path="/Menu" exact Component={Menu} />
