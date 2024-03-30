@@ -107,7 +107,7 @@ const AccountList = () => {
         // {`admin-home/${userID}`}
         page2="ACCOUNT LIST"
         commissionList={`/accounts`}
-        page3="COMMISSION LIST"
+        page3="ERRAND LIST"
         applicants={`/commission-list`}
         page4="MAP"
         map={`/map`}
