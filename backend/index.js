@@ -464,6 +464,24 @@ app.put("/accept-apply/:comID/:applyID", (req, res) => {
     return res.json("Application Approved");
   });
 });
+/**
+ * DENY other applicatns after accepting an applicatn
+ * APS - 30/03/24
+ */
+app.put("/deny-other-apply/:comID/:catcherID", (req, res) => {
+  const comId = req.params.comID;
+  const catcherID = req.params.catcherID;
+  const q =
+    "UPDATE application SET applicationStatus = 'Denied' WHERE applicationErrandID = ? AND catcherID != ?";
+
+  db.query(q, [comId, catcherID], (err) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+    return res.json("Other Applications Denied");
+  });
+});
 //APS - 03/03/24
 //delete application
 //requires catcherID and applicationID
