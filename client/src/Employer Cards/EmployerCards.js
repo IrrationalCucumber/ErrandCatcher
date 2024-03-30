@@ -24,6 +24,7 @@ const EmployerCard = ({ employer }) => {
           setCounts({
             numPosts: res2.data[0].postCount,
             numApplicants: res2.data[0].applicantCount,
+            numErrands: res2.data[0].pending,
           });
         } catch (err) {
           console.log(err);
