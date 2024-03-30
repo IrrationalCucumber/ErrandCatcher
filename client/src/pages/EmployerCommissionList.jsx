@@ -84,7 +84,7 @@ const CommissionList = () => {
         commissionList={`/commissions/${userID}`}
         page3="APPLICANTS"
         applicants={`/applicants/${userID}`}
-         map={`/e-map/${userID}`}
+        map={`/e-map/${userID}`}
         page4="MAP"
       />
       <div className="Commission-page-container">
@@ -136,7 +136,7 @@ const CommissionList = () => {
                   </button>
                   <button className="update">
                     <Link
-                      to={`/update-commission/${commissionItem.commissionID}/${userID}`}
+                      to={`/view-errand/${userID}/${commissionItem.commissionID}`}
                     >
                       View
                     </Link>
