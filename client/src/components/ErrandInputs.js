@@ -6,10 +6,13 @@ function ErrandInputs(props) {
     <>
       <div className="input-cont">
         <div className="errand-inputs">
+          <div>
+            <p>{props.status}</p>
+          </div>
           {/* commission title */}
           <div className="input-group">
             <div className="col1">
-              <label>Commission Title</label>
+              <label style={{ color: "black" }}>Errand Title</label>
             </div>
             <div className="col2">
               <input
@@ -18,14 +21,13 @@ function ErrandInputs(props) {
                 onChange={props.handleChange}
                 name={props.title}
                 value={props.titleValue}
-                disabled={props.disable}
               />
             </div>
           </div>
           {/* deadline */}
           <div className="input-group">
             <div className="col1">
-              <label>DeadLine</label>
+              <label style={{ color: "black" }}>Due Date</label>
             </div>
             <div className="col2">
               <input
@@ -34,14 +36,28 @@ function ErrandInputs(props) {
                 onChange={props.handleChange}
                 name={props.deadline}
                 value={props.dlValue}
-                disabled={props.disable}
+              />
+            </div>
+          </div>
+          {/*start date*/}
+          <div className="input-group">
+            <div className="col1">
+              <label style={{ color: "black" }}>Start Date</label>
+            </div>
+            <div className="col2">
+              <input
+                type="date"
+                placeholder="Start Date"
+                onChange={props.handleChange}
+                name={props.start}
+                value={props.startValue}
               />
             </div>
           </div>
           {/* location */}
           <div className="input-group">
             <div className="col1">
-              <label>Location</label>
+              <label style={{ color: "black" }}>Location</label>
             </div>
             <div className="col2">
               <input
@@ -50,21 +66,21 @@ function ErrandInputs(props) {
                 onChange={props.handleChange}
                 name={props.location}
                 value={props.locValue}
-                disabled={props.disable}
               />
             </div>
           </div>
           {/* commission type */}
           <div className="input-group">
             <div className="col1">
-              <label htmlFor="">Commission Type</label>
+              <label style={{ color: "black" }} htmlFor="">
+                Errand Type
+              </label>
             </div>
             <div className="col2">
               <select
                 name={props.type}
                 onChange={props.handleChange}
                 value={props.typeValue}
-                disabled={props.disable}
               >
                 <option value="">Choose type....</option>
                 <option value="HomeService - Indoor">
@@ -78,10 +94,44 @@ function ErrandInputs(props) {
               </select>
             </div>
           </div>
+          {/* Display when Transport Type is selected */}
+          {props.typeValue === "Transport" && (
+            <div className="input-group">
+              <div className="col1">
+                <label style={{ color: "black" }}>Destination</label>
+              </div>
+              <div className="col2">
+                <input
+                  type="text"
+                  placeholder="Destination"
+                  onChange={props.handleChange}
+                  name={props.to}
+                  value={props.toValue}
+                />
+              </div>
+            </div>
+          )}
+          {/* Display when Delivery Type is selected */}
+          {props.typeValue === "Delivery" && (
+            <div className="input-group">
+              <div className="col1">
+                <label style={{ color: "black" }}>Destination</label>
+              </div>
+              <div className="col2">
+                <input
+                  type="text"
+                  placeholder="Destination"
+                  onChange={props.handleChange}
+                  name={props.to}
+                  value={props.toValue}
+                />
+              </div>
+            </div>
+          )}
           {/* Amount */}
           <div className="input-group">
             <div className="col1">
-              <label>Amount: ₱</label>
+              <label style={{ color: "black" }}>Amount: ₱</label>
             </div>
             <div className="col2">
               <input
@@ -90,17 +140,13 @@ function ErrandInputs(props) {
                 onChange={props.handleChange}
                 name={props.pay}
                 value={props.payValue}
-                disabled={props.disable}
-                style={{
-                  content: ".00",
-                }}
               />
             </div>
           </div>
           {/* contact number */}
           <div className="input-group">
             <div className="col1">
-              <label>Contact Number</label>
+              <label style={{ color: "black" }}>Contact Number</label>
             </div>
             <div className="col2">
               <input
@@ -109,13 +155,12 @@ function ErrandInputs(props) {
                 onChange={props.handleChange}
                 name={props.number}
                 value={props.numValue}
-                disabled={props.disable}
               />
             </div>
           </div>
           <div className="input-group">
             <div className="col1">
-              <label>Description</label>
+              <label style={{ color: "black" }}>Description</label>
             </div>
             <div className="col2">
               <textarea
@@ -126,7 +171,6 @@ function ErrandInputs(props) {
                 onChange={props.handleChange}
                 name={props.desc}
                 value={props.descValue}
-                disabled={props.disable}
               />
             </div>
           </div>

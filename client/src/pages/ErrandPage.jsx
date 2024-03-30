@@ -72,7 +72,7 @@ const ErrandPage = () => {
       };
       fetchApp();
     }
-  }, [isApplied]);
+  }, [isApplied, userID]);
 
   // Add a state to track the marker's longitude and latitude
   const [markerLngLat, setMarkerLngLat] = useState([123.8854, 10.3157]); // Default values
@@ -266,6 +266,7 @@ const ErrandPage = () => {
       <Navbar />
       <div className="errand-cont">
         <ErrandInputs
+          status={commission.comStatus}
           handleChange={handleChange}
           title="comTitle"
           disable="true"
@@ -287,7 +288,7 @@ const ErrandPage = () => {
           lat={commission.comLat}
         />
         <br />
-        {type === "Employer" && (
+        {type === "Employer" && commission.employerID == userID && (
           <button className="formButton" onClick={handleClick}>
             UPDATE
           </button>
@@ -295,12 +296,12 @@ const ErrandPage = () => {
         {type === "Catcher" && (
           <button
             className="formButton"
-            onClick={handleApply}
+            onClick={isApplied ? null : handleApply}
             style={{
               backgroundColor: isApplied ? "none" : "",
             }}
           >
-            APPLY
+            {isApplied ? "Applied" : "APPLY"}
           </button>
         )}
         {/* <button className="formButton" onClick={handleClick}>

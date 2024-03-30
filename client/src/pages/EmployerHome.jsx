@@ -10,7 +10,6 @@ import EmployerCard from '../Employer Cards/EmployerCards'
 import Cards from '../components/Cards'
 import Footer from "../components/Footer";
 
-
 function EmployerHome() {
   //carry id to other page
   const location = useLocation();
@@ -29,6 +28,7 @@ function EmployerHome() {
         page4="MAP"
         map={`/e-map/${userID}`}
       />
+
       <EmployerCard/>
       <div>
         <h2 className="recently-posted" style={{borderBottom: "1px solid gray", fontSize:"18px", paddingTop:"60px", paddingLeft: "20px", color:"Black"}}>Recently Posted</h2>
@@ -38,12 +38,14 @@ function EmployerHome() {
 
 
       {/* <Menu /> */}
+
       {/*destination is post commission */}
       <StickyButton
         buttonText="Post Errand"
         destination={`/post-commission/${userID}`}
       />
       <Footer/>
+
     </div>
   );
 }
