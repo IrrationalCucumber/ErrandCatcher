@@ -28,12 +28,14 @@
   flex-wrap: wrap;
   gap: 20px; 
   justify-content: space-between;
+
 }
 
 .cards__item {
   display: flex;
   flex-direction: column;
   align-items: center;
+
   justify-content: flex-end;
   width: 400px; /* Adjust the width as needed */
   height: 500px; /* Adjust the height as needed */
@@ -41,6 +43,7 @@
   border-radius: 10px;
   box-shadow: none; /* Add shadow for a card effect */
   transition: transform 0.3s ease; /* Add transition for hover effect */
+
 }
 
 .cards__item__link {
@@ -49,18 +52,20 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
   width: 220px;
   height: 300px;
   padding: 1rem;
+
   box-shadow: 0 6px 20px rgba(56, 125, 255, 0.17);
   -webkit-filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
   filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
   border-radius: 10px;
   /* border: 2px solid black; */
+
   overflow: hidden;
   text-decoration: none;
   min-height: 85%;
-  border-radius: 10px;
   box-shadow: 0 0 0 .5rem rgba(0, 0, 0, .1);
 }
 
@@ -73,16 +78,18 @@
   display: grid;
   place-items: center; /* Center the image both horizontally and vertically */
   position: relative;
+
   width: 320px;
   /* padding-top: 10px; */
+
   padding-bottom: 10px;
   overflow: hidden;
 }
 
-.fade-img {
+/* .fade-img {
   animation-name: fade-img;
   animation-duration: 2s;
-}
+} */
 
 .cards__item__pic-wrap::after {
   /* border: 3px solid black; */

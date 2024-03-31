@@ -17,8 +17,10 @@ const PostCommission = () => {
   const [commission, setCommission] = useState({
     empID: "",
     comTitle: "",
+    comStart: "",
     comDeadline: "",
     comLocation: "",
+    comTo: "",
     comType: "",
     comDescription: "",
     comPay: "",
@@ -82,33 +84,6 @@ const PostCommission = () => {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   };
 
-  //store the inputted info to db
-  //trigers when clicked
-  const handleClick = async (e) => {
-    e.preventDefault();
-    try {
-      const currentDate = getCurrentDate();
-      const updatedCommission = {
-        ...commission,
-        DatePosted: currentDate,
-        empID: userID,
-      };
-
-      await axios.post("http://localhost:8800/commission", updatedCommission);
-
-      //add a notification to the commission's employer
-      notif.notifDesc = "A new Errand has been posted";
-      //notif.userID = commission.employerID;
-      notif.notificationType = "New Errand";
-      notif.notifDate = getTimeAndDate();
-
-      await axios.post("http://localhost:8800/notify", notif);
-      alert("You have Posted an Errand!");
-      navigate(`/commissions/${userID}`);
-    } catch (err) {
-      console.log(err);
-    }
-  };
   //event handler when user add marker
 
   //variables for map
@@ -185,6 +160,37 @@ const PostCommission = () => {
         return null;
     }
   };
+  //store the inputted info to db
+  //trigers when clicked
+  console.log(commission);
+  const handleClick = async (e) => {
+    e.preventDefault();
+    try {
+      const currentDate = getCurrentDate();
+      const updatedCommission = {
+        ...commission,
+        DatePosted: currentDate,
+        empID: userID,
+      };
+      if (commission.comLat == "" && commission.comLong == "") {
+        alert("Looks like you havent set the location in the Map");
+      } else {
+        await axios.post("http://localhost:8800/commission", updatedCommission);
+
+        //add a notification to the commission's employer
+        notif.notifDesc = "A new Errand has been posted";
+        //notif.userID = commission.employerID;
+        notif.notificationType = "New Errand";
+        notif.notifDate = getTimeAndDate();
+
+        await axios.post("http://localhost:8800/notify", notif);
+        alert("You have Posted an Errand!");
+        navigate(`/commissions/${userID}`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -193,8 +199,10 @@ const PostCommission = () => {
         <ErrandInputs
           handleChange={handleChange}
           title="comTitle"
+          start="comStart"
           deadline="comDeadline"
           location="comLocation"
+          to="comTo"
           type="comType"
           typeValue={commission.comType}
           desc="comDescription"
