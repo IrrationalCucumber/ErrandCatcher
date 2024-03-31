@@ -71,7 +71,6 @@ const AddAccount = () => {
     <div style={styles.container}>
       <h1 style={styles.heading}>NEW ACCOUNT</h1>
       <form onSubmit={handleClick} style={styles.form}>
-        
         <input
           type="text"
           placeholder="username"
@@ -80,27 +79,32 @@ const AddAccount = () => {
           style={styles.input}
           required
         />
-
-        <div style={styles.inlineInputs}>
-            <input
-              type="text"
-              placeholder="First Name"
-              onChange={handleChange}
-              name="fname"
-              style={styles.input}
-              required
-            />
-            <input
-              type="text"
-              placeholder="Last Name"
-              onChange={handleChange}
-              name="lname"
-              style={styles.input}
-              required
-            />
-          </div>
-
-          <div style={styles.inlineInputs}>
+        <input
+          type="text"
+          placeholder="password"
+          onChange={handleChange}
+          name="password"
+          style={styles.input}
+          required
+        />
+        <input
+          type="text"
+          placeholder="first name"
+          onChange={handleChange}
+          name="fname"
+          style={styles.input}
+          required
+        />
+        <input
+          type="text"
+          placeholder="last name"
+          onChange={handleChange}
+          name="lname"
+          style={styles.input}
+          required
+        />
+        <label htmlFor="gender" style={styles.input}>
+          Gender
           <select
             name="gender"
             onChange={handleChange}
@@ -112,24 +116,20 @@ const AddAccount = () => {
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
-
-          <input
-          type="number"
-          placeholder="Age"
-          onChange={handleChange}
-          name="age"
-          style={styles.input}
-          required
-          />
-
-          </div>
-
-        
+        </label>
         <input
           type="text"
           placeholder="contact number"
           onChange={handleChange}
           name="contact"
+          style={styles.input}
+          required
+        />
+        <input
+          type="number"
+          placeholder="Age"
+          onChange={handleChange}
+          name="age"
           style={styles.input}
           required
         />
@@ -149,16 +149,6 @@ const AddAccount = () => {
           style={styles.input}
           required
         />
-
-        <input
-          type="text"
-          placeholder="password"
-          onChange={handleChange}
-          name="password"
-          style={styles.input}
-          required
-        />
-
         <select
           name="type"
           onChange={handleChange}
@@ -171,7 +161,6 @@ const AddAccount = () => {
           <option value="Catcher">Catcher</option>
         </select>
 
-
         <button type="submit" style={styles.button}>Add Account</button>
       </form>
     </div>
@@ -183,7 +172,7 @@ export default AddAccount;
 
 const styles = {
   container: {
-    maxWidth: "500px",
+    maxWidth: "400px",
     margin: "auto",
     padding: "20px",
     border: "1px solid #ccc",
@@ -193,29 +182,28 @@ const styles = {
   heading: {
     textAlign: "center",
     marginBottom: "20px",
-    paddingtop: "20px"
   },
   form: {
     display: "grid",
     gap: "10px",
   },
   input: {
-    width: "20px",
+    width: "100%",
     padding: "10px",
-    fontSize: "12px",
+    fontSize: "16px",
     border: "1px solid #ccc",
     borderRadius: "5px",
   },
   select: {
-    width: "20px",
+    width: "100%",
     padding: "10px",
-    fontSize: "12px",
+    fontSize: "16px",
     border: "1px solid #ccc",
     borderRadius: "5px",
     cursor: "pointer",
   },
   label: {
-    fontSize: "12px",
+    fontSize: "16px",
   },
   button: {
     width: "100%",
@@ -226,11 +214,6 @@ const styles = {
     border: "none",
     borderRadius: "5px",
     cursor: "pointer",
-  },
-  inlineInputs: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: "10px",
   },
 };
 
