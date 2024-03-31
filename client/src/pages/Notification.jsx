@@ -46,11 +46,11 @@ function Notification() {
       <div className="notification-container">
         <main className="notification-main">
           <div className="notification-header">
-            <p className="notification-title">Notifications</p>
-            <img src="/images/notification_icon.svg" className="icon" alt="notification_icon" />
-            <button onClick={markAsRead} className="mark-read-button">
-              Mark All as Read
-              <img src="/images/check_icon.svg" className="check-icon" alt="check_icon" />
+            <p className="notification-title" style={{paddingLeft:"30px"}}>Notifications</p>
+            <img src="/images/notification_icon.svg" className="icon" alt="notification_icon" style={{paddingLeft:"20px"}}/>
+            <button onClick={markAsRead} className="mark-read-button" style={{textAlign:"center"}}>
+              Mark all as Read
+              <img src="/images/check_icon.svg" className="check-icon" alt="check_icon"/>
             </button>
           </div>
           <div className="notification-list">
