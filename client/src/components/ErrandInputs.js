@@ -12,7 +12,7 @@ function ErrandInputs(props) {
           {/* commission title */}
           <div className="input-group">
             <div className="col1">
-              <label style={{ color: "black" }}>Errand Title</label>
+              <label style={{ color: "black" }}>Errand Name</label>
             </div>
             <div className="col2">
               <input
@@ -21,21 +21,6 @@ function ErrandInputs(props) {
                 onChange={props.handleChange}
                 name={props.title}
                 value={props.titleValue}
-              />
-            </div>
-          </div>
-          {/* deadline */}
-          <div className="input-group">
-            <div className="col1">
-              <label style={{ color: "black" }}>Due Date</label>
-            </div>
-            <div className="col2">
-              <input
-                type="date"
-                placeholder="Deadline"
-                onChange={props.handleChange}
-                name={props.deadline}
-                value={props.dlValue}
               />
             </div>
           </div>
@@ -51,6 +36,21 @@ function ErrandInputs(props) {
                 onChange={props.handleChange}
                 name={props.start}
                 value={props.startValue}
+              />
+            </div>
+          </div>
+          {/* deadline */}
+          <div className="input-group">
+            <div className="col1">
+              <label style={{ color: "black" }}>Due Date</label>
+            </div>
+            <div className="col2">
+              <input
+                type="date"
+                placeholder="Deadline"
+                onChange={props.handleChange}
+                name={props.deadline}
+                value={props.dlValue}
               />
             </div>
           </div>
@@ -124,6 +124,7 @@ function ErrandInputs(props) {
                   onChange={props.handleChange}
                   name={props.to}
                   value={props.toValue}
+                  style={{fontFamily:"Lucida Sans, Lucida Sans Regular, Lucida Grande, Lucida Sans Unicode, Geneva, Verdana, sans-serif"}}
                 />
               </div>
             </div>
