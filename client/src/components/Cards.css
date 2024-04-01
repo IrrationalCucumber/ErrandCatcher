@@ -32,6 +32,8 @@ h1 {
   justify-content: space-between; /* Ensures equal spacing between cards */
   margin: 0 -15px;
   gap: 35px;
+  list-style: none;
+
 }
 
 .cards__item {
