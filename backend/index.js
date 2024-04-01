@@ -123,7 +123,7 @@ app.get("/errands", (req, res) => {
 //display 10 recent posted commissino
 app.get("/recent-commission", (req, res) => {
   const q =
-    "Select * from commission order by DatePosted AND commissionStatus = 'Available' DESC LIMIT 3 ";
+    "Select * from commission WHERE commissionStatus = 'Available'commissionStatus = 'Available' order by DatePosted DESC LIMIT 3 ";
   db.query(q, (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
@@ -454,7 +454,7 @@ app.put("/accept-apply/:comID/:applyID", (req, res) => {
   const comId = req.params.comID;
   const applicationID = req.params.applyID;
   const q =
-    "UPDATE application SET `applicationStatus` = 'Approved' WHERE applicationErrandID = ? AND applicationID = ?";
+    "UPDATE application SET `applicationStatus` = 'Accepted' WHERE applicationErrandID = ? AND applicationID = ?";
 
   db.query(q, [comId, applicationID], (err) => {
     if (err) {
