@@ -11,7 +11,7 @@ function Cards() {
   useEffect(() => {
     const fetchAllCommission = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/recent-commission");
+        const res = await axios.get("http://localhost:8800/errands");
         //"http://localhost:8800/commission" - local computer
         //"http://192.168.1.47:8800/commission" - netwrok
         setCommissions(res.data);
