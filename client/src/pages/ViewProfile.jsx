@@ -234,8 +234,6 @@ function ViewProfile() {
                       placeholder="Address"
                     ></textarea>
                   </div>
-                  <button>Save</button>
-                  <button>Edit</button>
                 </div>
               )}
               {activeTab === "history" && (
