@@ -82,7 +82,7 @@ const EmployerApplicants = () => {
     >
       <i className="fa-regular fa-user"></i>
     </button>,
-    applicant.status === "Pending" ? (
+    applicant.applicationStatus === "Pending" ? (
       <>
         <button
           className="accept action-btn"
@@ -216,7 +216,7 @@ const EmployerApplicants = () => {
     <div>
       <NavBar
         page1="HOME"
-        home={`/e-home/${userID}`}
+        home={`/home/${userID}`}
         page2="COMMISSIONS"
         commissionList={`/commissions/${userID}`}
         page3="APPLICANTS"
