@@ -92,12 +92,12 @@ function Navbar(props) {
       <nav className="navbar">
         <div className="navbar-container justify-center">
           <Link
-            to={props.home}
+            to={`/home/${userID}`}
             className="navbar-logo"
             onClick={closeMobileMenu}
           >
             <Link
-              to={props.home}
+              to={`/home/${userID}`}
               className="navbar-logo"
               onClick={closeMobileMenu}
             >
