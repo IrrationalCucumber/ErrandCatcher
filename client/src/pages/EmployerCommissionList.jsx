@@ -39,41 +39,41 @@ const CommissionList = () => {
   }, [userID]); // Add userID to the dependency array
 
   //fetch posted commission
-  const fetchSearchResults = async () => {
-    try {
-      const res = await axios.get(
-        `http://localhost:8800/search-employer-commission/${userID}`,
-        {
-          params: { term: searchTerm }, // Pass the search term as a query parameter
-        }
-      );
-      setCommissions(res.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const fetchSearchResults = async () => {
+  //   try {
+  //     const res = await axios.get(
+  //       `http://localhost:8800/search-employer-commission/${userID}`,
+  //       {
+  //         params: { term: searchTerm }, // Pass the search term as a query parameter
+  //       }
+  //     );
+  //     setCommissions(res.data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchSearchResults();
-  }, [searchTerm]); // Trigger the search whenever searchTerm changes
+  // useEffect(() => {
+  //   fetchSearchResults();
+  // }, [searchTerm]); // Trigger the search whenever searchTerm changes
 
-   // filter type
-   const fetchTypeResults = async () => {
-    try {
-          //http://localhost:8800/user - local
-          //http://192.168.1.47:8800/user - network
-        const res = await axios.get('http://localhost:8800/employer-commilist', {
-            params: { status: status } // Pass the search term as a query parameter
-        });
-        setCommissions(res.data);
-    } catch (err) {
-        console.log(err);
-    }
-};
+  // filter type
+  // const fetchTypeResults = async () => {
+  //   try {
+  //     //http://localhost:8800/user - local
+  //     //http://192.168.1.47:8800/user - network
+  //     const res = await axios.get("http://localhost:8800/employer-commilist", {
+  //       params: { status: status }, // Pass the search term as a query parameter
+  //     });
+  //     setCommissions(res.data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
-useEffect(() => {
-  fetchTypeResults();
-}, [status]);
+  // useEffect(() => {
+  //   fetchTypeResults();
+  // }, [status]);
 
   //funtion to delete commission
   const handleDelete = async (commissionID) => {
@@ -98,7 +98,7 @@ useEffect(() => {
     <div>
       <NavBar
         page1="HOME"
-        home={`/e-home/${userID}`}
+        home={`/home/${userID}`}
         page2="COMMISSIONS"
         commissionList={`/commissions/${userID}`}
         page3="APPLICANTS"
@@ -123,7 +123,10 @@ useEffect(() => {
                 </button>
               </div>
               <div className="filter">
-                <select onChange={(e) => setStatus(e.target.value)} value={status}>
+                <select
+                  onChange={(e) => setStatus(e.target.value)}
+                  value={status}
+                >
                   <option value="">All Status</option>
                   <option value="Pending">Pending</option>
                   <option value="Completed">Completed</option>
@@ -145,7 +148,7 @@ useEffect(() => {
                 commissionItem.commissionID,
                 commissionItem.employerID,
                 commissionItem.commissionTitle,
-                commissionItem.DatePosted,
+                new Date(commissionItem.DatePosted).toISOString().substr(0, 10),
                 commissionItem.commissionStatus,
                 <React.Fragment>
                   <button
