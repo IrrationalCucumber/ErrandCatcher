@@ -6,7 +6,7 @@ import AccountList from "./pages/AccountList";
 import AddAccount from "./pages/AddAccount";
 import PostCommission from "./pages/PostCommission";
 import CommissionList from "./pages/CommissionList";
-// import Home from "./pages/Home";
+import Home from "./pages/Home";
 import UpdateAccount from "./pages/UpdateAccount";
 import UpdateCommission from "./pages/UpdateCommission";
 //import "./style.css";
@@ -74,7 +74,7 @@ function App() {
           <Route path="/Delivery/:userID/:type" element={<Delivery />} />
           <Route path="/update-account/:userID" element={<UpdateAccount />} />
           {/* <Route path="/admin-home/:userID" element={<AdminHome />} /> */}
-          {/* <Route path="/" exact Component={Home} /> */}
+          <Route path="/home/:userID" exact Component={Home} />
           {/* ADMIN */}
           <Route path="/accounts" exact Component={AccountList} />
           <Route path="/add" exact Component={AddAccount} />
