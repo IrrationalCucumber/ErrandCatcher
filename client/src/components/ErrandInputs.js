@@ -24,21 +24,7 @@ function ErrandInputs(props) {
               />
             </div>
           </div>
-          {/* deadline */}
-          <div className="input-group">
-            <div className="col1">
-              <label style={{ color: "black" }}>Due Date</label>
-            </div>
-            <div className="col2">
-              <input
-                type="date"
-                placeholder="Deadline"
-                onChange={props.handleChange}
-                name={props.deadline}
-                value={props.dlValue}
-              />
-            </div>
-          </div>
+
           {/*start date*/}
           <div className="input-group">
             <div className="col1">
@@ -54,6 +40,23 @@ function ErrandInputs(props) {
               />
             </div>
           </div>
+
+          {/* deadline */}
+          <div className="input-group">
+            <div className="col1">
+              <label style={{ color: "black" }}>Due Date</label>
+            </div>
+            <div className="col2">
+              <input
+                type="date"
+                placeholder="Deadline"
+                onChange={props.handleChange}
+                name={props.deadline}
+                value={props.dlValue}
+              />
+            </div>
+          </div>
+
           {/* location */}
           <div className="input-group">
             <div className="col1">
