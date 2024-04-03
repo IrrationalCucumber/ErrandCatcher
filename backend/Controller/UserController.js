@@ -85,9 +85,8 @@ const userController = {
   //update user info
   putUpdateUser: (req, res) => {
     const userID = req.params.id;
-    const fname = req.query.fname;
-    const lname = req.query.lname;
-    User.putUpdateUserById(userID, fname, lname, (error, result) => {
+    const updatedData = req.query;
+    User.putUpdateUserById(userID, updatedData, (error, result) => {
       if (error) {
         console.error("Error updating user:", error);
         res

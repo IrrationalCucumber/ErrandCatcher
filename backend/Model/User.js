@@ -41,22 +41,21 @@ const User = {
   //     db.query("INSERT INTO UserAccount (`username`, `password`, `userLastname`, `userFirstname`, `userGender`, `userEmail`,`userContactNum`, `userAge`, `userBirthday`, `userAddress`, `accountType`, `dateCreated` ) VALUES (?)")
   //   },
   //update user data
-  putUpdateUserById: (
-    id,
-    username,
-    password,
-    fname,
-    lname,
-    gender,
-    email,
-    cnum,
-    age,
-    bday,
-    address,
-    desc,
-    pic,
-    callback
-  ) => {
+  putUpdateUserById: (id, userData, callback) => {
+    const {
+      username,
+      password,
+      fname,
+      lname,
+      gender,
+      email,
+      cnum,
+      age,
+      bday,
+      address,
+      desc,
+      pic,
+    } = userData;
     db.query(
       `UPDATE useraccount
       username = ?, password = ?, userLastname = ?, userFirstname = ?, userGender =?, userEmail = ?,
