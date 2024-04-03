@@ -169,6 +169,7 @@ const SignUp = () => {
                       onChange={handleChange}
                       name="regUsername"
                       value={account.regUsername}
+                      autocomplete="off"
                     />
                     <input
                       className={employerErrorMessage ? "error" : ""}
@@ -193,6 +194,7 @@ const SignUp = () => {
                       onChange={handleChange}
                       name="regPassword"
                       value={account.regPassword}
+                      autoComplete="off"
                     />
                     <input
                       className={employerErrorMessage ? "error" : ""}
@@ -201,6 +203,7 @@ const SignUp = () => {
                       onChange={handleChange}
                       name="regPassword"
                       value={account.regPassword2}
+                      autoComplete="off"
                     />
                     <br />
                     <p className="em">
@@ -253,6 +256,7 @@ const SignUp = () => {
                       onChange={handleChange}
                       name="regUsername"
                       value={account.regUsername}
+                      autoComplete="off"
                     />
                     <input
                       className={catcherErrorMessage ? "error" : ""}
@@ -277,6 +281,7 @@ const SignUp = () => {
                       onChange={handleChange}
                       name="regPassword"
                       value={account.regPassword}
+                      autoComplete="off"
                     />
                     <input
                       className={catcherErrorMessage ? "error" : ""}
@@ -284,6 +289,7 @@ const SignUp = () => {
                       placeholder="Confirm password..."
                       onChange={handleChange}
                       name="regPassword2"
+                      autoComplete="off"
                       value={account.regPassword2}
                     />
                     <br />
