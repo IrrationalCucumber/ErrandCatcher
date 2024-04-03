@@ -36,19 +36,21 @@ const ErrandPage = () => {
 
   //setState for account type
   const [type, setType] = useState("");
+  const [status, setStatus] = useState("");
   useEffect(() => {
     const fetchType = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/get-type/${userID}`);
+        const res = await axios.get(`http://localhost:8800/user/${userID}`);
         //console.log(res.data);
-        setType(res.data);
+        setType(res.data[0].accountType);
+        setStatus(res.data[0].accountStatus);
         console.log(type);
       } catch (err) {
         console.log(err);
       }
     };
     fetchType();
-  }, [type]);
+  }, [type, status]);
   //APS - 19/03/24
   //CHeck if Catcher already applied
   //setState if applies
@@ -288,12 +290,12 @@ const ErrandPage = () => {
           lat={commission.comLat}
         />
         <br />
-        {type === "Employer" && commission.employerID == userID && (
+        {type === "Employer" && commission.employerID === userID && (
           <button className="formButton" onClick={handleClick}>
             UPDATE
           </button>
         )}
-        {type === "Catcher" && (
+        {type === "Catcher" && status === "Verified" && (
           <button
             className="formButton"
             onClick={isApplied ? null : handleApply}
