@@ -86,13 +86,13 @@ const scheduler = setInterval(updateExpiredRecords, 10000);
 // }, 3600000); // Stop after 1 hour (3600 seconds * 1000 milliseconds)
 //========================================================================
 //return data from database
-app.get("/user", (req, res) => {
-  const q = "SELECT * from useraccount";
-  db.query(q, (err, data) => {
-    if (err) return res.json(err);
-    return res.json(data);
-  });
-});
+// app.get("/user", (req, res) => {
+//   const q = "SELECT * from useraccount";
+//   db.query(q, (err, data) => {
+//     if (err) return res.json(err);
+//     return res.json(data);
+//   });
+// });
 //return data from commission tbale
 app.get("/commission", (req, res) => {
   const q = "Select * from commission";
@@ -131,24 +131,24 @@ app.get("/recent-commission", (req, res) => {
 });
 //APS - 14/03/24
 //retrieve username
-app.get("/username/:userID", (req, res) => {
-  const userID = req.params.userID; // Use req.params.userID to get the route parameter
-  const q = "Select username from useraccount where userID = ?";
-  db.query(q, [userID], (err, data) => {
-    if (err) return res.json(err);
-    return res.json(data);
-  });
-});
+// app.get("/username/:userID", (req, res) => {
+//   const userID = req.params.userID; // Use req.params.userID to get the route parameter
+//   const q = "Select username from useraccount where userID = ?";
+//   db.query(q, [userID], (err, data) => {
+//     if (err) return res.json(err);
+//     return res.json(data);
+//   });
+// });
 //APS - 19/03/24
 //Retrieve the accountType of User
-app.get("/get-type/:userID", (req, res) => {
-  const userID = req.params.userID; // Use req.params.userID to get the route parameter
-  const q = "Select accountType from useraccount where userID = ?";
-  db.query(q, [userID], (err, data) => {
-    if (err) return res.json(err);
-    return res.json(data[0].accountType);
-  });
-});
+// app.get("/get-type/:userID", (req, res) => {
+//   const userID = req.params.userID; // Use req.params.userID to get the route parameter
+//   const q = "Select accountType from useraccount where userID = ?";
+//   db.query(q, [userID], (err, data) => {
+//     if (err) return res.json(err);
+//     return res.json(data[0].accountType);
+//   });
+// });
 //==========================================CATEGORY=================================================================//
 //select type
 app.get("/type/:type", (req, res) => {
@@ -680,100 +680,100 @@ app.delete("/commission/:userID/:commissionID", (req, res) => {
 /**========================UPDATE ACCOUNT=============================== */
 //retrieve account
 //info based on ID
-app.get("/user/:userID", (req, res) => {
-  const userID = req.params.userID; // Get the search term from the query parameter
-  const q = "SELECT * FROM UserAccount WHERE userID = ?";
+// app.get("/user/:userID", (req, res) => {
+//   const userID = req.params.userID; // Get the search term from the query parameter
+//   const q = "SELECT * FROM UserAccount WHERE userID = ?";
 
-  db.query(q, [userID], (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "An error occurred" });
-    }
-    return res.json(data);
-  });
-});
+//   db.query(q, [userID], (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ error: "An error occurred" });
+//     }
+//     return res.json(data);
+//   });
+// });
 
 //upadate account
-app.put("/update-account/:userID", (req, res) => {
-  const userID = req.params.userID;
-  //const q = "UPDATE UserAccount SET `username` = ?, `password` = ?, `userLastname` = ?, `userFirstname` = ?, `userGender` =?, `userEmail` = ?,`userContactNum` =?, `userAge` =?, `userAddress` = ? WHERE userID = ?"
-  const q =
-    "UPDATE useraccount set `username` = ?, `password` = ?, `userLastname` = ?, `userFirstname` = ?, `userGender` =?, `userEmail` = ?,`userContactNum` =?, `userAge` =?, `userBirthday` = ?, `userAddress` = ?, `userDesc` = ?, `profileImage` = ? WHERE userID = ?";
-  const values = [
-    req.body.username,
-    req.body.password,
-    req.body.lname,
-    req.body.fname,
-    req.body.gender,
-    req.body.email,
-    req.body.contact,
-    req.body.age,
-    req.body.bday,
-    req.body.address,
-    req.body.desc,
-    //req.body.type,
-    //req.body.dateCreated,
-    req.body.profileImage,
-  ];
+// app.put("/update-account/:userID", (req, res) => {
+//   const userID = req.params.userID;
+//   //const q = "UPDATE UserAccount SET `username` = ?, `password` = ?, `userLastname` = ?, `userFirstname` = ?, `userGender` =?, `userEmail` = ?,`userContactNum` =?, `userAge` =?, `userAddress` = ? WHERE userID = ?"
+//   const q =
+//     "UPDATE useraccount set `username` = ?, `password` = ?, `userLastname` = ?, `userFirstname` = ?, `userGender` =?, `userEmail` = ?,`userContactNum` =?, `userAge` =?, `userBirthday` = ?, `userAddress` = ?, `userDesc` = ?, `profileImage` = ? WHERE userID = ?";
+//   const values = [
+//     req.body.username,
+//     req.body.password,
+//     req.body.lname,
+//     req.body.fname,
+//     req.body.gender,
+//     req.body.email,
+//     req.body.contact,
+//     req.body.age,
+//     req.body.bday,
+//     req.body.address,
+//     req.body.desc,
+//     //req.body.type,
+//     //req.body.dateCreated,
+//     req.body.profileImage,
+//   ];
 
-  db.query(q, [...values, userID], (err, data) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).json(err);
-    }
-    return res.json("Account updated");
-  });
-});
+//   db.query(q, [...values, userID], (err, data) => {
+//     if (err) {
+//       console.log(err);
+//       return res.status(500).json(err);
+//     }
+//     return res.json("Account updated");
+//   });
+// });
 //=====================================================
 
 /**===========================VERIFICATION====================================== */
 //verify-account
-app.put("/verify-account/:userID", (req, res) => {
-  const userID = req.params.userID;
-  const q =
-    "UPDATE UserAccount SET accountStatus = 'Verified' WHERE userID = ?";
+// app.put("/verify-account/:userID", (req, res) => {
+//   const userID = req.params.userID;
+//   const q =
+//     "UPDATE UserAccount SET accountStatus = 'Verified' WHERE userID = ?";
 
-  db.query(q, [userID], (err, data) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).json(err);
-    }
-    return res.json("Account Verified");
-  });
-});
+//   db.query(q, [userID], (err, data) => {
+//     if (err) {
+//       console.log(err);
+//       return res.status(500).json(err);
+//     }
+//     return res.json("Account Verified");
+//   });
+// });
 
 //Deactivate Account
-app.put("/deactivate-account/:userID", (req, res) => {
-  const userID = req.params.userID;
-  const q =
-    "UPDATE UserAccount SET accountStatus = 'Deactivate' WHERE userID = ?";
+// app.put("/deactivate-account/:userID", (req, res) => {
+//   const userID = req.params.userID;
+//   const q =
+//     "UPDATE UserAccount SET accountStatus = 'Deactivate' WHERE userID = ?";
 
-  db.query(q, [userID], (err, data) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).json(err);
-    }
-    return res.json("Account deactivated");
-  });
-});
+//   db.query(q, [userID], (err, data) => {
+//     if (err) {
+//       console.log(err);
+//       return res.status(500).json(err);
+//     }
+//     return res.json("Account deactivated");
+//   });
+// });
 
 /**==========================SIGN IN MODULE==================================== */
 
 //sign-in
-app.get("/sign-in", (req, res) => {
-  const username = req.query.username;
-  const password = req.query.password;
-  const q =
-    "SELECT * FROM UserAccount WHERE (username = ? OR userEmail = ?) AND password = ?";
+// app.get("/sign-in", (req, res) => {
+//   const username = req.query.username;
+//   const password = req.query.password;
+//   const q =
+//     "SELECT * FROM UserAccount WHERE (username = ? OR userEmail = ?) AND password = ?";
 
-  db.query(q, [username, username, password], (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "An error occurred" });
-    }
-    return res.json(data);
-  });
-});
+//   db.query(q, [username, username, password], (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ error: "An error occurred" });
+//     }
+//     return res.json(data);
+//   });
+// });
 
 //home based on id
 app.get("/home/:userID", (req, res) => {
@@ -986,18 +986,18 @@ app.get("/user-rating", (req, res) => {
 
 //APS - 02/03/24
 //Return the accountStatus of user based on UserID
-app.get("/user-verify/:userID", (req, res) => {
-  const userID = req.params.userID;
-  const q = "Select accountStatus FROM useraccount WHERE userID = (?)";
+// app.get("/user-verify/:userID", (req, res) => {
+//   const userID = req.params.userID;
+//   const q = "Select accountStatus FROM useraccount WHERE userID = (?)";
 
-  db.query(q, [userID], (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "An error occurred" });
-    }
-    return res.json(data);
-  });
-});
+//   db.query(q, [userID], (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ error: "An error occurred" });
+//     }
+//     return res.json(data);
+//   });
+// });
 
 //=================================================================//
 /**
