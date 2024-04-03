@@ -79,6 +79,42 @@ const User = {
       callback
     );
   },
+  //sign-up/ add new user
+  postNewUser: (userData, callback) => {
+    const {
+      username,
+      password,
+      fname,
+      lname,
+      gender,
+      email,
+      cnum,
+      age,
+      bday,
+      address,
+      type,
+      dateCreated,
+    } = userData;
+    db.query(
+      "INSERT INTO UserAccount (`username`, `password`, `userLastname`, `userFirstname`, `userGender`, `userEmail`,`userContactNum`, `userAge`, `userBirthday`, `userAddress`, `accountType`, `dateCreated` ) VALUES (?)",
+      [
+        username,
+        password,
+        lname,
+        fname,
+        gender,
+        email,
+        cnum,
+        age,
+        bday,
+        address,
+        type,
+        dateCreated,
+        id,
+      ],
+      callback
+    );
+  },
 };
 
 module.exports = User;

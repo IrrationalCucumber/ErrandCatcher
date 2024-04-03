@@ -105,6 +105,22 @@ const userController = {
       res.status(200).json({ message: "User updated successfully" });
     });
   },
+  //sign in/ add new user
+  postSignUp: (req, res) => {
+    const newUserData = req.body;
+    User.postNewUser(newUserData, (error) => {
+      if (error) {
+        console.error("Error adding user:", error);
+        res
+          .status(500)
+          .json({ error: "An error occurred while adding new user" });
+        return;
+      }
+
+      // User added successfully
+      res.status(200).json({ message: "sign up successfully" });
+    });
+  },
 
   // Add more controller functions as needed...
 };
