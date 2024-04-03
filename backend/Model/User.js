@@ -58,7 +58,7 @@ const User = {
     } = userData;
     db.query(
       `UPDATE useraccount
-      username = ?, password = ?, userLastname = ?, userFirstname = ?, userGender =?, userEmail = ?,
+      SET username = ?, password = ?, userLastname = ?, userFirstname = ?, userGender =?, userEmail = ?,
       userContactNum =?, userAge =?, userBirthday = ?, userAddress = ?, userDesc = ?, profileImage = ?
     WHERE userID = ?`,
       [
@@ -79,6 +79,22 @@ const User = {
       callback
     );
   },
+  //Update user accountStatus
+  putChangeStatusById: (id, status, callback) => {
+    db.query(
+      `UPDATE useraccount SET accountStatus = ? WHERE userID =?`,
+      [status, id],
+      callback
+    );
+  },
+  putDeactivateById: (id, callback) => {
+    db.query(
+      `UPDATE useraccount SET accountStatus = 'Deactivate' WHERE userID =?`,
+      [id],
+      callback
+    );
+  },
+
   //sign-up/ add new user
   postNewUser: (userData, callback) => {
     const {

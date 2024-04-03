@@ -105,6 +105,27 @@ const userController = {
       res.status(200).json({ message: "User updated successfully" });
     });
   },
+  //Update user status
+  putChangeStatusByUserID: (req, res) => {
+    const userID = req.params.id;
+    const status = req.query;
+    User.putChangeStatusById(userID, status, (error, result) => {
+      if (error) {
+        console.error("Error updating user:", error);
+        res
+          .status(500)
+          .json({ error: "An error occurred while updating user" });
+        return;
+      }
+      // Check if any rows were affected by the update operation
+      if (result.affectedRows === 0) {
+        res.status(404).json({ error: "User not found" });
+        return;
+      }
+      // User updated successfully
+      res.status(200).json({ message: "Status updated successfully" });
+    });
+  },
   //sign in/ add new user
   postSignUp: (req, res) => {
     const newUserData = req.body;
