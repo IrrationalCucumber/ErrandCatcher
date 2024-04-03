@@ -5,7 +5,7 @@ const UserRoutes = require("./Route/UserRoutes");
 const db = require("./dbConfig.js");
 
 const app = express();
-
+//use routes for each modules
 app.use("/user", UserRoutes);
 
 const PORT = process.env.PORT || 8800;
