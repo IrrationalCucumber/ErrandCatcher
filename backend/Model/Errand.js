@@ -12,6 +12,14 @@ const Errand = {
       callback
     );
   },
+  //getType
+  getType: (type, callback) => {
+    db.query(
+      "SELECT * FROM commission WHERE commissionType LIKE ? AND commissionStatus = 'Available'",
+      [`%${type}%`],
+      callback
+    );
+  },
   //get specific errand by id
   getErrandById: (id, callback) => {
     db.query(`SELECT * FROM commission WHERE commissionID = ?`, [id], callback);
