@@ -111,23 +111,23 @@ const User = {
       type,
       dateCreated,
     } = userData;
+    values = [
+      username,
+      password,
+      lname,
+      fname,
+      gender,
+      email,
+      cnum,
+      age,
+      bday,
+      address,
+      type,
+      dateCreated,
+    ];
     db.query(
       "INSERT INTO UserAccount (`username`, `password`, `userLastname`, `userFirstname`, `userGender`, `userEmail`,`userContactNum`, `userAge`, `userBirthday`, `userAddress`, `accountType`, `dateCreated` ) VALUES (?)",
-      [
-        username,
-        password,
-        lname,
-        fname,
-        gender,
-        email,
-        cnum,
-        age,
-        bday,
-        address,
-        type,
-        dateCreated,
-        id,
-      ],
+      [values],
       callback
     );
   },
