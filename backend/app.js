@@ -2,11 +2,13 @@
 
 const express = require("express");
 const UserRoutes = require("./Route/UserRoutes");
+const ErrandRoutes = require("./Route/ErrandRoutes.js");
 const db = require("./dbConfig.js");
 
 const app = express();
 //use routes for each modules
 app.use("/user", UserRoutes);
+app.use("/errand", ErrandRoutes);
 
 const PORT = process.env.PORT || 8800;
 app.listen(PORT, () => {
