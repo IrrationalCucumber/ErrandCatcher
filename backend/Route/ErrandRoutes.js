@@ -5,5 +5,6 @@ const router = express.Router();
 
 router.get("/errands", errandController.getErrands);
 router.get("/errand/:id", errandController.getErrandById);
+router.get("/your-errand/:id", errandController.getErrandByUser);
 
 module.exports = router;

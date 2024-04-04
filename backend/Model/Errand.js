@@ -9,7 +9,10 @@ const Errand = {
   getErrandById: (id, callback) => {
     db.query(`SELECT * FROM commission WHERE commissionID = ?`, [id], callback);
   },
-  //
+  //get specific errand by userid
+  getErrandById: (id, callback) => {
+    db.query(`SELECT * FROM commission WHERE employerID = ?`, [id], callback);
+  },
 };
 
 module.exports = Errand;
