@@ -1,8 +1,8 @@
 const Errand = require("../Model/Errand");
 
 const ErrandController = {
-  getErrands: (res) => {
-    Errand.getErrands((err, errands) => {
+  getErrands: (req, res) => {
+    Errand.getAllErrands((err, errands) => {
       if (err) {
         console.error("Error fetching users:", err);
         res.status(500).send("Internal Server Error");
@@ -14,7 +14,7 @@ const ErrandController = {
   //get errand by id
   getErrandById: (req, res) => {
     const errandID = req.params.id;
-    User.getErrandById(errandID, (err, errand) => {
+    Errand.getErrandById(errandID, (err, errand) => {
       if (err) {
         console.error("Error fetching Errand:", err);
         res.status(500).send("Internal Server Error");
@@ -28,3 +28,5 @@ const ErrandController = {
     });
   },
 };
+
+module.exports = ErrandController;

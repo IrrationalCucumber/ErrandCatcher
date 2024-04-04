@@ -1,17 +1,13 @@
 const db = require("../dbConfig");
 
-const Errands = {
+const Errand = {
   //get all errands
   getAllErrands: (callback) => {
-    db.query("SELECT * FROM commissions");
+    db.query("SELECT * FROM commission", callback);
   },
   //get specific errand by id
   getErrandById: (id, callback) => {
-    db.query(
-      `SELECT * FROM commissions WHERE commissionID = ?`,
-      [id],
-      callback
-    );
+    db.query(`SELECT * FROM commission WHERE commissionID = ?`, [id], callback);
   },
   //
 };
