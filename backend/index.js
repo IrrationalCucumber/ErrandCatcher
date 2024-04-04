@@ -824,7 +824,8 @@ app.get("/notification", (req, res) => {
 app.get("/show-notif/:userID", (req, res) => {
   const userID = req.params.userID;
   const q =
-    "SELECT * FROM notification WHERE `isRead` = 'no' AND `notifUserID` = (?) ORDER BY notifDate DESC";
+    "SELECT * FROM notification " +
+    " WHERE (isRead = 'no' AND notifUserID = (?)) OR notificationType = 'New Errand' ORDER BY notifDate DESC ";
 
   db.query(q, [userID], (err, data) => {
     if (err) {
@@ -856,6 +857,21 @@ app.post("/notify", (req, res) => {
     "INSERT INTO notification (`notifUserID`, `notificationType`, `notifDesc`, `notifDate`) VALUES (?)";
   const values = [
     req.body.userID,
+    req.body.notificationType,
+    req.body.notifDesc,
+    req.body.notifDate,
+  ];
+  db.query(q, [values], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("Notification added");
+  });
+});
+
+app.post("/notify-new", (req, res) => {
+  const q =
+    "INSERT INTO notification (`notificationType`, `notifDesc`, `notifDate`) VALUES (?)";
+  const values = [
+    //req.body.userID,
     req.body.notificationType,
     req.body.notifDesc,
     req.body.notifDate,

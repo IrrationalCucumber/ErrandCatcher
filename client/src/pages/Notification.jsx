@@ -16,7 +16,9 @@ function Notification() {
   useEffect(() => {
     const fetchNotif = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/notification");
+        const res = await axios.get(
+          `http://localhost:8800/show-notif/${userID}`
+        );
         setNotifs(res.data);
       } catch (err) {
         console.log(err);

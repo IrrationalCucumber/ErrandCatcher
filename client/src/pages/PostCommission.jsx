@@ -183,7 +183,7 @@ const PostCommission = () => {
         notif.notificationType = "New Errand";
         notif.notifDate = getTimeAndDate();
 
-        await axios.post("http://localhost:8800/notify", notif);
+        await axios.post("http://localhost:8800/notify-new", notif);
         alert("You have Posted an Errand!");
         navigate(`/commissions/${userID}`);
       }
