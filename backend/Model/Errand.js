@@ -5,6 +5,13 @@ const Errand = {
   getAllErrands: (callback) => {
     db.query("SELECT * FROM commission", callback);
   },
+  //get all available errands
+  getAllAvailable: (callback) => {
+    db.query(
+      "SELECT * FROM commission WHERE commissionStatus = 'Available'",
+      callback
+    );
+  },
   //get specific errand by id
   getErrandById: (id, callback) => {
     db.query(`SELECT * FROM commission WHERE commissionID = ?`, [id], callback);

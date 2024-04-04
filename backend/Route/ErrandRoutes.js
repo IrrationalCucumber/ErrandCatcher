@@ -4,6 +4,7 @@ const errandController = require("../Controller/ErrandController");
 const router = express.Router();
 
 router.get("/errands", errandController.getErrands);
+router.get("/available", errandController.getAllAvailable);
 router.get("/errand/:id", errandController.getErrandById);
 router.get("/your-errand/:id", errandController.getErrandByUser);
 

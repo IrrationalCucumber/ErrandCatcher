@@ -4,7 +4,18 @@ const ErrandController = {
   getErrands: (req, res) => {
     Errand.getAllErrands((err, errands) => {
       if (err) {
-        console.error("Error fetching users:", err);
+        console.error("Error fetching errands:", err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      res.json(errands);
+    });
+  },
+  //display all available
+  getAllAvailable: (req, res) => {
+    Errand.getAllAvailable((err, errands) => {
+      if (err) {
+        console.error("Error fetching errands:", err);
         res.status(500).send("Internal Server Error");
         return;
       }
