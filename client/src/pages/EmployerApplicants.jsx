@@ -84,7 +84,7 @@ const EmployerApplicants = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = applicants.slice(indexOfFirstItem, indexOfLastItem);
 
-  const headers = ["DATE", "CATCHER", "ERRAND TITLE", "ACTION"];
+  const headers = ["DATE", "CATCHER", "ERRAND TITLE", "ACTION", ""];
   const applicantData = currentItems.map((applicant) => [
     //applicant.applicationID,
     new Date(applicant.applicationDate).toLocaleDateString(),
@@ -122,6 +122,9 @@ const EmployerApplicants = () => {
     ) : (
       <button className="declined action-btn">Declined</button>
     ),
+    <button onClick={() => handleViewProfile(applicant, applicant.username)}>
+      View Profile
+    </button>,
   ]);
   //FOR NOTIFICATION
   //set variables for notification
@@ -251,18 +254,6 @@ const EmployerApplicants = () => {
         <Table headers={headers} data={applicantData} />
 
         {/* added  by ash */}
-        <ul>
-          {applicants.map((applicant) => (
-            <li key={applicant.id}>
-              {applicant.userFirstname} {applicant.userLastname} -{" "}
-              <button
-                onClick={() => handleViewProfile(applicant, applicant.username)}
-              >
-                View Profile
-              </button>
-            </li>
-          ))}
-        </ul>
 
         {showProfileModal && (
           <ProfileModal
@@ -273,10 +264,10 @@ const EmployerApplicants = () => {
             num={selectedApplicant.userContactNum}
             age={selectedApplicant.userAge}
             applicant={selectedApplicant}
+            rating={selectedApplicant.c}
             closeModal={handleCloseProfileModal}
           />
         )}
-
         {/* Pagination controls */}
         {applicants.length > 0 && (
           <Pagination
