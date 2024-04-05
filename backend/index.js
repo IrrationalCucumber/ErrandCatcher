@@ -146,7 +146,7 @@ app.get("/get-type/:userID", (req, res) => {
   const q = "Select accountType from useraccount where userID = ?";
   db.query(q, [userID], (err, data) => {
     if (err) return res.json(err);
-    return res.json(data[0].accountType);
+    return res.json(data);
   });
 });
 //==========================================CATEGORY=================================================================//

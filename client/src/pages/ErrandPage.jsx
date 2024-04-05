@@ -290,7 +290,7 @@ const ErrandPage = () => {
           lat={commission.comLat}
         />
         <br />
-        {type === "Employer" && commission.employerID === userID && (
+        {type == "Employer" && commission.employerID == userID && (
           <button className="formButton" onClick={handleClick}>
             UPDATE
           </button>
