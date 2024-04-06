@@ -31,7 +31,7 @@ const Errand = {
   //post new errand
   postErrand: (errandData, callback) => {
     const {
-      comEmployer,
+      empID,
       comTitle,
       comStart,
       comDeadline,
@@ -42,9 +42,11 @@ const Errand = {
       comPay,
       DatePosted,
       Contactno,
+      comLong,
+      comLat,
     } = errandData;
     const values = [
-      comEmployer,
+      empID,
       comTitle,
       comStart,
       comDeadline,
@@ -55,9 +57,13 @@ const Errand = {
       comPay,
       DatePosted,
       Contactno,
+      comLong,
+      comLat,
     ];
     db.query(
-      "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionStartDate`, `commissionDeadline`, `commissionLocation`, `commissionTo`,`commissionType`, `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`) VALUES (?)",
+      "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionStartDate`," +
+        " `commissionDeadline`, `commissionLocation`, `commissionTo`,`commissionType`," +
+        " `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`,`commissionLong`, `commissionLat`) VALUES (?)",
       [values],
       callback
     );

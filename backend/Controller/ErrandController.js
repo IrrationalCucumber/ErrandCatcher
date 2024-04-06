@@ -68,7 +68,7 @@ const ErrandController = {
   //post new errand
   postErrand: (req, res) => {
     const errnadData = req.body;
-    User.postErrand(errnadData, (error) => {
+    Errand.postErrand(errnadData, (error) => {
       if (error) {
         console.error("Error adding erand:", error);
         res
