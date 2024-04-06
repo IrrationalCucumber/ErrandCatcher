@@ -67,11 +67,9 @@ const Profile = () => {
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:8800/user-verify/${userID}`
-        );
-        console.log(res.data[0].accountStatus);
-        setStatus(res.data[0].accountStatus);
+        const res = await axios.get(`http://localhost:8800/status/${userID}`);
+        console.log(res.data);
+        setStatus(res.data);
         if (status.toUpperCase == "VERIFIED" || status == "Verified") {
           setVerified(true);
           console.log(verified);
@@ -149,8 +147,7 @@ const Profile = () => {
                 {/* Verification Icon */}
                 {/* Verification Icon */}
                 <p>
-                  Click
-                  <Link to="/verification">
+                  <Link to={verified ? null : "/verification"}>
                     <i
                       className={
                         verified
@@ -164,7 +161,7 @@ const Profile = () => {
                       }}
                     ></i>
                   </Link>
-                  UNVERIFIED
+                  {status.toUpperCase()}
                 </p>
 
                 {/* <FontAwesomeIcon

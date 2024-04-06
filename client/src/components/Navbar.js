@@ -55,7 +55,7 @@ function Navbar(props) {
         .get(`http://localhost:8800/username/${userID}`)
         .then((response) => {
           //console.log(response.data[0].username);
-          setUsername(response.data[0].username);
+          setUsername(response.data);
         })
         .catch(function (error) {
           console.log(error);

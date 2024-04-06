@@ -4,11 +4,14 @@ const express = require("express");
 const UserRoutes = require("./Route/UserRoutes");
 const ErrandRoutes = require("./Route/ErrandRoutes.js");
 const db = require("./dbConfig.js");
+const cors = require("cors");
 
 const app = express();
+app.use(express.json());
+app.use(cors());
 //use routes for each modules
-app.use("/user", UserRoutes);
-app.use("/errand", ErrandRoutes);
+app.use("/", UserRoutes);
+app.use("/", ErrandRoutes);
 
 const PORT = process.env.PORT || 8800;
 app.listen(PORT, () => {

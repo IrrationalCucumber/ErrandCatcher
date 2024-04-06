@@ -18,22 +18,6 @@ const User = {
       callback
     );
   },
-  //get accouunt status
-  //   getStatus: (id, callback) => {
-  //     db.query(
-  //       "SELECT accountStatus FROM useraccount WHERE userID = ?",
-  //       [id],
-  //       callback
-  //     );
-  //   },
-  //get username
-  //   getUsername: (id, callback) => {
-  //     db.query(
-  //       "SELECT username FROM useraccount WHERE userID = ?",
-  //       [id],
-  //       callback
-  //     );
-  //   },
   // Add more CRUD operations as needed...
   //sign up new user
   //   postSignUp: (userData, callback) => {
@@ -87,13 +71,13 @@ const User = {
       callback
     );
   },
-  putDeactivateById: (id, callback) => {
-    db.query(
-      `UPDATE useraccount SET accountStatus = 'Deactivate' WHERE userID =?`,
-      [id],
-      callback
-    );
-  },
+  // putDeactivateById: (id, callback) => {
+  //   db.query(
+  //     `UPDATE useraccount SET accountStatus = 'Deactivate' WHERE userID =?`,
+  //     [id],
+  //     callback
+  //   );
+  // },
 
   //sign-up/ add new user
   postNewUser: (userData, callback) => {
