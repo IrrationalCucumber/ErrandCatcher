@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import App from "./App";
 import Root from "./pages/admin/Root";
 import AdminHome from "./pages/admin/AdminHome";
@@ -52,7 +51,7 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    {/* <App /> */}
-    <RouterProvider router={router} />
+    <App />
+    {/* <RouterProvider router={router} /> */}
   </React.StrictMode>
 );
