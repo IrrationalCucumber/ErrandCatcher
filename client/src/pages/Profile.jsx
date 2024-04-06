@@ -26,8 +26,13 @@ const Profile = () => {
     bday: "",
     address: "",
     desc: "",
+    status: "",
+    type: "",
     // profileImage:"",
   });
+  //RV & APS 02/03/24
+  //useState for Status
+  const [status, setStatus] = useState("");
   //pre-fill the fields
   useEffect(() => {
     const fetchAccount = async () => {
@@ -52,25 +57,11 @@ const Profile = () => {
           bday: formattedDate,
           address: retrievedAccount.userAddress,
           desc: retrievedAccount.userDesc,
+          status: retrievedAccount.accountStatus,
+          type: retrievedAccount.accountType,
         });
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    fetchAccount();
-  }, [userID]);
-  //RV & APS 02/03/24
-  //useState for Status
-  const [status, setStatus] = useState("");
-  //update display for status
-  useEffect(() => {
-    const fetchStatus = async () => {
-      try {
-        const res = await axios.get(`http://localhost:8800/status/${userID}`);
-        console.log(res.data);
-        setStatus(res.data);
-        if (status.toUpperCase == "VERIFIED" || status == "Verified") {
+        //setStatus(res.data);
+        if (account.status.toUpperCase() == "VERIFIED") {
           setVerified(true);
           console.log(verified);
         }
@@ -78,8 +69,10 @@ const Profile = () => {
         console.log(err);
       }
     };
-    fetchStatus();
-  }, [status]);
+
+    fetchAccount();
+  }, [userID]);
+
   const handleChange = (e) => {
     // For the 'gender' field, directly set the value without using spread syntax
     if (e.target.name === "gender") {
@@ -143,26 +136,38 @@ const Profile = () => {
               </div>
               {/*username changed when user sign up*/}
               <div className="username-container">
-                <label className="username">Username</label>
+                <label className="username">{account.username}</label>
                 {/* Verification Icon */}
                 {/* Verification Icon */}
-                <p>
-                  <Link to={verified ? null : "/verification"}>
+                {account.status == "Unverified" && (
+                  <Link to="/verification">
                     <i
-                      className={
-                        verified
-                          ? "fa-solid fa-circle-check"
-                          : "fa-regular fa-circle-check"
-                      }
-                      style={{
-                        marginLeft: "5px",
-                        color: verified ? "green" : "gray",
-                        cursor: "pointer", // Make the cursor change to a pointer to indicate it's clickable
-                      }}
-                    ></i>
+                      className="fa-regular fa-circle-check"
+                      style={{ color: "gray", cursor: "pointer" }}
+                    >
+                      UNVERIFIED
+                    </i>
                   </Link>
-                  {status.toUpperCase()}
-                </p>
+                )}
+                {account.status === "Verified" ? (
+                  <>
+                    <i
+                      className="fa-solid fa-circle-check"
+                      style={{ color: "green" }}
+                    >
+                      {account.status}
+                    </i>
+                  </>
+                ) : (
+                  <Link to={`/verification/${userID}`}>
+                    <i
+                      className="fa-regular fa-circle-check"
+                      style={{ color: "gray", cursor: "pointer" }}
+                    >
+                      UNVERIFIED
+                    </i>
+                  </Link>
+                )}
 
                 {/* <FontAwesomeIcon
                   icon={faCertificate}
@@ -172,10 +177,12 @@ const Profile = () => {
                   }}
                 /> */}
               </div>
-              <div className="rating-box">
-                <label className="Rating">Rating</label>
-                <label className="RateNo">{rating} /5</label>
-              </div>
+              {account.type === "Catcher" && (
+                <div className="rating-box">
+                  <label className="Rating">Rating</label>
+                  <label className="RateNo">{rating} /5</label>
+                </div>
+              )}
               <textarea
                 className="description"
                 placeholder="Description"
