@@ -25,7 +25,7 @@ const PostCommission = () => {
     comDescription: "",
     comPay: "",
     DatePosted: "",
-    DateCompleted: "",
+    //DateCompleted: "",
     Contactno: "",
     comLong: "",
     comLat: "",
