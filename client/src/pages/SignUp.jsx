@@ -124,21 +124,6 @@ const SignUp = () => {
       console.log(err);
     }
   };
-  /**
-   * regUsername,
-      regPassword,
-      lname,
-      fname,
-      gender,
-      email,
-      cnum,
-      age,
-      bday,
-      address,
-      type,
-      dateCreated,
-   */
-
   return (
     <div className="body">
       <div className="container">
