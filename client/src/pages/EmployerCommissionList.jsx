@@ -80,7 +80,7 @@ const CommissionList = () => {
     try {
       //"http://localhost:8800/commission" - local computer
       //"http://192.168.1.47:8800/commission" - netwrok
-      await axios.delete(`http://localhost:8800/commission/${commissionID}`);
+      await axios.delete(`http://localhost:8800/delete-errand/${commissionID}`);
       window.location.reload();
     } catch (err) {
       console.log(err);
