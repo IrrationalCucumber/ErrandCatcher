@@ -64,22 +64,41 @@ function Navbar(props) {
     fetchName();
   }, [userID]);
 
+  //setState for account type
+  const [type, setType] = useState("");
+  useEffect(() => {
+    const fetchType = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/get-type/${userID}`);
+        //console.log(res.data);
+        setType(res.data);
+        console.log(type);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchType();
+  }, [type]);
+
   const [notifCount, setNotifCount] = useState("");
   useEffect(() => {
     const fetchNotif = async () => {
-      axios
-        .get(`http://localhost:8800/notif-count/${userID}`)
-        .then((response) => {
-          //console.log(response.data[0].c);
-          setNotifCount(response.data[0].c);
-          //console.log(notifCount);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      try {
+        if (type == "Catcher") {
+          const res = await axios.get(
+            `http://localhost:8800/c-count/${userID}`
+          );
+          setNotifCount(res.data[0].c);
+        } else {
+          const res = await axios.get(`http://localhost:8800/count/${userID}`);
+          setNotifCount(res.data[0].c);
+        }
+      } catch (err) {
+        console.log(err);
+      }
     };
     fetchNotif();
-  }, [userID]);
+  }, [type, userID]);
 
   const handleLogout = () => {
     // Perform logout logic here
