@@ -65,6 +65,21 @@ const ErrandController = {
       res.json(errand);
     });
   },
+  //post new errand
+  postErrand: (req, res) => {
+    const errnadData = req.body;
+    User.postErrand(errnadData, (error) => {
+      if (error) {
+        console.error("Error adding erand:", error);
+        res
+          .status(500)
+          .json({ error: "An error occurred while adding new errand" });
+        return;
+      }
+      // User added successfully
+      res.status(200).json({ message: "errand added successfully" });
+    });
+  },
 };
 
 module.exports = ErrandController;

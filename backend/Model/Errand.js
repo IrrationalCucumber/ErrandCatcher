@@ -28,6 +28,40 @@ const Errand = {
   getErrandById: (id, callback) => {
     db.query(`SELECT * FROM commission WHERE employerID = ?`, [id], callback);
   },
+  //post new errand
+  postErrand: (errandData, callback) => {
+    const {
+      comEmployer,
+      comTitle,
+      comStart,
+      comDeadline,
+      comLocation,
+      comTo,
+      comType,
+      comDescription,
+      comPay,
+      DatePosted,
+      Contactno,
+    } = errandData;
+    const values = [
+      comEmployer,
+      comTitle,
+      comStart,
+      comDeadline,
+      comLocation,
+      comTo,
+      comType,
+      comDescription,
+      comPay,
+      DatePosted,
+      Contactno,
+    ];
+    db.query(
+      "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionStartDate`, `commissionDeadline`, `commissionLocation`, `commissionTo`,`commissionType`, `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`) VALUES (?)",
+      [values],
+      callback
+    );
+  },
 };
 
 module.exports = Errand;

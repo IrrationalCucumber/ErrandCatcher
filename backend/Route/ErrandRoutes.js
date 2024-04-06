@@ -8,5 +8,6 @@ router.get("/available", errandController.getAllAvailable);
 router.get("/type/:type", errandController.getType);
 router.get("/errand/:id", errandController.getErrandById);
 router.get("/your-errand/:id", errandController.getErrandByUser);
+router.post("/commission", errandController.postErrand);
 
 module.exports = router;
