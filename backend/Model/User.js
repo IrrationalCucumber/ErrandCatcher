@@ -82,35 +82,35 @@ const User = {
   //sign-up/ add new user
   postNewUser: (userData, callback) => {
     const {
-      username,
-      password,
+      regUsername,
+      regPassword,
       fname,
       lname,
-      gender,
+      //gender,
       email,
       cnum,
-      age,
-      bday,
-      address,
+      //age,
+      //bday,
+      //address,
       type,
       dateCreated,
     } = userData;
     values = [
-      username,
-      password,
+      regUsername,
+      regPassword,
       lname,
       fname,
-      gender,
+      //gender,
       email,
       cnum,
-      age,
-      bday,
-      address,
+      //age,
+      // bday,
+      //address,
       type,
       dateCreated,
     ];
     db.query(
-      "INSERT INTO UserAccount (`username`, `password`, `userLastname`, `userFirstname`, `userGender`, `userEmail`,`userContactNum`, `userAge`, `userBirthday`, `userAddress`, `accountType`, `dateCreated` ) VALUES (?)",
+      "INSERT INTO useraccount (`username`, `password`, `userLastname`, `userFirstname`, `userEmail`,`userContactNum`, `accountType`, `dateCreated` ) VALUES (?)",
       [values],
       callback
     );

@@ -8,15 +8,17 @@ import "./Error.css";
 
 const SignUp = () => {
   const [account, setAccount] = useState({
-    firstName: "",
-    lastName: "",
     regUsername: "",
     regPassword: "",
-    regPassword2: "",
+    firstName: "",
+    lastName: "",
     email: "",
+    // age: "",
+    // bday: "",
     contactNumber: "",
     type: "Employer",
     dateCreated: "",
+    regPassword2: "",
   });
 
   //handle state of error message
@@ -27,15 +29,17 @@ const SignUp = () => {
   //handle the state event
   const resetForm = () => {
     setAccount({
-      firstName: "",
-      lastName: "",
       regUsername: "",
       regPassword: "",
-      regPassword2: "",
+      firstName: "",
+      lastName: "",
       email: "",
+      // age: "",
+      // bday: "",
       contactNumber: "",
       type: isChecked ? "Employer" : "Catcher",
       dateCreated: "",
+      regPassword2: "",
     });
     setEmployerErrorMessage("");
     setCatcherErrorMessage("");
@@ -114,12 +118,26 @@ const SignUp = () => {
     e.preventDefault();
     try {
       account.dateCreated = getCurrentDate();
-      await axios.post("http://localhost:8800/signup", account); // new enpoint
+      await axios.post("http://localhost:8800/sign-up/", account); // new enpoint
       navigate("/sign-in");
     } catch (err) {
       console.log(err);
     }
   };
+  /**
+   * regUsername,
+      regPassword,
+      lname,
+      fname,
+      gender,
+      email,
+      cnum,
+      age,
+      bday,
+      address,
+      type,
+      dateCreated,
+   */
 
   return (
     <div className="body">
@@ -201,9 +219,8 @@ const SignUp = () => {
                       type="password"
                       placeholder="Confirm password.."
                       onChange={handleChange}
-                      name="regPassword"
+                      name="regPassword2"
                       value={account.regPassword2}
-                      autoComplete="off"
                     />
                     <br />
                     <p className="em">
