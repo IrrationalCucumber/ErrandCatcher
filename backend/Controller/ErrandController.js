@@ -52,7 +52,7 @@ const ErrandController = {
   //display data by user id
   getErrandByUser: (req, res) => {
     const userID = req.params.id;
-    Errand.getErrandById(userID, (err, errand) => {
+    Errand.getErrandByUserID(userID, (err, errand) => {
       if (err) {
         console.error("Error fetching Errand:", err);
         res.status(500).send("Internal Server Error");
@@ -78,6 +78,61 @@ const ErrandController = {
       }
       // User added successfully
       res.status(200).json({ message: "errand added successfully" });
+    });
+  },
+  //update errnad by comID
+  updateErrand: (req, res) => {
+    const comID = req.params.id;
+    const updatedData = req.body;
+    Errand.updateErrandByID(comID, updatedData, (error, result) => {
+      if (error) {
+        console.error("Error updating errand:", error);
+        res
+          .status(500)
+          .json({ error: "An error occurred while updating errand" });
+        return;
+      }
+      // Check if any rows were affected by the update operation
+      if (result.affectedRows === 0) {
+        res.status(404).json({ error: "Errand not found" });
+        return;
+      }
+      // User updated successfully
+      res.status(200).json({ message: "Errand updated successfully" });
+    });
+  },
+  //update errand status
+  //set what value will be passed
+  updateErrandStatus: (req, res) => {
+    const comID = req.params.id;
+    const status = "Caught";
+    Errand.updateErrandStatus(comID, status, (error, result) => {
+      if (error) {
+        console.error("Error updating errand:", error);
+        res
+          .status(500)
+          .json({ error: "An error occurred while updating errand" });
+        return;
+      }
+      // Check if any rows were affected by the update operation
+      if (result.affectedRows === 0) {
+        res.status(404).json({ error: "Errand not found" });
+        return;
+      }
+      // User updated successfully
+      res.status(200).json({ message: "Errand updated successfully" });
+    });
+  },
+  //delete errand by id
+  deleteErrand: (req, res) => {
+    const errandID = req.params.id;
+    Errand.deleteErrandById(errandID, (err, errand) => {
+      if (err) {
+        console.error("Error fetching Errand:", err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      res.json(errand);
     });
   },
 };

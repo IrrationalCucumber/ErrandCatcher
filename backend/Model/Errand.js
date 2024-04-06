@@ -25,7 +25,7 @@ const Errand = {
     db.query(`SELECT * FROM commission WHERE commissionID = ?`, [id], callback);
   },
   //get specific errand by userid
-  getErrandById: (id, callback) => {
+  getErrandByUserID: (id, callback) => {
     db.query(`SELECT * FROM commission WHERE employerID = ?`, [id], callback);
   },
   //post new errand
@@ -40,8 +40,8 @@ const Errand = {
       comType,
       comDescription,
       comPay,
-      DatePosted,
       Contactno,
+      DatePosted,
       comLong,
       comLat,
     } = errandData;
@@ -67,6 +67,57 @@ const Errand = {
       [values],
       callback
     );
+  },
+  //update errand
+  updateErrandByID: (id, errandData, callback) => {
+    const {
+      comTitle,
+      comStart,
+      comDeadline,
+      comLocation,
+      comTo,
+      comType,
+      comDescription,
+      comPay,
+      Contactno,
+      comLong,
+      comLat,
+    } = errandData;
+    const values = [];
+    db.query(
+      `UPDATE commission SET commissionTitle = ?, commissionStartDate = ?, 
+      commissionDeadline = ?, commissionLocation = ?, commissionTo = ?,commissionType = ?,
+       commissionDesc = ?, commissionPay = ?, ContactNumber = ?, commissionLong = ?, commissionLat
+        = ? WHERE commissionID = ?`,
+      [
+        comTitle,
+        comStart,
+        comDeadline,
+        comLocation,
+        comTo,
+        comType,
+        comDescription,
+        comPay,
+        Contactno,
+        comLong,
+        comLat,
+        id,
+      ],
+      callback
+    );
+  },
+  //pass status to update the commission status
+  //can be reused
+  updateErrandStatus: (id, status, callback) => {
+    db.query(
+      `UPDATE commission SET commissionStatus = ? WHERE commissionID = ?`,
+      [status, id],
+      callback
+    );
+  },
+  //delete errand based on id
+  deleteErrandById: (id, callback) => {
+    db.query(`DELETE FROM commission WHERE commissionID = ?`, [id], callback);
   },
 };
 
