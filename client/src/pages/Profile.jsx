@@ -108,14 +108,11 @@ const Profile = () => {
     //refresh the page when button is clicked
     e.preventDefault();
     try {
-      await axios.put(
-        "http://localhost:8800/update-account/" + userID,
-        account
-      );
+      await axios.put("http://localhost:8800/update/" + userID, account);
 
       alert("Profile updated *Replace this*");
       //console.log(account);
-      window.location.reload();
+      //window.location.reload();
     } catch (err) {
       console.log(err);
     }
