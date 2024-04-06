@@ -34,7 +34,7 @@ const Home = () => {
       <div>
         {type === "Employer" && (
           <>
-            <Navbar
+            {/* <Navbar
               page1="HOME"
               home={`/home/${userID}`}
               page2="COMMISSIONS"
@@ -43,19 +43,18 @@ const Home = () => {
               applicants={`/applicants/${userID}`}
               page4="MAP"
               map={`/e-map/${userID}`}
-            />
+            /> */}
             <EmployerCard />
             <StickyButton
               buttonText="Post Errand"
               destination={`/post-commission/${userID}`}
             />
             <Cards />
-            <Footer />
           </>
         )}
         {type === "Catcher" && (
           <>
-            <Navbar
+            {/* <Navbar
               page1="HOME"
               home={`/home/${userID}`}
               page2="COMMISSIONS"
@@ -64,26 +63,27 @@ const Home = () => {
               applicants={`/my-application/${userID}`}
               map={`/e-map/${userID}`}
               page4="MAP"
-            />
+            /> */}
             <Menu />
           </>
         )}
         {type.toLocaleUpperCase() === "ADMIN" && (
           <>
-            <Navbar
+            {/* <Navbar
+              page1="HOME"
+              home={`/home/${userID}`}
               // {`admin-home/${userID}`}
               page2="ACCOUNT LIST"
-              commissionList={`/accounts`}
+              commissionList={`/accounts/${userID}`}
               page3="COMMISSION LIST"
-              applicants={`/commission-list`}
+              applicants={`/commission-list/${userID}`}
               page4="MAP"
               map={`/map`}
-              pageButton="/sign-in"
-              button="SIGN OUT"
-            />
+            /> */}
             <Menu />
           </>
         )}
+        <Footer />
       </div>
     </>
   );

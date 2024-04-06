@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Cards from "../components/Cards";
 //  import NavBar from '../components/Navbar';
-import Footer from "../components/Footer";
+//import Footer from "../components/Footer";
 import "./Menu.css";
 //import CardItem from '../components/CardItem';
 
@@ -107,8 +107,6 @@ const Menu = () => {
                 </div>
             </section> */}
       <Cards />
-
-      <Footer />
     </>
   );
 };
