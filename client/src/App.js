@@ -54,7 +54,7 @@ function App() {
             path="/view-profile/:userID/:catcherID"
             element={<ViewProfile />}
           />
-          <Route path="/verification" exact Component={Verification} />
+          <Route path="/verification/:userID" exact Component={Verification} />
           <Route path="/add" exact Component={AddAccount} />
           <Route path="/" exact Component={Landing} />
           <Route
