@@ -35,6 +35,16 @@ const Notif = {
       callback
     );
   },
+  //add new notif
+  postNotif: (notifData, callback) => {
+    const { userID, notificationType, notifDesc, notifDate } = notifData;
+    values = [userID, notificationType, notifDesc, notifDate];
+    db.query(
+      "INSERT INTO notification (`notifUserID`, `notificationType`, `notifDesc`, `notifDate`) VALUES (?)",
+      [values],
+      callback
+    );
+  },
 };
 
 module.exports = Notif;

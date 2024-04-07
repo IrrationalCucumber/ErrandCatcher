@@ -8,5 +8,6 @@ router.get("/count/:userID", notifController.getNotCount);
 router.get("/c-count/:userID", notifController.getCatchCount);
 router.get("/my-notif/:userID", notifController.getNotifByID);
 router.get("/emp-notif/:userID", notifController.getNotifEmp);
+router.post("/notify", notifController.postNotif);
 
 module.exports = router;

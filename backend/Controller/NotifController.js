@@ -60,6 +60,21 @@ const notifController = {
       res.json(notifs);
     });
   },
+  //post new notif
+  postNotif: (req, res) => {
+    const notifData = req.body;
+    Notif.postNotif(notifData, (error) => {
+      if (error) {
+        console.error("Error adding noitf:", error);
+        res
+          .status(500)
+          .json({ error: "An error occurred while adding new notif" });
+        return;
+      }
+      // User added successfully
+      res.status(200).json({ message: "Notif added successfully" });
+    });
+  },
 };
 
 module.exports = notifController;
