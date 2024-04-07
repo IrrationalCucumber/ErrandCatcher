@@ -12,6 +12,12 @@ const Errand = {
       callback
     );
   },
+  getRecent: (callback) => {
+    db.query(
+      "Select * from commission WHERE commissionStatus = 'Available' order by DatePosted DESC LIMIT 10",
+      callback
+    );
+  },
   //getType
   getType: (type, callback) => {
     db.query(

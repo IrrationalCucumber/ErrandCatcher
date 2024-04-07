@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.get("/errands", errandController.getErrands);
 router.get("/available", errandController.getAllAvailable);
+router.get("/recent", errandController.getRecent);
 router.get("/type/:type", errandController.getType);
 router.get("/errand/:id", errandController.getErrandById);
 router.get("/your-commission/:id", errandController.getErrandByUser);

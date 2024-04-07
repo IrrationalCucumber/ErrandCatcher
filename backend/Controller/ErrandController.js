@@ -22,6 +22,16 @@ const ErrandController = {
       res.json(errands);
     });
   },
+  getRecent: (req, res) => {
+    Errand.getRecent((err, errands) => {
+      if (err) {
+        console.error("Error fetching errands:", err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      res.json(errands);
+    });
+  },
   getType: (req, res) => {
     const type = req.params.type;
     Errand.getType(type, (err, errands) => {
