@@ -17,6 +17,11 @@ const Signup = () => {
     setSelectedType(selectedOption);
   };
 
+  const handleReset = () => {
+    setSelectedType("");
+    setSelectedOption("");
+  };
+
   const onSubmit = async (data) => {
     try {
       // Your HTTP request code for sign-up goes here
@@ -31,7 +36,7 @@ const Signup = () => {
 
   return (
     <div className="SUcontainer" style={{ maxWidth: "950px", margin: "20px auto", padding: "0 15px", textAlign: "center" }}>
-      <h2 style={{fontFamily:"sans-serif", paddingTop:"20px"}}>Errand Catcher</h2>
+      <h2 style={{ fontFamily: "sans-serif", paddingTop: "20px" }}>Errand Catcher</h2>
       <form onSubmit={onSubmit}>
         <div className="SUrow">
           {!selectedType && (
@@ -39,35 +44,35 @@ const Signup = () => {
               <div className="SUcontainer" style={{ maxWidth: "950px", margin: "0 auto", padding: "20px 20px 20px 20px", textAlign: "center" }}>
                 <h2>Join as an Employer or a Catcher</h2>
               </div>
-              {/* <div>
-                <input
-                  type="radio"
-                  value="employer"
-                  checked={selectedOption === "employer"}
-                  onChange={handleOptionChange}
-                />
-                <label className="SUlabel">Employer</label>
-                <input
-                  type="radio"
-                  value="catcher"
-                  checked={selectedOption === "catcher"}
-                  onChange={handleOptionChange}
-                />
-                <label className="SUlabel">Catcher</label>
-              </div> */}
               <RadioInputs
-                            options={options}
-                            selectedOption={selectedOption}
-                            onChange={handleOptionChange}
+                options={options}
+                selectedOption={selectedOption}
+                onChange={handleOptionChange}
               />
               <div>
-                <button onClick={handleTypeChange} disabled={!selectedOption}>
+                <button onClick={handleTypeChange} disabled={!selectedOption}
+                  style={{
+                    padding: "10px",
+                    width: "200px",
+                    borderRadius: "5px",
+                    border: "ridge",
+                    transition: "background-color 0.3s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.backgroundColor = "#005a80"; // Change background color on hover
+                    e.target.style.color = "#fff";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.backgroundColor = ""; // Revert back to initial background color
+                    e.target.style.color = "";
+                  }}
+                >
                   {selectedOption
                     ? `Join as ${selectedOption.charAt(0).toUpperCase() + selectedOption.slice(1)}`
                     : "Create Account"}
                 </button>
               </div>
-              <div className="m-4">
+              <div className="m-4" style={{ paddingTop: "20px" }}>
                 Already have an account? <a href="/login">Login</a>
               </div>
             </div>
@@ -86,22 +91,12 @@ const Signup = () => {
               >
                 <div className="SUrow" style={{ display: "flex", flexWrap: "wrap", margin: "0 -15px" }}>
                   <div className="col">
-                    <label className="SUlabel">Email Address</label>
-                    <input type="email" placeholder="Email Address" required />
-                  </div>
-                  <div className="col">
                     <label className="SUlabel">Username</label>
                     <input type="text" placeholder="Username" required />
                   </div>
-                </div>
-                <div className="SUrow" style={{ display: "flex", flexWrap: "wrap", margin: "0 -15px" }}>
                   <div className="col">
-                    <label className="SUlabel">Password</label>
-                    <input type="password" placeholder="Password" required />
-                  </div>
-                  <div className="col">
-                    <label className="SUlabel">Confirm Password</label>
-                    <input type="password" placeholder="Confirm Password" required />
+                    <label className="SUlabel">Email Address</label>
+                    <input type="email" placeholder="Email Address" required />
                   </div>
                 </div>
                 <div className="SUrow" style={{ display: "flex", flexWrap: "wrap", margin: "0 -15px" }}>
@@ -121,7 +116,7 @@ const Signup = () => {
                   </div>
                   <div className="col">
                     <label className="SUlabel">Gender</label>
-                    <select required>
+                    <select required style={{ width: "100%" }}>
                       <option value="">Select Gender</option>
                       <option value="male">Male</option>
                       <option value="female">Female</option>
@@ -129,9 +124,27 @@ const Signup = () => {
                   </div>
                 </div>
                 <div className="SUrow" style={{ display: "flex", flexWrap: "wrap", margin: "0 -15px" }}>
+                  <div className="col">
+                    <label className="SUlabel">Password</label>
+                    <input type="password" placeholder="Password" required />
+                  </div>
+                  <div className="col">
+                    <label className="SUlabel">Confirm Password</label>
+                    <input type="password" placeholder="Confirm Password" required />
+                  </div>
+                </div>
+                <div className="SUrow" style={{ display: "flex", flexWrap: "wrap", margin: "0 -15px" }}>
                   <div className="col text-center">
                     <button type="submit">Sign Up</button>
                   </div>
+                </div>
+                <div className="m-4" style={{ paddingTop: "20px" }}>
+                  Already have an account? <a href="/login">Login</a>
+                </div>
+                <div className="m-4-return" style={{ paddingTop: "20px", paddingLeft:"20px", border:"none",  position: "absolute", top: 0, left: 0 }}>
+                  <span  onClick={handleReset} style={{cursor:"pointer", fontSize: "20px"}}>
+                    <i class="fa-solid fa-arrow-left"/>
+                  </span>
                 </div>
               </form>
             </div>
@@ -151,7 +164,7 @@ const Signup = () => {
           .SUcontainer input[type="email"],
           .SUcontainer input[type="password"],
           .SUcontainer select {
-            width: 100%;
+            width: calc(50% - 5px);
             padding: 10px;
             margin-bottom: 15px;
             border: 1px solid #ccc;
@@ -175,14 +188,29 @@ const Signup = () => {
 
           .SUcontainer .text-center {
             text-align: center;
+            padding-top: 20px;
           }
 
           .SUcontainer .mb-4 {
             margin-bottom: 1.5rem;
           }
 
-          .SUlabel{
+          .SUlabel {
             color: black;
+          }
+
+          .SUrow {
+            gap: 20px;
+          }
+
+          .col {
+            flex: 1;
+          }
+
+          .m-4-return span {
+            color: #007bff;
+            text-decoration: underline; 
+            margin-right: 5px;
           }
         `}
       </style>
