@@ -1,7 +1,53 @@
+//need change for the backend
 import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
 import RadioInputs from "./RadioInputs";
+//import "./Error.css";
 
 const Signup = () => {
+  const [account, setAccount] = useState({
+    firstName: "",
+    lastName: "",
+    regUsername: "",
+    regPassword: "",
+    regPassword2: "",
+    email: "",
+    contactNumber: "",
+    type: "Employer",
+    dateCreated: "",
+  });
+
+    //handle state of error message
+    const [employerErrorMessage, setEmployerErrorMessage] = useState("");
+    const [catcherErrorMessage, setCatcherErrorMessage] = useState("");
+
+    const navigate = useNavigate();
+
+    const resetForm = () => {
+      setAccount({
+        firstName: "",
+        lastName: "",
+        regUsername: "",
+        regPassword: "",
+        regPassword2: "",
+        email: "",
+        contactNumber: "",
+        dateCreated: "",
+      });
+      setEmployerErrorMessage("");
+      setCatcherErrorMessage("");
+    };
+  
+    const getCurrentDate = () => {
+      const currentDate = new Date();
+      const year = currentDate.getFullYear();
+      const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+      const day = String(currentDate.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    };
+    
+
   const [selectedType, setSelectedType] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
   const options = [
@@ -31,6 +77,51 @@ const Signup = () => {
     } catch (error) {
       console.error(error);
       // Handle error
+    }
+  };
+
+    //save the data into db
+    const handleClick = async (e) => {
+      //if fileds are empty
+      //error message
+      if (
+        !account.firstName ||
+        !account.lastName ||
+        !account.regPassword ||
+        !account.regPassword2 ||
+        !account.email ||
+        !account.contactNumber ||
+        !account.type
+      ) {
+        if (account.type === "Employer") {
+          setEmployerErrorMessage("Missing fields. Please try again.");
+        } else {
+          setCatcherErrorMessage("Missing fields. Please try again.");
+        }
+        return;
+      } else if (account.regPassword.length < 8) {
+        if (account.type === "Employer") {
+          setEmployerErrorMessage("Password is too short.");
+        } else {
+          setCatcherErrorMessage("Password is too short.");
+        }
+        return;
+      } else if (account.regPassword !== account.regPassword2) {
+        if (account.type === "Employer") {
+          setEmployerErrorMessage("Password does not match.");
+        } else {
+          setCatcherErrorMessage("Password does not match.");
+        }
+        return;
+      }
+          //save to db if no error
+    e.preventDefault();
+    try {
+      account.dateCreated = getCurrentDate();
+      await axios.post("http://localhost:8800/signup", account); // new enpoint
+      navigate("/sign-in");
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -134,7 +225,7 @@ const Signup = () => {
                   </div>
                 </div>
                 <div className="SUrow" style={{ display: "flex", flexWrap: "wrap", margin: "0 -15px" }}>
-                  <div className="col text-center">
+                  <div className="col text-center" >
                     <button type="submit">Sign Up</button>
                   </div>
                 </div>
@@ -175,9 +266,10 @@ const Signup = () => {
           .SUcontainer button[type="submit"] {
             background-color: #007bff;
             color: #fff;
+            width: 200px;
             padding: 10px 20px;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
           }
@@ -197,6 +289,8 @@ const Signup = () => {
 
           .SUlabel {
             color: black;
+            text-align: left;
+            display: block;
           }
 
           .SUrow {
