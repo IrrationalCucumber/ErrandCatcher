@@ -24,6 +24,8 @@ const Signup = () => {
 
     const navigate = useNavigate();
 
+    const [isChecked, setIsChecked] = useState(false);
+
     const resetForm = () => {
       setAccount({
         firstName: "",
@@ -77,6 +79,23 @@ const Signup = () => {
     } catch (error) {
       console.error(error);
       // Handle error
+    }
+  };
+
+  const handleChange = (e) => {
+    // For the 'gender' field, directly set the value without using spread syntax
+
+    if (e.target.name === "type") {
+      if (isChecked) {
+        // Checkbox is checked, store one value
+        setAccount((prev) => ({ ...prev, type: "Catcher" }));
+      } else {
+        // Checkbox is not checked, store another value
+        setAccount((prev) => ({ ...prev, type: "Employer" }));
+      }
+    } else {
+      // For other fields, use spread syntax as before
+      setAccount((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     }
   };
 
@@ -183,27 +202,55 @@ const Signup = () => {
                 <div className="SUrow" style={{ display: "flex", flexWrap: "wrap", margin: "0 -15px" }}>
                   <div className="col">
                     <label className="SUlabel">Username</label>
-                    <input type="text" placeholder="Username" required />
+                    <input 
+                      type="text" 
+                      placeholder="Username" 
+                      onChange={handleChange}
+                      name="regUsername"
+                      value={account.regUsername}
+                      autocomplete="off"
+                      required />
                   </div>
                   <div className="col">
                     <label className="SUlabel">Email Address</label>
-                    <input type="email" placeholder="Email Address" required />
+                    <input 
+                      type="email" 
+                      placeholder="Email Address" 
+                      onChange={handleChange}
+                      name="email"
+                      value={account.email}
+                      required />
                   </div>
                 </div>
                 <div className="SUrow" style={{ display: "flex", flexWrap: "wrap", margin: "0 -15px" }}>
                   <div className="col">
                     <label className="SUlabel">First Name</label>
-                    <input type="text" placeholder="First Name" required />
+                    <input 
+                      type="text" 
+                      placeholder="First Name" 
+                      onChange={handleChange}
+                      name="firstName"
+                      value={account.firstName}
+                      required />
                   </div>
                   <div className="col">
                     <label className="SUlabel">Last Name</label>
-                    <input type="text" placeholder="Last Name" required />
+                    <input 
+                      type="text" 
+                      placeholder="Last Name" 
+                      onChange={handleChange}
+                      name="lastName"
+                      value={account.lastName}
+                      required />
                   </div>
                 </div>
                 <div className="SUrow" style={{ display: "flex", flexWrap: "wrap", margin: "0 -15px" }}>
                   <div className="col">
                     <label className="SUlabel">Birthday</label>
-                    <input type="date" placeholder="Birthday" required />
+                    <input 
+                      type="date" 
+                      placeholder="Birthday" 
+                      required />
                   </div>
                   <div className="col">
                     <label className="SUlabel">Gender</label>
@@ -217,11 +264,25 @@ const Signup = () => {
                 <div className="SUrow" style={{ display: "flex", flexWrap: "wrap", margin: "0 -15px" }}>
                   <div className="col">
                     <label className="SUlabel">Password</label>
-                    <input type="password" placeholder="Password" required />
+                    <input 
+                      type="password" 
+                      placeholder="Password" 
+                      onChange={handleChange}
+                      name="regPassword"
+                      value={account.regPassword}
+                      autoComplete="off"
+                      required />
                   </div>
                   <div className="col">
                     <label className="SUlabel">Confirm Password</label>
-                    <input type="password" placeholder="Confirm Password" required />
+                    <input 
+                      type="password" 
+                      placeholder="Confirm Password" 
+                      onChange={handleChange}
+                      name="regPassword"
+                      value={account.regPassword2}
+                      autoComplete="off"
+                      required />
                   </div>
                 </div>
                 <div className="SUrow" style={{ display: "flex", flexWrap: "wrap", margin: "0 -15px" }}>
