@@ -164,7 +164,7 @@ const Signup = () => {
                 </button>
               </div>
               <div className="m-4" style={{ paddingTop: "20px" }}>
-                Already have an account? <a href="/login">Login</a>
+                Already have an account? <Link to="/sign-in">Sign in</Link>
               </div>
             </div>
           )}
@@ -230,7 +230,7 @@ const Signup = () => {
                   </div>
                 </div>
                 <div className="m-4" style={{ paddingTop: "20px" }}>
-                  Already have an account? <a href="/login">Login</a>
+                  Already have an account? <Link to="/sign-in">Sign in</Link>
                 </div>
                 <div className="m-4-return" style={{ paddingTop: "20px", paddingLeft:"20px", border:"none",  position: "absolute", top: 0, left: 0 }}>
                   <span  onClick={handleReset} style={{cursor:"pointer", fontSize: "20px"}}>
