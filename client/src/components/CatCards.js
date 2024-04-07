@@ -4,8 +4,8 @@ import CardItem from "./CardItem";
 import axios from "axios";
 import "./Cards.css";
 
-function CatCards() {
-  const [commissions, setCommissions] = useState([]);
+function CatCards({ commissions }) {
+  const [commissionslist, setCommissionslist] = useState([]);
   const location = useLocation();
   //pathname to array from
   //get the id
@@ -18,7 +18,7 @@ function CatCards() {
         const res = await axios.get(`http://localhost:8800/type/${type}`);
         //"http://localhost:8800/commission" - local computer
         //"http://192.168.1.47:8800/commission" - netwrok
-        setCommissions(res.data);
+        setCommissionslist(res.data);
       } catch (err) {
         console.log(err);
       }
