@@ -78,6 +78,25 @@ const notifController = {
   /**
    * ADD READ NOTIF
    */
+  putReadNotif: (req, res) => {
+    const notifID = req.params.notifID;
+    const id = req.params.id;
+    Notif.putReadNotif(notifID, id, (error, result) => {
+      if (error) {
+        console.error("Error updating Notification:", error);
+        res
+          .status(500)
+          .json({ error: "An error occurred while updating notification" });
+        return;
+      }
+      // Check if any rows were affected by the update operation
+      if (result.affectedRows === 0) {
+        res.status(404).json({ error: "Notification not found" });
+        return;
+      }
+      res.status(200).json({ message: "Notification updated successfully" });
+    });
+  },
 };
 
 module.exports = notifController;

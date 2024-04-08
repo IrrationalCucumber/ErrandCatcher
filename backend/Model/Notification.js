@@ -45,6 +45,14 @@ const Notif = {
       callback
     );
   },
+  // update the notif to read
+  putReadNotif: (notifID, id, callback) => {
+    db.query(
+      `UPDATE notification SET isRead = 'yes' WHERE notificationID = (?) AND userID = (?)`,
+      [notifID, id],
+      callback
+    );
+  },
 };
 
 module.exports = Notif;
