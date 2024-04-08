@@ -106,7 +106,7 @@ function App() {
           <Route path="/post-commission/:userID" element={<PostCommission />} />
           <Route
             path="/update-commission/:commissionID/:userID"
-            elemnt={<UpdateCommission />}
+            element={<UpdateCommission />}
           />
           {/* CATCHER */}
           <Route
