@@ -53,4 +53,23 @@ const scheduler = setInterval(updateExpiredRecords, 10000);
 //   clearInterval(scheduler);
 //   console.log('Scheduler stopped.');
 // }, 3600000); // Stop after 1 hour (3600 seconds * 1000 milliseconds)
+
+//combiniation
+app.get("/post-and-applicant-count/:userID", (req, res) => {
+  const userID = req.params.userID;
+  const q = `
+    SELECT 
+      (SELECT COUNT(*) FROM commission WHERE employerID = ?) AS postCount,
+      (SELECT COUNT(*) FROM commission e JOIN application a ON a.applicationErrandID = e.commissionID WHERE e.employerID = ?) AS applicantCount,
+      (SELECT COUNT(*) FROM errandtransaction t JOIN commission c ON t.transErrandID = c.commissionID WHERE c.employerID = ? AND errandStatus = 'Ongoing' ) AS pending
+  `;
+
+  db.query(q, [userID, userID, userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data); // Assuming you only expect one row of results
+  });
+});
 module.exports;
