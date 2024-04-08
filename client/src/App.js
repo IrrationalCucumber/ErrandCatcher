@@ -6,7 +6,7 @@ import AccountList from "./pages/AccountList";
 import AddAccount from "./pages/AddAccount";
 import PostCommission from "./pages/PostCommission";
 import CommissionList from "./pages/CommissionList";
-// import Home from "./pages/Home";
+import Home from "./pages/Home";
 import UpdateAccount from "./pages/UpdateAccount";
 import UpdateCommission from "./pages/UpdateCommission";
 //import "./style.css";
@@ -36,6 +36,7 @@ import HomeServices from "./pages/Services/HomeServices";
 import Delivery from "./pages/Services/Delivery";
 import Verification from "./pages/Verification";
 import ErrandPage from "./pages/ErrandPage";
+import ViewProfile from "./pages/ViewProfile";
 
 function App() {
   return (
@@ -49,6 +50,10 @@ function App() {
           <Route path="/sign-up" exact Component={SignUp} />
           {/* UNIVERSAL */}
           <Route path="/profile/:userID" exact Component={Profile} />
+          <Route
+            path="/view-profile/:userID/:catcherID"
+            element={<ViewProfile />}
+          />
           <Route path="/verification" exact Component={Verification} />
           <Route path="/add" exact Component={AddAccount} />
           <Route path="/" exact Component={Landing} />
@@ -69,7 +74,7 @@ function App() {
           <Route path="/Delivery/:userID/:type" element={<Delivery />} />
           <Route path="/update-account/:userID" element={<UpdateAccount />} />
           {/* <Route path="/admin-home/:userID" element={<AdminHome />} /> */}
-          {/* <Route path="/" exact Component={Home} /> */}
+          <Route path="/home/:userID" exact Component={Home} />
           {/* ADMIN */}
           <Route path="/accounts" exact Component={AccountList} />
           <Route path="/add" exact Component={AddAccount} />
@@ -92,7 +97,7 @@ function App() {
           <Route path="/post-commission/:userID" element={<PostCommission />} />
           <Route
             path="/update-commission/:commissionID/:userID"
-            elemnt={<UpdateCommission />}
+            element={<UpdateCommission />}
           />
           {/* CATCHER */}
           <Route

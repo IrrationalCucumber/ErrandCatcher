@@ -2,6 +2,7 @@ import express from "express";
 import mysql from "mysql";
 import cors from "cors";
 import createDBConnection from "./dbConfig.js";
+import cron from "node-cron";
 
 const app = express();
 //connect to database
@@ -18,6 +19,72 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.json("hello this is the backend");
 });
+
+//=====================================SCHDULER========================================
+// Define the cron job to update expired commissions
+// cron.schedule(
+//   "0 0 * * *",
+//   () => {
+//     console.log("Running cron job to update expired commissions...");
+
+//     // Update query to set commissionStatus to 'Expired' for commissions with past deadline
+//     const query = `
+//     UPDATE commission
+//     SET commissionStatus = 'Expired'
+//     WHERE commissionDeadline < CURDATE()
+//     AND commissionStatus = 'Available';
+//   `;
+
+//     // Execute the query
+//     db.query(query, (err, result) => {
+//       if (err) {
+//         console.error("Error updating expired commissions:", err);
+//       } else {
+//         console.log(
+//           "Successfully updated expired commissions:",
+//           result.affectedRows,
+//           "rows updated"
+//         );
+//       }
+//     });
+//   },
+//   {
+//     scheduled: true,
+//     timezone: "Asia/Kolkata",
+//   }
+// );
+/**
+ * NEW METHOD FOR SCHEDULER
+ * WORKING AS OF NOW
+ */
+
+// Function to update records with expired deadlines
+const updateExpiredRecords = () => {
+  const currentTime = new Date().toISOString().slice(0, 19).replace("T", " ");
+  const query = `
+    UPDATE commission
+    SET commissionStatus = 'Expired'
+    WHERE commissionDeadline < '${currentTime}' AND commissionStatus = 'Available'
+  `;
+
+  db.query(query, (error, results) => {
+    if (error) {
+      console.error("Error updating records:", error);
+    } else {
+      console.log(`${results.affectedRows} errand updated.`);
+    }
+  });
+};
+
+// Schedule the update function to run every minute
+const scheduler = setInterval(updateExpiredRecords, 10000);
+
+// Stop the scheduler after a certain duration (optional)
+// setTimeout(() => {
+//   clearInterval(scheduler);
+//   console.log('Scheduler stopped.');
+// }, 3600000); // Stop after 1 hour (3600 seconds * 1000 milliseconds)
+//========================================================================
 //return data from database
 app.get("/user", (req, res) => {
   const q = "SELECT * from useraccount";
@@ -44,9 +111,19 @@ app.get("/your-commission/:userID", (req, res) => {
     return res.json(data);
   });
 });
+
+//return data from all available errands
+app.get("/errands", (req, res) => {
+  const q = "Select * from commission WHERE commissionStatus = 'Available'";
+  db.query(q, (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+});
 //display 10 recent posted commissino
 app.get("/recent-commission", (req, res) => {
-  const q = "Select * from commission order by DatePosted DESC LIMIT 3";
+  const q =
+    "Select * from commission WHERE commissionStatus = 'Available'commissionStatus = 'Available' order by DatePosted DESC LIMIT 3 ";
   db.query(q, (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
@@ -69,14 +146,15 @@ app.get("/get-type/:userID", (req, res) => {
   const q = "Select accountType from useraccount where userID = ?";
   db.query(q, [userID], (err, data) => {
     if (err) return res.json(err);
-    return res.json(data[0].accountType);
+    return res.json(data);
   });
 });
 //==========================================CATEGORY=================================================================//
 //select type
 app.get("/type/:type", (req, res) => {
   const type = req.params.type; // Get the type from the query parameter
-  const q = "SELECT * FROM commission WHERE commissionType LIKE ?";
+  const q =
+    "SELECT * FROM commission WHERE commissionType LIKE ? AND commissionStatus = 'Available'";
   const values = [`%${type}%`];
 
   db.query(q, [values], (err, data) => {
@@ -137,7 +215,7 @@ app.get("/search-user", (req, res) => {
 app.get("/search-commission", (req, res) => {
   const searchTerm = req.query.term; // Get the search term from the query parameter
   const q =
-    "SELECT * FROM commission WHERE commissionTitle LIKE ? OR commissionType LIKE ? OR commissionLocation LIKE ?";
+    "SELECT * FROM commission WHERE commissionTitle LIKE ? OR commissionType LIKE ? OR commissionLocation LIKE ? AND commissionStatus = 'Available'";
   const values = [`%${searchTerm}%`, `%${searchTerm}%`, `%${searchTerm}%`];
 
   db.query(q, values, (err, data) => {
@@ -181,6 +259,22 @@ app.get("/search-employer-commission/:userID", (req, res) => {
     `%${searchTerm}%`,
     `%${searchTerm}%`,
   ];
+
+  db.query(q, values, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+
+// Employer Commission List filter //
+app.get("/employer-commilist", (req, res) => {
+  // Get the search term from the query parameter
+  const status = req.query.status || "";
+  const q = "SELECT * FROM commission WHERE commissionStatus = ?";
+  const values = [status];
 
   db.query(q, values, (err, data) => {
     if (err) {
@@ -366,7 +460,7 @@ app.put("/accept-apply/:comID/:applyID", (req, res) => {
   const comId = req.params.comID;
   const applicationID = req.params.applyID;
   const q =
-    "UPDATE application SET `applicationStatus` = 'Approved' WHERE applicationErrandID = ? AND applicationID = ?";
+    "UPDATE application SET `applicationStatus` = 'Accepted' WHERE applicationErrandID = ? AND applicationID = ?";
 
   db.query(q, [comId, applicationID], (err) => {
     if (err) {
@@ -374,6 +468,24 @@ app.put("/accept-apply/:comID/:applyID", (req, res) => {
       return res.status(500).json(err);
     }
     return res.json("Application Approved");
+  });
+});
+/**
+ * DENY other applicatns after accepting an applicatn
+ * APS - 30/03/24
+ */
+app.put("/deny-other-apply/:comID/:catcherID", (req, res) => {
+  const comId = req.params.comID;
+  const catcherID = req.params.catcherID;
+  const q =
+    "UPDATE application SET applicationStatus = 'Denied' WHERE applicationErrandID = ? AND catcherID != ?";
+
+  db.query(q, [comId, catcherID], (err) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+    return res.json("Other Applications Denied");
   });
 });
 //APS - 03/03/24
@@ -424,7 +536,7 @@ app.get("/get-apply/:userID/:comID", (req, res) => {
 });
 
 //================================================================================================//
-
+//===========================================ERRAND=================================================//
 //post commission
 //employer
 //send data to commission table
@@ -432,13 +544,14 @@ app.get("/get-apply/:userID/:comID", (req, res) => {
 app.post("/post-commission", (req, res) => {
   const q =
     //`commissionStartDate`,
-    "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionDeadline`, `commissionLocation`,`commissionType`, `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`) VALUES (?)";
+    "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionStartDate`, `commissionDeadline`, `commissionLocation`, `commissionTo`,`commissionType`, `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`) VALUES (?)";
   const values = [
     req.body.comEmployer,
     req.body.comTitle,
-    //req.body.comStart,
+    req.body.comStart,
     req.body.comDeadline,
     req.body.comLocation,
+    req.body.comTo,
     req.body.comType,
     req.body.comDescription,
     req.body.comPay,
@@ -513,14 +626,15 @@ app.put("/update-commission/:commissionID", (req, res) => {
   const commissionID = req.params.commissionID;
   const q =
     //`commissionStartDate` = ?,
-    "UPDATE commission SET `commissionTitle` = ?, `commissionDeadline` = ?, `commissionLocation` = ?,`commissionType` = ?, `commissionDesc` = ?, `commissionPay` = ?, `ContactNumber` = ?, `commissionLong` = ?, `commissionLat` = ? WHERE commissionID = ?";
+    "UPDATE commission SET `commissionTitle` = ?, `commissionStarDate` = ?, `commissionDeadline` = ?, `commissionLocation` = ?, `commissionTo` = ?,`commissionType` = ?, `commissionDesc` = ?, `commissionPay` = ?, `ContactNumber` = ?, `commissionLong` = ?, `commissionLat` = ? WHERE commissionID = ?";
   //const q = "UPDATE commission SET `commissionTitle` = ? WHERE `commissionID` = ?"
   const values = [
     //req.body.comEmployer,
     req.body.comTitle,
+    req.body.comStart,
     req.body.comDeadline,
-    //req.body.comStart,
     req.body.comLocation,
+    req.body.comTo,
     req.body.comType,
     req.body.comDescription,
     req.body.comPay,
@@ -716,7 +830,8 @@ app.get("/notification", (req, res) => {
 app.get("/show-notif/:userID", (req, res) => {
   const userID = req.params.userID;
   const q =
-    "SELECT * FROM notification WHERE `isRead` = 'no' AND `notifUserID` = (?) ORDER BY notifDate DESC";
+    "SELECT * FROM notification " +
+    " WHERE (isRead = 'no' AND notifUserID = (?)) OR notificationType = 'New Errand' ORDER BY notifDate DESC ";
 
   db.query(q, [userID], (err, data) => {
     if (err) {
@@ -748,6 +863,21 @@ app.post("/notify", (req, res) => {
     "INSERT INTO notification (`notifUserID`, `notificationType`, `notifDesc`, `notifDate`) VALUES (?)";
   const values = [
     req.body.userID,
+    req.body.notificationType,
+    req.body.notifDesc,
+    req.body.notifDate,
+  ];
+  db.query(q, [values], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("Notification added");
+  });
+});
+
+app.post("/notify-new", (req, res) => {
+  const q =
+    "INSERT INTO notification (`notificationType`, `notifDesc`, `notifDate`) VALUES (?)";
+  const values = [
+    //req.body.userID,
     req.body.notificationType,
     req.body.notifDesc,
     req.body.notifDate,
@@ -910,6 +1040,74 @@ app.post("/add-trans", (req, res) => {
   db.query(q, [values], (err, data) => {
     if (err) return res.json(err);
     return res.json("Transaction added");
+  });
+});
+
+//================================================COUNT==========================================//
+/**
+ * Retrieve count of Posted errands, applicants, and completed errands
+ * APS - 27/03/24
+ */
+//get posted errand count
+app.get("/post-count/:userID", (req, res) => {
+  const userID = req.params.userID;
+  const q = "select count(*) as 'c' from commission where employerID = (?) ";
+
+  db.query(q, [userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+//get applicant count
+app.get("/applicant-count/:userID", (req, res) => {
+  const userID = req.params.userID;
+  const q =
+    "select count(*) as 'c' " +
+    "from commission e " +
+    "JOIN application a ON a.applicationErrandID = e.commissionID " +
+    "where employerID = ?";
+
+  db.query(q, [userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+//combiniation
+app.get("/post-and-applicant-count/:userID", (req, res) => {
+  const userID = req.params.userID;
+  const q = `
+    SELECT 
+      (SELECT COUNT(*) FROM commission WHERE employerID = ?) AS postCount,
+      (SELECT COUNT(*) FROM commission e JOIN application a ON a.applicationErrandID = e.commissionID WHERE e.employerID = ?) AS applicantCount,
+      (SELECT COUNT(*) FROM errandtransaction t JOIN commission c ON t.transErrandID = c.commissionID WHERE c.employerID = ? AND errandStatus = 'Ongoing' ) AS pending
+  `;
+
+  db.query(q, [userID, userID, userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data); // Assuming you only expect one row of results
+  });
+});
+
+app.get("/complete-count/:userID", (req, res) => {
+  const userID = req.params.userID;
+  const q =
+    "select count(*) as 'c' from commission where employerID = (?) AND commissionStatus = 'Complete";
+
+  db.query(q, [userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
   });
 });
 

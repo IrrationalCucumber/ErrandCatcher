@@ -23,10 +23,17 @@ h1 {
 }
 
 .cards__items {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  /* display: grid;
+  grid-template-columns: repeat(4, 1fr);
   flex-wrap: wrap;
-  gap: 30px; 
+  gap: 30px;  */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Ensures equal spacing between cards */
+  margin: 0 -15px;
+  gap: 35px;
+  list-style: none;
+
 }
 
 .cards__item {
@@ -34,12 +41,16 @@ h1 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 400%; /* Adjust the width as needed */
-  height: 500px; /* Adjust the height as needed */
-  margin: 20px; /* Adjust the margin between cards as needed */
+  width: 400px; 
+  height: 500px;
+  margin: 20px; 
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for a card effect */
-  transition: transform 0.3s ease; /* Add transition for hover effect */
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  */
+  transition: transform 0.3s ease; 
+
+  flex: 0 0 calc(25% - 30px); /* Set flex basis to 25% minus the margin */
+  max-width: calc(25% - 30px); /* Set maximum width to 25% minus the margin */
+  margin: 0 15px 30px; 
 }
 
 .cards__item__link {
@@ -48,18 +59,18 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 275px;
+  width: 250px;
   height: 18rem;
   padding-top: 1px;
   box-shadow: 0 6px 20px rgba(56, 125, 255, 0.17);
   -webkit-filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
   filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
   border-radius: 10px;
-  border: 2px solid black;
+  /* border: 2px solid black; */
+  border: none;
   overflow: hidden;
   text-decoration: none;
   min-height: 85%;
-  border-radius: 10px;
   box-shadow: 0 0 0 .5rem rgba(0, 0, 0, .1);
 }
 
@@ -72,16 +83,16 @@ h1 {
   display: grid;
   place-items: center; /* Center the image both horizontally and vertically */
   position: relative;
-  width: 500px;
+  width: 450px;
   padding-top: 10px;
   padding-bottom: 10px;
   overflow: hidden;
 }
 
-.fade-img {
+/* .fade-img {
   animation-name: fade-img;
   animation-duration: 2s;
-}
+} */
 
 .cards__item__pic-wrap::after {
   border: 3px solid black;
