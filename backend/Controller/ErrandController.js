@@ -145,6 +145,24 @@ const ErrandController = {
       res.json(errand);
     });
   },
+  /**
+   * Return completed errand
+   */
+  getCompletedErrand: (req, res) => {
+    const userID = req.params.id;
+    Errand.getCompletedErrand(userID, (err, errand) => {
+      if (err) {
+        console.error("Error fetching Errand:", err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      if (!errand) {
+        res.status(404).send("Errand not found");
+        return;
+      }
+      res.json(errand);
+    });
+  },
 };
 
 module.exports = ErrandController;

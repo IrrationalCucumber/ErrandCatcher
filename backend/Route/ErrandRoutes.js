@@ -13,5 +13,6 @@ router.post("/commission", errandController.postErrand);
 router.put("/update-errand/:id", errandController.updateErrand);
 router.put("/errand-taken/:id", errandController.updateErrandStatus);
 router.delete("/delete-errand/:id", errandController.deleteErrand);
+router.get("/complete-count/:id", errandController.getCompletedErrand);
 
 module.exports = router;
