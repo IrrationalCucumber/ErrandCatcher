@@ -31,10 +31,28 @@ const EmployerApplicants = () => {
   //ash
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [selectedApplicant, setSelectedApplicant] = useState(null);
+  const [rating, setRating] = useState("");
 
   const handleViewProfile = (applicant) => {
     setSelectedApplicant(applicant);
-    //console.log(selectedApplicant.userFirstname);
+    //display rating of acathcer
+    const fetchRating = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8800/user-rating/${applicant.catcherID}`
+        );
+        // if rating is null
+        if (res.data[0].c == null) {
+          setRating(0);
+        } else {
+          setRating(res.data[0].c);
+        }
+        // console.log(res.data[0].c);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchRating();
     setShowProfileModal(true);
   };
 
@@ -91,12 +109,6 @@ const EmployerApplicants = () => {
     new Date(applicant.applicationDate).toLocaleDateString(),
     `${applicant.userFirstname} ${applicant.userLastname}`,
     applicant.commissionTitle,
-    <button
-      onClick={() => navigate(`/view-profile/${userID}/${applicant.catcherID}`)}
-      //`/view-profile/${applicant.catcherID}`
-    >
-      <i className="fa-regular fa-user"></i>
-    </button>,
     applicant.applicationStatus === "Pending" ? (
       <>
         <button
@@ -275,7 +287,7 @@ const EmployerApplicants = () => {
             num={selectedApplicant.userContactNum}
             age={selectedApplicant.userAge}
             applicant={selectedApplicant}
-            rating={selectedApplicant.c}
+            rating={rating}
             closeModal={handleCloseProfileModal}
           />
         )}

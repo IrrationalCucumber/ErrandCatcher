@@ -32,7 +32,7 @@ const ProfileModal = ({
           <p>Age: {age}</p>
           <p>Email: {email}</p>
           <p>Contact Number: {num}</p>
-          <p>Rating: </p>
+          <p>Rating: {rating}</p>
           <button onClick={() => handleAccept(applicant)}>Accept</button>
           <button onClick={() => handleDecline(applicant)}>Decline</button>
         </div>
