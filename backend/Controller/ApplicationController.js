@@ -153,6 +153,18 @@ const applyController = {
       res.status(200).json({ message: "Application deleted successfully" });
     });
   },
+  //count of applicants
+  getApplicantCount: (req, res) => {
+    const userID = req.params.id;
+    Apply.getApplicantCount(userID, (err, count) => {
+      if (err) {
+        console.error("Error fetching Count:", err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      res.json(count);
+    });
+  },
 };
 
 module.exports = applyController;

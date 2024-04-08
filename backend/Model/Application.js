@@ -83,6 +83,17 @@ const Apply = {
       callback
     );
   },
+  //get applicant count
+  getApplicantCount: (id, callback) => {
+    db.query(
+      `select count(*) as 'c'
+      from commission e 
+      JOIN application a ON a.applicationErrandID = e.commissionID 
+      where employerID = ?`,
+      [id],
+      callback
+    );
+  },
 };
 
 module.exports = Apply;

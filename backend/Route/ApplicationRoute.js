@@ -15,4 +15,5 @@ router.put(
 router.put("/cancel-apply/:id/:applyID", applicationController.putCancelApply);
 router.put("/deny-other-apply/:comID/:id", applicationController.putDenyOther);
 router.delete("/delete-apply", applicationController.deleteApply);
+router.get("/applicant-count/:id", applicationController.getApplicantCount);
 module.exports = router;
