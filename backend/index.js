@@ -111,6 +111,19 @@ app.get("/type/Transportation", (req, res) => {
     return res.json(data);
   });
 });
+// CommissionType: Homeservice //
+app.get("/type/Home", (req, res) => {
+  const q = "SLECT * FROM commission WHERE commissionType = 'Home' AND commissionStatus = 'Available' ";
+
+  db.query(q, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+
 
 // static query for type
 // select type
