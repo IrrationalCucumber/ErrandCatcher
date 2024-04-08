@@ -75,6 +75,9 @@ const notifController = {
       res.status(200).json({ message: "Notif added successfully" });
     });
   },
+  /**
+   * ADD READ NOTIF
+   */
 };
 
 module.exports = notifController;

@@ -90,7 +90,7 @@ const ErrandController = {
       res.status(200).json({ message: "errand added successfully" });
     });
   },
-  //update errnad by comID
+  //update errnad data by comID
   updateErrand: (req, res) => {
     const comID = req.params.id;
     const updatedData = req.body;
