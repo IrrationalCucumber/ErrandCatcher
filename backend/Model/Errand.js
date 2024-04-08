@@ -125,10 +125,18 @@ const Errand = {
   deleteErrandById: (id, callback) => {
     db.query(`DELETE FROM commission WHERE commissionID = ?`, [id], callback);
   },
-  //get completed errand of emplyer
+  //get count completed errand of emplyer
   getCompletedErrand: (id, callback) => {
     db.query(
       `select count(*) as 'c' from commission where employerID = (?) AND commissionStatus = 'Complete`,
+      [id],
+      callback
+    );
+  },
+  // count of posted errand
+  getPostCount: (id, callback) => {
+    db.query(
+      `select count(*) as 'c' from commission where employerID = (?) `,
       [id],
       callback
     );

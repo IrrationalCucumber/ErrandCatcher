@@ -14,5 +14,6 @@ router.put("/update-errand/:id", errandController.updateErrand);
 router.put("/errand-taken/:id", errandController.updateErrandStatus);
 router.delete("/delete-errand/:id", errandController.deleteErrand);
 router.get("/complete-count/:id", errandController.getCompletedErrand);
+router.get("/post-count/:id", errandController.getPostCount);
 
 module.exports = router;
