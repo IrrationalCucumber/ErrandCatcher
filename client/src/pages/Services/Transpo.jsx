@@ -1,14 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../Services/Transpo.css";
-import Cards from "../../components/CatCards";
 import Navbar from "../../components/Navbar";
+import axios from "axios";
+import CatCards from "../../components/CatCards";
 
 const Transportation = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [commissions, setCommissions] = useState([]);
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
   };
+
+  useEffect(() => {
+    const fetchAllCommission = async () => {
+        try {
+            const res = await axios.get("http://localhost:8800/type/Transportation");
+            setCommissions(res.data);
+          } catch (err) {
+            console.log(err);
+          }
+        };
+    fetchAllCommission();
+    }, []);
+
+// Search commmissions using JS filter method //
+const filteredCommissions = commissions.filter(commission =>
+  commission.commissionTitle.toLowerCase().includes(searchQuery.toLowerCase())
+);
 
   return (
     <>
@@ -23,7 +42,7 @@ const Transportation = () => {
         />
         <button>Search</button>
       </div>
-      <Cards />
+      <CatCards commissions = {filteredCommissions} />
       <div></div>
     </>
   );
