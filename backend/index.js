@@ -310,11 +310,17 @@ app.get("/filter-type", (req, res) => {
 //regester account
 // app.post("/signup", (req, res) => {
 //   const q =
-//     "INSERT INTO UserAccount (`username`, `password`, `userEmail`, `accountType`, `dateCreated` ) VALUES (?)";
+//     "INSERT INTO UserAccount (`username`, `password`,`userFirstname`, `userLastname`, `userBirthday`,  `userGender`, `userEmail`,`userContactNum`, `accountType`, `dateCreated` ) VALUES (?)";
+//   // `userAge`
 //   const values = [
-//     req.body.username,
-//     req.body.password,
+//     req.body.regUsername,
+//     req.body.regPassword,
+//     req.body.firstName,
+//     req.body.lastName,
+//     req.body.bday,
+//     req.body.gender,
 //     req.body.email,
+//     req.body.contactNumber,
 //     req.body.type,
 //     req.body.dateCreated,
 //   ];

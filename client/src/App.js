@@ -5,7 +5,7 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
+import SignUp from "./pages/SignUp/Signup";
 import Profile from "./pages/Profile";
 import AccountList from "./pages/admin/AccountList";
 import AddAccount from "./pages/admin/AddAccount";
