@@ -17,13 +17,11 @@ function AdminHome() {
         home={`/admin-home/${userID}`}
         // {`admin-home/${userID}`}
         page2="ACCOUNT LIST"
-        commissionList={`/accounts`}
+        commissionList={`/accounts/${userID}`}
         page3="COMMISSION LIST"
-        applicants={`/commission-list`}
+        applicants={`/commission-list/${userID}`}
         page4="MAP"
-        map={`/map`}
-        pageButton="/sign-in"
-        button="SIGN OUT"
+        map={`/map/${userID}`}
       />
 
       <Menu />

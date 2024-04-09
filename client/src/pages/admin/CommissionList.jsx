@@ -97,6 +97,17 @@ const CommissionList = () => {
   //need front end
   return (
     <div>
+      <NavBar
+        page1="HOME"
+        home={`/admin-home/${userID}`}
+        // {`admin-home/${userID}`}
+        page2="ACCOUNT LIST"
+        commissionList={`/accounts/${userID}`}
+        page3="COMMISSION LIST"
+        applicants={`/commission-list/${userID}`}
+        page4="MAP"
+        map={`/map/${userID}`}
+      />
       <div className="commissions">
         <h1>Commission List</h1>
         <div className="search-filter">

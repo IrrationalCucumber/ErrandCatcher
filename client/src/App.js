@@ -23,7 +23,7 @@ import AdminHome from "./pages/admin/AdminHome";
 import ApplyCommission from "./pages/ApplyCommission";
 import EmployerApplicants from "./pages/EmployerApplicants";
 //MAP ROUTES
-import Map from "./pages/CommissionMap";
+import Map from "./pages/admin/CommissionMap";
 import CatcherMap from "./pages/CatcherMap";
 import EmployerMap from "./pages/EmployerMap";
 import Notification from "./pages/Notification";
@@ -83,7 +83,7 @@ function App() {
           {/* ADMIN */}
           <Route path="/accounts/:userID" element={<AccountList />} />
           <Route path="/add" exact Component={AddAccount} />
-          <Route path="/map" element={<Map />} />
+          <Route path="/map/:id" element={<Map />} />
           <Route path="/admin-home/:userID" element={<AdminHome />} />
           <Route
             path="/commission-list/:userID"
