@@ -4,6 +4,7 @@ const db = require("../dbConfig");
 const Apply = {
   // /applicants/:id
   //get applicants of employer
+  // show only pending
   getApplicants: (id, callback) => {
     db.query(
       `SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname 
@@ -76,10 +77,10 @@ const Apply = {
     );
   },
   //delete application
-  deleteApply: (id, comID, callback) => {
+  deleteApply: (id, callback) => {
     db.query(
-      `DELETE FROM application WHERE catcherID = ? AND applicationID = ?`,
-      [id, comID],
+      `DELETE FROM application WHERE  applicationID = ?`,
+      [id],
       callback
     );
   },

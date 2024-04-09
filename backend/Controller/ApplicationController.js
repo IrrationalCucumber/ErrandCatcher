@@ -139,8 +139,7 @@ const applyController = {
   // cahtcher side
   deleteApply: (req, res) => {
     const id = req.params.id;
-    const comID = req.params.comID;
-    Apply.deleteApply(id, comID, (err, result) => {
+    Apply.deleteApply(id, (err, result) => {
       if (err) {
         console.error("Error fetching Errand:", err);
         res.status(500).send("Internal Server Error");
