@@ -34,7 +34,7 @@ const Home = () => {
       <div>
         {type === "Employer" && (
           <>
-            {/* <Navbar
+            <Navbar
               page1="HOME"
               home={`/home/${userID}`}
               page2="COMMISSIONS"
@@ -43,7 +43,7 @@ const Home = () => {
               applicants={`/applicants/${userID}`}
               page4="MAP"
               map={`/e-map/${userID}`}
-            /> */}
+            />
             <EmployerCard />
             <StickyButton
               buttonText="Post Errand"
@@ -54,7 +54,7 @@ const Home = () => {
         )}
         {type === "Catcher" && (
           <>
-            {/* <Navbar
+            <Navbar
               page1="HOME"
               home={`/home/${userID}`}
               page2="COMMISSIONS"
@@ -63,13 +63,13 @@ const Home = () => {
               applicants={`/my-application/${userID}`}
               map={`/e-map/${userID}`}
               page4="MAP"
-            /> */}
+            />
             <Menu />
           </>
         )}
         {type.toLocaleUpperCase() === "ADMIN" && (
           <>
-            {/* <Navbar
+            <Navbar
               page1="HOME"
               home={`/home/${userID}`}
               // {`admin-home/${userID}`}
@@ -79,7 +79,7 @@ const Home = () => {
               applicants={`/commission-list/${userID}`}
               page4="MAP"
               map={`/map`}
-            /> */}
+            />
             <Menu />
           </>
         )}

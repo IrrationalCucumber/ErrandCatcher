@@ -146,7 +146,7 @@ app.get("/", (req, res) => {
 //   const q = "Select accountType from useraccount where userID = ?";
 //   db.query(q, [userID], (err, data) => {
 //     if (err) return res.json(err);
-//     return res.json(data[0].accountType);
+//     return res.json(data);
 //   });
 // });
 //==========================================CATEGORY=================================================================//
@@ -395,7 +395,6 @@ app.get("/filter-type", (req, res) => {
 //     return res.json(data);
 //   });
 // });
-
 //APS - 13/03/24
 //retrieve catcher errand application
 // app.get("/your-application/:userID", (req, res) => {
@@ -857,6 +856,21 @@ app.get("/filter-type", (req, res) => {
 //     "INSERT INTO notification (`notifUserID`, `notificationType`, `notifDesc`, `notifDate`) VALUES (?)";
 //   const values = [
 //     req.body.userID,
+//     req.body.notificationType,
+//     req.body.notifDesc,
+//     req.body.notifDate,
+//   ];
+//   db.query(q, [values], (err, data) => {
+//     if (err) return res.json(err);
+//     return res.json("Notification added");
+//   });
+// });
+
+// app.post("/notify-new", (req, res) => {
+//   const q =
+//     "INSERT INTO notification (`notificationType`, `notifDesc`, `notifDate`) VALUES (?)";
+//   const values = [
+//     //req.body.userID,
 //     req.body.notificationType,
 //     req.body.notifDesc,
 //     req.body.notifDate,

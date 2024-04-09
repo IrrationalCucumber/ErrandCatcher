@@ -137,7 +137,7 @@ const Profile = () => {
                 {/* Verification Icon */}
                 {/* Verification Icon */}
                 {account.status == "Unverified" && (
-                  <Link to="/verification">
+                  <Link to={`/verification/${userID}`}>
                     <i
                       className="fa-regular fa-circle-check"
                       style={{ color: "gray", cursor: "pointer" }}
