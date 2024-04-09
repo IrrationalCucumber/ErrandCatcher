@@ -18,3 +18,23 @@
     border: 1px solid gray;
   }
 
+  .commissions{
+    display: flex;
+}
+
+.commissions{
+    flex:1;
+    flex-direction: column;
+}
+label{
+  width: 250px;
+  padding: 10px;
+}
+  .formButton{
+    border: none;
+    padding: 10px;
+    background-color: lightcoral;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
