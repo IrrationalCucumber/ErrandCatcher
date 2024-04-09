@@ -1,4 +1,11 @@
 // app.js
+/**
+ * IF YOU WANT TO USE THE OLD APIs
+ * GO TO backend>package.json
+ * CHANGE:
+ *  "main": "app.js" --> "main": "index.js"
+    "type": "commonjs" --> "type": "module" 
+ */
 
 const express = require("express");
 const UserRoutes = require("./Route/UserRoutes");

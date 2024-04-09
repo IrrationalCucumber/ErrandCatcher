@@ -59,25 +59,25 @@ app.get("/", (req, res) => {
  */
 
 // Function to update records with expired deadlines
-const updateExpiredRecords = () => {
-  const currentTime = new Date().toISOString().slice(0, 19).replace("T", " ");
-  const query = `
-    UPDATE commission
-    SET commissionStatus = 'Expired'
-    WHERE commissionDeadline < '${currentTime}' AND commissionStatus = 'Available'
-  `;
+// const updateExpiredRecords = () => {
+//   const currentTime = new Date().toISOString().slice(0, 19).replace("T", " ");
+//   const query = `
+//     UPDATE commission
+//     SET commissionStatus = 'Expired'
+//     WHERE commissionDeadline < '${currentTime}' AND commissionStatus = 'Available'
+//   `;
 
-  db.query(query, (error, results) => {
-    if (error) {
-      console.error("Error updating records:", error);
-    } else {
-      console.log(`${results.affectedRows} errand updated.`);
-    }
-  });
-};
+//   db.query(query, (error, results) => {
+//     if (error) {
+//       console.error("Error updating records:", error);
+//     } else {
+//       console.log(`${results.affectedRows} errand updated.`);
+//     }
+//   });
+// };
 
 // Schedule the update function to run every minute
-const scheduler = setInterval(updateExpiredRecords, 10000);
+//const scheduler = setInterval(updateExpiredRecords, 10000);
 
 // Stop the scheduler after a certain duration (optional)
 // setTimeout(() => {
@@ -94,41 +94,41 @@ const scheduler = setInterval(updateExpiredRecords, 10000);
 //   });
 // });
 //return data from commission tbale
-app.get("/commission", (req, res) => {
-  const q = "Select * from commission";
-  db.query(q, (err, data) => {
-    if (err) return res.json(err);
-    return res.json(data);
-  });
-});
+// app.get("/commission", (req, res) => {
+//   const q = "Select * from commission";
+//   db.query(q, (err, data) => {
+//     if (err) return res.json(err);
+//     return res.json(data);
+//   });
+// });
 //========================DIPSLAY ENPOIN=============================
 //commission list based on user id
-app.get("/your-commission/:userID", (req, res) => {
-  const userID = req.params.userID; // Use req.params.userID to get the route parameter
-  const q = "Select * from commission where employerID = ?";
-  db.query(q, [userID], (err, data) => {
-    if (err) return res.json(err);
-    return res.json(data);
-  });
-});
+// app.get("/your-commission/:userID", (req, res) => {
+//   const userID = req.params.userID; // Use req.params.userID to get the route parameter
+//   const q = "Select * from commission where employerID = ?";
+//   db.query(q, [userID], (err, data) => {
+//     if (err) return res.json(err);
+//     return res.json(data);
+//   });
+// });
 
 //return data from all available errands
-app.get("/errands", (req, res) => {
-  const q = "Select * from commission WHERE commissionStatus = 'Available'";
-  db.query(q, (err, data) => {
-    if (err) return res.json(err);
-    return res.json(data);
-  });
-});
+// app.get("/errands", (req, res) => {
+//   const q = "Select * from commission WHERE commissionStatus = 'Available'";
+//   db.query(q, (err, data) => {
+//     if (err) return res.json(err);
+//     return res.json(data);
+//   });
+// });
 //display 10 recent posted commissino
-app.get("/recent-commission", (req, res) => {
-  const q =
-    "Select * from commission WHERE commissionStatus = 'Available'commissionStatus = 'Available' order by DatePosted DESC LIMIT 3 ";
-  db.query(q, (err, data) => {
-    if (err) return res.json(err);
-    return res.json(data);
-  });
-});
+// app.get("/recent-commission", (req, res) => {
+//   const q =
+//     "Select * from commission WHERE commissionStatus = 'Available' order by DatePosted DESC LIMIT 3 ";
+//   db.query(q, (err, data) => {
+//     if (err) return res.json(err);
+//     return res.json(data);
+//   });
+// });
 //APS - 14/03/24
 //retrieve username
 // app.get("/username/:userID", (req, res) => {
@@ -151,20 +151,20 @@ app.get("/recent-commission", (req, res) => {
 // });
 //==========================================CATEGORY=================================================================//
 //select type
-app.get("/type/:type", (req, res) => {
-  const type = req.params.type; // Get the type from the query parameter
-  const q =
-    "SELECT * FROM commission WHERE commissionType LIKE ? AND commissionStatus = 'Available'";
-  const values = [`%${type}%`];
+// app.get("/type/:type", (req, res) => {
+//   const type = req.params.type; // Get the type from the query parameter
+//   const q =
+//     "SELECT * FROM commission WHERE commissionType LIKE ? AND commissionStatus = 'Available'";
+//   const values = [`%${type}%`];
 
-  db.query(q, [values], (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "An error occurred" });
-    }
-    return res.json(data);
-  });
-});
+//   db.query(q, [values], (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ error: "An error occurred" });
+//     }
+//     return res.json(data);
+//   });
+// });
 // static query for type
 // select type
 // UNTESTED
@@ -308,196 +308,197 @@ app.get("/filter-type", (req, res) => {
 
 //============================================SIGNUP==================================//
 //regester account
-app.post("/signup", (req, res) => {
-  const q =
-    "INSERT INTO UserAccount (`username`, `password`, `userEmail`, `accountType`, `dateCreated` ) VALUES (?)";
-  const values = [
-    req.body.username,
-    req.body.password,
-    req.body.email,
-    req.body.type,
-    req.body.dateCreated,
-  ];
+// app.post("/signup", (req, res) => {
+//   const q =
+//     "INSERT INTO UserAccount (`username`, `password`, `userEmail`, `accountType`, `dateCreated` ) VALUES (?)";
+//   const values = [
+//     req.body.username,
+//     req.body.password,
+//     req.body.email,
+//     req.body.type,
+//     req.body.dateCreated,
+//   ];
 
-  db.query(q, [values], (err, data) => {
-    if (err) return res.json(err);
-    return res.json("Account has been added");
-  });
-});
+//   db.query(q, [values], (err, data) => {
+//     if (err) return res.json(err);
+//     return res.json("Account has been added");
+//   });
+// });
 //send data to userAccount
-app.post("/user", (req, res) => {
-  //const q = "INSERT INTO UserAccount (`username`, `password`, `userLastname`, `userFirstname`, `userGender`, `userEmail`, `userContactNum`, `userAge`, `userBirthday`, `userAddress`, `userDesc`, `accountType`, `dateCreated`, `profileImage`) VALUES (?)"
-  const q =
-    "INSERT INTO UserAccount (`username`, `password`, `userLastname`, `userFirstname`, `userGender`, `userEmail`,`userContactNum`, `userAge`, `userBirthday`, `userAddress`, `accountType`, `dateCreated` ) VALUES (?)";
-  const values = [
-    req.body.username,
-    req.body.password,
-    req.body.lname,
-    req.body.fname,
-    req.body.gender,
-    req.body.email,
-    req.body.contact,
-    req.body.age,
-    req.body.bday,
-    req.body.address,
-    req.body.type,
-    req.body.dateCreated,
-  ];
+// app.post("/user", (req, res) => {
+//   //const q = "INSERT INTO UserAccount (`username`, `password`, `userLastname`, `userFirstname`, `userGender`, `userEmail`, `userContactNum`, `userAge`, `userBirthday`, `userAddress`, `userDesc`, `accountType`, `dateCreated`, `profileImage`) VALUES (?)"
+//   const q =
+//     "INSERT INTO UserAccount (`username`, `password`, `userLastname`, `userFirstname`, `userGender`, `userEmail`,`userContactNum`, `userAge`, `userBirthday`, `userAddress`, `accountType`, `dateCreated` ) VALUES (?)";
+//   const values = [
+//     req.body.username,
+//     req.body.password,
+//     req.body.lname,
+//     req.body.fname,
+//     req.body.gender,
+//     req.body.email,
+//     req.body.contact,
+//     req.body.age,
+//     req.body.bday,
+//     req.body.address,
+//     req.body.type,
+//     req.body.dateCreated,
+//   ];
 
-  db.query(q, [values], (err, data) => {
-    if (err) return res.json(err);
-    return res.json("Account has been added");
-  });
-});
+//   db.query(q, [values], (err, data) => {
+//     if (err) return res.json(err);
+//     return res.json("Account has been added");
+//   });
+// });
 //send data to commission table
-app.post("/commission", (req, res) => {
-  const q =
-    "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionDeadline`, `commissionLocation`,`commissionType`, `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`, `commissionLong`, `commissionLat`) VALUES (?)";
-  const values = [
-    req.body.empID,
-    req.body.comTitle,
-    req.body.comDeadline,
-    req.body.comLocation,
-    req.body.comType,
-    req.body.comDescription,
-    req.body.comPay,
-    // req.body.comStatus,
-    // req.body.catcherID,
-    req.body.DatePosted,
-    // req.body.DateCompleted,
-    req.body.Contactno,
-    req.body.comLong,
-    req.body.comLat,
-  ];
-  db.query(q, [values], (err, data) => {
-    if (err) return res.json(err);
-    return res.json("Commission has been posted");
-  });
-});
+// app.post("/commission", (req, res) => {
+//   const q =
+//     "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionDeadline`, `commissionLocation`,`commissionType`, `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`, `commissionLong`, `commissionLat`) VALUES (?)";
+//   const values = [
+//     req.body.empID,
+//     req.body.comTitle,
+//     req.body.comDeadline,
+//     req.body.comLocation,
+//     req.body.comType,
+//     req.body.comDescription,
+//     req.body.comPay,
+//     req.body.DatePosted,
+//     req.body.Contactno,
+//     req.body.comLong,
+//     req.body.comLat,
+//   ];
+//   db.query(q, [values], (err, data) => {
+//     if (err) return res.json(err);
+//     return res.json("Commission has been posted");
+//   });
+// });
 //=============================================APPLICATION=====================================//
 //catcher application
 //save to Application table
 //send data to commission table
-app.post("/apply", (req, res) => {
-  const q =
-    "INSERT INTO application (`catcherID`,`applicationErrandID`, `applicationDate`) VALUES (?)";
-  const values = [req.body.catcherID, req.body.comID, req.body.applicationDate];
-  db.query(q, [values], (err, data) => {
-    if (err) return res.json(err);
-    return res.json("Application Saved");
-  });
-});
+// app.post("/apply", (req, res) => {
+//   const q =
+//     "INSERT INTO application (`catcherID`,`applicationErrandID`, `applicationDate`) VALUES (?)";
+//   const values = [req.body.catcherID, req.body.comID, req.body.applicationDate];
+//   db.query(q, [values], (err, data) => {
+//     if (err) return res.json(err);
+//     return res.json("Application Saved");
+//   });
+// });
 
 //display applicant of empoyer's commissoin
-app.get("/applicants/:userID", (req, res) => {
-  const userID = req.params.userID; // Use req.params.userID to get the route parameter
-  const q =
-    "SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname FROM Application a JOIN commission c ON a.applicationErrandID = c.commissionID JOIN useraccount ua ON a.catcherID = ua.userID WHERE a.applicationErrandID IN (SELECT commissionID FROM commission WHERE employerID = ?)";
-  db.query(q, [userID], (err, data) => {
-    if (err) return res.json(err);
-    return res.json(data);
-  });
-});
+// app.get("/applicants/:userID", (req, res) => {
+//   const userID = req.params.userID; // Use req.params.userID to get the route parameter
+//   const q =
+//     "SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname FROM Application a JOIN commission c ON a.applicationErrandID = c.commissionID JOIN useraccount ua ON a.catcherID = ua.userID WHERE a.applicationErrandID IN (SELECT commissionID FROM commission WHERE employerID = ?)";
+//   db.query(q, [userID], (err, data) => {
+//     if (err) return res.json(err);
+//     return res.json(data);
+//   });
+// });
+
 //APS - 13/03/24
 //retrieve catcher errand application
-app.get("/your-application/:userID", (req, res) => {
-  const userID = req.params.userID; // Use req.params.userID to get the route parameter
-  const q =
-    "SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname, c.employerID" +
-    " FROM Application a " +
-    " JOIN commission c ON a.applicationErrandID = c.commissionID" +
-    " JOIN useraccount ua ON c.employerID = ua.userID" +
-    " WHERE a.catcherID IN (SELECT userID FROM useraccount WHERE userID = ?)";
-  //Add condition to retrieve Pending only
-  // AND applicationStatus = 'Pending'
-  db.query(q, [userID], (err, data) => {
-    if (err) return res.json(err);
-    return res.json(data);
-  });
-});
+// app.get("/your-application/:userID", (req, res) => {
+//   const userID = req.params.userID; // Use req.params.userID to get the route parameter
+//   const q =
+//     "SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname, c.employerID" +
+//     " FROM Application a " +
+//     " JOIN commission c ON a.applicationErrandID = c.commissionID" +
+//     " JOIN useraccount ua ON c.employerID = ua.userID" +
+//     " WHERE a.catcherID IN (SELECT userID FROM useraccount WHERE userID = ?)";
+//   //Add condition to retrieve Pending only
+//   // AND applicationStatus = 'Pending'
+//   db.query(q, [userID], (err, data) => {
+//     if (err) return res.json(err);
+//     return res.json(data);
+//   });
+// });
+
 // APS - 13/03/2024
 //Cancel Application
 //needs catcherID and application ID
-app.put("/cancel-apply/:userID/:applyID", (req, res) => {
-  const userID = req.params.userID;
-  const applicationID = req.params.applyID;
-  const q =
-    "UPDATE application SET `applicationStatus` = 'Cancelled' WHERE catcherID = ? AND applicationID = ?";
+// app.put("/cancel-apply/:userID/:applyID", (req, res) => {
+//   const userID = req.params.userID;
+//   const applicationID = req.params.applyID;
+//   const q =
+//     "UPDATE application SET `applicationStatus` = 'Cancelled' WHERE catcherID = ? AND applicationID = ?";
 
-  db.query(q, [userID, applicationID], (err) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).json(err);
-    }
-    return res.json("Application Cancelled");
-  });
-});
+//   db.query(q, [userID, applicationID], (err) => {
+//     if (err) {
+//       console.log(err);
+//       return res.status(500).json(err);
+//     }
+//     return res.json("Application Cancelled");
+//   });
+// });
 
 // APS - 13/03/2024
 //Deny Applicant
 //needs commission and application ID
-app.put("/deny-apply/:comID/:applyID", (req, res) => {
-  const comId = req.params.comID;
-  const applicationID = req.params.applyID;
-  const q =
-    "UPDATE application SET `applicationStatus` = 'Denied' WHERE applicationErrandID = ? AND applicationID = ?";
+// app.put("/deny-apply/:comID/:applyID", (req, res) => {
+//   const comId = req.params.comID;
+//   const applicationID = req.params.applyID;
+//   const q =
+//     "UPDATE application SET `applicationStatus` = 'Denied' WHERE applicationErrandID = ? AND applicationID = ?";
 
-  db.query(q, [comId, applicationID], (err) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).json(err);
-    }
-    return res.json("Application Denied");
-  });
-});
-app.put("/accept-apply/:comID/:applyID", (req, res) => {
-  const comId = req.params.comID;
-  const applicationID = req.params.applyID;
-  const q =
-    "UPDATE application SET `applicationStatus` = 'Accepted' WHERE applicationErrandID = ? AND applicationID = ?";
+//   db.query(q, [comId, applicationID], (err) => {
+//     if (err) {
+//       console.log(err);
+//       return res.status(500).json(err);
+//     }
+//     return res.json("Application Denied");
+//   });
+// });
 
-  db.query(q, [comId, applicationID], (err) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).json(err);
-    }
-    return res.json("Application Approved");
-  });
-});
+// app.put("/accept-apply/:comID/:applyID", (req, res) => {
+//   const comId = req.params.comID;
+//   const applicationID = req.params.applyID;
+//   const q =
+//     "UPDATE application SET `applicationStatus` = 'Accepted' WHERE applicationErrandID = ? AND applicationID = ?";
+//   db.query(q, [comId, applicationID], (err) => {
+//     if (err) {
+//       console.log(err);
+//       return res.status(500).json(err);
+//     }
+//     return res.json("Application Approved");
+//   });
+// });
+
 /**
  * DENY other applicatns after accepting an applicatn
  * APS - 30/03/24
  */
-app.put("/deny-other-apply/:comID/:catcherID", (req, res) => {
-  const comId = req.params.comID;
-  const catcherID = req.params.catcherID;
-  const q =
-    "UPDATE application SET applicationStatus = 'Denied' WHERE applicationErrandID = ? AND catcherID != ?";
+// app.put("/deny-other-apply/:comID/:catcherID", (req, res) => {
+//   const comId = req.params.comID;
+//   const catcherID = req.params.catcherID;
+//   const q =
+//     "UPDATE application SET applicationStatus = 'Denied' WHERE applicationErrandID = ? AND catcherID != ?";
 
-  db.query(q, [comId, catcherID], (err) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).json(err);
-    }
-    return res.json("Other Applications Denied");
-  });
-});
+//   db.query(q, [comId, catcherID], (err) => {
+//     if (err) {
+//       console.log(err);
+//       return res.status(500).json(err);
+//     }
+//     return res.json("Other Applications Denied");
+//   });
+// });
 //APS - 03/03/24
 //delete application
 //requires catcherID and applicationID
-app.delete("/delete-apply/:userID/:applyID", (req, res) => {
-  const userID = req.params.userID;
-  const applicationID = req.params.applyID;
-  const q = "DELETE FROM application WHERE catcherID = ? AND applicationID = ?";
+// app.delete("/delete-apply/:userID/:applyID", (req, res) => {
+//   const userID = req.params.userID;
+//   const applicationID = req.params.applyID;
+//   const q = "DELETE FROM application WHERE catcherID = ? AND applicationID = ?";
 
-  db.query(q, [userID, applicationID], (err, data) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).json(err);
-    }
-    return res.json("Application Deleted");
-  });
-});
+//   db.query(q, [userID, applicationID], (err, data) => {
+//     if (err) {
+//       console.log(err);
+//       return res.status(500).json(err);
+//     }
+//     return res.json("Application Deleted");
+//   });
+// });
+
 //APS - 13/03/24
 //retrieve catcher errand application
 //returns boolean
@@ -518,16 +519,16 @@ app.delete("/delete-apply/:userID/:applyID", (req, res) => {
 //APS - 19/03/24
 // return the application id of the Catcher
 //pair with check apply
-app.get("/get-apply/:userID/:comID", (req, res) => {
-  const userID = req.params.userID;
-  const comID = req.params.comID;
-  const q =
-    "SELECT applicationID FROM application WHERE catcherID = ? AND applicationErrandID = ?";
-  db.query(q, [userID, comID], (err, data) => {
-    if (err) return res.status(500).json(err);
-    return res.json(data[0]);
-  });
-});
+// app.get("/get-apply/:userID/:comID", (req, res) => {
+//   const userID = req.params.userID;
+//   const comID = req.params.comID;
+//   const q =
+//     "SELECT applicationID FROM application WHERE catcherID = ? AND applicationErrandID = ?";
+//   db.query(q, [userID, comID], (err, data) => {
+//     if (err) return res.status(500).json(err);
+//     return res.json(data[0]);
+//   });
+// });
 
 //================================================================================================//
 //===========================================ERRAND=================================================//
@@ -535,148 +536,148 @@ app.get("/get-apply/:userID/:comID", (req, res) => {
 //employer
 //send data to commission table
 //NOTE: UNUSED ENDPOINT?
-app.post("/post-commission", (req, res) => {
-  const q =
-    //`commissionStartDate`,
-    "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionStartDate`, `commissionDeadline`, `commissionLocation`, `commissionTo`,`commissionType`, `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`) VALUES (?)";
-  const values = [
-    req.body.comEmployer,
-    req.body.comTitle,
-    req.body.comStart,
-    req.body.comDeadline,
-    req.body.comLocation,
-    req.body.comTo,
-    req.body.comType,
-    req.body.comDescription,
-    req.body.comPay,
-    // req.body.comStatus,
-    // req.body.catcherID,
-    req.body.DatePosted,
-    // req.body.DateCompleted,
-    req.body.Contactno,
-  ];
-  db.query(q, [values], (err, data) => {
-    if (err) return res.json(err);
-    return res.json("Commission has been posted");
-  });
-});
+// app.post("/post-commission", (req, res) => {
+//   const q =
+//     //`commissionStartDate`,
+//     "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionStartDate`, `commissionDeadline`, `commissionLocation`, `commissionTo`,`commissionType`, `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`) VALUES (?)";
+//   const values = [
+//     req.body.comEmployer,
+//     req.body.comTitle,
+//     req.body.comStart,
+//     req.body.comDeadline,
+//     req.body.comLocation,
+//     req.body.comTo,
+//     req.body.comType,
+//     req.body.comDescription,
+//     req.body.comPay,
+//     // req.body.comStatus,
+//     // req.body.catcherID,
+//     req.body.DatePosted,
+//     // req.body.DateCompleted,
+//     req.body.Contactno,
+//   ];
+//   db.query(q, [values], (err, data) => {
+//     if (err) return res.json(err);
+//     return res.json("Commission has been posted");
+//   });
+// });
 
 //retrieve commission
 //info based on ID
-app.get("/commission/:commissionID", (req, res) => {
-  const commissionID = req.params.commissionID; // Get the search term from the query parameter
-  const q = "SELECT * FROM commission WHERE commissionID = ?";
+// app.get("/commission/:commissionID", (req, res) => {
+//   const commissionID = req.params.commissionID; // Get the search term from the query parameter
+//   const q = "SELECT * FROM commission WHERE commissionID = ?";
 
-  db.query(q, [commissionID], (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "An error occurred" });
-    }
-    return res.json(data);
-  });
-});
+//   db.query(q, [commissionID], (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ error: "An error occurred" });
+//     }
+//     return res.json(data);
+//   });
+// });
 
 //retrieve commission FOR Catcher
 //info based on ID
-app.get("/accepted-errands/:userID", (req, res) => {
-  const userID = req.params.userID; // Get the search term from the query parameter
-  const q =
-    "SELECT c.*, t.errandStatus, t.transDateAccepted,ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname" +
-    " FROM errandtransaction t" +
-    " JOIN commission c ON t.transErrandID = c.commissionID" +
-    " JOIN useraccount ua ON c.employerID = ua.userID" +
-    " WHERE t.transCatcherID IN (SELECT userID FROM useraccount WHERE userID = ?)";
+// app.get("/accepted-errands/:userID", (req, res) => {
+//   const userID = req.params.userID; // Get the search term from the query parameter
+//   const q =
+//     "SELECT c.*, t.errandStatus, t.transDateAccepted,ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname" +
+//     " FROM errandtransaction t" +
+//     " JOIN commission c ON t.transErrandID = c.commissionID" +
+//     " JOIN useraccount ua ON c.employerID = ua.userID" +
+//     " WHERE t.transCatcherID IN (SELECT userID FROM useraccount WHERE userID = ?)";
 
-  db.query(q, [userID], (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "An error occurred" });
-    }
-    return res.json(data);
-  });
-});
+//   db.query(q, [userID], (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ error: "An error occurred" });
+//     }
+//     return res.json(data);
+//   });
+// });
 
 //retrieve commission FOR Employer
 //info based on ID
-app.get("/pending-errands/:userID", (req, res) => {
-  const userID = req.params.userID; // Get the search term from the query parameter
-  const q =
-    "SELECT c.*, t.errandStatus, t.transDateAccepted,ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname" +
-    " FROM errandtransaction t" +
-    " JOIN commission c ON t.transErrandID = c.commissionID" +
-    " JOIN useraccount ua ON t.transCatcherID = ua.userID" +
-    " WHERE t.transErrandID IN (SELECT commissionID FROM commission WHERE employerID = ?)";
+// app.get("/pending-errands/:userID", (req, res) => {
+//   const userID = req.params.userID; // Get the search term from the query parameter
+//   const q =
+//     "SELECT c.*, t.errandStatus, t.transDateAccepted,ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname" +
+//     " FROM errandtransaction t" +
+//     " JOIN commission c ON t.transErrandID = c.commissionID" +
+//     " JOIN useraccount ua ON t.transCatcherID = ua.userID" +
+//     " WHERE t.transErrandID IN (SELECT commissionID FROM commission WHERE employerID = ?)";
 
-  db.query(q, [userID], (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "An error occurred" });
-    }
-    return res.json(data);
-  });
-});
+//   db.query(q, [userID], (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ error: "An error occurred" });
+//     }
+//     return res.json(data);
+//   });
+// });
 //update commission
-app.put("/update-commission/:commissionID", (req, res) => {
-  const commissionID = req.params.commissionID;
-  const q =
-    //`commissionStartDate` = ?,
-    "UPDATE commission SET `commissionTitle` = ?, `commissionStarDate` = ?, `commissionDeadline` = ?, `commissionLocation` = ?, `commissionTo` = ?,`commissionType` = ?, `commissionDesc` = ?, `commissionPay` = ?, `ContactNumber` = ?, `commissionLong` = ?, `commissionLat` = ? WHERE commissionID = ?";
-  //const q = "UPDATE commission SET `commissionTitle` = ? WHERE `commissionID` = ?"
-  const values = [
-    //req.body.comEmployer,
-    req.body.comTitle,
-    req.body.comStart,
-    req.body.comDeadline,
-    req.body.comLocation,
-    req.body.comTo,
-    req.body.comType,
-    req.body.comDescription,
-    req.body.comPay,
-    req.body.ContactNo,
-    req.body.comLong,
-    req.body.comLat,
-  ];
+// app.put("/update-commission/:commissionID", (req, res) => {
+//   const commissionID = req.params.commissionID;
+//   const q =
+//     //`commissionStartDate` = ?,
+//     "UPDATE commission SET `commissionTitle` = ?, `commissionStarDate` = ?, `commissionDeadline` = ?, `commissionLocation` = ?, `commissionTo` = ?,`commissionType` = ?, `commissionDesc` = ?, `commissionPay` = ?, `ContactNumber` = ?, `commissionLong` = ?, `commissionLat` = ? WHERE commissionID = ?";
+//   //const q = "UPDATE commission SET `commissionTitle` = ? WHERE `commissionID` = ?"
+//   const values = [
+//     //req.body.comEmployer,
+//     req.body.comTitle,
+//     req.body.comStart,
+//     req.body.comDeadline,
+//     req.body.comLocation,
+//     req.body.comTo,
+//     req.body.comType,
+//     req.body.comDescription,
+//     req.body.comPay,
+//     req.body.ContactNo,
+//     req.body.comLong,
+//     req.body.comLat,
+//   ];
 
-  db.query(q, [...values, commissionID], (err, data) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).json(err);
-    }
-    return res.json("Commission updated");
-  });
-});
+//   db.query(q, [...values, commissionID], (err, data) => {
+//     if (err) {
+//       console.log(err);
+//       return res.status(500).json(err);
+//     }
+//     return res.json("Commission updated");
+//   });
+// });
 
 //delete commission
-app.delete("/commission/:commissionID", (req, res) => {
-  const commissionID = req.params.commissionID;
-  const q = "DELETE FROM commission WHERE commissionID = ?";
+// app.delete("/commission/:commissionID", (req, res) => {
+//   const commissionID = req.params.commissionID;
+//   const q = "DELETE FROM commission WHERE commissionID = ?";
 
-  db.query(q, [commissionID], (err, data) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).json(err);
-    }
-    return res.json("Commission has been deleted");
-  });
-});
+//   db.query(q, [commissionID], (err, data) => {
+//     if (err) {
+//       console.log(err);
+//       return res.status(500).json(err);
+//     }
+//     return res.json("Commission has been deleted");
+//   });
+// });
 
 //delete commission
 //with user id
 //check if user id is poster
 //UNTESTED
-app.delete("/commission/:userID/:commissionID", (req, res) => {
-  const commissionID = req.params.commissionID;
-  const userID = req.params.userID;
-  const q = "DELETE FROM commission WHERE commissionID = ? AND userID = (?)";
+// app.delete("/commission/:userID/:commissionID", (req, res) => {
+//   const commissionID = req.params.commissionID;
+//   const userID = req.params.userID;
+//   const q = "DELETE FROM commission WHERE commissionID = ? AND userID = (?)";
 
-  db.query(q, [userID, commissionID], (err, data) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).json(err);
-    }
-    return res.json("I HAVE REDDIT");
-  });
-});
+//   db.query(q, [userID, commissionID], (err, data) => {
+//     if (err) {
+//       console.log(err);
+//       return res.status(500).json(err);
+//     }
+//     return res.json("I HAVE REDDIT");
+//   });
+// });
 /**========================UPDATE ACCOUNT=============================== */
 //retrieve account
 //info based on ID
@@ -775,113 +776,113 @@ app.delete("/commission/:userID/:commissionID", (req, res) => {
 //   });
 // });
 
-//home based on id
-app.get("/home/:userID", (req, res) => {
-  const userID = req.params.userID; // Get the search term from the query parameter
-  const q = "SELECT * FROM commission WHERE userID = ?";
+// //home based on id
+// app.get("/home/:userID", (req, res) => {
+//   const userID = req.params.userID; // Get the search term from the query parameter
+//   const q = "SELECT * FROM commission WHERE userID = ?";
 
-  db.query(q, [userID], (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "An error occurred" });
-    }
-    return res.json(data);
-  });
-});
+//   db.query(q, [userID], (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ error: "An error occurred" });
+//     }
+//     return res.json(data);
+//   });
+// });
 
 //=============================END MODULE=====================================
 
 /**============================NOTIF MODULE================================== */
 //display all notification
-app.get("/notifs", (req, res) => {
-  const userID = req.params.userID;
-  const q = "SELECT * FROM notification";
+// app.get("/notifs", (req, res) => {
+//   const userID = req.params.userID;
+//   const q = "SELECT * FROM notification";
 
-  db.query(q, (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "An error occurred" });
-    }
-    return res.json(data);
-  });
-});
+//   db.query(q, (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ error: "An error occurred" });
+//     }
+//     return res.json(data);
+//   });
+// });
 
 //display notification of user
-app.get("/notification", (req, res) => {
-  const userID = req.params.userID;
-  const q = "SELECT * FROM notification";
+// app.get("/notification", (req, res) => {
+//   const userID = req.params.userID;
+//   const q = "SELECT * FROM notification";
 
-  db.query(q, [userID], (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "An error occurred" });
-    }
-    return res.json(data);
-  });
-});
+//   db.query(q, [userID], (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ error: "An error occurred" });
+//     }
+//     return res.json(data);
+//   });
+// });
 
 //retrieve  info of for the notification
-app.get("/show-notif/:userID", (req, res) => {
-  const userID = req.params.userID;
-  const q =
-    "SELECT * FROM notification WHERE `isRead` = 'no' AND `notifUserID` = (?) ORDER BY notifDate DESC";
+// app.get("/show-notif/:userID", (req, res) => {
+//   const userID = req.params.userID;
+//   const q =
+//     "SELECT * FROM notification WHERE `isRead` = 'no' AND `notifUserID` = (?) ORDER BY notifDate DESC";
 
-  db.query(q, [userID], (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "An error occurred" });
-    }
-    return res.json(data);
-  });
-});
+//   db.query(q, [userID], (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ error: "An error occurred" });
+//     }
+//     return res.json(data);
+//   });
+// });
 // ADS 24/02/24
 //retrieve number of unread notif of user
-app.get("/notif-count/:userID", (req, res) => {
-  const notifUserID = req.params.userID;
-  const q =
-    "select count(*) as 'c' from notification where notifUserID = (?) AND isRead = 'No' ORDER BY notifDate ASC";
+// app.get("/notif-count/:userID", (req, res) => {
+//   const notifUserID = req.params.userID;
+//   const q =
+//     "select count(*) as 'c' from notification where notifUserID = (?) AND isRead = 'No' ORDER BY notifDate ASC";
 
-  db.query(q, [notifUserID], (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "An error occurred" });
-    }
-    return res.json(data);
-  });
-});
+//   db.query(q, [notifUserID], (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ error: "An error occurred" });
+//     }
+//     return res.json(data);
+//   });
+// });
 
 //add notification to userID
-app.post("/notify", (req, res) => {
-  const q =
-    "INSERT INTO notification (`notifUserID`, `notificationType`, `notifDesc`, `notifDate`) VALUES (?)";
-  const values = [
-    req.body.userID,
-    req.body.notificationType,
-    req.body.notifDesc,
-    req.body.notifDate,
-  ];
-  db.query(q, [values], (err, data) => {
-    if (err) return res.json(err);
-    return res.json("Notification added");
-  });
-});
+// app.post("/notify", (req, res) => {
+//   const q =
+//     "INSERT INTO notification (`notifUserID`, `notificationType`, `notifDesc`, `notifDate`) VALUES (?)";
+//   const values = [
+//     req.body.userID,
+//     req.body.notificationType,
+//     req.body.notifDesc,
+//     req.body.notifDate,
+//   ];
+//   db.query(q, [values], (err, data) => {
+//     if (err) return res.json(err);
+//     return res.json("Notification added");
+//   });
+// });
 
 //notif have been read
 // update the `isRead` tp "YES"
-app.put("/notif-read/:notificationID/:userID/", (req, res) => {
-  const notificationID = req.params.notificationID;
-  const userID = req.params.userID;
-  const q =
-    "UPDATE notification SET isRead = 'yes' WHERE notificationID = (?) AND userID = (?)";
+// app.put("/notif-read/:notificationID/:userID/", (req, res) => {
+//   const notificationID = req.params.notificationID;
+//   const userID = req.params.userID;
+//   const q =
+//     "UPDATE notification SET isRead = 'yes' WHERE notificationID = (?) AND userID = (?)";
 
-  db.query(q, [notificationID, userID], (err, data) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).json(err);
-    }
-    return res.json("I HAVE REDDIT");
-  });
-});
+//   db.query(q, [notificationID, userID], (err, data) => {
+//     if (err) {
+//       console.log(err);
+//       return res.status(500).json(err);
+//     }
+//     return res.json("I HAVE REDDIT");
+//   });
+// });
 
 //=========================END MODULE==============================//
 //===========================RATING================================//
@@ -890,66 +891,66 @@ app.put("/notif-read/:notificationID/:userID/", (req, res) => {
 //Retrieve all saved Feedback
 //ALTER FOR ADMIN USE
 // NEED TESTING
-app.get("/user-feedbacks/", (req, res) => {
-  const q = "SELECT * FROM feedbackcommission ORDER BY feedbackDate DESC";
+// app.get("/user-feedbacks/", (req, res) => {
+//   const q = "SELECT * FROM feedbackcommission ORDER BY feedbackDate DESC";
 
-  db.query(q, (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "An error occurred" });
-    }
-    return res.json(data);
-  });
-});
+//   db.query(q, (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ error: "An error occurred" });
+//     }
+//     return res.json(data);
+//   });
+// });
 
 //Retrieve feedback data of Catcher
-app.get("/user-feedbacks/:userID", (req, res) => {
-  const userID = req.params.userID;
-  const q =
-    "SELECT * FROM feedbackcommission WHERE `feedbackCatcherID` = (?) ORDER BY feedbackDate DESC";
+// app.get("/user-feedbacks/:userID", (req, res) => {
+//   const userID = req.params.userID;
+//   const q =
+//     "SELECT * FROM feedbackcommission WHERE `feedbackCatcherID` = (?) ORDER BY feedbackDate DESC";
 
-  db.query(q, [userID], (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "An error occurred" });
-    }
-    return res.json(data);
-  });
-});
+//   db.query(q, [userID], (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ error: "An error occurred" });
+//     }
+//     return res.json(data);
+//   });
+// });
 
 //Display the average rating of feedbackCount of the Catcher
-app.get("/user-rating/:userID", (req, res) => {
-  const userID = req.params.userID;
-  const q =
-    "select avg(feedbackRate) as 'c' from feedbackcommission where feedbackCatcherID = (?)";
+// app.get("/user-rating/:userID", (req, res) => {
+//   const userID = req.params.userID;
+//   const q =
+//     "select avg(feedbackRate) as 'c' from feedbackcommission where feedbackCatcherID = (?)";
 
-  db.query(q, [userID], (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "An error occurred" });
-    }
-    return res.json(data);
-  });
-});
+//   db.query(q, [userID], (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ error: "An error occurred" });
+//     }
+//     return res.json(data);
+//   });
+// });
 
 //Save feedback of the Epmloyer
 //VARIABLES SUBJECT TO CHANGE BASED ON ERD AND DB
-app.post("/rate", (req, res) => {
-  const q =
-    "INSERT INTO feedbackcommission (`feedbackCommissionID`, `feedbackCatcherID` , `feedbackComment`, `feedbackCount`, `feedbackDate`, `feedbackPosterID`) VALUES (?)";
-  const values = [
-    req.body.commissionID,
-    req.body.catcherID,
-    req.body.feedbackComment,
-    req.body.feedbackCount,
-    req.body.feedbackDate,
-    req.body.feedbackPosterID,
-  ];
-  db.query(q, [values], (err, data) => {
-    if (err) return res.json(err);
-    return res.json("Feedback added");
-  });
-});
+// app.post("/rate", (req, res) => {
+//   const q =
+//     "INSERT INTO feedbackcommission (`feedbackCommissionID`, `feedbackCatcherID` , `feedbackComment`, `feedbackCount`, `feedbackDate`, `feedbackPosterID`) VALUES (?)";
+//   const values = [
+//     req.body.commissionID,
+//     req.body.catcherID,
+//     req.body.feedbackComment,
+//     req.body.feedbackCount,
+//     req.body.feedbackDate,
+//     req.body.feedbackPosterID,
+//   ];
+//   db.query(q, [values], (err, data) => {
+//     if (err) return res.json(err);
+//     return res.json("Feedback added");
+//   });
+// });
 
 //=========================END MODULE==============================//
 //=========================VERIFICATION============================//
@@ -1005,21 +1006,21 @@ app.get("/user-rating", (req, res) => {
  * APS - 24/03/24
  */
 //Add transaction
-app.post("/add-trans", (req, res) => {
-  const q =
-    "INSERT INTO errandtransaction (`transErrandID`, `transCatcherID`, `transDateAccepted`) VALUES (?)";
-  const values = [
-    req.body.comID,
-    req.body.catcherID,
-    req.body.dateAccepted,
-    // req.body.dateCompleted,
-    //  req.body.reciept,
-  ];
-  db.query(q, [values], (err, data) => {
-    if (err) return res.json(err);
-    return res.json("Transaction added");
-  });
-});
+// app.post("/add-trans", (req, res) => {
+//   const q =
+//     "INSERT INTO errandtransaction (`transErrandID`, `transCatcherID`, `transDateAccepted`) VALUES (?)";
+//   const values = [
+//     req.body.comID,
+//     req.body.catcherID,
+//     req.body.dateAccepted,
+//     // req.body.dateCompleted,
+//     //  req.body.reciept,
+//   ];
+//   db.query(q, [values], (err, data) => {
+//     if (err) return res.json(err);
+//     return res.json("Transaction added");
+//   });
+// });
 
 //================================================COUNT==========================================//
 /**
@@ -1027,67 +1028,67 @@ app.post("/add-trans", (req, res) => {
  * APS - 27/03/24
  */
 //get posted errand count
-app.get("/post-count/:userID", (req, res) => {
-  const userID = req.params.userID;
-  const q = "select count(*) as 'c' from commission where employerID = (?) ";
+// app.get("/post-count/:userID", (req, res) => {
+//   const userID = req.params.userID;
+//   const q = "select count(*) as 'c' from commission where employerID = (?) ";
 
-  db.query(q, [userID], (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "An error occurred" });
-    }
-    return res.json(data);
-  });
-});
+//   db.query(q, [userID], (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ error: "An error occurred" });
+//     }
+//     return res.json(data);
+//   });
+// });
 //get applicant count
-app.get("/applicant-count/:userID", (req, res) => {
-  const userID = req.params.userID;
-  const q =
-    "select count(*) as 'c' " +
-    "from commission e " +
-    "JOIN application a ON a.applicationErrandID = e.commissionID " +
-    "where employerID = ?";
+// app.get("/applicant-count/:userID", (req, res) => {
+//   const userID = req.params.userID;
+//   const q =
+//     "select count(*) as 'c' " +
+//     "from commission e " +
+//     "JOIN application a ON a.applicationErrandID = e.commissionID " +
+//     "where employerID = ?";
 
-  db.query(q, [userID], (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "An error occurred" });
-    }
-    return res.json(data);
-  });
-});
-//combiniation
-app.get("/post-and-applicant-count/:userID", (req, res) => {
-  const userID = req.params.userID;
-  const q = `
-    SELECT 
-      (SELECT COUNT(*) FROM commission WHERE employerID = ?) AS postCount,
-      (SELECT COUNT(*) FROM commission e JOIN application a ON a.applicationErrandID = e.commissionID WHERE e.employerID = ?) AS applicantCount,
-      (SELECT COUNT(*) FROM errandtransaction t JOIN commission c ON t.transErrandID = c.commissionID WHERE c.employerID = ? AND errandStatus = 'Ongoing' ) AS pending
-  `;
+//   db.query(q, [userID], (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ error: "An error occurred" });
+//     }
+//     return res.json(data);
+//   });
+// });
+// //combiniation
+// app.get("/post-and-applicant-count/:userID", (req, res) => {
+//   const userID = req.params.userID;
+//   const q = `
+//     SELECT
+//       (SELECT COUNT(*) FROM commission WHERE employerID = ?) AS postCount,
+//       (SELECT COUNT(*) FROM commission e JOIN application a ON a.applicationErrandID = e.commissionID WHERE e.employerID = ?) AS applicantCount,
+//       (SELECT COUNT(*) FROM errandtransaction t JOIN commission c ON t.transErrandID = c.commissionID WHERE c.employerID = ? AND errandStatus = 'Ongoing' ) AS pending
+//   `;
 
-  db.query(q, [userID, userID, userID], (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "An error occurred" });
-    }
-    return res.json(data); // Assuming you only expect one row of results
-  });
-});
+//   db.query(q, [userID, userID, userID], (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ error: "An error occurred" });
+//     }
+//     return res.json(data); // Assuming you only expect one row of results
+//   });
+// });
 
-app.get("/complete-count/:userID", (req, res) => {
-  const userID = req.params.userID;
-  const q =
-    "select count(*) as 'c' from commission where employerID = (?) AND commissionStatus = 'Complete";
+// app.get("/complete-count/:userID", (req, res) => {
+//   const userID = req.params.userID;
+//   const q =
+//     "select count(*) as 'c' from commission where employerID = (?) AND commissionStatus = 'Complete";
 
-  db.query(q, [userID], (err, data) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "An error occurred" });
-    }
-    return res.json(data);
-  });
-});
+//   db.query(q, [userID], (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ error: "An error occurred" });
+//     }
+//     return res.json(data);
+//   });
+// });
 
 app.listen(8800, () => {
   console.log("connected to backend!");
