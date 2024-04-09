@@ -6,6 +6,7 @@ const ErrandRoutes = require("./Route/ErrandRoutes.js");
 const NotifRoutes = require("./Route/NotifRoutes.js");
 const ApplyRoutes = require("./Route/ApplicationRoute.js");
 const RatingRoutes = require("./Route/RatingRoute.js");
+const TransRoutes = require("./Route/TransactionRoute.js");
 const db = require("./dbConfig.js");
 const cors = require("cors");
 
@@ -18,6 +19,7 @@ app.use("/", ErrandRoutes);
 app.use("/", NotifRoutes);
 app.use("/", ApplyRoutes);
 app.use("/", RatingRoutes);
+app.use("/", TransRoutes);
 
 app.get("/", (req, res) => {
   res.json("hello this is the backend");
