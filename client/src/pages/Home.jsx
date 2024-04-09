@@ -21,7 +21,7 @@ const Home = () => {
         const res = await axios.get(`http://localhost:8800/get-type/${userID}`);
         //console.log(res.data);
         setType(res.data);
-        console.log(type);
+        //console.log(type);
       } catch (err) {
         console.log(err);
       }

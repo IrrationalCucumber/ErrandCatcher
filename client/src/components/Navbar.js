@@ -72,7 +72,7 @@ function Navbar(props) {
         const res = await axios.get(`http://localhost:8800/get-type/${userID}`);
         //console.log(res.data);
         setType(res.data);
-        console.log(type);
+        //console.log(type);
       } catch (err) {
         console.log(err);
       }
@@ -193,7 +193,7 @@ function Navbar(props) {
                     hasNotification={true}
                     onClick={() => console.log("Notification clicked!")}
                     style={{ color: "white" }}
-                    notificationCount={notifCount}
+                    notificationCount={parseInt(notifCount)}
                   />
                 ) : (
                   <div>
