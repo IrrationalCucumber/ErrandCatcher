@@ -124,10 +124,26 @@ const transConstroller = {
    */
   //update if tranaction is complete/cancelled
   //pair up with updaet status for erand
-  putUpdateTrans: (req, res) => {
+  putCancelTrans: (req, res) => {
     const id = req.params.id;
-    const transData = req.body;
-    Trans.putUpdateTransaction(id, transData, (error) => {
+    const status = "Cancelled";
+    const date = req.query;
+    Trans.putUpdateTransaction(id, status, date, (error) => {
+      if (error) {
+        console.error("Error updating Transaction:", error);
+        res
+          .status(500)
+          .json({ error: "An error occurred while updating new Transaction" });
+        return;
+      }
+      res.status(200).json({ message: "Transaction updated successfully" });
+    });
+  },
+  putCompleteTrans: (req, res) => {
+    const id = req.params.id;
+    const status = "Complete";
+    const date = req.body;
+    Trans.putUpdateTransaction(id, status, date, (error) => {
       if (error) {
         console.error("Error updating Transaction:", error);
         res

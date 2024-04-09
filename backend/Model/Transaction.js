@@ -78,14 +78,11 @@ const Trans = {
     );
   },
   //update transactionn if complete
-  putUpdateTransaction: (id, transData, callback) => {
-    const { errandStatus, dateComplete } = transData;
-    values = [errandStatus, dateComplete];
+  putUpdateTransaction: (id, status, date, callback) => {
+    const { dateComplete } = date;
     db.query(
-      `UPDATE errandTransaction
-      SET errandStatus = ?, transDateComplete = ?
-      WHERE transactID = ?`,
-      [values, id],
+      `UPDATE errandTransaction SET errandStatus = ?, transDateComplete = ? WHERE transactID = ?`,
+      [status, dateComplete, id],
       callback
     );
   },
