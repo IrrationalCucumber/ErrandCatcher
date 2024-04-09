@@ -8,7 +8,7 @@ const Trans = {
   // view tranactaction details
   getTransDetail: (id, callback) => {
     db.query(
-      `SELECT * FROM errandtranscation WHERE transactID = ?`,
+      `SELECT * FROM errandtransaction WHERE transactID = ?`,
       [id],
       callback
     );
@@ -17,7 +17,11 @@ const Trans = {
   //get all transaction
   getTransById: (id, callback) => {
     db.query(
-      `SELECT * FROM errandtranscation WHERE transCatcherID = ?`,
+      `SELECT  c.*, t.*,ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname
+      FROM errandtransaction t
+      JOIN commission c ON t.transErrandID = c.commissionID
+      JOIN useraccount ua ON c.employerID = ua.userID
+       WHERE transCatcherID = ?`,
       [id],
       callback
     );
@@ -26,8 +30,12 @@ const Trans = {
   //get ongiong/cancelled/etc errand
   getTransWithStatus: (id, status, callback) => {
     db.query(
-      `SELECT * FROM errandtranscation WHERE errandStatus = ? AND transCatcherID = ?`,
-      [status, id],
+      `SELECT  c.*, t.*,ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname
+        FROM errandtransaction t
+        JOIN commission c ON t.transErrandID = c.commissionID
+        JOIN useraccount ua ON c.employerID = ua.userID
+         WHERE t.transCatcherID = ? AND t.errandStatus = ?`,
+      [id, status],
       callback
     );
   },
@@ -35,9 +43,10 @@ const Trans = {
   // display taken errand
   getTakenErrand: (id, callback) => {
     db.query(
-      `SELECT t.*, c.*
-    FROM erranctransaction t
+      `SELECT t.*, c.*, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname
+    FROM errandtransaction t
     JOIN commission c ON t.transErrandID = c.commissionID
+    JOIN useraccount ua ON t.transCatcherID = ua.userID
     WHERE c.employerID = ?
     `,
       [id],
@@ -48,9 +57,10 @@ const Trans = {
   // display onging/Cancelled/etc errand
   getTakendWithStatus: (id, status, callback) => {
     db.query(
-      `SELECT t.*, c.*
-    FROM erranctransaction t
-    JOIN commission c ON t.transErrandID = c.commissionID
+      `SELECT t.*, c.*, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname
+        FROM errandtransaction t
+        JOIN commission c ON t.transErrandID = c.commissionID
+        JOIN useraccount ua ON t.transCatcherID = ua.userID
     WHERE c.employerID = ? AND errandStatus = ?
     `,
       [id, status],
