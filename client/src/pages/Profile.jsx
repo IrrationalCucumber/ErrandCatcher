@@ -1,5 +1,5 @@
-import React, { useEffect, useState, } from "react";
-import NavbarPage from "../components/NavBarPage";
+import React, { useEffect, useState } from "react";
+import NavbarPage from "../components/Navbar";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faCertificate } from "@fortawesome/free-solid-svg-icons";
 import "./profile.css";
@@ -82,6 +82,17 @@ const Profile = () => {
     };
     fetchStatus();
   }, [status]);
+  const handleChange = (e) => {
+    // For the 'gender' field, directly set the value without using spread syntax
+    if (e.target.name === "gender") {
+      setAccount((prev) => ({ ...prev, gender: e.target.value }));
+    } else if (e.target.name === "type") {
+      setAccount((prev) => ({ ...prev, type: e.target.value }));
+    } else {
+      // For other fields, use spread syntax as before
+      setAccount((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    }
+  };
   //APS - 03/03/24
   //get the rating of the user
   const [rating, setRating] = useState("");
@@ -99,6 +110,25 @@ const Profile = () => {
     };
     fetchRating();
   }, [userID]);
+
+  //sSave CHanges
+  const handleClick = async (e) => {
+    //const updatedAccount = { ...account };
+    //refresh the page when button is clicked
+    e.preventDefault();
+    try {
+      await axios.put(
+        "http://localhost:8800/update-account/" + userID,
+        account
+      );
+
+      alert("Profile updated *Replace this*");
+      //console.log(account);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div>
@@ -119,23 +149,23 @@ const Profile = () => {
                 {/* Verification Icon */}
                 {/* Verification Icon */}
                 <p>
-        Click 
-        <Link to="/verification">
-          <i
-            className={
-              verified
-                ? "fa-solid fa-circle-check"
-                : "fa-regular fa-circle-check"
-            }
-            style={{
-              marginLeft: "5px",
-              color: verified ? "green" : "gray",
-              cursor: "pointer" // Make the cursor change to a pointer to indicate it's clickable
-            }}
-          ></i>
-        </Link> 
-      UNVERIFIED
-      </p>
+                  Click
+                  <Link to={`verification/${userID}`}>
+                    <i
+                      className={
+                        verified
+                          ? "fa-solid fa-circle-check"
+                          : "fa-regular fa-circle-check"
+                      }
+                      style={{
+                        marginLeft: "5px",
+                        color: verified ? "green" : "gray",
+                        cursor: "pointer", // Make the cursor change to a pointer to indicate it's clickable
+                      }}
+                    ></i>
+                  </Link>
+                  UNVERIFIED
+                </p>
 
                 {/* <FontAwesomeIcon
                   icon={faCertificate}
@@ -172,7 +202,6 @@ const Profile = () => {
                 >
                   History
                 </span>
-
               </div>
               {activeTab === "about" && (
                 <div
@@ -183,33 +212,54 @@ const Profile = () => {
                   {/* About section content */}
                   <div className="input-row">
                     <label className="PP">Name:</label>
-                    <textarea
+                    <input
                       type="text"
                       className="display-data"
                       placeholder="Name"
-                      value={account.fname + " " + account.lname}
-                    ></textarea>
+                      name="fname"
+                      value={account.fname}
+                      onChange={handleChange}
+                    ></input>
+
+                    <input
+                      type="text"
+                      className="display-data"
+                      value={account.lname}
+                      placeholder="username"
+                      onChange={handleChange}
+                      name="lname"
+                    ></input>
                   </div>
                   <div className="input-row">
                     <label className="PP">Age</label>
-                    <textarea
+                    <input
                       type="number"
+                      name="age"
                       className="display-data1"
                       placeholder="Age"
                       value={account.age}
-                    ></textarea>
+                      onChange={handleChange}
+                      min={1}
+                      max={99}
+                    ></input>
                   </div>
                   <div className="input-row">
                     <label className="PP">Birth Date</label>
-                    <textarea
-                      type="number"
+                    <input
+                      type="date"
                       className="display-data1"
+                      value={account.bday}
                       placeholder="Date of birth"
-                    ></textarea>
+                    ></input>
                   </div>
                   <div className="input-row">
                     <label className="PP">Gender</label>
-                    <select className="display-data1">
+                    <select
+                      className="display-data1"
+                      value={account.gender}
+                      onChange={handleChange}
+                      name="gender"
+                    >
                       gender
                       <option value="">Choose gender....</option>
                       <option value="male">Male</option>
@@ -218,19 +268,25 @@ const Profile = () => {
                   </div>
                   <div className="input-row">
                     <label className="PP">Contact Number:</label>
-                    <textarea
+                    <input
                       type="number"
                       className="display-data"
                       placeholder="Contact Number"
-                    ></textarea>
+                      name="contact"
+                      value={account.contact}
+                      onChange={handleChange}
+                    ></input>
                   </div>
                   <div className="input-row">
                     <label className="PP">Email Address:</label>
-                    <textarea
-                      type="text"
+                    <input
+                      type="email"
                       className="display-data"
                       placeholder="Email Address"
-                    ></textarea>
+                      value={account.email}
+                      name="email"
+                      onChange={handleChange}
+                    ></input>
                   </div>
                   <div className="input-row">
                     <label className="PP">Address:</label>
@@ -238,10 +294,12 @@ const Profile = () => {
                       type="text"
                       className="display-data"
                       placeholder="Address"
+                      value={account.address}
+                      name="address"
+                      onChange={handleChange}
                     ></textarea>
                   </div>
-                  <button>Save</button>
-                  <button>Edit</button>
+                  <button onClick={handleClick}>Save</button>
                 </div>
               )}
               {activeTab === "history" && (

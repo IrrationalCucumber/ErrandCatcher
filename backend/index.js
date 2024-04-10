@@ -123,7 +123,7 @@ app.get("/errands", (req, res) => {
 //display 10 recent posted commissino
 app.get("/recent-commission", (req, res) => {
   const q =
-    "Select * from commission order by DatePosted AND commissionStatus = 'Available' DESC LIMIT 3 ";
+    "Select * from commission WHERE commissionStatus = 'Available'commissionStatus = 'Available' order by DatePosted DESC LIMIT 3 ";
   db.query(q, (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
@@ -146,7 +146,7 @@ app.get("/get-type/:userID", (req, res) => {
   const q = "Select accountType from useraccount where userID = ?";
   db.query(q, [userID], (err, data) => {
     if (err) return res.json(err);
-    return res.json(data[0].accountType);
+    return res.json(data);
   });
 });
 //==========================================CATEGORY=================================================================//
@@ -310,11 +310,17 @@ app.get("/filter-type", (req, res) => {
 //regester account
 app.post("/signup", (req, res) => {
   const q =
-    "INSERT INTO UserAccount (`username`, `password`, `userEmail`, `accountType`, `dateCreated` ) VALUES (?)";
+    "INSERT INTO UserAccount (`username`, `password`,`userFirstname`, `userLastname`, `userBirthday`,  `userGender`, `userEmail`,`userContactNum`, `accountType`, `dateCreated` ) VALUES (?)";
+  // `userAge`
   const values = [
-    req.body.username,
-    req.body.password,
+    req.body.regUsername,
+    req.body.regPassword,
+    req.body.firstName,
+    req.body.lastName,
+    req.body.bday,
+    req.body.gender,
     req.body.email,
+    req.body.contactNumber,
     req.body.type,
     req.body.dateCreated,
   ];
@@ -392,7 +398,13 @@ app.post("/apply", (req, res) => {
 app.get("/applicants/:userID", (req, res) => {
   const userID = req.params.userID; // Use req.params.userID to get the route parameter
   const q =
-    "SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname FROM Application a JOIN commission c ON a.applicationErrandID = c.commissionID JOIN useraccount ua ON a.catcherID = ua.userID WHERE a.applicationErrandID IN (SELECT commissionID FROM commission WHERE employerID = ?)";
+    "SELECT a.*, c.commissionTitle,ua.userAge, ua.username, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname " +
+    "FROM Application a " +
+    "JOIN commission c ON a.applicationErrandID = c.commissionID " +
+    "JOIN useraccount ua ON a.catcherID = ua.userID " +
+    //"JOIN feedbackcommission f ON a.catcherID = f.feedbackCatcherID " +
+    //avg(feedbackRate) as 'c' from feedbackcommission where feedbackCatcherID = (?)
+    "WHERE a.applicationErrandID IN (SELECT commissionID FROM commission WHERE employerID = ?)";
   db.query(q, [userID], (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
@@ -454,7 +466,7 @@ app.put("/accept-apply/:comID/:applyID", (req, res) => {
   const comId = req.params.comID;
   const applicationID = req.params.applyID;
   const q =
-    "UPDATE application SET `applicationStatus` = 'Approved' WHERE applicationErrandID = ? AND applicationID = ?";
+    "UPDATE application SET `applicationStatus` = 'Accepted' WHERE applicationErrandID = ? AND applicationID = ?";
 
   db.query(q, [comId, applicationID], (err) => {
     if (err) {
@@ -824,7 +836,8 @@ app.get("/notification", (req, res) => {
 app.get("/show-notif/:userID", (req, res) => {
   const userID = req.params.userID;
   const q =
-    "SELECT * FROM notification WHERE `isRead` = 'no' AND `notifUserID` = (?) ORDER BY notifDate DESC";
+    "SELECT * FROM notification " +
+    " WHERE (isRead = 'no' AND notifUserID = (?)) OR notificationType = 'New Errand' ORDER BY notifDate DESC ";
 
   db.query(q, [userID], (err, data) => {
     if (err) {
@@ -856,6 +869,21 @@ app.post("/notify", (req, res) => {
     "INSERT INTO notification (`notifUserID`, `notificationType`, `notifDesc`, `notifDate`) VALUES (?)";
   const values = [
     req.body.userID,
+    req.body.notificationType,
+    req.body.notifDesc,
+    req.body.notifDate,
+  ];
+  db.query(q, [values], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("Notification added");
+  });
+});
+
+app.post("/notify-new", (req, res) => {
+  const q =
+    "INSERT INTO notification (`notificationType`, `notifDesc`, `notifDate`) VALUES (?)";
+  const values = [
+    //req.body.userID,
     req.body.notificationType,
     req.body.notifDesc,
     req.body.notifDate,

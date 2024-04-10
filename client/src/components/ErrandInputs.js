@@ -24,6 +24,7 @@ function ErrandInputs(props) {
               />
             </div>
           </div>
+
           {/*start date*/}
           <div className="input-group">
             <div className="col1">
@@ -39,6 +40,7 @@ function ErrandInputs(props) {
               />
             </div>
           </div>
+
           {/* deadline */}
           <div className="input-group">
             <div className="col1">
@@ -54,6 +56,7 @@ function ErrandInputs(props) {
               />
             </div>
           </div>
+
           {/* location */}
           <div className="input-group">
             <div className="col1">

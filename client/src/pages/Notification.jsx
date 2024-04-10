@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import NotificationItem from "../components/NotificationItem";
 import { useLocation } from "react-router-dom";
-import Navbar from "../components/NavBarPage";
+import Navbar from "../components/Navbar.js";
 import "../components//Notification.css"; // Combined CSS styles
 
 function Notification() {
@@ -11,12 +11,14 @@ function Notification() {
   // Get the id from the address bar
   const location = useLocation();
   const userID = location.pathname.split("/")[2];
-  
+
   // Display all notifications
   useEffect(() => {
     const fetchNotif = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/notification");
+        const res = await axios.get(
+          `http://localhost:8800/show-notif/${userID}`
+        );
         setNotifs(res.data);
       } catch (err) {
         console.log(err);
@@ -46,11 +48,22 @@ function Notification() {
       <div className="notification-container">
         <main className="notification-main">
           <div className="notification-header">
+
             <p className="notification-title" style={{paddingLeft:"30px"}}>Notifications</p>
-            <img src="/images/notification_icon.svg" className="icon" alt="notification_icon" style={{paddingLeft:"20px"}}/>
+            <img 
+                 src="/images/notification_icon.svg" 
+                 className="icon" 
+                 alt="notification_icon" 
+                 style={{paddingLeft:"20px"}}/>
             <button onClick={markAsRead} className="mark-read-button" style={{textAlign:"center"}}>
               Mark all as Read
-              <img src="/images/check_icon.svg" className="check-icon" alt="check_icon"/>
+              <img 
+                 src="/images/check_icon.svg" 
+                 className="check-icon" 
+                 alt="check_icon"
+              />
+
+
             </button>
           </div>
           <div className="notification-list">

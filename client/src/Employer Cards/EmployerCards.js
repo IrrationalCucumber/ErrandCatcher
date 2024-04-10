@@ -39,7 +39,7 @@ const EmployerCard = ({ employer }) => {
       //   };
       //   setCounts(simulatedCounts);
       setLoading(false);
-    }, 1000); // Simulate 1 second delay
+    }, 100); // Simulate 1 second delay
   }, [counts, userID]);
 
   return (
@@ -66,7 +66,7 @@ const EmployerCard = ({ employer }) => {
             <p>{counts.numApplicants}</p>
           </Link>
           <Link
-            to={`/commissions`}
+            to={`/commissions/${userID}`}
             className="count-section errands"
             style={{ color: "black" }}
           >

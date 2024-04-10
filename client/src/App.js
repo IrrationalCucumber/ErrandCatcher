@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
+import SignUp from "./pages/SignUp/Signup";
 import Profile from "./pages/Profile";
 import AccountList from "./pages/AccountList";
 import AddAccount from "./pages/AddAccount";
 import PostCommission from "./pages/PostCommission";
 import CommissionList from "./pages/CommissionList";
-// import Home from "./pages/Home";
+import Home from "./pages/Home";
 import UpdateAccount from "./pages/UpdateAccount";
 import UpdateCommission from "./pages/UpdateCommission";
 //import "./style.css";
@@ -54,7 +54,7 @@ function App() {
             path="/view-profile/:userID/:catcherID"
             element={<ViewProfile />}
           />
-          <Route path="/verification" exact Component={Verification} />
+          <Route path="/verification/:userID" exact Component={Verification} />
           <Route path="/add" exact Component={AddAccount} />
           <Route path="/" exact Component={Landing} />
           <Route
@@ -74,7 +74,7 @@ function App() {
           <Route path="/Delivery/:userID/:type" element={<Delivery />} />
           <Route path="/update-account/:userID" element={<UpdateAccount />} />
           {/* <Route path="/admin-home/:userID" element={<AdminHome />} /> */}
-          {/* <Route path="/" exact Component={Home} /> */}
+          <Route path="/home/:userID" exact Component={Home} />
           {/* ADMIN */}
           <Route path="/accounts" exact Component={AccountList} />
           <Route path="/add" exact Component={AddAccount} />
@@ -97,7 +97,7 @@ function App() {
           <Route path="/post-commission/:userID" element={<PostCommission />} />
           <Route
             path="/update-commission/:commissionID/:userID"
-            elemnt={<UpdateCommission />}
+            element={<UpdateCommission />}
           />
           {/* CATCHER */}
           <Route
