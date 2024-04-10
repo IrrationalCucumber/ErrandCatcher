@@ -4,6 +4,7 @@ import Stepper from "../components/stepper"; // Corrected import path
 import "./verification.css"; // Import the provided CSS styles
 import Navbar from "../components/Navbar";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 function Verification() {
   const [firstName, setFirstName] = useState("");
@@ -34,6 +35,34 @@ function Verification() {
   const handleSubmit = (event) => {
     event.preventDefault();
   };
+
+  const [images, setImages] = useState([]);
+
+  function handleImage(e) {
+    const selectedFiles = e.target.files;
+    if (selectedFiles.length > 2) {
+      // If more than two files are selected, alert the user
+      alert("You can only upload up to two images.");
+      // Clear the file input
+      e.target.value = null;
+      return;
+    }
+    // Set the images state with the selected files
+    setImages(selectedFiles);
+  }
+
+  const handleUpload = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    images.forEach((image) => {
+      formData.append("images", image);
+    });
+    await axios
+      .post(`http://localhost:8800/upload/${userID}`, formData)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+  console.log();
 
   const list = [
     <div className="step">
@@ -132,8 +161,15 @@ function Verification() {
             </label>
           </div>
           <div className="input-rows">
-            <input type="file" id="fileInput2" accept="image/*" />
+            <input
+              type="file"
+              id="fileInput2"
+              accept="image/*"
+              onChange={handleImage}
+              multiple
+            />
           </div>
+          <button onClick={handleUpload}>UPLOAD</button>
           <div className="input-rows" style={{ justifyContent: "center" }}>
             <button onClick={() => setCurrentStep(currentStep - 1)}>
               Prev
