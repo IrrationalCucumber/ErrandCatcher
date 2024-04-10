@@ -1,4 +1,3 @@
-const { useCallback } = require("react");
 const db = require("../dbConfig");
 
 const Apply = {
