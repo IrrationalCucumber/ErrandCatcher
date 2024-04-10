@@ -8,7 +8,7 @@ const path = require("path");
 const storage = multer.diskStorage({
   // store the passed file in a destination folder
   destination: (req, file, callback) => {
-    callback(null, "public/images");
+    callback(null, "public/images/profile");
   },
   filename: (req, file, callback) => {
     //fieldname = name of file that is being pass frpm frontend

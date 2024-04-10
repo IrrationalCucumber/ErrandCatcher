@@ -154,7 +154,10 @@ const Profile = () => {
               <div className="">
                 <label>Upload Image</label>
                 <img
-                  src={`http://localhost:8800/images/` + account.profileImage}
+                  src={
+                    `http://localhost:8800/images/profile/` +
+                    account.profileImage
+                  }
                   width={150}
                   length={150}
                 />
