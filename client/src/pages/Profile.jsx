@@ -28,7 +28,7 @@ const Profile = () => {
     desc: "",
     status: "",
     type: "",
-    // profileImage:"",
+    profileImage: "",
   });
   //RV & APS 02/03/24
   //useState for Status
@@ -59,6 +59,7 @@ const Profile = () => {
           desc: retrievedAccount.userDesc,
           status: retrievedAccount.accountStatus,
           type: retrievedAccount.accountType,
+          profileImage: retrievedAccount.profileImage,
         });
         //setStatus(res.data);
         if (account.status.toUpperCase() == "VERIFIED") {
@@ -79,6 +80,8 @@ const Profile = () => {
       setAccount((prev) => ({ ...prev, gender: e.target.value }));
     } else if (e.target.name === "type") {
       setAccount((prev) => ({ ...prev, type: e.target.value }));
+    } else if (e.target.name === "desc") {
+      setAccount((prev) => ({ ...prev, desc: e.target.value }));
     } else {
       // For other fields, use spread syntax as before
       setAccount((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -102,6 +105,22 @@ const Profile = () => {
     fetchRating();
   }, [userID]);
 
+  const [image, setImage] = useState("");
+  function handleImage(e) {
+    //console.log(e.target.files);
+    setImage(e.target.files[0]);
+  }
+
+  const handleUpload = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("image", image);
+    await axios
+      .post(`http://localhost:8800/update-pic/${userID}`, formData)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
   //sSave CHanges
   const handleClick = async (e) => {
     //const updatedAccount = { ...account };
@@ -109,6 +128,12 @@ const Profile = () => {
     e.preventDefault();
     try {
       await axios.put("http://localhost:8800/update/" + userID, account);
+      const formData = new FormData();
+      formData.append("image", image);
+      await axios
+        .post(`http://localhost:8800/update-pic/${userID}`, formData)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
 
       alert("Profile updated *Replace this*");
       console.log(account);
@@ -117,6 +142,7 @@ const Profile = () => {
       console.log(err);
     }
   };
+  console.log(account);
 
   return (
     <div>
@@ -125,11 +151,15 @@ const Profile = () => {
         <div className="profile-info">
           <div className="description-form">
             <form>
-              <div className="FileContainer">
-                <label htmlFor="file" className="File">
-                  Upload Image
-                </label>
-                <input type="file" id="file" className="file" />
+              <div className="">
+                <label>Upload Image</label>
+                <img
+                  src={`http://localhost:8800/images/` + account.profileImage}
+                  width={150}
+                  length={150}
+                />
+                <input type="file" id="file" onChange={handleImage} />
+                <button onClick={handleUpload}>Upload</button>
               </div>
               {/*username changed when user sign up*/}
               <div className="username-container">
@@ -183,6 +213,9 @@ const Profile = () => {
               <textarea
                 className="description"
                 placeholder="Description"
+                onChange={handleChange}
+                name="desc"
+                value={account.desc}
               ></textarea>
             </form>
           </div>
