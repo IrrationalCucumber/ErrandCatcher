@@ -67,6 +67,21 @@ const verifyController = {
         });
       });
   },
+  //update status of request
+  putUpdateRequest: (req, res) => {
+    const id = req.params.id;
+    const status = "Approved";
+    Verify.putUpdateRequest(id, status, date, (error) => {
+      if (error) {
+        console.error("Error updating Transaction:", error);
+        res
+          .status(500)
+          .json({ error: "An error occurred while updating new Request" });
+        return;
+      }
+      res.status(200).json({ message: "Request updated successfully" });
+    });
+  },
 };
 
 module.exports = verifyController;
