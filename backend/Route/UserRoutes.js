@@ -12,6 +12,7 @@ router.get("/status/:id", userController.getStatus);
 router.get("/username/:id", userController.getUsername);
 router.get("/get-type/:id", userController.getType);
 router.put("/update/:id", userController.putUpdateUser);
+router.post("/update-pic/:id", userController.uploadProfileImage);
 router.put("/change-status/:id", userController.putChangeStatusByUserID);
 router.post("/sign-up/", userController.postSignUp);
 // Add more routes as needed...

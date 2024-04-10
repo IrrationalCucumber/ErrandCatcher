@@ -17,9 +17,32 @@ const TransRoutes = require("./Route/TransactionRoute.js");
 const db = require("./dbConfig.js");
 const cors = require("cors");
 
+// //profile upload
+// const multer = require("multer");
+// const path = require("path");
+
+// const storage = multer.diskStorage({
+//   // store the passed file in a destination folder
+//   destination: (req, file, callback) => {
+//     callback(null, "public/images");
+//   },
+//   filename: (req, file, callback) => {
+//     //fieldname = name of file that is being pass frpm frontend
+//     callback(
+//       null,
+//       file.fieldname + "_" + Date.now() + path.extname(file.originalname)
+//     );
+//   },
+// });
+
+// const upload = multer({
+//   storage: storage,
+// });
+
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(express.static("public"));
 //use routes for each modules
 app.use("/", UserRoutes);
 app.use("/", ErrandRoutes);
@@ -28,9 +51,21 @@ app.use("/", ApplyRoutes);
 app.use("/", RatingRoutes);
 app.use("/", TransRoutes);
 
-app.get("/", (req, res) => {
-  res.json("hello this is the backend");
-});
+// //api endpoint for upload
+// app.post("/upload/:id", upload.single("image"), (req, res) => {
+//   console.log(req.file);
+//   const id = req.params.id;
+//   const image = req.file.filename;
+//   const sql = `UPDATE useraccount SET  profileImage = ? WHERE userID = ?`;
+//   db.query(sql, [image, id], (err, results) => {
+//     if (err) return res.json({ Message: "Error" });
+//     return res.json({ Status: "Success" });
+//   });
+// });
+
+// app.get("/", (req, res) => {
+//   res.json("hello this is the backend");
+// });
 
 const PORT = process.env.PORT || 8800;
 app.listen(PORT, () => {

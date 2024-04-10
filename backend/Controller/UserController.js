@@ -1,6 +1,27 @@
 // userController.js
 
 const User = require("../Model/User");
+//profile upload
+const multer = require("multer");
+const path = require("path");
+// set destination for image storage
+const storage = multer.diskStorage({
+  // store the passed file in a destination folder
+  destination: (req, file, callback) => {
+    callback(null, "public/images");
+  },
+  filename: (req, file, callback) => {
+    //fieldname = name of file that is being pass frpm frontend
+    callback(
+      null,
+      file.fieldname + "_" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+
+const upload = multer({
+  storage: storage,
+});
 
 const userController = {
   getUsers: (req, res) => {
@@ -94,13 +115,11 @@ const userController = {
           .json({ error: "An error occurred while updating user" });
         return;
       }
-
       // Check if any rows were affected by the update operation
       if (result.affectedRows === 0) {
         res.status(404).json({ error: "User not found" });
         return;
       }
-
       // User updated successfully
       res.status(200).json({ message: "User updated successfully" });
     });
@@ -137,13 +156,50 @@ const userController = {
           .json({ error: "An error occurred while adding new user" });
         return;
       }
-
       // User added successfully
       res.status(200).json({ message: "sign up successfully" });
     });
   },
 
   // Add more controller functions as needed...
+  /**
+   * UPLOAD IMAGE
+   */
+
+  //api endpoint for upload
+  // app.post("/upload", upload.single("image"), (req, res) => {
+  //   console.log(req.file);
+  //   const sql =
+  // });
+  //update profile image of user
+  uploadProfileImage: (req, res) => {
+    upload.single("image")(req, res, (err) => {
+      if (err) {
+        console.error("Error uploading image:", err);
+        return res.status(500).json({ message: "Internal server error" });
+      }
+
+      const userID = req.params.id;
+      const pic = req.file.filename;
+
+      User.putUpdatePic(userID, pic, (error, result) => {
+        if (error) {
+          console.error("Error updating user:", error);
+          res
+            .status(500)
+            .json({ error: "An error occurred while updating user" });
+          return;
+        }
+        // Check if any rows were affected by the update operation
+        if (result.affectedRows === 0) {
+          res.status(404).json({ error: "User not found" });
+          return;
+        }
+        // User updated successfully
+        res.status(200).json({ message: "User updated successfully" });
+      });
+    });
+  },
 };
 
 module.exports = userController;

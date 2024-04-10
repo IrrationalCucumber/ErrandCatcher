@@ -33,17 +33,18 @@ const User = {
       lname,
       gender,
       email,
-      cnum,
+      contact,
       age,
       bday,
       address,
       desc,
-      pic,
+      //profileImage,
     } = userData;
+    //, profileImage = ?
     db.query(
       `UPDATE useraccount
       SET username = ?, password = ?, userLastname = ?, userFirstname = ?, userGender =?, userEmail = ?,
-      userContactNum =?, userAge =?, userBirthday = ?, userAddress = ?, userDesc = ?, profileImage = ?
+      userContactNum =?, userAge =?, userBirthday = ?, userAddress = ?, userDesc = ?
     WHERE userID = ?`,
       [
         username,
@@ -52,14 +53,22 @@ const User = {
         fname,
         gender,
         email,
-        cnum,
+        contact,
         age,
         bday,
         address,
         desc,
-        pic,
+        //profileImage,
         id,
       ],
+      callback
+    );
+  },
+  //update pic of user
+  putUpdatePic: (id, profile, callback) => {
+    db.query(
+      `UPDATE useraccount SET  profileImage = ? WHERE userID = ?`,
+      [profile, id],
       callback
     );
   },
