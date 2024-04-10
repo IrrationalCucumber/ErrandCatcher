@@ -137,13 +137,14 @@ const CommissionList = () => {
 
             <Table
               headers={[
-                "ID",
-                "CATCHER",
                 "ERRAND TITLE",
-                "DATE POSTED",
+                "TYPE",
+                "START DATE",
+                "DUE DATE",
                 "STATUS",
                 "ACTION",
               ]}
+              // update the data here
               data={currentItems.map((commissionItem) => [
                 commissionItem.commissionID,
                 commissionItem.employerID,
