@@ -60,6 +60,11 @@
     margin-bottom: 10px;
   }
 
+  .input-rows2 {
+    display: flex;
+    flex-direction: column;
+  }
+
   .label{
     flex: 0 0 150px; /* Adjust label width as needed */
     text-align: left;

@@ -39,21 +39,29 @@ function Verification() {
             <input type='text' placeholder='First name' value={firstName} onChange={(e) => setFirstName(e.target.value)} required></input>
             <input type='text' placeholder='Last name' value={lastName} onChange={(e) => setLastName(e.target.value)} required></input>
         </div>
+
         <div className='input-rows'>
-            <label className='label'>Gender</label>
-            <select className='select'>
-                <option value=''>Choose gender...</option>
-                <option value='Male'>Male</option>
-                <option value='Female'>Female</option>
-            </select>
+            <label className='label'>Email Address</label>
+            <input type='text' placeholder='Enter your Email Address' required></input>
         </div>
         
             <div className='input-rows'>
             <label className='label'>Age</label>
-            <input type='number' value={age} onChange={handleAgeChange} placeholder='Enter your age' required></input>
-            <label className='label'>Birthdate</label>
-            <input type='date' required></input>
+            <input type='number' value={age} onChange={handleAgeChange} placeholder='' required></input>
+            
+            <label className='label'>Gender</label>
+            <select className='select'>
+                <option value=''></option>
+                <option value='Male'>Male</option>
+                <option value='Female'>Female</option>
+            </select>
+
             </div>
+
+        <div className='input-rows'>
+        <label className='label'>Birthdate</label>
+            <input type='date' required></input>
+        </div>
             
         <div className='input-rows'>
             <label className='label'>Home Address</label>
@@ -63,35 +71,34 @@ function Verification() {
             <label className='label'>Contact Number</label>
             <input type='text' placeholder='Enter your Contact Number' required></input>
         </div>
-        <div className='input-rows'>
-            <label className='label'>Email Address</label>
-            <input type='text' placeholder='Enter your Email Address' required></input>
-        </div>
+
             <div>
-                <button type='submit' onClick={handleNext}>Next</button>
+                <button type='submit' onClick={handleNext} style={{margin:"20px", padding: '10px', width: '100px', borderRadius:'5px'}}>Next</button>
             </div>
         </div>
       </form>
     </div>,
     <div className="step">
   <h1>Upload Image</h1>
-  <div className='form-group1'> {/* Wrap the form with form-group */}
+  <div className='form-group1'> 
     <form className='form-container'>
-      <div className='input-rows'>
-        <label className='label2' htmlFor="fileInput1">Upload your documents in here</label>
+      <div className='input-rows2'>
+        <label className='label2' style={{marginTop: "5px"}} htmlFor="fileInput1">Upload your documents in here</label>
+        <p style={{marginBottom: "5px", marginLeft: "10px", fontSize: "10px"}}>Upload your legal documents here</p>
       </div>
-      <div className='input-rows'>
+      <div className='input-rows2'>
         <input type="file" id="fileInput1" accept="image/*" />
       </div>
-      <div className='input-rows'>
-        <label className='label2' htmlFor="fileInput2">Upload your image here</label>
+      <div className='input-rows2'>
+        <label className='label2' style={{marginTop: "20px"}} htmlFor="fileInput2">Upload your image here</label>
+        <p style={{marginBottom: "5px", marginLeft: "10px", fontSize: "10px"}}>Upload your identification card here</p>
       </div>
-      <div className='input-rows'>
+      <div className='input-rows2'>
         <input type="file" id="fileInput2" accept="image/*" />
       </div>
       <div className='input-rows' style={{ justifyContent: 'center' }}>
-        <button onClick={() => setCurrentStep(currentStep - 1)}>Prev</button>
-        <button onClick={() => setCurrentStep(currentStep + 1)}>Next</button>
+        <button onClick={() => setCurrentStep(currentStep - 1)} style={{margin:"20px", padding: '10px', width: '100px', borderRadius:'5px'}}>Prev</button>
+        <button onClick={() => setCurrentStep(currentStep + 1)} style={{margin:"20px", padding: '10px', width: '100px', borderRadius:'5px'}}>Next</button>
       </div>
     </form>
   </div>
@@ -100,7 +107,7 @@ function Verification() {
     <div className="step">
     <form className='form-container'>
     <h1>Sending Verifification to the Admin!</h1>
-      <label>Explore the services in Errand Catcher</label>
+      <p style={{marginBottom: "5px", marginLeft: "150px", fontSize: "15px"}}>Explore the services in Errand Catcher</p>
 
     </form>
     </div>
