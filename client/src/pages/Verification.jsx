@@ -36,33 +36,53 @@ function Verification() {
     event.preventDefault();
   };
 
-  const [images, setImages] = useState([]);
+  const [image1, setImage1] = useState("");
+  const [image2, setImage2] = useState("");
 
   function handleImage(e) {
-    const selectedFiles = e.target.files;
-    if (selectedFiles.length > 2) {
-      // If more than two files are selected, alert the user
-      alert("You can only upload up to two images.");
-      // Clear the file input
-      e.target.value = null;
-      return;
+    // const selectedFiles = e.target.files;
+    // if (selectedFiles.length > 2) {
+    //   // If more than two files are selected, alert the user
+    //   alert("You can only upload up to two images.");
+    //   // Clear the file input
+    //   e.target.value = null;
+    //   return;
+    // }
+    // // Set the images state with the selected files
+    // setImages(selectedFiles);
+    if (e.target.name === "image1") {
+      setImage1(e.target.files[0]);
+    } else if (e.target.name === "image2") {
+      setImage2(e.target.files[0]);
     }
-    // Set the images state with the selected files
-    setImages(selectedFiles);
   }
-
+  // console.log(image1);
+  // console.log(image2);
   const handleUpload = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    images.forEach((image) => {
-      formData.append("images", image);
-    });
+    // for (const fileKey in files) {
+    //   if (files.hasOwnProperty(fileKey)) {
+    //     const fileArray = files[fileKey];
+    //     if (Array.isArray(fileArray)) {
+    //       fileArray.forEach((file) => {
+    //         formData.append("files", file);
+    //       });
+    //     } else {
+    //       formData.append("files", fileArray);
+    //     }
+    //   }
+    // }
+    //append them into one
+    formData.append("image1", image1);
+    formData.append("image2", image2);
+    console.log(formData);
     await axios
       .post(`http://localhost:8800/upload/${userID}`, formData)
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
-  console.log();
+  //console.log();
 
   const list = [
     <div className="step">
@@ -161,14 +181,31 @@ function Verification() {
             </label>
           </div>
           <div className="input-rows">
-            <input
-              type="file"
-              id="fileInput2"
-              accept="image/*"
-              onChange={handleImage}
-              multiple
-            />
+            <label htmlFor="">
+              FRONT ID:
+              <input
+                type="file"
+                id="file1"
+                name="image1"
+                accept="image/*"
+                onChange={handleImage}
+              />
+            </label>
           </div>
+
+          <div className="input-rows">
+            <label htmlFor="">
+              BACK ID:
+              <input
+                type="file"
+                id="file2"
+                name="image2"
+                accept="image/*"
+                onChange={handleImage}
+              />
+            </label>
+          </div>
+
           <button onClick={handleUpload}>UPLOAD</button>
           <div className="input-rows" style={{ justifyContent: "center" }}>
             <button onClick={() => setCurrentStep(currentStep - 1)}>
