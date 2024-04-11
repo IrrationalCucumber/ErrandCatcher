@@ -16,5 +16,6 @@ router.post("/update-pic/:id", userController.uploadProfileImage);
 router.put("/change-status/:id", userController.putChangeStatusByUserID);
 router.post("/sign-up/", userController.postSignUp);
 // Add more routes as needed...
+router.get("/search-user/", userController.getSearchByTerm);
 
 module.exports = router;

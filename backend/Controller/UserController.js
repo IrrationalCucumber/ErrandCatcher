@@ -200,6 +200,26 @@ const userController = {
       });
     });
   },
+  /**
+   * SEARCH
+   */
+  getSearchByTerm: (req, res) => {
+    const term = req.query.term;
+    const type = req.query.type;
+    const status = req.query.status;
+    User.getSeatchByTerm(term, type, status, (err, users) => {
+      if (err) {
+        console.error("Error fetching users:", err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      if (!users) {
+        res.status(404).send("Users not found");
+        return;
+      }
+      res.json(users);
+    });
+  },
 };
 
 module.exports = userController;
