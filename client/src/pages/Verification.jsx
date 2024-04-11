@@ -99,7 +99,7 @@ function Verification() {
 
     <div className="step">
     <form className='form-container'>
-    <h1>Congratulation you are Verified!</h1>
+    <h1>Sending Verifification to the Admin!</h1>
       <label>Explore the services in Errand Catcher</label>
 
     </form>

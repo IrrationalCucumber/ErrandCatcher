@@ -1,12 +1,4 @@
-.App {
-    font-family: sans-serif;
-    text-align: center;
-  }
 
-  body {
-    background-color: #e7e1c7; /* Set the background color for the entire page */
-  }
-  
   .form-container {
     max-width: 600px;
     margin: 0 auto;
