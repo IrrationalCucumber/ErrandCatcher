@@ -8,10 +8,14 @@ import Table from "../../components/Table";
 
 const AccountList = () => {
   const [accounts, setAccounts] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [type, setType] = useState("");
-  const [status, setStatus] = useState("");
-  const [NoSearch, setNoSearch] = useState(true);
+  const [searchTerm, setSearchTerm] = useState({
+    term: "",
+    type: "",
+    status: "",
+  });
+  // const [type, setType] = useState("");
+  // const [status, setStatus] = useState("");
+  // const [NoSearch, setNoSearch] = useState(true);
   const location = useLocation();
   const userID = location.pathname.split("/")[2];
 
@@ -36,7 +40,7 @@ const AccountList = () => {
       }
     };
     fetchAllAccount();
-  }, [type, status]);
+  }, []);
   //fetch all accounts
   //triggers when search input is filled
   // const fetchSearchResults = async () => {
@@ -44,7 +48,11 @@ const AccountList = () => {
   //     //http://localhost:8800/user - local
   //     //http://192.168.1.47:8800/user - network
   //     const res = await axios.get("http://localhost:8800/search-user", {
-  //       params: { term: searchTerm, type: type, status: status }, // Pass the search term as a query parameter
+  //       params: {
+  //         term: searchTerm.term,
+  //         type: searchTerm.type,
+  //         status: searchTerm.status,
+  //       }, // Pass the search term as a query parameter
   //     });
   //     setAccounts(res.data);
   //   } catch (err) {
@@ -52,9 +60,37 @@ const AccountList = () => {
   //   }
   // };
 
-  // useEffect(() => {
-  //   fetchSearchResults();
-  // }, [searchTerm, type, status]); // Trigger the search whenever searchTerm changes
+  useEffect(() => {
+    const fetchSearchResults = async () => {
+      try {
+        //http://localhost:8800/user - local
+        //http://192.168.1.47:8800/user - network
+        const res = await axios.get("http://localhost:8800/search-user", {
+          params: {
+            term: searchTerm.term,
+            type: searchTerm.type,
+            status: searchTerm.status,
+          }, // Pass the search term as a query parameter
+        });
+        setAccounts(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchSearchResults();
+  }, [searchTerm]); // Trigger the search whenever searchTerm changes
+
+  const handleChange = (e) => {
+    // For the 'gender' field, directly set the value without using spread syntax
+    if (e.target.name === "status") {
+      setSearchTerm((prev) => ({ ...prev, status: e.target.value }));
+    } else if (e.target.name === "type") {
+      setSearchTerm((prev) => ({ ...prev, type: e.target.value }));
+    } else {
+      // For other fields, use spread syntax as before
+      setSearchTerm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    }
+  };
 
   // filter type //
   // const fetchType = async () => {
@@ -97,6 +133,7 @@ const AccountList = () => {
     new Date(account.dateCreated).toLocaleDateString(),
     account.accountStatus,
   ]);
+  console.log(searchTerm);
 
   //list need to be in a column
   //need filter
@@ -117,15 +154,12 @@ const AccountList = () => {
       <div className="search">
         <input
           type="text"
+          name="term"
           placeholder="Search..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          value={searchTerm.term}
+          onChange={handleChange}
         />
-        <select
-          name="type"
-          onChange={(e) => setType(e.target.value)}
-          value={type}
-        >
+        <select name="type" onChange={handleChange} value={searchTerm.type}>
           <option value="">Type</option>
           <option value="Employer">employer</option>
           <option value="Catcher">Catcher</option>
@@ -133,8 +167,8 @@ const AccountList = () => {
         </select>
         <select
           name="status"
-          onChange={(e) => setStatus(e.target.value)}
-          value={status}
+          onChange={handleChange}
+          value={searchTerm.status}
           id=""
         >
           <option value="">Status</option>
