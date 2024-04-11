@@ -18,12 +18,12 @@ const Verify = {
     );
   },
   //add new request
-  postNewRequest: (id, images, callback) => {
-    const [id_picture_front, id_picture_back] = images;
-    console.log(id);
+  postNewRequest: (id, image1, image2, callback) => {
+    //const [id_picture_front, id_picture_back] = images;
+    //console.log(id);
     db.query(
       `INSERT INTO verification_request (requestUserID, id_picture_front, id_picture_back) VALUES (?, ?, ?)`,
-      [id, id_picture_front, id_picture_back],
+      [id, image1, image2],
       callback
     );
   },

@@ -194,6 +194,7 @@ app.get("/type", (req, res) => {
 //===================================================================================================================//
 //==========================================SEARCH FUNCTION==========================================================//
 //search account
+// TRANSFFERRED
 app.get("/search-user", (req, res) => {
   const searchTerm = req.query.term || ""; // Get the search term from the query parameter
   const type = req.query.type || "";

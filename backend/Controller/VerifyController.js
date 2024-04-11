@@ -47,26 +47,32 @@ const verifyController = {
       res.json(user);
     });
   },
-  //upload docus
   uploadRequest: (req, res) => {
-    upload.array("images", 2),
-      (req,
-      res,
-      (err) => {
-        if (err) {
-          console.error("Error uploading image:", err);
-          return res.status(500).json({ message: "Internal server error" });
-        }
+    // state what files are sent
+    // store them in an array
+    upload.fields([
+      { name: "image1", maxCount: 1 }, // inique name of what is being append
+      { name: "image2", maxCount: 1 }, //
+    ])(req, res, (err) => {
+      if (err) {
+        console.error("Error uploading images:", err);
+        return res.status(500).json({ message: "Internal server error" });
+      }
 
-        const userID = req.params.id;
-        const images = req.files.map((file) => file.filename);
-        // console.log(images);
-        Verify.postNewRequest(userID, images, (error) => {
-          if (error) return res.json({ Message: "Error" });
-          return res.json({ Status: "Success" });
-        });
+      const userID = req.params.id;
+      //This accesses the filename of the first uploaded file for the image1 field
+      const image1 = req.files["image1"][0].filename;
+      const image2 = req.files["image2"][0].filename;
+      Verify.postNewRequest(userID, image1, image2, (error) => {
+        if (error) {
+          console.error("Error posting new request:", error);
+          return res.status(500).json({ message: "Error posting new request" });
+        }
+        return res.json({ status: "Success" });
       });
+    });
   },
+
   //update status of request
   putUpdateRequest: (req, res) => {
     const id = req.params.id;
