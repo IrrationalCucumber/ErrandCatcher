@@ -142,7 +142,7 @@ const Errand = {
     );
   },
   /**
-   * SEARCH QUERIES
+   * SEARCH/FILTERING QUERIES
    */
   //search based on one term only
   // similar wording
@@ -162,6 +162,14 @@ const Errand = {
         callback
       );
     }
+  },
+  //get employer errands by status
+  getMyErrandStatus: (id, status, callback) => {
+    db.query(
+      `SELECT * FROM commission WHERE commissionStatus = ? AND employerID = ?`,
+      [status, id],
+      callback
+    );
   },
 };
 

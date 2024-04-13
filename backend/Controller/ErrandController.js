@@ -198,9 +198,27 @@ const ErrandController = {
       res.json(errands);
     });
   },
+  //search all regardless of status
   getSearchAll: (req, res) => {
     const term = req.query.term;
     Errand.getSearchAll(term, (err, errands) => {
+      if (err) {
+        console.error("Error fetching errands:", err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      if (!errands) {
+        res.status(404).send("errands not found");
+        return;
+      }
+      res.json(errands);
+    });
+  },
+  //filter employer's errands based on status
+  getMyErrandStatus: (req, res) => {
+    const id = req.query.id;
+    const status = req.query.status;
+    Errand.getMyErrandStatus(id, status, (err, errands) => {
       if (err) {
         console.error("Error fetching errands:", err);
         res.status(500).send("Internal Server Error");
