@@ -3,17 +3,18 @@ const errandController = require("../Controller/ErrandController");
 
 const router = express.Router();
 
-router.get("/errands", errandController.getErrands);
-router.get("/available", errandController.getAllAvailable);
-router.get("/recent", errandController.getRecent);
-router.get("/type/:type", errandController.getType);
-router.get("/errand/:id", errandController.getErrandById);
-router.get("/your-commission/:id", errandController.getErrandByUser);
-router.post("/commission", errandController.postErrand);
-router.put("/update-errand/:id", errandController.updateErrand);
-router.put("/errand-taken/:id", errandController.updateErrandStatus);
-router.delete("/delete-errand/:id", errandController.deleteErrand);
-router.get("/complete-count/:id", errandController.getCompletedErrand);
-router.get("/post-count/:id", errandController.getPostCount);
+router.get("/errands", errandController.getErrands); // get all errands
+router.get("/available", errandController.getAllAvailable); // get all available errands
+router.get("/recent", errandController.getRecent); // get recent postedn errand
+router.get("/type/:type", errandController.getType); // get all errand with type/category as condiiton
+router.get("/errand/:id", errandController.getErrandById); // get errand's details based on id
+router.get("/your-commission/:id", errandController.getErrandByUser); // get all errands of user || requeired : userID
+router.post("/commission", errandController.postErrand); // post new errand
+router.put("/update-errand/:id", errandController.updateErrand); // update the existing errand || required: commissionID
+router.put("/errand-taken/:id", errandController.updateErrandStatus); // updaete the errand || required: commissionID
+router.delete("/delete-errand/:id", errandController.deleteErrand); // delete the errand || required: commissionID
+router.get("/complete-count/:id", errandController.getCompletedErrand); // get count of already done errand based on transaction|| req: userID
+router.get("/post-count/:id", errandController.getPostCount); // get count of posted errand|| req: userID
+router.get("/search-commission", errandController.getSearchAll); // get search and display errand based on search term
 
 module.exports = router;

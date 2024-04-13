@@ -141,6 +141,18 @@ const Errand = {
       callback
     );
   },
+  /**
+   * SEARCH QUERIES
+   */
+  //search based on one term only
+  // similar wording
+  getSearchAll: (term, callback) => {
+    db.query(
+      `SELECT * FROM commission WHERE (commissionTitle LIKE ? OR commissionType LIKE ? OR commissionLocation LIKE ?) AND commissionStatus = 'Available'`,
+      [`%${term}%`, `%${term}%`, `%${term}%`],
+      callback
+    );
+  },
 };
 
 module.exports = Errand;
