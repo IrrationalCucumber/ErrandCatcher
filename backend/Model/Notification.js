@@ -45,6 +45,20 @@ const Notif = {
       callback
     );
   },
+  //post notif to all catcher if new errand is posted
+  postNotifToCatcher: (type, desc, callback) => {
+    db.query(
+      `
+      INSERT INTO notification (notifUserID, notifDesc, notificationType, notifDate)
+      SELECT userID, ?, ?, NOW() 
+      FROM useraccount 
+      WHERE accountType = 'Catcher';
+      `,
+      [desc, type],
+      callback
+    );
+  },
+
   // update the notif to read
   putReadNotif: (notifID, id, callback) => {
     db.query(

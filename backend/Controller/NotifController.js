@@ -75,6 +75,21 @@ const notifController = {
       res.status(200).json({ message: "Notif added successfully" });
     });
   },
+  postNotifToCatcher: (req, res) => {
+    const type = "New Errand";
+    const desc = "A new errand has been posted";
+    Notif.postNotifToCatcher(type, desc, (error) => {
+      if (error) {
+        console.error("Error adding noitf:", error);
+        res
+          .status(500)
+          .json({ error: "An error occurred while adding new notif" });
+        return;
+      }
+      // User added successfully
+      res.status(200).json({ message: "Notif added successfully" });
+    });
+  },
   /**
    * ADD READ NOTIF
    */

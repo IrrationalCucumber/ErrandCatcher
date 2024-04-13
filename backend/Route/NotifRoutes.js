@@ -10,5 +10,6 @@ router.get("/my-notif/:userID", notifController.getNotifByID);
 router.get("/emp-notif/:userID", notifController.getNotifEmp);
 router.post("/notify", notifController.postNotif);
 router.put("/read-notif/:notifID/:id", notifController.putReadNotif);
+router.post("/notify-catcher", notifController.postNotifToCatcher);
 
 module.exports = router;
