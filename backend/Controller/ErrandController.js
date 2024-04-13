@@ -1,6 +1,7 @@
 const Errand = require("../Model/Errand");
 
 const ErrandController = {
+  //get all errands
   getErrands: (req, res) => {
     Errand.getAllErrands((err, errands) => {
       if (err) {
@@ -22,6 +23,7 @@ const ErrandController = {
       res.json(errands);
     });
   },
+  // show recent posted errands
   getRecent: (req, res) => {
     Errand.getRecent((err, errands) => {
       if (err) {
@@ -32,6 +34,7 @@ const ErrandController = {
       res.json(errands);
     });
   },
+  //get errand accourding to type beiing passed
   getType: (req, res) => {
     const type = req.params.type;
     Errand.getType(type, (err, errands) => {
@@ -221,7 +224,7 @@ const ErrandController = {
     });
   },
   /**
-   * SEARCH
+   * SEARCH FUNCTIONS
    */
   getSearchAllAvailable: (req, res) => {
     const term = req.query.term;
@@ -243,6 +246,23 @@ const ErrandController = {
   getSearchAll: (req, res) => {
     const term = req.query.term;
     Errand.getSearchAll(term, (err, errands) => {
+      if (err) {
+        console.error("Error fetching errands:", err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      if (!errands) {
+        res.status(404).send("errands not found");
+        return;
+      }
+      res.json(errands);
+    });
+  },
+  //search errand on a category
+  getSearchWithType: (req, res) => {
+    const term = req.query.term;
+    const type = req.params.type;
+    Errand.getSearchWithType(term, type, (err, errands) => {
       if (err) {
         console.error("Error fetching errands:", err);
         res.status(500).send("Internal Server Error");

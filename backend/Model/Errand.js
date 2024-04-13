@@ -163,6 +163,18 @@ const Errand = {
       );
     }
   },
+  //search by term
+  //only search in specific category/type
+  //available only
+  getSearchWithType: (term, type, callback) => {
+    if (term != "") {
+      db.query(
+        `SELECT * FROM commission WHERE (commissionTitle LIKE ? OR commissionLocation LIKE ?) AND commissionType LIKE ? AND commissionStatus = 'Available'`,
+        [`%${term}%`, `%${term}%`, `%${type}%`],
+        callback
+      );
+    }
+  },
   //get employer errands by status
   getMyErrandStatus: (id, status, callback) => {
     db.query(
