@@ -146,12 +146,22 @@ const Errand = {
    */
   //search based on one term only
   // similar wording
-  getSearchAll: (term, callback) => {
-    db.query(
-      `SELECT * FROM commission WHERE (commissionTitle LIKE ? OR commissionType LIKE ? OR commissionLocation LIKE ?) AND commissionStatus = 'Available'`,
-      [`%${term}%`, `%${term}%`, `%${term}%`],
-      callback
-    );
+  getSearchAll: (term, status, callback) => {
+    if (status == "") {
+      // search all regardless of status
+      db.query(
+        `SELECT * FROM commission WHERE (commissionTitle LIKE ? OR commissionType LIKE ? OR commissionLocation LIKE ?) `,
+        [`%${term}%`, `%${term}%`, `%${term}%`],
+        callback
+      );
+    } else {
+      // search all available
+      db.query(
+        `SELECT * FROM commission WHERE (commissionTitle LIKE ? OR commissionType LIKE ? OR commissionLocation LIKE ?) AND commissionStatus = 'Available'`,
+        [`%${term}%`, `%${term}%`, `%${term}%`],
+        callback
+      );
+    }
   },
 };
 

@@ -182,6 +182,22 @@ const ErrandController = {
   /**
    * SEARCH
    */
+  getSearchAllAvailable: (req, res) => {
+    const term = req.query.term;
+    const status = "Available";
+    Errand.getSearchAll(term, status, (err, errands) => {
+      if (err) {
+        console.error("Error fetching errands:", err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      if (!errands) {
+        res.status(404).send("errands not found");
+        return;
+      }
+      res.json(errands);
+    });
+  },
   getSearchAll: (req, res) => {
     const term = req.query.term;
     Errand.getSearchAll(term, (err, errands) => {

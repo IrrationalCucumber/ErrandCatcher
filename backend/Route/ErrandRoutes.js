@@ -15,6 +15,6 @@ router.put("/errand-taken/:id", errandController.updateErrandStatus); // updaete
 router.delete("/delete-errand/:id", errandController.deleteErrand); // delete the errand || required: commissionID
 router.get("/complete-count/:id", errandController.getCompletedErrand); // get count of already done errand based on transaction|| req: userID
 router.get("/post-count/:id", errandController.getPostCount); // get count of posted errand|| req: userID
-router.get("/search-commission", errandController.getSearchAll); // get search and display errand based on search term
-
+router.get("/search-available", errandController.getSearchAllAvailable); // get search and display available errand based on search term
+router.get("/search-commission", errandController.getSearchAll); // search and display all errands based on serrch term
 module.exports = router;
