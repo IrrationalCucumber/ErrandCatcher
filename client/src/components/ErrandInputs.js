@@ -12,7 +12,7 @@ function ErrandInputs(props) {
           {/* commission title */}
           <div className="input-group">
             <div className="col1">
-              <label style={{ color: "black" }}>Errand Title</label>
+              <label style={{ color: "black" }}>Errand Name</label>
             </div>
             <div className="col2">
               <input
@@ -127,6 +127,7 @@ function ErrandInputs(props) {
                   onChange={props.handleChange}
                   name={props.to}
                   value={props.toValue}
+                  style={{fontFamily:"Lucida Sans, Lucida Sans Regular, Lucida Grande, Lucida Sans Unicode, Geneva, Verdana, sans-serif"}}
                 />
               </div>
             </div>

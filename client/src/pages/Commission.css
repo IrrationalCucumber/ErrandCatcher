@@ -7,28 +7,30 @@ select, textarea{
 }
 
 label{
-    font-size: 12px !important;
+    color: black;
+    font-size: 14px !important;
     width: 100% !important;
 }
 
 .errand-cont{
     position: relative;
     width: 90%;
-    height: auto;
-    margin: 10% auto 10% auto;
-    padding-bottom: 10%;
+    /* height: auto; */
+    margin-left: 60px;
+    padding-bottom: 10px;
+    border: solid ;
 }
 
 .input-cont{
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-top: 5% !important;
+    margin-top: 1% !important;
 }
 
 .errand-inputs{
   border-radius: 5px;
-  background-color: #f2f2f2;
+  /* background-color: #f2f2f2; */
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -39,7 +41,7 @@ label{
 
 .input-group{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
 }
 .col1, .col2{
@@ -67,7 +69,7 @@ label{
 }
 .btn{
     margin-top: 20px;
-    width: 100% !important;
+    width: 80% !important;
     height: 40px !important;
     border-radius: 20px !important;
     padding: 10px;
@@ -76,6 +78,7 @@ label{
 .btn-container{
     display: flex;
     justify-content: center;
+    padding-left: 20px;
 }
 @media screen and (min-width: 320px) {
     .input-cont{
@@ -84,7 +87,7 @@ label{
 }
 @media screen and (min-width: 470px) {
     label{
-        font-size: 16px !important;
+        font-size: 14px !important;
     }
 }
 @media screen and (min-width: 780px){

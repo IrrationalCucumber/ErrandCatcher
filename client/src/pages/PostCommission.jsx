@@ -264,7 +264,7 @@ const PostCommission = () => {
         )}
 
         <div className="btn-container">
-          <button onClick={handleClick} className="btn btn-yellow">
+          <button onClick={handleClick} className="btn btn-yellow" style={{}}>
             POST
           </button>
         </div>

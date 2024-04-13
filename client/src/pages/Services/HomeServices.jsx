@@ -11,8 +11,8 @@ const HomeServices = () => {
   return (
     <>
       <Navbar />
-      <h1>Home Services</h1>
-      <div className="search-bar">
+      <h1 style={{paddingTop:"20px"}}>Home Services</h1>
+      <div className="search-bar" style={{display: "flex", justifyContent:"center", alignItems:"center", margin: "44px 5%"}}>
         <input
           type="text"
           placeholder="Search..."
