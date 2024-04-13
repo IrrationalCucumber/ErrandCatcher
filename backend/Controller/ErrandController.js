@@ -113,9 +113,50 @@ const ErrandController = {
   },
   //update errand status
   //set what value will be passed
-  updateErrandStatus: (req, res) => {
+  updateErrandStatusToCaught: (req, res) => {
     const comID = req.params.id;
     const status = "Caught";
+    Errand.updateErrandStatus(comID, status, (error, result) => {
+      if (error) {
+        console.error("Error updating errand:", error);
+        res
+          .status(500)
+          .json({ error: "An error occurred while updating errand" });
+        return;
+      }
+      // Check if any rows were affected by the update operation
+      if (result.affectedRows === 0) {
+        res.status(404).json({ error: "Errand not found" });
+        return;
+      }
+      // User updated successfully
+      res.status(200).json({ message: "Errand updated successfully" });
+    });
+  },
+  //update errand to cancelled
+  updateStatusToCancelled: (req, res) => {
+    const comID = req.params.id;
+    const status = "Cancelled";
+    Errand.updateErrandStatus(comID, status, (error, result) => {
+      if (error) {
+        console.error("Error updating errand:", error);
+        res
+          .status(500)
+          .json({ error: "An error occurred while updating errand" });
+        return;
+      }
+      // Check if any rows were affected by the update operation
+      if (result.affectedRows === 0) {
+        res.status(404).json({ error: "Errand not found" });
+        return;
+      }
+      // User updated successfully
+      res.status(200).json({ message: "Errand updated successfully" });
+    });
+  },
+  updateStatusToComplete: (req, res) => {
+    const comID = req.params.id;
+    const status = "Completed";
     Errand.updateErrandStatus(comID, status, (error, result) => {
       if (error) {
         console.error("Error updating errand:", error);

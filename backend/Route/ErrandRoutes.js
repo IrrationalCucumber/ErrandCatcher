@@ -11,7 +11,9 @@ router.get("/errand/:id", errandController.getErrandById); // get errand's detai
 router.get("/your-commission/:id", errandController.getErrandByUser); // get all errands of user || requeired : userID
 router.post("/commission", errandController.postErrand); // post new errand
 router.put("/update-errand/:id", errandController.updateErrand); // update the existing errand || required: commissionID
-router.put("/errand-taken/:id", errandController.updateErrandStatus); // updaete the errand || required: commissionID
+router.put("/errand-taken/:id", errandController.updateErrandStatusToCaught); // updaete the errand status|| required: commissionID
+router.put("/errand-cancel/:id", errandController.updateStatusToCancelled); // updaete the errand status|| required: commissionID
+router.put("/errand-done/:id", errandController.updateStatusToComplete); // updaete the errand status|| required: commissionID
 router.delete("/delete-errand/:id", errandController.deleteErrand); // delete the errand || required: commissionID
 router.get("/complete-count/:id", errandController.getCompletedErrand); // get count of already done errand based on transaction|| req: userID
 router.get("/post-count/:id", errandController.getPostCount); // get count of posted errand|| req: userID
