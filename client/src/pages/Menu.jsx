@@ -40,7 +40,7 @@ const Menu = () => {
             </Link>
           </div>
           <div className="box">
-            <Link to={`/Transpo/${userID}/${"Transpo"}`}>
+            <Link to={`/Transpo/${userID}/${"Transport"}`}>
               <button style={{ backgroundColor: "white" }}>
                 <img src="/images/img4.png" alt="" />
                 <div className="content">
