@@ -90,7 +90,7 @@ const PostCommission = () => {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
-  const [zoom] = useState(10);
+  const [zoom] = useState(14);
 
   useEffect(() => {
     if (map.current) return;
@@ -98,8 +98,8 @@ const PostCommission = () => {
     map.current = new maplibregl.Map({
       container: mapContainer.current,
       style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${API_KEY}`,
-      center: markerLngLat,
-      zoom: zoom,
+      // center: markerLngLat,
+      //zoom: zoom,
     });
 
     map.current.addControl(new maplibregl.NavigationControl(), "top-right");
@@ -108,6 +108,18 @@ const PostCommission = () => {
       navigator.geolocation.getCurrentPosition((position) => {
         const currentLng = position.coords.longitude;
         const currentLat = position.coords.latitude;
+        setCommission((prev) => ({
+          ...prev,
+          comLong: currentLng,
+          comLat: currentLng,
+        }));
+
+        map.current = new maplibregl.Map({
+          container: mapContainer.current,
+          style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${API_KEY}`,
+          center: [currentLng, currentLat],
+          zoom: [9],
+        });
 
         const marker = new maplibregl.Marker({
           color: "#00FF00",
@@ -172,18 +184,39 @@ const PostCommission = () => {
         DatePosted: currentDate,
         empID: userID,
       };
-      if (commission.comLat == "" && commission.comLong == "") {
+      if (
+        !commission.comTitle ||
+        !commission.comStart ||
+        !commission.comDeadline ||
+        !commission.comLocation ||
+        !commission.comType ||
+        !commission.comPay ||
+        !commission.Contactno ||
+        !commission.comDescription
+      ) {
+        if (
+          commission.comType == "Delivery" ||
+          commission.comType == "Transportation"
+        ) {
+          if (
+            !commission.comTitle ||
+            !commission.comStart ||
+            !commission.comDeadline ||
+            !commission.comType ||
+            !commission.comPay ||
+            !commission.comLocation ||
+            !commission.comTo ||
+            !commission.Contactno ||
+            !commission.comDescription
+          )
+            alert("Empty fields");
+        }
+      } else if (commission.comLat == "" && commission.comLong == "") {
         alert("Looks like you havent set the location in the Map");
       } else {
         await axios.post("http://localhost:8800/commission", updatedCommission);
 
-        //add a notification to the commission's employer
-        notif.notifDesc = "A new Errand has been posted";
-        //notif.userID = commission.employerID;
-        notif.notificationType = "New Errand";
-        notif.notifDate = getTimeAndDate();
-
-        await axios.post("http://localhost:8800/notify", notif);
+        await axios.post("http://localhost:8800/notify-catcher");
         alert("You have Posted an Errand!");
         navigate(`/commissions/${userID}`);
       }
