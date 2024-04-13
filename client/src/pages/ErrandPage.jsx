@@ -272,10 +272,12 @@ const ErrandPage = () => {
       <Navbar />
       <div className="errand-cont">
         <ErrandInputs
+          statusHeader="Status"
           status={commission.comStatus}
-          handleChange={handleChange}
+          variant="solid"
+          //handleChange={handleChange}
           title="comTitle"
-          disable="true"
+          readOnly={true}
           titleValue={commission.comTitle}
           startValue={commission.comStart}
           //   deadline="comDeadline"

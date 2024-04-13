@@ -29,19 +29,43 @@ const AccountList = () => {
 
   //useEffect to handle error
   useEffect(() => {
-    const fetchAllAccount = async () => {
-      try {
-        const res = await axios.get("http://localhost:8800/users");
-        //http://localhost:8800/user - local
-        //http://192.168.1.47:8800/user - network
-        setAccounts(res.data);
-        //console.log(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchAllAccount();
-  }, []);
+    if (
+      searchTerm.type != "" ||
+      searchTerm.status != "" ||
+      searchTerm.term != ""
+    ) {
+      const fetchSearchResults = async () => {
+        try {
+          //http://localhost:8800/user - local
+          //http://192.168.1.47:8800/user - network
+          const res = await axios.get("http://localhost:8800/search-user", {
+            params: {
+              term: searchTerm.term,
+              type: searchTerm.type,
+              status: searchTerm.status,
+            }, // Pass the search term as a query parameter
+          });
+          setAccounts(res.data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      fetchSearchResults();
+    } else {
+      const fetchAllAccount = async () => {
+        try {
+          const res = await axios.get("http://localhost:8800/users");
+          //http://localhost:8800/user - local
+          //http://192.168.1.47:8800/user - network
+          setAccounts(res.data);
+          //console.log(res.data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      fetchAllAccount();
+    }
+  }, [searchTerm]);
   //fetch all accounts
   //triggers when search input is filled
   // const fetchSearchResults = async () => {
@@ -61,25 +85,25 @@ const AccountList = () => {
   //   }
   // };
 
-  useEffect(() => {
-    const fetchSearchResults = async () => {
-      try {
-        //http://localhost:8800/user - local
-        //http://192.168.1.47:8800/user - network
-        const res = await axios.get("http://localhost:8800/search-user", {
-          params: {
-            term: searchTerm.term,
-            type: searchTerm.type,
-            status: searchTerm.status,
-          }, // Pass the search term as a query parameter
-        });
-        setAccounts(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchSearchResults();
-  }, [searchTerm]); // Trigger the search whenever searchTerm changes
+  // useEffect(() => {
+  //   const fetchSearchResults = async () => {
+  //     try {
+  //       //http://localhost:8800/user - local
+  //       //http://192.168.1.47:8800/user - network
+  //       const res = await axios.get("http://localhost:8800/search-user", {
+  //         params: {
+  //           term: searchTerm.term,
+  //           type: searchTerm.type,
+  //           status: searchTerm.status,
+  //         }, // Pass the search term as a query parameter
+  //       });
+  //       setAccounts(res.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   fetchSearchResults();
+  // }, [searchTerm]); // Trigger the search whenever searchTerm changes
 
   const handleChange = (e) => {
     // For the 'gender' field, directly set the value without using spread syntax
@@ -156,6 +180,7 @@ const AccountList = () => {
         className="header"
         style={{
           paddingLeft: "20px",
+          justifyContent: "center",
           fontFamily:
             "'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif",
         }}
@@ -182,25 +207,10 @@ const AccountList = () => {
             fontSize: "12px",
             border: "1px solid #ccc",
             borderRadius: "4px",
-            marginRight: "0",
+            marginRight: "10px",
             marginBottom: "10px",
           }}
         />
-        <button
-          style={{
-            padding: "8px",
-            fontSize: "12px",
-            cursor: "pointer",
-            border: "none",
-            backgroundColor: "#CE9251",
-            color: "white",
-            borderRadius: "4px",
-            marginBottom: "10px",
-            marginRight: "10px",
-          }}
-        >
-          <i className="fa fa-search"></i>
-        </button>
         <select
           className="ALtype"
           name="type"
@@ -279,34 +289,3 @@ const AccountList = () => {
 };
 
 export default AccountList;
-//{Account.profileImage && <img src={Account.profileImage} alt=''/>}
-
-// {/* <p>{Account.userID}</p>
-//                 <p>{Account.username} {Account.password}</p>
-//                 <p>{Account.userFirstname} {Account.userLastname}</p>
-//                 <p>{Account.userGender}</p>
-//                 <p>{Account.useAddress}</p>
-//                 <p>{Account.accountStatus} {Account.userEmail}</p>
-//                 <p>{Account.accountType} {new Date(Account.dateCreated).toLocaleDateString()}</p>
-//                 <button>Delete</button> */}
-//----------------------------------------------------------
-// {accounts.map(Account=>(
-//   <div className="account" key={Account.userID}>
-//       <td className='userid'>{Account.userID}</td>
-//       <td className='username'>{Account.username}</td>
-//       <td className='firstname'>{Account.userFirstname}</td>
-//       <td className='lastname'>{Account.userLastname}</td>
-//       <td className='Status'>{Account.accountStatus}</td>
-//       <td className='type'>{Account.accountType}</td>
-//       <td className='date'>{new Date(Account.dateCreated).toLocaleDateString()}</td>
-//   </div>
-// ))}
-
-// const handleChange = async (username) =>{
-//   try {
-//     await axios.get(`http://192.168.1.47:8800/search-user/${username}`)
-//     window.location.reload()
-//   } catch (err) {
-//     console.log(err)
-//   }
-// }

@@ -5,6 +5,8 @@ import NavBar from "../../components/Navbar.js";
 import "./commissionlist.css";
 import Pagination from "../../components/Pagination.js";
 import Table from "../../components/Table.js";
+import Select from "@mui/joy/Select";
+import Option from "@mui/joy/Option";
 
 const CommissionList = () => {
   const [commissions, setCommissions] = useState([]);
@@ -142,7 +144,7 @@ const CommissionList = () => {
               marginBottom: "10px",
             }}
           />
-          <button
+          {/* <button
             type="submit"
             //onClick={fetchSearchResults}
             style={{
@@ -158,7 +160,7 @@ const CommissionList = () => {
             }}
           >
             <i className="fa fa-search"></i>
-          </button>
+          </button> */}
 
           <div
             className="filter"
@@ -168,15 +170,7 @@ const CommissionList = () => {
               className="CLstatus"
               onChange={(e) => setStatus(e.target.value)}
               value={status}
-              style={{
-                padding: "8px",
-                fontSize: "12px",
-                border: "1px solid #ccc",
-                borderRadius: "4px",
-                marginRight: "10px",
-                marginBottom: "10px",
-                width: "150px",
-              }}
+              defaultValue={""}
             >
               <option value="">Status</option>
               <option value="Pending">Pending</option>
@@ -231,7 +225,9 @@ const CommissionList = () => {
               <i class="fa-solid fa-trash"></i>
               </button> */}
               <button className="update">
-                <Link to={`/update-commission/${Commission.commissionID}`}>
+                <Link
+                  to={`/view-commission/${userID}/${Commission.commissionID}`}
+                >
                   <i class="fa-solid fa-eye"></i>
                 </Link>
               </button>
@@ -248,7 +244,7 @@ const CommissionList = () => {
         )}
       </div>
       {/* onClick={handleAddCommission} logic for the button since this is a link inside a button */}
-      <Link to="/post-commission" style={{ textDecoration: "none" }}>
+      {/* <Link to="/post-commission" style={{ textDecoration: "none" }}>
         <button
           style={{
             marginLeft: "20px",
@@ -268,7 +264,7 @@ const CommissionList = () => {
         >
           Add Errand
         </button>
-      </Link>
+      </Link> */}
     </div>
   );
 };
