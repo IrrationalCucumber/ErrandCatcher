@@ -179,7 +179,7 @@ const User = {
         );
       }
       //type + status only
-      else if (searchTerms == "" && status != "") {
+      else if (type != "" && status != "") {
         //if type only
         db.query(
           `SELECT * FROM useraccount WHERE accountType = ? and accountStatus = ?`,
