@@ -150,7 +150,7 @@ const Profile = () => {
                 {/* Verification Icon */}
                 <p>
                   Click
-                  <Link to="/verification">
+                  <Link to={`verification/${userID}`}>
                     <i
                       className={
                         verified

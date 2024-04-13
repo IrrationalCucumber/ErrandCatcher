@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
+import SignUp from "./pages/SignUp/Signup";
 import Profile from "./pages/Profile";
 import AccountList from "./pages/AccountList";
 import AddAccount from "./pages/AddAccount";
@@ -54,7 +54,7 @@ function App() {
             path="/view-profile/:userID/:catcherID"
             element={<ViewProfile />}
           />
-          <Route path="/verification" exact Component={Verification} />
+          <Route path="/verification/:userID" exact Component={Verification} />
           <Route path="/add" exact Component={AddAccount} />
           <Route path="/" exact Component={Landing} />
           <Route

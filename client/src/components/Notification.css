@@ -5,8 +5,8 @@
 
 .notification-main {
   height: 100%;
-  width: 100%;
-  padding: 50px 5%;
+  /* width: 100%; */
+  padding: 20px 5%;
   background-color: rgb(233, 233, 233);
 }
 
