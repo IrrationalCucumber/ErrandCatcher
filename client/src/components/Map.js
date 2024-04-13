@@ -13,7 +13,7 @@ export default function Map() {
 
   const fetchCommissions = async () => {
     try {
-      const response = await fetch("http://localhost:8800/commission");
+      const response = await fetch("http://localhost:8800/available");
       const data = await response.json();
       return data;
     } catch (error) {

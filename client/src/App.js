@@ -1,11 +1,16 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  createBrowserRouter,
+} from "react-router-dom";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp/Signup";
 import Profile from "./pages/Profile";
-import AccountList from "./pages/AccountList";
-import AddAccount from "./pages/AddAccount";
+import AccountList from "./pages/admin/AccountList";
+import AddAccount from "./pages/admin/AddAccount";
 import PostCommission from "./pages/PostCommission";
-import CommissionList from "./pages/CommissionList";
+import CommissionList from "./pages/admin/CommissionList";
 import Home from "./pages/Home";
 import UpdateAccount from "./pages/UpdateAccount";
 import UpdateCommission from "./pages/UpdateCommission";
@@ -14,11 +19,11 @@ import CatcherHome from "./pages/CatcherHome";
 import EmployerHome from "./pages/EmployerHome";
 import ViewCommission from "./pages/ViewCommission";
 import EmployerCommissions from "./pages/EmployerCommissionList";
-import AdminHome from "./pages/AdminHome";
+import AdminHome from "./pages/admin/AdminHome";
 import ApplyCommission from "./pages/ApplyCommission";
 import EmployerApplicants from "./pages/EmployerApplicants";
 //MAP ROUTES
-import Map from "./pages/CommissionMap";
+import Map from "./pages/admin/CommissionMap";
 import CatcherMap from "./pages/CatcherMap";
 import EmployerMap from "./pages/EmployerMap";
 import Notification from "./pages/Notification";
@@ -76,11 +81,15 @@ function App() {
           {/* <Route path="/admin-home/:userID" element={<AdminHome />} /> */}
           <Route path="/home/:userID" exact Component={Home} />
           {/* ADMIN */}
-          <Route path="/accounts" exact Component={AccountList} />
+          <Route path="/accounts/:userID" element={<AccountList />} />
           <Route path="/add" exact Component={AddAccount} />
-          <Route path="/map" element={<Map />} />
-          <Route path="/admin-home" element={<AdminHome />} />
-          <Route path="/commission-list" exact Component={CommissionList} />
+          <Route path="/map/:id" element={<Map />} />
+          <Route path="/admin-home/:userID" element={<AdminHome />} />
+          <Route
+            path="/commission-list/:userID"
+            exact
+            Component={CommissionList}
+          />
           <Route
             path="/update-account/:userID"
             exact

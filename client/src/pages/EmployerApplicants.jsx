@@ -65,7 +65,7 @@ const EmployerApplicants = () => {
     const fetchAllAccount = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/applicants/${userID}`
+          `http://localhost:8800/applicants/${userID}` // show only pending
         );
         //http://localhost:8800/user - local
         //http://192.168.1.47:8800/user - network

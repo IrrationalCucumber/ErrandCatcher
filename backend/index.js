@@ -86,6 +86,7 @@ const scheduler = setInterval(updateExpiredRecords, 10000);
 // }, 3600000); // Stop after 1 hour (3600 seconds * 1000 milliseconds)
 //========================================================================
 //return data from database
+// TRANSFERRED
 app.get("/user", (req, res) => {
   const q = "SELECT * from useraccount";
   db.query(q, (err, data) => {
@@ -94,6 +95,7 @@ app.get("/user", (req, res) => {
   });
 });
 //return data from commission tbale
+//TRANSFERRED
 app.get("/commission", (req, res) => {
   const q = "Select * from commission";
   db.query(q, (err, data) => {
@@ -103,6 +105,7 @@ app.get("/commission", (req, res) => {
 });
 //========================DIPSLAY ENPOIN=============================
 //commission list based on user id
+//TRANSFERRED
 app.get("/your-commission/:userID", (req, res) => {
   const userID = req.params.userID; // Use req.params.userID to get the route parameter
   const q = "Select * from commission where employerID = ?";
@@ -113,6 +116,7 @@ app.get("/your-commission/:userID", (req, res) => {
 });
 
 //return data from all available errands
+//TRANSFERRED
 app.get("/errands", (req, res) => {
   const q = "Select * from commission WHERE commissionStatus = 'Available'";
   db.query(q, (err, data) => {
@@ -121,9 +125,10 @@ app.get("/errands", (req, res) => {
   });
 });
 //display 10 recent posted commissino
+//TRANSFERRED
 app.get("/recent-commission", (req, res) => {
   const q =
-    "Select * from commission WHERE commissionStatus = 'Available'commissionStatus = 'Available' order by DatePosted DESC LIMIT 3 ";
+    "Select * from commission WHERE commissionStatus = 'Available' order by DatePosted DESC LIMIT 3 ";
   db.query(q, (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
@@ -131,6 +136,7 @@ app.get("/recent-commission", (req, res) => {
 });
 //APS - 14/03/24
 //retrieve username
+//TRANSFERRED
 app.get("/username/:userID", (req, res) => {
   const userID = req.params.userID; // Use req.params.userID to get the route parameter
   const q = "Select username from useraccount where userID = ?";
@@ -141,6 +147,7 @@ app.get("/username/:userID", (req, res) => {
 });
 //APS - 19/03/24
 //Retrieve the accountType of User
+//TRANSFERRED
 app.get("/get-type/:userID", (req, res) => {
   const userID = req.params.userID; // Use req.params.userID to get the route parameter
   const q = "Select accountType from useraccount where userID = ?";
@@ -151,6 +158,7 @@ app.get("/get-type/:userID", (req, res) => {
 });
 //==========================================CATEGORY=================================================================//
 //select type
+//TRANSFERRED
 app.get("/type/:type", (req, res) => {
   const type = req.params.type; // Get the type from the query parameter
   const q =
@@ -168,23 +176,25 @@ app.get("/type/:type", (req, res) => {
 // static query for type
 // select type
 // UNTESTED
-// app.get("/type", (req, res) => {
-//   //const type = req.query.type; // Get the type from the query parameter
-//   const q =
-//     "SELECT * FROM commission WHERE commissionType LIKE '%HomeService%'";
-//   //const values = [`%${type}%`];
+//TRANSFERRED
+app.get("/type", (req, res) => {
+  //const type = req.query.type; // Get the type from the query parameter
+  const q =
+    "SELECT * FROM commission WHERE commissionType LIKE '%HomeService%'";
+  //const values = [`%${type}%`];
 
-//   db.query(q, (err, data) => {
-//     if (err) {
-//       console.error(err);
-//       return res.status(500).json({ error: "An error occurred" });
-//     }
-//     return res.json(data);
-//   });
-// });
+  db.query(q, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
 //===================================================================================================================//
 //==========================================SEARCH FUNCTION==========================================================//
 //search account
+// TRANSFFERRED
 app.get("/search-user", (req, res) => {
   const searchTerm = req.query.term || ""; // Get the search term from the query parameter
   const type = req.query.type || "";
@@ -212,6 +222,7 @@ app.get("/search-user", (req, res) => {
 
 //search commission
 //search account
+//TRANSFERRED
 app.get("/search-commission", (req, res) => {
   const searchTerm = req.query.term; // Get the search term from the query parameter
   const q =
@@ -308,6 +319,7 @@ app.get("/filter-type", (req, res) => {
 
 //============================================SIGNUP==================================//
 //regester account
+//TRANSFERRED
 app.post("/signup", (req, res) => {
   const q =
     "INSERT INTO UserAccount (`username`, `password`,`userFirstname`, `userLastname`, `userBirthday`,  `userGender`, `userEmail`,`userContactNum`, `accountType`, `dateCreated` ) VALUES (?)";
@@ -331,6 +343,7 @@ app.post("/signup", (req, res) => {
   });
 });
 //send data to userAccount
+//TRANSFERRED
 app.post("/user", (req, res) => {
   //const q = "INSERT INTO UserAccount (`username`, `password`, `userLastname`, `userFirstname`, `userGender`, `userEmail`, `userContactNum`, `userAge`, `userBirthday`, `userAddress`, `userDesc`, `accountType`, `dateCreated`, `profileImage`) VALUES (?)"
   const q =
@@ -356,6 +369,7 @@ app.post("/user", (req, res) => {
   });
 });
 //send data to commission table
+//TRANSFERRED
 app.post("/commission", (req, res) => {
   const q =
     "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionDeadline`, `commissionLocation`,`commissionType`, `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`, `commissionLong`, `commissionLat`) VALUES (?)";
@@ -367,10 +381,7 @@ app.post("/commission", (req, res) => {
     req.body.comType,
     req.body.comDescription,
     req.body.comPay,
-    // req.body.comStatus,
-    // req.body.catcherID,
     req.body.DatePosted,
-    // req.body.DateCompleted,
     req.body.Contactno,
     req.body.comLong,
     req.body.comLat,
@@ -384,6 +395,7 @@ app.post("/commission", (req, res) => {
 //catcher application
 //save to Application table
 //send data to commission table
+//TRANSFERRED
 app.post("/apply", (req, res) => {
   const q =
     "INSERT INTO application (`catcherID`,`applicationErrandID`, `applicationDate`) VALUES (?)";
@@ -395,16 +407,11 @@ app.post("/apply", (req, res) => {
 });
 
 //display applicant of empoyer's commissoin
+//TRANSFERRED
 app.get("/applicants/:userID", (req, res) => {
   const userID = req.params.userID; // Use req.params.userID to get the route parameter
   const q =
-    "SELECT a.*, c.commissionTitle,ua.userAge, ua.username, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname " +
-    "FROM Application a " +
-    "JOIN commission c ON a.applicationErrandID = c.commissionID " +
-    "JOIN useraccount ua ON a.catcherID = ua.userID " +
-    //"JOIN feedbackcommission f ON a.catcherID = f.feedbackCatcherID " +
-    //avg(feedbackRate) as 'c' from feedbackcommission where feedbackCatcherID = (?)
-    "WHERE a.applicationErrandID IN (SELECT commissionID FROM commission WHERE employerID = ?)";
+    "SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname FROM Application a JOIN commission c ON a.applicationErrandID = c.commissionID JOIN useraccount ua ON a.catcherID = ua.userID WHERE a.applicationErrandID IN (SELECT commissionID FROM commission WHERE employerID = ?)";
   db.query(q, [userID], (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
@@ -412,6 +419,7 @@ app.get("/applicants/:userID", (req, res) => {
 });
 //APS - 13/03/24
 //retrieve catcher errand application
+//TRANSFERRED
 app.get("/your-application/:userID", (req, res) => {
   const userID = req.params.userID; // Use req.params.userID to get the route parameter
   const q =
@@ -427,9 +435,11 @@ app.get("/your-application/:userID", (req, res) => {
     return res.json(data);
   });
 });
+
 // APS - 13/03/2024
 //Cancel Application
 //needs catcherID and application ID
+//TRANSFERRED
 app.put("/cancel-apply/:userID/:applyID", (req, res) => {
   const userID = req.params.userID;
   const applicationID = req.params.applyID;
@@ -448,6 +458,7 @@ app.put("/cancel-apply/:userID/:applyID", (req, res) => {
 // APS - 13/03/2024
 //Deny Applicant
 //needs commission and application ID
+//TRANSFERRED
 app.put("/deny-apply/:comID/:applyID", (req, res) => {
   const comId = req.params.comID;
   const applicationID = req.params.applyID;
@@ -462,12 +473,12 @@ app.put("/deny-apply/:comID/:applyID", (req, res) => {
     return res.json("Application Denied");
   });
 });
+//TRANSFERRED
 app.put("/accept-apply/:comID/:applyID", (req, res) => {
   const comId = req.params.comID;
   const applicationID = req.params.applyID;
   const q =
     "UPDATE application SET `applicationStatus` = 'Accepted' WHERE applicationErrandID = ? AND applicationID = ?";
-
   db.query(q, [comId, applicationID], (err) => {
     if (err) {
       console.log(err);
@@ -476,10 +487,12 @@ app.put("/accept-apply/:comID/:applyID", (req, res) => {
     return res.json("Application Approved");
   });
 });
+
 /**
  * DENY other applicatns after accepting an applicatn
  * APS - 30/03/24
  */
+//TRANSFERRED
 app.put("/deny-other-apply/:comID/:catcherID", (req, res) => {
   const comId = req.params.comID;
   const catcherID = req.params.catcherID;
@@ -497,6 +510,7 @@ app.put("/deny-other-apply/:comID/:catcherID", (req, res) => {
 //APS - 03/03/24
 //delete application
 //requires catcherID and applicationID
+//TRANSFERRED
 app.delete("/delete-apply/:userID/:applyID", (req, res) => {
   const userID = req.params.userID;
   const applicationID = req.params.applyID;
@@ -510,26 +524,29 @@ app.delete("/delete-apply/:userID/:applyID", (req, res) => {
     return res.json("Application Deleted");
   });
 });
+
 //APS - 13/03/24
 //retrieve catcher errand application
 //returns boolean
-// app.get("/check-apply/:userID/:applyID", (req, res) => {
-//   const userID = req.params.userID;
-//   const applicationID = req.params.applyID;
-//   const q =
-//     "SELECT CASE " +
-//     "WHEN catcherID = ? AND applicationErrandID = ? THEN 'true' " +
-//     "ELSE 'false' " +
-//     "END AS result " +
-//     "FROM application WHERE catcherID = ?";
-//   db.query(q, [userID, applicationID, userID], (err, data) => {
-//     if (err) return res.json(err);
-//     return res.json(data[0].result);
-//   });
-// });
+//TRANSFERRED
+app.get("/check-apply/:userID/:applyID", (req, res) => {
+  const userID = req.params.userID;
+  const applicationID = req.params.applyID;
+  const q =
+    "SELECT CASE " +
+    "WHEN catcherID = ? AND applicationErrandID = ? THEN 'true' " +
+    "ELSE 'false' " +
+    "END AS result " +
+    "FROM application WHERE catcherID = ?";
+  db.query(q, [userID, applicationID, userID], (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data[0].result);
+  });
+});
 //APS - 19/03/24
 // return the application id of the Catcher
 //pair with check apply
+//TRANSFERRED
 app.get("/get-apply/:userID/:comID", (req, res) => {
   const userID = req.params.userID;
   const comID = req.params.comID;
@@ -547,6 +564,7 @@ app.get("/get-apply/:userID/:comID", (req, res) => {
 //employer
 //send data to commission table
 //NOTE: UNUSED ENDPOINT?
+//TRANSFERRED
 app.post("/post-commission", (req, res) => {
   const q =
     //`commissionStartDate`,
@@ -575,6 +593,7 @@ app.post("/post-commission", (req, res) => {
 
 //retrieve commission
 //info based on ID
+//TRANSFERRED
 app.get("/commission/:commissionID", (req, res) => {
   const commissionID = req.params.commissionID; // Get the search term from the query parameter
   const q = "SELECT * FROM commission WHERE commissionID = ?";
@@ -590,6 +609,7 @@ app.get("/commission/:commissionID", (req, res) => {
 
 //retrieve commission FOR Catcher
 //info based on ID
+//TRANSFERRED
 app.get("/accepted-errands/:userID", (req, res) => {
   const userID = req.params.userID; // Get the search term from the query parameter
   const q =
@@ -610,6 +630,7 @@ app.get("/accepted-errands/:userID", (req, res) => {
 
 //retrieve commission FOR Employer
 //info based on ID
+//TRANSFERRED
 app.get("/pending-errands/:userID", (req, res) => {
   const userID = req.params.userID; // Get the search term from the query parameter
   const q =
@@ -628,6 +649,7 @@ app.get("/pending-errands/:userID", (req, res) => {
   });
 });
 //update commission
+//TRANSFERRED
 app.put("/update-commission/:commissionID", (req, res) => {
   const commissionID = req.params.commissionID;
   const q =
@@ -659,6 +681,7 @@ app.put("/update-commission/:commissionID", (req, res) => {
 });
 
 //delete commission
+//TRANSFERRED
 app.delete("/commission/:commissionID", (req, res) => {
   const commissionID = req.params.commissionID;
   const q = "DELETE FROM commission WHERE commissionID = ?";
@@ -676,6 +699,7 @@ app.delete("/commission/:commissionID", (req, res) => {
 //with user id
 //check if user id is poster
 //UNTESTED
+//TRANSFERRED
 app.delete("/commission/:userID/:commissionID", (req, res) => {
   const commissionID = req.params.commissionID;
   const userID = req.params.userID;
@@ -692,6 +716,7 @@ app.delete("/commission/:userID/:commissionID", (req, res) => {
 /**========================UPDATE ACCOUNT=============================== */
 //retrieve account
 //info based on ID
+//TRANSFERRED
 app.get("/user/:userID", (req, res) => {
   const userID = req.params.userID; // Get the search term from the query parameter
   const q = "SELECT * FROM UserAccount WHERE userID = ?";
@@ -706,6 +731,7 @@ app.get("/user/:userID", (req, res) => {
 });
 
 //upadate account
+//TRANSFERRED
 app.put("/update-account/:userID", (req, res) => {
   const userID = req.params.userID;
   //const q = "UPDATE UserAccount SET `username` = ?, `password` = ?, `userLastname` = ?, `userFirstname` = ?, `userGender` =?, `userEmail` = ?,`userContactNum` =?, `userAge` =?, `userAddress` = ? WHERE userID = ?"
@@ -740,6 +766,7 @@ app.put("/update-account/:userID", (req, res) => {
 
 /**===========================VERIFICATION====================================== */
 //verify-account
+//TRANSFERRED
 app.put("/verify-account/:userID", (req, res) => {
   const userID = req.params.userID;
   const q =
@@ -755,6 +782,7 @@ app.put("/verify-account/:userID", (req, res) => {
 });
 
 //Deactivate Account
+//TRANSFERRED
 app.put("/deactivate-account/:userID", (req, res) => {
   const userID = req.params.userID;
   const q =
@@ -772,6 +800,7 @@ app.put("/deactivate-account/:userID", (req, res) => {
 /**==========================SIGN IN MODULE==================================== */
 
 //sign-in
+//TRANSFERRED
 app.get("/sign-in", (req, res) => {
   const username = req.query.username;
   const password = req.query.password;
@@ -787,7 +816,8 @@ app.get("/sign-in", (req, res) => {
   });
 });
 
-//home based on id
+// //home based on id
+//TRANSFERRED
 app.get("/home/:userID", (req, res) => {
   const userID = req.params.userID; // Get the search term from the query parameter
   const q = "SELECT * FROM commission WHERE userID = ?";
@@ -805,6 +835,7 @@ app.get("/home/:userID", (req, res) => {
 
 /**============================NOTIF MODULE================================== */
 //display all notification
+//TRANSFERRED
 app.get("/notifs", (req, res) => {
   const userID = req.params.userID;
   const q = "SELECT * FROM notification";
@@ -819,6 +850,7 @@ app.get("/notifs", (req, res) => {
 });
 
 //display notification of user
+//TRANSFERRED
 app.get("/notification", (req, res) => {
   const userID = req.params.userID;
   const q = "SELECT * FROM notification";
@@ -833,11 +865,11 @@ app.get("/notification", (req, res) => {
 });
 
 //retrieve  info of for the notification
+//TRANSFERRED
 app.get("/show-notif/:userID", (req, res) => {
   const userID = req.params.userID;
   const q =
-    "SELECT * FROM notification " +
-    " WHERE (isRead = 'no' AND notifUserID = (?)) OR notificationType = 'New Errand' ORDER BY notifDate DESC ";
+    "SELECT * FROM notification WHERE `isRead` = 'no' AND `notifUserID` = (?) ORDER BY notifDate DESC";
 
   db.query(q, [userID], (err, data) => {
     if (err) {
@@ -849,6 +881,7 @@ app.get("/show-notif/:userID", (req, res) => {
 });
 // ADS 24/02/24
 //retrieve number of unread notif of user
+//TRANSFERRED
 app.get("/notif-count/:userID", (req, res) => {
   const notifUserID = req.params.userID;
   const q =
@@ -864,6 +897,7 @@ app.get("/notif-count/:userID", (req, res) => {
 });
 
 //add notification to userID
+//TRANSFERRED
 app.post("/notify", (req, res) => {
   const q =
     "INSERT INTO notification (`notifUserID`, `notificationType`, `notifDesc`, `notifDate`) VALUES (?)";
@@ -878,7 +912,7 @@ app.post("/notify", (req, res) => {
     return res.json("Notification added");
   });
 });
-
+//TRANSFERRED
 app.post("/notify-new", (req, res) => {
   const q =
     "INSERT INTO notification (`notificationType`, `notifDesc`, `notifDate`) VALUES (?)";
@@ -896,6 +930,7 @@ app.post("/notify-new", (req, res) => {
 
 //notif have been read
 // update the `isRead` tp "YES"
+//TRANSFERRED
 app.put("/notif-read/:notificationID/:userID/", (req, res) => {
   const notificationID = req.params.notificationID;
   const userID = req.params.userID;
@@ -918,6 +953,7 @@ app.put("/notif-read/:notificationID/:userID/", (req, res) => {
 //Retrieve all saved Feedback
 //ALTER FOR ADMIN USE
 // NEED TESTING
+//TRANSFERRED
 app.get("/user-feedbacks/", (req, res) => {
   const q = "SELECT * FROM feedbackcommission ORDER BY feedbackDate DESC";
 
@@ -931,6 +967,7 @@ app.get("/user-feedbacks/", (req, res) => {
 });
 
 //Retrieve feedback data of Catcher
+//TRANSFERRED
 app.get("/user-feedbacks/:userID", (req, res) => {
   const userID = req.params.userID;
   const q =
@@ -946,6 +983,7 @@ app.get("/user-feedbacks/:userID", (req, res) => {
 });
 
 //Display the average rating of feedbackCount of the Catcher
+//TRANSFERRED
 app.get("/user-rating/:userID", (req, res) => {
   const userID = req.params.userID;
   const q =
@@ -962,6 +1000,7 @@ app.get("/user-rating/:userID", (req, res) => {
 
 //Save feedback of the Epmloyer
 //VARIABLES SUBJECT TO CHANGE BASED ON ERD AND DB
+//TRANSFERRED
 app.post("/rate", (req, res) => {
   const q =
     "INSERT INTO feedbackcommission (`feedbackCommissionID`, `feedbackCatcherID` , `feedbackComment`, `feedbackCount`, `feedbackDate`, `feedbackPosterID`) VALUES (?)";
@@ -1014,6 +1053,7 @@ app.get("/user-rating", (req, res) => {
 
 //APS - 02/03/24
 //Return the accountStatus of user based on UserID
+//TRANSFERRED
 app.get("/user-verify/:userID", (req, res) => {
   const userID = req.params.userID;
   const q = "Select accountStatus FROM useraccount WHERE userID = (?)";
@@ -1033,6 +1073,7 @@ app.get("/user-verify/:userID", (req, res) => {
  * APS - 24/03/24
  */
 //Add transaction
+//TRANSFERRED
 app.post("/add-trans", (req, res) => {
   const q =
     "INSERT INTO errandtransaction (`transErrandID`, `transCatcherID`, `transDateAccepted`) VALUES (?)";
@@ -1055,6 +1096,7 @@ app.post("/add-trans", (req, res) => {
  * APS - 27/03/24
  */
 //get posted errand count
+//TRANSFERRED
 app.get("/post-count/:userID", (req, res) => {
   const userID = req.params.userID;
   const q = "select count(*) as 'c' from commission where employerID = (?) ";
@@ -1068,6 +1110,7 @@ app.get("/post-count/:userID", (req, res) => {
   });
 });
 //get applicant count
+//TRANSFERRED
 app.get("/applicant-count/:userID", (req, res) => {
   const userID = req.params.userID;
   const q =
@@ -1084,11 +1127,12 @@ app.get("/applicant-count/:userID", (req, res) => {
     return res.json(data);
   });
 });
-//combiniation
+// //combiniation
+//TRANSFERRED
 app.get("/post-and-applicant-count/:userID", (req, res) => {
   const userID = req.params.userID;
   const q = `
-    SELECT 
+    SELECT
       (SELECT COUNT(*) FROM commission WHERE employerID = ?) AS postCount,
       (SELECT COUNT(*) FROM commission e JOIN application a ON a.applicationErrandID = e.commissionID WHERE e.employerID = ?) AS applicantCount,
       (SELECT COUNT(*) FROM errandtransaction t JOIN commission c ON t.transErrandID = c.commissionID WHERE c.employerID = ? AND errandStatus = 'Ongoing' ) AS pending
@@ -1102,7 +1146,7 @@ app.get("/post-and-applicant-count/:userID", (req, res) => {
     return res.json(data); // Assuming you only expect one row of results
   });
 });
-
+//TRANSFERRED
 app.get("/complete-count/:userID", (req, res) => {
   const userID = req.params.userID;
   const q =

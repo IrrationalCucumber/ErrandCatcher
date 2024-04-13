@@ -14,6 +14,7 @@ const ErrandPage = () => {
   const [commission, setCommission] = useState({
     employerID: "",
     comTitle: "",
+    comStart: "",
     comDeadline: "",
     comLocation: "",
     comType: "",
@@ -97,7 +98,7 @@ const ErrandPage = () => {
   const fetchLoc = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8800/commission/${commissionID}`
+        `http://localhost:8800/errand/${commissionID}`
       );
       const data = await response.json();
       return data;
@@ -112,19 +113,22 @@ const ErrandPage = () => {
     const fetchCommission = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/commission/${commissionID}`
+          `http://localhost:8800/errand/${commissionID}`
         );
         const retrievedCommission = res.data[0];
         //format date
         const formattedDate = new Date(retrievedCommission.commissionDeadline)
           .toISOString()
           .substr(0, 10);
-
+        const formatStart = new Date(retrievedCommission.commissionStartDate)
+          .toISOString()
+          .substr(0, 10);
         // Update the state with retrieved account data
         setCommission({
           employerID: retrievedCommission.employerID,
           comTitle: retrievedCommission.commissionTitle,
           comDeadline: formattedDate,
+          comStart: formatStart,
           comLocation: retrievedCommission.commissionLocation,
           comType: retrievedCommission.commissionType,
           comDescription: retrievedCommission.commissionDesc,
@@ -268,11 +272,14 @@ const ErrandPage = () => {
       <Navbar />
       <div className="errand-cont">
         <ErrandInputs
+          statusHeader="Status"
           status={commission.comStatus}
-          handleChange={handleChange}
+          variant="solid"
+          //handleChange={handleChange}
           title="comTitle"
-          disable="true"
+          readOnly={true}
           titleValue={commission.comTitle}
+          startValue={commission.comStart}
           //   deadline="comDeadline"
           dlValue={commission.comDeadline}
           //   location="comLocation"
