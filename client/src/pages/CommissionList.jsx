@@ -102,35 +102,47 @@ useEffect(() => {
         // {`admin-home/${userID}`}
         page2="ACCOUNT LIST"
         commissionList={`/accounts`}
-        page3="COMMISSION LIST"
+        page3="ERRAND LIST"
         applicants={`/commission-list`}
         page4="MAP"
         map={`/map`}
       />
 
       <div className="commissions">
-        <h1>Commission List</h1>
-        <div className="search-filter">
-          <div className="search">
+        <h1 style={{ marginTop:"10px", marginBottom: "10px", fontFamily: "'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif"}}>Errand List</h1>
+          <div className="search" style={{marginTop:"10px", marginBottom: "10px", display: "flex", alignItems: "center" }}>
             <input
               type="text"
               placeholder="Search..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              style={{ padding: "8px", fontSize: "12px", border: "1px solid #ccc", borderRadius: "4px", marginRight: "0", marginBottom:"10px" }}
             />
-            <button type="submit" onClick={fetchSearchResults}>
+            <button type="submit" 
+              onClick={fetchSearchResults} 
+              style={{ padding: "8px", fontSize: "12px", cursor: "pointer", border: "none", backgroundColor: "#CE9251", color: "white", borderRadius: "4px", marginBottom:"10px", marginRight:"10px" }}>
               <i className="fa fa-search"></i>
             </button>
-          </div>
-          <div className="filter">
-            <select onChange={(e) => setStatus(e.target.value)} value={status}>
-              <option value="">All Status</option>
+         
+          <div className="filter"  style={{ display: "flex", alignItems: "center" }}>
+            <select 
+              className="CLstatus"
+              onChange={(e) => setStatus(e.target.value)} 
+              value={status}
+              style={{ padding: "8px", fontSize: "12px", border: "1px solid #ccc", borderRadius: "4px", marginRight: "10px", marginBottom:"10px", width: "150px" }}
+              >
+              <option value="">Status</option>
               <option value="Pending">Pending</option>
               <option value="Completed">Completed</option>
               <option value="Cancelled">Cancelled</option>
             </select>
-            <select onChange={(e) => setType(e.target.value)} value={type}>
-              <option value="">All Types</option>
+            <select 
+              className="CLtype"
+              onChange={(e) => setType(e.target.value)} 
+              value={type}
+              style={{ padding: "8px", fontSize: "12px", border: "1px solid #ccc", borderRadius: "4px", marginRight: "10px", marginBottom:"10px", width: "150px" }}
+              >
+              <option value="">Type</option>
               <option value="Home">Home</option>
               <option value="Transportation">Transportation</option>
               <option value="Delivery">Delivery</option>
@@ -161,11 +173,11 @@ useEffect(() => {
             Commission.commissionStatus,
             <>
               <button onClick={() => handleDelete(Commission.commissionID)}>
-                X
+              <i class="fa-solid fa-trash"></i>
               </button>
               <button className="update">
                 <Link to={`/update-commission/${Commission.commissionID}`}>
-                  View
+                <i class="fa-solid fa-eye"></i>
                 </Link>
               </button>
             </>,
@@ -181,9 +193,24 @@ useEffect(() => {
         )}
       </div>
       {/* onClick={handleAddCommission} logic for the button since this is a link inside a button */}
-      <button className="add-commission">
-        <Link to="/post-commission">Add Commission</Link>
-      </button>
+      <Link to="/post-commission"  style={{ textDecoration: "none" }}>
+        <button style={{ 
+            marginLeft:"20px",
+            padding: "8px 12px", 
+            fontSize: "12px", 
+            cursor: "pointer", 
+            border: "none", 
+            backgroundColor: "#CE9251", 
+            color: "white", 
+            borderRadius: "4px",
+            display: "inline-block", 
+            textAlign: "center", 
+            lineHeight: "1.5",
+            fontFamily: "'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif"
+          }}>
+          Add Errand
+        </button>
+      </Link>
     </div>
   );
 };

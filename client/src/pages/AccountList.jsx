@@ -1,3 +1,4 @@
+//updated
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -106,35 +107,44 @@ const AccountList = () => {
         // {`admin-home/${userID}`}
         page2="ACCOUNT LIST"
         commissionList={`/accounts`}
-        page3="COMMISSION LIST"
+        page3="ERRAND LIST"
         applicants={`/commission-list`}
         page4="MAP"
         map={`/map`}
       />
 
-      <h1>Account List</h1>
-      <div className="search">
+      <h1 className="header" style={{paddingLeft:"20px", fontFamily: "'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif"}}>Account List</h1>
+      <div className="search" style={{paddingLeft:"20px", marginBottom: "10px", display: "flex", alignItems: "center" }}>
         <input
           type="text"
           placeholder="Search..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          style={{ padding: "8px", fontSize: "12px", border: "1px solid #ccc", borderRadius: "4px", marginRight: "0", marginBottom:"10px" }}
         />
+        <button
+          style={{ padding: "8px", fontSize: "12px", cursor: "pointer", border: "none", backgroundColor: "#CE9251", color: "white", borderRadius: "4px", marginBottom:"10px", marginRight:"10px" }}>
+          <i className="fa fa-search"></i>
+        </button>
         <select
+          className="ALtype"
           name="type"
           onChange={(e) => setType(e.target.value)}
           value={type}
+          style={{ padding: "8px", fontSize: "12px", border: "1px solid #ccc", borderRadius: "4px", marginRight: "10px", marginBottom:"10px", width: "150px" }}
         >
           <option value="">Type</option>
-          <option value="Employer">employer</option>
+          <option value="Employer">Employer</option>
           <option value="Catcher">Catcher</option>
           <option value="admin">Admin</option>
         </select>
         <select
+          className="ALstatus"
           name="status"
           onChange={(e) => setStatus(e.target.value)}
           value={status}
           id=""
+          style={{ padding: "8px", fontSize: "12px", border: "1px solid #ccc", borderRadius: "4px", marginRight: "10px", marginBottom:"10px", width: "150px" }}
         >
           <option value="">Status</option>
           <option value="Verified">Verified</option>
@@ -152,9 +162,26 @@ const AccountList = () => {
           paginate={paginate}
         />
       </div>
-      <button>
-        <Link to="/add">Add account</Link>
-      </button>
+      <Link to="/add" style={{ textDecoration: "none" }}>
+        <button
+          style={{ 
+            marginLeft:"20px",
+            padding: "8px 12px", 
+            fontSize: "12px", 
+            cursor: "pointer", 
+            border: "none", 
+            backgroundColor: "#CE9251", 
+            color: "white", 
+            borderRadius: "4px",
+            display: "inline-block", 
+            textAlign: "center", 
+            lineHeight: "1.5",
+            fontFamily: "'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif"
+          }}
+        >
+          Add account
+        </button>
+      </Link>
     </div>
   );
 };
