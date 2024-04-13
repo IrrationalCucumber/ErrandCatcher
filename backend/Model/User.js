@@ -3,6 +3,8 @@
 const db = require("../dbConfig");
 
 const User = {
+  //get all users from db
+  //callback = retrun statment
   getAllUsers: (callback) => {
     db.query("SELECT * FROM useraccount", callback);
   },

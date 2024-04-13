@@ -1,6 +1,7 @@
 const Notif = require("../Model/Notification");
 
 const notifController = {
+  //get all notifs
   getNotifs: (req, res) => {
     Notif.getAllNotifs((err, notifs) => {
       if (err) {
@@ -11,6 +12,7 @@ const notifController = {
       res.json(notifs);
     });
   },
+  //get notifs of user
   getNotifByID: (req, res) => {
     const userId = req.params.id;
     Notif.getNotifById(userId, (err, notifs) => {
@@ -23,18 +25,7 @@ const notifController = {
       res.json(notifs);
     });
   },
-  getNotifEmp: (req, res) => {
-    const userId = req.params.id;
-    Notif.getNotifEmp(userId, (err, notifs) => {
-      if (err) {
-        console.error("Error fetching notif:", err);
-        res.status(500).send("Internal Server Error");
-        return;
-      }
-
-      res.json(notifs);
-    });
-  },
+  //get total count of notif of user
   getNotCount: (req, res) => {
     const userId = req.params.id;
     Notif.getNotifCount(userId, (err, notifs) => {
@@ -47,19 +38,7 @@ const notifController = {
       res.json(notifs);
     });
   },
-  //catcher count
-  getCatchCount: (req, res) => {
-    const userId = req.params.id;
-    Notif.getCatchCount(userId, (err, notifs) => {
-      if (err) {
-        console.error("Error fetching notif:", err);
-        res.status(500).send("Internal Server Error");
-        return;
-      }
 
-      res.json(notifs);
-    });
-  },
   //post new notif
   postNotif: (req, res) => {
     const notifData = req.body;
