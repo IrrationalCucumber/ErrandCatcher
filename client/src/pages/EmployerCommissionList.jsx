@@ -6,6 +6,10 @@ import NavBar from "../components/Navbar.js";
 import "./ecommission.css";
 import Table from "../components/Table.js";
 import Pagination from "../components/Pagination.js";
+import Button from "@mui/joy/Button";
+import ButtonGroup from "@mui/joy/ButtonGroup";
+import IconButton from "@mui/joy/IconButton";
+//import Settings from "@mui/icons-material/Settings";
 
 const CommissionList = () => {
   const [commissions, setCommissions] = useState([]);
@@ -25,18 +29,34 @@ const CommissionList = () => {
   //rretrieve data
   // Frontend code
   useEffect(() => {
-    const fetchAllCommission = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:8800/your-commission/${userID}`
-        ); // Pass userID in the URL
-        setCommissions(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchAllCommission();
-  }, [userID]); // Add userID to the dependency array
+    if (status != "") {
+      const fetchTypeResults = async () => {
+        try {
+          //http://localhost:8800/user - local
+          //http://192.168.1.47:8800/user - network
+          const res = await axios.get(`http://localhost:8800/filter-myerrand`, {
+            params: { id: userID, status: status }, // Pass the search term as a query parameter
+          });
+          setCommissions(res.data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      fetchTypeResults();
+    } else {
+      const fetchAllCommission = async () => {
+        try {
+          const res = await axios.get(
+            `http://localhost:8800/your-commission/${userID}`
+          ); // Pass userID in the URL
+          setCommissions(res.data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      fetchAllCommission();
+    }
+  }, [userID, status]); // Add userID to the dependency array
 
   //fetch posted commission
   // const fetchSearchResults = async () => {
@@ -57,13 +77,13 @@ const CommissionList = () => {
   //   fetchSearchResults();
   // }, [searchTerm]); // Trigger the search whenever searchTerm changes
 
-  // filter type
+  //filter type
   // const fetchTypeResults = async () => {
   //   try {
   //     //http://localhost:8800/user - local
   //     //http://192.168.1.47:8800/user - network
-  //     const res = await axios.get("http://localhost:8800/employer-commilist", {
-  //       params: { status: status }, // Pass the search term as a query parameter
+  //     const res = await axios.get(`http://localhost:8800/filter-myerrand`, {
+  //       params: { id: userID, status: status }, // Pass the search term as a query parameter
   //     });
   //     setCommissions(res.data);
   //   } catch (err) {
@@ -72,7 +92,9 @@ const CommissionList = () => {
   // };
 
   // useEffect(() => {
-  //   fetchTypeResults();
+  //   if (status != "") {
+  //     fetchTypeResults();
+  //   }
   // }, [status]);
 
   //funtion to delete commission
@@ -128,9 +150,11 @@ const CommissionList = () => {
                   value={status}
                 >
                   <option value="">All Status</option>
-                  <option value="Pending">Pending</option>
+                  <option value="Taken">Pending</option>
                   <option value="Completed">Completed</option>
                   <option value="Cancelled">Cancelled</option>
+                  <option value="Available">Available</option>
+                  <option value="Expired">Expired</option>
                 </select>
               </div>
             </div>
@@ -138,7 +162,6 @@ const CommissionList = () => {
             <Table
               headers={[
                 "ID",
-                "CATCHER",
                 "ERRAND TITLE",
                 "DATE POSTED",
                 "STATUS",
@@ -146,23 +169,27 @@ const CommissionList = () => {
               ]}
               data={currentItems.map((commissionItem) => [
                 commissionItem.commissionID,
-                commissionItem.employerID,
                 commissionItem.commissionTitle,
                 new Date(commissionItem.DatePosted).toISOString().substr(0, 10),
                 commissionItem.commissionStatus,
                 <React.Fragment>
-                  <button
-                    onClick={() => handleDelete(commissionItem.commissionID)}
+                  <ButtonGroup
+                    spacing="0.5rem"
+                    aria-label="spacing button group"
                   >
-                    DELETE
-                  </button>
-                  <button className="update">
-                    <Link
-                      to={`/view-errand/${userID}/${commissionItem.commissionID}`}
+                    <Button
+                      onClick={() => handleDelete(commissionItem.commissionID)}
                     >
-                      View
-                    </Link>
-                  </button>
+                      DELETE
+                    </Button>
+                    <Button>
+                      <Link
+                        to={`/view-errand/${userID}/${commissionItem.commissionID}`}
+                      >
+                        View
+                      </Link>
+                    </Button>
+                  </ButtonGroup>
                 </React.Fragment>,
               ])}
             />
