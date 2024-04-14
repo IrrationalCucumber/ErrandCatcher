@@ -255,7 +255,7 @@ const EmployerApplicants = () => {
         page4="MAP"
       />
       <div className="applicants">
-        <h1>APPLICANTS</h1>
+        <h1 style={{paddingBottom:"10px"}}>APPLICANTS</h1>
         <div className="search">
           <input type="text" placeholder="Search..." />
           <button type="submit">

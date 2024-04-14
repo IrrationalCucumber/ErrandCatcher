@@ -66,6 +66,7 @@
   
   .applicants th {
     background-color: #CE9251;
+    color: #fff;
   }
   
   .applicants-table tr:last-child td {

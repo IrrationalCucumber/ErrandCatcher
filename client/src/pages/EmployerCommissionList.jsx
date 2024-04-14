@@ -130,7 +130,7 @@ const CommissionList = () => {
       />
       <div className="Commission-page-container">
         <div className="Commission-page">
-          <h1 style={{paddingLeft:"20px"}}>Errands Posted</h1>
+          <h1 style={{paddingLeft:"20px"}}>ERRAND POSTED</h1>
           <div className="commissions">
             <div className="search-filter">
               <div className="search">
