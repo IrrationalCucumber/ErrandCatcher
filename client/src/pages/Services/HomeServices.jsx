@@ -50,7 +50,7 @@ const HomeServices = () => {
   return (
     <>
       <Navbar />
-      <h1 style={{ paddingTop: "20px" }}>Home Services</h1>
+      <h1 style={{ paddingTop: "20px", paddingLeft: "20px" }}>Home Services</h1>
       <div
         className="search-bar"
         style={{

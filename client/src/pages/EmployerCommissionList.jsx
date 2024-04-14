@@ -130,7 +130,7 @@ const CommissionList = () => {
       />
       <div className="Commission-page-container">
         <div className="Commission-page">
-          <h1>Commission List</h1>
+          <h1 style={{paddingLeft:"20px"}}>Errands Posted</h1>
           <div className="commissions">
             <div className="search-filter">
               <div className="search">
@@ -205,7 +205,7 @@ const CommissionList = () => {
         )}
       </div>
       <button className="add-errand">
-        <Link to={`/post-commission/${userID}`}>
+        <Link to={`/post-commission/${userID}`} style={{ textDecoration: 'none', color: 'inherit' }}>
           <i className="fa-solid fa-plus"></i> Add Errand
         </Link>
       </button>

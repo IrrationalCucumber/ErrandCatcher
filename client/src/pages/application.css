@@ -42,7 +42,8 @@
   }
   
   .application th {
-    background-color: #CE9251;
+    background-color: #ce9251;
+    color: #fff;
   }
   
   .application-table tr:last-child td {

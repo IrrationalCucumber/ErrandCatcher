@@ -50,7 +50,7 @@ const Delivery = () => {
   return (
     <>
       <Navbar />
-      <h1 style={{ paddingTop: "20px" }}>Delivery</h1>
+      <h1 style={{ paddingTop: "20px", paddingLeft: "20px" }}>Delivery</h1>
       <div
         className="search-bar"
         style={{

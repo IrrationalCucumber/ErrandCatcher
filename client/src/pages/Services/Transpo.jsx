@@ -51,7 +51,7 @@ const Transportation = () => {
   return (
     <>
       <Navbar />
-      <h1 className="headingTranspo" style={{ paddingTop: "20px" }}>
+      <h1 className="headingTranspo" style={{ paddingTop: "20px", paddingLeft: "20px" }}>
         Transportation
       </h1>
       <div
