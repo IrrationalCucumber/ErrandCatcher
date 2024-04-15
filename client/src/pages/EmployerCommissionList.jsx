@@ -121,7 +121,7 @@ const CommissionList = () => {
       <NavBar
         page1="HOME"
         home={`/home/${userID}`}
-        page2="COMMISSIONS"
+        page2="ERRANDS"
         commissionList={`/commissions/${userID}`}
         page3="APPLICANTS"
         applicants={`/applicants/${userID}`}
@@ -140,7 +140,7 @@ const CommissionList = () => {
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <button type="submit">
+                <button type="submit" style={{backgroundColor:"#1679AB"}}>
                   <i className="fa fa-search"></i>
                 </button>
               </div>
