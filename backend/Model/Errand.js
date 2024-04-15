@@ -147,7 +147,7 @@ const Errand = {
   //search based on one term only
   // similar wording
   getSearchAll: (term, status, callback) => {
-    if (status == "") {
+    if (!status) {
       // search all regardless of status
       db.query(
         `SELECT * FROM commission WHERE (commissionTitle LIKE ? OR commissionType LIKE ? OR commissionLocation LIKE ?) `,
