@@ -24,7 +24,7 @@ const Menu = () => {
           value={searchQuery}
           onChange={handleSearchChange}
         />
-        <button>Search</button>
+        <button style={{backgroundColor:"#1679AB"}}>Search</button>
       </div>
 
       <section className="Menu" id="Menu">

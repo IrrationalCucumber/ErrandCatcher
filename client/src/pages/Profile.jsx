@@ -6,6 +6,7 @@ import "./profile.css";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import styled from "@emotion/styled";
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("about");
   const [verified, setVerified] = useState(false);
@@ -151,18 +152,23 @@ const Profile = () => {
         <div className="profile-info">
           <div className="description-form">
             <form>
-              <div className="">
-                <label>Upload Image</label>
-                <img
-                  src={
-                    `http://localhost:8800/images/profile/` +
-                    account.profileImage
-                  }
-                  width={150}
-                  length={150}
-                />
-                <input type="file" id="file" onChange={handleImage} />
-                <button onClick={handleUpload}>Upload</button>
+            <div className="Image-container">
+            <label>Upload Image</label>
+            <div className="image-container">
+              <img
+                src={`http://localhost:8800/images/profile/${account.profileImage}`}
+                alt="Profile Image"
+                width={250}
+                height={250}
+                style={{ padding: "20px" }}
+              />
+            </div>
+              <div className="upload-container">
+                <input type="file" id="file" onChange={handleImage} style={{ width: "100px" }} />
+                <button onClick={handleUpload}>
+                  <i className="fa-solid fa-arrow-up-from-bracket" style={{ color: "#fff", width: "20px"}}></i>
+                </button>
+              </div>
               </div>
               {/*username changed when user sign up*/}
               <div className="username-container">
@@ -237,7 +243,7 @@ const Profile = () => {
                   }
                   onClick={() => setActiveTab("history")}
                 >
-                  History
+                  Transaction
                 </span>
               </div>
               {activeTab === "about" && (
@@ -336,7 +342,7 @@ const Profile = () => {
                       onChange={handleChange}
                     ></textarea>
                   </div>
-                  <button onClick={handleClick}>Save</button>
+                  <button onClick={handleClick} style={{borderRadius:"10px"}}>Save</button>
                 </div>
               )}
               {activeTab === "history" && (
