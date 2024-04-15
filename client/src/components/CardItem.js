@@ -10,8 +10,8 @@ function CardItem(props) {
                     <img src={props.src} alt='Travel' className='cards__item__img'></img>
                 </figure>
                 <div className='cards__item__info'>
-                    <h5 className='cards__item__text' >{props.text}</h5>
-                    <p className='cards__item__location' style={{color:'black', fontSize:'12'}}>
+                    <h1 className='cards__item__text' style={{paddingTop:"10px", paddingBottom:"10px"}}>{props.text}</h1>
+                    <p className='cards__item__location' style={{color:'black', fontSize:'12', paddingBottom:"10px"}}>
                     <i className="fas fa-map-marker-alt" style={{ marginRight: '5px' }}></i>
                     {props.location}
                     </p>

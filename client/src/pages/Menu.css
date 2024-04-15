@@ -62,7 +62,7 @@
 
 }
 .Menu .box button:hover {
-    background: #a0a0a0;
+    background: #fff;
     color: rgb(8, 8, 8);
 
 }
@@ -82,7 +82,7 @@
         font-weight: 1000;
         text-align: justify;
         padding-left: 5.5rem;
-        padding-top: 19px;
+        /* padding-top: 20px; */
         padding-bottom: 5px;
         color: rgb(17, 16, 16);
         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;

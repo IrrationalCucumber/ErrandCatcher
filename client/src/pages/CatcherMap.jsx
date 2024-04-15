@@ -11,7 +11,7 @@ function CatcherMap() {
     <div>
       <NavBar
         page1="HOME"
-        home={`/c-home/${userID}`}
+        home={`/home/${userID}`}
         page2="COMMISSIONS"
         commissionList={`/catcher-errands/${userID}`}
         page3="APPLICATIONS"

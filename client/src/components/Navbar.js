@@ -55,7 +55,7 @@ function Navbar(props) {
         .get(`http://localhost:8800/username/${userID}`)
         .then((response) => {
           //console.log(response.data[0].username);
-          setUsername(response.data[0].username);
+          setUsername(response.data);
         })
         .catch(function (error) {
           console.log(error);
@@ -67,16 +67,12 @@ function Navbar(props) {
   const [notifCount, setNotifCount] = useState("");
   useEffect(() => {
     const fetchNotif = async () => {
-      axios
-        .get(`http://localhost:8800/notif-count/${userID}`)
-        .then((response) => {
-          //console.log(response.data[0].c);
-          setNotifCount(response.data[0].c);
-          //console.log(notifCount);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      try {
+        const res = await axios.get(`http://localhost:8800/count/${userID}`);
+        setNotifCount(res.data[0].c);
+      } catch (err) {
+        console.log(err);
+      }
     };
     fetchNotif();
   }, [userID]);
@@ -92,12 +88,12 @@ function Navbar(props) {
       <nav className="navbar">
         <div className="navbar-container justify-center">
           <Link
-            to={props.home}
+            to={`/home/${userID}`}
             className="navbar-logo"
             onClick={closeMobileMenu}
           >
             <Link
-              to={props.home}
+              to={`/home/${userID}`}
               className="navbar-logo"
               onClick={closeMobileMenu}
             >
@@ -174,7 +170,7 @@ function Navbar(props) {
                     hasNotification={true}
                     onClick={() => console.log("Notification clicked!")}
                     style={{ color: "white" }}
-                    notificationCount={notifCount}
+                    notificationCount={parseInt(notifCount)}
                   />
                 ) : (
                   <div>

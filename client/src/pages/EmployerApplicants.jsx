@@ -3,16 +3,19 @@
 //added pagination and table. contents for the td are based on the old code --ash
 //03-10-24  <Route path="/e-applicants" exact Component={EmployerApplicants}/>
 //03-14-24 inital fixing. 4:56pm fixed the error
+//03-28-24 added view profile but modal doesnt have data
 
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import NavBar from "../components/Navbar";
 import Table from "../components/Table";
 import "./applicant.css";
 import Pagination from "../components/Pagination";
+import ProfileModal from "../components/Profile Modal/ProfileModal";
 
 const EmployerApplicants = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   //pathname to array from
   //get the id
@@ -25,13 +28,44 @@ const EmployerApplicants = () => {
   //Pagination --Ash
   //display data per page
   const [itemsPerPage] = useState(10);
+  //ash
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [selectedApplicant, setSelectedApplicant] = useState(null);
+  const [rating, setRating] = useState("");
+
+  const handleViewProfile = (applicant) => {
+    setSelectedApplicant(applicant);
+    //display rating of acathcer
+    const fetchRating = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8800/user-rating/${applicant.catcherID}`
+        );
+        // if rating is null
+        if (res.data[0].c == null) {
+          setRating(0);
+        } else {
+          setRating(res.data[0].c);
+        }
+        // console.log(res.data[0].c);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchRating();
+    setShowProfileModal(true);
+  };
+
+  const handleCloseProfileModal = () => {
+    setShowProfileModal(false);
+  };
 
   //useEffect to handle error
   useEffect(() => {
     const fetchAllAccount = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/applicants/${userID}`
+          `http://localhost:8800/applicants/${userID}` // show only pending
         );
         //http://localhost:8800/user - local
         //http://192.168.1.47:8800/user - network
@@ -69,7 +103,7 @@ const EmployerApplicants = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = applicants.slice(indexOfFirstItem, indexOfLastItem);
 
-  const headers = ["DATE", "CATCHER", "ERRAND TITLE", "ACTION"];
+  const headers = ["DATE", "CATCHER", "ERRAND TITLE", "ACTION", ""];
   const applicantData = currentItems.map((applicant) => [
     //applicant.applicationID,
     new Date(applicant.applicationDate).toLocaleDateString(),
@@ -107,6 +141,9 @@ const EmployerApplicants = () => {
     ) : (
       <button className="declined action-btn">Declined</button>
     ),
+    <button onClick={() => handleViewProfile(applicant, applicant.username)}>
+      View Profile
+    </button>,
   ]);
   //FOR NOTIFICATION
   //set variables for notification
@@ -159,7 +196,7 @@ const EmployerApplicants = () => {
       trans.comID = applicationErrandID;
       trans.catcherID = catcherID;
       trans.dateAccepted = getTimeAndDate();
-      console.log(catcherID);
+      //console.log(catcherID);
       await axios.post("http://localhost:8800/add-trans/", trans);
       //add a notification to the commission's applicant
       notif.notifDesc = "Your Errand application has been Accepted";
@@ -167,6 +204,10 @@ const EmployerApplicants = () => {
       notif.notificationType = "Application";
       notif.notifDate = getTimeAndDate();
       await axios.post("http://localhost:8800/notify", notif);
+      //DENY other applicants
+      await axios.put(
+        `http://localhost:8800/deny-other-apply/${applicationErrandID}/${catcherID}`
+      );
       //replace modular
       alert("You have accepted a Cather!");
       window.location.reload();
@@ -200,12 +241,12 @@ const EmployerApplicants = () => {
       console.log(err);
     }
   };
-  console.log(applicants);
+  //console.log(applicants);
   return (
     <div>
       <NavBar
         page1="HOME"
-        home={`/e-home/${userID}`}
+        home={`/home/${userID}`}
         page2="COMMISSIONS"
         commissionList={`/commissions/${userID}`}
         page3="APPLICANTS"
@@ -235,6 +276,21 @@ const EmployerApplicants = () => {
         </div>
         <Table headers={headers} data={applicantData} />
 
+        {/* added  by ash */}
+
+        {showProfileModal && (
+          <ProfileModal
+            username={selectedApplicant.username}
+            fname={selectedApplicant.userFirstname}
+            lname={selectedApplicant.userLastname}
+            email={selectedApplicant.userEmail}
+            num={selectedApplicant.userContactNum}
+            age={selectedApplicant.userAge}
+            applicant={selectedApplicant}
+            rating={rating}
+            closeModal={handleCloseProfileModal}
+          />
+        )}
         {/* Pagination controls */}
         {applicants.length > 0 && (
           <Pagination
@@ -249,74 +305,3 @@ const EmployerApplicants = () => {
 };
 
 export default EmployerApplicants;
-{
-  /*
-        <div className="accounts">
-          <table>
-            <thead>
-              <tr>
-                <th className='col1'>Commission</th>
-                <th className='col2'>Commission ID</th>
-                <th className='col3'>Catcher</th>
-                <th className='col4'>Email</th>
-                <th className='col5'>Contact Number</th>
-                <th className='col6'>Date Applied</th>
-                <th className='col7'>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {applicants.map(Applicant=>(
-                    <tr className="account" key={Applicant.applicationID}>
-                        <td className='col1'>{Applicant.commissionTitle}</td>
-                        <td className='col2'>{Applicant.commissionID}</td>
-                        <td className='col3'><Link to={`/update-account/${Applicant.catcherID}`}>{Applicant.userFirstname} {Applicant.userLastname}</Link></td>
-                        <td className='col4'>{Applicant.userEmail}</td>
-                        <td className='col5'>{Applicant.userContactNum}</td>
-                        <td className='col6'>{new Date(Applicant.applicationDate).toLocaleDateString()}</td>
-                        <td className='col7'>{Applicant.applicationStatus}</td>
-                        <td><button className='update'><Link to={`/update-account/${Applicant.catcherID}`}>Update</Link></button></td>
-                    </tr>
-                    ))}
-            </tbody>
-          </table>
-      </div>
-
-
-          const handleAccept = (applicationId) => {
-      console.log('Accepted application with id:', applicationId);
-      // Add logic to handle accepting the application
-    };
-  
-    const handleDecline = (applicationId) => {
-      console.log('Declined application with id:', applicationId);
-      // Add logic to handle declining the application
-    };
-
-      <Table
-          headers={['DATE', 'EMPLOYER', 'ERRAND TITLE', 'ACTION']}
-          data={currentItems.map((application, rowIndex) => {
-            return (
-              <tr key={rowIndex}>
-                <td>{application.date}</td>
-                <td>{application.employer}</td>
-                <td>{application.errandTitle}</td>
-                <td>
-                  {application.action === 'Pending' && (
-                    <>
-                      <button className="accept action-btn" onClick={() => handleAccept(application.id)}>Accept</button>
-                      <button className="decline action-btn" onClick={() => handleDecline(application.id)}>Decline</button>
-                    </>
-                  )}
-                  {application.action === 'Accepted' && (
-                    <button className="accepted action-btn">Accepted</button>
-                  )}
-                  {application.action === 'Declined' && (
-                    <button className="declined action-btn">Declined</button>
-                  )}
-                </td>
-              </tr>
-            );
-          })}
-        />
-*/
-}
