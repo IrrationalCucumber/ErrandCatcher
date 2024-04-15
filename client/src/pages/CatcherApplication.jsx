@@ -142,7 +142,7 @@ function Application() {
           <h1>Application</h1>
           <div className="search">
             <input type="text" placeholder="Search..." />
-            <button type="submit">
+            <button type="submit" style={{backgroundColor:"#1679AB"}}>
               <i className="fa fa-search" place></i>
             </button>
             {/*<select name="type" id="">
