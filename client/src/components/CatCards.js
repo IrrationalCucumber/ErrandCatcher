@@ -31,25 +31,24 @@ function CatCards({ commissions }) {
     };
     fetchAllCommission();
   }, [type]);
-
   return (
     <div className="cards">
       {/* <h1>Check out this epic Destination!</h1> */}
       <div className="cards__container">
         <div className="cards__wrapper">
           <div className="cards__items">
-            {/* {commissions.map((commission) => ( */}
-
-            <CardItem
-              key={props.id}
-              src="/images/hr.png"
-              text={props.title}
-              label={props.type}
-              location={props.location}
-              path={props.path}
-              //`/view-errand/${userID}/${commission.commissionID}`
-            />
-            {/* ))} */}
+            {commissions.map((commission) => (
+              <CardItem
+                key={commission.commissionID}
+                src="/images/hr.png"
+                text={commission.commissionTitle}
+                pay={commission.commissionPay}
+                label={commission.commissionType}
+                location={commission.commissionLocation}
+                path={`/view-errand/${userID}/${commission.commissionID}`}
+                //`/view-errand/${userID}/${commission.commissionID}`
+              />
+            ))}
           </div>
         </div>
       </div>
