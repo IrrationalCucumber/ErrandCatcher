@@ -3,6 +3,7 @@
 //added pagination and table. contents for the td are based on the old code --ash
 //03-10-24  <Route path="/e-applicants" exact Component={EmployerApplicants}/>
 //03-14-24 inital fixing. 4:56pm fixed the error
+//03-28-24 added view profile but modal doesnt have data
 
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -11,6 +12,7 @@ import NavBar from "../components/Navbar";
 import Table from "../components/Table";
 import "./applicant.css";
 import Pagination from "../components/Pagination";
+import ProfileModal from "../components/Profile Modal/ProfileModal";
 
 const EmployerApplicants = () => {
   const navigate = useNavigate();
@@ -26,13 +28,44 @@ const EmployerApplicants = () => {
   //Pagination --Ash
   //display data per page
   const [itemsPerPage] = useState(10);
+  //ash
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [selectedApplicant, setSelectedApplicant] = useState(null);
+  const [rating, setRating] = useState("");
+
+  const handleViewProfile = (applicant) => {
+    setSelectedApplicant(applicant);
+    //display rating of acathcer
+    const fetchRating = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8800/user-rating/${applicant.catcherID}`
+        );
+        // if rating is null
+        if (res.data[0].c == null) {
+          setRating(0);
+        } else {
+          setRating(res.data[0].c);
+        }
+        // console.log(res.data[0].c);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchRating();
+    setShowProfileModal(true);
+  };
+
+  const handleCloseProfileModal = () => {
+    setShowProfileModal(false);
+  };
 
   //useEffect to handle error
   useEffect(() => {
     const fetchAllAccount = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/applicants/${userID}`
+          `http://localhost:8800/applicants/${userID}` // show only pending
         );
         //http://localhost:8800/user - local
         //http://192.168.1.47:8800/user - network
@@ -76,12 +109,6 @@ const EmployerApplicants = () => {
     new Date(applicant.applicationDate).toLocaleDateString(),
     `${applicant.userFirstname} ${applicant.userLastname}`,
     applicant.commissionTitle,
-    <button
-      onClick={() => navigate(`/view-profile/${userID}/${applicant.catcherID}`)}
-      //`/view-profile/${applicant.catcherID}`
-    >
-      <i className="fa-regular fa-user"></i>
-    </button>,
     applicant.applicationStatus === "Pending" ? (
       <>
         <button
@@ -114,6 +141,9 @@ const EmployerApplicants = () => {
     ) : (
       <button className="declined action-btn">Declined</button>
     ),
+    <button onClick={() => handleViewProfile(applicant, applicant.username)}>
+      View Profile
+    </button>,
   ]);
   //FOR NOTIFICATION
   //set variables for notification
@@ -211,7 +241,7 @@ const EmployerApplicants = () => {
       console.log(err);
     }
   };
-  console.log(applicants);
+  //console.log(applicants);
   return (
     <div>
       <NavBar
@@ -246,6 +276,21 @@ const EmployerApplicants = () => {
         </div>
         <Table headers={headers} data={applicantData} />
 
+        {/* added  by ash */}
+
+        {showProfileModal && (
+          <ProfileModal
+            username={selectedApplicant.username}
+            fname={selectedApplicant.userFirstname}
+            lname={selectedApplicant.userLastname}
+            email={selectedApplicant.userEmail}
+            num={selectedApplicant.userContactNum}
+            age={selectedApplicant.userAge}
+            applicant={selectedApplicant}
+            rating={rating}
+            closeModal={handleCloseProfileModal}
+          />
+        )}
         {/* Pagination controls */}
         {applicants.length > 0 && (
           <Pagination

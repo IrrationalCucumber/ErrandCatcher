@@ -12,20 +12,43 @@ function Notification() {
   const location = useLocation();
   const userID = location.pathname.split("/")[2];
 
+  //setState for account type
+  const [type, setType] = useState("");
+  useEffect(() => {
+    const fetchType = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/get-type/${userID}`);
+        //console.log(res.data);
+        setType(res.data);
+        console.log(type);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchType();
+  }, [type]);
+
   // Display all notifications
   useEffect(() => {
     const fetchNotif = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:8800/show-notif/${userID}`
-        );
-        setNotifs(res.data);
+        if (type == "Catcher") {
+          const res = await axios.get(
+            `http://localhost:8800/my-notif/${userID}`
+          );
+          setNotifs(res.data);
+        } else {
+          const res = await axios.get(
+            `http://localhost:8800/emp-notif/${userID}`
+          );
+          setNotifs(res.data);
+        }
       } catch (err) {
         console.log(err);
       }
     };
     fetchNotif();
-  }, []);
+  }, [type]);
 
   // Function to format date
   const formatDate = (dateString) => {
@@ -48,19 +71,22 @@ function Notification() {
       <div className="notification-container">
         <main className="notification-main">
           <div className="notification-header">
-            <p className="notification-title">Notifications</p>
-            <img
-              src="/images/notification_icon.svg"
-              className="icon"
-              alt="notification_icon"
-            />
-            <button onClick={markAsRead} className="mark-read-button">
-              Mark All as Read
-              <img
-                src="/images/check_icon.svg"
-                className="check-icon"
-                alt="check_icon"
+
+            <p className="notification-title" style={{paddingLeft:"30px"}}>Notifications</p>
+            <img 
+                 src="/images/notification_icon.svg" 
+                 className="icon" 
+                 alt="notification_icon" 
+                 style={{paddingLeft:"20px"}}/>
+            <button onClick={markAsRead} className="mark-read-button" style={{textAlign:"center"}}>
+              Mark all as Read
+              <img 
+                 src="/images/check_icon.svg" 
+                 className="check-icon" 
+                 alt="check_icon"
               />
+
+
             </button>
           </div>
           <div className="notification-list">

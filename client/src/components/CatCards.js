@@ -1,11 +1,17 @@
+/**
+ * 13/4/24
+ * CatCards is now a props
+ * Called in Services pages to be used
+ * Can display based on serhes
+ */
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import CardItem from "./CardItem";
 import axios from "axios";
 import "./Cards.css";
 
-function CatCards() {
-  const [commissions, setCommissions] = useState([]);
+function CatCards({ commissions }) {
+  const [commissionslist, setCommissionslist] = useState([]);
   const location = useLocation();
   //pathname to array from
   //get the id
@@ -18,14 +24,13 @@ function CatCards() {
         const res = await axios.get(`http://localhost:8800/type/${type}`);
         //"http://localhost:8800/commission" - local computer
         //"http://192.168.1.47:8800/commission" - netwrok
-        setCommissions(res.data);
+        setCommissionslist(res.data);
       } catch (err) {
         console.log(err);
       }
     };
     fetchAllCommission();
   }, [type]);
-
   return (
     <div className="cards">
       {/* <h1>Check out this epic Destination!</h1> */}
@@ -37,9 +42,11 @@ function CatCards() {
                 key={commission.commissionID}
                 src="/images/hr.png"
                 text={commission.commissionTitle}
+                pay={commission.commissionPay}
                 label={commission.commissionType}
                 location={commission.commissionLocation}
                 path={`/view-errand/${userID}/${commission.commissionID}`}
+                //`/view-errand/${userID}/${commission.commissionID}`
               />
             ))}
           </div>

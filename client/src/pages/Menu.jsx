@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Cards from "../components/Cards";
 //  import NavBar from '../components/Navbar';
-import Footer from "../components/Footer";
+//import Footer from "../components/Footer";
 import "./Menu.css";
 //import CardItem from '../components/CardItem';
 
@@ -10,6 +10,7 @@ const Menu = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const location = useLocation();
   const userID = location.pathname.split("/")[2];
+  const navigate = useNavigate();
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
@@ -22,9 +23,15 @@ const Menu = () => {
           type="text"
           placeholder="Search..."
           value={searchQuery}
-          onChange={handleSearchChange}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <button>Search</button>
+        <button
+          onClick={(e) => {
+            navigate(`/search/${userID}/${searchQuery}`);
+          }}
+        >
+          Search
+        </button>
       </div>
 
       <section className="Menu" id="Menu">
@@ -40,7 +47,7 @@ const Menu = () => {
             </Link>
           </div>
           <div className="box">
-            <Link to={`/Transpo/${userID}/${"Transpo"}`}>
+            <Link to={`/Transpo/${userID}/${"Transport"}`}>
               <button style={{ backgroundColor: "white" }}>
                 <img src="/images/img4.png" alt="" />
                 <div className="content">
@@ -107,8 +114,6 @@ const Menu = () => {
                 </div>
             </section> */}
       <Cards />
-
-      <Footer />
     </>
   );
 };

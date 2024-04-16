@@ -12,6 +12,7 @@ const UpdateCommission = () => {
   const [commission, setCommission] = useState({
     comTitle: "",
     comDeadline: "",
+    comStart: "",
     comLocation: "",
     comType: "",
     comDescription: "",
@@ -19,7 +20,7 @@ const UpdateCommission = () => {
     comStatus: "",
     //catcherID:"",
     //DatePosted:"",
-    DateCompleted: "",
+    //DateCompleted: "",
     ContactNo: "",
     comLong: "",
     comLat: "",
@@ -137,7 +138,7 @@ const UpdateCommission = () => {
   const fetchLoc = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8800/commission/${commissionID}`
+        `http://localhost:8800/errand/${commissionID}`
       );
       const data = await response.json();
       return data;
@@ -152,24 +153,27 @@ const UpdateCommission = () => {
     const fetchCommission = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/commission/${commissionID}`
+          `http://localhost:8800/errand/${commissionID}`
         );
         const retrievedCommission = res.data[0];
         //format date
         const formattedDate = new Date(retrievedCommission.commissionDeadline)
           .toISOString()
           .substr(0, 10);
-
+        const formatStart = new Date(retrievedCommission.commissionStartDate)
+          .toISOString()
+          .substr(0, 10);
         // Update the state with retrieved account data
         setCommission({
           comTitle: retrievedCommission.commissionTitle,
           comDeadline: formattedDate,
+          comStart: formatStart,
           comLocation: retrievedCommission.commissionLocation,
           comType: retrievedCommission.commissionType,
           comDescription: retrievedCommission.commissionDesc,
           comPay: retrievedCommission.commissionPay,
           comStatus: retrievedCommission.commissionStatus,
-          catcherID: retrievedCommission.catcherID,
+          //catcherID: retrievedCommission.catcherID,
           //DatePosted:"",
           //DateCompleted:retrievedCommission.,
           ContactNo: retrievedCommission.ContactNumber,
@@ -284,10 +288,10 @@ const UpdateCommission = () => {
     try {
       //account.dateCreated = getCurrentDate();
       await axios.put(
-        "http://localhost:8800/update-commission/" + commissionID,
+        `http://localhost:8800/update-errand/${commissionID}`,
         commission
       );
-      navigate(`/commissions/${userID}`);
+      //navigate(`/commissions/${userID}`);
     } catch (err) {
       console.log(err);
     }
@@ -304,6 +308,8 @@ const UpdateCommission = () => {
           title="comTitle"
           titleValue={commission.comTitle}
           deadline="comDeadline"
+          start="comStart"
+          startValue={commission.comStart}
           dlValue={commission.comDeadline}
           location="comLocation"
           locValue={commission.comLocation}

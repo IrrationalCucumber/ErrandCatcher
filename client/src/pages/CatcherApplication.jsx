@@ -45,11 +45,12 @@ function Application() {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = apply.slice(indexOfFirstItem, indexOfLastItem);
 
-  const headers = ["DATE", "EMPLOYER", "ERRAND TITLE", "ACTION"];
+  const headers = ["DATE", "EMPLOYER", "ERRAND TITLE", "STATUS", "ACTION"];
   const applicationData = currentItems.map((applicant) => [
     new Date(applicant.applicationDate).toLocaleDateString(),
     `${applicant.userFirstname} ${applicant.userLastname}`,
     applicant.commissionTitle,
+    applicant.applicationStatus,
     applicant.applicationStatus === "Pending" ? (
       <button
         className="cancel action-btn"
@@ -57,11 +58,14 @@ function Application() {
       >
         Cancel
       </button>
-    ) : applicant.status === "Cancel" ? (
-      <button className="cancel action-btn" disabled>
-        Cancelled
+    ) : (
+      <button
+        className=""
+        onClick={() => handleDelete(applicant.applicationID)}
+      >
+        DELETE
       </button>
-    ) : null, // handle other statuses or add a default action
+    ), // handle other statuses or add a default action
   ]);
   //set variables for notification
   const [notif, setNotif] = useState({
@@ -105,6 +109,17 @@ function Application() {
       await axios.post("http://localhost:8800/notify", notif);
       window.location.reload();
       //navigate(`/my-application/${userID}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  // delete application
+  const handleDelete = async (applicationID) => {
+    try {
+      //"http://localhost:8800/commission" - local computer
+      //"http://192.168.1.47:8800/commission" - netwrok
+      await axios.delete(`http://localhost:8800/delete-apply/${applicationID}`);
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }
