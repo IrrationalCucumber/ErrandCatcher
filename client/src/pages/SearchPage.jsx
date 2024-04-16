@@ -1,45 +1,58 @@
-import React, { useState, useEffect } from "react";
-import "../Services/Transpo.css";
-import Navbar from "../../components/Navbar";
-import { useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import Cards from "../components/CatCards";
 import axios from "axios";
-import CatCards from "../../components/CatCards";
+import Navbar from "../components/Navbar";
 
-const Transportation = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+function SearchPage() {
   const [commissions, setCommissions] = useState([]);
+  // const navigate = useNavigate();
+  const location = useLocation();
+  const userID = location.pathname.split("/")[2];
+  const term = location.pathname.split("/")[3];
+  const [message, setMessage] = useState("");
+  // const [searchQuery, setSearchQuery] = useState("");
+  //filter varibales
   const [filter, setFilter] = useState({
-    term: "",
+    type: "",
     status: "",
     date: "",
     minPay: "",
     maxPay: "",
     location: "",
   });
-
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
-  };
-
+  //  rretrieve data
   useEffect(() => {
+    //add condition if search term is empty
+    // revert to all errnds
+    //if (term == "") {
     const fetchAllCommission = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:8800/type/Transportation`
-        );
+        const res = await axios.get(`http://localhost:8800/search-available`, {
+          params: { term: term },
+        });
+        //"http://localhost:8800/commission" - local computer
+        //"http://192.168.1.47:8800/commission" - netwrok
         setCommissions(res.data);
       } catch (err) {
         console.log(err);
       }
     };
     fetchAllCommission();
-  }, []);
+    setMessage("You have search for " + term);
+    // }
+    //add 'term' as dependencies
+    // to trigger if its empty
+  }, [term]);
 
   // Search commmissions using JS filter method //
   const filteredCommissions = commissions.filter((commission) => {
+    const type = commission.commissionType
+      .toLowerCase()
+      .includes(filter.type.toLowerCase());
     const titleMatches = commission.commissionTitle
       .toLowerCase()
-      .includes(searchQuery.toLowerCase());
+      .includes(term.toLowerCase());
     const locationMatches = commission.commissionLocation
       .toLowerCase()
       .includes(filter.location.toLowerCase());
@@ -51,12 +64,14 @@ const Transportation = () => {
         commission.commissionPay <= filter.maxPay;
     }
 
-    return titleMatches && locationMatches && priceMatches;
+    return titleMatches && locationMatches && priceMatches && type;
   });
-
+  //handle filter values changes
   const handleChange = (e) => {
     if (e.target.name === "location") {
       setFilter((prev) => ({ ...prev, location: e.target.value }));
+    } else if (e.target.name === "type") {
+      setFilter((prev) => ({ ...prev, type: e.target.value }));
     } else {
       setFilter((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     }
@@ -65,16 +80,29 @@ const Transportation = () => {
   return (
     <>
       <Navbar />
-      <h1>Transportation</h1>
-      <div className="search-bar">
+      {message}
+      {/* FILTERS */}
+      {/* <div className="search-bar">
         <input
           type="text"
           placeholder="Search..."
           value={searchQuery}
-          onChange={handleSearchChange}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <button>Search</button>
-      </div>
+        <button
+          onClick={(e) => {
+            navigate(`/search/${userID}/${searchQuery}`);
+          }}
+        >
+          Search
+        </button>
+      </div> */}
+      <select name="type" id="type" value={filter.type} onChange={handleChange}>
+        <option value="">Choose Location....</option>
+        <option value="HomeService">Home Service</option>
+        <option value="Delivery">Delivery</option>
+        <option value="Transportation">Transportation</option>
+      </select>
       <select
         name="location"
         id="location"
@@ -105,9 +133,9 @@ const Transportation = () => {
           value={filter.maxPay}
         />
       </label>
-      <CatCards commissions={filteredCommissions} />
+      <Cards commissions={filteredCommissions} />
     </>
   );
-};
+}
 
-export default Transportation;
+export default SearchPage;
