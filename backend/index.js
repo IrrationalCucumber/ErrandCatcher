@@ -173,6 +173,44 @@ app.get("/type/:type", (req, res) => {
     return res.json(data);
   });
 });
+// CommissionType: Delivery service //
+app.get("/type/Delivery", (req, res) => {
+  const q = "SLECT * FROM commission WHERE commissionType = 'Delivery' AND commissionStatus = 'Available' ";
+
+  db.query(q, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+// CommissionType: Transportation service //
+app.get("/type/Transportation", (req, res) => {
+  const q = "SLECT * FROM commission WHERE commissionType = 'Transportation' AND commissionStatus = 'Available' ";
+
+  db.query(q, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+// CommissionType: Homeservice //
+app.get("/type/Home", (req, res) => {
+  const q = "SLECT * FROM commission WHERE commissionType = 'Home' AND commissionStatus = 'Available' ";
+
+  db.query(q, (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+
+
 // static query for type
 // select type
 // UNTESTED

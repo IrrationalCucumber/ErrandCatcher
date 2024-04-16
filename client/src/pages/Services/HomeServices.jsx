@@ -1,55 +1,73 @@
-import React, { useEffect, useState } from "react";
-import Cards from "../../components/CatCards";
+import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
-import { useLocation } from "react-router-dom";
+import CatCards from "../../components/CatCards";
 import axios from "axios";
 
 const HomeServices = () => {
-  const [term, setTerm] = useState("");
-  //pathname to array from
-  //get the id
+  const [searchQuery, setSearchQuery] = useState("");
   const [commissions, setCommissions] = useState([]);
-  const location = useLocation();
-  const userID = location.pathname.split("/")[2];
-  const type = location.pathname.split("/")[3];
-  const [message, setMessage] = useState("");
+  const [filter, setFilter] = useState({
+    term: "",
+    status: "",
+    date: "",
+    minPay: "",
+    maxPay: "",
+    location: "",
+  });
 
-  //rretrieve data
-  useEffect(() => {
-    //add condition if search term is empty
-    // revert to all errnds
-    if (term == "") {
-      const fetchAllCommission = async () => {
-        try {
-          const res = await axios.get(`http://localhost:8800/type/${type}`);
-          //"http://localhost:8800/commission" - local computer
-          //"http://192.168.1.47:8800/commission" - netwrok
-          setCommissions(res.data);
-        } catch (err) {
-          console.log(err);
-        }
-      };
-      fetchAllCommission();
-      setMessage("");
-    }
-    //add 'term' as dependencies
-    // to trigger if its empty
-  }, [type, term]);
-  //display errands based on term
-  //if search is clicked
-  const handleSearch = () => {
-    const fetchSearch = async () => {
-      const res = await axios.get(`http://localhost:8800/search/${type}`, {
-        params: { term: term },
-      });
-      setCommissions(res.data);
-    };
-    fetchSearch();
-    setMessage(`You have searched for ${term}`);
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
   };
+
+  useEffect(() => {
+    const fetchAllCommission = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/type/HomeService`);
+        setCommissions(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAllCommission();
+  }, []);
+
+  // Search commmissions using JS filter method //
+  const filteredCommissions = commissions.filter((commission) => {
+    //   commission.commissionTitle
+    //     .toLowerCase()
+    //     .includes(searchQuery.toLowerCase()) &&
+    //   commission.commissionLocation
+    //     .toLowerCase()
+    //     .includes(filter.location.toLowerCase()) &&
+    const titleMatches = commission.commissionTitle
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    const locationMatches = commission.commissionLocation
+      .toLowerCase()
+      .includes(filter.location.toLowerCase());
+    //if price range has been entered
+    let priceMatches = true;
+    if (filter.minPay !== "" && filter.maxPay !== "") {
+      priceMatches =
+        commission.commissionPay >= filter.minPay &&
+        commission.commissionPay <= filter.maxPay;
+    }
+
+    return titleMatches && locationMatches && priceMatches;
+  });
+
+  const handleChange = (e) => {
+    if (e.target.name === "location") {
+      setFilter((prev) => ({ ...prev, location: e.target.value }));
+    } else {
+      setFilter((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    }
+  };
+
   return (
     <>
       <Navbar />
+
       <h1 style={{ paddingTop: "20px", paddingLeft: "20px" }}>Home Services</h1>
       <div
         className="search-bar"
@@ -60,30 +78,46 @@ const HomeServices = () => {
           margin: "44px 5%",
         }}
       >
+
         <input
           type="text"
           placeholder="Search..."
-          name="term"
-          value={term}
-          onChange={(e) => setTerm(e.target.value)}
+          value={searchQuery}
+          onChange={handleSearchChange}
         />
-        <button onClick={handleSearch}>Search</button>
+        <button>Search</button>
       </div>
-      {/* 
-      SHOW A MESSAGE OF WHAT USER SEARCHED
-        ADD DESIGN OR REMOVE THIS SEARCH MESSAGE
-        */}
-      {message}
-      {commissions.map((commission) => (
-        <Cards
-          id={commission.commissionID}
-          title={commission.commissionTitle}
-          type={commission.commissionType}
-          location={commission.commissionLocation}
-          path={`/view-errand/${userID}/${commission.commissionID}`}
+      <select
+        name="location"
+        id="location"
+        value={filter.location}
+        onChange={handleChange}
+      >
+        <option value="">Choose Location....</option>
+        <option value="Cebu">Cebu</option>
+        <option value="Cordova">Cordova</option>
+        <option value="Mandaue">Mandaue</option>
+        <option value="Lapu-Lapu">Lapu-Lapu</option>
+        <option value="Talisay">Talisay</option>
+      </select>
+      <label htmlFor="">
+        Payment range
+        <input
+          type="number"
+          placeholder="Starting range..."
+          name="minPay"
+          onChange={handleChange}
+          value={filter.minPay}
         />
-      ))}
-      <div></div>
+        <input
+          type="number"
+          placeholder="Maximum range..."
+          name="maxPay"
+          onChange={handleChange}
+          value={filter.maxPay}
+        />
+      </label>
+      <CatCards commissions={filteredCommissions} />
     </>
   );
 };

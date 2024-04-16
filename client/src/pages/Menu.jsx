@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Cards from "../components/Cards";
 //  import NavBar from '../components/Navbar';
 //import Footer from "../components/Footer";
@@ -10,6 +10,7 @@ const Menu = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const location = useLocation();
   const userID = location.pathname.split("/")[2];
+  const navigate = useNavigate();
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
@@ -22,11 +23,11 @@ const Menu = () => {
           type="text"
           placeholder="Search..."
           value={searchQuery}
-          onChange={handleSearchChange}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <button style={{backgroundColor:"#1679AB"}}>Search</button>
-      </div>
-
+        <button onClick={(e) => {
+            navigate(`/search/${userID}/${searchQuery}`);
+          }} style={{backgroundColor:"#1679AB"}}>Search</button>
       <section className="Menu" id="Menu">
         <div className="box-container">
           <div className="box">

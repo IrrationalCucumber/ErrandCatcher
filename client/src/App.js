@@ -42,6 +42,7 @@ import Delivery from "./pages/Services/Delivery";
 import Verification from "./pages/Verification";
 import ErrandPage from "./pages/ErrandPage";
 import ViewProfile from "./pages/ViewProfile";
+import SearchPage from "./pages/SearchPage";
 
 function App() {
   return (
@@ -74,6 +75,8 @@ function App() {
 
           <Route path="/Menu" exact Component={Menu} />
           <Route path="/testpage" exact Component={testpage} />
+          {/* SEARCH PAGES */}
+          <Route path="/search/:id/:term" element={<SearchPage />} />
           <Route path="/Transpo/:userID/:type" element={<Transportation />} />
           <Route path="/HomeService/:userID/:type" element={<HomeServices />} />
           <Route path="/Delivery/:userID/:type" element={<Delivery />} />
