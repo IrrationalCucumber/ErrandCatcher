@@ -3,7 +3,11 @@ const db = require("../dbConfig");
 const Errand = {
   //get all errands
   getAllErrands: (callback) => {
-    db.query("SELECT * FROM commission", callback);
+    db.query(
+      "SELECT c.*, ua.username, ua.userFirstname, ua.userLastname FROM commission c" +
+        " JOIN useraccount ua ON c.employerID = ua.userID",
+      callback
+    );
   },
   //get all available errands
   getAllAvailable: (callback) => {
