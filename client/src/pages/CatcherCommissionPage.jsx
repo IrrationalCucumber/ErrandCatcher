@@ -125,6 +125,8 @@ function CommissionPage() {
       console.log(err);
     }
   };
+  //Display format to date
+  // months into words
   const formattedDate = (commissionDeadline) => {
     const date = new Date(commissionDeadline);
     const monthNames = [

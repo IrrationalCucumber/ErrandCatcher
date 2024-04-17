@@ -76,26 +76,30 @@ const EmployerApplicants = () => {
     };
     fetchAllAccount();
   }, [userID]);
-  //fetch all accounts
-  //triggers when search input is filled
-  //     const fetchSearchResults = async () => {
-  //       try {
-  //             //http://localhost:8800/user - local
-  //             //http://192.168.1.47:8800/user - network
-  //           const res = await axios.get('http://localhost:8800/search-user', {
-  //               params: { term: searchTerm } // Pass the search term as a query parameter
-  //           });
-  //           setApplicants(res.data);
-  //       } catch (err) {
-  //           console.log(err);
-  //       }
-  //   };
-  //   useEffect(() => {
-  //       fetchSearchResults();
-  //   }, [searchTerm]); // Trigger the search whenever searchTerm changes
+  //Display format to date
+  // months into words
+  const formattedDate = (theDate) => {
+    const date = new Date(theDate);
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ]; // Get the month and year from the date object
+    const month = monthNames[date.getMonth()];
+    const year = date.getFullYear();
 
-  //list need to be in a column
-  //need filter
+    // Construct the formatted date string
+    return `${month} ${date.getDate()}, ${year}`;
+  };
 
   // Pagination
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -106,7 +110,7 @@ const EmployerApplicants = () => {
   const headers = ["DATE", "CATCHER", "ERRAND TITLE", "ACTION", ""];
   const applicantData = currentItems.map((applicant) => [
     //applicant.applicationID,
-    new Date(applicant.applicationDate).toLocaleDateString(),
+    formattedDate(applicant.applicationDate),
     `${applicant.userFirstname} ${applicant.userLastname}`,
     applicant.commissionTitle,
     applicant.applicationStatus === "Pending" ? (

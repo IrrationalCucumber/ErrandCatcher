@@ -77,8 +77,31 @@ const AccountList = () => {
     indexOfFirstItem,
     indexOfLastItem
   );
-
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  //Display format to date
+  // months into words
+  const formattedDate = (theDate) => {
+    const date = new Date(theDate);
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ]; // Get the month and year from the date object
+    const month = monthNames[date.getMonth()];
+    const year = date.getFullYear();
+
+    // Construct the formatted date string
+    return `${month} ${date.getDate()}, ${year}`;
+  };
 
   const headers = [
     "ID",
@@ -95,7 +118,7 @@ const AccountList = () => {
     `${account.userFirstname} ${account.userLastname}`,
     account.userEmail,
     account.accountType,
-    new Date(account.dateCreated).toLocaleDateString(),
+    formattedDate(account.dateCreated),
     account.accountStatus,
   ]);
   console.log(searchTerm);
