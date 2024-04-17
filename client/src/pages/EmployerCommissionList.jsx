@@ -163,10 +163,13 @@ const CommissionList = () => {
               headers={[
                 "ID",
                 "ERRAND TITLE",
-                "DATE POSTED",
+                "TYPE",
+                "START DATE",
+                "DUE DATE",
                 "STATUS",
                 "ACTION",
               ]}
+              // update the data here
               data={currentItems.map((commissionItem) => [
                 commissionItem.commissionID,
                 commissionItem.commissionTitle,
