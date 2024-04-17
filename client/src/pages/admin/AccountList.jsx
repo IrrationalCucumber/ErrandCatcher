@@ -29,81 +29,19 @@ const AccountList = () => {
 
   //useEffect to handle error
   useEffect(() => {
-    if (
-      searchTerm.type != "" ||
-      searchTerm.status != "" ||
-      searchTerm.term != ""
-    ) {
-      const fetchSearchResults = async () => {
-        try {
-          //http://localhost:8800/user - local
-          //http://192.168.1.47:8800/user - network
-          const res = await axios.get("http://localhost:8800/search-user", {
-            params: {
-              term: searchTerm.term,
-              type: searchTerm.type,
-              status: searchTerm.status,
-            }, // Pass the search term as a query parameter
-          });
-          setAccounts(res.data);
-        } catch (err) {
-          console.log(err);
-        }
-      };
-      fetchSearchResults();
-    } else {
-      const fetchAllAccount = async () => {
-        try {
-          const res = await axios.get("http://localhost:8800/users");
-          //http://localhost:8800/user - local
-          //http://192.168.1.47:8800/user - network
-          setAccounts(res.data);
-          //console.log(res.data);
-        } catch (err) {
-          console.log(err);
-        }
-      };
-      fetchAllAccount();
-    }
-  }, [searchTerm]);
-  //fetch all accounts
-  //triggers when search input is filled
-  // const fetchSearchResults = async () => {
-  //   try {
-  //     //http://localhost:8800/user - local
-  //     //http://192.168.1.47:8800/user - network
-  //     const res = await axios.get("http://localhost:8800/search-user", {
-  //       params: {
-  //         term: searchTerm.term,
-  //         type: searchTerm.type,
-  //         status: searchTerm.status,
-  //       }, // Pass the search term as a query parameter
-  //     });
-  //     setAccounts(res.data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const fetchSearchResults = async () => {
-  //     try {
-  //       //http://localhost:8800/user - local
-  //       //http://192.168.1.47:8800/user - network
-  //       const res = await axios.get("http://localhost:8800/search-user", {
-  //         params: {
-  //           term: searchTerm.term,
-  //           type: searchTerm.type,
-  //           status: searchTerm.status,
-  //         }, // Pass the search term as a query parameter
-  //       });
-  //       setAccounts(res.data);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //   fetchSearchResults();
-  // }, [searchTerm]); // Trigger the search whenever searchTerm changes
+    const fetchAllAccount = async () => {
+      try {
+        const res = await axios.get("http://localhost:8800/users");
+        //http://localhost:8800/user - local
+        //http://192.168.1.47:8800/user - network
+        setAccounts(res.data);
+        //console.log(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAllAccount();
+  }, []);
 
   const handleChange = (e) => {
     // For the 'gender' field, directly set the value without using spread syntax
@@ -116,27 +54,29 @@ const AccountList = () => {
       setSearchTerm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     }
   };
+  //filter
+  const filterAccounts = accounts.filter((account) => {
+    const type = account.accountType
+      .toLowerCase()
+      .includes(searchTerm.type.toLowerCase());
+    const termMatch = account.username
+      .toLowerCase()
+      .includes(searchTerm.term.toLowerCase());
+    const termMatch2 = account.userEmail
+      .toLowerCase()
+      .includes(searchTerm.term.toLowerCase());
+    const status = account.accountStatus.includes(searchTerm.status);
 
-  // filter type //
-  // const fetchType = async () => {
-  //   try {
-  //     const res = await axios.get("http://localhost:8800/filter-type", {
-  //       params: { type: type, status: status }, // Pass the search term as a query parameter
-  //     });
-  //     setAccounts(res.data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchType();
-  // }, [type, status]); // reflect changes
+    return type && (termMatch || termMatch2) && status;
+  });
 
   //Logic of Pagination
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentAccounts = accounts.slice(indexOfFirstItem, indexOfLastItem);
+  const currentAccounts = filterAccounts.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
