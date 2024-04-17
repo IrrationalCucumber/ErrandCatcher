@@ -13,8 +13,11 @@ import IconButton from "@mui/joy/IconButton";
 
 const CommissionList = () => {
   const [commissions, setCommissions] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [status, setStatus] = useState("");
+  const [searchTerm, setSearchTerm] = useState({
+    term: "",
+    type: "",
+    status: "",
+  });
 
   const location = useLocation();
 
@@ -29,73 +32,18 @@ const CommissionList = () => {
   //rretrieve data
   // Frontend code
   useEffect(() => {
-    if (status != "") {
-      const fetchTypeResults = async () => {
-        try {
-          //http://localhost:8800/user - local
-          //http://192.168.1.47:8800/user - network
-          const res = await axios.get(`http://localhost:8800/filter-myerrand`, {
-            params: { id: userID, status: status }, // Pass the search term as a query parameter
-          });
-          setCommissions(res.data);
-        } catch (err) {
-          console.log(err);
-        }
-      };
-      fetchTypeResults();
-    } else {
-      const fetchAllCommission = async () => {
-        try {
-          const res = await axios.get(
-            `http://localhost:8800/your-commission/${userID}`
-          ); // Pass userID in the URL
-          setCommissions(res.data);
-        } catch (err) {
-          console.log(err);
-        }
-      };
-      fetchAllCommission();
-    }
-  }, [userID, status]); // Add userID to the dependency array
-
-  //fetch posted commission
-  // const fetchSearchResults = async () => {
-  //   try {
-  //     const res = await axios.get(
-  //       `http://localhost:8800/search-employer-commission/${userID}`,
-  //       {
-  //         params: { term: searchTerm }, // Pass the search term as a query parameter
-  //       }
-  //     );
-  //     setCommissions(res.data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchSearchResults();
-  // }, [searchTerm]); // Trigger the search whenever searchTerm changes
-
-  //filter type
-  // const fetchTypeResults = async () => {
-  //   try {
-  //     //http://localhost:8800/user - local
-  //     //http://192.168.1.47:8800/user - network
-  //     const res = await axios.get(`http://localhost:8800/filter-myerrand`, {
-  //       params: { id: userID, status: status }, // Pass the search term as a query parameter
-  //     });
-  //     setCommissions(res.data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (status != "") {
-  //     fetchTypeResults();
-  //   }
-  // }, [status]);
+    const fetchAllCommission = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8800/your-commission/${userID}`
+        ); // Pass userID in the URL
+        setCommissions(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAllCommission();
+  }, [userID]); // Add userID to the dependency array
 
   //funtion to delete commission
   const handleDelete = async (commissionID) => {
@@ -109,11 +57,42 @@ const CommissionList = () => {
     }
   };
 
+  const handleChange = (e) => {
+    // For the 'gender' field, directly set the value without using spread syntax
+    if (e.target.name === "status") {
+      setSearchTerm((prev) => ({ ...prev, status: e.target.value }));
+    } else if (e.target.name === "type") {
+      setSearchTerm((prev) => ({ ...prev, type: e.target.value }));
+    } else {
+      // For other fields, use spread syntax as before
+      setSearchTerm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    }
+  };
+
+  //filter
+  const filterErrands = commissions.filter((commission) => {
+    const type = commission.commissionType
+      .toLowerCase()
+      .includes(searchTerm.type.toLowerCase());
+    const termMatch = commission.commissionTitle
+      .toLowerCase()
+      .includes(searchTerm.term.toLowerCase());
+    // const termMatch2 = commission.userFirstname
+    //   .toLowerCase()
+    //   .includes(searchTerm.term.toLowerCase());
+    // const termMatch3 = commission.userLastname
+    //   .toLowerCase()
+    //   .includes(searchTerm.term.toLowerCase());
+    const status = commission.commissionStatus.includes(searchTerm.status);
+
+    return type && termMatch && status;
+  });
+
   // Pagination functions
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = commissions.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filterErrands.slice(indexOfFirstItem, indexOfLastItem);
 
   //need front end
   return (
@@ -137,8 +116,9 @@ const CommissionList = () => {
                 <input
                   type="text"
                   placeholder="Search..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  value={searchTerm.term}
+                  name="term"
+                  onChange={handleChange}
                 />
                 <button type="submit">
                   <i className="fa fa-search"></i>
@@ -146,8 +126,9 @@ const CommissionList = () => {
               </div>
               <div className="filter">
                 <select
-                  onChange={(e) => setStatus(e.target.value)}
-                  value={status}
+                  onChange={handleChange}
+                  name="status"
+                  value={searchTerm.status}
                 >
                   <option value="">All Status</option>
                   <option value="Taken">Pending</option>
@@ -173,7 +154,11 @@ const CommissionList = () => {
               data={currentItems.map((commissionItem) => [
                 commissionItem.commissionID,
                 commissionItem.commissionTitle,
+                commissionItem.commissionType,
                 new Date(commissionItem.DatePosted).toISOString().substr(0, 10),
+                new Date(commissionItem.commissionDeadline)
+                  .toISOString()
+                  .substr(0, 10),
                 commissionItem.commissionStatus,
                 <React.Fragment>
                   <ButtonGroup
