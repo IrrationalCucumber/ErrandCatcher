@@ -1,3 +1,4 @@
+
 .footer-container {
     background-color: #3d342f;
     padding: 1rem 0 1rem 0;
@@ -5,6 +6,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    bottom: 0;
+    left: 0;
+  position: stick;
+  width: 100%;
 }
 
 .footer-subscription{
