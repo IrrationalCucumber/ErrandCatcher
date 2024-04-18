@@ -44,6 +44,7 @@ import Verification from "./pages/Verification";
 import ErrandPage from "./pages/ErrandPage";
 import ViewProfile from "./pages/ViewProfile";
 import SearchPage from "./pages/SearchPage";
+import RequestPage from "./pages/admin/Request/RequestPage";
 
 function App() {
   return (
@@ -88,6 +89,7 @@ function App() {
           <Route path="/accounts/:userID" element={<AccountList />} />
           <Route path="/add" exact Component={AddAccount} />
           <Route path="/map/:id" element={<Map />} />
+          <Route path="/request/:id" element={<RequestPage />} />
           <Route path="/admin-home/:userID" element={<AdminHome />} />
           <Route
             path="/commission-list/:userID"
