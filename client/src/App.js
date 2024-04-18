@@ -5,21 +5,21 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import Home from "./pages/Home";
-import Verification from "./pages/Verification";
+import Verification from "./pages/profile/Verification";
 import Notification from "./pages/Notification";
 import testpage from "./pages/testpage";
 //import "./style.css";
 //DISPLAY
 import Landing from "./pages/Landing";
 import Menu from "./pages/Menu";
-import ErrandPage from "./pages/ErrandPage";
-import ViewProfile from "./pages/ViewProfile";
-import ViewCommission from "./pages/ViewCommission";
+import ErrandPage from "./pages/errand  views/ErrandPage";
+import ViewProfile from "./pages/profile/ViewProfile";
+import ViewCommission from "./pages/errand  views/ViewCommission";
 //UPDATE/REGISTER
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp/Signup";
-import UpdateAccount from "./pages/UpdateAccount";
-import Profile from "./pages/Profile";
+import UpdateAccount from "./pages/profile/UpdateAccount";
+import Profile from "./pages/profile/Profile";
 //ADMIN Routes
 import AccountList from "./pages/admin/AccountList";
 import AddAccount from "./pages/admin/AddAccount";
@@ -34,11 +34,11 @@ import Application from "./pages/catcher/CatcherApplication";
 import CatcherCommission from "./pages/catcher/CatcherCommissionPage";
 //EMPLOYER Routes
 import EmployerHome from "./pages/employer/EmployerHome";
-import PostCommission from "./pages/employer/PostCommission";
+import PostCommission from "./pages/errand  views/PostCommission";
 import EmployerCommissions from "./pages/employer/EmployerCommissionList";
 import EmployerApplicants from "./pages/employer/EmployerApplicants";
 import EmployerMap from "./pages/employer/EmployerMap";
-import UpdateCommission from "./pages/employer/UpdateCommission";
+import UpdateCommission from "./pages/errand  views/UpdateCommission";
 //SEARCH/ CATEGORY Routes
 import Transportation from "./pages/Services/Transpo";
 import HomeServices from "./pages/Services/HomeServices";
