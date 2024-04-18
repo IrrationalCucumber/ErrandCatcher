@@ -4,12 +4,13 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 //import { Button } from "./NavButton";
 //import "./Navbar.css";
-//import { useAuth } from "./AuthContext";
+import { useAuth } from "../AuthContext";
 import NotificationIcon from "./notif-icon";
 import NavDropdown from "./NavDropdown";
 import axios from "axios";
 
 function Navbar(props) {
+  const { user } = useAuth();
   //change the state of the menu
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
@@ -35,34 +36,7 @@ function Navbar(props) {
 
   //carry id to other page
   //pathname to array from
-  const location = useLocation();
-  const userID = location.pathname.split("/")[2];
-  //REVERT THIS FOR PRIVATEROUTE
-  // log uot user
-  // const { logout } = useAuth();
-  // const navigate = useNavigate();
-  // const handleLogout = () => {
-  //   logout();
-  //   navigate("/");
-  // };
-
-  //APS - 14/03/2024
-  //display username
-  const [username, setUsername] = useState("");
-  useEffect(() => {
-    const fetchName = async () => {
-      axios
-        .get(`http://localhost:8800/username/${userID}`)
-        .then((response) => {
-          //console.log(response.data[0].username);
-          setUsername(response.data);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    };
-    fetchName();
-  }, [userID]);
+  const userID = user.userID;
 
   const [notifCount, setNotifCount] = useState("");
   useEffect(() => {
@@ -78,22 +52,26 @@ function Navbar(props) {
   }, [userID]);
 
   const handleLogout = () => {
-    // Perform logout logic here
-    console.log("Logging out...");
-    // Redirect to the sign-in page
-    navigate("/sign-in");
+    // log uot user
+    // const navigate = useNavigate();
+    // const handleLogout = () => {
+    //logout();
+    //   navigate("/");
+    // };
   };
   return (
     <>
       <nav className="navbar">
         <div className="navbar-container justify-center">
           <Link
-            to={`/home/${userID}`}
+            // to={`/home/${userID}`}
+            to={`dashboard/home`}
             className="navbar-logo"
             onClick={closeMobileMenu}
           >
             <Link
-              to={`/home/${userID}`}
+              //to={`/home/${userID}`}
+              to={`/dashboard/home`}
               className="navbar-logo"
               onClick={closeMobileMenu}
             >
@@ -166,7 +144,7 @@ function Navbar(props) {
               >
                 {button ? (
                   <NotificationIcon
-                    to={`/notifications/${userID}`}
+                    to={`/notifications`}
                     hasNotification={true}
                     onClick={() => console.log("Notification clicked!")}
                     style={{ color: "white" }}
@@ -175,7 +153,7 @@ function Navbar(props) {
                 ) : (
                   <div>
                     <Link
-                      to={`/notifications/${userID}`}
+                      to={`/notifications`}
                       className="nav-links"
                       onClick={closeMobileMenu}
                       style={{ fontSize: "16px" }}
@@ -189,12 +167,12 @@ function Navbar(props) {
             <li className="nav-item">
               {button ? (
                 <div className="dropdown-container">
-                  <NavDropdown name={username.toUpperCase()} />
+                  <NavDropdown name={user.username.toUpperCase()} />
                 </div>
               ) : (
                 <div className="profile-signout-container">
                   <Link
-                    to={`/profile/${userID}`}
+                    to={`/profile/me`}
                     className="nav-links"
                     onClick={closeMobileMenu}
                     style={{ fontSize: "16px" }}

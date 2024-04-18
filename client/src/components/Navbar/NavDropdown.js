@@ -15,7 +15,7 @@ function NavDropdown(props) {
   const location = useLocation();
   const userID = location.pathname.split("/")[2];
 
-  const profileLink = `/profile/${userID}`; // URL for the profile page
+  const profileLink = `/profile/me`; // URL for the profile page
   const signOutLink = "/sign-in"; // URL for the sign out page
 
   return (
@@ -70,6 +70,7 @@ function NavDropdown(props) {
             My Profile
           </Link>
           <Link
+            onClick={props.onClick}
             to={signOutLink}
             style={{
               display: "block",
