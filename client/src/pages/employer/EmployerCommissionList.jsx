@@ -1,8 +1,8 @@
 //03-10-24 updated w/ filter
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import NavBar from "../../components/Navbar.js";
+import NavBar from "../../components/Navbar/Navbar.js";
 import "./ecommission.css";
 import Table from "../../components/Table.js";
 import Pagination from "../../components/Pagination.js";
@@ -10,6 +10,7 @@ import Button from "@mui/joy/Button";
 import ButtonGroup from "@mui/joy/ButtonGroup";
 import IconButton from "@mui/joy/IconButton";
 //import Settings from "@mui/icons-material/Settings";
+import { useAuth } from "../../components/AuthContext.js";
 
 const CommissionList = () => {
   const [commissions, setCommissions] = useState([]);
@@ -18,15 +19,12 @@ const CommissionList = () => {
     type: "",
     status: "",
   });
-
-  const location = useLocation();
-
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const userID = user.userID;
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
-
-  const userID = location.pathname.split("/")[2];
-  //pathname to array from
 
   //handle error
   //rretrieve data
@@ -122,16 +120,6 @@ const CommissionList = () => {
   //need front end
   return (
     <div>
-      <NavBar
-        page1="HOME"
-        home={`/home/${userID}`}
-        page2="COMMISSIONS"
-        commissionList={`/commissions/${userID}`}
-        page3="APPLICANTS"
-        applicants={`/applicants/${userID}`}
-        map={`/e-map/${userID}`}
-        page4="MAP"
-      />
       <div className="Commission-page-container">
         <div className="Commission-page">
           <h1>Commission List</h1>
@@ -195,7 +183,7 @@ const CommissionList = () => {
                     </Button>
                     <Button>
                       <Link
-                        to={`/view-errand/${userID}/${commissionItem.commissionID}`}
+                        to={`/errand/update-commission/${commissionItem.commissionID}`}
                       >
                         View
                       </Link>
@@ -215,10 +203,11 @@ const CommissionList = () => {
           />
         )}
       </div>
-      <button className="add-errand">
-        <Link to={`/post-commission/${userID}`}>
-          <i className="fa-solid fa-plus"></i> Add Errand
-        </Link>
+      <button
+        className="add-errand"
+        onClick={(e) => navigate(`/errand/post-commission`)}
+      >
+        <i className="fa-solid fa-plus"></i> Add Errand
       </button>
     </div>
   );

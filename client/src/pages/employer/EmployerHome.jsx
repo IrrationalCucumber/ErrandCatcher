@@ -1,7 +1,7 @@
 //added Sticky button
 //03-27-24 updated the design
 import React from "react";
-import NavBar from "../../components/Navbar";
+import NavBar from "../../components/Navbar/Navbar";
 //import HeroSection from '../components/HeroSection'
 import { useLocation } from "react-router-dom";
 import Menu from "../Menu";

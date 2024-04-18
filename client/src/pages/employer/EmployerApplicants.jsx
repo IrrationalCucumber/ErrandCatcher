@@ -8,18 +8,19 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import NavBar from "../../components/Navbar";
+import NavBar from "../../components/Navbar/Navbar";
 import Table from "../../components/Table";
 import "./applicant.css";
 import Pagination from "../../components/Pagination";
 import ProfileModal from "../../components/Profile Modal/ProfileModal";
+import { useAuth } from "../../components/AuthContext";
 
 const EmployerApplicants = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const { user } = useAuth();
   //pathname to array from
   //get the id
-  const userID = location.pathname.split("/")[2];
+  const userID = user.userID;
   //const [searchTerm, setSearchTerm] = useState('');
   const [applicants, setApplicants] = useState([]);
 
@@ -248,16 +249,6 @@ const EmployerApplicants = () => {
   //console.log(applicants);
   return (
     <div>
-      <NavBar
-        page1="HOME"
-        home={`/home/${userID}`}
-        page2="COMMISSIONS"
-        commissionList={`/commissions/${userID}`}
-        page3="APPLICANTS"
-        applicants={`/applicants/${userID}`}
-        map={`/e-map/${userID}`}
-        page4="MAP"
-      />
       <div className="applicants">
         <h1>APPLICANTS</h1>
         <div className="search">
