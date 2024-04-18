@@ -1,6 +1,6 @@
 import React from "react";
-import Map from "../components/Map";
-import Navbar from "../components/Navbar";
+import Map from "../../components/Map";
+import Navbar from "../../components/Navbar";
 import { useLocation } from "react-router-dom";
 
 function CommissionMap() {

@@ -5,9 +5,9 @@ import maplibregl from "maplibre-gl";
 //import 'maplibre-gl/dist/maplibre-gl.css';
 import axios from "axios";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import Navbar from "../components/NavBarPage";
-import "./Commission.css"; // Import your CSS file
-import ErrandInputs from "../components/ErrandInputs";
+import Navbar from "../../components/NavBarPage";
+import "../Commission.css"; // Import your CSS file
+import ErrandInputs from "../../components/ErrandInputs";
 //image --ash
 
 const PostCommission = () => {

@@ -1,12 +1,9 @@
-//gi tangtang nako ang herosection for homepageee
-
 import React from "react";
-import NavBar from "../components/Navbar";
-//import HeroSection from "../components/HeroSection";
+import Map from "../../components/Map.js";
+import NavBar from "../../components/Navbar.js";
 import { useLocation } from "react-router-dom";
-import Menu from "./Menu";
 
-function CatcherHome() {
+function CatcherMap() {
   //get the id from the address bar
   const location = useLocation();
   const userID = location.pathname.split("/")[2];
@@ -14,7 +11,7 @@ function CatcherHome() {
     <div>
       <NavBar
         page1="HOME"
-        home={`/c-home/${userID}`}
+        home={`/home/${userID}`}
         page2="COMMISSIONS"
         commissionList={`/catcher-errands/${userID}`}
         page3="APPLICATIONS"
@@ -22,11 +19,9 @@ function CatcherHome() {
         map={`/c-map/${userID}`}
         page4="MAP"
       />
-
-      <Menu />
-      {/* <Footer/> */}
+      <Map />
     </div>
   );
 }
 
-export default CatcherHome;
+export default CatcherMap;

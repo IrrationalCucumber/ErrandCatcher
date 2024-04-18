@@ -12,7 +12,7 @@ const SignIn = () => {
   const [userID, setUserID] = useState(""); //var for id
   const [errorMessage, setErrorMessage] = useState(""); //error message
   const [rememberMe, setRememberMe] = useState(false); //remember me function
-  // const { login } = useAuth(); // Get the login function from useAut
+  const { updateUser } = useAuth(); // Get the login function from useAut
 
   //remeber me function
   const handleRememberMeChange = (e) => {
@@ -36,8 +36,13 @@ const SignIn = () => {
 
       //revert login() function for PrivateBrowser
       if (user != null) {
-        setUserID(user.userID);
-        navigate(`/home/${user.userID}`);
+        const userData = {
+          username: user.username,
+          userID: user.userID,
+          userType: user.accountType,
+        };
+        updateUser(userData);
+        navigate(`/dashboard/home/${user.userID}`);
         //login();
       } else {
         setErrorMessage("Invalid password/username");

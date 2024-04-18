@@ -8,11 +8,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import NavBar from "../components/Navbar";
-import Table from "../components/Table";
+import NavBar from "../../components/Navbar";
+import Table from "../../components/Table";
 import "./applicant.css";
-import Pagination from "../components/Pagination";
-import ProfileModal from "../components/Profile Modal/ProfileModal";
+import Pagination from "../../components/Pagination";
+import ProfileModal from "../../components/Profile Modal/ProfileModal";
 
 const EmployerApplicants = () => {
   const navigate = useNavigate();

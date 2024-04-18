@@ -2,9 +2,9 @@
 //
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Navbar from "../components/Navbar";
-import Table from "../components/Table";
-import Pagination from "../components/Pagination";
+import Navbar from "../../components/Navbar";
+import Table from "../../components/Table";
+import Pagination from "../../components/Pagination";
 import "./commissionpage.css";
 import { useLocation } from "react-router-dom";
 

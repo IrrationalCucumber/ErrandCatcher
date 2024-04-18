@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import "../style.css";
-import Navbar from "../components/NavBarPage";
+import "../../style.css";
+import Navbar from "../../components/NavBarPage";
 
 const ApplyCommission = () => {
   const [commission, setCommission] = useState({

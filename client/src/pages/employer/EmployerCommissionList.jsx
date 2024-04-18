@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
-import NavBar from "../components/Navbar.js";
+import NavBar from "../../components/Navbar.js";
 import "./ecommission.css";
-import Table from "../components/Table.js";
-import Pagination from "../components/Pagination.js";
+import Table from "../../components/Table.js";
+import Pagination from "../../components/Pagination.js";
 import Button from "@mui/joy/Button";
 import ButtonGroup from "@mui/joy/ButtonGroup";
 import IconButton from "@mui/joy/IconButton";

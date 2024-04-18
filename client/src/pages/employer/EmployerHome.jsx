@@ -1,14 +1,14 @@
 //added Sticky button
 //03-27-24 updated the design
 import React from "react";
-import NavBar from "../components/Navbar";
+import NavBar from "../../components/Navbar";
 //import HeroSection from '../components/HeroSection'
 import { useLocation } from "react-router-dom";
-import Menu from "./Menu";
-import StickyButton from "../components/Sticky Button/StickyButton";
-import EmployerCard from '../Employer Cards/EmployerCards'
-import Cards from '../components/Cards'
-import Footer from "../components/Footer";
+import Menu from "../Menu";
+import StickyButton from "../../components/Sticky Button/StickyButton";
+import EmployerCard from "../../Employer Cards/EmployerCards";
+import Cards from "../../components/Cards";
+import Footer from "../../components/Footer";
 
 function EmployerHome() {
   //carry id to other page
@@ -29,13 +29,23 @@ function EmployerHome() {
         map={`/e-map/${userID}`}
       />
 
-      <EmployerCard/>
+      <EmployerCard />
       <div>
-        <h2 className="recently-posted" style={{borderBottom: "1px solid gray", fontSize:"18px", paddingTop:"60px", paddingLeft: "20px", color:"Black"}}>Recently Posted</h2>
+        <h2
+          className="recently-posted"
+          style={{
+            borderBottom: "1px solid gray",
+            fontSize: "18px",
+            paddingTop: "60px",
+            paddingLeft: "20px",
+            color: "Black",
+          }}
+        >
+          Recently Posted
+        </h2>
         {/* Add your component or content for displaying recently posted items here */}
-        <Cards/>
+        <Cards />
       </div>
-
 
       {/* <Menu /> */}
 
@@ -44,8 +54,7 @@ function EmployerHome() {
         buttonText="Post Errand"
         destination={`/post-commission/${userID}`}
       />
-      <Footer/>
-
+      <Footer />
     </div>
   );
 }

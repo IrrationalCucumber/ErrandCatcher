@@ -7,9 +7,9 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Navbar from "../components/Navbar";
-import Table from "../components/Table";
-import Pagination from "../components/Pagination";
+import Navbar from "../../components/Navbar";
+import Table from "../../components/Table";
+import Pagination from "../../components/Pagination";
 import "./application.css";
 
 function Application() {

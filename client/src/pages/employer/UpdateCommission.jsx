@@ -3,10 +3,10 @@ import React, { useRef, useEffect, useState } from "react";
 import maplibregl from "maplibre-gl";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 //import "../style.css";
-import ErrandInputs from "../components/ErrandInputs";
-import Navbar from "../components/NavBarPage";
-import "./Commission.css"; // Import your CSS file
-import Modals from "../components/Modals";
+import ErrandInputs from "../../components/ErrandInputs";
+import Navbar from "../../components/NavBarPage";
+import "../Commission.css"; // Import your CSS file
+import Modals from "../../components/Modals";
 
 const UpdateCommission = () => {
   const [commission, setCommission] = useState({

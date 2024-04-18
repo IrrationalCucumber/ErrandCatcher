@@ -4,46 +4,49 @@ import {
   Routes,
   createBrowserRouter,
 } from "react-router-dom";
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp/Signup";
-import Profile from "./pages/Profile";
-import AccountList from "./pages/admin/AccountList";
-import AddAccount from "./pages/admin/AddAccount";
-import PostCommission from "./pages/PostCommission";
-import CommissionList from "./pages/admin/CommissionList";
 import Home from "./pages/Home";
-import UpdateAccount from "./pages/UpdateAccount";
-import UpdateCommission from "./pages/UpdateCommission";
-//import "./style.css";
-import CatcherHome from "./pages/CatcherHome";
-import EmployerHome from "./pages/EmployerHome";
-import ViewCommission from "./pages/ViewCommission";
-import EmployerCommissions from "./pages/EmployerCommissionList";
-import AdminHome from "./pages/admin/AdminHome";
-import ApplyCommission from "./pages/ApplyCommission";
-import EmployerApplicants from "./pages/EmployerApplicants";
-//MAP ROUTES
-import Map from "./pages/admin/CommissionMap";
-import CatcherMap from "./pages/CatcherMap";
-import EmployerMap from "./pages/EmployerMap";
+import Verification from "./pages/Verification";
 import Notification from "./pages/Notification";
+import testpage from "./pages/testpage";
+//import "./style.css";
+//DISPLAY
 import Landing from "./pages/Landing";
 import Menu from "./pages/Menu";
-import testpage from "./pages/testpage";
-import Application from "./pages/CatcherApplication";
-import CatcherCommission from "./pages/CatcherCommissionPage";
-//private route
-// import { AuthProvider } from "./components/AuthContext";
-// import PrivateRoute from "./components/PrivateRoute";
-
+import ErrandPage from "./pages/ErrandPage";
+import ViewProfile from "./pages/ViewProfile";
+import ViewCommission from "./pages/ViewCommission";
+//UPDATE/REGISTER
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp/Signup";
+import UpdateAccount from "./pages/UpdateAccount";
+import Profile from "./pages/Profile";
+//ADMIN Routes
+import AccountList from "./pages/admin/AccountList";
+import AddAccount from "./pages/admin/AddAccount";
+import CommissionList from "./pages/admin/CommissionList";
+import AdminHome from "./pages/admin/AdminHome";
+import Map from "./pages/admin/CommissionMap";
+//CATCHER Routes
+import CatcherHome from "./pages/catcher/CatcherHome";
+import CatcherMap from "./pages/catcher/CatcherMap";
+import ApplyCommission from "./pages/catcher/ApplyCommission";
+import Application from "./pages/catcher/CatcherApplication";
+import CatcherCommission from "./pages/catcher/CatcherCommissionPage";
+//EMPLOYER Routes
+import EmployerHome from "./pages/employer/EmployerHome";
+import PostCommission from "./pages/employer/PostCommission";
+import EmployerCommissions from "./pages/employer/EmployerCommissionList";
+import EmployerApplicants from "./pages/employer/EmployerApplicants";
+import EmployerMap from "./pages/employer/EmployerMap";
+import UpdateCommission from "./pages/employer/UpdateCommission";
+//SEARCH/ CATEGORY Routes
 import Transportation from "./pages/Services/Transpo";
 import HomeServices from "./pages/Services/HomeServices";
 import Delivery from "./pages/Services/Delivery";
-import Verification from "./pages/Verification";
-import ErrandPage from "./pages/ErrandPage";
-import ViewProfile from "./pages/ViewProfile";
 import SearchPage from "./pages/SearchPage";
-
+//private route
+// import { AuthProvider } from "./components/AuthContext";
+// import PrivateRoute from "./components/PrivateRoute";
 function App() {
   return (
     <div className="App">
