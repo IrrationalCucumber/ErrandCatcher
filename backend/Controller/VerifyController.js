@@ -76,10 +76,10 @@ const verifyController = {
   //update status of request
   putUpdateRequest: (req, res) => {
     const id = req.params.id;
-    const status = "Approved";
-    Verify.putUpdateRequest(id, status, date, (error) => {
+    const status = "Complete";
+    Verify.putUpdateRequest(id, status, (error) => {
       if (error) {
-        console.error("Error updating Transaction:", error);
+        console.error("Error updating Request:", error);
         res
           .status(500)
           .json({ error: "An error occurred while updating new Request" });
