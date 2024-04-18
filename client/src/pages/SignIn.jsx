@@ -40,9 +40,10 @@ const SignIn = () => {
           username: user.username,
           userID: user.userID,
           userType: user.accountType,
+          status: user.accountStatus,
         };
         updateUser(userData);
-        navigate(`/dashboard/home/${user.userID}`);
+        navigate(`/dashboard/home/`);
         //login();
       } else {
         setErrorMessage("Invalid password/username");
