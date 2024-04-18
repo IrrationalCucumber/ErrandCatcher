@@ -76,6 +76,7 @@ const User = {
   },
   //Update user accountStatus
   putChangeStatusById: (id, status, callback) => {
+    console.log(id);
     db.query(
       `UPDATE useraccount SET accountStatus = ? WHERE userID =?`,
       [status, id],
