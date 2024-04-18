@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
-import NavBar from "../../components/Navbar.js";
 import "./commissionlist.css";
 import Pagination from "../../components/Pagination.js";
 import Table from "../../components/Table.js";
@@ -94,7 +93,7 @@ const CommissionList = () => {
   //need front end
   return (
     <div>
-      <NavBar
+      {/* <NavBar
         page1="HOME"
         home={`/admin-home/${userID}`}
         // {`admin-home/${userID}`}
@@ -104,7 +103,7 @@ const CommissionList = () => {
         applicants={`/commission-list/${userID}`}
         page4="MAP"
         map={`/map/${userID}`}
-      />
+      /> */}
       <div className="commissions">
         <h1
           style={{
@@ -227,9 +226,7 @@ const CommissionList = () => {
               <i class="fa-solid fa-trash"></i>
               </button> */}
               <button className="update">
-                <Link
-                  to={`/view-commission/${userID}/${Commission.commissionID}`}
-                >
+                <Link to={`/errand/view-errand/${Commission.commissionID}`}>
                   <i class="fa-solid fa-eye"></i>
                 </Link>
               </button>

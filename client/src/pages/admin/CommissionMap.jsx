@@ -1,6 +1,6 @@
 import React from "react";
 import Map from "../../components/Map";
-import NavBar from "../../components/Navbar";
+import NavBar from "../../components/Navbar/Navbar";
 import { useLocation } from "react-router-dom";
 
 /** update navbar for map
@@ -12,12 +12,12 @@ import { useLocation } from "react-router-dom";
 
 function CommissionMap() {
   //carry id to other page
-  const location = useLocation();
-  const userID = location.pathname.split("/")[2];
+  // const location = useLocation();
+  // const userID = location.pathname.split("/")[2];
   //pathname to array from
   return (
     <div>
-      <NavBar
+      {/* <NavBar
         page1="HOME"
         home={`/admin-home/${userID}`}
         // {`admin-home/${userID}`}
@@ -27,7 +27,7 @@ function CommissionMap() {
         applicants={`/commission-list/${userID}`}
         page4="MAP"
         map={`/map/${userID}`}
-      />
+      /> */}
       <Map />
     </div>
   );

@@ -1,11 +1,12 @@
 //updated
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
-import NavBar from "../../components/Navbar";
+import NavBar from "../../components/Navbar/Navbar";
 import "./accountlist.css";
 import Pagination from "../../components/Pagination";
 import Table from "../../components/Table";
+import { useAuth } from "../../components/AuthContext";
 
 const AccountList = () => {
   const [accounts, setAccounts] = useState([]);
@@ -14,11 +15,8 @@ const AccountList = () => {
     type: "",
     status: "",
   });
-  // const [type, setType] = useState("");
-  // const [status, setStatus] = useState("");
-  // const [NoSearch, setNoSearch] = useState(true);
-  const location = useLocation();
-  const userID = location.pathname.split("/")[2];
+  // const { user } = useAuth();
+  // const userID = user.userID;
 
   //pagination --Ash
   const [currentPage, setCurrentPage] = useState(1);
@@ -127,7 +125,7 @@ const AccountList = () => {
   //need filter
   return (
     <div>
-      <NavBar
+      {/* <NavBar
         page1="HOME"
         home={`/admin-home/${userID}`}
         // {`admin-home/${userID}`}
@@ -137,7 +135,7 @@ const AccountList = () => {
         applicants={`/commission-list/${userID}`}
         page4="MAP"
         map={`/map/${userID}`}
-      />
+      /> */}
 
       <h1
         className="header"
@@ -226,7 +224,7 @@ const AccountList = () => {
           paginate={paginate}
         />
       </div>
-      <Link to="/add" style={{ textDecoration: "none" }}>
+      <Link to="/profile/add" style={{ textDecoration: "none" }}>
         <button
           style={{
             marginLeft: "20px",

@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import Navbar from "../../components/NavBarPage";
 
 const AddAccount = () => {
   const [account, setAccount] = useState({
@@ -67,103 +66,104 @@ const AddAccount = () => {
   console.log(account);
   return (
     <div>
-    <Navbar />
-    <div style={styles.container}>
-      <h1 style={styles.heading}>NEW ACCOUNT</h1>
-      <form onSubmit={handleClick} style={styles.form}>
-        <input
-          type="text"
-          placeholder="username"
-          onChange={handleChange}
-          name="username"
-          style={styles.input}
-          required
-        />
-        <input
-          type="text"
-          placeholder="password"
-          onChange={handleChange}
-          name="password"
-          style={styles.input}
-          required
-        />
-        <input
-          type="text"
-          placeholder="first name"
-          onChange={handleChange}
-          name="fname"
-          style={styles.input}
-          required
-        />
-        <input
-          type="text"
-          placeholder="last name"
-          onChange={handleChange}
-          name="lname"
-          style={styles.input}
-          required
-        />
-        <label htmlFor="gender" style={styles.input}>
-          Gender
-          <select
-            name="gender"
+      <div style={styles.container}>
+        <h1 style={styles.heading}>NEW ACCOUNT</h1>
+        <form onSubmit={handleClick} style={styles.form}>
+          <input
+            type="text"
+            placeholder="username"
             onChange={handleChange}
-            value={account.gender}
+            name="username"
+            style={styles.input}
+            required
+          />
+          <input
+            type="text"
+            placeholder="password"
+            onChange={handleChange}
+            name="password"
+            style={styles.input}
+            required
+          />
+          <input
+            type="text"
+            placeholder="first name"
+            onChange={handleChange}
+            name="fname"
+            style={styles.input}
+            required
+          />
+          <input
+            type="text"
+            placeholder="last name"
+            onChange={handleChange}
+            name="lname"
+            style={styles.input}
+            required
+          />
+          <label htmlFor="gender" style={styles.input}>
+            Gender
+            <select
+              name="gender"
+              onChange={handleChange}
+              value={account.gender}
+              style={styles.select}
+              required
+            >
+              <option value="">Choose gender....</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </label>
+          <input
+            type="text"
+            placeholder="contact number"
+            onChange={handleChange}
+            name="contact"
+            style={styles.input}
+            required
+          />
+          <input
+            type="number"
+            placeholder="Age"
+            onChange={handleChange}
+            name="age"
+            style={styles.input}
+            required
+          />
+          <input
+            type="email"
+            placeholder="Email address"
+            onChange={handleChange}
+            name="email"
+            style={styles.input}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Address"
+            onChange={handleChange}
+            name="address"
+            style={styles.input}
+            required
+          />
+          <select
+            name="type"
+            onChange={handleChange}
+            value={account.type}
             style={styles.select}
             required
           >
-            <option value="">Choose gender....</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            <option value="">Choose Type</option>
+            <option value="Employer">Employer</option>
+            <option value="Catcher">Catcher</option>
           </select>
-        </label>
-        <input
-          type="text"
-          placeholder="contact number"
-          onChange={handleChange}
-          name="contact"
-          style={styles.input}
-          required
-        />
-        <input
-          type="number"
-          placeholder="Age"
-          onChange={handleChange}
-          name="age"
-          style={styles.input}
-          required
-        />
-        <input
-          type="email"
-          placeholder="Email address"
-          onChange={handleChange}
-          name="email"
-          style={styles.input}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Address"
-          onChange={handleChange}
-          name="address"
-          style={styles.input}
-          required
-        />
-        <select
-          name="type"
-          onChange={handleChange}
-          value={account.type}
-          style={styles.select}
-          required
-        >
-          <option value="">Choose Type</option>
-          <option value="Employer">Employer</option>
-          <option value="Catcher">Catcher</option>
-        </select>
 
-        <button type="submit" style={styles.button}>Add Account</button>
-      </form>
-    </div>
+          <button type="submit" style={styles.button}>
+            Add Account
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import NavBar from "../../components/Navbar";
+import NavBar from "../../components/Navbar/Navbar";
 import { useLocation } from "react-router-dom";
 import Menu from "../Menu";
 //import Footer from '../components/Footer'

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Cards from "../components/CatCards";
 import axios from "axios";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/Navbar/Navbar";
+import { useAuth } from "../components/AuthContext";
 
 function SearchPage() {
   const [commissions, setCommissions] = useState([]);
   // const navigate = useNavigate();
+  //  const { user } = useAuth();
   const location = useLocation();
-  const userID = location.pathname.split("/")[2];
-  const term = location.pathname.split("/")[3];
+  const term = location.pathname.split("/")[2];
   const [message, setMessage] = useState("");
   // const [searchQuery, setSearchQuery] = useState("");
   //filter varibales
