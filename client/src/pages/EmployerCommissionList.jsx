@@ -123,8 +123,8 @@ const CommissionList = () => {
   return (
     <div>
       <NavBar
-        page1="HOME"
-        home={`/home/${userID}`}
+        page1="ONGOING"
+        one={`/ongoing/${userID}`}
         page2="COMMISSIONS"
         commissionList={`/commissions/${userID}`}
         page3="APPLICANTS"
