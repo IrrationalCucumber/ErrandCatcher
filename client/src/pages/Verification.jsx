@@ -107,13 +107,14 @@ function Verification() {
               required
             ></input>
           </div>
+
           <div className="input-rows">
-            <label className="label">Gender</label>
-            <select className="select">
-              <option value="">Choose gender...</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
+            <label className="label">Email Address</label>
+            <input
+              type="text"
+              placeholder="Enter your Email Address"
+              required
+            ></input>
           </div>
 
           <div className="input-rows">
@@ -122,9 +123,19 @@ function Verification() {
               type="number"
               value={age}
               onChange={handleAgeChange}
-              placeholder="Enter your age"
+              placeholder=""
               required
             ></input>
+
+            <label className="label">Gender</label>
+            <select className="select">
+              <option value=""></option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+
+          <div className="input-rows">
             <label className="label">Birthdate</label>
             <input type="date" required></input>
           </div>
@@ -145,16 +156,18 @@ function Verification() {
               required
             ></input>
           </div>
-          <div className="input-rows">
-            <label className="label">Email Address</label>
-            <input
-              type="text"
-              placeholder="Enter your Email Address"
-              required
-            ></input>
-          </div>
+
           <div>
-            <button type="submit" onClick={handleNext}>
+            <button
+              type="submit"
+              onClick={handleNext}
+              style={{
+                margin: "20px",
+                padding: "10px",
+                width: "100px",
+                borderRadius: "5px",
+              }}
+            >
               Next
             </button>
           </div>
@@ -164,54 +177,83 @@ function Verification() {
     <div className="step">
       <h1>Upload Image</h1>
       <div className="form-group1">
-        {" "}
-        {/* Wrap the form with form-group */}
         <form className="form-container">
-          <div className="input-rows">
-            <label className="label2" htmlFor="fileInput1">
+          <div className="input-rows2">
+            <label
+              className="label2"
+              style={{ marginTop: "5px" }}
+              htmlFor="fileInput1"
+            >
               Upload your documents in here
             </label>
+            <p
+              style={{
+                marginBottom: "5px",
+                marginLeft: "10px",
+                fontSize: "10px",
+              }}
+            >
+              Upload your legal documents here
+            </p>
           </div>
-          <div className="input-rows">
+          <div className="input-rows2">
             <input type="file" id="fileInput1" accept="image/*" />
           </div>
-          <div className="input-rows">
-            <label className="label2" htmlFor="fileInput2">
+          <div className="input-rows2">
+            <label
+              className="label2"
+              style={{ marginTop: "20px" }}
+              htmlFor="fileInput2"
+            >
               Upload your image here
             </label>
+            <p
+              style={{
+                marginBottom: "5px",
+                marginLeft: "10px",
+                fontSize: "10px",
+              }}
+            >
+              Upload your identification card here
+            </p>
           </div>
-          <div className="input-rows">
-            <label htmlFor="">
-              FRONT ID:
-              <input
-                type="file"
-                id="file1"
-                name="image1"
-                accept="image/*"
-                onChange={handleImage}
-              />
-            </label>
+          <div className="input-rows2">
+            <input
+              type="file"
+              id="fileInput2"
+              name="image2"
+              accept="image/*"
+              onChange={handleImage}
+            />
+            <input
+              type="file"
+              id="fileInput2"
+              name="image2"
+              accept="image/*"
+              onChange={handleImage}
+            />
           </div>
-
-          <div className="input-rows">
-            <label htmlFor="">
-              BACK ID:
-              <input
-                type="file"
-                id="file2"
-                name="image2"
-                accept="image/*"
-                onChange={handleImage}
-              />
-            </label>
-          </div>
-
-          <button onClick={handleUpload}>UPLOAD</button>
           <div className="input-rows" style={{ justifyContent: "center" }}>
-            <button onClick={() => setCurrentStep(currentStep - 1)}>
+            <button
+              onClick={() => setCurrentStep(currentStep - 1)}
+              style={{
+                margin: "20px",
+                padding: "10px",
+                width: "100px",
+                borderRadius: "5px",
+              }}
+            >
               Prev
             </button>
-            <button onClick={() => setCurrentStep(currentStep + 1)}>
+            <button
+              onClick={() => setCurrentStep(currentStep + 1)}
+              style={{
+                margin: "20px",
+                padding: "10px",
+                width: "100px",
+                borderRadius: "5px",
+              }}
+            >
               Next
             </button>
           </div>
@@ -221,8 +263,12 @@ function Verification() {
 
     <div className="step">
       <form className="form-container">
-        <h1>Congratulation you are Verified!</h1>
-        <label>Explore the services in Errand Catcher</label>
+        <h1>Sending Verifification to the Admin!</h1>
+        <p
+          style={{ marginBottom: "5px", marginLeft: "150px", fontSize: "15px" }}
+        >
+          Explore the services in Errand Catcher
+        </p>
       </form>
     </div>,
   ];

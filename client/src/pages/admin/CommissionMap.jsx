@@ -21,9 +21,9 @@ function CommissionMap() {
         page1="HOME"
         home={`/admin-home/${userID}`}
         // {`admin-home/${userID}`}
-        page2="ACCOUNT LIST"
+        page2="ACCOUNTS"
         commissionList={`/accounts/${userID}`}
-        page3="COMMISSION LIST"
+        page3="ERRANDS"
         applicants={`/commission-list/${userID}`}
         page4="MAP"
         map={`/map/${userID}`}
