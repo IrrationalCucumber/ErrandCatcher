@@ -27,7 +27,7 @@ const Menu = () => {
         />
         <button
           onClick={(e) => {
-            navigate(`/search/${userID}/${searchQuery}`);
+            navigate(`/search/${searchQuery}`);
           }}
         >
           Search
@@ -37,7 +37,7 @@ const Menu = () => {
       <section className="Menu" id="Menu">
         <div className="box-container">
           <div className="box">
-            <Link to={`/HomeService/${userID}/${"HomeService"}`}>
+            <Link to={`/service/HomeService/${"HomeService"}`}>
               <button style={{ backgroundColor: "white" }}>
                 <img src="/images/img6.png" alt="" />
                 <div className="content">
@@ -47,7 +47,7 @@ const Menu = () => {
             </Link>
           </div>
           <div className="box">
-            <Link to={`/Transpo/${userID}/${"Transport"}`}>
+            <Link to={`/service/Transpo/${"Transport"}`}>
               <button style={{ backgroundColor: "white" }}>
                 <img src="/images/img4.png" alt="" />
                 <div className="content">
@@ -57,7 +57,7 @@ const Menu = () => {
             </Link>
           </div>
           <div className="box">
-            <Link to={`/Delivery/${userID}/${"Delivery"}`}>
+            <Link to={`/service/Delivery/${"Delivery"}`}>
               <button style={{ backgroundColor: "white" }}>
                 <img src="/images/img5.png" alt="" />
                 <div className="content">

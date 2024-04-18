@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import NavBar from "../components/Navbar";
+import NavBar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer";
 import axios from "axios";
 import "./Landing.css";
