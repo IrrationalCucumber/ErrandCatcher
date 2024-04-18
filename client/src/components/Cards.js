@@ -39,7 +39,7 @@ function Cards() {
                 text={commission.commissionTitle}
                 label={commission.commissionType}
                 location={commission.commissionLocation}
-                path={`/view-errand/${userID}/${commission.commissionID}`}
+                path={`/errand/view-errand/${commission.commissionID}`}
               />
             ))}
           </div>
