@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../Services/Transpo.css";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/Navbar/Navbar";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import CatCards from "../../components/CatCards";
@@ -64,7 +64,6 @@ const Transportation = () => {
 
   return (
     <>
-      <Navbar />
       <h1>Transportation</h1>
       <div className="search-bar">
         <input

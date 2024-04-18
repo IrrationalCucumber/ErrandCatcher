@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CatCards from "../../components/CatCards";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/Navbar/Navbar";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 
@@ -61,7 +61,6 @@ const Delivery = () => {
 
   return (
     <>
-      <Navbar />
       <div className="search-bar">
         <input
           type="text"

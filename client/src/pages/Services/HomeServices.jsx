@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/Navbar/Navbar";
 import CatCards from "../../components/CatCards";
 import axios from "axios";
 
@@ -66,7 +66,6 @@ const HomeServices = () => {
 
   return (
     <>
-      <Navbar />
       <h1>Home Services</h1>
       <div className="search-bar">
         <input
