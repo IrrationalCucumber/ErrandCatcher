@@ -55,8 +55,8 @@ const Home = () => {
         {type === "Catcher" && (
           <>
             <Navbar
-              page1="HOME"
-              home={`/home/${userID}`}
+              // page1="HOME"
+              // home={`/home/${userID}`}
               page2="COMMISSIONS"
               commissionList={`/catcher-errands/${userID}`}
               page3="APPLICATIONS"
