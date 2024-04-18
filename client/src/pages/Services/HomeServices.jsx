@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar/Navbar";
-import CatCards from "../../components/CatCards";
+import CatCards from "../../components/Cards/CatCards";
 import axios from "axios";
 
 const HomeServices = () => {

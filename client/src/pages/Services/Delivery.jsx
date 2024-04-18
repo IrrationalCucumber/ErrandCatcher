@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CatCards from "../../components/CatCards";
+import CatCards from "../../components/Cards/CatCards";
 import Navbar from "../../components/Navbar/Navbar";
 import { useLocation } from "react-router-dom";
 import axios from "axios";

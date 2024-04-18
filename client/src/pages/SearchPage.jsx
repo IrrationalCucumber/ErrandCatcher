@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import Cards from "../components/CatCards";
+import Cards from "../components/Cards/CatCards";
 import axios from "axios";
 import Navbar from "../components/Navbar/Navbar";
 import { useAuth } from "../components/AuthContext";

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Cards from "../components/Cards";
+import Cards from "../components/Cards/Cards";
 //  import NavBar from '../components/Navbar';
 //import Footer from "../components/Footer";
 import "./Menu.css";
