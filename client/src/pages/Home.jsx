@@ -70,15 +70,15 @@ const Home = () => {
         {type.toLocaleUpperCase() === "ADMIN" && (
           <>
             <Navbar
-              page1="HOME"
-              home={`/home/${userID}`}
+              page1="REQUESTS"
+              one={`/request/${userID}`}
               // {`admin-home/${userID}`}
               page2="ACCOUNTS"
               commissionList={`/accounts/${userID}`}
               page3="ERRANDS"
               applicants={`/commission-list/${userID}`}
               page4="MAP"
-              map={`/map`}
+              map={`/map/${userID}`}
             />
             <Menu />
           </>
