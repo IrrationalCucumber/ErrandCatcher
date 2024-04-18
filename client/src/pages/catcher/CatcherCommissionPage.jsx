@@ -2,12 +2,12 @@
 //
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/Navbar/Navbar";
 import Table from "../../components/Table";
 import Pagination from "../../components/Pagination";
 import "./commissionpage.css";
 import { useLocation } from "react-router-dom";
-
+import { useAuth } from "../../components/AuthContext";
 function CommissionPage() {
   const headers = ["DATE", "EMPLOYER", "ERRAND TITLE", "STATUS"];
   const [commissions, setCommissions] = useState([]);
@@ -23,8 +23,8 @@ function CommissionPage() {
   const [itemsPerPage] = useState(10);
 
   //getuserID
-  const location = useLocation();
-  const userID = location.pathname.split("/")[2];
+  const { user } = useAuth();
+  const userID = user.userID;
 
   useEffect(() => {
     const fetchAllCommission = async () => {
@@ -152,16 +152,6 @@ function CommissionPage() {
 
   return (
     <div>
-      <Navbar
-        page1="HOME"
-        home={`/home/${userID}`}
-        page2="COMMISSIONS"
-        commissionList={`/catcher-errands/${userID}`}
-        page3="APPLICATIONS"
-        applicants={`/my-application/${userID}`}
-        map={`/c-map/${userID}`}
-        page4="MAP"
-      />
       <div className="Commission-page-container">
         <div className="Commission-page">
           {" "}

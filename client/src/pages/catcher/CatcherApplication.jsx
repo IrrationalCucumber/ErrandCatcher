@@ -7,14 +7,15 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/Navbar/Navbar";
 import Table from "../../components/Table";
 import Pagination from "../../components/Pagination";
 import "./application.css";
+import { useAuth } from "../../components/AuthContext";
 
 function Application() {
-  const location = useLocation();
-  const userID = location.pathname.split("/")[2];
+  const { user } = useAuth();
+  const userID = user.userID;
   const [apply, setApply] = useState([]);
   //pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -188,16 +189,6 @@ function Application() {
 
   return (
     <div>
-      <Navbar
-        page1="HOME"
-        home={`/home/${userID}`}
-        page2="COMMISSIONS"
-        commissionList={`/catcher-errands/${userID}`}
-        page3="APPLICATIONS"
-        applicants={`/my-application/${userID}`}
-        map={`/c-map/${userID}`}
-        page4="MAP"
-      />
       <div className="application-container">
         <div className="application">
           <h1>Application</h1>

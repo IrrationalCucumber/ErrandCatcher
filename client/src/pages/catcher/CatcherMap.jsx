@@ -1,15 +1,11 @@
 import React from "react";
 import Map from "../../components/Map.js";
-import NavBar from "../../components/Navbar.js";
-import { useLocation } from "react-router-dom";
+import NavBar from "../../components/Navbar/Navbar.js";
 
 function CatcherMap() {
-  //get the id from the address bar
-  const location = useLocation();
-  const userID = location.pathname.split("/")[2];
   return (
     <div>
-      <NavBar
+      {/* <NavBar
         page1="HOME"
         home={`/home/${userID}`}
         page2="COMMISSIONS"
@@ -18,7 +14,7 @@ function CatcherMap() {
         applicants={`/my-application/${userID}`}
         map={`/c-map/${userID}`}
         page4="MAP"
-      />
+      /> */}
       <Map />
     </div>
   );
