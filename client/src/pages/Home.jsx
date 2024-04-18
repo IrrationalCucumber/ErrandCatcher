@@ -20,8 +20,8 @@ const Home = () => {
       try {
         const res = await axios.get(`http://localhost:8800/get-type/${userID}`);
         //console.log(res.data);
-        setType(res.data[0].accountType);
-        console.log(type);
+        setType(res.data);
+        //console.log(type);
       } catch (err) {
         console.log(err);
       }
@@ -50,7 +50,6 @@ const Home = () => {
               destination={`/post-commission/${userID}`}
             />
             <Cards />
-            <Footer />
           </>
         )}
         {type === "Catcher" && (
@@ -71,19 +70,20 @@ const Home = () => {
         {type.toLocaleUpperCase() === "ADMIN" && (
           <>
             <Navbar
+              page1="HOME"
+              home={`/home/${userID}`}
               // {`admin-home/${userID}`}
-              page2="ACCOUNT LIST"
-              commissionList={`/accounts`}
-              page3="COMMISSION LIST"
-              applicants={`/commission-list`}
+              page2="ACCOUNTS"
+              commissionList={`/accounts/${userID}`}
+              page3="ERRANDS"
+              applicants={`/commission-list/${userID}`}
               page4="MAP"
               map={`/map`}
-              pageButton="/sign-in"
-              button="SIGN OUT"
             />
             <Menu />
           </>
         )}
+        <Footer />
       </div>
     </>
   );

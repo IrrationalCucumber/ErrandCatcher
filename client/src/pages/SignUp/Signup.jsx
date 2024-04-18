@@ -128,7 +128,7 @@ const Signup = () => {
     e.preventDefault();
     try {
       account.dateCreated = getCurrentDate();
-      await axios.post("http://localhost:8800/signup", account); // new enpoint
+      await axios.post("http://localhost:8800/sign-up", account); // new enpoint
       alert("Success");
       navigate("/sign-in");
     } catch (err) {

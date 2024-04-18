@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import Navbar from "../components/NavBarPage";
+import Navbar from "../../components/NavBarPage";
 
 const AddAccount = () => {
   const [account, setAccount] = useState({

@@ -12,20 +12,43 @@ function Notification() {
   const location = useLocation();
   const userID = location.pathname.split("/")[2];
 
+  //setState for account type
+  const [type, setType] = useState("");
+  useEffect(() => {
+    const fetchType = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/get-type/${userID}`);
+        //console.log(res.data);
+        setType(res.data);
+        console.log(type);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchType();
+  }, [type]);
+
   // Display all notifications
   useEffect(() => {
     const fetchNotif = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:8800/show-notif/${userID}`
-        );
-        setNotifs(res.data);
+        if (type == "Catcher") {
+          const res = await axios.get(
+            `http://localhost:8800/my-notif/${userID}`
+          );
+          setNotifs(res.data);
+        } else {
+          const res = await axios.get(
+            `http://localhost:8800/emp-notif/${userID}`
+          );
+          setNotifs(res.data);
+        }
       } catch (err) {
         console.log(err);
       }
     };
     fetchNotif();
-  }, []);
+  }, [type]);
 
   // Function to format date
   const formatDate = (dateString) => {
