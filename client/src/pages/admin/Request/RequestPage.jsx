@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Pagination from "../../../components/Pagination";
 import RequestModal from "./RequestModal";
 import Navbar from "../../../components/Navbar";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 function RequestPage() {
   // Mock list of verification requests
@@ -10,17 +12,18 @@ function RequestPage() {
   const [itemsPerPage] = useState(5);
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const location = useLocation();
+  const userID = location.pathname.split("/")[2];
 
   useEffect(() => {
     // Simulate fetching data (you can replace this with actual API calls)
-    const fetchData = () => {
-      // Simulated data
-      //   const mockRequests = [
-      //     { id: 1, user: 'John Doe', type: 'Employer' },
-      //     { id: 2, user: 'Jane Smith', type: 'Catcher' },
-      //     { id: 3, user: 'Alice Johnson', type: 'Employer' },
-      //   ];
-      //   setRequests(mockRequests);
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/requests`);
+        setRequests(res.data);
+      } catch (err) {
+        console.log(err);
+      }
     };
 
     fetchData();
@@ -46,15 +49,15 @@ function RequestPage() {
   return (
     <div>
       <Navbar
-        page1="HOME"
-        home={`/admin-home`}
+        page1="REQUESTS"
+        one={`/request/${userID}`}
         // {`admin-home/${userID}`}
         page2="ACCOUNTS"
-        commissionList={`/accounts`}
+        commissionList={`/accounts/${userID}`}
         page3="ERRANDS"
-        applicants={`/commission-list`}
+        applicants={`/commission-list/${userID}`}
         page4="MAP"
-        map={`/map`}
+        map={`/map/${userID}`}
       />
       <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
         Verification Requests
@@ -73,9 +76,9 @@ function RequestPage() {
         <tbody>
           {requests.map((request) => (
             <tr key={request.id} style={tableRowStyle}>
-              <td style={tableCellStyle}>{request.id}</td>
-              <td style={tableCellStyle}>{request.user}</td>
-              <td style={tableCellStyle}>{request.type}</td>
+              <td style={tableCellStyle}>{request.userID}</td>
+              <td style={tableCellStyle}>{request.username}</td>
+              <td style={tableCellStyle}>{request.accountType}</td>
               <td style={tableCellStyle}>
                 <button
                   style={buttonStyle}
