@@ -1,18 +1,40 @@
+import axios from "axios";
 import React, { useState } from "react";
 
 const RequestModal = ({ request, handleClose }) => {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
 
-  const handleVerify = () => {
-    // You can implement the logic to mark the request as verified here
-    console.log("Request verified:", request);
-    setIsButtonClicked(true);
+  const handleVerify = async (requestUserID) => {
+    try {
+      const status = "Verified";
+      await axios.put(
+        `http://localhost:8800/change-status/${requestUserID}/${status}`
+      );
+      console.log("Request verified:", request);
+      setIsButtonClicked(true);
+      /**
+       * ADD NOTFICATION FOR REQUESTER
+       */
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const handleUnverify = () => {
+  const handleUnverify = async (requestUserID) => {
     // You can implement the logic to mark the request as unverified here
-    console.log("Request unverified:", request);
-    setIsButtonClicked(true);
+    try {
+      const status = "Suspended";
+      await axios.put(
+        `http://localhost:8800/change-status/${requestUserID}/${status}`
+      );
+      console.log("Request verified:", request);
+      setIsButtonClicked(true);
+      /**
+       * ADD NOTFICATION FOR REQUESTER
+       */
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const formattedDate = (theDate) => {
@@ -76,10 +98,16 @@ const RequestModal = ({ request, handleClose }) => {
           </div>
         )}
         <div>
-          <button onClick={handleVerify} style={Veributton}>
-            Verified
+          <button
+            onClick={(e) => handleVerify(request.requestUserID)}
+            style={Veributton}
+          >
+            VerifY
           </button>
-          <button onClick={handleUnverify} style={Veributton}>
+          <button
+            onClick={(e) => handleUnverify(request.requestUserID)}
+            style={Veributton}
+          >
             Suspend
           </button>
         </div>
