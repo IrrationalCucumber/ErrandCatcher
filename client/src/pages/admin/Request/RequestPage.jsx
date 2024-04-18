@@ -68,8 +68,9 @@ function RequestPage() {
         <thead>
           <tr>
             <th style={{ ...tableHeaderStyle, width: "25%" }}>ID</th>
-            <th style={{ ...tableHeaderStyle, width: "45%" }}>User</th>
-            <th style={{ ...tableHeaderStyle, width: "35%" }}>Type</th>
+            <th style={{ ...tableHeaderStyle, width: "40%" }}>User</th>
+            <th style={{ ...tableHeaderStyle, width: "30%" }}>Type</th>
+            <th style={{ ...tableHeaderStyle, width: "10%" }}>Status</th>
             <th style={{ ...tableHeaderStyle, width: "25%" }}>Action</th>
           </tr>
         </thead>
@@ -79,6 +80,7 @@ function RequestPage() {
               <td style={tableCellStyle}>{request.userID}</td>
               <td style={tableCellStyle}>{request.username}</td>
               <td style={tableCellStyle}>{request.accountType}</td>
+              <td style={tableCellStyle}>{request.requestStatus}</td>
               <td style={tableCellStyle}>
                 <button
                   style={buttonStyle}
