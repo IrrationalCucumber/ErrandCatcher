@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Pagination from '../../components/Pagination';
 import RequestModal from './RequestModal';
 import Navbar from '../../components/Navbar';
+import { useAuth } from "../../components/AuthContext";
 
 function RequestPage() {
+  const {user} = useAuth();
+  const userID = user.userID;
   // Mock list of verification requests
   const [requests, setRequests] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -11,19 +14,16 @@ function RequestPage() {
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [showModal, setShowModal] = useState(false);
   
-
   useEffect(() => {
     // Simulate fetching data (you can replace this with actual API calls)
-    const fetchData = () => {
-      // Simulated data
-    //   const mockRequests = [
-    //     { id: 1, user: 'John Doe', type: 'Employer' },
-    //     { id: 2, user: 'Jane Smith', type: 'Catcher' },
-    //     { id: 3, user: 'Alice Johnson', type: 'Employer' },
-    //   ];
-    //   setRequests(mockRequests);
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/requests`);
+        setRequests(res.data);
+      } catch (err) {
+        console.log(err);
+      }
     };
-
     fetchData();
   }, []);
 
@@ -46,17 +46,6 @@ function RequestPage() {
 
   return (
     <div>
-    <Navbar
-        page1="HOME"
-        home={`/admin-home`}
-        // {`admin-home/${userID}`}
-        page2="ACCOUNTS"
-        commissionList={`/accounts`}
-        page3="ERRANDS"
-        applicants={`/commission-list`}
-        page4="MAP"
-        map={`/map`}
-    />
       <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Verification Requests</h1>
       <table style={{ margin: '0 auto', width: '80%', borderCollapse: 'collapse' }}>
         <thead>
