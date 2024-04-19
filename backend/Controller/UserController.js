@@ -127,7 +127,7 @@ const userController = {
   //Update user status
   putChangeStatusByUserID: (req, res) => {
     const userID = req.params.id;
-    const status = req.query.status;
+    const status = req.params.status;
     User.putChangeStatusById(userID, status, (error, result) => {
       if (error) {
         console.error("Error updating user:", error);

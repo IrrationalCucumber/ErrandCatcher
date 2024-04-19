@@ -35,8 +35,8 @@ const Home = () => {
         {type === "Employer" && (
           <>
             <Navbar
-              page1="HOME"
-              home={`/home/${userID}`}
+              page1="ONGOING"
+              one={`/ongoing/${userID}`}
               page2="COMMISSIONS"
               commissionList={`/commissions/${userID}`}
               page3="APPLICANTS"
@@ -55,8 +55,8 @@ const Home = () => {
         {type === "Catcher" && (
           <>
             <Navbar
-              page1="HOME"
-              home={`/home/${userID}`}
+              // page1="HOME"
+              // home={`/home/${userID}`}
               page2="COMMISSIONS"
               commissionList={`/catcher-errands/${userID}`}
               page3="APPLICATIONS"
@@ -70,15 +70,15 @@ const Home = () => {
         {type.toLocaleUpperCase() === "ADMIN" && (
           <>
             <Navbar
-              page1="HOME"
-              home={`/home/${userID}`}
+              page1="REQUESTS"
+              one={`/request/${userID}`}
               // {`admin-home/${userID}`}
               page2="ACCOUNTS"
               commissionList={`/accounts/${userID}`}
               page3="ERRANDS"
               applicants={`/commission-list/${userID}`}
               page4="MAP"
-              map={`/map`}
+              map={`/map/${userID}`}
             />
             <Menu />
           </>
