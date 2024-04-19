@@ -29,6 +29,7 @@ import CommissionList from "./pages/admin/CommissionList";
 import AdminHome from "./pages/admin/AdminHome";
 import Map from "./pages/admin/CommissionMap";
 import Dashboard from "./pages/admin/Dashboard";
+import RequestPage from "./pages/Request/RequestPage"
 //CATCHER Routes
 import CatcherHome from "./pages/catcher/CatcherHome";
 import CatcherMap from "./pages/catcher/CatcherMap";
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
         path: "map",
         element: <Map />,
       },
+        {
+          path: "request",
+        element: <RequestPage />,
+        },
       //EMPLOYER
       {
         path: "commissions/",
