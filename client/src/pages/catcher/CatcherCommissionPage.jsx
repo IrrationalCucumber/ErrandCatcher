@@ -8,7 +8,7 @@ import Pagination from "../../components/Pagination";
 import "./commissionpage.css";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "../../components/AuthContext";
-import OngoingCards from "./Dropdown/OngoingCards";
+import OngoingCards from "../Dropdown/OngoingCards";
 
 function CommissionPage() {
   const headers = ["DATE", "EMPLOYER", "ERRAND TITLE", "STATUS"];

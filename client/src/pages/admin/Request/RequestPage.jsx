@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Pagination from "../../../components/Pagination";
 import RequestModal from "./RequestModal";
-import Navbar from "../../../components/Navbar";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 
@@ -48,17 +47,6 @@ function RequestPage() {
 
   return (
     <div>
-      <Navbar
-        page1="REQUESTS"
-        one={`/request/${userID}`}
-        // {`admin-home/${userID}`}
-        page2="ACCOUNTS"
-        commissionList={`/accounts/${userID}`}
-        page3="ERRANDS"
-        applicants={`/commission-list/${userID}`}
-        page4="MAP"
-        map={`/map/${userID}`}
-      />
       <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
         Verification Requests
       </h1>

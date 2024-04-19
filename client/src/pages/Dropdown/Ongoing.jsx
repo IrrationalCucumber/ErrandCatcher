@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 //import Cards from '../../components/Cards';
 import OngoingCards from "./OngoingCards";
-import NavBar from "../../components/Navbar";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 
@@ -34,16 +33,6 @@ function Ongoing() {
   return (
     <div>
       {/* No user ID */}
-      <NavBar
-        page1="ONGOING"
-        one={`/ongoing/${userID}`}
-        page2="COMMISSIONS"
-        commissionList={`/commissions/${userID}`}
-        page3="APPLICANTS"
-        applicants={`/applicants/${userID}`}
-        map={`/e-map/${userID}`}
-        page4="MAP"
-      />
 
       <OngoingCards commissions={commissions} to={`/view-errand/${userID}`} />
     </div>
