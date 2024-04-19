@@ -13,6 +13,8 @@ function Dashboard() {
           {user.userType === "Employer" && (
             <>
               <Navbar
+                page1="ONGOING"
+                one={`/dashboard/ongoing`}
                 page2="COMMISSIONS"
                 commissionList={`/dashboard/commissions`}
                 page3="APPLICANTS"
@@ -37,8 +39,8 @@ function Dashboard() {
           {user.userType.toLocaleUpperCase() === "ADMIN" && (
             <>
               <Navbar
-                page1="HOME"
-                home={`/dashboard/home`}
+                page1="REQUESTS"
+                one={`/dashboard/request`}
                 // {`admin-home/${userID}`}
                 page2="ACCOUNTS"
                 commissionList={`/dashboard/accounts`}
