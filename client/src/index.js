@@ -29,7 +29,7 @@ import CommissionList from "./pages/admin/CommissionList";
 import AdminHome from "./pages/admin/AdminHome";
 import Map from "./pages/admin/CommissionMap";
 import Dashboard from "./pages/admin/Dashboard";
-import RequestPage from "./pages/Request/RequestPage"
+import RequestPage from "./pages/admin/Request/RequestPage";
 //CATCHER Routes
 import CatcherHome from "./pages/catcher/CatcherHome";
 import CatcherMap from "./pages/catcher/CatcherMap";
@@ -43,6 +43,7 @@ import EmployerCommissions from "./pages/employer/EmployerCommissionList";
 import EmployerApplicants from "./pages/employer/EmployerApplicants";
 import EmployerMap from "./pages/employer/EmployerMap";
 import UpdateCommission from "./pages/errand  views/UpdateCommission";
+import Ongoing from "./pages/Dropdown/Ongoing";
 //SEARCH/ CATEGORY Routes
 import Transportation from "./pages/Services/Transpo";
 import HomeServices from "./pages/Services/HomeServices";
@@ -74,10 +75,10 @@ const router = createBrowserRouter([
         path: "map",
         element: <Map />,
       },
-        {
-          path: "request",
+      {
+        path: "request",
         element: <RequestPage />,
-        },
+      },
       //EMPLOYER
       {
         path: "commissions/",
@@ -90,6 +91,10 @@ const router = createBrowserRouter([
       {
         path: "e-map/",
         element: <EmployerMap />,
+      },
+      {
+        path: "ongoing/",
+        element: <Ongoing />,
       },
       //CATCHER
       {
