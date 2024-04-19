@@ -8,6 +8,8 @@ import Pagination from "../../components/Pagination";
 import "./commissionpage.css";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "../../components/AuthContext";
+import OngoingCards from "./Dropdown/OngoingCards";
+
 function CommissionPage() {
   const headers = ["DATE", "EMPLOYER", "ERRAND TITLE", "STATUS"];
   const [commissions, setCommissions] = useState([]);
@@ -30,7 +32,7 @@ function CommissionPage() {
     const fetchAllCommission = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/accepted-errand/${userID}`
+          `http://localhost:8800/catcher/ongoing/${userID}`
         );
         //"http://localhost:8800/commission" - local computer
         //"http://192.168.1.47:8800/commission" - netwrok
@@ -207,6 +209,7 @@ function CommissionPage() {
           />
         </div>
       </div>
+      <OngoingCards commissions={commissions} to={`/view-errand/${userID}`} />
       {/* Pagination controls */}
       {commissions.length > 0 && (
         <Pagination

@@ -15,7 +15,10 @@ router.put("/update/:id", userController.putUpdateUser);
 router.post("/update-pic/:id", userController.uploadProfileImage);
 // for admin
 //change userStatus
-router.put("/change-status/:id", userController.putChangeStatusByUserID);
+router.put(
+  "/change-status/:id/:status",
+  userController.putChangeStatusByUserID
+);
 router.post("/sign-up/", userController.postSignUp);
 // Add more routes as needed...
 router.get("/search-user/", userController.getSearchByTerm);

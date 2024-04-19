@@ -18,8 +18,8 @@ function CommissionMap() {
   return (
     <div>
       {/* <NavBar
-        page1="HOME"
-        home={`/admin-home/${userID}`}
+        page1="REQUESTS"
+        one={`/request/${userID}`}
         // {`admin-home/${userID}`}
         page2="ACCOUNTS"
         commissionList={`/accounts/${userID}`}

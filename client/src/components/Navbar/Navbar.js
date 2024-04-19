@@ -97,16 +97,16 @@ function Navbar(props) {
             <i className={click ? "fas fa-times" : "fas fa-bars"}></i>
           </div>
           <ul className={click ? "nav-menu active" : "nav-menu"}>
-            {/* <li className="nav-item">
+            <li className="nav-item">
               <Link
-                to={props.home}
+                to={props.one}
                 className="nav-links"
                 onClick={closeMobileMenu}
                 style={{ fontSize: "16px" }}
               >
                 {props.page1}
               </Link>
-            </li> */}
+            </li>
             <li className="nav-item">
               <Link
                 to={props.commissionList}

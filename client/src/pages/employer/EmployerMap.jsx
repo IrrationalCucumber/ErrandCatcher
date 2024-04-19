@@ -9,8 +9,8 @@ function CommissionMap() {
   return (
     <div>
       {/* <Navbar
-        page1="HOME"
-        home={`/home/${userID}`}
+        page1="REQUESTS"
+        one={`/request/${userID}`}
         page2="COMMISSIONS"
         commissionList={`/commissions/${userID}`}
         page3="APPLICANTS"
