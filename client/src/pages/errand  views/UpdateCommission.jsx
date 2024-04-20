@@ -19,9 +19,6 @@ const UpdateCommission = () => {
     comDescription: "",
     comPay: "",
     comStatus: "",
-    //catcherID:"",
-    //DatePosted:"",
-    //DateCompleted: "",
     ContactNo: "",
     comLong: "",
     comLat: "",
@@ -287,11 +284,13 @@ const UpdateCommission = () => {
     e.preventDefault();
     try {
       //account.dateCreated = getCurrentDate();
+      commission.comStatus = "Available";
       await axios.put(
         `http://localhost:8800/update-errand/${commissionID}`,
         commission
       );
-      //navigate(`/commissions/${userID}`);
+      alert("UPdate successful");
+      navigate(`dashboard/commissions/${userID}`);
     } catch (err) {
       console.log(err);
     }
@@ -303,6 +302,8 @@ const UpdateCommission = () => {
     <div>
       <div className="errand-cont">
         <ErrandInputs
+          statusHeader="Status"
+          status={commission.comStatus}
           handleChange={handleChange}
           title="comTitle"
           titleValue={commission.comTitle}
