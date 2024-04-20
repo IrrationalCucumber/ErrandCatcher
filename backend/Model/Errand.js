@@ -89,6 +89,7 @@ const Errand = {
       comType,
       comDescription,
       comPay,
+      comStatus,
       Contactno,
       comLong,
       comLat,
@@ -97,7 +98,7 @@ const Errand = {
     db.query(
       `UPDATE commission SET commissionTitle = ?, commissionStartDate = ?, 
       commissionDeadline = ?, commissionLocation = ?, commissionTo = ?,commissionType = ?,
-       commissionDesc = ?, commissionPay = ?, ContactNumber = ?, commissionLong = ?, commissionLat
+       commissionDesc = ?, commissionPay = ?, commissionStatus = ?, ContactNumber = ?, commissionLong = ?, commissionLat
         = ? WHERE commissionID = ?`,
       [
         comTitle,
@@ -108,6 +109,7 @@ const Errand = {
         comType,
         comDescription,
         comPay,
+        comStatus,
         Contactno,
         comLong,
         comLat,
