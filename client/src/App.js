@@ -40,7 +40,7 @@ import EmployerCommissions from "./pages/employer/EmployerCommissionList";
 import EmployerApplicants from "./pages/employer/EmployerApplicants";
 import EmployerMap from "./pages/employer/EmployerMap";
 import UpdateCommission from "./pages/errand  views/UpdateCommission";
-//SEARCH/ CATEGORY Routes
+//SEARCH/ CATEGORY Routess
 import Transportation from "./pages/Services/Transpo";
 import HomeServices from "./pages/Services/HomeServices";
 import Delivery from "./pages/Services/Delivery";
