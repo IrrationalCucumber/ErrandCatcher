@@ -245,6 +245,7 @@ const EmployerApplicants = () => {
       await axios.post("http://localhost:8800/notify", notif);
       //  alert("You have Posted an Errand!");
       window.location.reload();
+      setShowProfileModal(false);
       //navigate(`/my-application/${userID}`);
     } catch (err) {
       console.log(err);
@@ -287,6 +288,20 @@ const EmployerApplicants = () => {
             age={selectedApplicant.userAge}
             applicant={selectedApplicant}
             rating={rating}
+            handleAccept={() =>
+              handleAccept(
+                selectedApplicant.applicationID,
+                selectedApplicant.applicationErrandID,
+                selectedApplicant.catcherID
+              )
+            }
+            handleDecline={() =>
+              handleDecline(
+                selectedApplicant.applicationID,
+                selectedApplicant.applicationErrandID,
+                selectedApplicant.catcherID
+              )
+            }
             closeModal={handleCloseProfileModal}
           />
         )}
