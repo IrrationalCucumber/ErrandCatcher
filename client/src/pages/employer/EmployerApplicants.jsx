@@ -213,6 +213,10 @@ const EmployerApplicants = () => {
       await axios.put(
         `http://localhost:8800/deny-other-apply/${applicationErrandID}/${catcherID}`
       );
+      //set the errand status to caught
+      await axios.post(
+        `http://localhost:8800/errand-taken/${applicationErrandID}`
+      );
       //replace modular
       alert("You have accepted a Cather!");
       window.location.reload();
