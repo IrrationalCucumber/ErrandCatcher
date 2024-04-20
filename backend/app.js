@@ -92,14 +92,34 @@ const updateExpiredRecords = () => {
     }
   });
 };
+// update the transaction record if deadline has passed
+//set satus to expired
+const updateExpiredTrans = () => {
+  const currentTime = new Date().toISOString().slice(0, 19).replace("T", " ");
+  const query = `
+  UPDATE errandtransaction t
+  JOIN commission c ON c.commissionID = t.transErrandID
+  SET  t.errandStatus = 'Expired'
+  WHERE c.commissionDeadline <'${currentTime}' AND t.errandStatus = 'Ongoing'
+    `;
+
+  db.query(query, (error, results) => {
+    if (error) {
+      console.error("Error updating records:", error);
+    } else {
+      console.log(`${results.affectedRows} trans updated.`);
+    }
+  });
+};
 
 // Schedule the update function to run every minute
-const scheduler = setInterval(updateExpiredRecords, 10000);
+const scheduler = setInterval(updateExpiredRecords, 60 * 1000);
+const transScheduler = setInterval(updateExpiredTrans, 60 * 1000); //every min
 
 // Stop the scheduler after a certain duration (optional)
 // setTimeout(() => {
-//   clearInterval(scheduler);
-//   console.log('Scheduler stopped.');
+//   clearInterval(scheduler, transScheduler);
+//   console.log("Scheduler stopped.");
 // }, 3600000); // Stop after 1 hour (3600 seconds * 1000 milliseconds)
 
 //combiniation
