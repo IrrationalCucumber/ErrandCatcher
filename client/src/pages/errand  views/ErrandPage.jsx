@@ -25,6 +25,8 @@ const ErrandPage = () => {
     ContactNo: "",
     comLong: "",
     comLat: "",
+    last: "",
+    first: "",
   });
 
   const navigate = useNavigate();
@@ -122,6 +124,8 @@ const ErrandPage = () => {
           ContactNo: retrievedCommission.ContactNumber,
           comLong: retrievedCommission.commissionLong,
           comLat: retrievedCommission.commissionLat,
+          last: retrievedCommission.userLastname,
+          first: retrievedCommission.userFirstname,
         });
       } catch (err) {
         console.log(err);
@@ -251,6 +255,9 @@ const ErrandPage = () => {
     <div>
       <div className="errand-cont">
         <ErrandInputs
+          employer="Employer"
+          fname={commission.first}
+          lname={commission.last}
           statusHeader="Status"
           status={commission.comStatus}
           variant="solid"

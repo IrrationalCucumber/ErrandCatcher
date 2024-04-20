@@ -77,7 +77,19 @@ function ErrandInputs(props) {
               </>
             )}
           </div>
-
+          {/* ERRAND POSTER */}
+          {props.employer !== "" && props.fname !== "" && (
+            <>
+              <div className="input-group">
+                <div className="col1">
+                  <label style={{ color: "black" }}>{props.employer}</label>
+                </div>
+                <div className="col2">
+                  {props.fname} {props.lname}
+                </div>
+              </div>
+            </>
+          )}
           {/* commission title */}
           <div className="input-group">
             <div className="col1">
@@ -97,7 +109,6 @@ function ErrandInputs(props) {
               />
             </div>
           </div>
-
           {/*start date*/}
           <div className="input-group">
             <div className="col1">
@@ -117,7 +128,6 @@ function ErrandInputs(props) {
               />
             </div>
           </div>
-
           {/* deadline */}
           <div className="input-group">
             <div className="col1">
@@ -137,7 +147,6 @@ function ErrandInputs(props) {
               />
             </div>
           </div>
-
           {/* location */}
           <div className="input-group">
             <div className="col1">
