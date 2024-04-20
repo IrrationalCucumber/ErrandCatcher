@@ -283,14 +283,21 @@ const UpdateCommission = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      //account.dateCreated = getCurrentDate();
-      commission.comStatus = "Available";
-      await axios.put(
-        `http://localhost:8800/update-errand/${commissionID}`,
-        commission
-      );
-      alert("UPdate successful");
-      navigate(`dashboard/commissions/${userID}`);
+      if (
+        commission.commissionDeadline > Date.now() ||
+        commission.comStart > Date.now()
+      ) {
+        //account.dateCreated = getCurrentDate();
+        commission.comStatus = "Available";
+        await axios.put(
+          `http://localhost:8800/update-errand/${commissionID}`,
+          commission
+        );
+        alert("UPdate successful");
+        navigate(`dashboard/commissions/${userID}`);
+      } else {
+        alert("Please Update the Dates in your errands");
+      }
     } catch (err) {
       console.log(err);
     }
