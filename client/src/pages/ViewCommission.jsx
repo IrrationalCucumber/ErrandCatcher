@@ -1,16 +1,18 @@
+//03-31-24 inserted start date but unsure with data
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import Navbar from "../components/NavBarPage";
 import maplibregl from "maplibre-gl";
 import Map from "../components/Map";
-import "../style.css";
+//import "../style.css";
 import "./Commission.css";
 
 const ViewCommission = () => {
   const [commission, setCommission] = useState({
     comID: "",
     comTitle: "",
+    comStart: "",
     comDeadline: "",
     comLocation: "",
     comType: "",
@@ -112,38 +114,43 @@ const ViewCommission = () => {
       <Navbar />
       <div className="form errand-cont">
         <div className="input-cont">
-          <div className="errand-inputs">
-            <h1>View Commission</h1>
+          <div className="errand-inputs" style={{paddingLeft:"50px"}}>
+            <h1>{commission.comTitle}</h1>
             {/* {imageURL && <img src={imageURL} alt='Commission Type' />} */}
             {/* commision title */}
-            <div className="input-group">
+            {/* <div className="input-group">
               <label>Commission Title:</label>
-              <p> This is title: {commission.comTitle}</p>
+              <p>{commission.comTitle}</p>
+            </div> */}
+            {/* start date */}
+            <div className="input-group" >
+              <label className="col1">Start Date:</label>
+              <p className="col2">{commission.comStart}</p>
             </div>
             {/* deadline */}
             <div className="input-group">
-              <label>Deadline:</label>
-              <p>this is deadline{commission.comDeadline}</p>
+              <label className="col1">Due Date:</label>
+              <p className="col2">{commission.comDeadline}</p>
             </div>
             {/* location */}
             <div className="input-group">
-              <label>Location</label>
-              <p>this is location{commission.comLocation}</p>
+              <label className="col1">Location</label>
+              <p className="col2">{commission.comLocation}</p>
             </div>
             {/* commission type */}
             <div className="input-group">
-              <label htmlFor="">Commission Type:</label>
-              <p>this is commission type{commission.comType}</p>
-            </div>
-            {/* description */}
-            <div className="input-group">
-              <label>Description</label>
-              <p> some description{commission.comDescription}</p>
+              <label htmlFor=""  className="col1">Commission Type:</label>
+              <p className="col2">{commission.comType}</p>
             </div>
             {/* Amount */}
             <div className="input-group">
-              <label>Amount: ₱</label>
-              <p>1000{commission.comPay}</p>
+              <label className="col1">Amount: ₱</label>
+              <p className="col2">{commission.comPay}</p>
+            </div>
+            {/* description */}
+            <div className="input-group">
+              <label className="col1">Description</label>
+              <p className="col2">{commission.comDescription}</p>
             </div>
           </div>
           <Map />
@@ -151,7 +158,7 @@ const ViewCommission = () => {
         {/* <input type="text" value={commission.ContactNo} onChange={handleChange} placeholder='Contact Number' name='ContactNo'/> */}
         <div className="btn-container">
           <button
-            className="formButton btn"
+            className="btn btn-yellow"
             onClick={(e) => {
               navigate(`/update-commission/${commission.commissionID}`);
             }}

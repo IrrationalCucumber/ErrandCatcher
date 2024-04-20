@@ -8,15 +8,17 @@ import "./Error.css";
 
 const SignUp = () => {
   const [account, setAccount] = useState({
+    regUsername: "",
+    regPassword: "",
     firstName: "",
     lastName: "",
-    username: "",
-    password: "",
-    password2: "",
     email: "",
+    // age: "",
+    // bday: "",
     contactNumber: "",
     type: "Employer",
     dateCreated: "",
+    regPassword2: "",
   });
 
   //handle state of error message
@@ -27,15 +29,17 @@ const SignUp = () => {
   //handle the state event
   const resetForm = () => {
     setAccount({
+      regUsername: "",
+      regPassword: "",
       firstName: "",
       lastName: "",
-      username: "",
-      password: "",
-      password2: "",
       email: "",
+      // age: "",
+      // bday: "",
       contactNumber: "",
       type: isChecked ? "Employer" : "Catcher",
       dateCreated: "",
+      regPassword2: "",
     });
     setEmployerErrorMessage("");
     setCatcherErrorMessage("");
@@ -82,8 +86,8 @@ const SignUp = () => {
     if (
       !account.firstName ||
       !account.lastName ||
-      !account.username ||
-      !account.password ||
+      !account.regPassword ||
+      !account.regPassword2 ||
       !account.email ||
       !account.contactNumber ||
       !account.type
@@ -94,14 +98,14 @@ const SignUp = () => {
         setCatcherErrorMessage("Missing fields. Please try again.");
       }
       return;
-    } else if (account.password.length < 8) {
+    } else if (account.regPassword.length < 8) {
       if (account.type === "Employer") {
         setEmployerErrorMessage("Password is too short.");
       } else {
         setCatcherErrorMessage("Password is too short.");
       }
       return;
-    } else if (account.password !== account.password2) {
+    } else if (account.regPassword !== account.regPassword2) {
       if (account.type === "Employer") {
         setEmployerErrorMessage("Password does not match.");
       } else {
@@ -110,19 +114,16 @@ const SignUp = () => {
       return;
     }
 
-   //save to db if no error
+    //save to db if no error
     e.preventDefault();
     try {
       account.dateCreated = getCurrentDate();
-      await axios.post("http://localhost:8800/signup", account); // new enpoint
+      await axios.post("http://localhost:8800/sign-up/", account); // new enpoint
       navigate("/sign-in");
     } catch (err) {
       console.log(err);
     }
   };
-
-
-
   return (
     <div className="body">
       <div className="container">
@@ -130,7 +131,7 @@ const SignUp = () => {
           type="checkbox"
           id="flip"
           className="flip"
-          checked={isChecked} 
+          checked={isChecked}
           onChange={handleCheckboxChange} // Handle checkbox change
         />
         <div className="cover">
@@ -149,28 +150,29 @@ const SignUp = () => {
                 <div className="input-boxes">
                   <div className="input-box">
                     <input
-                    className={employerErrorMessage ? "error" : ""}
-                    type="text"
-                    placeholder="First Name"
-                    onChange={handleChange}
-                    name="firstName"
-                    value={account.firstName}
-                  />
-                  <input
-                    className={employerErrorMessage ? "error" : ""}
-                    type="text"
-                    placeholder="Last Name"
-                    onChange={handleChange}
-                    name="lastName"
-                    value={account.lastName}
-                  />
-                  <input
+                      className={employerErrorMessage ? "error" : ""}
+                      type="text"
+                      placeholder="First Name"
+                      onChange={handleChange}
+                      name="firstName"
+                      value={account.firstName}
+                    />
+                    <input
+                      className={employerErrorMessage ? "error" : ""}
+                      type="text"
+                      placeholder="Last Name"
+                      onChange={handleChange}
+                      name="lastName"
+                      value={account.lastName}
+                    />
+                    <input
                       className={employerErrorMessage ? "error" : ""}
                       type="text"
                       placeholder="Username"
                       onChange={handleChange}
-                      name="username"
-                      value={account.username}
+                      name="regUsername"
+                      value={account.regUsername}
+                      autocomplete="off"
                     />
                     <input
                       className={employerErrorMessage ? "error" : ""}
@@ -180,29 +182,30 @@ const SignUp = () => {
                       name="email"
                       value={account.email}
                     />
-                     <input
+                    <input
                       className={employerErrorMessage ? "error" : ""}
                       type="text"
                       placeholder="Contact Number"
                       onChange={handleChange}
                       name="contactNumber"
                       value={account.contactNumber}
-                      />
+                    />
                     <input
                       className={employerErrorMessage ? "error" : ""}
                       type="password"
                       placeholder="Password (8-20)"
                       onChange={handleChange}
-                      name="password"
-                      value={account.password}
+                      name="regPassword"
+                      value={account.regPassword}
+                      autoComplete="off"
                     />
                     <input
                       className={employerErrorMessage ? "error" : ""}
                       type="password"
                       placeholder="Confirm password.."
                       onChange={handleChange}
-                      name="password2"
-                      value={account.password2}
+                      name="regPassword2"
+                      value={account.regPassword2}
                     />
                     <br />
                     <p className="em">
@@ -217,8 +220,8 @@ const SignUp = () => {
                       Switch to <label htmlFor="flip">Catcher</label>
                     </div>
                     <div className="toSignIn">
-                      Already got an account? {" "}
-                      <div style={{display: "block", marginTop: "5px"}}></div>
+                      Already got an account?{" "}
+                      <div style={{ display: "block", marginTop: "5px" }}></div>
                       <i>
                         <Link to="/sign-in">Sign-in!</Link>
                       </i>
@@ -232,29 +235,30 @@ const SignUp = () => {
               <form action="#">
                 <div className="input-boxes">
                   <div className="input-box">
-                  <input
-                    className={employerErrorMessage ? "error" : ""}
-                    type="text"
-                    placeholder="First Name"
-                    onChange={handleChange}
-                    name="firstName"
-                    value={account.firstName}
-                  />
-                  <input
-                    className={employerErrorMessage ? "error" : ""}
-                    type="text"
-                    placeholder="Last Name"
-                    onChange={handleChange}
-                    name="lastName"
-                    value={account.lastName}
-                  />
+                    <input
+                      className={employerErrorMessage ? "error" : ""}
+                      type="text"
+                      placeholder="First Name"
+                      onChange={handleChange}
+                      name="firstName"
+                      value={account.firstName}
+                    />
+                    <input
+                      className={employerErrorMessage ? "error" : ""}
+                      type="text"
+                      placeholder="Last Name"
+                      onChange={handleChange}
+                      name="lastName"
+                      value={account.lastName}
+                    />
                     <input
                       className={catcherErrorMessage ? "error" : ""}
                       type="text"
                       placeholder="Username"
                       onChange={handleChange}
-                      name="username"
-                      value={account.username}
+                      name="regUsername"
+                      value={account.regUsername}
+                      autoComplete="off"
                     />
                     <input
                       className={catcherErrorMessage ? "error" : ""}
@@ -277,16 +281,18 @@ const SignUp = () => {
                       type="password"
                       placeholder="Password (8-20 characters)"
                       onChange={handleChange}
-                      name="password"
-                      value={account.password}
+                      name="regPassword"
+                      value={account.regPassword}
+                      autoComplete="off"
                     />
                     <input
                       className={catcherErrorMessage ? "error" : ""}
                       type="password"
                       placeholder="Confirm password..."
                       onChange={handleChange}
-                      name="password2"
-                      value={account.password2}
+                      name="regPassword2"
+                      autoComplete="off"
+                      value={account.regPassword2}
                     />
                     <br />
                     <p className="em">
@@ -301,8 +307,8 @@ const SignUp = () => {
                       Switch to <label htmlFor="flip">Employer</label>
                     </div>
                     <div className="toSignIn">
-                    Already got an account?{" "}
-                    <div style={{display: "block", marginTop: "5px"}}></div>
+                      Already got an account?{" "}
+                      <div style={{ display: "block", marginTop: "5px" }}></div>
                       <i>
                         <Link to="/sign-in">Sign-in!</Link>
                       </i>

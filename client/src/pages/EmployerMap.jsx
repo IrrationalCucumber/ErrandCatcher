@@ -4,13 +4,13 @@ import Navbar from "../components/Navbar";
 import { useLocation } from "react-router-dom";
 
 function CommissionMap() {
-  const location = useLocation()
-  const userID = location.pathname.split("/")[2]
+  const location = useLocation();
+  const userID = location.pathname.split("/")[2];
   return (
     <div>
-       <Navbar
-        page1="HOME"
-        home={`/e-home/${userID}`}
+      <Navbar
+        page1="ONGOING"
+        one={`/ongoing/${userID}`}
         page2="COMMISSIONS"
         commissionList={`/commissions/${userID}`}
         page3="APPLICANTS"

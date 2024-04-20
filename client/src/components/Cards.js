@@ -5,40 +5,13 @@ import axios from "axios";
 import "./Cards.css";
 
 function Cards() {
-  //Simulated commission data
-  // const commissions = [
-  //   {
-  //     commissionID: 1,
-  //     commissionTitle: 'Commission 1',
-  //     commissionType: 'Type A',
-  //   },
-  //   {
-  //     commissionID: 2,
-  //     commissionTitle: 'Commission 2',
-  //     commissionType: 'Type B',
-  //   },
-  //   {
-  //     commissionID: 3,
-  //     commissionTitle: 'Commission 3',
-  //     commissionType: 'Type C',
-  //   },
-  //   {
-  //     commissionID: 4,
-  //     commissionTitle: 'Commission 3',
-  //     commissionLocation: 'basak',
-  //     commissionType: 'Home Service',
-  //   },
-  // ];
-
-  // const userID = 123; // Example userID
-
   const [commissions, setCommissions] = useState([]);
 
   //rretrieve data
   useEffect(() => {
     const fetchAllCommission = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/recent-commission");
+        const res = await axios.get("http://localhost:8800/available");
         //"http://localhost:8800/commission" - local computer
         //"http://192.168.1.47:8800/commission" - netwrok
         setCommissions(res.data);

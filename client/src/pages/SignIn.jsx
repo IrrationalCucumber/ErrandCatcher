@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import "./Error.css"; // Import your custom CSS for stylin
 import "./signin.css";
 import { useAuth } from "../components/AuthContext";
+import Alert from "@mui/joy/Alert";
 
 const SignIn = () => {
   const [username, setUsername] = useState(""); //username
@@ -18,15 +19,13 @@ const SignIn = () => {
     setRememberMe(e.target.checked);
   };
   //go-to-page function
-
   const navigate = useNavigate();
 
   const handleClick = async () => {
     if (!username || !password) {
-      setErrorMessage("Please fill in both username and password.");
+      setErrorMessage("Please fill in both username/password.");
       return;
     }
-
     try {
       const res = await axios.get("http://localhost:8800/sign-in", {
         params: { username: username, password: password },
@@ -36,18 +35,10 @@ const SignIn = () => {
       const user = res.data[0];
 
       //revert login() function for PrivateBrowser
-      if (user) {
+      if (user != null) {
         setUserID(user.userID);
-        if (user.accountType === "Employer") {
-          navigate(`/e-home/${user.userID}`);
-          //login();
-        } else if (user.accountType === "admin") {
-          navigate(`/admin-home`);
-          //login();
-        } else if (user.accountType === "Catcher") {
-          navigate(`/c-home/${user.userID}`);
-          //login();
-        }
+        navigate(`/home/${user.userID}`);
+        //login();
       } else {
         setErrorMessage("Invalid password/username");
       }
@@ -75,8 +66,13 @@ const SignIn = () => {
       <div className="cont contman">
         <div className="si-txt">
           <h1>
+<<<<<<< HEAD
             <span class="welcome">Welcome</span> to{" "}
             <span class="errand-catcher">ERRAND CATCHER</span>
+=======
+            <span className="welcome">Welcome</span> to{" "}
+            <span className="errand-catcher">ERRAND CATCHER</span>
+>>>>>>> qa
           </h1>
           <div className="text">
             <div className="sign"></div>
@@ -99,6 +95,7 @@ const SignIn = () => {
           type="password"
           placeholder="Password"
         />
+<<<<<<< HEAD
         <p className="em">
           <i>{errorMessage}</i>
 
@@ -112,6 +109,25 @@ const SignIn = () => {
             />
           </label>
         </p>
+=======
+        <div className="em">
+          {errorMessage != "" && (
+            <Alert color="danger" size="lg" variant="outlined">
+              <i style={{ fontSize: 12 }}>{errorMessage}</i>
+            </Alert>
+          )}
+        </div>
+        <label className="rem" htmlFor="remember Me">
+          Remember&nbsp;Me
+          <input
+            type="checkbox"
+            id="rememberMe"
+            checked={rememberMe}
+            onChange={handleRememberMeChange}
+          />
+        </label>
+
+>>>>>>> qa
         <div className="button1">
           <div className="button2"></div>
           <button type="button" onClick={handleClick}>

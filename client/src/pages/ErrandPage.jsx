@@ -14,6 +14,7 @@ const ErrandPage = () => {
   const [commission, setCommission] = useState({
     employerID: "",
     comTitle: "",
+    comStart: "",
     comDeadline: "",
     comLocation: "",
     comType: "",
@@ -36,19 +37,21 @@ const ErrandPage = () => {
 
   //setState for account type
   const [type, setType] = useState("");
+  const [status, setStatus] = useState("");
   useEffect(() => {
     const fetchType = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/get-type/${userID}`);
+        const res = await axios.get(`http://localhost:8800/user/${userID}`);
         //console.log(res.data);
-        setType(res.data);
+        setType(res.data[0].accountType);
+        setStatus(res.data[0].accountStatus);
         console.log(type);
       } catch (err) {
         console.log(err);
       }
     };
     fetchType();
-  }, [type]);
+  }, [type, status]);
   //APS - 19/03/24
   //CHeck if Catcher already applied
   //setState if applies
@@ -95,7 +98,7 @@ const ErrandPage = () => {
   const fetchLoc = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8800/commission/${commissionID}`
+        `http://localhost:8800/errand/${commissionID}`
       );
       const data = await response.json();
       return data;
@@ -110,19 +113,22 @@ const ErrandPage = () => {
     const fetchCommission = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/commission/${commissionID}`
+          `http://localhost:8800/errand/${commissionID}`
         );
         const retrievedCommission = res.data[0];
         //format date
         const formattedDate = new Date(retrievedCommission.commissionDeadline)
           .toISOString()
           .substr(0, 10);
-
+        const formatStart = new Date(retrievedCommission.commissionStartDate)
+          .toISOString()
+          .substr(0, 10);
         // Update the state with retrieved account data
         setCommission({
           employerID: retrievedCommission.employerID,
           comTitle: retrievedCommission.commissionTitle,
           comDeadline: formattedDate,
+          comStart: formatStart,
           comLocation: retrievedCommission.commissionLocation,
           comType: retrievedCommission.commissionType,
           comDescription: retrievedCommission.commissionDesc,
@@ -266,10 +272,14 @@ const ErrandPage = () => {
       <Navbar />
       <div className="errand-cont">
         <ErrandInputs
-          handleChange={handleChange}
+          statusHeader="Status"
+          status={commission.comStatus}
+          variant="solid"
+          //handleChange={handleChange}
           title="comTitle"
-          disable="true"
+          readOnly={true}
           titleValue={commission.comTitle}
+          startValue={commission.comStart}
           //   deadline="comDeadline"
           dlValue={commission.comDeadline}
           //   location="comLocation"
@@ -287,12 +297,12 @@ const ErrandPage = () => {
           lat={commission.comLat}
         />
         <br />
-        {type === "Employer" && commission.employerID == userID && (
+        {type == "Employer" && commission.employerID == userID && (
           <button className="formButton" onClick={handleClick}>
             UPDATE
           </button>
         )}
-        {type === "Catcher" && (
+        {type === "Catcher" && status === "Verified" && (
           <button
             className="formButton"
             onClick={isApplied ? null : handleApply}

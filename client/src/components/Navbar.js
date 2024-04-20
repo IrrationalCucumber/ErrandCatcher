@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 //import { Button } from "./NavButton";
 //import "./Navbar.css";
-import { useAuth } from "./AuthContext";
+//import { useAuth } from "./AuthContext";
 import NotificationIcon from "./notif-icon";
 import NavDropdown from "./NavDropdown";
 import axios from "axios";
@@ -54,8 +54,8 @@ function Navbar(props) {
       axios
         .get(`http://localhost:8800/username/${userID}`)
         .then((response) => {
-          console.log(response.data[0].username);
-          setUsername(response.data[0].username);
+          //console.log(response.data[0].username);
+          setUsername(response.data);
         })
         .catch(function (error) {
           console.log(error);
@@ -67,16 +67,12 @@ function Navbar(props) {
   const [notifCount, setNotifCount] = useState("");
   useEffect(() => {
     const fetchNotif = async () => {
-      axios
-        .get(`http://localhost:8800/notif-count/${userID}`)
-        .then((response) => {
-          //console.log(response.data[0].c);
-          setNotifCount(response.data[0].c);
-          //console.log(notifCount);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      try {
+        const res = await axios.get(`http://localhost:8800/count/${userID}`);
+        setNotifCount(res.data[0].c);
+      } catch (err) {
+        console.log(err);
+      }
     };
     fetchNotif();
   }, [userID]);
@@ -92,12 +88,12 @@ function Navbar(props) {
       <nav className="navbar">
         <div className="navbar-container justify-center">
           <Link
-            to={props.home}
+            to={`/home/${userID}`}
             className="navbar-logo"
             onClick={closeMobileMenu}
           >
             <Link
-              to={props.home}
+              to={`/home/${userID}`}
               className="navbar-logo"
               onClick={closeMobileMenu}
             >
@@ -123,16 +119,16 @@ function Navbar(props) {
             <i className={click ? "fas fa-times" : "fas fa-bars"}></i>
           </div>
           <ul className={click ? "nav-menu active" : "nav-menu"}>
-            {/* <li className="nav-item">
+            <li className="nav-item">
               <Link
-                to={props.home}
+                to={props.one}
                 className="nav-links"
                 onClick={closeMobileMenu}
                 style={{ fontSize: "16px" }}
               >
                 {props.page1}
               </Link>
-            </li> */}
+            </li>
             <li className="nav-item">
               <Link
                 to={props.commissionList}
@@ -174,7 +170,7 @@ function Navbar(props) {
                     hasNotification={true}
                     onClick={() => console.log("Notification clicked!")}
                     style={{ color: "white" }}
-                    notificationCount={notifCount}
+                    notificationCount={parseInt(notifCount)}
                   />
                 ) : (
                   <div>

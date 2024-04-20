@@ -1,5 +1,5 @@
-import React, { useEffect, useState, } from "react";
-import NavbarPage from "../components/NavBarPage";
+import React, { useEffect, useState } from "react";
+import NavbarPage from "../components/Navbar";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faCertificate } from "@fortawesome/free-solid-svg-icons";
 import "./profile.css";
@@ -26,8 +26,13 @@ const Profile = () => {
     bday: "",
     address: "",
     desc: "",
-    // profileImage:"",
+    status: "",
+    type: "",
+    profileImage: "",
   });
+  //RV & APS 02/03/24
+  //useState for Status
+  const [status, setStatus] = useState("");
   //pre-fill the fields
   useEffect(() => {
     const fetchAccount = async () => {
@@ -52,27 +57,12 @@ const Profile = () => {
           bday: formattedDate,
           address: retrievedAccount.userAddress,
           desc: retrievedAccount.userDesc,
+          status: retrievedAccount.accountStatus,
+          type: retrievedAccount.accountType,
+          profileImage: retrievedAccount.profileImage,
         });
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    fetchAccount();
-  }, [userID]);
-  //RV & APS 02/03/24
-  //useState for Status
-  const [status, setStatus] = useState("");
-  //update display for status
-  useEffect(() => {
-    const fetchStatus = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:8800/user-verify/${userID}`
-        );
-        console.log(res.data[0].accountStatus);
-        setStatus(res.data[0].accountStatus);
-        if (status.toUpperCase == "VERIFIED" || status == "Verified") {
+        //setStatus(res.data);
+        if (account.status.toUpperCase() == "VERIFIED") {
           setVerified(true);
           console.log(verified);
         }
@@ -80,8 +70,23 @@ const Profile = () => {
         console.log(err);
       }
     };
-    fetchStatus();
-  }, [status]);
+
+    fetchAccount();
+  }, [userID]);
+
+  const handleChange = (e) => {
+    // For the 'gender' field, directly set the value without using spread syntax
+    if (e.target.name === "gender") {
+      setAccount((prev) => ({ ...prev, gender: e.target.value }));
+    } else if (e.target.name === "type") {
+      setAccount((prev) => ({ ...prev, type: e.target.value }));
+    } else if (e.target.name === "desc") {
+      setAccount((prev) => ({ ...prev, desc: e.target.value }));
+    } else {
+      // For other fields, use spread syntax as before
+      setAccount((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    }
+  };
   //APS - 03/03/24
   //get the rating of the user
   const [rating, setRating] = useState("");
@@ -100,6 +105,45 @@ const Profile = () => {
     fetchRating();
   }, [userID]);
 
+  const [image, setImage] = useState("");
+  function handleImage(e) {
+    //console.log(e.target.files);
+    setImage(e.target.files[0]);
+  }
+
+  const handleUpload = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("image", image);
+    await axios
+      .post(`http://localhost:8800/update-pic/${userID}`, formData)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
+  //sSave CHanges
+  const handleClick = async (e) => {
+    //const updatedAccount = { ...account };
+    //refresh the page when button is clicked
+    e.preventDefault();
+    try {
+      await axios.put("http://localhost:8800/update/" + userID, account);
+      const formData = new FormData();
+      formData.append("image", image);
+      await axios
+        .post(`http://localhost:8800/update-pic/${userID}`, formData)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+
+      alert("Profile updated *Replace this*");
+      console.log(account);
+      //window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  console.log(account);
+
   return (
     <div>
       <NavbarPage />
@@ -107,35 +151,53 @@ const Profile = () => {
         <div className="profile-info">
           <div className="description-form">
             <form>
-              <div className="FileContainer">
-                <label htmlFor="file" className="File">
-                  Upload Image
-                </label>
-                <input type="file" id="file" className="file" />
+              <div className="">
+                <label>Upload Image</label>
+                <img
+                  src={
+                    `http://localhost:8800/images/profile/` +
+                    account.profileImage
+                  }
+                  width={150}
+                  length={150}
+                />
+                <input type="file" id="file" onChange={handleImage} />
+                <button onClick={handleUpload}>Upload</button>
               </div>
               {/*username changed when user sign up*/}
               <div className="username-container">
-                <label className="username">Username</label>
+                <label className="username">{account.username}</label>
                 {/* Verification Icon */}
                 {/* Verification Icon */}
-                <p>
-        Click 
-        <Link to="/verification">
-          <i
-            className={
-              verified
-                ? "fa-solid fa-circle-check"
-                : "fa-regular fa-circle-check"
-            }
-            style={{
-              marginLeft: "5px",
-              color: verified ? "green" : "gray",
-              cursor: "pointer" // Make the cursor change to a pointer to indicate it's clickable
-            }}
-          ></i>
-        </Link> 
-      UNVERIFIED
-      </p>
+                {account.status == "Unverified" && (
+                  <Link to={`/verification/${userID}`}>
+                    <i
+                      className="fa-regular fa-circle-check"
+                      style={{ color: "gray", cursor: "pointer" }}
+                    >
+                      UNVERIFIED
+                    </i>
+                  </Link>
+                )}
+                {account.status === "Verified" ? (
+                  <>
+                    <i
+                      className="fa-solid fa-circle-check"
+                      style={{ color: "green" }}
+                    >
+                      {account.status}
+                    </i>
+                  </>
+                ) : (
+                  <Link to={`/verification/${userID}`}>
+                    <i
+                      className="fa-regular fa-circle-check"
+                      style={{ color: "gray", cursor: "pointer" }}
+                    >
+                      UNVERIFIED
+                    </i>
+                  </Link>
+                )}
 
                 {/* <FontAwesomeIcon
                   icon={faCertificate}
@@ -145,13 +207,18 @@ const Profile = () => {
                   }}
                 /> */}
               </div>
-              <div className="rating-box">
-                <label className="Rating">Rating</label>
-                <label className="RateNo">{rating} /5</label>
-              </div>
+              {account.type === "Catcher" && (
+                <div className="rating-box">
+                  <label className="Rating">Rating</label>
+                  <label className="RateNo">{rating} /5</label>
+                </div>
+              )}
               <textarea
                 className="description"
                 placeholder="Description"
+                onChange={handleChange}
+                name="desc"
+                value={account.desc}
               ></textarea>
             </form>
           </div>
@@ -172,7 +239,6 @@ const Profile = () => {
                 >
                   History
                 </span>
-
               </div>
               {activeTab === "about" && (
                 <div
@@ -183,33 +249,54 @@ const Profile = () => {
                   {/* About section content */}
                   <div className="input-row">
                     <label className="PP">Name:</label>
-                    <textarea
+                    <input
                       type="text"
                       className="display-data"
                       placeholder="Name"
-                      value={account.fname + " " + account.lname}
-                    ></textarea>
+                      name="fname"
+                      value={account.fname}
+                      onChange={handleChange}
+                    ></input>
+
+                    <input
+                      type="text"
+                      className="display-data"
+                      value={account.lname}
+                      placeholder="username"
+                      onChange={handleChange}
+                      name="lname"
+                    ></input>
                   </div>
                   <div className="input-row">
                     <label className="PP">Age</label>
-                    <textarea
+                    <input
                       type="number"
+                      name="age"
                       className="display-data1"
                       placeholder="Age"
                       value={account.age}
-                    ></textarea>
+                      onChange={handleChange}
+                      min={1}
+                      max={99}
+                    ></input>
                   </div>
                   <div className="input-row">
                     <label className="PP">Birth Date</label>
-                    <textarea
-                      type="number"
+                    <input
+                      type="date"
                       className="display-data1"
+                      value={account.bday}
                       placeholder="Date of birth"
-                    ></textarea>
+                    ></input>
                   </div>
                   <div className="input-row">
                     <label className="PP">Gender</label>
-                    <select className="display-data1">
+                    <select
+                      className="display-data1"
+                      value={account.gender}
+                      onChange={handleChange}
+                      name="gender"
+                    >
                       gender
                       <option value="">Choose gender....</option>
                       <option value="male">Male</option>
@@ -218,19 +305,25 @@ const Profile = () => {
                   </div>
                   <div className="input-row">
                     <label className="PP">Contact Number:</label>
-                    <textarea
+                    <input
                       type="number"
                       className="display-data"
                       placeholder="Contact Number"
-                    ></textarea>
+                      name="contact"
+                      value={account.contact}
+                      onChange={handleChange}
+                    ></input>
                   </div>
                   <div className="input-row">
                     <label className="PP">Email Address:</label>
-                    <textarea
-                      type="text"
+                    <input
+                      type="email"
                       className="display-data"
                       placeholder="Email Address"
-                    ></textarea>
+                      value={account.email}
+                      name="email"
+                      onChange={handleChange}
+                    ></input>
                   </div>
                   <div className="input-row">
                     <label className="PP">Address:</label>
@@ -238,10 +331,12 @@ const Profile = () => {
                       type="text"
                       className="display-data"
                       placeholder="Address"
+                      value={account.address}
+                      name="address"
+                      onChange={handleChange}
                     ></textarea>
                   </div>
-                  <button>Save</button>
-                  <button>Edit</button>
+                  <button onClick={handleClick}>Save</button>
                 </div>
               )}
               {activeTab === "history" && (
