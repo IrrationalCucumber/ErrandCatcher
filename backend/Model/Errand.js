@@ -32,7 +32,13 @@ const Errand = {
   },
   //get specific errand by id
   getErrandById: (id, callback) => {
-    db.query(`SELECT * FROM commission WHERE commissionID = ?`, [id], callback);
+    db.query(
+      `SELECT c.*, ua.username, ua.userFirstname, ua.userLastname 
+    FROM commission c JOIN useraccount ua ON c.employerID = ua.userID 
+    WHERE c.commissionID = ?`,
+      [id],
+      callback
+    );
   },
   //get specific errand by userid
   getErrandByUserID: (id, callback) => {
