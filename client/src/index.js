@@ -17,6 +17,7 @@ import ViewProfile from "./pages/profile/ViewProfile";
 import ProfilePage from "./pages/profile/ProfilePage";
 import ViewCommission from "./pages/errand  views/ViewCommission";
 import Errands from "./pages/errand  views/Errands";
+import ErrorElement from "./pages/ErrorElement";
 //UPDATE/REGISTER
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp/Signup";
@@ -193,6 +194,10 @@ const router = createBrowserRouter([
     element: <SignUp />,
   },
   { path: "/sign-in", element: <SignIn /> },
+  {
+    path: "*",
+    element: <ErrorElement />,
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
