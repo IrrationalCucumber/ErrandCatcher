@@ -407,13 +407,13 @@ const AccountList = () => {
         />
       </div>
       <Modal open={!!layout} onClose={() => setLayout(undefined)}>
-        <ModalDialog layout={layout}>
+        <ModalDialog layout={layout} className="custom-dialog">
           <ModalClose />
           <DialogTitle>{account.username.toUpperCase()} PROFILE</DialogTitle>
-          <DialogContent>
+          <DialogContent style={{ display: "flex", flexDirection: "row-reverse", padding:"20px" }}>
             <>
               <div>
-                <img
+                {/* <img
                   src={
                     `http://localhost:8800/images/profile/` +
                     account.profileImage
@@ -421,7 +421,7 @@ const AccountList = () => {
                   alt="Profile"
                   width={150}
                   length={150}
-                />
+                /> */}
                 <h4>USER: {currentId}</h4>
                 <h5>
                   <b>USERNAME: </b>
@@ -456,6 +456,16 @@ const AccountList = () => {
                   <b>ERRAND CANCELLED: </b> {count.cancel} <br /> */}
                 </h5>
               </div>
+              <img
+                  src={
+                    `http://localhost:8800/images/profile/` +
+                    account.profileImage
+                  }
+                  alt="Profile"
+                  width={150}
+                  length={150}
+                  style={{ marginRight: "20px" }}
+                />
             </>
           </DialogContent>
         </ModalDialog>
