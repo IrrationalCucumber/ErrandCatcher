@@ -15,6 +15,7 @@ const UpdateCommission = () => {
     comDeadline: "",
     comStart: "",
     comLocation: "",
+    comTo: "",
     comType: "",
     comDescription: "",
     comPay: "",
@@ -22,6 +23,8 @@ const UpdateCommission = () => {
     ContactNo: "",
     comLong: "",
     comLat: "",
+    destLng: 0,
+    destLat: 0,
   });
 
   const [feedback, setFeedback] = useState({
@@ -176,6 +179,8 @@ const UpdateCommission = () => {
           ContactNo: retrievedCommission.ContactNumber,
           comLong: retrievedCommission.commissionLong,
           comLat: retrievedCommission.commissionLat,
+          destLat: retrievedCommission.commissionDestLat,
+          destLng: retrievedCommission.commissionDestLong,
         });
       } catch (err) {
         console.log(err);
@@ -204,29 +209,6 @@ const UpdateCommission = () => {
 
     map.current.addControl(new maplibregl.NavigationControl(), "top-right");
 
-    //if ("geolocation" in navigator) {
-    //   navigator.geolocation.getCurrentPosition((position) => {
-    //     const currentLng = position.coords.longitude;
-    //     const currentLat = position.coords.latitude;
-    //     const marker = new maplibregl.Marker({
-    //       color: "#00FF00",
-    //       draggable: true,
-    //     }) // Set draggable to true
-    //       .setLngLat([currentLng, currentLat])
-    //       .setPopup(new maplibregl.Popup().setHTML("<h3>Add location</h3>"))
-    //       .addTo(map.current);
-    //     setCurrentLocationMarker(marker);
-    //     // Event listener for marker dragend event
-    //     marker.on("dragend", () => {
-    //       const newLngLat = marker.getLngLat();
-    //       setCommission((prev) => ({
-    //         ...prev,
-    //         comLong: newLngLat.lng,
-    //         comLat: newLngLat.lat,
-    //       }));
-    //     });
-    //   });
-
     //display the current coordinate of the errand
     fetchLoc().then((commissions) => {
       commissions.forEach((commission) => {
@@ -237,11 +219,7 @@ const UpdateCommission = () => {
           draggable: true,
         }) // Red marker for commissions
           .setLngLat([currentLng, currentLat])
-          .setPopup(
-            new maplibregl.Popup().setHTML(
-              `<h3>${commission.commissionTitle}</h3><p>${commission.commissionDesc}</p>`
-            )
-          )
+          .setPopup(new maplibregl.Popup().setHTML(`<h3>Update Location</h3>`))
           .addTo(map.current);
 
         setCurrentLocationMarker(marker);
@@ -258,27 +236,57 @@ const UpdateCommission = () => {
       });
     });
   }, [API_KEY, zoom]);
+  //add another marker if delvery or transpo
+  const [marker, setMarker] = useState(null);
+  const addMarker = () => {
+    //const newLngLat = currentLocationMarker.getLngLat();
+    const currentLng = commission.destLng;
+    const currentLat = commission.destLat;
+    setCommission((prev) => ({
+      ...prev,
+      comDestLong: currentLng,
+      comDestLat: currentLat,
+    }));
 
-  // Handle dragend event of the marker to update coordinates
-  useEffect(() => {
-    if (currentLocationMarker) {
-      const updateLngLat = () => {
-        const newLngLat = currentLocationMarker.getLngLat();
-        setCommission((prev) => ({
-          ...prev,
-          comLong: newLngLat.lng,
-          comLat: newLngLat.lat,
-        }));
-      };
-
-      currentLocationMarker.on("dragend", updateLngLat);
-
-      return () => {
-        // Remove the event listener when the component unmounts
-        currentLocationMarker.off("dragend", updateLngLat);
-      };
+    const newMarker = new maplibregl.Marker({
+      draggable: true,
+    })
+      .setLngLat([currentLng, currentLat])
+      .setPopup(new maplibregl.Popup().setHTML("<h3>Add Destination</h3>"))
+      .addTo(map.current);
+    //add new marker
+    newMarker.on("dragend", () => {
+      const newLngLat = newMarker.getLngLat();
+      setCommission((prev) => ({
+        ...prev,
+        comDestLong: newLngLat.lng,
+        comDestLat: newLngLat.lat,
+      }));
+    });
+    //ad
+    setMarker(newMarker);
+  };
+  // Function to handle removing marker
+  const removeMarker = () => {
+    if (marker) {
+      marker.remove();
+      setMarker(null);
     }
-  }, [currentLocationMarker]);
+  };
+  //add or remove marker if type is correct
+  useEffect(() => {
+    const type = commission.comType;
+    if (type === "Delivery" || type === "Transportation") {
+      if (type === "Delivery") {
+        addMarker();
+      } else if (type === "Transportation") {
+        addMarker();
+      }
+    }
+    if (type !== "Delivery" || type !== "Transportation") {
+      removeMarker();
+    }
+  }, [commission.comType]); // Add dependencies if your conditions depend on props or state
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -320,6 +328,8 @@ const UpdateCommission = () => {
           dlValue={commission.comDeadline}
           location="comLocation"
           locValue={commission.comLocation}
+          to="comTo"
+          toValue={commission.comTo}
           type="comType"
           typeValue={commission.comType}
           desc="comDescription"
@@ -331,6 +341,8 @@ const UpdateCommission = () => {
           mapContainer={mapContainer}
           long={commission.comLong}
           lat={commission.comLat}
+          destlong={commission.destLng}
+          destlat={commission.destLat}
         />
         <br />
         <button className="formButton" onClick={handleClick}>

@@ -21,12 +21,15 @@ const ErrandPage = () => {
     comDescription: "",
     comPay: "",
     comStatus: "",
+    comTo: "",
     DateCompleted: "",
     ContactNo: "",
     comLong: "",
     comLat: "",
     last: "",
     first: "",
+    destLng: 0,
+    destLat: 0,
   });
 
   const navigate = useNavigate();
@@ -64,20 +67,6 @@ const ErrandPage = () => {
 
   // Add a state to track the marker's longitude and latitude
   const [markerLngLat, setMarkerLngLat] = useState([123.8854, 10.3157]); // Default values
-
-  //handle changes
-  const handleChange = (e) => {
-    if (e.target.name === "comType") {
-      setCommission((prev) => ({ ...prev, comType: e.target.value }));
-      //setImageURL(commissionTypeImages[e.target.value]);
-    } else if (e.target.name === "comDescription") {
-      setCommission((prev) => ({ ...prev, comDescription: e.target.value }));
-    } else {
-      // For other fields, use spread syntax as before
-      setCommission((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-    }
-  };
-
   //get the coordinates of the cerrand
   const fetchLoc = async () => {
     try {
@@ -114,6 +103,7 @@ const ErrandPage = () => {
           comDeadline: formattedDate,
           comStart: formatStart,
           comLocation: retrievedCommission.commissionLocation,
+          comTo: retrievedCommission.commissionTo,
           comType: retrievedCommission.commissionType,
           comDescription: retrievedCommission.commissionDesc,
           comPay: retrievedCommission.commissionPay,
@@ -126,6 +116,8 @@ const ErrandPage = () => {
           comLat: retrievedCommission.commissionLat,
           last: retrievedCommission.userLastname,
           first: retrievedCommission.userFirstname,
+          destLat: retrievedCommission.commissionDestLat,
+          destLng: retrievedCommission.commissionDestLng,
         });
       } catch (err) {
         console.log(err);
@@ -165,14 +157,33 @@ const ErrandPage = () => {
         }) // Red marker for commissions
           .setLngLat([currentLng, currentLat])
           .setPopup(
-            new maplibregl.Popup().setHTML(
-              `<h3>${commission.commissionTitle}</h3><p>${commission.commissionDesc}</p>`
-            )
+            new maplibregl.Popup().setHTML(`<h3>The Errand is here!</h3>`)
           )
           .addTo(map.current);
       });
     });
   }, [API_KEY, zoom]);
+  //add another marker if delvery or transpo
+  const [marker, setMarker] = useState(null);
+  const addMarker = () => {
+    const currentLng = commission.destLng;
+    const currentLat = commission.destLat;
+
+    const newMarker = new maplibregl.Marker({})
+      .setLngLat([currentLng, currentLat])
+      .setPopup(new maplibregl.Popup().setHTML("<h3>Destination</h3>"))
+      .addTo(map.current);
+    //add new maker
+    setMarker(newMarker);
+  };
+
+  //add or remove marker if type is correct
+  useEffect(() => {
+    const type = commission.comType;
+    if (type === "Delivery" || type === "Transportation") {
+      addMarker();
+    }
+  }, [commission.comType]); // Add dependencies if your conditions depend on props or state
   //Transfer to update page
   const handleClick = (e) => {
     e.preventDefault();
@@ -270,6 +281,7 @@ const ErrandPage = () => {
           dlValue={commission.comDeadline}
           //   location="comLocation"
           locValue={commission.comLocation}
+          toValue={commission.comTo}
           //   type="comType"
           typeValue={commission.comType}
           //   desc="comDescription"
@@ -281,6 +293,8 @@ const ErrandPage = () => {
           mapContainer={mapContainer}
           long={commission.comLong}
           lat={commission.comLat}
+          destlong={commission.destLng}
+          destlat={commission.destLat}
         />
 
         {commission.employerID === user.userID && (

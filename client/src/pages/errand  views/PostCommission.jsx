@@ -153,7 +153,11 @@ const PostCommission = () => {
   useEffect(() => {
     const type = commission.comType;
     if (type === "Delivery" || type === "Transportation") {
-      addMarker();
+      if (type === "Delivery") {
+        addMarker();
+      } else if (type === "Transportation") {
+        addMarker();
+      }
     }
     if (type !== "Delivery" || type !== "Transportation") {
       removeMarker();
