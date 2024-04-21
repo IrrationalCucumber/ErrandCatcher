@@ -19,7 +19,7 @@
     font-size: 16px;
     background-color:#ce9251;
     color: #fff;
-    box-shadow: 0 0 0 .2rem rgba(0, 0, 0, .1);
+    /* box-shadow: 0 0 0 .2rem rgba(0, 0, 0, .1); */
     border: none;
     border-radius: 5px;
     margin-right: 65%;
@@ -45,7 +45,7 @@
  .Menu .box {
     border: 2px solid black;
     border-radius: 10px;
-    box-shadow: 0 0 0 .5rem rgba(0, 0, 0, .1);    
+    /* box-shadow: 0 0 0 .5rem rgba(0, 0, 0, .1);     */
     margin-bottom: 10px;
     flex-direction: column;
     box-sizing: border-box;
@@ -82,7 +82,7 @@
         font-weight: 1000;
         text-align: justify;
         padding-left: 5.5rem;
-        /* padding-top: 20px; */
+        
         padding-bottom: 5px;
         color: rgb(17, 16, 16);
         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;

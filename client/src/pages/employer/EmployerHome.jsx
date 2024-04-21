@@ -21,7 +21,7 @@ function EmployerHome() {
       <NavBar
         page1="HOME"
         home={`/e-home/${userID}`}
-        page2="COMMISSIONS"
+        page2="ERRANDS"
         commissionList={`/commissions/${userID}`}
         page3="APPLICANTS"
         applicants={`/applicants/${userID}`}

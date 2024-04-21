@@ -45,7 +45,7 @@
 }
 
 .Commission-page th {
-    background-color: #ce9251;
+    background-color: #1679AB;
 }
 
 .Commission-page tr:last-child td {
@@ -57,14 +57,14 @@
 }
 
 .add-errand{
-    width: 200px;
+    width: 180px;
     height: 50px;
-    border-radius: 40px;
+    border-radius: 20px;
     padding: 10px 0 5px 0;
-    background-color:  #eca763;
+    background-color: #1679AB;
     color: #fff;
     border: none;
-    margin: 20px;
+    margin-left: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
 }
 
@@ -86,7 +86,13 @@
   }
   
   .filter {
-    margin-left: 10px; /* Adjust margin between search and filter */
+    margin-left: 20px;
+    margin-bottom: 30px;
+    width: 120px;
+  }
+
+  .search{
+    width: 280px;
   }
   
   .filter select {
