@@ -5,7 +5,7 @@ const ImageModal = ({ images, handleClose }) => {
     <div className="modal" style={modalStyle}>
       <div className="modal-content" style={modalContentStyle}>
         <span className="close" onClick={handleClose} style={closeStyle}>
-        <i class="fa-regular fa-circle-xmark"></i>
+          &times;
         </span>
         <h2 style={{ margin: "20px" }}>Images</h2>
         <div className="scroll-container" style={scrollContainerStyle}>
@@ -51,6 +51,7 @@ const closeStyle = {
   float: "right",
   fontSize: "28px",
   fontWeight: "bold",
+  cursor: "pointer",
 };
 
 const scrollContainerStyle = {
