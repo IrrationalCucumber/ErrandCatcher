@@ -23,6 +23,11 @@ function OngoingCards({ commissions, to }) {
     // Perform the logic to mark the commission as completed
     console.log(`Commission ${commissionId} marked as completed`);
   };
+  
+  const cancel = (commissionId) => {
+    // Perform the logic to cancel the commission
+    console.log(`Commission ${commissionId} cancelled`);
+  };
 
   return (
     <div className="Oncards">
@@ -79,6 +84,31 @@ function OngoingCards({ commissions, to }) {
                     }}
                   >
                     Mark as Completed
+                  </button>
+                  <button
+                    onClick={() => cancel(commission.commissionID)}
+                    style={{
+                      backgroundColor: "#cccccc",
+                      color: "#ffffff",
+                      padding: "10px 10px",
+                      border: "none",
+                      borderRadius: "4px",
+                      cursor: "pointer",
+                      marginTop: "5px",
+                      marginBottom: "10px",
+                      transition: "background-color 0.3s",
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                      display: "block",
+                    }}
+                    onMouseOver={(e) => {
+                      e.target.style.backgroundColor = "#00cc00";
+                    }}
+                    onMouseOut={(e) => {
+                      e.target.style.backgroundColor = "#cccccc";
+                    }}
+                  >
+                    Cancel
                   </button>
                   <button
                     style={{
