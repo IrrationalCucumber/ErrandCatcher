@@ -18,28 +18,6 @@ const VerifyRoutes = require("./Route/VerifyRoutes.js");
 const db = require("./dbConfig.js");
 const cors = require("cors");
 
-// //profile upload
-// const multer = require("multer");
-// const path = require("path");
-
-// const storage = multer.diskStorage({
-//   // store the passed file in a destination folder
-//   destination: (req, file, callback) => {
-//     callback(null, "public/images");
-//   },
-//   filename: (req, file, callback) => {
-//     //fieldname = name of file that is being pass frpm frontend
-//     callback(
-//       null,
-//       file.fieldname + "_" + Date.now() + path.extname(file.originalname)
-//     );
-//   },
-// });
-
-// const upload = multer({
-//   storage: storage,
-// });
-
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -90,24 +68,63 @@ const updateExpiredRecords = () => {
     } else {
       console.log(`${results.affectedRows} errand updated.`);
     }
+
+    if (results.affectedRows > 0) {
+      const insertNotificationQuery = `
+        INSERT INTO notification (notifUserID, notificationType, notifDesc, notifDate)
+        SELECT employerID, 'Expiration', 'Your Errand has expired.', NOW()
+        FROM commission
+        WHERE commissionStatus = 'Expired';
+      `;
+
+      db.query(insertNotificationQuery, (insertError, insertResults) => {
+        if (insertError) {
+          console.error("Error inserting notifications:", insertError);
+          return;
+        }
+
+        console.log(`${insertResults.affectedRows} notifications inserted.`);
+      });
+    }
   });
 };
 // update the transaction record if deadline has passed
 //set satus to expired
 const updateExpiredTrans = () => {
   const currentTime = new Date().toISOString().slice(0, 19).replace("T", " ");
-  const query = `
-  UPDATE errandtransaction t
-  JOIN commission c ON c.commissionID = t.transErrandID
-  SET  t.errandStatus = 'Expired'
-  WHERE c.commissionDeadline <'${currentTime}' AND t.errandStatus = 'Ongoing'
-    `;
+  const updateQuery = `
+    UPDATE errandtransaction t
+    JOIN commission c ON c.commissionID = t.transErrandID
+    SET t.errandStatus = 'Expired'
+    WHERE c.commissionDeadline < '${currentTime}' AND t.errandStatus = 'Ongoing';
+  `;
 
-  db.query(query, (error, results) => {
-    if (error) {
-      console.error("Error updating records:", error);
-    } else {
-      console.log(`${results.affectedRows} trans updated.`);
+  db.query(updateQuery, (updateError, updateResults) => {
+    if (updateError) {
+      console.error("Error updating transactions:", updateError);
+      return;
+    }
+
+    console.log(
+      `${updateResults.affectedRows} transactions updated to expired.`
+    );
+
+    if (updateResults.affectedRows > 0) {
+      const insertNotificationQuery = `
+        INSERT INTO notification (notifUserID, notificationType, notifDesc, notifDate)
+        SELECT transCatcherID, 'Expiration', 'Your transaction has expired.', NOW()
+        FROM errandtransaction
+        WHERE errandStatus = 'Expired';
+      `;
+
+      db.query(insertNotificationQuery, (insertError, insertResults) => {
+        if (insertError) {
+          console.error("Error inserting notifications:", insertError);
+          return;
+        }
+
+        console.log(`${insertResults.affectedRows} notifications inserted.`);
+      });
     }
   });
 };
