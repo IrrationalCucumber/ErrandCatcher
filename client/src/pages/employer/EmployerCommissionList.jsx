@@ -9,11 +9,20 @@ import Pagination from "../../components/Pagination.js";
 import Button from "@mui/joy/Button";
 import ButtonGroup from "@mui/joy/ButtonGroup";
 import IconButton from "@mui/joy/IconButton";
+import Divider from "@mui/joy/Divider";
+import DialogTitle from "@mui/joy/DialogTitle";
+import DialogContent from "@mui/joy/DialogContent";
+import DialogActions from "@mui/joy/DialogActions";
+import Modal from "@mui/joy/Modal";
+import ModalDialog from "@mui/joy/ModalDialog";
+import DeleteForever from "@mui/icons-material/DeleteForever";
+import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 //import Settings from "@mui/icons-material/Settings";
 import { useAuth } from "../../components/AuthContext.js";
 
 const CommissionList = () => {
   const [commissions, setCommissions] = useState([]);
+  //filter
   const [searchTerm, setSearchTerm] = useState({
     term: "",
     type: "",
@@ -25,6 +34,17 @@ const CommissionList = () => {
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
+  const [open, setOpen] = useState(false); // modal
+  const [currentId, setCurrentId] = useState(null);
+  const handleOpenModal = (id) => {
+    setOpen(true);
+    setCurrentId(id); // Set the ID in state
+  };
+  // Use this ID when confirming the deletion
+  const confirmDelete = () => {
+    handleDelete(currentId);
+    setOpen(false);
+  };
 
   //handle error
   //rretrieve data
@@ -49,7 +69,8 @@ const CommissionList = () => {
       //"http://localhost:8800/commission" - local computer
       //"http://192.168.1.47:8800/commission" - netwrok
       await axios.delete(`http://localhost:8800/delete-errand/${commissionID}`);
-      window.location.reload();
+      // window.location.reload();
+      //alert(commissionID);
     } catch (err) {
       console.log(err);
     }
@@ -172,15 +193,49 @@ const CommissionList = () => {
                 formattedDate(commissionItem.commissionDeadline),
                 commissionItem.commissionStatus,
                 <React.Fragment>
-                  <ButtonGroup
-                    spacing="0.5rem"
-                    aria-label="spacing button group"
-                  >
+                  <ButtonGroup aria-label="spacing button group">
                     <Button
-                      onClick={() => handleDelete(commissionItem.commissionID)}
-                    >
-                      DELETE
-                    </Button>
+                      variant="outlined"
+                      color="danger"
+                      endDecorator={<DeleteForever />}
+                      onClick={() =>
+                        handleOpenModal(commissionItem.commissionID)
+                      }
+                    ></Button>
+                    <Modal open={open} onClose={() => setOpen(false)}>
+                      <ModalDialog variant="outlined" role="alertdialog">
+                        <DialogTitle>
+                          <WarningRoundedIcon />
+                          Confirmation
+                        </DialogTitle>
+                        <Divider />
+                        <DialogContent>
+                          Are you sure you want to discard Errand {currentId} ?
+                          {/* Display the current ID from state */}
+                        </DialogContent>
+                        <DialogActions>
+                          <Button
+                            variant="solid"
+                            color="danger"
+                            onClick={confirmDelete}
+                          >
+                            Delete
+                          </Button>
+                          <Button
+                            variant="plain"
+                            color="neutral"
+                            onClick={() => setOpen(false)}
+                          >
+                            Cancel
+                          </Button>
+                        </DialogActions>
+                      </ModalDialog>
+                    </Modal>
+                    {/* <Button
+                    onClick={() => handleDelete(commissionItem.commissionID)}
+                  >
+                    DELETE
+                  </Button> */}
                     <Button>
                       <Link
                         to={`/errand/update-commission/${commissionItem.commissionID}`}
