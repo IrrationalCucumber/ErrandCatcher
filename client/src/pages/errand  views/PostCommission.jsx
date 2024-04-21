@@ -214,9 +214,7 @@ const PostCommission = () => {
         />
         <div className="btn-container">
           <button
-            onClick={() => {
-              handleClick;
-            }}
+            onClick={() => handleClick()}
             className="btn btn-yellow"
             style={{}}
           >
