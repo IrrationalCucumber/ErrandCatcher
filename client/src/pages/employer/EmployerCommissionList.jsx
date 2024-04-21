@@ -49,19 +49,22 @@ const CommissionList = () => {
   //handle error
   //rretrieve data
   // Frontend code
+  const fetchAllCommission = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8800/your-commission/${userID}`
+      );
+      setCommissions(response.data);
+    } catch (err) {
+      console.log("Error fetching commissions:", err);
+    }
+  };
   useEffect(() => {
-    const fetchAllCommission = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:8800/your-commission/${userID}`
-        ); // Pass userID in the URL
-        setCommissions(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchAllCommission();
-  }, [userID]); // Add userID to the dependency array
+    fetchAllCommission(); // Initial fetch
+    const intervalId = setInterval(fetchAllCommission, 5000); // Fetch every 5 seconds
+    // Cleanup function to clear the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  }, []);
 
   //funtion to delete commission
   const handleDelete = async (commissionID) => {
