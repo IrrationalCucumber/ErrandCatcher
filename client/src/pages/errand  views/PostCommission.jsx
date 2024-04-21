@@ -28,8 +28,8 @@ const PostCommission = () => {
     Contactno: "",
     comLong: "",
     comLat: "",
-    comDestLong: "",
-    comDestLat: "",
+    comDestLong: 0,
+    comDestLat: 0,
   });
 
   const navigate = useNavigate();
