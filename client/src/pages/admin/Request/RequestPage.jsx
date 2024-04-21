@@ -3,6 +3,7 @@ import Pagination from "../../../components/Pagination";
 import RequestModal from "./RequestModal";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import RequestImages from "./RequestImage";
 
 function RequestPage() {
   // Mock list of verification requests
@@ -10,7 +11,9 @@ function RequestPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
   const [selectedRequest, setSelectedRequest] = useState(null);
+  const [selectedImages, setSelectedImages] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [showImageModal, setShowImageModal] = useState(false);
   const location = useLocation();
   const userID = location.pathname.split("/")[2];
 
@@ -33,9 +36,20 @@ function RequestPage() {
     setShowModal(true); // Show modal
   };
 
+    // Function to handle click on RequestImage button
+    const handleImageButtonClick = (requestImages) => {
+      setSelectedImages(requestImages);
+      setShowImageModal(true);
+    };  
+
   const handleCloseModal = () => {
     setShowModal(false); // Hide modal
   };
+
+    // Function to close image modal
+    const handleCloseImageModal = () => {
+      setShowImageModal(false);
+    };
 
   // Get current items
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -76,6 +90,12 @@ function RequestPage() {
                 >
                   View
                 </button>
+                {/* for Image request */}
+                <button className="RequestImage"
+                  style={buttonStyle}
+                >
+                  <i class="fa-regular fa-file"></i>
+                </button>
               </td>
             </tr>
           ))}
@@ -90,6 +110,12 @@ function RequestPage() {
         <RequestModal
           request={selectedRequest}
           handleClose={handleCloseModal}
+        />
+      )}
+      {showImageModal && (
+        <RequestImages
+          request={selectedImages}
+          handleClose={handleCloseImageModal}
         />
       )}
     </div>
