@@ -5,7 +5,7 @@ const transConstroller = {
    * DISPLAY STATMENTS
    */
   //display all transactin
-  getAllTrans: (res, req) => {
+  getAllTrans: (req, res) => {
     Trans.getAllTrans((err, trans) => {
       if (err) {
         console.error("Error fetching Transactions:", err);
@@ -39,6 +39,45 @@ const transConstroller = {
       res.json(trans);
     });
   },
+  //display count of all transaction cancelled by catcher
+  // getTransCount: (req, res) => {
+  //   // const status = "Complete";
+  //   const userId = req.params.id;
+  //   Trans.getTransCount(userId, (err, trans) => {
+  //     if (err) {
+  //       console.error("Error fetching Transaction:", err);
+  //       res.status(500).send("Internal Server Error");
+  //       return;
+  //     }
+  //     res.json(trans);
+  //   });
+  // },
+  //get count of expired
+  // getExpireCount: (req, res) => {
+  //   const status = "Expired";
+  //   const userId = req.params.id;
+  //   Trans.getTransDoneCount(userId, status, (err, trans) => {
+  //     if (err) {
+  //       console.error("Error fetching Transaction:", err);
+  //       res.status(500).send("Internal Server Error");
+  //       return;
+  //     }
+  //     res.json(trans);
+  //   });
+  // },
+  //display count of all transaction done by catcher
+  // getCancelCount: (req, res) => {
+  //   const status = "Cancelled";
+  //   const userId = req.params.id;
+  //   Trans.getTransDoneCount(userId, status, (err, trans) => {
+  //     if (err) {
+  //       console.error("Error fetching Transaction:", err);
+  //       res.status(500).send("Internal Server Error");
+  //       return;
+  //     }
+  //     res.json(trans);
+  //   });
+  // },
   //display ongioing transaction of catcher
   getOngoing: (req, res) => {
     const userId = req.params.id;

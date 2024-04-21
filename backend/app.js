@@ -157,4 +157,20 @@ app.get("/post-and-applicant-count/:userID", (req, res) => {
     return res.json(data); // Assuming you only expect one row of results
   });
 });
+app.get("/trans-count/:userID", (req, res) => {
+  const userID = req.params.userID;
+  const q = `
+   SELECT
+  (SELECT  count(*) FROM errandtransaction WHERE errandStatus = 'Complete' AND transCatcherID = ?) AS done,
+  (SELECT  count(*) FROM errandtransaction WHERE errandStatus = 'Expired' AND transCatcherID = ?) AS expired,
+  (SELECT  count(*) FROM errandtransaction WHERE errandStatus = 'Cancelled' AND transCatcherID = ?) AS cancel`;
+
+  db.query(q, [userID, userID, userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data); // Assuming you only expect one row of results
+  });
+});
 module.exports;
