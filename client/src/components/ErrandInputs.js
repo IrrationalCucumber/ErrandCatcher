@@ -300,7 +300,9 @@ function ErrandInputs(props) {
           </div>
         </div>
         <div className="map--wrap">
+          {props.typeValue === "Delivery" && <>Distance: {props.distance}</>}
           <div ref={props.mapContainer} className="map-small" />
+
           <p className="coords">
             X: {props.long} Y: {props.lat}
           </p>

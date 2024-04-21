@@ -1,6 +1,7 @@
 //03-21-24 logic for the image is in here but needed testing
 
 import React, { useRef, useEffect, useState } from "react";
+//map
 import maplibregl from "maplibre-gl";
 //import 'maplibre-gl/dist/maplibre-gl.css';
 import axios from "axios";
@@ -27,20 +28,20 @@ const PostCommission = () => {
     Contactno: "",
     comLong: "",
     comLat: "",
+    comDestLong: "",
+    comDestLat: "",
   });
 
   const navigate = useNavigate();
   //get user id from url
   const { user } = useAuth();
   const userID = user.userID;
-  const [open, setOpen] = useState(false); // modal
   //use state for adding marker
   //const [addingMarker, setAddingMarker] = useState(false);
-
   const [currentLocationMarker, setCurrentLocationMarker] = useState(null);
 
   // Add a state to track the marker's longitude and latitude
-  const [markerLngLat, setMarkerLngLat] = useState([123.8854, 10.3157]); // Default values
+  // const [markerLngLat, setMarkerLngLat] = useState([123.8854, 10.3157]); // Default values
 
   //update the info that will be stored
   const handleChange = (e) => {
@@ -65,7 +66,7 @@ const PostCommission = () => {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
-  const [zoom] = useState(14);
+  const [zoom] = useState(10);
 
   useEffect(() => {
     if (map.current) return;
@@ -73,8 +74,8 @@ const PostCommission = () => {
     map.current = new maplibregl.Map({
       container: mapContainer.current,
       style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${API_KEY}`,
-      // center: markerLngLat,
-      //zoom: zoom,
+      center: [123.8854, 10.3157],
+      zoom: zoom,
     });
 
     map.current.addControl(new maplibregl.NavigationControl(), "top-right");
@@ -88,13 +89,6 @@ const PostCommission = () => {
           comLong: currentLng,
           comLat: currentLng,
         }));
-
-        map.current = new maplibregl.Map({
-          container: mapContainer.current,
-          style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${API_KEY}`,
-          center: [currentLng, currentLat],
-          zoom: [9],
-        });
 
         const marker = new maplibregl.Marker({
           color: "#00FF00",
@@ -118,20 +112,53 @@ const PostCommission = () => {
       });
     }
   }, [API_KEY, zoom]);
+  //add another marker if delvery or transpo
+  const [marker, setMarker] = useState(null);
+  const addMarker = () => {
+    const newLngLat = currentLocationMarker.getLngLat();
+    const currentLng = newLngLat.lng;
+    const currentLat = newLngLat.lat;
+    setCommission((prev) => ({
+      ...prev,
+      comDestLong: currentLng,
+      comDestLat: currentLat,
+    }));
 
-  // Handle dragend event of the marker to update coordinates
-  useEffect(() => {
-    if (currentLocationMarker) {
-      currentLocationMarker.on("dragend", () => {
-        const newLngLat = currentLocationMarker.getLngLat();
-        setCommission((prev) => ({
-          ...prev,
-          comLong: newLngLat.lng,
-          comLat: newLngLat.lat,
-        }));
-      });
+    const newMarker = new maplibregl.Marker({
+      draggable: true,
+    })
+      .setLngLat([currentLng, currentLat])
+      .setPopup(new maplibregl.Popup().setHTML("<h3>Add Destination</h3>"))
+      .addTo(map.current);
+    //add new marker
+    newMarker.on("dragend", () => {
+      const newLngLat = newMarker.getLngLat();
+      setCommission((prev) => ({
+        ...prev,
+        comDestLong: newLngLat.lng,
+        comDestLat: newLngLat.lat,
+      }));
+    });
+    //ad
+    setMarker(newMarker);
+  };
+  // Function to handle removing marker
+  const removeMarker = () => {
+    if (marker) {
+      marker.remove();
+      setMarker(null);
     }
-  }, [currentLocationMarker]);
+  };
+  //add or remove marker if type is correct
+  useEffect(() => {
+    const type = commission.comType;
+    if (type === "Delivery" || type === "Transportation") {
+      addMarker();
+    }
+    if (type !== "Delivery" || type !== "Transportation") {
+      removeMarker();
+    }
+  }, [commission.comType]); // Add dependencies if your conditions depend on props or state
 
   //store the inputted info to db
   //trigers when clicked
@@ -172,7 +199,7 @@ const PostCommission = () => {
           )
             alert("Empty fields");
         }
-      } else if (commission.comLat == "" && commission.comLong == "") {
+      } else if (commission.comLat === "" && commission.comLong === "") {
         alert("Looks like you havent set the location in the Map");
       } else {
         await axios.post("http://localhost:8800/commission", updatedCommission);
@@ -206,6 +233,9 @@ const PostCommission = () => {
           mapContainer={mapContainer}
           long={commission.comLong}
           lat={commission.comLat}
+          destlong={commission.comDestLong}
+          destlat={commission.comDestLat}
+          distance=""
         />
         <div className="btn-container">
           <button onClick={handleClick} className="btn btn-yellow" style={{}}>
