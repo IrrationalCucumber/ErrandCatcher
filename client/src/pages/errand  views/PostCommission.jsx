@@ -208,11 +208,7 @@ const PostCommission = () => {
           lat={commission.comLat}
         />
         <div className="btn-container">
-          <button
-            onClick={() => handleClick()}
-            className="btn btn-yellow"
-            style={{}}
-          >
+          <button onClick={handleClick} className="btn btn-yellow" style={{}}>
             POST
           </button>
         </div>
