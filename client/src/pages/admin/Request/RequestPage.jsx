@@ -93,8 +93,9 @@ function RequestPage() {
                 {/* for Image request */}
                 <button className="RequestImage"
                   style={buttonStyle}
+                  onClick={() => handleImageButtonClick(request.images)}
                 >
-                  <i class="fa-regular fa-file"></i>
+                  View Image
                 </button>
               </td>
             </tr>
