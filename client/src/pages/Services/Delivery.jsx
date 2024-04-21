@@ -62,7 +62,16 @@ const Delivery = () => {
   return (
     <>
       <Navbar />
-      <div className="search-bar">
+      <h1 style={{ paddingTop: "20px", paddingLeft: "20px" }}>Delivery</h1>
+      <div
+        className="search-bar"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "44px 5%",
+        }}
+      >
         <input
           type="text"
           placeholder="Search..."

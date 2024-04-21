@@ -67,7 +67,7 @@ const SignIn = () => {
         <div className="si-txt">
           <h1>
             <span className="welcome">Welcome</span> to{" "}
-            <span className="errand-catcher">ERRAND CATCHER</span>
+            <span className="errand-catcher" style={{color:"#1679AB"}}>ERRAND CATCHER</span>
           </h1>
           <div className="text">
             <div className="sign"></div>
@@ -97,7 +97,7 @@ const SignIn = () => {
             </Alert>
           )}
         </div>
-        <label className="rem" htmlFor="remember Me">
+        <label className="rem" htmlFor="remember Me" style={{paddingLeft:"85px", fontSize:"12px"}}>
           Remember&nbsp;Me
           <input
             type="checkbox"
@@ -109,7 +109,7 @@ const SignIn = () => {
 
         <div className="button1">
           <div className="button2"></div>
-          <button type="button" onClick={handleClick}>
+          <button type="button" onClick={handleClick} style={{backgroundColor:"#1679AB", fontSize:"16px"}}>
             Sign In
           </button>
         </div>

@@ -65,8 +65,18 @@ const Transportation = () => {
   return (
     <>
       <Navbar />
-      <h1>Transportation</h1>
-      <div className="search-bar">
+      <h1 className="headingTranspo" style={{ paddingTop: "20px", paddingLeft: "20px" }}>
+        Transportation
+      </h1>
+      <div
+        className="search-bar"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "44px 5%",
+        }}
+      >
         <input
           type="text"
           placeholder="Search..."

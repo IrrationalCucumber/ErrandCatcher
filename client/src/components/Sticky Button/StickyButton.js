@@ -29,7 +29,8 @@ function StickyButton(props) {
         style={{
           backgroundColor: props.buttonColor,
           color: props.buttonTextColor,
-          borderRadius: props.buttonRadius
+          borderRadius: props.buttonRadius,
+          boxShadow: scrolled ? '0px 2px 5px rgba(0, 0, 0, 0.5)' : 'none'
         }}
       >
         {props.buttonText}
@@ -40,11 +41,11 @@ function StickyButton(props) {
 
 StickyButton.defaultProps = {
   buttonText: '',
-  buttonColor: '#ce9251',
+  buttonColor: '#1679AB',
   buttonTextColor: '#fff',
   buttonRadius: '5px',
   scrollThreshold: 100,
-  destination: ''
+  destination: '', 
 };
 
 export default StickyButton;

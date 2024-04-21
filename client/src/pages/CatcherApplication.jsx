@@ -202,13 +202,16 @@ function Application() {
         <div className="application">
           <h1>Application</h1>
           <div className="search">
-            <input
-              type="text"
-              placeholder="Search Employer or Errand title..."
+
+            <input 
+              type="text" 
+              placeholder="Search Employer or Errand title..." 
               name="term"
               onChange={handleChange}
             />
-
+//             <button type="submit" style={{backgroundColor:"#1679AB"}}>
+//               <i className="fa fa-search" place></i>
+//             </button>
             <select
               className="CLstatus"
               onChange={handleChange}

@@ -31,10 +31,15 @@ label{
   padding: 10px;
 }
   .formButton{
+    width: 200px;
+    height: 45px;
     border: none;
-    padding: 10px;
-    background-color: lightcoral;
+    /* padding: 10px; */
+    margin-left: 20px;
+    background-color: #1679AB;
     color: white;
     font-weight: bold;
     cursor: pointer;
+    border-radius: 10px;
+    font-size: 14px;
   }
