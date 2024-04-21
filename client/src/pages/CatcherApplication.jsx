@@ -19,6 +19,11 @@ function Application() {
   //pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
+  const [searchTerm, setSearchTerm] = useState({
+    term: "",
+    type: "",
+    status: "",
+  });
 
   //data
   //useEffect to handle error
@@ -39,15 +44,71 @@ function Application() {
     fetchAllAccount();
   }, [userID]);
 
+  const handleChange = (e) => {
+    // For the 'gender' field, directly set the value without using spread syntax
+    if (e.target.name === "status") {
+      setSearchTerm((prev) => ({ ...prev, status: e.target.value }));
+    } else if (e.target.name === "type") {
+      setSearchTerm((prev) => ({ ...prev, type: e.target.value }));
+    } else {
+      // For other fields, use spread syntax as before
+      setSearchTerm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    }
+  };
+
+  //filter
+  const filterApply = apply.filter((apply) => {
+    // const type = apply.commissionType
+    //   .toLowerCase()
+    //   .includes(searchTerm.type.toLowerCase());
+    const termMatch = apply.commissionTitle
+      .toLowerCase()
+      .includes(searchTerm.term.toLowerCase());
+    const termMatch2 = apply.userFirstname
+      .toLowerCase()
+      .includes(searchTerm.term.toLowerCase());
+    const termMatch3 = apply.userLastname
+      .toLowerCase()
+      .includes(searchTerm.term.toLowerCase());
+    const status = apply.applicationStatus.includes(searchTerm.status);
+
+    return (termMatch || termMatch2 || termMatch3) && status;
+  });
+
   // Pagination
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = apply.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filterApply.slice(indexOfFirstItem, indexOfLastItem);
+
+  //Display format to date
+  // months into words
+  const formattedDate = (applicationDate) => {
+    const date = new Date(applicationDate);
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ]; // Get the month and year from the date object
+    const month = monthNames[date.getMonth()];
+    const year = date.getFullYear();
+
+    // Construct the formatted date string
+    return `${month} ${date.getDate()}, ${year}`;
+  };
 
   const headers = ["DATE", "EMPLOYER", "ERRAND TITLE", "STATUS", "ACTION"];
   const applicationData = currentItems.map((applicant) => [
-    new Date(applicant.applicationDate).toLocaleDateString(),
+    formattedDate(applicant.applicationDate),
     `${applicant.userFirstname} ${applicant.userLastname}`,
     applicant.commissionTitle,
     applicant.applicationStatus,
@@ -141,22 +202,28 @@ function Application() {
         <div className="application">
           <h1>Application</h1>
           <div className="search">
-            <input type="text" placeholder="Search..." />
-            <button type="submit" style={{backgroundColor:"#1679AB"}}>
-              <i className="fa fa-search" place></i>
-            </button>
-            {/*<select name="type" id="">
-            <option value=""></option>
-            <option value="employer">Employer</option>
-            <option value="catcher">Catcher</option>
-            <option value="admin">Admin</option>
-          </select>
-          <select name="status" id="">
-            <option value=""></option>
-            <option value="verified">Verified</option>
-            <option value="unverified">Unverified</option>
-            <option value="Suspended">Suspended</option>
-          </select>*/}
+
+            <input 
+              type="text" 
+              placeholder="Search Employer or Errand title..." 
+              name="term"
+              onChange={handleChange}
+            />
+//             <button type="submit" style={{backgroundColor:"#1679AB"}}>
+//               <i className="fa fa-search" place></i>
+//             </button>
+            <select
+              className="CLstatus"
+              onChange={handleChange}
+              value={searchTerm.status}
+              name="status"
+            >
+              <option value="">Status</option>
+              <option value="Pending">Pending</option>
+              <option value="Cancelled">Cancelled</option>
+              <option value="Denied">Denied</option>
+              <option value="Accepted">Accepted</option>
+            </select>
           </div>
           <Table headers={headers} data={applicationData} />
         </div>

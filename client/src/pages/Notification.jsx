@@ -32,17 +32,8 @@ function Notification() {
   useEffect(() => {
     const fetchNotif = async () => {
       try {
-        if (type == "Catcher") {
-          const res = await axios.get(
-            `http://localhost:8800/my-notif/${userID}`
-          );
-          setNotifs(res.data);
-        } else {
-          const res = await axios.get(
-            `http://localhost:8800/emp-notif/${userID}`
-          );
-          setNotifs(res.data);
-        }
+        const res = await axios.get(`http://localhost:8800/my-notif/${userID}`);
+        setNotifs(res.data);
       } catch (err) {
         console.log(err);
       }
@@ -71,22 +62,26 @@ function Notification() {
       <div className="notification-container">
         <main className="notification-main">
           <div className="notification-header">
-
-            <p className="notification-title" style={{paddingLeft:"30px"}}>Notifications</p>
-            <img 
-                 src="/images/notification_icon.svg" 
-                 className="icon" 
-                 alt="notification_icon" 
-                 style={{paddingLeft:"20px"}}/>
-            <button onClick={markAsRead} className="mark-read-button" style={{textAlign:"center"}}>
+            <p className="notification-title" style={{ paddingLeft: "30px" }}>
+              Notifications
+            </p>
+            <img
+              src="/images/notification_icon.svg"
+              className="icon"
+              alt="notification_icon"
+              style={{ paddingLeft: "20px" }}
+            />
+            <button
+              onClick={markAsRead}
+              className="mark-read-button"
+              style={{ textAlign: "center" }}
+            >
               Mark all as Read
-              <img 
-                 src="/images/check_icon.svg" 
-                 className="check-icon" 
-                 alt="check_icon"
+              <img
+                src="/images/check_icon.svg"
+                className="check-icon"
+                alt="check_icon"
               />
-
-
             </button>
           </div>
           <div className="notification-list">

@@ -10,10 +10,11 @@ import Option from "@mui/joy/Option";
 
 const CommissionList = () => {
   const [commissions, setCommissions] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selStatus, setSelStatus] = useState("");
-  const [type, setType] = useState("");
-  const [status, setStatus] = useState("");
+  const [searchTerm, setSearchTerm] = useState({
+    term: "",
+    type: "",
+    status: "",
+  });
   const location = useLocation();
   const userID = location.pathname.split("/")[2];
 
@@ -40,43 +41,6 @@ const CommissionList = () => {
     fetchAllCommission();
   }, []);
 
-  //fetch all accounts
-  //triggers when search input is filled
-  // const fetchSearchResults = async () => {
-  //   try {
-  //     //"http://localhost:8800/commission" - local computer
-  //     //"http://192.168.1.47:8800/commission" - netwrok
-  //     const res = await axios.get("http://localhost:8800/search-commission", {
-  //       params: { term: searchTerm }, // Pass the search term as a query parameter
-  //     });
-  //     setCommissions(res.data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchSearchResults();
-  // }, [searchTerm]); // Trigger the search whenever searchTerm changes
-
-  // // filter type
-  // const fetchTypeResultses = async () => {
-  //   try {
-  //     //http://localhost:8800/user - local
-  //     //http://192.168.1.47:8800/user - network
-  //     const res = await axios.get("http://localhost:8800/type-commilist", {
-  //       params: { status: status, type: type }, // Pass the search term as a query parameter
-  //     });
-  //     setCommissions(res.data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchTypeResultses();
-  // }, [status, type]);
-
   //funtion to delete commission
   const handleDelete = async (commissionID) => {
     try {
@@ -89,10 +53,41 @@ const CommissionList = () => {
     }
   };
 
+  const handleChange = (e) => {
+    // For the 'gender' field, directly set the value without using spread syntax
+    if (e.target.name === "status") {
+      setSearchTerm((prev) => ({ ...prev, status: e.target.value }));
+    } else if (e.target.name === "type") {
+      setSearchTerm((prev) => ({ ...prev, type: e.target.value }));
+    } else {
+      // For other fields, use spread syntax as before
+      setSearchTerm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    }
+  };
+
+  //filter
+  const filterErrands = commissions.filter((commission) => {
+    const type = commission.commissionType
+      .toLowerCase()
+      .includes(searchTerm.type.toLowerCase());
+    const termMatch = commission.commissionTitle
+      .toLowerCase()
+      .includes(searchTerm.term.toLowerCase());
+    const termMatch2 = commission.userFirstname
+      .toLowerCase()
+      .includes(searchTerm.term.toLowerCase());
+    const termMatch3 = commission.userLastname
+      .toLowerCase()
+      .includes(searchTerm.term.toLowerCase());
+    const status = commission.commissionStatus.includes(searchTerm.status);
+
+    return type && (termMatch || termMatch2 || termMatch3) && status;
+  });
+
   //Logic of Pagination
   const indexOfLastItem = currentPage + itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = commissions.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filterErrands.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -100,12 +95,12 @@ const CommissionList = () => {
   return (
     <div>
       <NavBar
-        page1="HOME"
-        home={`/admin-home/${userID}`}
+        page1="REQUESTS"
+        one={`/request/${userID}`}
         // {`admin-home/${userID}`}
-        page2="ACCOUNT LIST"
+        page2="ACCOUNTS"
         commissionList={`/accounts/${userID}`}
-        page3="ERRAND LIST"
+        page3="ERRANDS"
         applicants={`/commission-list/${userID}`}
         page4="MAP"
         map={`/map/${userID}`}
@@ -132,9 +127,10 @@ const CommissionList = () => {
         >
           <input
             type="text"
+            name="term"
             placeholder="Search..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            value={searchTerm.term}
+            onChange={handleChange}
             style={{
               padding: "8px",
               fontSize: "12px",
@@ -168,19 +164,23 @@ const CommissionList = () => {
           >
             <select
               className="CLstatus"
-              onChange={(e) => setStatus(e.target.value)}
-              value={status}
+              onChange={handleChange}
+              value={searchTerm.status}
+              name="status"
               defaultValue={""}
             >
               <option value="">Status</option>
               <option value="Pending">Pending</option>
               <option value="Completed">Completed</option>
               <option value="Cancelled">Cancelled</option>
+              <option value="Expired">Expired</option>
+              <option value="Caught">Caught</option>
             </select>
             <select
               className="CLtype"
-              onChange={(e) => setType(e.target.value)}
-              value={type}
+              onChange={handleChange}
+              value={searchTerm.type}
+              name="type"
               style={{
                 padding: "8px",
                 fontSize: "12px",
@@ -214,11 +214,13 @@ const CommissionList = () => {
           data={currentItems.map((Commission) => [
             Commission.commissionID,
             Commission.commissionTitle,
-            Commission.employerID,
+            `${Commission.userFirstname} ${Commission.userLastname}`,
             Commission.commissionType,
             Commission.commissionPay,
-            Commission.DatePosted,
-            Commission.DateCompleted,
+            new Date(Commission.DatePosted).toLocaleDateString(),
+            Commission.DateCompleted === ""
+              ? new Date(Commission.DateCompleted).toLocaleDateString()
+              : "",
             Commission.commissionStatus,
             <>
               {/* <button onClick={() => handleDelete(Commission.commissionID)}>

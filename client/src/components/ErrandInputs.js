@@ -180,7 +180,7 @@ function ErrandInputs(props) {
                   Home Service - Outdoor
                 </option>
                 <option value="Delivery">Delivery Service</option>
-                <option value="Transport">Transport Service</option>
+                <option value="Transportation">Transport Service</option>
               </select>
             </div>
           </div>

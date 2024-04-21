@@ -7,10 +7,17 @@ import Table from "../components/Table";
 import Pagination from "../components/Pagination";
 import "./commissionpage.css";
 import { useLocation } from "react-router-dom";
+import OngoingCards from "./Dropdown/OngoingCards";
 
 function CommissionPage() {
   const headers = ["DATE", "EMPLOYER", "ERRAND TITLE", "STATUS"];
   const [commissions, setCommissions] = useState([]);
+  const [searchTerm, setSearchTerm] = useState({
+    term: "",
+    type: "",
+    status: "",
+    date: "",
+  });
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,7 +31,7 @@ function CommissionPage() {
     const fetchAllCommission = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/accepted-errand/${userID}`
+          `http://localhost:8800/catcher/ongoing/${userID}`
         );
         //"http://localhost:8800/commission" - local computer
         //"http://192.168.1.47:8800/commission" - netwrok
@@ -35,12 +42,43 @@ function CommissionPage() {
     };
     fetchAllCommission();
   }, []);
+  const handleChange = (e) => {
+    // For the 'gender' field, directly set the value without using spread syntax
+    if (e.target.name === "status") {
+      setSearchTerm((prev) => ({ ...prev, status: e.target.value }));
+    } else if (e.target.name === "type") {
+      setSearchTerm((prev) => ({ ...prev, type: e.target.value }));
+    } else {
+      // For other fields, use spread syntax as before
+      setSearchTerm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    }
+  };
+
+  //filter
+  const filterErrands = commissions.filter((commission) => {
+    const type = commission.commissionType
+      .toLowerCase()
+      .includes(searchTerm.type.toLowerCase());
+    const termMatch = commission.commissionTitle
+      .toLowerCase()
+      .includes(searchTerm.term.toLowerCase());
+    const termMatch2 = commission.userFirstname
+      .toLowerCase()
+      .includes(searchTerm.term.toLowerCase());
+    let deadline = true;
+    if (searchTerm.date) {
+      deadline = commission.commissionDeadline >= searchTerm.date;
+    }
+    const status = commission.commissionStatus.includes(searchTerm.status);
+
+    return type && (termMatch || termMatch2) && status && deadline;
+  });
 
   // Pagination functions
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = commissions.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filterErrands.slice(indexOfFirstItem, indexOfLastItem);
 
   //set variables for notification
   const [notif, setNotif] = useState({
@@ -88,6 +126,30 @@ function CommissionPage() {
       console.log(err);
     }
   };
+  //Display format to date
+  // months into words
+  const formattedDate = (commissionDeadline) => {
+    const date = new Date(commissionDeadline);
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ]; // Get the month and year from the date object
+    const month = monthNames[date.getMonth()];
+    const year = date.getFullYear();
+
+    // Construct the formatted date string
+    return `${month} ${date.getDate()}, ${year}`;
+  };
 
   return (
     <div>
@@ -106,6 +168,27 @@ function CommissionPage() {
           {" "}
           {/* Apply Commission-page class here */}
           <h1>Commission</h1>
+          <div className="search">
+            <input
+              type="text"
+              placeholder="Search Errand title..."
+              name="term"
+              onChange={handleChange}
+            />
+            <input type="date" name="date" onChange={handleChange} />
+
+            <select
+              className="CLstatus"
+              onChange={handleChange}
+              value={searchTerm.status}
+              name="status"
+            >
+              <option value="">Status</option>
+              <option value="Ongoing">Ongoing</option>
+              <option value="Completed">Completed</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </div>
           <h6>Catcher can see the status of the commission</h6>
           <Table
             headers={[
@@ -120,9 +203,7 @@ function CommissionPage() {
               `${commission.userFirstname} ${commission.userLastname}`,
               commission.commissionTitle,
               commission.commissionStart,
-              new Date(commission.commissionDeadline)
-                .toISOString()
-                .substr(0, 10),
+              formattedDate(commission.commissionDeadline),
               commission.errandStatus,
               commission.errandStatus === "Ongoing" ? (
                 <button
@@ -137,6 +218,7 @@ function CommissionPage() {
           />
         </div>
       </div>
+      <OngoingCards commissions={commissions} to={`/view-errand/${userID}`} />
       {/* Pagination controls */}
       {commissions.length > 0 && (
         <Pagination

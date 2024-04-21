@@ -32,6 +32,7 @@ import Menu from "./pages/Menu";
 import testpage from "./pages/testpage";
 import Application from "./pages/CatcherApplication";
 import CatcherCommission from "./pages/CatcherCommissionPage";
+import Ongoing from "./pages/Dropdown/Ongoing";
 //private route
 // import { AuthProvider } from "./components/AuthContext";
 // import PrivateRoute from "./components/PrivateRoute";
@@ -43,6 +44,7 @@ import Verification from "./pages/Verification";
 import ErrandPage from "./pages/ErrandPage";
 import ViewProfile from "./pages/ViewProfile";
 import SearchPage from "./pages/SearchPage";
+import RequestPage from "./pages/admin/Request/RequestPage";
 
 function App() {
   return (
@@ -87,6 +89,7 @@ function App() {
           <Route path="/accounts/:userID" element={<AccountList />} />
           <Route path="/add" exact Component={AddAccount} />
           <Route path="/map/:id" element={<Map />} />
+          <Route path="/request/:id" element={<RequestPage />} />
           <Route path="/admin-home/:userID" element={<AdminHome />} />
           <Route
             path="/commission-list/:userID"
@@ -111,6 +114,7 @@ function App() {
             path="/update-commission/:commissionID/:userID"
             element={<UpdateCommission />}
           />
+          <Route path="/ongoing/:id" element={<Ongoing />} />
           {/* CATCHER */}
           <Route
             path="/apply-commission/:commissionID/:userID"

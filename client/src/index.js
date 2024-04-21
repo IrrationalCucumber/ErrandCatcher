@@ -5,17 +5,18 @@ import Root from "./pages/admin/Root";
 import AdminHome from "./pages/admin/AdminHome";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import AccountList from "./pages/admin/AccountList";
-import SignUp from "./pages/SignUp";
+import SignUp from "./pages/SignUp/Signup";
 import SignIn from "./pages/SignIn";
 import Home from "./pages/Home";
 import CommissionList from "./pages/admin/CommissionList";
 import Map from "./components/Map";
 import Profile from "./pages/Profile";
 import Notification from "./pages/Notification";
+import Landing from "./pages/Landing";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/dashboard",
     element: <Root />,
     children: [
       { path: "home/:userID", element: <Home /> },
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: "/notifications/:userID",
     element: <Notification />,
+  },
+  {
+    path: "/",
+    element: <Landing />,
   },
   {
     path: "/sign-up",
