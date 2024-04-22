@@ -57,7 +57,7 @@ const applyController = {
     const status = "Denied";
     const comID = req.params.comID;
     const applyID = req.params.applyID;
-    Apply.updateErrandStatus(comID, applyID, status, (error, result) => {
+    Apply.putChangeApply(comID, applyID, status, (error, result) => {
       if (error) {
         console.error("Error updating Application:", error);
         res
@@ -78,7 +78,7 @@ const applyController = {
     const status = "Accepted";
     const comID = req.params.comID;
     const applyID = req.params.applyID;
-    Apply.updateErrandStatus(comID, applyID, status, (error, result) => {
+    Apply.putChangeApply(comID, applyID, status, (error, result) => {
       if (error) {
         console.error("Error updating Application:", error);
         res

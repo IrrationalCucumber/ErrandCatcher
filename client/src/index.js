@@ -1,62 +1,211 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import Root from "./pages/admin/Root";
-import AdminHome from "./pages/admin/AdminHome";
+
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import AccountList from "./pages/admin/AccountList";
-import SignUp from "./pages/SignUp/Signup";
-import SignIn from "./pages/SignIn";
 import Home from "./pages/Home";
-import CommissionList from "./pages/admin/CommissionList";
-import Map from "./components/Map";
-import Profile from "./pages/Profile";
+import Verification from "./pages/profile/Verification";
 import Notification from "./pages/Notification";
+import testpage from "./pages/testpage";
+import "./style.css";
+import "./App.css";
+//DISPLAY
 import Landing from "./pages/Landing";
+import Menu from "./pages/Menu";
+import ErrandPage from "./pages/errand  views/ErrandPage";
+import ViewProfile from "./pages/profile/ViewProfile";
+import ProfilePage from "./pages/profile/ProfilePage";
+import ViewCommission from "./pages/errand  views/ViewCommission";
+import Errands from "./pages/errand  views/Errands";
+import ErrorElement from "./pages/ErrorElement";
+//UPDATE/REGISTER
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp/Signup";
+import UpdateAccount from "./pages/profile/UpdateAccount";
+import Profile from "./pages/profile/Profile";
+//ADMIN Routes
+import AccountList from "./pages/admin/AccountList";
+import AddAccount from "./pages/admin/AddAccount";
+import CommissionList from "./pages/admin/CommissionList";
+import AdminHome from "./pages/admin/AdminHome";
+import Map from "./pages/admin/CommissionMap";
+import Dashboard from "./pages/admin/Dashboard";
+import RequestPage from "./pages/admin/Request/RequestPage";
+//CATCHER Routes
+import CatcherHome from "./pages/catcher/CatcherHome";
+import CatcherMap from "./pages/catcher/CatcherMap";
+import ApplyCommission from "./pages/catcher/ApplyCommission";
+import Application from "./pages/catcher/CatcherApplication";
+import CatcherCommission from "./pages/catcher/CatcherCommissionPage";
+//EMPLOYER Routes
+import EmployerHome from "./pages/employer/EmployerHome";
+import PostCommission from "./pages/errand  views/PostCommission";
+import EmployerCommissions from "./pages/employer/EmployerCommissionList";
+import EmployerApplicants from "./pages/employer/EmployerApplicants";
+import EmployerMap from "./pages/employer/EmployerMap";
+import UpdateCommission from "./pages/errand  views/UpdateCommission";
+import Ongoing from "./pages/Dropdown/Ongoing";
+//SEARCH/ CATEGORY Routes
+import Transportation from "./pages/Services/Transpo";
+import HomeServices from "./pages/Services/HomeServices";
+import Delivery from "./pages/Services/Delivery";
+import SearchPage from "./pages/SearchPage";
+import Service from "./pages/Services/Service";
+//restrict
+import { AuthProvider } from "./components/AuthContext";
 
 const router = createBrowserRouter([
   {
-    path: "/dashboard",
-    element: <Root />,
+    path: "/",
+    element: <Landing />,
+  },
+  {
+    path: "/dashboard/",
+    element: <Dashboard />,
     children: [
-      { path: "home/:userID", element: <Home /> },
+      { path: "home", element: <Home /> },
       {
-        path: "accounts/:userID",
+        path: "accounts",
         element: <AccountList />,
       },
       {
-        path: "commission-list/:userID",
+        path: "commission-list",
         element: <CommissionList />,
       },
       {
         path: "map",
         element: <Map />,
       },
+      {
+        path: "request",
+        element: <RequestPage />,
+      },
+      //EMPLOYER
+      {
+        path: "commissions/",
+        element: <EmployerCommissions />,
+      },
+      {
+        path: "applicants/",
+        element: <EmployerApplicants />,
+      },
+      {
+        path: "e-map/",
+        element: <EmployerMap />,
+      },
+      {
+        path: "ongoing/",
+        element: <Ongoing />,
+      },
+      //CATCHER
+      {
+        path: "catcher-errands/",
+        element: <CatcherCommission />,
+      },
+      {
+        path: "my-application/",
+        element: <Application />,
+      },
+      {
+        path: "c-map/",
+        element: <CatcherMap />,
+      },
     ],
   },
   {
-    path: "/profile/:userID",
-    element: <Profile />,
+    path: "/errand/",
+    element: <Errands />,
+    children: [
+      {
+        path: "view-errand/:comID",
+        element: <ErrandPage />,
+      },
+      {
+        path: "view-commission/:comID",
+        element: <ViewCommission />,
+      },
+      {
+        path: "update-commission/:comID",
+        element: <UpdateCommission />,
+      },
+      {
+        path: "post-commission",
+        element: <PostCommission />,
+      },
+    ],
+  },
+  //SERVICES / CATEGIRY
+  {
+    path: "/service/",
+    element: <Service />,
+    children: [
+      {
+        path: "Transpo/:type",
+        element: <Transportation />,
+      },
+      {
+        path: "Delivery/:type",
+        element: <Delivery />,
+      },
+      {
+        path: "HomeService/:type",
+        element: <HomeServices />,
+      },
+    ],
+  },
+  //SEARCH PAGE
+  {
+    path: "/search/:term",
+    element: <SearchPage />,
+  },
+  //PROFILE PAGES
+  {
+    path: "/profile/",
+    element: <ProfilePage />,
+    children: [
+      {
+        path: "me",
+        element: <Profile />,
+      },
+      {
+        path: "update",
+        element: <UpdateAccount />,
+      },
+      {
+        path: "user/:id",
+        element: <ViewProfile />,
+      },
+      {
+        path: "verification",
+        element: <Verification />,
+      },
+      {
+        path: "add",
+        element: <AddAccount />,
+      },
+    ],
   },
   {
-    path: "/notifications/:userID",
+    path: "/notifications",
     element: <Notification />,
-  },
-  {
-    path: "/",
-    element: <Landing />,
   },
   {
     path: "/sign-up",
     element: <SignUp />,
   },
   { path: "/sign-in", element: <SignIn /> },
+  {
+    path: "*",
+    element: <ErrorElement />,
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
-    {/* <RouterProvider router={router} /> */}
+    <AuthProvider>
+      {/* <App /> */}
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 );

@@ -1,16 +1,13 @@
-import React from 'react'
-import Cards from '../components/Cards'
+import React from "react";
+import Cards from "../components/Cards/Cards";
 //import Menu from './Menu'
 
 function testpage() {
   return (
     <div>
-    
-      <Cards/>
- 
-
+      <Cards />
     </div>
-  )
+  );
 }
 
-export default testpage
+export default testpage;

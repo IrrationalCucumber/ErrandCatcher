@@ -1,0 +1,58 @@
+/*commissionpage.css*/
+.Commission-page-container {
+    display: flex;
+    justify-content: space-between; /* Center content horizontally */
+    align-items: flex-start;
+}
+
+.Commission-page {
+    margin: 20px;
+    flex-direction: column;
+}
+
+.Commission-page h1,
+.Commission-page h6 {
+    margin-right: 10px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin-bottom: 20px;
+}
+
+.Commission-page-divider {
+    border-top: 1px solid #ccc; /* Top border */
+    margin: 20px 0; /* Margin top and bottom */
+}
+
+.Commission-page-divider .table-wrapper {
+    overflow-x: auto;
+}
+
+.Commission-page table {
+    border-spacing: 0;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.Commission-page th,
+.Commission-page td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    color: black;
+    width: 100px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 12px;
+}
+
+.Commission-page th {
+    background-color: #1679AB;
+    color: #fff;
+}
+
+.Commission-page tr:last-child td {
+    border-bottom: none;
+}
+
+.Commission-page tr:hover {
+    background-color: #ddd;
+}

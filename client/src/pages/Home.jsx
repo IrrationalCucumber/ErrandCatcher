@@ -1,40 +1,21 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/Navbar/Navbar";
 import EmployerCard from "../Employer Cards/EmployerCards";
 import StickyButton from "../components/Sticky Button/StickyButton";
-import Cards from "../components/Cards";
+import Cards from "../components/Cards/Cards";
 import Menu from "./Menu";
-import HeroSection from "../components/HeroSection";
-import Footer from "../components/Footer";
-import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "../components/AuthContext";
 
 const Home = () => {
-  const location = useLocation();
-  const userID = location.pathname.split("/")[2];
-
-  //setState for account type
-  const [type, setType] = useState("");
-  useEffect(() => {
-    const fetchType = async () => {
-      try {
-        const res = await axios.get(`http://localhost:8800/get-type/${userID}`);
-        //console.log(res.data);
-        setType(res.data);
-        //console.log(type);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchType();
-  }, [type]);
-
+  const { user } = useAuth();
+  const userID = user.userID;
   return (
     <>
       <div>
-        {type === "Employer" && (
+        {user.userType === "Employer" && (
           <>
-            <Navbar
+            {/* <Navbar
               page1="ONGOING"
               one={`/ongoing/${userID}`}
               page2="COMMISSIONS"
@@ -43,18 +24,18 @@ const Home = () => {
               applicants={`/applicants/${userID}`}
               page4="MAP"
               map={`/e-map/${userID}`}
-            />
+            /> */}
             <EmployerCard />
             <StickyButton
               buttonText="Post Errand"
-              destination={`/post-commission/${userID}`}
+              destination={`/errand/post-commission`}
             />
             <Cards />
           </>
         )}
-        {type === "Catcher" && (
+        {user.userType === "Catcher" && (
           <>
-            <Navbar
+            {/* <Navbar
               // page1="HOME"
               // home={`/home/${userID}`}
               page2="COMMISSIONS"
@@ -63,13 +44,13 @@ const Home = () => {
               applicants={`/my-application/${userID}`}
               map={`/e-map/${userID}`}
               page4="MAP"
-            />
+            /> */}
             <Menu />
           </>
         )}
-        {type.toLocaleUpperCase() === "ADMIN" && (
+        {user.userType.toLocaleUpperCase() === "ADMIN" && (
           <>
-            <Navbar
+            {/* <Navbar
               page1="REQUESTS"
               one={`/request/${userID}`}
               // {`admin-home/${userID}`}
@@ -79,11 +60,11 @@ const Home = () => {
               applicants={`/commission-list/${userID}`}
               page4="MAP"
               map={`/map/${userID}`}
-            />
+ /> */}
             <Menu />
           </>
         )}
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </>
   );

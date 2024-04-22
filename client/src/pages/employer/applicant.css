@@ -1,0 +1,110 @@
+/*css for employer applicant page*/
+.applicants-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.applicants{
+  display: flex;
+  align-items: flex-start;
+  margin: 20px;
+  flex-direction: column;
+}
+
+.applicants h1{
+  margin-right: 10px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+
+.search {
+  margin-bottom: 10px; /* Adjust margin as needed */
+  display: flex;
+  align-items: center;
+}
+
+.search input[type="text"],
+.search button {
+  padding: 8px;
+  font-size: 16px; 
+  margin-bottom: 20px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 12px;
+}
+
+.applicants-divider {
+  border-top: 1px solid white; /* Adjust border color and style as needed */
+  margin: 20px 0; /* Adjust margin as needed */
+}
+
+.applicants-divider .table-wrapper {
+  overflow-x: auto;
+}
+
+.applicants table{
+    border-spacing: 0; /* Remove the gap between cells */
+    width: 100%;
+}
+
+.applicants-table {
+    border-spacing: 0;
+    width: 100%;
+  }
+  
+  .applicants th,
+  .applicants td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    color: black;
+    width: 100px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 12px;
+  }
+  
+  .applicants th {
+    background-color: #1679AB;
+    color: #fff;
+  }
+  
+  .applicants-table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .applicants-table tr:hover {
+    background-color: #ddd;
+  }
+  
+  .applicants-table button {
+    padding: 8px 12px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+  
+  .applicants-table .update button {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .applicants-table .update button:hover {
+    background-color: #218838;
+  }
+  
+  .applicants-table button.delete {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .applicants-table button.delete:hover {
+    background-color: #c82333;
+  }
+
+  .pagination-container {
+    display: flex;
+    justify-content: center;
+}
+  
+  
