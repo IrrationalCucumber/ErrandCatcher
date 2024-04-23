@@ -6,7 +6,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
 import Verification from "./pages/profile/Verification";
 import Notification from "./pages/Notification";
-import testpage from "./pages/testpage";
+import MapComponent from "./pages/testpage";
 import "./style.css";
 import "./App.css";
 //DISPLAY
@@ -194,6 +194,7 @@ const router = createBrowserRouter([
     element: <SignUp />,
   },
   { path: "/sign-in", element: <SignIn /> },
+  { path: "/test", element: <MapComponent /> },
   {
     path: "*",
     element: <ErrorElement />,
