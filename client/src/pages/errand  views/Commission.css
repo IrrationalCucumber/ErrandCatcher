@@ -127,7 +127,7 @@ label{
 
 @media screen and (min-width: 1300px){
     .input-cont, .errand-cont{
-        max-width: 1209px;
+        
         margin: auto;
     }
 }

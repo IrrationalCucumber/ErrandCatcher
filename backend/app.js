@@ -173,4 +173,42 @@ app.get("/trans-count/:userID", (req, res) => {
     return res.json(data); // Assuming you only expect one row of results
   });
 });
+
+const processPayment = require("./ProcessPayment");
+
+// Route when use succeeds in payment, update the necessary data in the database
+app.get("/success-payment", (req, res) => {
+  console.log(req.body);
+  return res.send("success");
+});
+
+// Route when user cancels payment
+app.get("/cancel-payment", (req, res) => {
+  console.log(req.body);
+  return res.send("cancel");
+});
+
+// Route to process payment
+app.post("/process-payment", async (req, res) => {
+  // distance is in meters being converted to kilometers
+  const distance = req.body.distance / 1000;
+  const baseAmount = req.body.amount;
+  const total = Math.round(distance) * 15 + baseAmount;
+  // Paymongo api key in base64, convert api key to base64
+  const authKey = "Basic c2tfdGVzdF9kcTh5b3BuZ1BoODNpb1F5b0V2MXZpc2E6";
+  const checkout = await processPayment(
+    authKey,
+    total * 100,
+    "Delivery",
+    `Total distance: ${distance.toFixed(2)}km`,
+    "http://localhost:8800/success-payment",
+    "http://localhost:8800/cancel-payment"
+  );
+  console.log(checkout.data);
+
+  // Redirect user to paymongo's checkout page
+  return res.send({ url: checkout.data.attributes.checkout_url });
+});
+
+
 module.exports;

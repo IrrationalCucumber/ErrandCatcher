@@ -18,8 +18,14 @@ import AddIcCallIcon from "@mui/icons-material/AddIcCall";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
+import Map, { handlePayment } from "./MapBox";
+import { useState } from "react";
 
 function ErrandInputs(props) {
+  const accessToken =
+    "pk.eyJ1Ijoiam9pbmVyIiwiYSI6ImNsdmNjbnF4NjBoajQycWxoaHV5b2M1NzIifQ.Z7Pi_LfWyuc7a_z01zKMFg";
+
+  const [distance, setDistance] = useState(0);
   return (
     <>
       <div className="input-cont">
@@ -242,7 +248,7 @@ function ErrandInputs(props) {
           {/* Amount */}
           <div className="input-group">
             <div className="col1">
-              <label style={{ color: "black" }}>Amount: ₱</label>
+              <label style={{ color: "black" }}>Amount: ₱{distance}</label>
             </div>
             <div className="col2">
               <Input
@@ -297,12 +303,15 @@ function ErrandInputs(props) {
                 value={props.descValue}
               />
             </div>
+            <button onClick={()=>{
+              handlePayment(distance)
+            }}>Payment</button>
           </div>
         </div>
-        <div className="map--wrap">
+         <div style={{display:"none" }} className="map--wrap">
           {props.typeValue === "Delivery" && <>Distance: {props.distance}</>}
-          <div ref={props.mapContainer} className="map-small" />
-
+           <div ref={props.mapContainer} className="map-small" /> 
+          
           <p className="coords">
             X: {props.long} Y: {props.lat}
           </p>
@@ -317,6 +326,13 @@ function ErrandInputs(props) {
             </>
           )}
         </div>
+        <Map
+        accessToken={accessToken}
+        getDistanceCallback={(distance) => {
+          setDistance(distance);
+        }}
+      />
+
       </div>
     </>
   );
