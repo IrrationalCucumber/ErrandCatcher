@@ -312,30 +312,26 @@ function ErrandInputs(props) {
             </button>
           </div>
         </div>
-        <div style={{ display: "none" }} className="map--wrap">
-          {props.typeValue === "Delivery" && <>Distance: {props.distance}</>}
-          <div ref={props.mapContainer} className="map-small" />
-
-          <p className="coords">
-            X: {props.long} Y: {props.lat}
-          </p>
-          {props.typeValue === "Delivery" && (
-            <>
-              X: {props.destlong} Y: {props.destlat}
-            </>
+        {props.typeValue !== "Delivery" &&
+          props.typeValue !== "Transportation" && (
+            <div className="map--wrap">
+              <div ref={props.mapContainer} className="map-small" />
+              <p className="coords">
+                X: {props.long} Y: {props.lat}
+              </p>
+            </div>
           )}
-          {props.typeValue === "Transportation" && (
-            <>
-              X: {props.destlong} Y: {props.destlat}
-            </>
-          )}
-        </div>
-        <Map
-          accessToken={accessToken}
-          getDistanceCallback={(distance) => {
-            setDistance(distance);
-          }}
-        />
+        {props.typeValue === "Delivery" && (
+          <>
+            Distance: {distance} m
+            <Map
+              accessToken={accessToken}
+              getDistanceCallback={(distance) => {
+                setDistance(distance);
+              }}
+            />
+          </>
+        )}
       </div>
     </>
   );

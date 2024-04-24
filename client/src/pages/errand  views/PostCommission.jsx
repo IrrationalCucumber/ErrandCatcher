@@ -239,7 +239,7 @@ const PostCommission = () => {
           lat={commission.comLat}
           destlong={commission.comDestLong}
           destlat={commission.comDestLat}
-          distance=""
+          
         />
         <div className="btn-container">
           <button onClick={handleClick} className="btn btn-yellow" style={{}}>
