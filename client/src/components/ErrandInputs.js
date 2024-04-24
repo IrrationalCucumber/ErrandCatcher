@@ -148,26 +148,6 @@ function ErrandInputs(props) {
           />
         </div>
       </div>
-      {/* location */}
-      <div className="input-group">
-        <div className="col1">
-          <label style={{ color: "black" }}>Where</label>
-        </div>
-        <div className="col2">
-          <Input
-            color="neutral"
-            disabled={props.readOnly}
-            size="lg"
-            variant={props.variant}
-            startDecorator={<LocationOn />}
-            type="text"
-            placeholder="Location"
-            onChange={props.handleChange}
-            name={props.location}
-            value={props.locValue}
-          />
-        </div>
-      </div>
       {/* commission type */}
       <div className="input-group">
         <div className="col1">
@@ -190,6 +170,26 @@ function ErrandInputs(props) {
             <option value="Delivery">Delivery Service</option>
             <option value="Transportation">Transport Service</option>
           </select>
+        </div>
+      </div>
+      {/* location */}
+      <div className="input-group">
+        <div className="col1">
+          <label style={{ color: "black" }}>Where</label>
+        </div>
+        <div className="col2">
+          <Input
+            color="neutral"
+            disabled={props.readOnly}
+            size="lg"
+            variant={props.variant}
+            startDecorator={<LocationOn />}
+            type="text"
+            placeholder="Location"
+            onChange={props.handleChange}
+            name={props.location}
+            value={props.locValue}
+          />
         </div>
       </div>
       {/* Display when Transport Type is selected */}
@@ -250,6 +250,28 @@ function ErrandInputs(props) {
             <label style={{ color: "black" }}>Fee: </label>
           )}
         </div>
+        {/* PAYMENT METOD */}
+        <div className="input-group">
+          <div className="col1">
+            <label style={{ color: "black" }} htmlFor="">
+              Payment Method
+            </label>
+          </div>
+          <div className="col2">
+            <select
+              name={props.method}
+              onChange={props.handleChange}
+              value={props.methodValue}
+              disabled={props.readOnly}
+            >
+              <option value="">Choose method....</option>
+              <option value="g-cash">G-Cash</option>
+              <option value="paymaya">Paymaya</option>
+              <option value="on-hand">Cash on Hand</option>
+              <option value="credit card">Credit Card</option>
+            </select>
+          </div>
+        </div>
         <div className="col2">
           <Input
             color="neutral"
@@ -268,6 +290,7 @@ function ErrandInputs(props) {
             props.typeValue !== "" && <p>₱15/km + ₱100</p>}
         </div>
       </div>
+
       {/* contact number */}
       <div className="input-group">
         <div className="col1">
@@ -314,7 +337,6 @@ function ErrandInputs(props) {
           Payment
         </button>
       </div>
-
       {/* {props.typeValue !== "Delivery" &&
           props.typeValue !== "Transportation" && (
             <div className="map--wrap">

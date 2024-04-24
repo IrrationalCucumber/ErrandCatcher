@@ -31,6 +31,7 @@ const PostCommission = () => {
     comLat: "",
     comDestLong: 0,
     comDestLat: 0,
+    method: "",
   });
 
   const navigate = useNavigate();
@@ -51,6 +52,8 @@ const PostCommission = () => {
   const handleChange = (e) => {
     if (e.target.name === "comType") {
       setCommission((prev) => ({ ...prev, comType: e.target.value }));
+    } else if (e.target.name === "method") {
+      setCommission((prev) => ({ ...prev, method: e.target.value }));
     } else {
       setCommission((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     }
@@ -159,6 +162,8 @@ const PostCommission = () => {
               desc="comDescription"
               pay="comPay"
               payValue={commission.comPay}
+              method="method"
+              methodValue={commission.method}
               number="Contactno"
               //mapContainer={mapContainer}
               long={commission.comLong}

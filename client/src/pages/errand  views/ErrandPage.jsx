@@ -32,6 +32,7 @@ const ErrandPage = () => {
     first: "",
     destLng: "",
     destLat: "",
+    method: "",
   });
 
   const navigate = useNavigate();
@@ -123,6 +124,7 @@ const ErrandPage = () => {
           first: retrievedCommission.userFirstname,
           destLat: retrievedCommission.commissionDestLat,
           destLng: retrievedCommission.commissionDestLong,
+          method: retrievedCommission.commissionPaymentMethod,
         });
       } catch (err) {
         console.log(err);
@@ -260,23 +262,17 @@ const ErrandPage = () => {
               statusHeader="Status"
               status={commission.comStatus}
               variant="solid"
-              //handleChange={handleChange}
               title="comTitle"
               readOnly={true}
+              methodValue={commission.method}
               titleValue={commission.comTitle}
               startValue={commission.comStart}
-              //   deadline="comDeadline"
               dlValue={commission.comDeadline}
-              //   location="comLocation"
               locValue={commission.comLocation}
               toValue={commission.comTo}
-              //   type="comType"
               typeValue={commission.comType}
-              //   desc="comDescription"
               descValue={commission.comDescription}
-              //   pay="comPay"
               payValue={commission.comPay}
-              //   number="Contactno"
               numValue={commission.ContactNo}
             />
           </div>

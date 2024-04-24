@@ -25,8 +25,9 @@ const UpdateCommission = () => {
     ContactNo: "",
     comLong: "",
     comLat: "",
-    // destLng: 0,
-    // destLat: 0,
+    destLng: 0,
+    destLat: 0,
+    method: "",
   });
 
   const [feedback, setFeedback] = useState({
@@ -183,6 +184,7 @@ const UpdateCommission = () => {
           comLat: retrievedCommission.commissionLat,
           destLat: retrievedCommission.commissionDestLat,
           destLng: retrievedCommission.commissionDestLong,
+          method: retrievedCommission.commissionPaymentMethod,
         });
       } catch (err) {
         console.log(err);
@@ -242,6 +244,8 @@ const UpdateCommission = () => {
               descValue={commission.comDescription}
               pay="comPay"
               payValue={commission.comPay}
+              method="method"
+              methodValue={commission.method}
               number="Contactno"
               numValue={commission.ContactNo}
             />
