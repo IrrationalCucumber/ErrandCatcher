@@ -191,15 +191,18 @@ app.get("/cancel-payment", (req, res) => {
 // Route to process payment
 app.post("/process-payment", async (req, res) => {
   // distance is in meters being converted to kilometers
-  const distance = req.body.distance / 1000;
-  const baseAmount = req.body.amount;
-  const total = Math.round(distance) * 15 + baseAmount;
+  // const distance = req.body.distance / 1000;
+  const baseAmount = req.body.pay;
+  const type = req.body.type;
+  const fname = req.body.first;
+  const lname = req.body.lname;
+  // const total = Math.round(distance) * 15 + baseAmount;
   // Paymongo api key in base64, convert api key to base64
   const authKey = "Basic c2tfdGVzdF9kcTh5b3BuZ1BoODNpb1F5b0V2MXZpc2E6";
   const checkout = await processPayment(
     authKey,
-    total * 100,
-    "Delivery",
+    baseAmount,
+    type,
     `Total distance: ${distance.toFixed(2)}km`,
     "http://localhost:8800/success-payment",
     "http://localhost:8800/cancel-payment"
@@ -209,6 +212,5 @@ app.post("/process-payment", async (req, res) => {
   // Redirect user to paymongo's checkout page
   return res.send({ url: checkout.data.attributes.checkout_url });
 });
-
 
 module.exports;
