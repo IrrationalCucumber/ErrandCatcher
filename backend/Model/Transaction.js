@@ -73,7 +73,7 @@ const Trans = {
         FROM errandtransaction t
         JOIN commission c ON t.transErrandID = c.commissionID
         JOIN useraccount ua ON t.transCatcherID = ua.userID
-    WHERE c.employerID = ? AND errandStatus = ?
+    WHERE c.employerID = ? AND t.errandStatus = ?
     `,
       [id, status],
       callback

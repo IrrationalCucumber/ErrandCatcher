@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import OngoingCards from "./OngoingCards";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "../../components/AuthContext";
 
 function Ongoing() {
   /**
@@ -11,14 +12,15 @@ function Ongoing() {
    */
   const [commissions, setCommissions] = useState([]);
   //get user details
+  const { user } = useAuth();
   const location = useLocation();
-  const userID = location.pathname.split("/")[2];
+  const userID = user.userID;
   //rretrieve data
   useEffect(() => {
     const fetchAllCommission = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:8800/employer/ongoing/" + userID
+          `http://localhost:8800/employer/ongoing/${userID}`
         );
         //"http://localhost:8800/commission" - local computer
         //"http://192.168.1.47:8800/commission" - netwrok
