@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import * as MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
 import axios from "axios";
-import "./MapBox.css"
+import "./MapBox.css";
 
 export default function Map({ accessToken, getDistanceCallback }) {
   const mapContainer = useRef(null);
@@ -44,8 +44,24 @@ export default function Map({ accessToken, getDistanceCallback }) {
     });
 
     directions.current.on("route", (e) => {
-      //   setDistance(e.route[0].distance);
-      getDistanceCallback(e.route[0].distance);
+      const route = e.route[0];
+
+      //console.log(route);
+
+      // Accessing coordinates of origin and destination
+      const originCoordinates = route.legs[0].steps[0].maneuver.location;
+      const destinationCoordinates =
+        route.legs[0].steps[route.legs[0].steps.length - 1].maneuver.location;
+
+      //getLngLat(startLat, startLng, endLng, endLat);
+      getDistanceCallback(
+        route.distance,
+        originCoordinates,
+        destinationCoordinates
+      );
+
+      // console.log("Origin Coordinates:", originCoordinates);
+      // console.log("Destination Coordinates:", destinationCoordinates);
     });
 
     map.current.addControl(directions.current);
