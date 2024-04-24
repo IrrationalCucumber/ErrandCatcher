@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import Navbar from "../../components/Navbar/NavBarPage";
 import maplibregl from "maplibre-gl";
-import Map from "../../components/Map";
+import Map from "../../components/Map/Map.js";
 //import "../style.css";
 import "./Commission.css";
 
