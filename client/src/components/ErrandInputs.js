@@ -329,13 +329,6 @@ function ErrandInputs(props) {
             value={props.descValue}
           />
         </div>
-        <button
-          onClick={() => {
-            handlePayment(distance);
-          }}
-        >
-          Payment
-        </button>
       </div>
       {/* {props.typeValue !== "Delivery" &&
           props.typeValue !== "Transportation" && (

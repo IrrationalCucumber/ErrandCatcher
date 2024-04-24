@@ -23,6 +23,22 @@ function OngoingCards({ commissions, to }) {
     console.log(`Commission ${commissionId} cancelled`);
   };
 
+  const handlePayment = (pay, type, fname, lname) => {
+    const paymentUrl = "http://localhost:8800/process-payment";
+    // Change the amount
+    const amount = pay;
+    axios
+      .post(paymentUrl, {
+        amount: amount,
+        type: type,
+        first: fname,
+        lname: lname,
+      })
+      .then((response) => {
+        window.open(response.data.url);
+      });
+  };
+
   return (
     <div className="Oncards">
       <div className="Oncards__container">
@@ -141,6 +157,18 @@ function OngoingCards({ commissions, to }) {
                         onClick={handleButtonClick}
                       >
                         Feedback
+                      </button>
+                      <button
+                        onClick={() => {
+                          handlePayment(
+                            commission.commissionPay,
+                            commission.commissionType,
+                            commission.userLastname,
+                            commission.userFirstname
+                          );
+                        }}
+                      >
+                        Payment
                       </button>
                     </>
                   )}
