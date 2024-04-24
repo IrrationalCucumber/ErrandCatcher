@@ -1,27 +1,30 @@
-import { useRef, useEffect, useState } from "react";
-import mapboxgl from "mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
+import React, { useRef, useEffect, useState } from "react";
+import mapboxgl from "mapbox-gl";
 import * as MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
 import axios from "axios";
 import "./MapBox.css";
 
-export default function Map({ accessToken, getDistanceCallback }) {
+export default function Map({
+  accessToken,
+  getDistanceCallback,
+  initialOrigin,
+  initialDestination,
+}) {
   const mapContainer = useRef(null);
   const map = useRef(null);
 
   // Initial state of map, e.g position and zoom
-  const [lng, setLng] = useState(123.8983);
-  const [lat, setLat] = useState(10.2981);
+  const [lng, setLng] = useState(initialOrigin?.lng || 123.8983);
+  const [lat, setLat] = useState(initialOrigin?.lat || 10.2981);
   const [zoom, setZoom] = useState(16.5);
 
   const directions = useRef(null);
-  //   const [isReady, setReady] = useState(false);
-  //   const [distance, setDistance] = useState(0);
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
     map.current = new mapboxgl.Map({
       accessToken,
-      container: "map-container",
+      container: mapContainer.current,
       style: "mapbox://styles/mapbox/streets-v12",
       center: [lng, lat],
       zoom: zoom,
@@ -33,7 +36,6 @@ export default function Map({ accessToken, getDistanceCallback }) {
       setZoom(map.current.getZoom().toFixed(2));
     });
 
-    // Controller at the top-left corner of the map. Object responsible for origin, destination, distance and etc.
     directions.current = new MapboxDirections({
       accessToken,
       controls: {
@@ -45,27 +47,36 @@ export default function Map({ accessToken, getDistanceCallback }) {
 
     directions.current.on("route", (e) => {
       const route = e.route[0];
-
-      //console.log(route);
-
-      // Accessing coordinates of origin and destination
       const originCoordinates = route.legs[0].steps[0].maneuver.location;
       const destinationCoordinates =
         route.legs[0].steps[route.legs[0].steps.length - 1].maneuver.location;
-
-      //getLngLat(startLat, startLng, endLng, endLat);
       getDistanceCallback(
         route.distance,
         originCoordinates,
         destinationCoordinates
       );
-
-      // console.log("Origin Coordinates:", originCoordinates);
-      // console.log("Destination Coordinates:", destinationCoordinates);
     });
 
     map.current.addControl(directions.current);
-  });
+
+    // Add markers if initial coordinates are provided
+    if (initialOrigin && initialDestination) {
+      new mapboxgl.Marker()
+        .setLngLat([initialOrigin.lng, initialOrigin.lat])
+        .addTo(map.current);
+
+      new mapboxgl.Marker()
+        .setLngLat([initialDestination.lng, initialDestination.lat])
+        .addTo(map.current);
+
+      // Optionally set a route
+      directions.current.setOrigin([initialOrigin.lng, initialOrigin.lat]);
+      directions.current.setDestination([
+        initialDestination.lng,
+        initialDestination.lat,
+      ]);
+    }
+  }, []);
 
   return (
     <div className="main-map">
