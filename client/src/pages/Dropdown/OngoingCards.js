@@ -1,29 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "../../components/AuthContext";
 
 function OngoingCards({ commissions, to }) {
   const [isClicked, setIsClicked] = useState(false);
   const [selectedCommissionId, setSelectedCommissionId] = useState(null);
+  const { user } = useAuth();
 
-  const handleButtonClick = () => {
+  const handleButtonClick = (e) => {
     setIsClicked(true);
     // Add any other logic you want to perform when the button is clicked
   };
-
-  // Simulated commissions data
-  // const simulatedCommissions = [
-  //   { id: 1, commissionTitle: "Commission 1", commissionType: "Type 1", commissionLocation: "Location 1" },
-  //   { id: 2, commissionTitle: "Commission 2", commissionType: "Type 2", commissionLocation: "Location 2" },
-  //   { id: 3, commissionTitle: "Commission 3", commissionType: "Type 3", commissionLocation: "Location 3" },
-  //   { id: 4, commissionTitle: "Commission 4", commissionType: "Type 4", commissionLocation: "Location 4" },
-  // ];
 
   const markAsCompleted = (commissionId) => {
     // Perform the logic to mark the commission as completed
     console.log(`Commission ${commissionId} marked as completed`);
   };
-  
+
   const cancel = (commissionId) => {
     // Perform the logic to cancel the commission
     console.log(`Commission ${commissionId} cancelled`);
@@ -60,80 +54,96 @@ function OngoingCards({ commissions, to }) {
                   >
                     View Errand
                   </Link>
-                  <button
-                    onClick={() => markAsCompleted(commission.commissionID)}
-                    style={{
-                      backgroundColor: "#cccccc",
-                      color: "#ffffff",
-                      padding: "10px 10px",
-                      border: "none",
-                      borderRadius: "4px",
-                      cursor: "pointer",
-                      marginTop: "5px",
-                      marginBottom: "10px",
-                      transition: "background-color 0.3s",
-                      fontSize: "12px",
-                      fontWeight: "bold",
-                      display: "block",
-                    }}
-                    onMouseOver={(e) => {
-                      e.target.style.backgroundColor = "#00cc00";
-                    }}
-                    onMouseOut={(e) => {
-                      e.target.style.backgroundColor = "#cccccc";
-                    }}
-                  >
-                    Mark as Completed
-                  </button>
-                  <button
-                    onClick={() => cancel(commission.commissionID)}
-                    style={{
-                      backgroundColor: "#cccccc",
-                      color: "#ffffff",
-                      padding: "10px 10px",
-                      border: "none",
-                      borderRadius: "4px",
-                      cursor: "pointer",
-                      marginTop: "5px",
-                      marginBottom: "10px",
-                      transition: "background-color 0.3s",
-                      fontSize: "12px",
-                      fontWeight: "bold",
-                      display: "block",
-                    }}
-                    onMouseOver={(e) => {
-                      e.target.style.backgroundColor = "#00cc00";
-                    }}
-                    onMouseOut={(e) => {
-                      e.target.style.backgroundColor = "#cccccc";
-                    }}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    style={{
-                      backgroundColor: isClicked ? "#fa9d6e" : "#facd46", // Change color when clicked
-                      color: "#ffffff",
-                      padding: "10px 10px",
-                      border: "none",
-                      borderRadius: "4px",
-                      cursor: "pointer",
-                      marginTop: "5px",
-                      marginBottom: "10px",
-                      transition: "background-color 0.3s",
-                      fontSize: "12px",
-                      fontWeight: "bold",
-                      display: "block",
-                      width: "130px",
-                      // Hover effects
-                      ":hover": {
-                        backgroundColor: isClicked ? "#fa9d6e" : "#ffbb33", // Change color on hover
-                      },
-                    }}
-                    onClick={handleButtonClick}
-                  >
-                    Feedback
-                  </button>
+                  {user.userType === "Employer" && (
+                    <>
+                      <p>CATCHER: {commission.transCatcherID}</p>
+                      <p>
+                        {commission.userFirstname} {commission.userLastname}
+                      </p>
+                    </>
+                  )}
+                  {user.userType === "Catcher" && (
+                    <>
+                      <button
+                        onClick={() => markAsCompleted(commission.commissionID)}
+                        style={{
+                          backgroundColor: "#cccccc",
+                          color: "#ffffff",
+                          padding: "10px 10px",
+                          border: "none",
+                          borderRadius: "4px",
+                          cursor: "pointer",
+                          marginTop: "5px",
+                          marginBottom: "10px",
+                          transition: "background-color 0.3s",
+                          fontSize: "12px",
+                          fontWeight: "bold",
+                          display: "block",
+                        }}
+                        onMouseOver={(e) => {
+                          e.target.style.backgroundColor = "#00cc00";
+                        }}
+                        onMouseOut={(e) => {
+                          e.target.style.backgroundColor = "#cccccc";
+                        }}
+                      >
+                        Mark as Completed
+                      </button>
+                      <button
+                        onClick={() => cancel(commission.commissionID)}
+                        style={{
+                          backgroundColor: "#cccccc",
+                          color: "#ffffff",
+                          padding: "10px 10px",
+                          border: "none",
+                          borderRadius: "4px",
+                          cursor: "pointer",
+                          marginTop: "5px",
+                          marginBottom: "10px",
+                          transition: "background-color 0.3s",
+                          fontSize: "12px",
+                          fontWeight: "bold",
+                          display: "block",
+                        }}
+                        onMouseOver={(e) => {
+                          e.target.style.backgroundColor = "#00cc00";
+                        }}
+                        onMouseOut={(e) => {
+                          e.target.style.backgroundColor = "#cccccc";
+                        }}
+                      >
+                        Cancel
+                      </button>
+                    </>
+                  )}
+                  {user.userType === "Employer" && (
+                    <>
+                      <button
+                        style={{
+                          backgroundColor: isClicked ? "#fa9d6e" : "#facd46", // Change color when clicked
+                          color: "#ffffff",
+                          padding: "10px 10px",
+                          border: "none",
+                          borderRadius: "4px",
+                          cursor: "pointer",
+                          marginTop: "5px",
+                          marginBottom: "10px",
+                          transition: "background-color 0.3s",
+                          fontSize: "12px",
+                          fontWeight: "bold",
+                          display: "block",
+                          width: "130px",
+                          // Hover effects
+                          ":hover": {
+                            backgroundColor: isClicked ? "#fa9d6e" : "#ffbb33", // Change color on hover
+                          },
+                        }}
+                        onClick={handleButtonClick}
+                      >
+                        Feedback
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             ))}

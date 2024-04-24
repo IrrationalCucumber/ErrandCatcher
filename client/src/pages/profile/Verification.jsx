@@ -81,6 +81,7 @@ function Verification() {
       .post(`http://localhost:8800/upload/${userID}`, formData)
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
+    setCurrentStep(currentStep + 1);
   };
   //console.log();
 
@@ -233,7 +234,7 @@ function Verification() {
               onChange={handleImage}
             />
           </div>
-          <button onClick={handleUpload}>UPLOAD</button>
+          <button onClick={handleUpload}>SUBMIT</button>
           <div className="input-rows" style={{ justifyContent: "center" }}>
             <button
               onClick={() => setCurrentStep(currentStep - 1)}
