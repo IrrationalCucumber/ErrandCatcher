@@ -109,7 +109,7 @@ const EmployerApplicants = () => {
   const currentItems = applicants.slice(indexOfFirstItem, indexOfLastItem);
 
   const headers = ["DATE", "CATCHER", "ERRAND TITLE", "ACTION", ""];
-  const applicantData = currentItems.map((applicant) => [
+  const applicantData = applicants.map((applicant) => [
     //applicant.applicationID,
     formattedDate(applicant.applicationDate),
     `${applicant.userFirstname} ${applicant.userLastname}`,
@@ -214,7 +214,7 @@ const EmployerApplicants = () => {
         `http://localhost:8800/deny-other-apply/${applicationErrandID}/${catcherID}`
       );
       //set the errand status to caught
-      await axios.post(
+      await axios.put(
         `http://localhost:8800/errand-taken/${applicationErrandID}`
       );
       //replace modular

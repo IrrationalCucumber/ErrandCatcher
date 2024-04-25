@@ -59,7 +59,7 @@ const ErrandPage = () => {
             `http://localhost:8800/get-apply/${userID}/${commissionID}`
           );
           console.log(res.data[0]);
-          if (!res.data[0]) {
+          if (!!res.data[0]) {
             setIsApplied(true);
           }
           console.log(isApplied);
