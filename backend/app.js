@@ -177,8 +177,20 @@ app.get("/trans-count/:userID", (req, res) => {
 const processPayment = require("./ProcessPayment");
 
 // Route when use succeeds in payment, update the necessary data in the database
-app.get("/success-payment", (req, res) => {
+app.get("/success-payment/:id", (req, res) => {
   console.log(req.body);
+  const id = req.params.id;
+  const currentTime = new Date().toISOString().slice(0, 19).replace("T", " ");
+  const q = `UPDATE errandtransaction 
+            SET errandStatus = 'Complete', transDateComplete = ? 
+            WHERE transactID = ?`;
+  db.query(q, [currentTime, id], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data); // Assuming you only expect one row of results
+  });
   return res.send("success");
 });
 
@@ -192,19 +204,23 @@ app.get("/cancel-payment", (req, res) => {
 app.post("/process-payment", async (req, res) => {
   // distance is in meters being converted to kilometers
   // const distance = req.body.distance / 1000;
-  const baseAmount = req.body.pay;
+  const amount = req.body.pay;
   const type = req.body.type;
-  const fname = req.body.first;
-  const lname = req.body.lname;
+  const name = req.body.name;
+  const total = amount * 1000;
+  const description = req.body.errand;
+  const id = req.body.id;
   // const total = Math.round(distance) * 15 + baseAmount;
   // Paymongo api key in base64, convert api key to base64
   const authKey = "Basic c2tfdGVzdF9kcTh5b3BuZ1BoODNpb1F5b0V2MXZpc2E6";
   const checkout = await processPayment(
     authKey,
-    baseAmount,
+    total,
+    // name,
     type,
-    `Total distance: ${distance.toFixed(2)}km`,
-    "http://localhost:8800/success-payment",
+    description,
+    // `Total distance: ${distance.toFixed(2)}km`,
+    ` http://localhost:8800/success-payment/${id}`,
     "http://localhost:8800/cancel-payment"
   );
   console.log(checkout.data);
