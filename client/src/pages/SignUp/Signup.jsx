@@ -21,8 +21,10 @@ const Signup = () => {
   });
 
   //handle state of error message
-  const [employerErrorMessage, setEmployerErrorMessage] = useState("");
-  const [catcherErrorMessage, setCatcherErrorMessage] = useState("");
+  // const [employerErrorMessage, setEmployerErrorMessage] = useState("");
+  // const [catcherErrorMessage, setCatcherErrorMessage] = useState("");
+
+  const [errorMessage, setErrorMessage] = useState(""); 
 
   const navigate = useNavigate();
   const resetForm = () => {
@@ -39,8 +41,9 @@ const Signup = () => {
       type: "",
       dateCreated: "",
     });
-    setEmployerErrorMessage("");
-    setCatcherErrorMessage("");
+    // setEmployerErrorMessage("");
+    // setCatcherErrorMessage("");
+    setErrorMessage("");
   };
 
   const getCurrentDate = () => {
@@ -105,6 +108,7 @@ const Signup = () => {
 
   //save the data into db
   const handleClick = async (e) => {
+    e.preventDefault();
     //if fileds are empty
     //error message
     if (
@@ -116,12 +120,16 @@ const Signup = () => {
       !account.contactNumber ||
       !account.type
     ) {
+      //error
+      setErrorMessage("Please fill in all required fields.");
+      return; 
+    
     } else if (account.regPassword.length < 8) {
-      setEmployerErrorMessage("Password is too short.");
+      setErrorMessage("Password is too short.");
 
       return;
     } else if (account.regPassword !== account.regPassword2) {
-      setEmployerErrorMessage("Password does not match.");
+      setErrorMessage("Password does not match.");
       return;
     }
     //save to db if no error
@@ -220,6 +228,7 @@ const Signup = () => {
                   <div className="col">
                     <label className="SUlabel">Username</label>
                     <input
+                      // className={errorMessage ? "error" : ""}
                       type="text"
                       placeholder="Username"
                       onChange={handleChange}
@@ -232,6 +241,7 @@ const Signup = () => {
                   <div className="col">
                     <label className="SUlabel">Email Address</label>
                     <input
+                      // className={errorMessage ? "error" : ""}
                       type="email"
                       placeholder="Email Address"
                       onChange={handleChange}
@@ -252,6 +262,7 @@ const Signup = () => {
                   <div className="col">
                     <label className="SUlabel">First Name</label>
                     <input
+                      // className={errorMessage ? "error" : ""}
                       type="text"
                       placeholder="First Name"
                       onChange={handleChange}
@@ -263,6 +274,7 @@ const Signup = () => {
                   <div className="col">
                     <label className="SUlabel">Last Name</label>
                     <input
+                      // className={errorMessage ? "error" : ""}
                       type="text"
                       placeholder="Last Name"
                       onChange={handleChange}
@@ -283,6 +295,7 @@ const Signup = () => {
                   <div className="col">
                     <label className="SUlabel">Birthday</label>
                     <input
+                    // className={errorMessage ? "error" : ""}
                       type="date"
                       placeholder="Birthday"
                       required
@@ -294,6 +307,7 @@ const Signup = () => {
                   <div className="col">
                     <label className="SUlabel">Gender</label>
                     <select
+                    // className={errorMessage ? "error" : ""}
                       required
                       style={{ width: "100%" }}
                       value={account.gender}
@@ -315,8 +329,10 @@ const Signup = () => {
                   }}
                 >
                   <div className="col">
+                  
                     <label className="SUlabel">Password</label>
                     <input
+                    // className={errorMessage ? "error" : ""}
                       type="password"
                       placeholder="Password"
                       onChange={handleChange}
@@ -329,6 +345,7 @@ const Signup = () => {
                   <div className="col">
                     <label className="SUlabel">Confirm Password</label>
                     <input
+                    // className={errorMessage ? "error" : ""}
                       type="password"
                       placeholder="Confirm Password"
                       onChange={handleChange}
@@ -347,7 +364,7 @@ const Signup = () => {
                     margin: "0 -15px",
                   }}
                 >
-                  <div className="col text-center">
+                  <div className="col text-center" style={{paddingTop:"20px"}}>
                     <button onClick={handleClick} 
                     style={{width:"200px", 
                             height:"30px", 
@@ -358,6 +375,12 @@ const Signup = () => {
                             }}
                             className="signup-button">Sign Up</button>
                   </div>
+                {/* Error message display */}
+                {errorMessage && (
+                  <div className="m-4" style={{ color: "red" }}>
+                    {errorMessage}
+                  </div>
+                )}
                 </div>
                 <div className="m-4" style={{ paddingTop: "20px" }}>
                   Already have an account? <Link to="/sign-in">Sign in</Link>
