@@ -147,7 +147,7 @@ const Signup = () => {
         textAlign: "center",
       }}
     >
-      <h2 style={{ fontFamily: "sans-serif", paddingTop: "20px" }}>
+      <h2 style={{ fontFamily: "sans-serif", paddingTop: "20px", color:"#005a80" }}>
         Errand Catcher
       </h2>
       <form>
@@ -348,7 +348,15 @@ const Signup = () => {
                   }}
                 >
                   <div className="col text-center">
-                    <button onClick={handleClick}>Sign Up</button>
+                    <button onClick={handleClick} 
+                    style={{width:"200px", 
+                            height:"30px", 
+                            borderRadius:"10px",
+                            backgroundColor:"#005a80", 
+                            color:"#fff",
+                            transition: "background-color 0.3s ease"
+                            }}
+                            className="signup-button">Sign Up</button>
                   </div>
                 </div>
                 <div className="m-4" style={{ paddingTop: "20px" }}>
@@ -440,6 +448,19 @@ const Signup = () => {
             color: #007bff;
             text-decoration: underline; 
             margin-right: 5px;
+          }
+
+          .signup-button {
+            width: 200px;
+            height: 30px;
+            border-radius: 10px;
+            background-color: #005a80;
+            color: #fff;
+            transition: background-color 0.3s ease;
+          }
+          
+          .signup-button:hover {
+            background-color: #04354a;
           }
         `}
       </style>
