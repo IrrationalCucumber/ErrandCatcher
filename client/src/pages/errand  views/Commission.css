@@ -48,6 +48,27 @@ label{
     width: 100%;
 }
 
+select:focus {
+    border: 2px solid  #1679AB ;
+}
+
+select{
+    border-radius: 8px;
+}
+
+.cols1, .cols2{
+    position: relative;
+    right: 90px;
+}
+.cols1 {
+    text-align: start;
+    width: 150px;
+}
+
+.cols2{
+    width: 145px;
+}
+
 .coord{
     display: none;
 }
