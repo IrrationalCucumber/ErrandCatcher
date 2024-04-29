@@ -206,8 +206,9 @@ app.post("/process-payment", async (req, res) => {
   // const distance = req.body.distance / 1000;
   const amount = req.body.pay;
   const type = req.body.type;
-  const name = req.body.name;
-  const total = amount * 1000;
+  // const name = req.body.name;
+  // times 100 to proply display as default is centavo
+  const total = amount * 100;
   const description = req.body.errand;
   const id = req.body.id;
   // const total = Math.round(distance) * 15 + baseAmount;
@@ -220,7 +221,7 @@ app.post("/process-payment", async (req, res) => {
     type,
     description,
     // `Total distance: ${distance.toFixed(2)}km`,
-    ` http://localhost:8800/success-payment/${id}`,
+    `http://localhost:8800/success-payment/${id}`,
     "http://localhost:8800/cancel-payment"
   );
   console.log(checkout.data);

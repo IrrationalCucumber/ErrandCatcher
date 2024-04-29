@@ -3,7 +3,8 @@ const axios = require("axios");
 module.exports = async function processPayment(
   authKey,
   amount,
-  name,
+  // name,
+  type,
   description,
   success_url,
   cancel_url
@@ -19,14 +20,14 @@ module.exports = async function processPayment(
     data: {
       data: {
         attributes: {
-          send_email_receipt: false,
+          send_email_receipt: true,
           // show_description: false,
           show_line_items: false,
           line_items: [
             {
               currency: "PHP",
               amount: amount,
-              name: name,
+              name: type,
               quantity: 1,
             },
           ],
