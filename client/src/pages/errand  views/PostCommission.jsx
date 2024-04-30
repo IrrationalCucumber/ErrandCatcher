@@ -2,13 +2,14 @@
 
 import React, { useRef, useEffect, useState } from "react";
 //map
-import maplibregl from "maplibre-gl";
+// import maplibregl from "maplibre-gl";
 //import 'maplibre-gl/dist/maplibre-gl.css';
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import Navbar from "../../components/Navbar/NavBarPage";
 import "./Commission.css"; // Import your CSS file
 import ErrandInputs from "../../components/ErrandInputs";
+import Map from "../../components/Map/MapBox";
+import MapLibre from "../../components/Map/MapLibre";
 //image --ash
 import { useAuth } from "../../components/AuthContext";
 
@@ -22,7 +23,7 @@ const PostCommission = () => {
     comTo: "",
     comType: "",
     comDescription: "",
-    comPay: "",
+    comPay: 0,
     DatePosted: "",
     //DateCompleted: "",
     Contactno: "",
@@ -30,6 +31,7 @@ const PostCommission = () => {
     comLat: "",
     comDestLong: 0,
     comDestLat: 0,
+    method: "",
   });
 
   const navigate = useNavigate();
@@ -39,6 +41,9 @@ const PostCommission = () => {
   //use state for adding marker
   //const [addingMarker, setAddingMarker] = useState(false);
   const [currentLocationMarker, setCurrentLocationMarker] = useState(null);
+  const [distance, setDistance] = useState(0);
+  const accessToken =
+    "pk.eyJ1Ijoiam9pbmVyIiwiYSI6ImNsdmNjbnF4NjBoajQycWxoaHV5b2M1NzIifQ.Z7Pi_LfWyuc7a_z01zKMFg";
 
   // Add a state to track the marker's longitude and latitude
   // const [markerLngLat, setMarkerLngLat] = useState([123.8854, 10.3157]); // Default values
@@ -47,10 +52,34 @@ const PostCommission = () => {
   const handleChange = (e) => {
     if (e.target.name === "comType") {
       setCommission((prev) => ({ ...prev, comType: e.target.value }));
+    } else if (e.target.name === "method") {
+      setCommission((prev) => ({ ...prev, method: e.target.value }));
     } else {
       setCommission((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     }
   };
+
+  useEffect(() => {
+    if (
+      commission.comType === "Delivery" ||
+      commission.comType === "Transportation"
+    ) {
+      const km = distance / 1000; //meter to km
+      const baseAmount = 100;
+      const total = Math.round(km) * 15 + baseAmount;
+      // Correctly update commission state without losing other fields
+
+      setCommission((prev) => ({
+        ...prev,
+        comPay: total,
+      }));
+    } else {
+      setCommission((prev) => ({
+        ...prev,
+        comPay: "",
+      }));
+    }
+  }, [commission.comType, distance]);
 
   //pull the local time of the pc
   const getCurrentDate = () => {
@@ -60,109 +89,6 @@ const PostCommission = () => {
     const day = String(currentDate.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
-
-  //event handler when user add marker
-  //variables for map
-  const mapContainer = useRef(null);
-  const map = useRef(null);
-  const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
-  const [zoom] = useState(10);
-
-  useEffect(() => {
-    if (map.current) return;
-
-    map.current = new maplibregl.Map({
-      container: mapContainer.current,
-      style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${API_KEY}`,
-      center: [123.8854, 10.3157],
-      zoom: zoom,
-    });
-
-    map.current.addControl(new maplibregl.NavigationControl(), "top-right");
-
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const currentLng = position.coords.longitude;
-        const currentLat = position.coords.latitude;
-        setCommission((prev) => ({
-          ...prev,
-          comLong: currentLng,
-          comLat: currentLng,
-        }));
-
-        const marker = new maplibregl.Marker({
-          color: "#00FF00",
-          draggable: true,
-        }) // Set draggable to true
-          .setLngLat([currentLng, currentLat])
-          .setPopup(new maplibregl.Popup().setHTML("<h3>Add location</h3>"))
-          .addTo(map.current);
-
-        setCurrentLocationMarker(marker);
-
-        // Event listener for marker dragend event
-        marker.on("dragend", () => {
-          const newLngLat = marker.getLngLat();
-          setCommission((prev) => ({
-            ...prev,
-            comLong: newLngLat.lng,
-            comLat: newLngLat.lat,
-          }));
-        });
-      });
-    }
-  }, [API_KEY, zoom]);
-  //add another marker if delvery or transpo
-  const [marker, setMarker] = useState(null);
-  const addMarker = () => {
-    const newLngLat = currentLocationMarker.getLngLat();
-    const currentLng = newLngLat.lng;
-    const currentLat = newLngLat.lat;
-    setCommission((prev) => ({
-      ...prev,
-      comDestLong: currentLng,
-      comDestLat: currentLat,
-    }));
-
-    const newMarker = new maplibregl.Marker({
-      draggable: true,
-    })
-      .setLngLat([currentLng, currentLat])
-      .setPopup(new maplibregl.Popup().setHTML("<h3>Add Destination</h3>"))
-      .addTo(map.current);
-    //add new marker
-    newMarker.on("dragend", () => {
-      const newLngLat = newMarker.getLngLat();
-      setCommission((prev) => ({
-        ...prev,
-        comDestLong: newLngLat.lng,
-        comDestLat: newLngLat.lat,
-      }));
-    });
-    //ad
-    setMarker(newMarker);
-  };
-  // Function to handle removing marker
-  const removeMarker = () => {
-    if (marker) {
-      marker.remove();
-      setMarker(null);
-    }
-  };
-  //add or remove marker if type is correct
-  useEffect(() => {
-    const type = commission.comType;
-    if (type === "Delivery" || type === "Transportation") {
-      if (type === "Delivery") {
-        addMarker();
-      } else if (type === "Transportation") {
-        addMarker();
-      }
-    }
-    if (type !== "Delivery" || type !== "Transportation") {
-      removeMarker();
-    }
-  }, [commission.comType]); // Add dependencies if your conditions depend on props or state
 
   //store the inputted info to db
   //trigers when clicked
@@ -221,31 +147,84 @@ const PostCommission = () => {
   return (
     <>
       <div className="errand-cont">
-        <ErrandInputs
-          handleChange={handleChange}
-          variant="soft"
-          title="comTitle"
-          start="comStart"
-          deadline="comDeadline"
-          location="comLocation"
-          to="comTo"
-          type="comType"
-          typeValue={commission.comType}
-          desc="comDescription"
-          pay="comPay"
-          number="Contactno"
-          mapContainer={mapContainer}
-          long={commission.comLong}
-          lat={commission.comLat}
-          destlong={commission.comDestLong}
-          destlat={commission.comDestLat}
-          distance=""
-        />
-        <div className="btn-container">
-          <button onClick={handleClick} className="btn btn-yellow" style={{}}>
-            POST
-          </button>
+        <div className="input-cont">
+          <div className="errand-inputs">
+            <ErrandInputs
+              handleChange={handleChange}
+              variant="soft"
+              title="comTitle"
+              start="comStart"
+              deadline="comDeadline"
+              location="comLocation"
+              to="comTo"
+              type="comType"
+              typeValue={commission.comType}
+              desc="comDescription"
+              pay="comPay"
+              payValue={commission.comPay}
+              method="method"
+              methodValue={commission.method}
+              number="Contactno"
+              //mapContainer={mapContainer}
+              long={commission.comLong}
+              lat={commission.comLat}
+              destlong={commission.comDestLong}
+              destlat={commission.comDestLat}
+            />
+          </div>
+          {commission.comType !== "Delivery" &&
+            commission.comType !== "Transportation" && (
+              <div className="map--wrap">
+                {/* <div ref={mapContainer} className="map-small" /> */}
+                <MapLibre
+                  getCoords={(lat, long) => {
+                    setCommission((prev) => ({
+                      ...prev,
+                      comLat: lat,
+                      comLong: long,
+                    }));
+                  }}
+                />
+                <p className="coords">
+                  X: {commission.comLong} Y: {commission.comLat}
+                </p>
+              </div>
+            )}
+          {commission.comType === "Delivery" && (
+            <>
+              <Map
+                accessToken={accessToken}
+                getDistanceCallback={(
+                  distance,
+                  originCoordinates,
+                  destinationCoordinates
+                ) => {
+                  setDistance(distance);
+                  setCommission((prev) => ({
+                    ...prev,
+                    comLat: originCoordinates[1],
+                    comLong: originCoordinates[0],
+                    comDestLong: destinationCoordinates[0],
+                    comDestLat: destinationCoordinates[1],
+                  }));
+                }}
+              />
+            </>
+          )}
+          {commission.comType === "Transportation" && (
+            <>
+              <Map
+                accessToken={accessToken}
+                getDistanceCallback={(distance) => {
+                  setDistance(distance);
+                }}
+              />
+            </>
+          )}
         </div>
+        <button onClick={handleClick} className="btn btn-yellow" style={{}}>
+          POST
+        </button>
       </div>
     </>
   );

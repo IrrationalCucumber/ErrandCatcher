@@ -37,16 +37,6 @@ CREATE TABLE `application` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `application`
---
-
-LOCK TABLES `application` WRITE;
-/*!40000 ALTER TABLE `application` DISABLE KEYS */;
-INSERT INTO `application` VALUES (33,29,29,'2024-03-18','Cancelled'),(42,31,37,'2024-03-19','Pending'),(43,30,29,'2024-03-22','Accepted'),(48,30,37,'2024-03-22','Denied'),(49,39,29,'2024-04-01','Accepted');
-/*!40000 ALTER TABLE `application` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `commission`
 --
 
@@ -71,21 +61,12 @@ CREATE TABLE `commission` (
   `commissionLat` double DEFAULT NULL,
   `commissionDestLong` double DEFAULT NULL,
   `commissionDestLat` double DEFAULT NULL,
+  `commissionPaymentMethod` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`commissionID`),
   KEY `userID_idx` (`employerID`),
   CONSTRAINT `userID` FOREIGN KEY (`employerID`) REFERENCES `useraccount` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `commission`
---
-
-LOCK TABLES `commission` WRITE;
-/*!40000 ALTER TABLE `commission` DISABLE KEYS */;
-INSERT INTO `commission` VALUES (29,28,'to post',NULL,'2023-08-30','A. C. Cortes Ave, Mandaue City, 6014 Cebu',NULL,'Delivery','',123123,'Expired','2023-08-29','',NULL,NULL,NULL,NULL),(30,28,'Test map',NULL,'2023-08-31','ac. cortes, looc, mandaue city, cebu',NULL,'Delivery','add map',23123,'Unavailable','2023-08-30','911',123.95306723777395,10.325103584518331,NULL,NULL),(31,36,'Errand CAtcher',NULL,'2023-09-08','gun-ob, Lapu-Lapu city, cebu',NULL,'Delivery','help me create an app in React',10000,'Expired','2023-08-30','09499286777',123.9472383036163,10.302871744829247,NULL,NULL),(37,28,'House cleaning',NULL,'2024-04-01','looc, lapu0lapu city',NULL,'HomeService - Indoor','Clean our house for several days',23212,'Expired','2024-03-25','166',123.89442894708321,10.36996410078062,NULL,NULL),(38,28,'Cook',NULL,'2024-03-30','Mandaue',NULL,'HomeService - Indoor','I want home cook meals',200,'Expired','2024-03-25','09864752211',123.92213553467207,10.35420379680447,NULL,NULL),(39,28,'A Ride From Shopping',NULL,'2024-04-06','Giasano Island Mall, Pusok, Lapu-Lapu City',NULL,'Transport','I need a ride home from grocery shopping and I will be buying a lot of things.',500,'Caught','2024-03-30','09499286',123.94718275449793,10.302787590282549,NULL,NULL),(40,28,'Find my cat',NULL,'2024-05-11','ibabao, cordova, cebu',NULL,'HomeService - Outdoor','Help me find my cat around my neighborhood',500,'Available','2024-04-04','0942428198',123.948433843754,10.271167236269306,NULL,NULL),(41,NULL,'Test title','2024-04-06','2024-05-11','test loc','','HomeService - Outdoor','sample test',23,'Available','2024-04-06','3123',NULL,NULL,NULL,NULL);
-/*!40000 ALTER TABLE `commission` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `errandtransaction`
@@ -107,18 +88,8 @@ CREATE TABLE `errandtransaction` (
   KEY `transCatcherID_idx` (`transCatcherID`),
   CONSTRAINT `transCatcherID` FOREIGN KEY (`transCatcherID`) REFERENCES `useraccount` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `transErrandID` FOREIGN KEY (`transErrandID`) REFERENCES `commission` (`commissionID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `errandtransaction`
---
-
-LOCK TABLES `errandtransaction` WRITE;
-/*!40000 ALTER TABLE `errandtransaction` DISABLE KEYS */;
-INSERT INTO `errandtransaction` VALUES (1,30,29,'Expired','2024-04-01 15:01:46',NULL,NULL),(2,39,29,'Expired','2024-04-01 15:27:50',NULL,NULL),(3,39,29,'Expired','2024-04-01 15:27:59',NULL,NULL);
-/*!40000 ALTER TABLE `errandtransaction` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `feedbackcommission`
@@ -146,16 +117,6 @@ CREATE TABLE `feedbackcommission` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `feedbackcommission`
---
-
-LOCK TABLES `feedbackcommission` WRITE;
-/*!40000 ALTER TABLE `feedbackcommission` DISABLE KEYS */;
-INSERT INTO `feedbackcommission` VALUES (4,28,29,3,NULL,NULL,29),(6,28,29,5,NULL,NULL,29);
-/*!40000 ALTER TABLE `feedbackcommission` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `notification`
 --
 
@@ -175,18 +136,8 @@ CREATE TABLE `notification` (
   PRIMARY KEY (`notificationID`),
   KEY `userID_idx` (`notifUserID`),
   CONSTRAINT `notifUserID` FOREIGN KEY (`notifUserID`) REFERENCES `useraccount` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `notification`
---
-
-LOCK TABLES `notification` WRITE;
-/*!40000 ALTER TABLE `notification` DISABLE KEYS */;
-INSERT INTO `notification` VALUES (6,28,'errand application',29,NULL,32,'There is a Catcher that want to apply to your Errand commission','No',NULL),(35,29,'Application',NULL,NULL,NULL,'Your Errand application has been Accepted','no','2024-04-01 15:27:59'),(36,NULL,'Application Cancelled',NULL,NULL,NULL,'A Catcher has cancelled their application on of your errand','no','2024-04-01 15:29:47'),(60,1,'Verification',NULL,NULL,NULL,'Your Verification request has been approved','no','2024-04-19 01:41:59'),(61,1,'Verification',NULL,NULL,NULL,'Your Verification request has been approved','no','2024-04-19 01:49:22'),(62,1,'Verification',NULL,NULL,NULL,'Your Verification request has been approved','no','2024-04-19 01:50:22'),(63,1,'Verification',NULL,NULL,NULL,'Your Verification request has been approved','no','2024-04-19 01:51:39'),(64,1,'Verification',NULL,NULL,NULL,'Your Verification request has been approved','no','2024-04-19 01:52:40'),(65,1,'Verification',NULL,NULL,NULL,'Your Verification request has been approved','no','2024-04-19 01:53:13');
-/*!40000 ALTER TABLE `notification` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `useraccount`
@@ -217,16 +168,6 @@ CREATE TABLE `useraccount` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `useraccount`
---
-
-LOCK TABLES `useraccount` WRITE;
-/*!40000 ALTER TABLE `useraccount` DISABLE KEYS */;
-INSERT INTO `useraccount` VALUES (1,'admin1','admin','last','first','male','adreanpaulsorono@gmail.com','',22,'1969-12-31',NULL,NULL,'Verified','admin',NULL,NULL),(28,'ash1','123','Employer','ash','female','ash_emplyer@gmail.com','226',22,'1969-12-22','basak, lapu-lapu city','I am a web designer ','unverified','Employer','2023-08-10','image_1713156589050.png'),(29,'ash2','123','Catcher','ash','female','ash_catch@email.com','123',23,'1970-01-01','gun ob',NULL,'Verified','Catcher','2023-08-10','C:\\fakepath\\Warframe0000.jpg'),(33,'employer','employer','halina','lorry','female','test2@gmail.com','09887888788',22,'2024-02-21','mindanao',NULL,'Deactivate','Employer','2024-02-17',NULL),(36,'adrean','testing123','sorono','adrean','Male','adreanpaulsorono@gmail.com','09499286777',24,'1999-05-24','Gun-ob, Lapu-Lapu City',NULL,'Unverified','Employer','2024-03-01',NULL),(37,'raymund','testing123','raymund','valeroso','Male','ramund@gmail.com','094342',24,NULL,'Babag, Lapu-Lapu City',NULL,'Unverified','Catcher','2024-03-07',NULL),(39,'trish','trisha1234','sasing','trisha','Female','trisha@email.com','09876543210',23,'2000-04-04','liloan',NULL,'Verified','Catcher','2024-04-04',NULL);
-/*!40000 ALTER TABLE `useraccount` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `verification_request`
 --
 
@@ -246,16 +187,6 @@ CREATE TABLE `verification_request` (
   CONSTRAINT `requestUserID` FOREIGN KEY (`requestUserID`) REFERENCES `useraccount` (`userID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `verification_request`
---
-
-LOCK TABLES `verification_request` WRITE;
-/*!40000 ALTER TABLE `verification_request` DISABLE KEYS */;
-INSERT INTO `verification_request` VALUES (1,1,NULL,NULL,NULL,NULL,'Complete'),(2,1,NULL,NULL,NULL,NULL,'Complete'),(3,1,NULL,NULL,NULL,NULL,'Pending'),(4,1,NULL,NULL,NULL,NULL,'Pending'),(5,1,NULL,NULL,NULL,NULL,'Pending'),(6,1,NULL,NULL,NULL,NULL,'Pending'),(7,1,NULL,NULL,NULL,NULL,'Pending'),(8,1,NULL,NULL,NULL,NULL,'Pending'),(9,1,NULL,NULL,NULL,NULL,'Pending'),(10,1,'image_1712815735396.png','image_1712815735396.png',NULL,NULL,'Pending'),(11,1,'image_1712815963347.png','image_1712815963347.png',NULL,NULL,'Pending'),(12,1,'image1_1712816057913.png','image1_1712816057913.png',NULL,NULL,'Pending'),(13,1,'image1_1712816319064.png','image2_1712816319079.png',NULL,NULL,'Pending');
-/*!40000 ALTER TABLE `verification_request` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -266,4 +197,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-20 11:25:14
+-- Dump completed on 2024-04-24 18:47:01

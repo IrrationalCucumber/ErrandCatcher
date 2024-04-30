@@ -4,11 +4,13 @@
 import axios from "axios";
 import React, { useRef, useEffect, useState } from "react";
 import maplibregl from "maplibre-gl";
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 //import "../style.css";
 import ErrandInputs from "../../components/ErrandInputs";
 import "./Commission.css"; // Import your CSS file
 import { useAuth } from "../../components/AuthContext";
+import Map from "../../components/Map/ViewMapBox";
+import MapLibre from "../../components/Map/MapLibre";
 
 const ErrandPage = () => {
   const [commission, setCommission] = useState({
@@ -28,8 +30,9 @@ const ErrandPage = () => {
     comLat: "",
     last: "",
     first: "",
-    destLng: 0,
-    destLat: 0,
+    destLng: "",
+    destLat: "",
+    method: "",
   });
 
   const navigate = useNavigate();
@@ -39,6 +42,9 @@ const ErrandPage = () => {
   const commissionID = location.pathname.split("/")[3];
   const { user } = useAuth();
   const userID = user.userID;
+  const [distance, setDistance] = useState(0);
+  const accessToken =
+    "pk.eyJ1Ijoiam9pbmVyIiwiYSI6ImNsdmNjbnF4NjBoajQycWxoaHV5b2M1NzIifQ.Z7Pi_LfWyuc7a_z01zKMFg";
 
   //APS - 19/03/24
   //CHeck if Catcher already applied
@@ -53,7 +59,7 @@ const ErrandPage = () => {
             `http://localhost:8800/get-apply/${userID}/${commissionID}`
           );
           console.log(res.data[0]);
-          if (!res.data[0]) {
+          if (!!res.data[0]) {
             setIsApplied(true);
           }
           console.log(isApplied);
@@ -117,7 +123,8 @@ const ErrandPage = () => {
           last: retrievedCommission.userLastname,
           first: retrievedCommission.userFirstname,
           destLat: retrievedCommission.commissionDestLat,
-          destLng: retrievedCommission.commissionDestLng,
+          destLng: retrievedCommission.commissionDestLong,
+          method: retrievedCommission.commissionPaymentMethod,
         });
       } catch (err) {
         console.log(err);
@@ -163,27 +170,7 @@ const ErrandPage = () => {
       });
     });
   }, [API_KEY, zoom]);
-  //add another marker if delvery or transpo
-  const [marker, setMarker] = useState(null);
-  const addMarker = () => {
-    const currentLng = commission.destLng;
-    const currentLat = commission.destLat;
 
-    const newMarker = new maplibregl.Marker({})
-      .setLngLat([currentLng, currentLat])
-      .setPopup(new maplibregl.Popup().setHTML("<h3>Destination</h3>"))
-      .addTo(map.current);
-    //add new maker
-    setMarker(newMarker);
-  };
-
-  //add or remove marker if type is correct
-  useEffect(() => {
-    const type = commission.comType;
-    if (type === "Delivery" || type === "Transportation") {
-      addMarker();
-    }
-  }, [commission.comType]); // Add dependencies if your conditions depend on props or state
   //Transfer to update page
   const handleClick = (e) => {
     e.preventDefault();
@@ -262,41 +249,90 @@ const ErrandPage = () => {
       console.log(err);
     }
   };
+  console.log(commission);
   return (
-    <div>
+    <>
       <div className="errand-cont">
-        <ErrandInputs
-          employer="Employer"
-          fname={commission.first}
-          lname={commission.last}
-          statusHeader="Status"
-          status={commission.comStatus}
-          variant="solid"
-          //handleChange={handleChange}
-          title="comTitle"
-          readOnly={true}
-          titleValue={commission.comTitle}
-          startValue={commission.comStart}
-          //   deadline="comDeadline"
-          dlValue={commission.comDeadline}
-          //   location="comLocation"
-          locValue={commission.comLocation}
-          toValue={commission.comTo}
-          //   type="comType"
-          typeValue={commission.comType}
-          //   desc="comDescription"
-          descValue={commission.comDescription}
-          //   pay="comPay"
-          payValue={commission.comPay}
-          //   number="Contactno"
-          numValue={commission.ContactNo}
-          mapContainer={mapContainer}
-          long={commission.comLong}
-          lat={commission.comLat}
-          destlong={commission.destLng}
-          destlat={commission.destLat}
-        />
-
+        <div className="input-cont">
+          <div className="errand-inputs">
+            <ErrandInputs
+              employer="Employer"
+              fname={commission.first}
+              lname={commission.last}
+              statusHeader="Status"
+              status={commission.comStatus}
+              variant="solid"
+              title="comTitle"
+              readOnly={true}
+              methodValue={commission.method}
+              titleValue={commission.comTitle}
+              startValue={commission.comStart}
+              dlValue={commission.comDeadline}
+              locValue={commission.comLocation}
+              toValue={commission.comTo}
+              typeValue={commission.comType}
+              descValue={commission.comDescription}
+              payValue={commission.comPay}
+              numValue={commission.ContactNo}
+            />
+          </div>
+          {commission.comType !== "Delivery" &&
+            commission.comType !== "Transportation" && (
+              <div className="map--wrap">
+                <div ref={mapContainer} className="map-small" />
+                {/* <MapLibre
+                    getCoords={(lat, long) => {
+                      setCommission((prev) => ({
+                        ...prev,
+                        comLat: lat,
+                        comLong: long,
+                      }));
+                    }}
+                  /> */}
+                <p className="coords">
+                  X: {commission.comLong} Y: {commission.comLat}
+                </p>
+              </div>
+            )}
+          {commission.comType === "Delivery" && (
+            <>
+              <Map
+                accessToken={accessToken}
+                interactive={false}
+                getDistanceCallback={(distance, origin, destination) =>
+                  console.log(distance, origin, destination)
+                }
+                initialOrigin={{
+                  lat: commission.comLat,
+                  lng: commission.comLong,
+                }}
+                initialDestination={{
+                  lat: commission.destLat,
+                  lng: commission.destLng,
+                }}
+              />
+            </>
+          )}
+          {commission.comType === "Transportation" && (
+            <>
+              <Map
+                accessToken={accessToken}
+                interactive={false}
+                getDistanceCallback={(distance, origin, destination) =>
+                  console.log(distance, origin, destination)
+                }
+                initialOrigin={{
+                  lat: commission.comLat,
+                  lng: commission.comLong,
+                }}
+                initialDestination={{
+                  lat: commission.destLat,
+                  lng: commission.destLng,
+                }}
+              />
+            </>
+          )}
+        </div>
         {commission.employerID === user.userID && (
           <button className="formButton" onClick={handleClick}>
             UPDATE
@@ -317,7 +353,7 @@ const ErrandPage = () => {
           UPDATE
         </button> */}
       </div>
-    </div>
+    </>
   );
 };
 

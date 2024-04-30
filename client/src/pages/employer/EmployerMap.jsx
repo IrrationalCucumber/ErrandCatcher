@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import Map from "../../components/Map";
+import Map from "../../components/Map/Map.js";
 //import Navbar from "../../components/Navbar/Navbar";
 import { useAuth } from "../../components/AuthContext";
 import maplibregl from "maplibre-gl";
