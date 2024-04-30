@@ -23,16 +23,21 @@ function OngoingCards({ commissions, to }) {
     console.log(`Commission ${commissionId} cancelled`);
   };
 
-  const handlePayment = (pay, type, fname, lname) => {
+  const handlePayment = (pay, type, fname, lname, id, comTitle) => {
     const paymentUrl = "http://localhost:8800/process-payment";
     // Change the amount
     const amount = pay;
+    const errType = type;
+    const name = fname + " " + lname;
+    const errand = id + " " + comTitle;
+
     axios
       .post(paymentUrl, {
-        amount: amount,
-        type: type,
-        first: fname,
-        lname: lname,
+        pay: amount,
+        type: errType,
+        name: name,
+        errand: errand,
+        id: id,
       })
       .then((response) => {
         window.open(response.data.url);
@@ -64,6 +69,7 @@ function OngoingCards({ commissions, to }) {
                   <p style={{ paddingTop: "10px" }}>
                     Location: {commission.commissionLocation}
                   </p>
+                  <p>Payment: {commission.commissionPay}</p>
                   <Link
                     to={`${to}/${commission.commissionID}`}
                     className="Oncard__link"
@@ -159,12 +165,29 @@ function OngoingCards({ commissions, to }) {
                         Feedback
                       </button>
                       <button
+                        style={{
+                          backgroundColor: "#cccccc",
+                          color: "#ffffff",
+                          padding: "10px 10px",
+                          border: "none",
+                          borderRadius: "4px",
+                          cursor: "pointer",
+                          marginTop: "5px",
+                          marginBottom: "10px",
+                          transition: "background-color 0.3s",
+                          fontSize: "12px",
+                          fontWeight: "bold",
+                          display: "block",
+                          width: "130px",
+                        }}
                         onClick={() => {
                           handlePayment(
                             commission.commissionPay,
                             commission.commissionType,
+                            commission.userFirstname,
                             commission.userLastname,
-                            commission.userFirstname
+                            commission.transactID,
+                            commission.commissionTitle
                           );
                         }}
                       >
