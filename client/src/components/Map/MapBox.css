@@ -16,13 +16,15 @@
   }
   
   .mapboxgl-control-container {
-    padding: 6px 12px;
-    z-index: 1;
-    position: absolute;
+    /* padding: 6px 12px; */
+    /* z-index: 1; */
+    /* position: relative; */
     top: 32px;
-    left: 0;
+    /* left: 0; */
     margin: 12px;
     border-radius: 4px;
+    background-color: transparent;
+    display: flex;
   }
   
   .mapboxgl-ctrl-attrib-inner {
@@ -34,7 +36,7 @@
     width: 500px;
   }
   
-  .sidebar {
+  /* .sidebar {
     background-color: rgb(35 55 75 / 90%);
     color: #fff;
     padding: 6px 12px;
@@ -45,7 +47,7 @@
     left: 0;
     margin: 12px;
     border-radius: 4px;
-  }
+  } */
   
   /* Mapboxgl Geocoder */
   /* Basics */
@@ -71,18 +73,27 @@
     border-radius: 0 3px 0 0;
   }
   
+  .mapboxgl-ctrl-geocoder input[type="text"]:focus{
+    border: 2px solid #1679AB;
+  }
+  
   .mapboxgl-ctrl-geocoder input[type="text"] {
-    font-size: 12px;
-    width: 100%;
+    font-size: 20px;
+    width: 250px;
     border: 0;
-    background-color: transparent;
-    height: 40px;
+    background-color: rgba(233, 235, 243, 0.925);
+    height: 45px; 
     margin: 0;
     color: rgba(0, 0, 0, 0.5);
     padding: 10px 40px 10px 10px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    border-radius: 8px;
+    font-family: inherit;
+    display: flex;
+    column-gap: 10px;
+    margin: 15px;
   }
   .mapbox-directions-origin input[type="text"] {
     box-shadow: 0 1px 0 0 #ddd;
@@ -254,7 +265,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    background: #8a8acb;
+    /* background: #8a8acb; */
     color: #fff;
     padding: 0;
     width: 40px;
@@ -269,10 +280,10 @@
     height: 40px;
   }
   .mapbox-directions-origin .mapbox-form-label {
-    background-color: #3bb2d0;
+    /* background-color: #3bb2d0; */
     border-radius: 3px 0 0 0;
     box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.1);
-    z-index: 1;
+    /* z-index: 1; */
   }
   
   /* icons */

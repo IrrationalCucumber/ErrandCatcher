@@ -254,17 +254,17 @@ function ErrandInputs(props) {
         <div className="input-group">
           <div className="cols1">
             <label style={{ color: "black" }} htmlFor="">
-              Payment Method
+              
             </label>
           </div>
           <div className="cols2">
-            <select
+            <select className="selectpay"
               name={props.method}
               onChange={props.handleChange}
               value={props.methodValue}
               disabled={props.readOnly}
             >
-              <option value="">Choose method....</option>
+              <option value="">Payment Method</option>
               <option value="g-cash">G-Cash</option>
               <option value="paymaya">Paymaya</option>
               <option value="on-hand">Cash on Hand</option>
@@ -272,7 +272,7 @@ function ErrandInputs(props) {
             </select>
           </div>
         </div>
-        <div className="col2">
+        <div className="colpeso">
           <Input
             color="neutral"
             disabled={props.readOnly}
@@ -287,7 +287,7 @@ function ErrandInputs(props) {
           />
           {props.typeValue !== "HomeService - Indoor" &&
             props.typeValue !== "HomeService - Outdoor" &&
-            props.typeValue !== "" && <p>₱15/km + ₱100</p>}
+            props.typeValue !== "" && <p>₱ 15 / km + ₱  100</p>}
         </div>
       </div>
 
