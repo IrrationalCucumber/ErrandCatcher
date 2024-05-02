@@ -27,17 +27,6 @@ const EmblaCarousel = (props) => {
     [emblaApi]
   );
 
-  useEffect(() => {
-    const autoplay = emblaApi?.plugins()?.autoplay;
-    if (!autoplay) return;
-
-    setIsPlaying(autoplay.isPlaying());
-    emblaApi
-      .on("autoplay:play", () => setIsPlaying(true))
-      .on("autoplay:stop", () => setIsPlaying(false))
-      .on("reInit", () => setIsPlaying(autoplay.isPlaying()));
-  }, [emblaApi]);
-
   return (
     <div className="embla">
       <div className="embla__viewport" ref={emblaRef}>
