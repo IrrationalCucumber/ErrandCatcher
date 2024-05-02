@@ -29,6 +29,7 @@ body .App .si{
 .rem{
   color: #333;
   padding-left: 0rem;
+  margin-left: 32%;
 }
 
 .contman{
@@ -51,12 +52,13 @@ body .App .si{
   margin: 0 auto;
 }
 .cont input{
-  font-size: 13px;
+  font-size: 16px;
   max-width: 250px;
   width: 100%;
   margin: 13px auto;
   display: block;
   font-family: 'PT Sans', sans-serif;
+  border-radius: 8px;
 }
 .cont input[type="checkbox"]{
   display: inline-block;
@@ -71,6 +73,25 @@ body .App .si{
   display: block;
   margin-top: 20px;
 }
+
+.button1 button{
+  padding: 7px;
+  border-radius: 22px;
+  font-size: 16px;
+  font-family: 'Neue Montreal', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 540;
+  border: none;
+  background-color: #0056b3;
+  width: 95px;
+  cursor: pointer;
+  color: white;
+}
+
+.button1 button:hover{
+  background-color: #0476C2
+}
+
+
 .cont .cont2{
   max-width: 250px;
   width: 100%;
