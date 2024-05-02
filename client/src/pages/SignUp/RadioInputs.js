@@ -21,8 +21,8 @@ function RadioInputs({ options, selectedOption, onChange }) {
               <div className="separator"></div>
               <div className="radio-description">
                 <h3>
-                  I'm {option.value === "employer" ? "an employer" : "a catcher"},
-                  looking for {option.value === "employer" ? "catcher" : "errands"}.
+                  I'm {option.value === "Employer" ? "an employer" : "a catcher"},
+                  looking for {option.value === "Employer" ? "catcher" : "errands"}.
                 </h3>
               </div>
             </div>
@@ -46,17 +46,44 @@ function RadioInputs({ options, selectedOption, onChange }) {
           }
           
           .radio-wrapper {
-            border: 1px solid #0073aa;
-            border-radius: 5px;
-            padding: 10px;
+            border: 1px solid grey;
+            border-radius: 8px;
+            padding: 16px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.1s ease;
           }
+
+          .radio-wrapper:hover {
+            border: 2px solid #1068C7;
+            
+          }
+          .radio-wrapper.animate {
+            transform: scale(1.1);
+          }
+          
+        
+          .radio-wrapper:active {
+            animation: jump 0.10s;
+            
+          }
+          @keyframes jump {
+            0% {
+              transform: translateY(0);
+            }
+            70% {
+              transform: translateY(-2px);
+            }
+            
+           }
+           
           
           .radio-header {
             display: flex;
             align-items: center;
             margin-bottom: 10px;
+            cursor: pointer;
+            font-size: 100px
+            
           }
           
           .radio-header.selected {
@@ -76,6 +103,11 @@ function RadioInputs({ options, selectedOption, onChange }) {
           .radio-label {
             margin-left: 10px;
             color: black;
+            border-radius: 90px;
+            cursor: pointer;
+            font-family: "Helvetica Neue", sans-serif;
+            font-size: 100px;
+            font-weight: bold;          
           }
           
           .separator {

@@ -176,10 +176,15 @@ const Signup = () => {
                   disabled={!selectedOption}
                   style={{
                     padding: "10px",
-                    width: "200px",
-                    borderRadius: "5px",
-                    border: "ridge",
+                    width: "190px",
+                    borderRadius: "17px",
+                    fontSize: "16px",
+                    fontWeight: "400",
+                    fontFamily: "Neue MontReal, Helvetica Neue, sans-serif;",
+                    border: "1px solid grey",
                     transition: "background-color 0.3s ease",
+          
+                  
                   }}
                   onMouseEnter={(e) => {
                     e.target.style.backgroundColor = "#005a80"; // Change background color on hover
@@ -348,7 +353,22 @@ const Signup = () => {
                   }}
                 >
                   <div className="col text-center">
-                    <button onClick={handleClick}>Sign Up</button>
+                    <button onClick={handleClick}
+                    style={{
+                      padding: "10px",
+                      width: "140px",
+                      borderRadius: "17px",
+                      fontSize: "16px",
+                      fontWeight: "400",
+                      fontFamily: "Neue MontReal, Helvetica Neue, sans-serif;",
+                      border: "1px solid grey",
+                      background: "rgb(0, 98, 128)",
+                      // background-color: "rgb(0, 98, 128)";
+                      cursor: "pointer",
+                      color: "white"
+                    }}
+                    
+                    >Sign Up</button>
                   </div>
                 </div>
                 <div className="m-4" style={{ paddingTop: "20px" }}>
