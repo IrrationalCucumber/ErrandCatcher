@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import NavBar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer";
@@ -8,6 +8,16 @@ import "../css/Carousel.css";
 import EmblaCarousel from "../components/Carousel/Carousel";
 
 const Landing = () => {
+  const [errands, setErrands] = useState([]);
+  //get recent errands
+  useEffect(() => {
+    const recentErrnads = async () => {
+      const res = await axios.get(`http://localhost:8800/recent`);
+      setErrands(res.data);
+    };
+    recentErrnads();
+  }, []);
+  console.log(errands);
   const OPTIONS = { loop: true };
   const SLIDE_COUNT = 6;
   const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
