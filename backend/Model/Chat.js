@@ -1,19 +1,40 @@
-const db = require("postgres://postgres.jxmlevrskooknnplyvbh:AnxiousCucumber99@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres");
+//const db = require("../db.js");
+const { createClient } = require("@supabase/supabase-js");
+// Initialize Supabase client
+const supabaseUrl = "https://jxmlevrskooknnplyvbh.supabase.co";
+const supabaseKey = process.env.SUPABASE_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+// console.log("Supabase URL:", supabaseUrl);
+// console.log("Supabase Key:", supabaseKey);
 
 const Chat = {
   //get the convo of user
   // also the convo contents
   // need convo id and userID
-  getChatById: (id, userID, callback) => {
-    db.query(
-      `SELECT ch.*, co.* 
-      FROM errand_chat ch
-      JOIN chat_conversation co ON ch.chatID = co.convoID
-      WHERE chatID = ? AND (chatEmpID = ? OR chatCatchID = ?)`,
-      [id, userID, userID],
-      callback
-    );
+  getChatById: async (id, userid) => {
+    try {
+      const { data, error } = await supabase
+        .from("errand_chat")
+        .select("*")
+        .eq("chatID", id)
+        .or(`chat_EmpID.eq.${userid},chat_CatchID.eq.${userid}`);
+
+      if (error) throw error;
+
+      return data;
+    } catch (error) {
+      console.error("Error fetching chat:", error);
+      return null;
+    }
   },
+  //   getChatById: (id, userID, callback) => {
+  //     db.query(
+  //       `SELECT * FROM errand_chat WHERE chatID = ? AND (chatEmpID = ? OR chatCatchID = ?)`,
+  //       [id, userID, userID],
+  //       callback
+  //     );
+  //   },
   //start a conversation
   // create a convo and add two user ids
   postNewChat: (chat, callback) => {
