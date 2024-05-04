@@ -1,9 +1,11 @@
 //const db = require("../db.js");
 const { createClient } = require("@supabase/supabase-js");
 // Initialize Supabase client
-const supabaseUrl = "https://jxmlevrskooknnplyvbh.supabase.co";
-const supabaseKey = process.env.SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_KEY
+);
 
 // console.log("Supabase URL:", supabaseUrl);
 // console.log("Supabase Key:", supabaseKey);
