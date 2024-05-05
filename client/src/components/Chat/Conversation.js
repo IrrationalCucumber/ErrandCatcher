@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../AuthContext";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import { Input } from "@mui/joy";
 
 function Conversation() {
   const { user } = useAuth();
@@ -12,6 +13,7 @@ function Conversation() {
     chatID: "",
     user: "",
   });
+  const [message, setMessage] = useState("");
   const [username, setUsername] = useState("");
 
   //get chat info
@@ -70,6 +72,16 @@ function Conversation() {
     };
     fetchUsername();
   }, [chatInfo.user]);
+  //send the message
+  const handleSend = async () => {
+    try {
+      await axios.post(`http://localhost:8800/add-convo?id=${chatInfo.chatID}&recID=${chatInfo.user}
+      &sendID=${user.userID}&message=${message}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // console.log(chatInfo);
   return (
     <div>
       <h1>
@@ -95,8 +107,20 @@ function Conversation() {
               {username}: {convo.message}
             </p>
           )}
+          {/* <i>{new Date(convo.dateSent).toLocaleDateString()}</i> */}
         </div>
       ))}
+      <Input
+        color="primary"
+        size="lg"
+        variant="soft"
+        type="text"
+        startDecorator="+"
+        placeholder="Enter message here..."
+        onChange={(e) => setMessage(e.target.value)}
+        name="message"
+      />
+      <button onClick={handleSend}>SEND</button>
     </div>
   );
 }
