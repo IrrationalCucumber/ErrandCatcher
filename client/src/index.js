@@ -18,6 +18,9 @@ import ProfilePage from "./pages/profile/ProfilePage";
 import ViewCommission from "./pages/errand  views/ViewCommission";
 import Errands from "./pages/errand  views/Errands";
 import ErrorElement from "./pages/ErrorElement";
+//CHAT
+import Chat from "./pages/Chat/Chat";
+import ChatPage from "./pages/Chat/ChatPage";
 //UPDATE/REGISTER
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp/Signup";
@@ -195,6 +198,16 @@ const router = createBrowserRouter([
   },
   { path: "/sign-in", element: <SignIn /> },
   { path: "/test", element: <MapComponent /> },
+  {
+    path: "/chat/",
+    element: <Chat />,
+    children: [
+      {
+        path: "c/:id",
+        element: <ChatPage />,
+      },
+    ],
+  },
   {
     path: "*",
     element: <ErrorElement />,
