@@ -30,6 +30,20 @@ const Chat = {
       return null;
     }
   },
+  //get convo/s of a chat
+  getChatConvo: async (id) => {
+    try {
+      const { data, error } = await supabase
+        .from("chat_conversation")
+        .select("*")
+        .eq("chat_convoID", id);
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      console.error("Error fetching convo:", error);
+      return null;
+    }
+  },
   //   getChatById: (id, userID, callback) => {
   //     db.query(
   //       `SELECT * FROM errand_chat WHERE chatID = ? AND (chatEmpID = ? OR chatCatchID = ?)`,
@@ -43,7 +57,7 @@ const Chat = {
     try {
       const { data, error } = await supabase
         .from("errand_chat")
-        .insert([{ chat_EmpID: empID }, { chat_CatchID: catchID }])
+        .insert([{ chat_EmpID: empID, chat_CatchID: catchID }])
         .select();
 
       if (error) throw error;
@@ -64,14 +78,14 @@ const Chat = {
   // require sender and recevier
   postConvo: async (chatID, recID, sendID, message) => {
     try {
-      const { data, error } = await supabase
-        .from("chat_conversation")
-        .insert([
-          { senderID: sendID },
-          { receiverID: recID },
-          { message: message },
-          { chat_convoID: chatID },
-        ]);
+      const { data, error } = await supabase.from("chat_conversation").insert([
+        {
+          senderID: sendID,
+          receiverID: recID,
+          message: message,
+          chat_convoID: chatID,
+        },
+      ]);
       if (error) throw error;
       return data;
     } catch (err) {

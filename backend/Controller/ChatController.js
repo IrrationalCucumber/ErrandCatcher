@@ -27,6 +27,19 @@ const ChatController = {
       res.status(500).json({ message: "Internal server error" });
     }
   },
+  // get convo of chat
+  fetchChatConvo: async (req, res) => {
+    const id = req.params.id;
+    try {
+      const chat = await Chat.getChatConvo(id);
+      if (!chat) {
+        return res.status(404).json({ message: "Conversation not found" });
+      }
+      res.json(chat);
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  },
   // add new chat
   postNewChat: async (req, res) => {
     const empID = req.query.empID;
@@ -45,6 +58,7 @@ const ChatController = {
     const message = req.query.message;
     try {
       const chat = await Chat.postConvo(chatID, recID, sendID, message);
+      //return json("Sent");
     } catch (err) {
       res.status(500).json({ message: "Internal server error" });
     }
