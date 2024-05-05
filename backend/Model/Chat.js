@@ -39,26 +39,55 @@ const Chat = {
   //   },
   //start a conversation
   // create a convo and add two user ids
-  postNewChat: (chat, callback) => {
-    const { empID, catchID } = chat;
-    values = [empID, catchID];
-    db.query(
-      "INSERT INTO chat_user (`chat_EmpID`, `chat_CatchID`, `dateCreated`) VALUES (?, ?, NOW())",
-      [values],
-      callback
-    );
+  postNewChat: async (empID, catchID) => {
+    try {
+      const { data, error } = await supabase
+        .from("errand_chat")
+        .insert([{ chat_EmpID: empID }, { chat_CatchID: catchID }])
+        .select();
+
+      if (error) throw error;
+      return data;
+    } catch (err) {
+      console.log("ERROR: ", err);
+      return null;
+    }
+    // const { empID, catchID } = chat;
+    // values = [empID, catchID];
+    // db.query(
+    //   "INSERT INTO chat_user (`chat_EmpID`, `chat_CatchID`, `dateCreated`) VALUES (?, ?, NOW())",
+    //   [values],
+    //   callback
+    // );
   },
   //add chat conversation
   // require sender and recevier
-  postConvo: (convoData, callback) => {
-    const { chatID, recID, sendID, message, dateSent } = convoData;
-    values = [chatID, recID, sendID, message, dateSent];
-    db.query(
-      "INSERT INTO chat_conversation (`chat_convoID`, `receiverID`, `senderID`, `message`, `dateSent`)",
-      [values],
-      callback
-    );
+  postConvo: async (chatID, recID, sendID, message) => {
+    try {
+      const { data, error } = await supabase
+        .from("chat_conversation")
+        .insert([
+          { senderID: sendID },
+          { receiverID: recID },
+          { message: message },
+          { chat_convoID: chatID },
+        ]);
+      if (error) throw error;
+      return data;
+    } catch (err) {
+      console.log("ERROR: ", err);
+      return null;
+    }
   },
+  // postConvo: (convoData, callback) => {
+  //   const { chatID, recID, sendID, message, dateSent } = convoData;
+  //   values = [chatID, recID, sendID, message, dateSent];
+  //   db.query(
+  //     "INSERT INTO chat_conversation (`chat_convoID`, `receiverID`, `senderID`, `message`, `dateSent`)",
+  //     [values],
+  //     callback
+  //   );
+  // },
 };
 
 module.exports = Chat;
