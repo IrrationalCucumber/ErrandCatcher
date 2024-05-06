@@ -16,9 +16,22 @@ const ChatController = {
   //   },
   fetchChatById: async (req, res) => {
     const id = req.params.id;
-    const userID = req.params.userid; // Assuming userID is stored on request object
+    //const userID = req.params.userid; // Assuming userID is stored on request object
     try {
-      const chat = await Chat.getChatById(id, userID);
+      const chat = await Chat.getChatById(id);
+      if (!chat) {
+        return res.status(404).json({ message: "Chat not found" });
+      }
+      res.json(chat);
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  },
+  //fetch chat of user
+  fetchChatbyUserID: async (req, res) => {
+    const id = req.params.id;
+    try {
+      const chat = await Chat.getChatbyUserID(id);
       if (!chat) {
         return res.status(404).json({ message: "Chat not found" });
       }

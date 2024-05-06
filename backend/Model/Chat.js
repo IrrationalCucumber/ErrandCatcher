@@ -14,19 +14,34 @@ const Chat = {
   //get the convo of user
   // also the convo contents
   // need convo id and userID
-  getChatById: async (id, userid) => {
+  getChatById: async (id) => {
     try {
       const { data, error } = await supabase
         .from("errand_chat")
         .select("*")
-        .eq("chatID", id)
-        .or(`chat_EmpID.eq.${userid},chat_CatchID.eq.${userid}`);
+        .eq("chatID", id);
+      // .or(`chat_EmpID.eq.${userid},chat_CatchID.eq.${userid}`);
 
       if (error) throw error;
 
       return data;
     } catch (error) {
       console.error("Error fetching chat:", error);
+      return null;
+    }
+  },
+  // get chats of user
+  getChatbyUserID: async (id) => {
+    try {
+      const { data, error } = await supabase
+        .from("errand_chat")
+        .select("*")
+        .or(`chat_EmpID.eq.${id},chat_CatchID.eq.${id}`);
+      if (error) throw error;
+
+      return data;
+    } catch (error) {
+      console.log("Error: ", error);
       return null;
     }
   },
