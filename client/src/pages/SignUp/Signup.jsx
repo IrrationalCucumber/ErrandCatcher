@@ -19,6 +19,7 @@ const Signup = () => {
     type: "",
     dateCreated: "",
   });
+  const [errors, setErrors] = useState({});
 
   //handle state of error message
   const [employerErrorMessage, setEmployerErrorMessage] = useState("");
@@ -103,29 +104,60 @@ const Signup = () => {
     }
   };
 
+  // Error handling if empty fields 
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!account.regUsername) {
+      newErrors.username = 'Username is required';
+    }
+    if (!account.email) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(account.email)) {
+      newErrors.email = 'Email is invalid';
+    }
+    if (!account.firstName) {
+      newErrors.firstName = 'First Name is required';
+    }
+    if (!account.lastName) {
+      newErrors.lastName = 'Last Name is required';
+    }
+    if (!account.bday) {
+      newErrors.bday = 'Birthday is required';
+    }
+    if (!account.gender) {
+      newErrors.gender = 'Gender is required';
+    }
+    // Alphanumeric password
+    if (!account.regPassword) {
+      newErrors.regPassword = 'Password is required';
+    } else if (account.regPassword.length < 8) {
+      newErrors.regPassword = 'Password must be at least 6 characters long';
+    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/.test(account.regPassword)) {
+      newErrors.regPassword = 'Password must contain at least one uppercase letter, one lowercase letter, and one number';
+    }
+
+    if (!account.regPassword2) {
+      newErrors.regPassword2 = 'Confirm Password is required';
+    } else if (account.regPassword !== account.regPassword2) {
+      newErrors.regPassword2 = 'Passwords do not match';
+    }
+    console.log(account);
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+
+  };
+
   //save the data into db
   const handleClick = async (e) => {
-    //if fileds are empty
-    //error message
-    if (
-      !account.firstName ||
-      !account.lastName ||
-      !account.regPassword ||
-      !account.regPassword2 ||
-      !account.email ||
-      !account.contactNumber ||
-      !account.type
-    ) {
-    } else if (account.regPassword.length < 8) {
-      setEmployerErrorMessage("Password is too short.");
-
-      return;
-    } else if (account.regPassword !== account.regPassword2) {
-      setEmployerErrorMessage("Password does not match.");
-      return;
-    }
     //save to db if no error
     e.preventDefault();
+    const isValid = validateForm();
+
+    if (isValid) {
+      console.log('Form submitted:', account);
+      
     try {
       account.dateCreated = getCurrentDate();
       await axios.post("http://localhost:8800/sign-up", account); // new enpoint
@@ -134,6 +166,7 @@ const Signup = () => {
     } catch (err) {
       console.log(err);
     }
+  }
   };
   //console.log(account);
 
@@ -233,6 +266,7 @@ const Signup = () => {
                       autocomplete="off"
                       required
                     />
+                    {errors.username && <span style={{color: "red"}}>{errors.username}</span>}
                   </div>
                   <div className="col">
                     <label className="SUlabel">Email Address</label>
@@ -244,6 +278,7 @@ const Signup = () => {
                       value={account.email}
                       required
                     />
+                     {errors.email && <span style={{color: "red"}}>{errors.email}</span>}
                   </div>
                 </div>
                 <div
@@ -264,6 +299,7 @@ const Signup = () => {
                       value={account.firstName}
                       required
                     />
+                     {errors.firstName && <span style={{color: "red"}}>{errors.firstName}</span>}
                   </div>
                   <div className="col">
                     <label className="SUlabel">Last Name</label>
@@ -275,6 +311,7 @@ const Signup = () => {
                       value={account.lastName}
                       required
                     />
+                     {errors.lastName && <span style={{color: "red"}}>{errors.lastName}</span>}
                   </div>
                 </div>
                 <div
@@ -295,6 +332,7 @@ const Signup = () => {
                       value={account.bday}
                       onChange={handleChange}
                     />
+                     {errors.bday && <span style={{color: "red"}}>{errors.bday}</span>}
                   </div>
                   <div className="col">
                     <label className="SUlabel">Gender</label>
@@ -309,6 +347,7 @@ const Signup = () => {
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
                     </select>
+                    {errors.gender && <span style={{color: "red"}}>{errors.gender}</span>}
                   </div>
                 </div>
                 <div
@@ -330,6 +369,7 @@ const Signup = () => {
                       autoComplete="off"
                       required
                     />
+                     {errors.regPassword && <span style={{color: "red"}}>{errors.regPassword}</span>}
                   </div>
                   <div className="col">
                     <label className="SUlabel">Confirm Password</label>
@@ -342,6 +382,7 @@ const Signup = () => {
                       autoComplete="off"
                       required
                     />
+                     {errors.regPassword2 && <span style={{color: "red"}}>{errors.regPassword2}</span>}
                   </div>
                 </div>
                 <div
