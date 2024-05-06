@@ -70,7 +70,7 @@ export default function Map({ accessToken, getDistanceCallback }) {
   return (
     <div className="main-map">
       <div className="sidebar">
-        Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
+        {/* Longitude: {lng} | Latitude: {lat} | Zoom: {zoom} */}
       </div>
       <div ref={mapContainer} className="map-container" id="map-container" />
     </div>

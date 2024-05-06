@@ -54,12 +54,36 @@ select:focus {
 
 select{
     border-radius: 8px;
+    font-weight: bold;
+    padding: 16px;
+}
+.selectpay{
+    border-radius: 8px;
+    font-weight: 700;
+    padding: 8px;
 }
 
 .cols1, .cols2{
     position: relative;
-    right: 90px;
+    display: flex;
+    flex-direction: column;
+    margin: 2px; 
 }
+
+.colpeso{
+    width: 100%;
+    border: 1px solid rgba(233, 235, 243, 0.925);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+    background-color: rgba(233, 235, 243, 0.925);
+    text-align: center;
+    font-family: inherit;
+    font-weight: 850;
+    color: darkgreen;
+}
+
 .cols1 {
     text-align: start;
     width: 150px;
@@ -95,6 +119,7 @@ select{
     border-radius: 20px !important;
     padding: 10px;
     text-align: center;
+    cursor: pointer;
 }
 .btn-container{
     display: flex;
