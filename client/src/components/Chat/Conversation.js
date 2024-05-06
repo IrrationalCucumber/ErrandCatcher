@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../AuthContext";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-import { Input } from "@mui/joy";
+import { Button, Input } from "@mui/joy";
+//icons
+import SendIcon from "@mui/icons-material/Send";
+import MessageIcon from "@mui/icons-material/Message";
 
 function Conversation() {
   const { user } = useAuth();
@@ -115,12 +118,12 @@ function Conversation() {
         size="lg"
         variant="soft"
         type="text"
-        startDecorator="+"
-        placeholder="Enter message here..."
+        startDecorator={<MessageIcon />}
+        placeholder="Type message here..."
         onChange={(e) => setMessage(e.target.value)}
         name="message"
+        endDecorator={<Button startDecorator={<SendIcon />}>Send</Button>}
       />
-      <button onClick={handleSend}>SEND</button>
     </div>
   );
 }
