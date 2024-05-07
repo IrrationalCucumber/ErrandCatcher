@@ -12,6 +12,7 @@ import Table from "../../components/Table";
 import Pagination from "../../components/Pagination";
 import "./application.css";
 import { useAuth } from "../../components/AuthContext";
+import AddChatButton from "../../components/Chat/AddChatButton";
 
 function Application() {
   const { user } = useAuth();
@@ -107,7 +108,7 @@ function Application() {
     return `${month} ${date.getDate()}, ${year}`;
   };
 
-  const headers = ["DATE", "EMPLOYER", "ERRAND TITLE", "STATUS", "ACTION"];
+  const headers = ["DATE", "EMPLOYER", "ERRAND TITLE", "STATUS", "ACTION", ""];
   const applicationData = currentItems.map((applicant) => [
     formattedDate(applicant.applicationDate),
     `${applicant.userFirstname} ${applicant.userLastname}`,
@@ -128,6 +129,10 @@ function Application() {
         DELETE
       </button>
     ), // handle other statuses or add a default action
+    <AddChatButton
+      otherUserId={applicant.employerID}
+      currentUserId={user.userID}
+    />,
   ]);
   //set variables for notification
   const [notif, setNotif] = useState({
