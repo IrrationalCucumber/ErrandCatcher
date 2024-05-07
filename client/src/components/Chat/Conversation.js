@@ -9,12 +9,11 @@ import MessageIcon from "@mui/icons-material/Message";
 
 function Conversation({ chatID }) {
   const { user } = useAuth();
-  const location = useLocation();
-  // const chatID = location.pathname.split("/")[3];
   const [convos, setConvo] = useState([]);
   const [message, setMessage] = useState("");
   const [username, setUsername] = useState("");
   const [receiver, setReciever] = useState("");
+
   useEffect(() => {
     //get chat info
     const fetchChat = async () => {
@@ -31,7 +30,18 @@ function Conversation({ chatID }) {
     };
     fetchChat();
   }, [chatID]);
-  // console.log(receiver);
+  //get username
+  useEffect(() => {
+    const fetchUsername = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/user/${receiver}`);
+        setUsername(res.data[0].username);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchUsername();
+  }, [receiver]);
   //get convo between user
   //refresh every 5 sec
   // display if new convo added
@@ -58,11 +68,10 @@ function Conversation({ chatID }) {
       console.log(error);
     }
   };
-  // console.log(chatInfo);
   return (
-    <TabPanel style={{ overflow: "auto" }}>
+    <TabPanel sx={{ overflow: "auto" }}>
       <nav style={{ backgroundColor: "skyblue" }}>
-        {/* <Typography level="h1">{username}</Typography> */}
+        <Typography level="h1">{username}</Typography>
       </nav>
 
       {convos.map((convo) => (
