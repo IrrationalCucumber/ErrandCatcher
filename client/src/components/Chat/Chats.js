@@ -11,7 +11,11 @@ function Chats({ chats, setActiveChatId }) {
           sx={{ overflow: "auto" }}
           onClick={() => setActiveChatId(chat.chatID)}
         >
-          <ChatItem id={chat.chat_EmpID} id2={chat.chat_CatchID} />
+          <ChatItem
+            chatID={chat.chatID}
+            id={chat.chat_EmpID}
+            id2={chat.chat_CatchID}
+          />
         </TabList>
       ))}
     </div>

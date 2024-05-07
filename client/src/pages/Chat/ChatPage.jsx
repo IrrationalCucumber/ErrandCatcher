@@ -26,10 +26,15 @@ function ChatPage() {
     };
     fetchChat();
   }, [user.userID]);
+
   return (
     <div>
-      <Tabs orientation="vertical" size="lg">
-        <Chats chats={chats} setActiveChatId={setActiveChatId} />
+      <Tabs orientation="vertical" size="lg" value={activeChatId}>
+        <Chats
+          chats={chats}
+          setActiveChatId={setActiveChatId}
+          value={activeChatId}
+        />
         <Conversation chatID={activeChatId} />
       </Tabs>
     </div>

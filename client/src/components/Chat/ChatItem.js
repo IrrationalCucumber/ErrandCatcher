@@ -9,9 +9,7 @@ function ChatItem(props) {
   const [id, setID] = useState("");
   useEffect(() => {
     //store userID of if not the user
-
     // This sets the id to the chat_CatchID of the first chat in the list
-    // setID(chats[0].chat_CatchID);
     if (props.id === user.userID) {
       setID(props.id2);
     } else if (props.id2 === user.userID) {
@@ -31,7 +29,9 @@ function ChatItem(props) {
   //console.log(props.id);
   return (
     <>
-      <Tab>{username}</Tab>
+      <Tab value={props.chatID} variant="plain" color="primary">
+        {username}
+      </Tab>
     </>
   );
 }

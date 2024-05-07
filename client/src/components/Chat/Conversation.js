@@ -69,7 +69,7 @@ function Conversation({ chatID }) {
     }
   };
   return (
-    <TabPanel sx={{ overflow: "auto" }}>
+    <TabPanel value={chatID} sx={{ overflow: "auto" }}>
       <nav style={{ backgroundColor: "skyblue" }}>
         <Typography level="h1">{username}</Typography>
       </nav>
