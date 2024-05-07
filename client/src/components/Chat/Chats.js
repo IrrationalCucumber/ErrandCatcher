@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
-
+import React from "react";
 import { Tab, TabList } from "@mui/joy";
-import axios from "axios";
-import { useAuth } from "../AuthContext";
 import ChatItem from "./ChatItem";
 
-function Chats({ chats }) {
+function Chats({ chats, setActiveChatId }) {
   return (
     <div>
       {chats.map((chat) => (
-        <TabList key={chat.chatID} sx={{ overflow: "auto" }}>
+        <TabList
+          key={chat.chatID}
+          sx={{ overflow: "auto" }}
+          onClick={() => setActiveChatId(chat.chatID)}
+        >
           <ChatItem id={chat.chat_EmpID} id2={chat.chat_CatchID} />
         </TabList>
       ))}

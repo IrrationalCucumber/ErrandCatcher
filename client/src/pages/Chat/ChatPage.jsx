@@ -8,7 +8,8 @@ import { useAuth } from "../../components/AuthContext";
 function ChatPage() {
   const { user } = useAuth();
   const [chats, setChats] = useState([]);
-  //get chat info
+  const [activeChatId, setActiveChatId] = useState(null); // state to keep track of active chat
+
   useEffect(() => {
     const fetchChat = async () => {
       try {
@@ -16,20 +17,20 @@ function ChatPage() {
           `http://localhost:8800/your-chat/${user.userID}`
         );
         setChats(res.data);
+        if (res.data.length > 0) {
+          setActiveChatId(res.data[0].chatID); // Set the first chat as active initially
+        }
       } catch (error) {
         console.log(error);
       }
     };
     fetchChat();
   }, [user.userID]);
-
   return (
     <div>
       <Tabs orientation="vertical" size="lg">
-        <Chats chats={chats} />
-        <TabPanel sx={{ overflow: "auto" }}>
-          <Conversation />
-        </TabPanel>
+        <Chats chats={chats} setActiveChatId={setActiveChatId} />
+        <Conversation chatID={activeChatId} />
       </Tabs>
     </div>
   );

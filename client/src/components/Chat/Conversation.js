@@ -2,81 +2,57 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../AuthContext";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-import { Button, Chip, Input, Stack, Typography } from "@mui/joy";
+import { Button, Chip, Input, Stack, TabPanel, Typography } from "@mui/joy";
 //icons
 import SendIcon from "@mui/icons-material/Send";
 import MessageIcon from "@mui/icons-material/Message";
 
-function Conversation() {
+function Conversation({ chatID }) {
   const { user } = useAuth();
   const location = useLocation();
-  const chatID = location.pathname.split("/")[3];
+  // const chatID = location.pathname.split("/")[3];
   const [convos, setConvo] = useState([]);
-  const [chatInfo, setChatInfo] = useState({
-    chatID: "",
-    user: "",
-  });
   const [message, setMessage] = useState("");
   const [username, setUsername] = useState("");
-
-  //get chat info
-  const fetchChat = async () => {
-    try {
-      const res = await axios.get(`http://localhost:8800/chat/${chatID}`);
-      if (res.data[0].chat_EmpID === user.userID) {
-        setChatInfo({
-          chatID: res.data[0].chatID,
-          // empID: res.data[0].chat_EmpID,
-          user: res.data[0].chat_CatchID,
-        });
-      } else {
-        setChatInfo({
-          chatID: res.data[0].chatID,
-          user: res.data[0].chat_EmpID,
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  //get convo between user
-  const fetchConvo = async () => {
-    try {
-      const res = await axios.get(`http://localhost:8800/c/${chatID}`);
-      setConvo(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  //assing object
-  //refresh every 5 sec
-  // display if new convo added
+  const [receiver, setReciever] = useState("");
   useEffect(() => {
-    fetchChat();
-    fetchConvo();
-    const interval = setInterval(fetchConvo, 5000);
-    return () => clearInterval(interval);
-  }, []);
-  // get chat info
-  // get username
-  useEffect(() => {
-    const fetchUsername = async () => {
+    //get chat info
+    const fetchChat = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:8800/username/${chatInfo.user}`
-        );
-        setUsername(res.data);
+        const res = await axios.get(`http://localhost:8800/chat/${chatID}`);
+        if (res.data[0].chat_EmpID === user.userID) {
+          setReciever(res.data[0].chat_CatchID);
+        } else {
+          setReciever(res.data[0].chat_EmpID);
+        }
       } catch (error) {
         console.log(error);
       }
     };
-    fetchUsername();
-  }, [chatInfo.user]);
+    fetchChat();
+  }, [chatID]);
+  // console.log(receiver);
+  //get convo between user
+  //refresh every 5 sec
+  // display if new convo added
+  useEffect(() => {
+    const fetchConvo = async () => {
+      if (!chatID) return; // If no chatID is set, do not fetch data
+      try {
+        const res = await axios.get(`http://localhost:8800/c/${chatID}`);
+        setConvo(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchConvo();
+    const interval = setInterval(fetchConvo, 5000);
+    return () => clearInterval(interval);
+  }, [chatID]);
   //send the message
   const handleSend = async () => {
     try {
-      await axios.post(`http://localhost:8800/add-convo?id=${chatInfo.chatID}&recID=${chatInfo.user}
+      await axios.post(`http://localhost:8800/add-convo?id=${chatID}&recID=${receiver}
       &sendID=${user.userID}&message=${message}`);
     } catch (error) {
       console.log(error);
@@ -84,9 +60,9 @@ function Conversation() {
   };
   // console.log(chatInfo);
   return (
-    <div>
+    <TabPanel style={{ overflow: "auto" }}>
       <nav style={{ backgroundColor: "skyblue" }}>
-        <Typography level="h1">{username}</Typography>
+        {/* <Typography level="h1">{username}</Typography> */}
       </nav>
 
       {convos.map((convo) => (
@@ -155,9 +131,13 @@ function Conversation() {
         placeholder="Type message here..."
         onChange={(e) => setMessage(e.target.value)}
         name="message"
-        endDecorator={<Button startDecorator={<SendIcon />}>Send</Button>}
+        endDecorator={
+          <Button startDecorator={<SendIcon />} onClick={handleSend}>
+            Send
+          </Button>
+        }
       />
-    </div>
+    </TabPanel>
   );
 }
 
