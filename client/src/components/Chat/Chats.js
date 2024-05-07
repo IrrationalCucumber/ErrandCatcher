@@ -8,7 +8,7 @@ function Chats({ chats, setActiveChatId }) {
       {chats.map((chat) => (
         <TabList
           key={chat.chatID}
-          sx={{ overflow: "auto" }}
+          sx={{ overflow: "auto", width: "250px" }}
           onClick={() => setActiveChatId(chat.chatID)}
         >
           <ChatItem

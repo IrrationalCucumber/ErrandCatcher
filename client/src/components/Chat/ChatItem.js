@@ -29,7 +29,12 @@ function ChatItem(props) {
   //console.log(props.id);
   return (
     <>
-      <Tab value={props.chatID} variant="plain" color="primary">
+      <Tab
+        sx={{ width: "100%", height: "100px" }}
+        value={props.chatID}
+        variant="plain"
+        color="primary"
+      >
         {username}
       </Tab>
     </>

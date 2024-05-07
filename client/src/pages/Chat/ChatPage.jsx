@@ -29,7 +29,17 @@ function ChatPage() {
 
   return (
     <div>
-      <Tabs orientation="vertical" size="lg" value={activeChatId}>
+      <Tabs
+        orientation="vertical"
+        size="lg"
+        value={activeChatId}
+        aria-label="Meaningful label"
+        sx={{
+          "--Tabs-spacing": "20px",
+          "--Tab-indicatorThickness": "4px",
+          "--Tab-indicatorRadius": "11px",
+        }}
+      >
         <Chats
           chats={chats}
           setActiveChatId={setActiveChatId}
