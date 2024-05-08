@@ -156,29 +156,13 @@ const EmployerApplicants = () => {
     userID: "", //this is the employer/ userID of the commission
     notificationType: "", //notif description
     notifDesc: "", //contents of the notif
-    notifDate: "", //time and date notif is added
   });
-  //get current time and date for notif
-  const getTimeAndDate = () => {
-    const currentDate = new Date();
-    // Get the date components
-    const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Months are zero-based
-    const day = String(currentDate.getDate()).padStart(2, "0");
-    // Get the time components
-    const hours = String(currentDate.getHours()).padStart(2, "0");
-    const minutes = String(currentDate.getMinutes()).padStart(2, "0");
-    const seconds = String(currentDate.getSeconds()).padStart(2, "0");
 
-    // Create a string representing the current date and time
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-  };
   //ADD TRANSACTION RECORD - 24/03/24
   //set variable fro trans
   const [trans, setTrans] = useState({
     comID: "",
     catcherID: "",
-    dateAccepted: "",
     //dateCompleted: "",
     //reciept: "",
   });
@@ -200,14 +184,14 @@ const EmployerApplicants = () => {
       //transaction
       trans.comID = applicationErrandID;
       trans.catcherID = catcherID;
-      trans.dateAccepted = getTimeAndDate();
+
       //console.log(catcherID);
       await axios.post("http://localhost:8800/add-trans/", trans);
       //add a notification to the commission's applicant
       notif.notifDesc = "Your Errand application has been Accepted";
       notif.userID = catcherID;
       notif.notificationType = "Application";
-      notif.notifDate = getTimeAndDate();
+
       await axios.post("http://localhost:8800/notify", notif);
       //DENY other applicants
       await axios.put(
@@ -241,7 +225,7 @@ const EmployerApplicants = () => {
       notif.notifDesc = "Your Errand application has been Denied";
       notif.userID = catcherID;
       notif.notificationType = "Application";
-      notif.notifDate = getTimeAndDate();
+
       await axios.post("http://localhost:8800/notify", notif);
       //  alert("You have Posted an Errand!");
       window.location.reload();

@@ -148,23 +148,7 @@ const AccountList = () => {
     userID: "", //this is the employer/ userID of the commission
     notificationType: "", //notif description
     notifDesc: "", //contents of the notif
-    notifDate: "", //time and date notif is added
   });
-  //get current time and date for notif
-  const getTimeAndDate = () => {
-    const currentDate = new Date();
-    // Get the date components
-    const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Months are zero-based
-    const day = String(currentDate.getDate()).padStart(2, "0");
-    // Get the time components
-    const hours = String(currentDate.getHours()).padStart(2, "0");
-    const minutes = String(currentDate.getMinutes()).padStart(2, "0");
-    const seconds = String(currentDate.getSeconds()).padStart(2, "0");
-
-    // Create a string representing the current date and time
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-  };
 
   const handleChange = (e) => {
     // For the 'gender' field, directly set the value without using spread syntax
@@ -283,7 +267,7 @@ const AccountList = () => {
       notif.notifDesc = "Your account has been suspended";
       notif.userID = id;
       notif.notificationType = "Suspension";
-      notif.notifDate = getTimeAndDate();
+
       await axios.post("http://localhost:8800/notify", notif);
     } catch (err) {
       console.log(err);
@@ -298,7 +282,7 @@ const AccountList = () => {
       notif.notifDesc = "Your account has been reactivated";
       notif.userID = id;
       notif.notificationType = "Account Reactivation";
-      notif.notifDate = getTimeAndDate();
+
       await axios.post("http://localhost:8800/notify", notif);
     } catch (err) {
       console.log(err);
@@ -312,7 +296,7 @@ const AccountList = () => {
       notif.notifDesc = "Your account has been deactivated";
       notif.userID = id;
       notif.notificationType = "Account Deactivated";
-      notif.notifDate = getTimeAndDate();
+
       await axios.post("http://localhost:8800/notify", notif);
     } catch (err) {
       console.log(err);
@@ -410,7 +394,13 @@ const AccountList = () => {
         <ModalDialog layout={layout} className="custom-dialog">
           <ModalClose />
           <DialogTitle>{account.username.toUpperCase()} PROFILE</DialogTitle>
-          <DialogContent style={{ display: "flex", flexDirection: "row-reverse", padding:"20px" }}>
+          <DialogContent
+            style={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              padding: "20px",
+            }}
+          >
             <>
               <div>
                 {/* <img
@@ -457,15 +447,14 @@ const AccountList = () => {
                 </h5>
               </div>
               <img
-                  src={
-                    `http://localhost:8800/images/profile/` +
-                    account.profileImage
-                  }
-                  alt="Profile"
-                  width={150}
-                  length={150}
-                  style={{ marginRight: "20px" }}
-                />
+                src={
+                  `http://localhost:8800/images/profile/` + account.profileImage
+                }
+                alt="Profile"
+                width={150}
+                length={150}
+                style={{ marginRight: "20px" }}
+              />
             </>
           </DialogContent>
         </ModalDialog>

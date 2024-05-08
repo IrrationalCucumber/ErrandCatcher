@@ -28,7 +28,6 @@ const ApplyCommission = () => {
     userID: "", //this is the employer/ userID of the commission
     notificationType: "", //notif description
     notifDesc: "", //contents of the notif
-    notifDate: "", //time and date notif is added
   });
 
   const navigate = useNavigate();
@@ -51,32 +50,6 @@ const ApplyCommission = () => {
       // For other fields, use spread syntax as before
       setCommission((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     }
-  };
-
-  //get current date
-
-  const getCurrentDate = () => {
-    const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed, so add 1
-    const day = String(currentDate.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
-
-  //get current time and date for notif
-  const getTimeAndDate = () => {
-    const currentDate = new Date();
-    // Get the date components
-    const year = currentDate.getCurrentDate();
-    const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Months are zero-based
-    const day = String(currentDate.getDate()).padStart(2, "0");
-    // Get the time components
-    const hours = String(currentDate.getHours()).padStart(2, "0");
-    const minutes = String(currentDate.getMinutes()).padStart(2, "0");
-    const seconds = String(currentDate.getSeconds()).padStart(2, "0");
-
-    // Create a string representing the current date and time
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   };
 
   //pre-fill the fields
@@ -121,7 +94,6 @@ const ApplyCommission = () => {
       console.log(userID); // Check if userID is correct
 
       //assign values to the variables in application
-      application.applicationDate = getCurrentDate();
       application.comID = commissionID;
       application.catcherID = userID;
 
@@ -132,7 +104,6 @@ const ApplyCommission = () => {
       notif.notifDesc = "A Catcher has applied to on of your errand";
       notif.userID = commission.employerID;
       notif.notificationType = "Errand Application";
-      notif.notifDate = getTimeAndDate();
 
       await axios.post("http://localhost:8800/notify", notif);
       navigate(`/application/${userID}`);
