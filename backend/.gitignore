@@ -1,0 +1,4 @@
+node_modules
+
+./backend/dbConfig.js
+.env
