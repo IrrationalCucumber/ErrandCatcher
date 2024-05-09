@@ -5,6 +5,16 @@ import "./verification.css"; // Import the provided CSS styles
 import Navbar from "../../components/Navbar/Navbar";
 import axios from "axios";
 import { useAuth } from "../../components/AuthContext";
+import Button from "@mui/joy/Button";
+import ButtonGroup from "@mui/joy/ButtonGroup";
+import Divider from "@mui/joy/Divider";
+import DialogTitle from "@mui/joy/DialogTitle";
+import DialogContent from "@mui/joy/DialogContent";
+import DialogActions from "@mui/joy/DialogActions";
+import Modal from "@mui/joy/Modal";
+import ModalDialog from "@mui/joy/ModalDialog";
+import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
+
 
 // Step 1: Component: Basic Info
 const Step1 = ({ onNext }) => {
@@ -24,7 +34,7 @@ const Step1 = ({ onNext }) => {
 
   return (
     <div className="step">
-      <h1>Basic Information</h1>
+      <h1 style={{textAlign: "center"}}>Basic Information</h1>
       {/*step 1 for input logic part is lacking where user input auto fill up */}
       <form onSubmit={handleSubmit} className="form-container">
         <div className="form-group">
@@ -94,14 +104,8 @@ const Step1 = ({ onNext }) => {
               required
             ></input>
           </div>
-          <div>
-          <button type="submit"
-            style={{
-              margin: "20px",
-              padding: "10px",
-              width: "100px",
-              borderRadius: "5px",
-            }}
+          <div style={{display: "flex", justifyContent: "center"}}>
+          <button className="btnn" type="submit"
           >Next</button>
           </div>
         </div>
@@ -114,10 +118,15 @@ const Step1 = ({ onNext }) => {
 const Step2 = ({ onPrev, onNext }) => {
   const { user } = useAuth();
   const userID = user.userID;
+  const [open, setOpen] = useState(false); // modal
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onNext();
+  };
+
+  const handleOpenModal = () => {
+    setOpen(true);
   };
 
   const [image1, setImage1] = useState("");
@@ -171,7 +180,7 @@ const Step2 = ({ onPrev, onNext }) => {
   return (
     <div>
       <div className="step">
-      <h1>Upload Image</h1>
+      <h1 style={{textAlign: "center"}}>Upload Image</h1>
       <div className="form-group1">
         <form className="form-container" onSubmit={handleSubmit}>
           <div className="input-rows2">
@@ -229,27 +238,72 @@ const Step2 = ({ onPrev, onNext }) => {
               onChange={handleImage}
             />
           </div>
-          <button onClick={handleUpload}>SUBMIT</button>
+          <div style={{ display: "flex", justifyContent: "center", margin: "10px"}}>
+          <ButtonGroup aria-label="spacing button group">
+                    <Button
+                      variant="outlined"
+                      color="green"
+                      sx={{
+                        // Custom color
+                        backgroundColor: '',
+                        '&:hover': {
+                          backgroundColor: 'skyblue', // Darker green on hover
+                        },
+                      }}
+                      // endDecorator={<DeleteForever />}
+                      onClick={() =>
+                        handleOpenModal()
+                      }
+                    >Submit file</Button>
+                    <Modal open={open} onClose={() => setOpen(false)}>
+                      <ModalDialog variant="outlined" role="alertdialog">
+                        <DialogTitle>
+                          <WarningRoundedIcon />
+                          Confirmation
+                        </DialogTitle>
+                        <Divider />
+                        <DialogContent>
+                          Are you sure you want to submit this upload file?
+                          {/* Display the current ID from state */}
+                        </DialogContent>
+                        <DialogActions>
+                          <Button
+                            variant="plain"
+                            color="neutral"
+                            onClick={handleUpload} // Upload the file if Yes
+                          >
+                            Yes
+                          </Button>
+                          <Button
+                            variant="plain"
+                            color="neutral"
+                            onClick={() => setOpen(false)}
+                          >
+                            Cancel
+                          </Button>
+                        </DialogActions>
+                      </ModalDialog>
+                    </Modal>
+                    {/* <Button
+                    onClick={() => handleDelete(commissionItem.commissionID)}
+                  >
+                    DELETE
+                  </Button> */}
+  
+                    </ButtonGroup>
+                    </div>
+          {/* <button className="btnn" onClick={handleUpload}>SUBMIT</button> */}
           <div className="input-rows" style={{ justifyContent: "center" }}>
-            <button
+            <button className="btnn"
               type="button"
               onClick={onPrev}
-              style={{
-                margin: "20px",
-                padding: "10px",
-                width: "100px",
-                borderRadius: "5px",
-              }}
             >
               Prev
             </button>
-            <button
+            <button className="btnn"
               type="submit"
               style={{
-                margin: "20px",
-                padding: "10px",
-                width: "100px",
-                borderRadius: "5px",
+            
               }}
             >
               Next
@@ -259,6 +313,7 @@ const Step2 = ({ onPrev, onNext }) => {
       </div>
     </div>
     </div>
+    
   );
 };
 
