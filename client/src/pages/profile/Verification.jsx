@@ -1,5 +1,5 @@
 //for verification
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Stepper from "../../components/stepper"; // Corrected import path
 import "./verification.css"; // Import the provided CSS styles
 import Navbar from "../../components/Navbar/Navbar";
@@ -21,7 +21,17 @@ const Step1 = ({ onNext }) => {
   
   const handleSubmit = (e) => {
     e.preventDefault();
-    onNext(); // Move to the next step
+    if (
+      firstName.trim() === "" ||
+      lastName.trim() === "" ||
+      age.trim() === ""
+    ) {
+      alert("Please fill in all the required fields.");
+    } else if (parseInt(age) < 18) {
+      alert("You must be at least 18 years old to proceed.");
+    } else {
+      onNext(); // Move to the next step
+    }
   };
 
   const [firstName, setFirstName] = useState("");
@@ -319,12 +329,28 @@ const Step2 = ({ onPrev, onNext }) => {
 
 // Step 3: 
 const Step3 = ({ onPrev }) => {
+
+  const showAlert = () => {
+    alert("Please wait for the confirmation of your verification from the Admin!");
+  };
+  useEffect(() => {
+    showAlert();
+  }, []);
+
   return (
     <div className="step">
       <form className="form-container">
-        <h1>Sending Verifification to the Admin!</h1>
+        <h1 style={{display: "flex", justifyContent: "center",}}>Sending Verification to the Admin!</h1>
         <p
-          style={{ marginBottom: "5px", marginLeft: "150px", fontSize: "15px" }}
+          style={{ 
+            marginBottom: "5px", 
+            // marginLeft: "150px", 
+            fontSize: "15px", 
+            marginTop: "45vh",
+            display: "flex",
+            justifyContent: "center",
+            alignContent: "center"
+           }}
         >
           Explore the services in Errand Catcher
         </p>
@@ -337,7 +363,7 @@ const Verification = () => {
   const steps = [<Step1 />, <Step2 />, <Step3 />];
 
   return (
-    <div>
+    <div className="App">
       <Stepper list={steps} />
     </div>
   );
