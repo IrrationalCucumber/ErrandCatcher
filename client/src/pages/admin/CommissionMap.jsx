@@ -84,19 +84,6 @@ function CommissionMap() {
 
   return (
     <div>
-      {/* <header>
-        <select
-          name="type"
-          onChange={(e) => setFilter(e.target.value)}
-          value={filter}
-        >
-          <option value="">TYPE</option>
-          <option value="HomeService - Indoor">Home Service - Indoor</option>
-          <option value="HomeService - Outdoor">Home Service - Outdoor</option>
-          <option value="Delivery">Delivery</option>
-          <option value="Transportation">Transportations</option>
-        </select>
-      </header> */}
       <Filter onFilterChange={handleChange} />
       <Map mapContainer={mapContainer} />
     </div>
