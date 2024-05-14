@@ -31,7 +31,7 @@ function CommissionMap() {
   const handleChange = (e) => {
     setFilter(e);
   };
-  console.log(filter);
+
   // Search commmissions using JS filter method //
   const filterErrand = errands.filter((errand) => {
     const type = errand.commissionType.includes(filter);
@@ -81,8 +81,6 @@ function CommissionMap() {
     // Store markers in the map object for future reference
     map.current.markers = markers;
   }, [API_KEY, filterErrand, lat, lng, zoom]);
-
-  console.log(filterErrand);
 
   return (
     <div>
