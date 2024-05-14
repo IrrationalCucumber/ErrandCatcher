@@ -71,7 +71,11 @@ function CommissionMap() {
         .setLngLat([errand.commissionLong, errand.commissionLat])
         .setPopup(
           new maplibregl.Popup().setHTML(
-            `<h3>${errand.commissionTitle}</h3><p>${errand.commissionDesc}</p><a href="/errand/view-errand/${errand.commissionID}">View</a>`
+            `<h4>${errand.commissionStatus}</h4>
+          <h3>${errand.commissionTitle}</h3>
+          <h5>${new Date(errand.DatePosted).toLocaleDateString()}</h5>
+          <p>${errand.commissionDesc}</p>
+          <a href="/errand/view-errand/${errand.commissionID}">View</a>`
           )
         )
         .addTo(map.current);
@@ -99,17 +103,3 @@ function CommissionMap() {
 }
 
 export default CommissionMap;
-
-{
-  /* <iframe width="500" height="300" src="https://api.maptiler.com/maps/streets-v2/?key=ZQyqv6eWtI6zNE29SPDd#0.2/-36.82166/14.10913"></iframe>
-        <Map mapLib={maplibregl}
-            initialViewState={{
-                longitude: 16.62662018,
-                latitude: 49.2125578,
-                zoom: 14
-            }}
-        style={{width: "100%", height: "100vh"}}
-        mapStyle="https://api.maptiler.com/maps/streets-v2/style.json?key=ZQyqv6eWtI6zNE29SPDd ">
-
-    </Map> */
-}
