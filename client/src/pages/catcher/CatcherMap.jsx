@@ -28,6 +28,9 @@ function CatcherMap() {
       }
     };
     fetchErrands();
+    //refresh map for 5 sec
+    const interval = setInterval(fetchErrands, 5000);
+    return () => clearInterval(interval);
   }, []);
   //filter map based on requiremnts
   const [filter, setFilter] = useState([]); // State to store filtered errands

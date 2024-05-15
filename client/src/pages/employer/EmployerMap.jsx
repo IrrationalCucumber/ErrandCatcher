@@ -29,6 +29,9 @@ function CommissionMap() {
       }
     };
     fetchErrand();
+    //refresh map for 5 sec
+    const interval = setInterval(fetchErrand, 5000);
+    return () => clearInterval(interval);
   }, []);
   /**
    * ERRAND MAP FILTER

@@ -25,6 +25,9 @@ function CommissionMap() {
       }
     };
     fetchCommissions();
+    //refresh map for 5 sec
+    const interval = setInterval(fetchCommissions, 5000);
+    return () => clearInterval(interval);
   }, []);
   //filter
   const [filter, setFilter] = useState([]); // State to store filtered errands
