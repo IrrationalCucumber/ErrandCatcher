@@ -83,10 +83,9 @@ function CommissionMap() {
   }, [API_KEY, filterErrand, lat, lng, zoom]);
 
   return (
-    <div>
-      <Filter onFilterChange={handleChange} />
-      <Map mapContainer={mapContainer} />
-    </div>
+    <>
+      <Map mapContainer={mapContainer} change={handleChange} />
+    </>
   );
 }
 

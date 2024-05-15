@@ -96,8 +96,8 @@ function CommissionMap() {
         page4="MAP"
         map={`/e-map/${userID}`}
       /> */}
-      <Filter onFilterChange={handleChange} />
-      <Map mapContainer={mapContainer} />
+      {/* <Filter onFilterChange={handleChange} /> */}
+      <Map mapContainer={mapContainer} change={handleChange} />
     </div>
   );
 }

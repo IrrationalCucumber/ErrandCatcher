@@ -79,7 +79,7 @@ function CatcherMap() {
     map.current.markers = markers;
   }, [API_KEY, filterErrand, lat, lng, zoom]);
   return (
-    <div>
+    <>
       {/* <NavBar
         page1="HOME"
         home={`/home/${userID}`}
@@ -90,9 +90,8 @@ function CatcherMap() {
         map={`/c-map/${userID}`}
         page4="MAP"
       /> */}
-      <Filter onFilterChange={handleChange} />
-      <Map mapContainer={mapContainer} />
-    </div>
+      <Map mapContainer={mapContainer} change={handleChange} />
+    </>
   );
 }
 
