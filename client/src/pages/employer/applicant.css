@@ -7,9 +7,10 @@
 
 .applicants{
   display: flex;
-  align-items: flex-start;
-  margin: 20px;
+  /* align-items: flex-start;
+  margin: 20px; */
   flex-direction: column;
+  min-height: 100vh;
 }
 
 .applicants h1{
