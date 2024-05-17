@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import mapboxgl from "mapbox-gl";
 import MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
 import axios from "axios";
-import "./MapBox.css";
+import "./css/MapBox.css";
 
 export default function Map({
   accessToken,
