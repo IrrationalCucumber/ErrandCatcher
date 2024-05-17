@@ -11,6 +11,7 @@ import styled from "@emotion/styled";
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("about");
   const [verified, setVerified] = useState(false);
+  const [preview, setPreview] = useState(null);
   //APS - 03/03/24
   //get userID from url
   const location = useLocation();
@@ -108,11 +109,22 @@ const Profile = () => {
     fetchRating();
   }, [userID]);
 
-  const [image, setImage] = useState("");
-  function handleImage(e) {
-    //console.log(e.target.files);
-    setImage(e.target.files[0]);
-  }
+  const [image, setImage] = useState(null);
+  // function handleImage(e) {
+  //   //console.log(e.target.files);
+  //   setImage(e.target.files[0]);
+  // }
+
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+    setPreview(URL.createObjectURL(file));
+  };
+
+  const handleDeleteImage = () => {
+    setImage(null);
+    setPreview(null);
+  };
 
   const handleUpload = async (e) => {
     e.preventDefault();
@@ -156,6 +168,22 @@ const Profile = () => {
               <div className="Image-container">
                 <label>Upload Image</label>
                 <div className="image-container">
+                {/* display piture preview look */}
+                {preview ? (
+                  <>
+                    <img
+                      src={preview}
+                      alt="Preview Image"
+                      width={250}
+                      height={250}
+                      style={{ padding: "20px", border: "1px solid skyblue", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)" }}
+      
+                    />
+                  <button onClick={handleDeleteImage} 
+                  style={{width: "100px", marginBottom: "16px", marginTop: "16px", height: "40px",}}>
+                    Delete</button>
+                  </>
+                  ) : (
                   <img
                     src={`http://localhost:8800/images/profile/${account.profileImage}`}
                     alt="Profile Image"
@@ -163,6 +191,7 @@ const Profile = () => {
                     height={250}
                     style={{ padding: "20px" }}
                   />
+                )}
                 </div>
                 <div className="upload-container">
                   <input
