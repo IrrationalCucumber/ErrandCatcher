@@ -7,6 +7,16 @@
   body {
     background-color: white; /* Set the background color for the entire page */
   }
+  .btnn{
+    margin: 20px;
+    padding: 10px;
+    width: 100px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color:  #1679AB;
+    color: #fff;
+    border: none;
+  }
 
   .form-container {
     max-width: 600px;
@@ -91,7 +101,7 @@
   .input-rows select,
   .input-rows input[type='date'] {
     flex: 1; /* Let the input fill the remaining space */
-    height: 40px; /* Set input height */
+    height: 50px; /* Set input height */
   }
   
   .input-rows input[type='number'],
@@ -100,8 +110,8 @@
   }
   
   .input-rows .select {
-    flex-grow: 1; /* Let the select fill the remaining space */
-    height: 40px; /* Set the select height */
+    flex-grow: 2; /* Let the select fill the remaining space */
+    height: 50px; /* Set the select height */
   }
 
   .form-group1.input-rows {
