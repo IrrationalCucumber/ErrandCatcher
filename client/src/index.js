@@ -29,7 +29,7 @@ import AddAccount from "./pages/admin/AddAccount";
 import CommissionList from "./pages/admin/CommissionList";
 import AdminHome from "./pages/admin/AdminHome";
 import Map from "./pages/admin/CommissionMap";
-import Dashboard from "./pages/admin/Dashboard";
+import Dashboard from "./pages/Dashboard";
 import RequestPage from "./pages/admin/Request/RequestPage";
 //CATCHER Routes
 import CatcherHome from "./pages/catcher/CatcherHome";
@@ -53,6 +53,7 @@ import SearchPage from "./pages/SearchPage";
 import Service from "./pages/Services/Service";
 //restrict
 import { AuthProvider } from "./components/AuthContext";
+import AdminPage from "./pages/admin/AdminPage";
 
 const router = createBrowserRouter([
   {
@@ -65,20 +66,26 @@ const router = createBrowserRouter([
     children: [
       { path: "home", element: <Home /> },
       {
-        path: "accounts",
-        element: <AccountList />,
-      },
-      {
-        path: "commission-list",
-        element: <CommissionList />,
-      },
-      {
-        path: "map",
-        element: <Map />,
-      },
-      {
-        path: "request",
-        element: <RequestPage />,
+        path: "admin/",
+        element: <AdminPage />,
+        children: [
+          {
+            path: "accounts",
+            element: <AccountList />,
+          },
+          {
+            path: "commission-list",
+            element: <CommissionList />,
+          },
+          {
+            path: "map",
+            element: <Map />,
+          },
+          {
+            path: "request",
+            element: <RequestPage />,
+          },
+        ],
       },
       //EMPLOYER
       {
