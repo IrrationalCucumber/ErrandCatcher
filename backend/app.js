@@ -175,6 +175,7 @@ app.get("/trans-count/:userID", (req, res) => {
 });
 
 const processPayment = require("./ProcessPayment");
+const getProcessPayment = require("./GetProcessPayment");
 
 // Route when use succeeds in payment, update the necessary data in the database
 app.get("/success-payment/:id", (req, res) => {
@@ -228,6 +229,23 @@ app.post("/process-payment", async (req, res) => {
 
   // Redirect user to paymongo's checkout page
   return res.send({ url: checkout.data.attributes.checkout_url });
+});
+
+// get data ID from the PayMongo API
+app.get("/payment-details/:sessionId", async (req, res) => {
+  const { sessionId } = req.params;
+  const authKey = "Basic c2tfdGVzdF9kcTh5b3BuZ1BoODNpb1F5b0V2MXZpc2E6";
+
+  try {
+    const paymentDetails = await getProcessPayment(authKey, sessionId);
+
+    // Extract data ID from PayMongo's response
+    const dataId = paymentDetails.data.id;
+    res.send({ dataId: dataId, details: paymentDetails });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send({ error: "Failed to retrieve payment details" });
+  }
 });
 
 module.exports;
