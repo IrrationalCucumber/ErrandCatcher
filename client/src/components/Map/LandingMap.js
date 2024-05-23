@@ -84,7 +84,7 @@ function LandingMap() {
         <div>
           <Filter onFilterChange={handleChange} />
         </div>
-        <div ref={mapContainer} className="map" />
+        <div ref={mapContainer} className="map-landing" />
       </div>
     </>
   );
