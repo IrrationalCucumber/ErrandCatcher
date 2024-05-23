@@ -41,7 +41,7 @@ const Landing = () => {
           </div>
         </div>
       </div>
-      <div className="Services">
+      <div className="landing__map">
         <LandingMap></LandingMap>
       </div>
       <section className="Services" id="Services">
