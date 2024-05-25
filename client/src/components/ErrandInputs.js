@@ -194,49 +194,73 @@ function ErrandInputs(props) {
       </div>
       {/* Display when Transport Type is selected */}
       {props.typeValue === "Transport" && (
-        <div className="input-group">
-          <div className="col1">
-            <label style={{ color: "black" }}>Destination</label>
+        <>
+          <div className="input-group">
+            <div className="col1">
+              <label style={{ color: "black" }}>Destination</label>
+            </div>
+            <div className="col2">
+              <Input
+                color="neutral"
+                disabled={props.readOnly}
+                size="lg"
+                variant={props.variant}
+                type="text"
+                placeholder="Destination"
+                onChange={props.handleChange}
+                name={props.to}
+                value={props.toValue}
+              />
+            </div>
           </div>
-          <div className="col2">
-            <Input
-              color="neutral"
-              disabled={props.readOnly}
-              size="lg"
-              variant={props.variant}
-              type="text"
-              placeholder="Destination"
-              onChange={props.handleChange}
-              name={props.to}
-              value={props.toValue}
-            />
+          {/* User choose vehicle type */}
+          <div className="input-group">
+            <div className="col1">
+              <label style={{ color: "black" }}>Vehicle</label>
+            </div>
+            <div className="col2">
+              <select
+                name={props.vehicle}
+                onChange={props.handleChange}
+                value={props.vehicleValue}
+                disabled={props.readOnly}
+              >
+                <option value="">Select vehicle....</option>
+                <option value="Motorcycle">Motorcycle (1 Passenger)</option>
+                <option value="Sedan">Sedan (4 Passenger)</option>
+                <option value="Suburban">Suburban (6+ Passenger)</option>
+                <option value="Semi-truck">Semi-Truck (4+ Passenger)</option>
+              </select>
+            </div>
           </div>
-        </div>
+        </>
       )}
       {/* Display when Delivery Type is selected */}
       {props.typeValue === "Delivery" && (
-        <div className="input-group">
-          <div className="col1">
-            <label style={{ color: "black" }}>Destination</label>
+        <>
+          <div className="input-group">
+            <div className="col1">
+              <label style={{ color: "black" }}>Destination</label>
+            </div>
+            <div className="col2">
+              <Input
+                color="neutral"
+                disabled={props.readOnly}
+                size="lg"
+                variant={props.variant}
+                type="text"
+                placeholder="Destination"
+                onChange={props.handleChange}
+                name={props.to}
+                value={props.toValue}
+                style={{
+                  fontFamily:
+                    "Lucida Sans, Lucida Sans Regular, Lucida Grande, Lucida Sans Unicode, Geneva, Verdana, sans-serif",
+                }}
+              />
+            </div>
           </div>
-          <div className="col2">
-            <Input
-              color="neutral"
-              disabled={props.readOnly}
-              size="lg"
-              variant={props.variant}
-              type="text"
-              placeholder="Destination"
-              onChange={props.handleChange}
-              name={props.to}
-              value={props.toValue}
-              style={{
-                fontFamily:
-                  "Lucida Sans, Lucida Sans Regular, Lucida Grande, Lucida Sans Unicode, Geneva, Verdana, sans-serif",
-              }}
-            />
-          </div>
-        </div>
+        </>
       )}
       {/* Amount */}
       <div className="input-group">
