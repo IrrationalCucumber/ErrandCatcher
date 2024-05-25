@@ -10,7 +10,7 @@ import ErrandInputs from "../../components/ErrandInputs";
 import "./Commission.css"; // Import your CSS file
 import { useAuth } from "../../components/AuthContext";
 import Map from "../../components/Map/ViewMapBox";
-import MapLibre from "../../components/Map/MapLibre";
+// import MapLibre from "../../components/Map/MapLibre";
 
 const ErrandPage = () => {
   const [commission, setCommission] = useState({
@@ -33,6 +33,7 @@ const ErrandPage = () => {
     destLng: "",
     destLat: "",
     method: "",
+    veihicle: "",
   });
 
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ const ErrandPage = () => {
   const commissionID = location.pathname.split("/")[3];
   const { user } = useAuth();
   const userID = user.userID;
-  const [distance, setDistance] = useState(0);
+  // const [distance, setDistance] = useState(0);
   const accessToken =
     "pk.eyJ1Ijoiam9pbmVyIiwiYSI6ImNsdmNjbnF4NjBoajQycWxoaHV5b2M1NzIifQ.Z7Pi_LfWyuc7a_z01zKMFg";
 
@@ -52,7 +53,7 @@ const ErrandPage = () => {
   const [isApplied, setIsApplied] = useState(false);
   // const [appID, setAppID] = useState("");
   useEffect(() => {
-    if (user.userType == "Catcher") {
+    if (user.userType === "Catcher") {
       const fetchApp = async () => {
         try {
           const res = await axios.get(
@@ -69,10 +70,10 @@ const ErrandPage = () => {
       };
       fetchApp();
     }
-  }, [isApplied, user.userType, userID]);
+  }, [isApplied, user.userType, userID, commissionID]);
 
   // Add a state to track the marker's longitude and latitude
-  const [markerLngLat, setMarkerLngLat] = useState([123.8854, 10.3157]); // Default values
+  const markerLngLat = [123.8854, 10.3157]; // Default values
   //get the coordinates of the cerrand
   const fetchLoc = async () => {
     try {
@@ -125,6 +126,7 @@ const ErrandPage = () => {
           destLat: retrievedCommission.commissionDestLat,
           destLng: retrievedCommission.commissionDestLong,
           method: retrievedCommission.commissionPaymentMethod,
+          veihicle: retrievedCommission.commissionVehicle,
         });
       } catch (err) {
         console.log(err);
@@ -274,6 +276,7 @@ const ErrandPage = () => {
               descValue={commission.comDescription}
               payValue={commission.comPay}
               numValue={commission.ContactNo}
+              veihicleValue={commission.veihicle}
             />
           </div>
           {commission.comType !== "Delivery" &&
