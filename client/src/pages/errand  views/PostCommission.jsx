@@ -32,6 +32,7 @@ const PostCommission = () => {
     comDestLong: 0,
     comDestLat: 0,
     method: "",
+    vehicle: "",
   });
 
   const navigate = useNavigate();
@@ -54,6 +55,8 @@ const PostCommission = () => {
       setCommission((prev) => ({ ...prev, comType: e.target.value }));
     } else if (e.target.name === "method") {
       setCommission((prev) => ({ ...prev, method: e.target.value }));
+    } else if (e.target.name === "vehicle") {
+      setCommission((prev) => ({ ...prev, vehicle: e.target.value }));
     } else {
       setCommission((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     }
@@ -157,6 +160,7 @@ const PostCommission = () => {
               deadline="comDeadline"
               location="comLocation"
               to="comTo"
+              vehicle="vehicle"
               type="comType"
               typeValue={commission.comType}
               desc="comDescription"
