@@ -1,11 +1,11 @@
 //03-21-24 logic for the image is in here but needed testing
 
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 //map
 // import maplibregl from "maplibre-gl";
 //import 'maplibre-gl/dist/maplibre-gl.css';
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Commission.css"; // Import your CSS file
 import ErrandInputs from "../../components/ErrandInputs";
 import Map from "../../components/Map/MapBox";
@@ -41,7 +41,7 @@ const PostCommission = () => {
   const userID = user.userID;
   //use state for adding marker
   //const [addingMarker, setAddingMarker] = useState(false);
-  const [currentLocationMarker, setCurrentLocationMarker] = useState(null);
+  //const [currentLocationMarker, setCurrentLocationMarker] = useState(null);
   const [distance, setDistance] = useState(0);
   const accessToken =
     "pk.eyJ1Ijoiam9pbmVyIiwiYSI6ImNsdmNjbnF4NjBoajQycWxoaHV5b2M1NzIifQ.Z7Pi_LfWyuc7a_z01zKMFg";
@@ -116,8 +116,8 @@ const PostCommission = () => {
         !commission.comDescription
       ) {
         if (
-          commission.comType == "Delivery" ||
-          commission.comType == "Transportation"
+          commission.comType === "Delivery" ||
+          commission.comType === "Transportation"
         ) {
           if (
             !commission.comTitle ||
