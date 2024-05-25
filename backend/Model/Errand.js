@@ -63,6 +63,7 @@ const Errand = {
       comDestLong,
       comDestLat,
       comMethod,
+      vehicle,
     } = errandData;
     const values = [
       empID,
@@ -81,11 +82,14 @@ const Errand = {
       comDestLong,
       comDestLat,
       comMethod,
+      vehicle,
     ];
     db.query(
       "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionStartDate`," +
         " `commissionDeadline`, `commissionLocation`, `commissionTo`,`commissionType`," +
-        " `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`,`commissionLong`, `commissionLat`, `commissionDestLong`, `commissionDestLat`, `commissionPaymentMethod`) VALUES (?)",
+        " `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`,`commissionLong`," +
+        " `commissionLat`, `commissionDestLong`, `commissionDestLat`, `commissionPaymentMethod`, `commissionVehicle`)" +
+        " VALUES (?)",
       [values],
       callback
     );
@@ -108,13 +112,14 @@ const Errand = {
       comDestLong,
       comDestLat,
       comMethod,
+      vehicle,
     } = errandData;
     const values = [];
     db.query(
       `UPDATE commission SET commissionTitle = ?, commissionStartDate = ?, 
       commissionDeadline = ?, commissionLocation = ?, commissionTo = ?,commissionType = ?,
        commissionDesc = ?, commissionPay = ?, commissionStatus = ?, ContactNumber = ?, commissionLong = ?, commissionLat
-        = ?,commissionLong = ?, commissionLat =?, commissionPaymentMethod = ? WHERE commissionID = ?`,
+        = ?,commissionLong = ?, commissionLat =?, commissionPaymentMethod = ?, commissionVehicle = ? WHERE commissionID = ?`,
       [
         comTitle,
         comStart,
@@ -131,6 +136,7 @@ const Errand = {
         comDestLong,
         comDestLat,
         comMethod,
+        vehicle,
         id,
       ],
       callback
