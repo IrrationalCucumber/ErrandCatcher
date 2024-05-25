@@ -230,6 +230,8 @@ function ErrandInputs(props) {
                 <option value="Sedan">Sedan (4 Passenger)</option>
                 <option value="Suburban">Suburban (6+ Passenger)</option>
                 <option value="Semi-truck">Semi-Truck (4+ Passenger)</option>
+                <option value="Minivan">Minivan (4+ Passenger)</option>
+                <option value="Truck">Truck (4+ Passenger)</option>
               </select>
             </div>
           </div>
