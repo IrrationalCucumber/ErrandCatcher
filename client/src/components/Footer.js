@@ -19,13 +19,13 @@ function Footer() {
           <div className="social-media-wrap">
             {/* About Us */}
             <div className="footer-logo">
-              <Link to="/" className="social-logo">
+              <Link to="/dashboard/about" className="social-logo">
                 About Us
               </Link>
             </div>
             {/* Contact Us */}
             <div className="footer-logo">
-              <Link to="/" className="social-logo">
+              <Link to={"/dashboard/contact"} className="social-logo">
                 Contact Us
               </Link>
             </div>
