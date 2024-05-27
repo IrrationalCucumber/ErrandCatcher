@@ -51,14 +51,6 @@ function Navbar(props) {
     fetchNotif();
   }, [userID]);
 
-  const handleLogout = () => {
-    // log uot user
-    // const navigate = useNavigate();
-    // const handleLogout = () => {
-    //logout();
-    //   navigate("/");
-    // };
-  };
   return (
     <>
       <nav className="navbar">
@@ -180,7 +172,7 @@ function Navbar(props) {
                     PROFILE
                   </Link>
                   <div className="sign-out-container">
-                    <button className="sign-out-button" onClick={handleLogout}>
+                    <button className="sign-out-button">
                       <i className="fa-solid fa-arrow-right-from-bracket"></i>
                     </button>
                   </div>
