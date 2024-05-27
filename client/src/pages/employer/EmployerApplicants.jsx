@@ -206,7 +206,7 @@ const EmployerApplicants = () => {
                   )
                 }
               >
-                Delete
+                Decline
               </Button>
               <Button
                 variant="plain"
@@ -301,6 +301,8 @@ const EmployerApplicants = () => {
       //replace modular
       alert("You have accepted a Cather!");
       window.location.reload();
+      setOpenAccept(false);
+      // create set upload modal heree...................................................................
       //navigate(`/my-application/${userID}`);
     } catch (err) {
       console.log(err);
@@ -404,7 +406,7 @@ const styles = {
   button: {
     padding: "10px 20px",
     fontSize: "16px",
-    backgroundColor: "#42a942", // red
+    backgroundColor: "#42a942",
     color: "#fff",
     border: "none",
     borderRadius: "5px",
