@@ -18,6 +18,8 @@ import ProfilePage from "./pages/profile/ProfilePage";
 import ViewCommission from "./pages/errand  views/ViewCommission";
 import Errands from "./pages/errand  views/Errands";
 import ErrorElement from "./pages/ErrorElement";
+import About from "./pages/Dashboard/About";
+import Contact from "./pages/Dashboard/Contact";
 //UPDATE/REGISTER
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp/Signup";
@@ -29,7 +31,7 @@ import AddAccount from "./pages/admin/AddAccount";
 import CommissionList from "./pages/admin/CommissionList";
 import AdminHome from "./pages/admin/AdminHome";
 import Map from "./pages/admin/CommissionMap";
-import Dashboard from "./pages/admin/Dashboard";
+import Dashboard from "./pages/Dashboard/Dashboard";
 import RequestPage from "./pages/admin/Request/RequestPage";
 //CATCHER Routes
 import CatcherHome from "./pages/catcher/CatcherHome";
@@ -109,6 +111,15 @@ const router = createBrowserRouter([
       {
         path: "c-map/",
         element: <CatcherMap />,
+      },
+      //MISCILLANOUS PAGES
+      {
+        path: "about",
+        element: <About />,
+      },
+      {
+        path: "contact",
+        element: <Contact />,
       },
     ],
   },
