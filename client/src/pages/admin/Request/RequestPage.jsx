@@ -4,6 +4,7 @@ import RequestModal from "./RequestModal";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import RequestImages from "./RequestImage";
+import "../Request/request.css";
 
 function RequestPage() {
   // Mock list of verification requests
@@ -36,20 +37,20 @@ function RequestPage() {
     setShowModal(true); // Show modal
   };
 
-    // Function to handle click on RequestImage button
-    const handleImageButtonClick = (requestImages) => {
-      setSelectedImages(requestImages);
-      setShowImageModal(true);
-    };  
+  // Function to handle click on RequestImage button
+  const handleImageButtonClick = (requestImages) => {
+    setSelectedImages(requestImages);
+    setShowImageModal(true);
+  };
 
   const handleCloseModal = () => {
     setShowModal(false); // Hide modal
   };
 
-    // Function to close image modal
-    const handleCloseImageModal = () => {
-      setShowImageModal(false);
-    };
+  // Function to close image modal
+  const handleCloseImageModal = () => {
+    setShowImageModal(false);
+  };
 
   // Get current items
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -60,7 +61,7 @@ function RequestPage() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div>
+    <div className="containerReq">
       <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
         Verification Requests
       </h1>
@@ -91,7 +92,8 @@ function RequestPage() {
                   View
                 </button>
                 {/* for Image request */}
-                <button className="RequestImage"
+                <button
+                  className="RequestImage"
                   style={buttonStyle}
                   onClick={() => handleImageButtonClick(request.images)}
                 >
