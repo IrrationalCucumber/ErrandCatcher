@@ -14,6 +14,7 @@ import "./applicant.css";
 import Pagination from "../../components/Pagination";
 import ProfileModal from "../../components/Profile Modal/ProfileModal";
 import { useAuth } from "../../components/AuthContext";
+import { DisplayDate } from "../../components/DisplayDate";
 
 const EmployerApplicants = () => {
   const navigate = useNavigate();
@@ -77,30 +78,6 @@ const EmployerApplicants = () => {
     };
     fetchAllAccount();
   }, [userID]);
-  //Display format to date
-  // months into words
-  const formattedDate = (theDate) => {
-    const date = new Date(theDate);
-    const monthNames = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ]; // Get the month and year from the date object
-    const month = monthNames[date.getMonth()];
-    const year = date.getFullYear();
-
-    // Construct the formatted date string
-    return `${month} ${date.getDate()}, ${year}`;
-  };
 
   // Pagination
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -111,7 +88,7 @@ const EmployerApplicants = () => {
   const headers = ["DATE", "CATCHER", "ERRAND TITLE", "ACTION", ""];
   const applicantData = applicants.map((applicant) => [
     //applicant.applicationID,
-    formattedDate(applicant.applicationDate),
+    DisplayDate(applicant.applicationDate),
     `${applicant.userFirstname} ${applicant.userLastname}`,
     applicant.commissionTitle,
     applicant.applicationStatus === "Pending" ? (

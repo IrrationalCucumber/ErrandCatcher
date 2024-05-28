@@ -10,7 +10,7 @@ import Notification from "./pages/Notification";
 import testpage from "./pages/testpage";
 //import "./style.css";
 //DISPLAY
-import Landing from "./pages/Landing";
+import Landing from "./pages/Landing/Landing";
 import Menu from "./pages/Menu";
 import ErrandPage from "./pages/errand  views/ErrandPage";
 import ViewProfile from "./pages/profile/ViewProfile";

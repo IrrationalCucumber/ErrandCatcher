@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import NavBar from "../components/Navbar/Navbar";
-import Footer from "../components/Footer";
-import axios from "axios";
+// import NavBar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer";
+// import axios from "axios";
 import "./Landing.css";
+import LandingMap from "../../components/Map/LandingMap";
 
 const Landing = () => {
   return (
@@ -29,18 +30,20 @@ const Landing = () => {
             time and streamlining life.
           </p>
           <div className="ld_btn">
-            <a href="sign-up" id="getStartedLink">
+            <Link to="sign-up" id="getStartedLink">
               <i className="fa-solid fa-house"></i> GET STARTED
-            </a>
+            </Link>
           </div>
           <div className="btns">
-            <a href="map">
+            <Link to="map">
               <i className="fa fa-eye"></i> VIEW ERRANDS{" "}
-            </a>
+            </Link>
           </div>
         </div>
       </div>
-
+      <div className="landing__map">
+        <LandingMap></LandingMap>
+      </div>
       <section className="Services" id="Services">
         <h1>
           <span>S</span>ervices
@@ -49,13 +52,20 @@ const Landing = () => {
           <div className="box">
             <img src="/images/img1.png" alt="" />
             <div className="content">
-              <p style={{paddingLeft:"65px"}}>Transportation</p>
+              <p style={{ paddingLeft: "65px" }}>Transportation</p>
               <h3>
                 {" "}
-                <i className="fas fa-map-marker-alt" style={{paddingLeft:"90px"}}></i> Mandaue City{" "}
+                <i
+                  className="fas fa-map-marker-alt"
+                  style={{ paddingLeft: "90px" }}
+                ></i>{" "}
+                Mandaue City{" "}
               </h3>
               <div className="btn">
-                <a href="sign-up" style={{backgroundColor:"#1679AB", fontSize:"16px"}}>
+                <a
+                  href="sign-up"
+                  style={{ backgroundColor: "#1679AB", fontSize: "16px" }}
+                >
                   <i></i> Apply{" "}
                 </a>
               </div>
@@ -65,14 +75,21 @@ const Landing = () => {
           <div className="box">
             <img src="/images/img2.png" alt="" />
             <div className="content">
-              <p style={{paddingLeft:"110px"}}>Delivery</p>
+              <p style={{ paddingLeft: "110px" }}>Delivery</p>
               <h3>
                 {" "}
-                <i className="fas fa-map-marker-alt" style={{paddingLeft:"90px"}}></i> Lapu-Lapu City{" "}
+                <i
+                  className="fas fa-map-marker-alt"
+                  style={{ paddingLeft: "90px" }}
+                ></i>{" "}
+                Lapu-Lapu City{" "}
               </h3>
 
               <div className="btn">
-                <a href="sign-up" style={{backgroundColor:"#1679AB", fontSize:"16px"}}>
+                <a
+                  href="sign-up"
+                  style={{ backgroundColor: "#1679AB", fontSize: "16px" }}
+                >
                   <i></i> Apply{" "}
                 </a>
               </div>
@@ -82,13 +99,20 @@ const Landing = () => {
           <div className="box">
             <img src="/images/img3.png" alt="" />
             <div className="content">
-              <p style={{paddingLeft:"70px"}}>Home Service</p>
+              <p style={{ paddingLeft: "70px" }}>Home Service</p>
               <h3>
                 {" "}
-                <i className="fas fa-map-marker-alt" style={{paddingLeft:"100px"}}></i> Cebu City{" "}
+                <i
+                  className="fas fa-map-marker-alt"
+                  style={{ paddingLeft: "100px" }}
+                ></i>{" "}
+                Cebu City{" "}
               </h3>
               <div className="btn">
-                <a href="sign-up" style={{backgroundColor:"#1679AB", fontSize:"16px"}}>
+                <a
+                  href="sign-up"
+                  style={{ backgroundColor: "#1679AB", fontSize: "16px" }}
+                >
                   <i></i> Apply{" "}
                 </a>
               </div>
@@ -97,14 +121,21 @@ const Landing = () => {
           <div className="box">
             <img src="/images/img1.png" alt="" />
             <div className="content">
-              <p style={{paddingLeft:"60px"}}>Transportation</p>
+              <p style={{ paddingLeft: "60px" }}>Transportation</p>
               <h3>
                 {" "}
-                <i className="fas fa-map-marker-alt" style={{paddingLeft:"100px"}}></i> Cebu City{" "}
+                <i
+                  className="fas fa-map-marker-alt"
+                  style={{ paddingLeft: "100px" }}
+                ></i>{" "}
+                Cebu City{" "}
               </h3>
 
               <div className="btn">
-                <a href="sign-up" style={{backgroundColor:"#1679AB", fontSize:"16px"}}>
+                <a
+                  href="sign-up"
+                  style={{ backgroundColor: "#1679AB", fontSize: "16px" }}
+                >
                   <i></i> Apply{" "}
                 </a>
               </div>
