@@ -6,6 +6,7 @@ import "./accountlist.css";
 import Pagination from "../../components/Pagination";
 import Table from "../../components/Table";
 import { useAuth } from "../../components/AuthContext";
+import { DisplayDate } from "../../components/DisplayDate";
 // ui components
 import Dropdown from "@mui/joy/Dropdown";
 import Menu from "@mui/joy/Menu";
@@ -86,11 +87,11 @@ const AccountList = () => {
           email: retrievedAccount.userEmail,
           contact: retrievedAccount.userContactNum,
           age: retrievedAccount.userAge,
-          bday: formattedDate(retrievedAccount.userBirthday),
+          bday: DisplayDate(retrievedAccount.userBirthday),
           address: retrievedAccount.userAddress,
           desc: retrievedAccount.userDesc,
           profileImage: retrievedAccount.profileImage,
-          dateC: formattedDate(retrievedAccount.dateCreated),
+          dateC: DisplayDate(retrievedAccount.dateCreated),
           status: retrievedAccount.accountStatus,
         });
       } catch (err) {
@@ -185,30 +186,6 @@ const AccountList = () => {
     indexOfLastItem
   );
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  //Display format to date
-  // months into words
-  const formattedDate = (theDate) => {
-    const date = new Date(theDate);
-    const monthNames = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ]; // Get the month and year from the date object
-    const month = monthNames[date.getMonth()];
-    const year = date.getFullYear();
-
-    // Construct the formatted date string
-    return `${month} ${date.getDate()}, ${year}`;
-  };
 
   const headers = [
     "ID",
@@ -226,7 +203,7 @@ const AccountList = () => {
     `${account.userFirstname} ${account.userLastname}`,
     account.userEmail,
     account.accountType,
-    formattedDate(account.dateCreated),
+    DisplayDate(account.dateCreated),
     account.accountStatus,
     <Dropdown>
       <MenuButton>ACTIONS</MenuButton>

@@ -9,6 +9,7 @@ import "./commissionpage.css";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "../../components/AuthContext";
 import OngoingCards from "../Dropdown/OngoingCards";
+import { DisplayDate } from "../../components/DisplayDate";
 
 function CommissionPage() {
   const headers = ["DATE", "EMPLOYER", "ERRAND TITLE", "STATUS"];
@@ -125,30 +126,6 @@ function CommissionPage() {
       console.log(err);
     }
   };
-  //Display format to date
-  // months into words
-  const formattedDate = (commissionDeadline) => {
-    const date = new Date(commissionDeadline);
-    const monthNames = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ]; // Get the month and year from the date object
-    const month = monthNames[date.getMonth()];
-    const year = date.getFullYear();
-
-    // Construct the formatted date string
-    return `${month} ${date.getDate()}, ${year}`;
-  };
 
   return (
     <div>
@@ -192,7 +169,7 @@ function CommissionPage() {
               `${commission.userFirstname} ${commission.userLastname}`,
               commission.commissionTitle,
               commission.commissionStart,
-              formattedDate(commission.commissionDeadline),
+              DisplayDate(commission.commissionDeadline),
               commission.errandStatus,
               commission.errandStatus === "Ongoing" ? (
                 <button

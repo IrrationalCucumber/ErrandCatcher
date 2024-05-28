@@ -12,6 +12,7 @@ import Table from "../../components/Table";
 import Pagination from "../../components/Pagination";
 import "./application.css";
 import { useAuth } from "../../components/AuthContext";
+import { DisplayDate } from "../../components/DisplayDate";
 
 function Application() {
   const { user } = useAuth();
@@ -82,34 +83,9 @@ function Application() {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filterApply.slice(indexOfFirstItem, indexOfLastItem);
 
-  //Display format to date
-  // months into words
-  const formattedDate = (applicationDate) => {
-    const date = new Date(applicationDate);
-    const monthNames = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ]; // Get the month and year from the date object
-    const month = monthNames[date.getMonth()];
-    const year = date.getFullYear();
-
-    // Construct the formatted date string
-    return `${month} ${date.getDate()}, ${year}`;
-  };
-
   const headers = ["DATE", "EMPLOYER", "ERRAND TITLE", "STATUS", "ACTION"];
   const applicationData = currentItems.map((applicant) => [
-    formattedDate(applicant.applicationDate),
+    DisplayDate(applicant.applicationDate),
     `${applicant.userFirstname} ${applicant.userLastname}`,
     applicant.commissionTitle,
     applicant.applicationStatus,
