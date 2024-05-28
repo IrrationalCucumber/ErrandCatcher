@@ -336,7 +336,7 @@ const EmployerApplicants = () => {
   };
   //console.log(applicants);
   return (
-    <div>
+    <div className="applicants-container">
       <div className="applicants">
         <h1 style={{ paddingBottom: "10px" }}>APPLICANTS</h1>
         <div className="search">
