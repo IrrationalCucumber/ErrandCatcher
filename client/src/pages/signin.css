@@ -41,10 +41,11 @@ body .App .si{
   font-weight: 500;
   color: #333;
   font-weight: bold;
-  padding: 45px 30px;
+  padding: 50px 30px;
 }
 
 .cont h3{
+  padding-top: 45px;
   font-size: 16px;
   max-width: 250px;
   width: 100%;
@@ -52,7 +53,7 @@ body .App .si{
 }
 .cont input{
   font-size: 13px;
-  max-width: 250px;
+  max-width: 290px;
   width: 100%;
   margin: 13px auto;
   display: block;

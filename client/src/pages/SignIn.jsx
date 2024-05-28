@@ -108,7 +108,7 @@ const SignIn = () => {
         <label
           className="rem"
           htmlFor="remember Me"
-          style={{ paddingLeft: "85px", fontSize: "12px" }}
+          style={{ paddingLeft: "140px", fontSize: "12px" }}
         >
           Remember&nbsp;Me
           <input
@@ -124,7 +124,12 @@ const SignIn = () => {
           <button
             type="button"
             onClick={handleClick}
-            style={{ backgroundColor: "#1679AB", fontSize: "16px" }}
+            style={{ backgroundColor: "#1679AB", 
+                    fontSize: "16px",
+                    width: "200px", 
+                    height:"40px", 
+                    borderRadius:"20px", 
+                    color:"#ffff" }}
           >
             Sign In
           </button>
