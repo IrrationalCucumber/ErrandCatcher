@@ -119,15 +119,6 @@ const router = createBrowserRouter([
         path: "c-map/",
         element: <CatcherMap />,
       },
-      //MISCILLANOUS PAGES
-      {
-        path: "about",
-        element: <About />,
-      },
-      {
-        path: "contact",
-        element: <Contact />,
-      },
     ],
   },
   {
@@ -213,6 +204,15 @@ const router = createBrowserRouter([
   },
   { path: "/sign-in", element: <SignIn /> },
   { path: "/test", element: <MapComponent /> },
+  //MISCILLANOUS PAGES
+  {
+    path: "/about",
+    element: <About />,
+  },
+  {
+    path: "/contact",
+    element: <Contact />,
+  },
   {
     path: "*",
     element: <ErrorElement />,
