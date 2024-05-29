@@ -18,6 +18,7 @@ import ProfilePage from "./pages/profile/ProfilePage";
 import ViewCommission from "./pages/errand  views/ViewCommission";
 import Errands from "./pages/errand  views/Errands";
 import ErrorElement from "./pages/ErrorElement";
+import Us from "./pages/Dashboard/Us";
 import About from "./pages/Dashboard/About";
 import Contact from "./pages/Dashboard/Contact";
 //UPDATE/REGISTER
@@ -206,12 +207,18 @@ const router = createBrowserRouter([
   { path: "/test", element: <MapComponent /> },
   //MISCILLANOUS PAGES
   {
-    path: "/about",
-    element: <About />,
-  },
-  {
-    path: "/contact",
-    element: <Contact />,
+    path: "/us/",
+    element: <Us />,
+    children: [
+      {
+        path: "about",
+        element: <About />,
+      },
+      {
+        path: "contact",
+        element: <Contact />,
+      },
+    ],
   },
   {
     path: "*",
