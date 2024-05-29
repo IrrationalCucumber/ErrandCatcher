@@ -19,20 +19,20 @@ function NavDropdown(props) {
   const profileLink = `/profile/me`; // URL for the profile page
   const signOutLink = "/sign-in"; // URL for the sign out page
 
-  const { updateUser } = useAuth();
+  const { logout } = useAuth();
   const handleLogout = () => {
-    const userData = {
-      username: null,
-      userID: null,
-      userType: null,
-      status: null,
-    };
-    updateUser(userData);
+    //   const userData = {
+    //     username: null,
+    //     userID: null,
+    //     userType: null,
+    //     status: null,
+    //   };
+    //   updateUser(userData);
     //alert("clicked");
     // log uot user
 
     // const handleLogout = () => {
-    //logout();
+    logout();
 
     // };
   };
