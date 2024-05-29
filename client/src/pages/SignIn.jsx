@@ -72,16 +72,11 @@ const SignIn = () => {
       <div className="cont contman">
         <div className="si-txt">
           <h1>
-<<<<<<< HEAD
-            <span class="welcome">Welcome</span> to{" "}
-            <span class="errand-catcher">ERRAND CATCHER</span>
-=======
             <span className="welcome">Welcome</span> to{" "}
             <span className="errand-catcher" style={{ color: "#1679AB" }}>
               ERRAND CATCHER
             </span>
             <span className="errand-catcher">ERRAND CATCHER</span>
->>>>>>> qa
           </h1>
           <div className="text">
             <div className="sign"></div>
@@ -104,21 +99,6 @@ const SignIn = () => {
           type="password"
           placeholder="Password"
         />
-<<<<<<< HEAD
-        <p className="em">
-          <i>{errorMessage}</i>
-
-          <label className="rem" htmlFor="remember Me">
-            Remember&nbsp;Me
-            <input
-              type="checkbox"
-              id="rememberMe"
-              checked={rememberMe}
-              onChange={handleRememberMeChange}
-            />
-          </label>
-        </p>
-=======
         <div className="em">
           {errorMessage != "" && (
             <Alert color="danger" size="lg" variant="outlined">
@@ -140,18 +120,19 @@ const SignIn = () => {
           />
         </label>
 
->>>>>>> qa
         <div className="button1">
           <div className="button2"></div>
           <button
             type="button"
             onClick={handleClick}
-            style={{ backgroundColor: "#1679AB", 
-                    fontSize: "16px",
-                    width: "200px", 
-                    height:"40px", 
-                    borderRadius:"20px", 
-                    color:"#ffff" }}
+            style={{
+              backgroundColor: "#1679AB",
+              fontSize: "16px",
+              width: "200px",
+              height: "40px",
+              borderRadius: "20px",
+              color: "#ffff",
+            }}
           >
             Sign In
           </button>
