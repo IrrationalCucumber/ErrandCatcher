@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Cards from "../components/Cards";
+import Cards from "../components/Cards/Cards";
 //  import NavBar from '../components/Navbar';
 //import Footer from "../components/Footer";
 import "./Menu.css";
@@ -27,41 +27,41 @@ const Menu = () => {
         />
         <button
           onClick={(e) => {
-            navigate(`/search/${userID}/${searchQuery}`);
+            navigate(`/search/${searchQuery}`);
           }}
+          style={{ backgroundColor: "#1679AB" }}
         >
           Search
         </button>
       </div>
-
       <section className="Menu" id="Menu">
         <div className="box-container">
           <div className="box">
-            <Link to={`/HomeService/${userID}/${"HomeService"}`}>
+            <Link to={`/service/HomeService/${"HomeService"}`}>
               <button style={{ backgroundColor: "white" }}>
                 <img src="/images/img6.png" alt="" />
                 <div className="content">
-                  <p>Home Service</p>
+                  <p style={{ paddingTop: "20px" }}>Home Service</p>
                 </div>
               </button>
             </Link>
           </div>
           <div className="box">
-            <Link to={`/Transpo/${userID}/${"Transport"}`}>
+            <Link to={`/service/Transpo/${"Transport"}`}>
               <button style={{ backgroundColor: "white" }}>
                 <img src="/images/img4.png" alt="" />
                 <div className="content">
-                  <p>Transportation</p>
+                  <p style={{ paddingTop: "20px" }}>Transportation</p>
                 </div>
               </button>
             </Link>
           </div>
           <div className="box">
-            <Link to={`/Delivery/${userID}/${"Delivery"}`}>
+            <Link to={`/service/Delivery/${"Delivery"}`}>
               <button style={{ backgroundColor: "white" }}>
                 <img src="/images/img5.png" alt="" />
                 <div className="content">
-                  <p>Delivery</p>
+                  <p style={{ paddingTop: "20px" }}>Delivery</p>
                 </div>
               </button>
             </Link>

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 //import Cards from '../../components/Cards';
 import OngoingCards from "./OngoingCards";
-import NavBar from "../../components/Navbar";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "../../components/AuthContext";
+import "./ongoing.css"
 
 function Ongoing() {
   /**
@@ -12,14 +13,15 @@ function Ongoing() {
    */
   const [commissions, setCommissions] = useState([]);
   //get user details
+  const { user } = useAuth();
   const location = useLocation();
-  const userID = location.pathname.split("/")[2];
+  const userID = user.userID;
   //rretrieve data
   useEffect(() => {
     const fetchAllCommission = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:8800/employer/ongoing/" + userID
+          `http://localhost:8800/employer/ongoing/${userID}`
         );
         //"http://localhost:8800/commission" - local computer
         //"http://192.168.1.47:8800/commission" - netwrok
@@ -32,18 +34,8 @@ function Ongoing() {
   }, []);
 
   return (
-    <div>
+    <div className="concards">
       {/* No user ID */}
-      <NavBar
-        page1="ONGOING"
-        one={`/ongoing/${userID}`}
-        page2="COMMISSIONS"
-        commissionList={`/commissions/${userID}`}
-        page3="APPLICANTS"
-        applicants={`/applicants/${userID}`}
-        map={`/e-map/${userID}`}
-        page4="MAP"
-      />
 
       <OngoingCards commissions={commissions} to={`/view-errand/${userID}`} />
     </div>

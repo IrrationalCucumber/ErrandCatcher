@@ -18,28 +18,6 @@ const VerifyRoutes = require("./Route/VerifyRoutes.js");
 const db = require("./dbConfig.js");
 const cors = require("cors");
 
-// //profile upload
-// const multer = require("multer");
-// const path = require("path");
-
-// const storage = multer.diskStorage({
-//   // store the passed file in a destination folder
-//   destination: (req, file, callback) => {
-//     callback(null, "public/images");
-//   },
-//   filename: (req, file, callback) => {
-//     //fieldname = name of file that is being pass frpm frontend
-//     callback(
-//       null,
-//       file.fieldname + "_" + Date.now() + path.extname(file.originalname)
-//     );
-//   },
-// });
-
-// const upload = multer({
-//   storage: storage,
-// });
-
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -90,16 +68,75 @@ const updateExpiredRecords = () => {
     } else {
       console.log(`${results.affectedRows} errand updated.`);
     }
+
+    if (results.affectedRows > 0) {
+      const insertNotificationQuery = `
+        INSERT INTO notification (notifUserID, notificationType, notifDesc, notifDate)
+        SELECT employerID, 'Expiration', 'Your Errand has expired.', NOW()
+        FROM commission
+        WHERE commissionStatus = 'Expired';
+      `;
+
+      db.query(insertNotificationQuery, (insertError, insertResults) => {
+        if (insertError) {
+          console.error("Error inserting notifications:", insertError);
+          return;
+        }
+
+        console.log(`${insertResults.affectedRows} notifications inserted.`);
+      });
+    }
+  });
+};
+// update the transaction record if deadline has passed
+//set satus to expired
+const updateExpiredTrans = () => {
+  const currentTime = new Date().toISOString().slice(0, 19).replace("T", " ");
+  const updateQuery = `
+    UPDATE errandtransaction t
+    JOIN commission c ON c.commissionID = t.transErrandID
+    SET t.errandStatus = 'Expired'
+    WHERE c.commissionDeadline < '${currentTime}' AND t.errandStatus = 'Ongoing';
+  `;
+
+  db.query(updateQuery, (updateError, updateResults) => {
+    if (updateError) {
+      console.error("Error updating transactions:", updateError);
+      return;
+    }
+
+    console.log(
+      `${updateResults.affectedRows} transactions updated to expired.`
+    );
+
+    if (updateResults.affectedRows > 0) {
+      const insertNotificationQuery = `
+        INSERT INTO notification (notifUserID, notificationType, notifDesc, notifDate)
+        SELECT transCatcherID, 'Expiration', 'Your transaction has expired.', NOW()
+        FROM errandtransaction
+        WHERE errandStatus = 'Expired';
+      `;
+
+      db.query(insertNotificationQuery, (insertError, insertResults) => {
+        if (insertError) {
+          console.error("Error inserting notifications:", insertError);
+          return;
+        }
+
+        console.log(`${insertResults.affectedRows} notifications inserted.`);
+      });
+    }
   });
 };
 
 // Schedule the update function to run every minute
-const scheduler = setInterval(updateExpiredRecords, 10000);
+const scheduler = setInterval(updateExpiredRecords, 60 * 1000);
+const transScheduler = setInterval(updateExpiredTrans, 60 * 1000); //every min
 
 // Stop the scheduler after a certain duration (optional)
 // setTimeout(() => {
-//   clearInterval(scheduler);
-//   console.log('Scheduler stopped.');
+//   clearInterval(scheduler, transScheduler);
+//   console.log("Scheduler stopped.");
 // }, 3600000); // Stop after 1 hour (3600 seconds * 1000 milliseconds)
 
 //combiniation
@@ -120,4 +157,77 @@ app.get("/post-and-applicant-count/:userID", (req, res) => {
     return res.json(data); // Assuming you only expect one row of results
   });
 });
+app.get("/trans-count/:userID", (req, res) => {
+  const userID = req.params.userID;
+  const q = `
+   SELECT
+  (SELECT  count(*) FROM errandtransaction WHERE errandStatus = 'Complete' AND transCatcherID = ?) AS done,
+  (SELECT  count(*) FROM errandtransaction WHERE errandStatus = 'Expired' AND transCatcherID = ?) AS expired,
+  (SELECT  count(*) FROM errandtransaction WHERE errandStatus = 'Cancelled' AND transCatcherID = ?) AS cancel`;
+
+  db.query(q, [userID, userID, userID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data); // Assuming you only expect one row of results
+  });
+});
+
+const processPayment = require("./ProcessPayment");
+
+// Route when use succeeds in payment, update the necessary data in the database
+app.get("/success-payment/:id", (req, res) => {
+  console.log(req.body);
+  const id = req.params.id;
+  const currentTime = new Date().toISOString().slice(0, 19).replace("T", " ");
+  const q = `UPDATE errandtransaction 
+            SET errandStatus = 'Complete', transDateComplete = ? 
+            WHERE transactID = ?`;
+  db.query(q, [currentTime, id], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data); // Assuming you only expect one row of results
+  });
+  return res.send("success");
+});
+
+// Route when user cancels payment
+app.get("/cancel-payment", (req, res) => {
+  console.log(req.body);
+  return res.send("cancel");
+});
+
+// Route to process payment
+app.post("/process-payment", async (req, res) => {
+  // distance is in meters being converted to kilometers
+  // const distance = req.body.distance / 1000;
+  const amount = req.body.pay;
+  const type = req.body.type;
+  // const name = req.body.name;
+  // times 100 to proply display as default is centavo
+  const total = amount * 100;
+  const description = req.body.errand;
+  const id = req.body.id;
+  // const total = Math.round(distance) * 15 + baseAmount;
+  // Paymongo api key in base64, convert api key to base64
+  const authKey = "Basic c2tfdGVzdF9kcTh5b3BuZ1BoODNpb1F5b0V2MXZpc2E6";
+  const checkout = await processPayment(
+    authKey,
+    total,
+    // name,
+    type,
+    description,
+    // `Total distance: ${distance.toFixed(2)}km`,
+    `http://localhost:8800/success-payment/${id}`,
+    "http://localhost:8800/cancel-payment"
+  );
+  console.log(checkout.data);
+
+  // Redirect user to paymongo's checkout page
+  return res.send({ url: checkout.data.attributes.checkout_url });
+});
+
 module.exports;

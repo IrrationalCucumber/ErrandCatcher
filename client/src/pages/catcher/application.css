@@ -1,0 +1,85 @@
+.application-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* justify-content: space-between; 
+    align-items: flex-start; */
+  }
+  
+  .application {
+    margin: 20px;
+    flex-direction: column;
+  }
+  
+  .application h1 {
+    margin-right: 10px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
+  
+  .application-divider {
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+  }
+  
+  .application-divider .table-wrapper {
+    overflow-x: auto;
+  }
+  
+  .application table {
+    border-spacing: 0;
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+  .application th,
+  .application td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    color: black;
+    width: 100px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 12px;
+  }
+  
+  .application th {
+    background-color: #1679AB;
+    color: #fff;
+  }
+  
+  .application-table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .application-table tr:hover {
+    background-color: #ddd;
+  }
+  
+  .application-table button {
+    padding: 8px 12px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+  
+  .application button.cancel {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .application button.cancel:hover {
+    background-color: #c82333;
+  }
+  
+  .pagination-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  
+  .pagination-container {
+    display: flex;
+    justify-content: center;
+  }
+  

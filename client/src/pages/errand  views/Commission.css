@@ -1,0 +1,154 @@
+input, select, textarea{
+    width: 100% !important;
+}
+
+select, textarea{
+    padding: 10px;
+}
+
+label{
+    color: black;
+    font-size: 14px !important;
+    width: 100% !important;
+}
+
+.errand-cont{
+    position: relative;
+    width: 90%;
+    /* height: auto; */
+    margin-left: 60px;
+    padding-bottom: 10px;
+    border: solid ;
+}
+
+.input-cont{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 1% !important;
+}
+
+.errand-inputs{
+  border-radius: 5px;
+  /* background-color: #f2f2f2; */
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 20px;
+  width: 100%;
+}
+
+.input-group{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.col1, .col2{
+    width: 100%;
+}
+
+select:focus {
+    border: 2px solid  #1679AB ;
+}
+
+select{
+    border-radius: 8px;
+}
+
+.cols1, .cols2{
+    position: relative;
+    right: 90px;
+}
+.cols1 {
+    text-align: start;
+    width: 150px;
+}
+
+.cols2{
+    width: 145px;
+}
+
+.coord{
+    display: none;
+}
+
+.map-small{
+    width: 90%;
+    margin: auto;
+    height: 490px;
+    z-index: 10;
+}
+.map--wrap{
+    height: 490px;
+    z-index: 10;
+}
+
+.btn-yellow{
+    background-color: #1679AB;
+    color: #fff;
+}
+.btn{
+    margin-top: 20px;
+    width: 80% !important;
+    height: 40px !important;
+    border-radius: 20px !important;
+    padding: 10px;
+    text-align: center;
+}
+.btn-container{
+    display: flex;
+    justify-content: center;
+    padding-left: 20px;
+}
+@media screen and (min-width: 320px) {
+    .input-cont{
+        flex-direction: column;
+    }
+}
+@media screen and (min-width: 470px) {
+    label{
+        font-size: 14px !important;
+    }
+}
+@media screen and (min-width: 780px){
+    .input-cont, .btn{
+        max-width: 700px;
+        margin: 20px auto;
+    }
+}
+
+@media screen and (min-width: 1100px){
+    .btn{
+        width: 300px !important;
+        margin: 0;
+    }
+    .btn-container{
+        display: flex;
+        justify-content: flex-start;
+    }
+    .input-cont{
+        flex-direction: row;
+        max-width: none;
+        gap: 20px;
+    }
+    .errand-inputs{
+        width: 50%;
+    }
+    .map--wrap, .map-wrap{
+        height: 490px !important;
+        z-index: 10;
+        display: block;
+        flex-basis: 50%;
+    }
+    .map-small{
+        min-height: 620px;
+    }
+}
+
+@media screen and (min-width: 1300px){
+    .input-cont, .errand-cont{
+        
+        margin: auto;
+    }
+}

@@ -148,3 +148,19 @@
     background-color: #b97728; /* Darken the button color on hover */
   }
   
+  .custom-modal {
+    width: 600px;
+    height: 400px;
+  }
+
+  @media (min-width: 768px) {
+    .MuiModalDialog-root {  /* Target the modal root class */
+      width: 600px;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .MuiModalDialog-root {
+      width: 90%; /* Set width to 90% for smaller screens */
+    }
+  }

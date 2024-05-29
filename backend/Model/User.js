@@ -15,7 +15,7 @@ const User = {
   //sign in
   getSignIn: (username, email, password, callback) => {
     db.query(
-      "SELECT userID FROM UserAccount WHERE (username = ? OR userEmail = ?) AND password = ?",
+      "SELECT * FROM UserAccount WHERE (username = ? OR userEmail = ?) AND password = ?",
       [username, email, password],
       callback
     );

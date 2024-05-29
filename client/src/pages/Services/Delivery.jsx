@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import CatCards from "../../components/CatCards";
-import Navbar from "../../components/Navbar";
+import CatCards from "../../components/Cards/CatCards";
+import Navbar from "../../components/Navbar/Navbar";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 
@@ -62,7 +62,16 @@ const Delivery = () => {
   return (
     <>
       <Navbar />
-      <div className="search-bar">
+      <h1 style={{ paddingTop: "20px", paddingLeft: "20px" }}>Delivery</h1>
+      <div
+        className="search-bar"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "44px 5%",
+        }}
+      >
         <input
           type="text"
           placeholder="Search..."

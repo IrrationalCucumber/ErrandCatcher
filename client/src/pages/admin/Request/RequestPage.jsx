@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Pagination from "../../../components/Pagination";
 import RequestModal from "./RequestModal";
-import Navbar from "../../../components/Navbar";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import RequestImages from "./RequestImage";
 
 function RequestPage() {
   // Mock list of verification requests
@@ -11,7 +11,9 @@ function RequestPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
   const [selectedRequest, setSelectedRequest] = useState(null);
+  const [selectedImages, setSelectedImages] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [showImageModal, setShowImageModal] = useState(false);
   const location = useLocation();
   const userID = location.pathname.split("/")[2];
 
@@ -34,9 +36,20 @@ function RequestPage() {
     setShowModal(true); // Show modal
   };
 
+    // Function to handle click on RequestImage button
+    const handleImageButtonClick = (requestImages) => {
+      setSelectedImages(requestImages);
+      setShowImageModal(true);
+    };  
+
   const handleCloseModal = () => {
     setShowModal(false); // Hide modal
   };
+
+    // Function to close image modal
+    const handleCloseImageModal = () => {
+      setShowImageModal(false);
+    };
 
   // Get current items
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -48,17 +61,6 @@ function RequestPage() {
 
   return (
     <div>
-      <Navbar
-        page1="REQUESTS"
-        one={`/request/${userID}`}
-        // {`admin-home/${userID}`}
-        page2="ACCOUNTS"
-        commissionList={`/accounts/${userID}`}
-        page3="ERRANDS"
-        applicants={`/commission-list/${userID}`}
-        page4="MAP"
-        map={`/map/${userID}`}
-      />
       <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
         Verification Requests
       </h1>
@@ -88,6 +90,13 @@ function RequestPage() {
                 >
                   View
                 </button>
+                {/* for Image request */}
+                <button className="RequestImage"
+                  style={buttonStyle}
+                  onClick={() => handleImageButtonClick(request.images)}
+                >
+                  View Image
+                </button>
               </td>
             </tr>
           ))}
@@ -102,6 +111,12 @@ function RequestPage() {
         <RequestModal
           request={selectedRequest}
           handleClose={handleCloseModal}
+        />
+      )}
+      {showImageModal && (
+        <RequestImages
+          request={selectedImages}
+          handleClose={handleCloseImageModal}
         />
       )}
     </div>

@@ -14,6 +14,18 @@ const Trans = {
     );
   },
   //for catcher
+  //get all transaction done
+  // getTransCount: (id, status, callback) => {
+  //   db.query(
+  //     ` SELECT
+  //     (SELECT  count(*) FROM errandtransaction WHERE errandStatus = 'Complete' AND transCatcherID = ?) AS done,
+  //     (SELECT  count(*) FROM errandtransaction WHERE errandStatus = 'Expired' AND transCatcherID = ?) AS expired,
+  //     (SELECT  count(*) FROM errandtransaction WHERE errandStatus = 'Cancelled' AND transCatcherID = ?) AS cancel`,
+  //     [id, id, id],
+  //     callback
+  //   );
+  // },
+  //for catcher
   //get all transaction
   getTransById: (id, callback) => {
     db.query(
@@ -21,7 +33,7 @@ const Trans = {
       FROM errandtransaction t
       JOIN commission c ON t.transErrandID = c.commissionID
       JOIN useraccount ua ON c.employerID = ua.userID
-       WHERE transCatcherID = ?`,
+       WHERE t.transCatcherID = ?`,
       [id],
       callback
     );
@@ -61,7 +73,7 @@ const Trans = {
         FROM errandtransaction t
         JOIN commission c ON t.transErrandID = c.commissionID
         JOIN useraccount ua ON t.transCatcherID = ua.userID
-    WHERE c.employerID = ? AND errandStatus = ?
+    WHERE c.employerID = ? AND t.errandStatus = ?
     `,
       [id, status],
       callback

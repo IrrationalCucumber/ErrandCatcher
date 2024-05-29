@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
-import NavBar from "../../components/Navbar.js";
 import "./commissionlist.css";
 import Pagination from "../../components/Pagination.js";
 import Table from "../../components/Table.js";
 import Select from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
+import { DisplayDate } from "../../components/DisplayDate.js";
 
 const CommissionList = () => {
   const [commissions, setCommissions] = useState([]);
@@ -94,8 +94,8 @@ const CommissionList = () => {
   //need front end
   return (
     <div>
-      <NavBar
-        page1="REQUESTS"
+      {/* <NavBar
+       page1="REQUESTS"
         one={`/request/${userID}`}
         // {`admin-home/${userID}`}
         page2="ACCOUNTS"
@@ -104,7 +104,7 @@ const CommissionList = () => {
         applicants={`/commission-list/${userID}`}
         page4="MAP"
         map={`/map/${userID}`}
-      />
+      /> */}
       <div className="commissions">
         <h1
           style={{
@@ -217,9 +217,9 @@ const CommissionList = () => {
             `${Commission.userFirstname} ${Commission.userLastname}`,
             Commission.commissionType,
             Commission.commissionPay,
-            new Date(Commission.DatePosted).toLocaleDateString(),
+            DisplayDate(Commission.DatePosted),
             Commission.DateCompleted === ""
-              ? new Date(Commission.DateCompleted).toLocaleDateString()
+              ? DisplayDate(Commission.DateCompleted)
               : "",
             Commission.commissionStatus,
             <>
@@ -227,9 +227,7 @@ const CommissionList = () => {
               <i class="fa-solid fa-trash"></i>
               </button> */}
               <button className="update">
-                <Link
-                  to={`/view-commission/${userID}/${Commission.commissionID}`}
-                >
+                <Link to={`/errand/view-errand/${Commission.commissionID}`}>
                   <i class="fa-solid fa-eye"></i>
                 </Link>
               </button>

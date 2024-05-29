@@ -32,7 +32,13 @@ const Errand = {
   },
   //get specific errand by id
   getErrandById: (id, callback) => {
-    db.query(`SELECT * FROM commission WHERE commissionID = ?`, [id], callback);
+    db.query(
+      `SELECT c.*, ua.username, ua.userFirstname, ua.userLastname 
+    FROM commission c JOIN useraccount ua ON c.employerID = ua.userID 
+    WHERE c.commissionID = ?`,
+      [id],
+      callback
+    );
   },
   //get specific errand by userid
   getErrandByUserID: (id, callback) => {
@@ -54,6 +60,9 @@ const Errand = {
       DatePosted,
       comLong,
       comLat,
+      comDestLong,
+      comDestLat,
+      comMethod,
     } = errandData;
     const values = [
       empID,
@@ -69,11 +78,14 @@ const Errand = {
       Contactno,
       comLong,
       comLat,
+      comDestLong,
+      comDestLat,
+      comMethod,
     ];
     db.query(
       "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionStartDate`," +
         " `commissionDeadline`, `commissionLocation`, `commissionTo`,`commissionType`," +
-        " `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`,`commissionLong`, `commissionLat`) VALUES (?)",
+        " `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`,`commissionLong`, `commissionLat`, `commissionDestLong`, `commissionDestLat`, `commissionPaymentMethod`) VALUES (?)",
       [values],
       callback
     );
@@ -89,16 +101,20 @@ const Errand = {
       comType,
       comDescription,
       comPay,
+      comStatus,
       Contactno,
       comLong,
       comLat,
+      comDestLong,
+      comDestLat,
+      comMethod,
     } = errandData;
     const values = [];
     db.query(
       `UPDATE commission SET commissionTitle = ?, commissionStartDate = ?, 
       commissionDeadline = ?, commissionLocation = ?, commissionTo = ?,commissionType = ?,
-       commissionDesc = ?, commissionPay = ?, ContactNumber = ?, commissionLong = ?, commissionLat
-        = ? WHERE commissionID = ?`,
+       commissionDesc = ?, commissionPay = ?, commissionStatus = ?, ContactNumber = ?, commissionLong = ?, commissionLat
+        = ?,commissionLong = ?, commissionLat =?, commissionPaymentMethod = ? WHERE commissionID = ?`,
       [
         comTitle,
         comStart,
@@ -108,9 +124,13 @@ const Errand = {
         comType,
         comDescription,
         comPay,
+        comStatus,
         Contactno,
         comLong,
         comLat,
+        comDestLong,
+        comDestLat,
+        comMethod,
         id,
       ],
       callback

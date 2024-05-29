@@ -4,46 +4,50 @@ import {
   Routes,
   createBrowserRouter,
 } from "react-router-dom";
+import Home from "./pages/Home";
+import Verification from "./pages/profile/Verification";
+import Notification from "./pages/Notification";
+import testpage from "./pages/testpage";
+//import "./style.css";
+//DISPLAY
+import Landing from "./pages/Landing/Landing";
+import Menu from "./pages/Menu";
+import ErrandPage from "./pages/errand  views/ErrandPage";
+import ViewProfile from "./pages/profile/ViewProfile";
+import ViewCommission from "./pages/errand  views/ViewCommission";
+//UPDATE/REGISTER
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp/Signup";
-import Profile from "./pages/Profile";
+import UpdateAccount from "./pages/profile/UpdateAccount";
+import Profile from "./pages/profile/Profile";
+//ADMIN Routes
 import AccountList from "./pages/admin/AccountList";
 import AddAccount from "./pages/admin/AddAccount";
-import PostCommission from "./pages/PostCommission";
 import CommissionList from "./pages/admin/CommissionList";
-import Home from "./pages/Home";
-import UpdateAccount from "./pages/UpdateAccount";
-import UpdateCommission from "./pages/UpdateCommission";
-//import "./style.css";
-import CatcherHome from "./pages/CatcherHome";
-import EmployerHome from "./pages/EmployerHome";
-import ViewCommission from "./pages/ViewCommission";
-import EmployerCommissions from "./pages/EmployerCommissionList";
 import AdminHome from "./pages/admin/AdminHome";
-import ApplyCommission from "./pages/ApplyCommission";
-import EmployerApplicants from "./pages/EmployerApplicants";
-//MAP ROUTES
 import Map from "./pages/admin/CommissionMap";
-import CatcherMap from "./pages/CatcherMap";
-import EmployerMap from "./pages/EmployerMap";
-import Notification from "./pages/Notification";
-import Landing from "./pages/Landing";
-import Menu from "./pages/Menu";
-import testpage from "./pages/testpage";
-import Application from "./pages/CatcherApplication";
-import CatcherCommission from "./pages/CatcherCommissionPage";
+//CATCHER Routes
+import CatcherHome from "./pages/catcher/CatcherHome";
+import CatcherMap from "./pages/catcher/CatcherMap";
+import ApplyCommission from "./pages/catcher/ApplyCommission";
+import Application from "./pages/catcher/CatcherApplication";
+import CatcherCommission from "./pages/catcher/CatcherCommissionPage";
 import Ongoing from "./pages/Dropdown/Ongoing";
-//private route
-// import { AuthProvider } from "./components/AuthContext";
-// import PrivateRoute from "./components/PrivateRoute";
-
+//EMPLOYER Routes
+import EmployerHome from "./pages/employer/EmployerHome";
+import PostCommission from "./pages/errand  views/PostCommission";
+import EmployerCommissions from "./pages/employer/EmployerCommissionList";
+import EmployerApplicants from "./pages/employer/EmployerApplicants";
+import EmployerMap from "./pages/employer/EmployerMap";
+import UpdateCommission from "./pages/errand  views/UpdateCommission";
+//SEARCH/ CATEGORY Routess
 import Transportation from "./pages/Services/Transpo";
 import HomeServices from "./pages/Services/HomeServices";
 import Delivery from "./pages/Services/Delivery";
-import Verification from "./pages/Verification";
-import ErrandPage from "./pages/ErrandPage";
-import ViewProfile from "./pages/ViewProfile";
 import SearchPage from "./pages/SearchPage";
+//private route
+// import { AuthProvider } from "./components/AuthContext";
+// import PrivateRoute from "./components/PrivateRoute";
 import RequestPage from "./pages/admin/Request/RequestPage";
 
 function App() {

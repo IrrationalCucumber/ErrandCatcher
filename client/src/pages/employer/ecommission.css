@@ -1,0 +1,106 @@
+/*For the EmployerCommissionList UI*/
+.Commission-page-container {
+    display: flex;
+    /* justify-content: space-between; Center content horizontally */
+    /* align-items: flex-start; */
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.Commission-page {
+    margin: 20px;
+    flex-direction: column;
+}
+
+.Commission-page h1,
+.Commission-page h6 {
+    margin-right: 10px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin-bottom: 20px;
+}
+
+.Commission-page-divider {
+    border-top: 1px solid #ccc; /* Top border */
+    margin: 20px 0; /* Margin top and bottom */
+}
+
+.Commission-page-divider .table-wrapper {
+    overflow-x: auto;
+}
+
+.Commission-page table {
+    border-spacing: 0;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.Commission-page th,
+.Commission-page td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    color: black;
+    width: 100px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 12px;
+}
+
+.Commission-page th {
+    background-color: #1679AB;
+}
+
+.Commission-page tr:last-child td {
+    border-bottom: none;
+}
+
+.Commission-page tr:hover {
+    background-color: #ddd;
+}
+
+.add-errand{
+    width: 180px;
+    height: 50px;
+    border-radius: 20px;
+    padding: 10px 0 5px 0;
+    background-color: #1679AB;
+    color: #fff;
+    border: none;
+    margin-left: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
+}
+
+.add-errand:active{
+    transform: translateY(1px);
+    box-shadow: none;
+  }
+
+  .search-filter {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Adjust margin as needed */
+  }
+  
+  .search,
+  .filter {
+    display: flex;
+    align-items: center;
+  }
+  
+  .filter {
+    margin-left: 20px;
+    margin-bottom: 30px;
+    width: 120px;
+  }
+
+  .search{
+    width: 280px;
+  }
+  
+  .filter select {
+    width: 150px; /* Adjust width as needed */
+  }
+  
+  
+  
+  

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./employercard.css";
 import axios from "axios";
+import { useAuth } from "../components/AuthContext";
 
 const EmployerCard = ({ employer }) => {
   const [counts, setCounts] = useState({
@@ -10,9 +11,8 @@ const EmployerCard = ({ employer }) => {
     numErrands: 0,
   });
   const [loading, setLoading] = useState(true);
-
-  const location = useLocation();
-  const userID = location.pathname.split("/")[2];
+  const { user } = useAuth();
+  const userID = user.userID;
   useEffect(() => {
     // Simulate fetching counts from backend API, be removed
     setTimeout(() => {
@@ -50,7 +50,7 @@ const EmployerCard = ({ employer }) => {
       ) : (
         <div className="count-details">
           <Link
-            to={`/commissions`}
+            to={`/dashboard/commissions`}
             className="count-section posts"
             style={{ color: "black" }}
           >
@@ -58,7 +58,7 @@ const EmployerCard = ({ employer }) => {
             <h3>Posts</h3>
           </Link>
           <Link
-            to={`/applicants/${userID}`}
+            to={`/dashboard/applicants`}
             className="count-section applicants1"
             style={{ color: "black" }}
           >
@@ -66,7 +66,7 @@ const EmployerCard = ({ employer }) => {
             <p>{counts.numApplicants}</p>
           </Link>
           <Link
-            to={`/commissions/${userID}`}
+            to={`/dashboard/commissions/${userID}`}
             className="count-section errands"
             style={{ color: "black" }}
           >
