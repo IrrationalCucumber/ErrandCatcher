@@ -107,8 +107,76 @@ export function LandingMap() {
     </>
   );
 }
+//view errand
+export function ViewMap({ id }) {
+  const [long, setLong] = useState(null);
+  const [lat, setLat] = useState(null);
+  //get the coordinates of the cerrand
+  const fetchLoc = async () => {
+    try {
+      const response = await fetch(`http://localhost:8800/errand/${id}`);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  };
 
+  //MAP
+  //variables for map
+  const mapContainer = useRef(null);
+  const map = useRef(null);
+  const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
+  const [zoom] = useState(10);
+
+  useEffect(() => {
+    if (map.current) return;
+
+    map.current = new maplibregl.Map({
+      container: mapContainer.current,
+      style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${API_KEY}`,
+      center: [123.8854, 10.3157],
+      zoom: zoom,
+    });
+
+    map.current.addControl(new maplibregl.NavigationControl(), "top-right");
+
+    //display the current coordinate of the errand
+    fetchLoc().then((commissions) => {
+      commissions.forEach((commission) => {
+        const currentLng = commission.commissionLong;
+        const currentLat = commission.commissionLat;
+        setLat(currentLat);
+        setLong(currentLng);
+        new maplibregl.Marker({
+          color: "#FF0000",
+          //draggable: true,
+        }) // Red marker for commissions
+          .setLngLat([currentLng, currentLat])
+          .setPopup(
+            new maplibregl.Popup().setHTML(`<h3>The Errand is here!</h3>`)
+          )
+          .addTo(map.current);
+      });
+    });
+  }, [API_KEY, zoom]);
+
+  return (
+    <>
+      <div className="map--wrap">
+        <div ref={mapContainer} className="map-small" />
+        <p className="coords">
+          X: {long} Y: {lat}
+        </p>
+      </div>
+    </>
+  );
+}
+
+//view
 //for errand page
+//delivery/transpo type obly
 export function MapLibre({ getCoords }) {
   //event handler when user add marker
   //variables for map
