@@ -287,7 +287,12 @@ function ErrandInputs(props) {
           />
           {props.typeValue !== "HomeService - Indoor" &&
             props.typeValue !== "HomeService - Outdoor" &&
-            props.typeValue !== "" && <p>₱15/km + ₱100</p>}
+            props.typeValue !== "" && (
+              <>
+                <p>₱15/km + ₱100</p>
+                <p>{props.distance} km</p>
+              </>
+            )}
         </div>
       </div>
 
