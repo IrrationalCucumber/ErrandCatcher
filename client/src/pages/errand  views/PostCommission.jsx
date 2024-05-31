@@ -9,7 +9,7 @@ import { useNavigate, Link } from "react-router-dom";
 import "./Commission.css"; // Import your CSS file
 import ErrandInputs from "../../components/ErrandInputs";
 import Map from "../../components/Map/MapBox";
-import MapLibre from "../../components/Map/MapLibre";
+import { MapLibre } from "../../components/Map/Map";
 //image --ash
 import { useAuth } from "../../components/AuthContext";
 

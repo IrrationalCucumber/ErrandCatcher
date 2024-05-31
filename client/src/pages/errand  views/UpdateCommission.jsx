@@ -9,7 +9,7 @@ import "./Commission.css"; // Import your CSS file
 import Modals from "../../components/Modals";
 import { useAuth } from "../../components/AuthContext";
 import Map from "../../components/Map/ViewMapBox";
-import MapLibre from "../../components/Map/MapLibre";
+import { MapLibre } from "../../components/Map/Map";
 
 const UpdateCommission = () => {
   const [commission, setCommission] = useState({
