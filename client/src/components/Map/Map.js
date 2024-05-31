@@ -149,7 +149,7 @@ export function MapLibre({ getCoords }) {
         });
       });
     }
-  }, [API_KEY, zoom]);
+  }, [API_KEY, zoom, getCoords]);
   return (
     <div>
       <div ref={mapContainer} className="map-small" />
