@@ -5,8 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import ErrandInputs from "../../components/ErrandInputs";
 import "./Commission.css"; // Import your CSS file
 import { useAuth } from "../../components/AuthContext";
-import Map from "../../components/Map/ViewMapBox";
-import { MapLibre } from "../../components/Map/Map";
+import { MapLibre, ViewMapBox } from "../../components/Map/Map";
 
 const UpdateCommission = () => {
   const [commission, setCommission] = useState({
@@ -172,7 +171,7 @@ const UpdateCommission = () => {
             )}
           {commission.comType === "Delivery" && (
             <>
-              <Map
+              <ViewMapBox
                 interactive={true}
                 accessToken={accessToken}
                 initialOrigin={{
@@ -202,7 +201,7 @@ const UpdateCommission = () => {
           )}
           {commission.comType === "Transportation" && (
             <>
-              <Map
+              <ViewMapBox
                 interactive={true}
                 accessToken={accessToken}
                 initialOrigin={{
