@@ -1,13 +1,30 @@
-import React from "react";
-import Cards from "../components/Cards/Cards";
-//import Menu from './Menu'
+import React, { useState } from "react";
 
-function testpage() {
+export default function Testpage() {
+  const test = () => {
+    alert("click");
+  };
+  const [password, setPassword] = useState();
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Call your test function here
+    test();
+  };
   return (
     <div>
-      <Cards />
+      test
+      <form onSubmit={handleSubmit}>
+        <input
+          type="password"
+          required
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit" value="Submit">
+          TEST
+        </button>
+      </form>
     </div>
   );
 }
-
-export default testpage;
