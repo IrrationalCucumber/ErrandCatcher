@@ -5,6 +5,8 @@ import "./Error.css"; // Import your custom CSS for stylin
 import "./signin.css";
 import { useAuth } from "../components/AuthContext";
 import Alert from "@mui/joy/Alert";
+import Key from "@mui/icons-material/Key";
+import { Input } from "@mui/joy";
 
 const SignIn = () => {
   const [username, setUsername] = useState(""); //username
@@ -90,14 +92,24 @@ const SignIn = () => {
           type="text"
           placeholder="Username"
         />
-        <input
+
+        <Input
           className={errorMessage ? "error" : ""}
           name="password"
+          startDecorator={<Key />}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           type="password"
           placeholder="Password"
+          style={{
+            width: "100%",
+            margin: "10px auto",
+            display: "flex",
+            maxWidth: "290px",
+            fontSize: "13px",
+          }}
         />
+
         <div className="em">
           {errorMessage != "" && (
             <Alert color="danger" size="lg" variant="outlined">
@@ -124,12 +136,14 @@ const SignIn = () => {
           <button
             type="button"
             onClick={handleClick}
-            style={{ backgroundColor: "#1679AB", 
-                    fontSize: "16px",
-                    width: "200px", 
-                    height:"40px", 
-                    borderRadius:"20px", 
-                    color:"#ffff" }}
+            style={{
+              backgroundColor: "#1679AB",
+              fontSize: "16px",
+              width: "200px",
+              height: "40px",
+              borderRadius: "20px",
+              color: "#ffff",
+            }}
           >
             Sign In
           </button>
