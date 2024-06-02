@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import RadioInputs from "./RadioInputs";
+import { Input, Stack, Typography } from "@mui/joy";
+import LinearProgress from "@mui/joy/LinearProgress";
 //import "./Error.css";
 
 const Signup = () => {
@@ -24,7 +26,7 @@ const Signup = () => {
   // const [employerErrorMessage, setEmployerErrorMessage] = useState("");
   // const [catcherErrorMessage, setCatcherErrorMessage] = useState("");
 
-  const [errorMessage, setErrorMessage] = useState(""); 
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
   const resetForm = () => {
@@ -122,8 +124,7 @@ const Signup = () => {
     ) {
       //error
       setErrorMessage("Please fill in all required fields.");
-      return; 
-    
+      return;
     } else if (account.regPassword.length < 8) {
       setErrorMessage("Password is too short.");
 
@@ -144,7 +145,7 @@ const Signup = () => {
     }
   };
   //console.log(account);
-
+  const minLength = 12;
   return (
     <div
       className="SUcontainer"
@@ -155,7 +156,13 @@ const Signup = () => {
         textAlign: "center",
       }}
     >
-      <h2 style={{ fontFamily: "sans-serif", paddingTop: "20px", color:"#005a80" }}>
+      <h2
+        style={{
+          fontFamily: "sans-serif",
+          paddingTop: "20px",
+          color: "#005a80",
+        }}
+      >
         Errand Catcher
       </h2>
       <form>
@@ -295,7 +302,7 @@ const Signup = () => {
                   <div className="col">
                     <label className="SUlabel">Birthday</label>
                     <input
-                    // className={errorMessage ? "error" : ""}
+                      // className={errorMessage ? "error" : ""}
                       type="date"
                       placeholder="Birthday"
                       required
@@ -307,7 +314,7 @@ const Signup = () => {
                   <div className="col">
                     <label className="SUlabel">Gender</label>
                     <select
-                    // className={errorMessage ? "error" : ""}
+                      // className={errorMessage ? "error" : ""}
                       required
                       style={{ width: "100%" }}
                       value={account.gender}
@@ -329,23 +336,61 @@ const Signup = () => {
                   }}
                 >
                   <div className="col">
-                  
-                    <label className="SUlabel">Password</label>
-                    <input
-                    // className={errorMessage ? "error" : ""}
-                      type="password"
-                      placeholder="Password"
-                      onChange={handleChange}
-                      name="regPassword"
-                      value={account.regPassword}
-                      autoComplete="off"
-                      required
-                    />
+                    <Stack
+                      spacing={0.5}
+                      style={{
+                        "--hue": Math.min(account.regPassword.length * 10, 120),
+                        display: "flex",
+                      }}
+                    >
+                      <label className="SUlabel">Password</label>
+                      <input
+                        // className={errorMessage ? "error" : ""}
+                        type="password"
+                        placeholder="Password"
+                        onChange={handleChange}
+                        name="regPassword"
+                        value={account.regPassword}
+                        autoComplete="off"
+                        required
+                      />{" "}
+                      <LinearProgress
+                        determinate
+                        size="sm"
+                        value={Math.min(
+                          (account.regPassword.length * 100) / minLength,
+                          100
+                        )}
+                        style={{
+                          bgcolor: "background.level3",
+                          color: "hsl(var(--hue) 80% 40%)",
+                          width: "100%",
+                          maxWidth: "290px",
+                        }}
+                      />
+                      <Typography
+                        level="body-xs"
+                        style={{
+                          alignSelf: "flex-end",
+                          color: "hsl(var(--hue) 80% 30%)",
+                        }}
+                      >
+                        {account.regPassword.length < 3 && "Very weak"}
+                        {account.regPassword.length >= 3 &&
+                          account.regPassword.length < 6 &&
+                          "Weak"}
+                        {account.regPassword.length >= 6 &&
+                          account.regPassword.length < 10 &&
+                          "Strong"}
+                        {account.regPassword.length >= 10 && "Very strong"}
+                      </Typography>
+                    </Stack>
                   </div>
+
                   <div className="col">
                     <label className="SUlabel">Confirm Password</label>
                     <input
-                    // className={errorMessage ? "error" : ""}
+                      // className={errorMessage ? "error" : ""}
                       type="password"
                       placeholder="Confirm Password"
                       onChange={handleChange}
@@ -364,23 +409,31 @@ const Signup = () => {
                     margin: "0 -15px",
                   }}
                 >
-                  <div className="col text-center" style={{paddingTop:"20px"}}>
-                    <button onClick={handleClick} 
-                    style={{width:"200px", 
-                            height:"30px", 
-                            borderRadius:"10px",
-                            backgroundColor:"#005a80", 
-                            color:"#fff",
-                            transition: "background-color 0.3s ease"
-                            }}
-                            className="signup-button">Sign Up</button>
+                  <div
+                    className="col text-center"
+                    style={{ paddingTop: "20px" }}
+                  >
+                    <button
+                      onClick={handleClick}
+                      style={{
+                        width: "200px",
+                        height: "30px",
+                        borderRadius: "10px",
+                        backgroundColor: "#005a80",
+                        color: "#fff",
+                        transition: "background-color 0.3s ease",
+                      }}
+                      className="signup-button"
+                    >
+                      Sign Up
+                    </button>
                   </div>
-                {/* Error message display */}
-                {errorMessage && (
-                  <div className="m-4" style={{ color: "red" }}>
-                    {errorMessage}
-                  </div>
-                )}
+                  {/* Error message display */}
+                  {errorMessage && (
+                    <div className="m-4" style={{ color: "red" }}>
+                      {errorMessage}
+                    </div>
+                  )}
                 </div>
                 <div className="m-4" style={{ paddingTop: "20px" }}>
                   Already have an account? <Link to="/sign-in">Sign in</Link>
