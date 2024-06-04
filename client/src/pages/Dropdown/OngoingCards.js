@@ -2,11 +2,23 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../../components/AuthContext";
+import Invoice from "../../components/Invoice";
 
 function OngoingCards({ commissions, to }) {
   const [isClicked, setIsClicked] = useState(false);
   const [selectedCommissionId, setSelectedCommissionId] = useState(null);
   const { user } = useAuth();
+  const userID = user.userID;
+  const [isOpen, setIsOpen] = useState(false);
+
+  // for handle invoice
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
 
   const handleButtonClick = (e) => {
     setIsClicked(true);
@@ -24,7 +36,7 @@ function OngoingCards({ commissions, to }) {
   };
 
   const handlePayment = (pay, type, fname, lname, id, comTitle) => {
-    const paymentUrl = "http://localhost:8800/process-payment";
+    const paymentUrl = `http://localhost:8800/process-payment/${userID}`;
     // Change the amount
     const amount = pay;
     const errType = type;
@@ -38,9 +50,13 @@ function OngoingCards({ commissions, to }) {
         name: name,
         errand: errand,
         id: id,
+        // employerID: userID,
       })
       .then((response) => {
         window.open(response.data.url);
+      })
+      .catch((error) => {
+        console.error("There was an error processing the payment!", error);
       });
   };
 
@@ -198,6 +214,12 @@ function OngoingCards({ commissions, to }) {
                 </div>
               </div>
             ))}
+          </div>
+          {/* for the meantime .... test lng */}
+          <div style={{ marginTop: "50px" }}>
+            <h1>Invoice:</h1>
+            <button onClick={handleOpen}>Open Invoice</button>
+            <Invoice open={isOpen} onClose={handleClose} userID={userID} />
           </div>
         </div>
       </div>
