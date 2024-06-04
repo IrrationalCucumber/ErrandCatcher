@@ -181,18 +181,20 @@ const getProcessPayment = require("./GetProcessPayment");
 app.get("/success-payment/:id", (req, res) => {
   console.log(req.body);
   const id = req.params.id;
+  // const checkoutId = req.query.checkoutId; // Extracting checkoutId from query parameters
+  const { checkoutId, employerID } = req.query; // Including employerID in the query parameters initial
   const currentTime = new Date().toISOString().slice(0, 19).replace("T", " ");
   const q = `UPDATE errandtransaction 
             SET errandStatus = 'Complete', transDateComplete = ? 
-            WHERE transactID = ?`;
-  db.query(q, [currentTime, id], (err, data) => {
+            WHERE transactID = ? AND checkoutId = ? AND employerID = ?`;
+  db.query(q, [currentTime, id, checkoutId, employerID], (err, data) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: "An error occurred" });
     }
-    return res.json(data); // Assuming you only expect one row of results
+    // return res.json(data); // Assuming you only expect one row of results
+    return res.send("Payment successful");
   });
-  return res.send("success");
 });
 
 // Route when user cancels payment
@@ -202,7 +204,7 @@ app.get("/cancel-payment", (req, res) => {
 });
 
 // Route to process payment
-app.post("/process-payment", async (req, res) => {
+app.post("/process-payment/:employerID", async (req, res) => {
   // distance is in meters being converted to kilometers
   // const distance = req.body.distance / 1000;
   const amount = req.body.pay;
@@ -212,6 +214,9 @@ app.post("/process-payment", async (req, res) => {
   const total = amount * 100;
   const description = req.body.errand;
   const id = req.body.id;
+  // const employerID = req.params.employerID;
+  const employerID = req.params;
+
   // const total = Math.round(distance) * 15 + baseAmount;
   // Paymongo api key in base64, convert api key to base64
   const authKey = "Basic c2tfdGVzdF9kcTh5b3BuZ1BoODNpb1F5b0V2MXZpc2E6";
@@ -227,8 +232,38 @@ app.post("/process-payment", async (req, res) => {
   );
   console.log(checkout.data);
 
-  // Redirect user to paymongo's checkout page
-  return res.send({ url: checkout.data.attributes.checkout_url });
+  // extract or access data object from the Paymongo api response
+  const checkoutId = checkout.data.id;
+  const paymentId = checkout.data.attributes.payment_intent.id;
+  const currency = checkout.data.attributes.line_items.currency;
+  // FROM_UNIXTIME(paid) AS paid_datetime coverter  sample date: 1717515231
+  const paid = checkout.data.attributes.created_at; // FROM_UNIXTIME(paid) AS paid_datetime coverter
+
+  // Save the response Paymongo API
+  const q =
+    "INSERT INTO errandtransaction (total, type, description, checkoutId, paymentId, currency, paid) VALUES ( ?, ?, ?, ?, ?, ?, FROM_UNIXTIME(?))";
+  const values = [
+    total,
+    type,
+    description,
+    checkoutId,
+    paymentId,
+    currency,
+    paid,
+    employerID,
+  ];
+
+  db.query(q, values, (err, results) => {
+    if (err) {
+      console.error("Error saving payment to the database:", err);
+      return res.status(500).send("Internal Server Error");
+    }
+    // Redirect user to PayMongo's checkout page
+    return res.send({
+      url: checkout.data.attributes.checkout_url,
+      checkoutId: checkoutId,
+    });
+  });
 });
 
 // get data ID from the PayMongo API
@@ -246,6 +281,21 @@ app.get("/payment-details/:sessionId", async (req, res) => {
     console.error(error.message);
     res.status(500).send({ error: "Failed to retrieve payment details" });
   }
+});
+
+// fetch history transaction
+app.get("/transactions/:employerID", (req, res) => {
+  const { employerID } = req.params;
+  const q =
+    "SELECT checkoutId, total, type, paymentId, description, DATE_FORMAT(paid, '%Y-%m-%dT%TZ') AS paid FROM errandtransaction WHERE employerID = ?";
+
+  db.query(q, [employerID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
 });
 
 module.exports;
