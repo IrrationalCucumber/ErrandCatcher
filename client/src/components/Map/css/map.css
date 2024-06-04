@@ -16,6 +16,13 @@
     height: 100%;
   }
 
+    
+  .map-landing {
+    position: absolute;
+    width: 100%;
+    height: 83%;
+  }
+
   .map__filter{
     position: fixed;
     width: 200px;
