@@ -13,7 +13,7 @@ function Filter({ onFilterChange }) {
   return (
     <>
       {/* <Input placeholder="Enter title here.." name="term" /> */}
-      <h3 className="map__filter__text">FILTER</h3>
+
       <select
         className="map__filter__type"
         name="type"
