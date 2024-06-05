@@ -16,8 +16,8 @@ import ErrandPage from "./pages/errand  views/ErrandPage";
 import ViewProfile from "./pages/profile/ViewProfile";
 import ViewCommission from "./pages/errand  views/ViewCommission";
 //UPDATE/REGISTER
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp/Signup";
+import SignIn from "./pages/Auth/SignIn";
+import SignUp from "./pages/Auth/Signup";
 import UpdateAccount from "./pages/profile/UpdateAccount";
 import Profile from "./pages/profile/Profile";
 //ADMIN Routes

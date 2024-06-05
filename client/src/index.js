@@ -22,8 +22,8 @@ import Us from "./pages/Dashboard/Us";
 import About from "./pages/Dashboard/About";
 import Contact from "./pages/Dashboard/Contact";
 //UPDATE/REGISTER
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp/Signup";
+import SignIn from "./pages/Auth/SignIn";
+import SignUp from "./pages/Auth/Signup";
 import UpdateAccount from "./pages/profile/UpdateAccount";
 import Profile from "./pages/profile/Profile";
 //ADMIN Routes
@@ -57,6 +57,7 @@ import Service from "./pages/Services/Service";
 //restrict
 import { AuthProvider } from "./components/AuthContext";
 import AdminPage from "./pages/admin/AdminPage";
+import Auth from "./pages/Auth/Auth";
 
 const router = createBrowserRouter([
   {
@@ -199,11 +200,19 @@ const router = createBrowserRouter([
     path: "/notifications",
     element: <Notification />,
   },
+
   {
-    path: "/sign-up",
-    element: <SignUp />,
+    path: "/auth/",
+    element: <Auth />,
+    children: [
+      { path: "sign-in", element: <SignIn /> },
+      {
+        path: "sign-up",
+        element: <SignUp />,
+      },
+    ],
   },
-  { path: "/sign-in", element: <SignIn /> },
+
   { path: "/test", element: <MapComponent /> },
   //MISCILLANOUS PAGES
   {

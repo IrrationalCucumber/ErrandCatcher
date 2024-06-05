@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import "./Error.css"; // Import your custom CSS for stylin
-import "./signin.css";
-import { useAuth } from "../components/AuthContext";
+import "./css/Error.css"; // Import your custom CSS for stylin
+import "./css/signin.css";
+import { useAuth } from "../../components/AuthContext";
 import Alert from "@mui/joy/Alert";
 
 const SignIn = () => {
@@ -124,12 +124,14 @@ const SignIn = () => {
           <button
             type="button"
             onClick={handleClick}
-            style={{ backgroundColor: "#1679AB", 
-                    fontSize: "16px",
-                    width: "200px", 
-                    height:"40px", 
-                    borderRadius:"20px", 
-                    color:"#ffff" }}
+            style={{
+              backgroundColor: "#1679AB",
+              fontSize: "16px",
+              width: "200px",
+              height: "40px",
+              borderRadius: "20px",
+              color: "#ffff",
+            }}
           >
             Sign In
           </button>
