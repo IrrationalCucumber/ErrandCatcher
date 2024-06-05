@@ -24,7 +24,7 @@ const Signup = () => {
   // const [employerErrorMessage, setEmployerErrorMessage] = useState("");
   // const [catcherErrorMessage, setCatcherErrorMessage] = useState("");
 
-  const [errorMessage, setErrorMessage] = useState(""); 
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
   const resetForm = () => {
@@ -122,8 +122,7 @@ const Signup = () => {
     ) {
       //error
       setErrorMessage("Please fill in all required fields.");
-      return; 
-    
+      return;
     } else if (account.regPassword.length < 8) {
       setErrorMessage("Password is too short.");
 
@@ -138,7 +137,7 @@ const Signup = () => {
       account.dateCreated = getCurrentDate();
       await axios.post("http://localhost:8800/sign-up", account); // new enpoint
       alert("Success");
-      navigate("/sign-in");
+      navigate("/auth/sign-in");
     } catch (err) {
       console.log(err);
     }
@@ -155,7 +154,13 @@ const Signup = () => {
         textAlign: "center",
       }}
     >
-      <h2 style={{ fontFamily: "sans-serif", paddingTop: "20px", color:"#005a80" }}>
+      <h2
+        style={{
+          fontFamily: "sans-serif",
+          paddingTop: "20px",
+          color: "#005a80",
+        }}
+      >
         Errand Catcher
       </h2>
       <form>
@@ -207,7 +212,7 @@ const Signup = () => {
                 </button>
               </div>
               <div className="m-4" style={{ paddingTop: "20px" }}>
-                Already have an account? <Link to="/sign-in">Sign in</Link>
+                Already have an account? <Link to="/auth/sign-in">Sign in</Link>
               </div>
             </div>
           )}
@@ -295,7 +300,7 @@ const Signup = () => {
                   <div className="col">
                     <label className="SUlabel">Birthday</label>
                     <input
-                    // className={errorMessage ? "error" : ""}
+                      // className={errorMessage ? "error" : ""}
                       type="date"
                       placeholder="Birthday"
                       required
@@ -307,7 +312,7 @@ const Signup = () => {
                   <div className="col">
                     <label className="SUlabel">Gender</label>
                     <select
-                    // className={errorMessage ? "error" : ""}
+                      // className={errorMessage ? "error" : ""}
                       required
                       style={{ width: "100%" }}
                       value={account.gender}
@@ -329,10 +334,9 @@ const Signup = () => {
                   }}
                 >
                   <div className="col">
-                  
                     <label className="SUlabel">Password</label>
                     <input
-                    // className={errorMessage ? "error" : ""}
+                      // className={errorMessage ? "error" : ""}
                       type="password"
                       placeholder="Password"
                       onChange={handleChange}
@@ -345,7 +349,7 @@ const Signup = () => {
                   <div className="col">
                     <label className="SUlabel">Confirm Password</label>
                     <input
-                    // className={errorMessage ? "error" : ""}
+                      // className={errorMessage ? "error" : ""}
                       type="password"
                       placeholder="Confirm Password"
                       onChange={handleChange}
@@ -364,26 +368,35 @@ const Signup = () => {
                     margin: "0 -15px",
                   }}
                 >
-                  <div className="col text-center" style={{paddingTop:"20px"}}>
-                    <button onClick={handleClick} 
-                    style={{width:"200px", 
-                            height:"30px", 
-                            borderRadius:"10px",
-                            backgroundColor:"#005a80", 
-                            color:"#fff",
-                            transition: "background-color 0.3s ease"
-                            }}
-                            className="signup-button">Sign Up</button>
+                  <div
+                    className="col text-center"
+                    style={{ paddingTop: "20px" }}
+                  >
+                    <button
+                      onClick={handleClick}
+                      style={{
+                        width: "200px",
+                        height: "30px",
+                        borderRadius: "10px",
+                        backgroundColor: "#005a80",
+                        color: "#fff",
+                        transition: "background-color 0.3s ease",
+                      }}
+                      className="signup-button"
+                    >
+                      Sign Up
+                    </button>
                   </div>
-                {/* Error message display */}
-                {errorMessage && (
-                  <div className="m-4" style={{ color: "red" }}>
-                    {errorMessage}
-                  </div>
-                )}
+                  {/* Error message display */}
+                  {errorMessage && (
+                    <div className="m-4" style={{ color: "red" }}>
+                      {errorMessage}
+                    </div>
+                  )}
                 </div>
                 <div className="m-4" style={{ paddingTop: "20px" }}>
-                  Already have an account? <Link to="/sign-in">Sign in</Link>
+                  Already have an account?{" "}
+                  <Link to="/auth/sign-in">Sign in</Link>
                 </div>
                 <div
                   className="m-4-return"

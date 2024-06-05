@@ -138,7 +138,7 @@ const SignIn = () => {
         </div>
         <p className="cont2">
           <i>
-            Don't have an Account? <Link to="/sign-up"> Sign-up!</Link>
+            Don't have an Account? <Link to="/auth/sign-up"> Sign-up!</Link>
           </i>
         </p>
       </div>

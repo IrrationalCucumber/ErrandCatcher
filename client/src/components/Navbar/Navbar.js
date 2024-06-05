@@ -214,7 +214,7 @@ export function NoUserNabar() {
   return (
     //IF NO USER
     <>
-      <nav className="navbar">
+      <nav className="navbar" style={{ position: "relative" }}>
         <div className="navbar-container justify-center">
           <Link
             // to={`/home/${userID}`}
@@ -256,7 +256,7 @@ export function NoUserNabar() {
             <li className="nav-item"></li>
           </ul>
           {button && (
-            <Button page={"/sign-in"} buttonStyle="btn--outline">
+            <Button page={"/auth/sign-in"} buttonStyle="btn--outline">
               SIGN IN
             </Button>
           )}

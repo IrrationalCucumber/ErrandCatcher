@@ -8,9 +8,7 @@ export default function Auth() {
   const { user } = useAuth();
   return (
     <>
-      <NoUserNabar />
       <Outlet />
-      <Footer />
     </>
   );
 }

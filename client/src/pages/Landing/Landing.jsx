@@ -31,7 +31,7 @@ const Landing = () => {
             time and streamlining life.
           </p>
           <div className="ld_btn">
-            <Link to="sign-up" id="getStartedLink">
+            <Link to="/auth/sign-up" id="getStartedLink">
               <i className="fa-solid fa-house"></i> GET STARTED
             </Link>
           </div>
