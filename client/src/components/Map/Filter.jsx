@@ -11,7 +11,7 @@ function Filter({ onFilterChange }) {
   };
 
   return (
-    <div className="map__filter">
+    <>
       {/* <Input placeholder="Enter title here.." name="term" /> */}
       <h3 className="map__filter__text">FILTER</h3>
       <select
@@ -26,7 +26,7 @@ function Filter({ onFilterChange }) {
         <option value="Transportation">Transportations</option>
       </select>
       {/* <button onClick={SetFilters}>SEARCH</button> */}
-    </div>
+    </>
   );
 }
 

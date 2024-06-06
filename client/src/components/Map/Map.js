@@ -8,7 +8,10 @@ export default function Map(props) {
   return (
     <>
       <div className="map-wrap">
-        <Filter onFilterChange={props.change} />
+        <div div className="map__filter">
+          <Filter onFilterChange={props.change} />
+        </div>
+
         <div ref={props.mapContainer} className="map" />
       </div>
     </>

@@ -98,6 +98,14 @@
  
 }
 
+/**
+MAP
+*/
+.landing__map{
+   margin: 50px;   
+   border: 2px solid;
+}
+
 .Services{
    margin: 50px;
 }
