@@ -297,7 +297,7 @@ const AccountList = () => {
   };
 
   return (
-    <div>
+    <div className="containerAcc">
       <h1
         className="header"
         style={{

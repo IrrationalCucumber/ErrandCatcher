@@ -1,0 +1,86 @@
+.landing__cont{
+    margin: 50px;   
+    border: 2px solid;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    height: 500px;
+    background-color: rgb(43, 137, 224);
+}
+
+
+
+.landing__text__right{
+    width: 55%;
+    height: inherit;
+    right: 0;
+    color: white;
+   
+}
+
+.landing__service__btn__lt{
+    position: relative;
+    left:30%;
+    width: 150px;
+    height: 50px;
+    background: none;
+    border: none;
+    color: white;
+    text-decoration: underline;
+}
+
+.landing__service__btn__lt:hover{
+    zoom: 1;
+    left: 30%;
+    color: black;
+    background: white;
+}
+
+.landing__service__btn__rt{
+    position: relative;
+    left: 50%;
+    width: 150px;
+    height: 50px;
+    background: none;
+    border: none;
+    color: white;
+    text-decoration: underline;
+
+}
+
+.landing__service__btn__rt:hover{
+    zoom: 1;
+    color: black;
+    background: white;
+}
+
+.landing__bg__left{
+    width: 45%; 
+    height: 100%;
+  align-items: center;
+  display: flex;
+    /* background: rgb(255, 255, 255) url("../../../../public/images/hs-i-4.jpg") no-repeat fixed left / 70%; */
+    border-radius: 0 50% 50% 0;
+}
+
+.landing__bg__right{
+    width: 45%;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    /* background: rgb(255, 255, 255) url("../../../../public/images/hs-o-1.jpg") no-repeat fixed right / 70%; */
+    border-radius: 50% 0 0 50%;
+}
+.landing__bg__right img{
+   z-index: -1;
+}
+.landing__text__left{
+    width: 55%;
+    right: 0;
+    color: white;
+}
+/* 
+.landing__cont:hover{
+   
+} */
+
