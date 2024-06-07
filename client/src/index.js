@@ -22,8 +22,8 @@ import Us from "./pages/Dashboard/Us";
 import About from "./pages/Dashboard/About";
 import Contact from "./pages/Dashboard/Contact";
 //UPDATE/REGISTER
-import SignIn from "./pages/Auth/SignIn";
-import SignUp from "./pages/Auth/Signup";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp/Signup";
 import UpdateAccount from "./pages/profile/UpdateAccount";
 import Profile from "./pages/profile/Profile";
 //ADMIN Routes
@@ -201,16 +201,10 @@ const router = createBrowserRouter([
     element: <Notification />,
   },
 
+  { path: "sign-in", element: <SignIn /> },
   {
-    path: "/auth/",
-    element: <Auth />,
-    children: [
-      { path: "sign-in", element: <SignIn /> },
-      {
-        path: "sign-up",
-        element: <SignUp />,
-      },
-    ],
+    path: "sign-up",
+    element: <SignUp />,
   },
 
   { path: "/test", element: <MapComponent /> },

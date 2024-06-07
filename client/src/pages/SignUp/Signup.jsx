@@ -137,7 +137,7 @@ const Signup = () => {
       account.dateCreated = getCurrentDate();
       await axios.post("http://localhost:8800/sign-up", account); // new enpoint
       alert("Success");
-      navigate("/auth/sign-in");
+      navigate("/sign-in");
     } catch (err) {
       console.log(err);
     }
@@ -212,7 +212,7 @@ const Signup = () => {
                 </button>
               </div>
               <div className="m-4" style={{ paddingTop: "20px" }}>
-                Already have an account? <Link to="/auth/sign-in">Sign in</Link>
+                Already have an account? <Link to="/sign-in">Sign in</Link>
               </div>
             </div>
           )}
@@ -395,8 +395,7 @@ const Signup = () => {
                   )}
                 </div>
                 <div className="m-4" style={{ paddingTop: "20px" }}>
-                  Already have an account?{" "}
-                  <Link to="/auth/sign-in">Sign in</Link>
+                  Already have an account? <Link to="/sign-in">Sign in</Link>
                 </div>
                 <div
                   className="m-4-return"

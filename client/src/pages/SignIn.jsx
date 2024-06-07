@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import "./css/Error.css"; // Import your custom CSS for stylin
-import "./css/signin.css";
-import { useAuth } from "../../components/AuthContext";
+import "./Error.css"; // Import your custom CSS for stylin
+import "./signin.css";
+import { useAuth } from "../components/AuthContext";
 import Alert from "@mui/joy/Alert";
 
 const SignIn = () => {
@@ -138,7 +138,7 @@ const SignIn = () => {
         </div>
         <p className="cont2">
           <i>
-            Don't have an Account? <Link to="/auth/sign-up"> Sign-up!</Link>
+            Don't have an Account? <Link to="/sign-up"> Sign-up!</Link>
           </i>
         </p>
       </div>

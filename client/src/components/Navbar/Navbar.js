@@ -256,7 +256,7 @@ export function NoUserNabar() {
             <li className="nav-item"></li>
           </ul>
           {button && (
-            <Button page={"/auth/sign-in"} buttonStyle="btn--outline">
+            <Button page={"/sign-in"} buttonStyle="btn--outline">
               SIGN IN
             </Button>
           )}
