@@ -66,56 +66,59 @@ const HomeServices = () => {
 
   return (
     <>
-      <Navbar />
+      {/* <h1 className="headingTranspo">Transportation</h1> */}
 
-      <h1 style={{ paddingTop: "20px", paddingLeft: "20px" }}>Home Services</h1>
-      <div
-        className="search-bar"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          margin: "44px 5%",
-        }}
-      >
-        <input
-          type="text"
-          placeholder="Search..."
-          value={searchQuery}
-          onChange={handleSearchChange}
-        />
-        <button>Search</button>
+      <div className="search-barborder">
+        <h1 className="headingTranspo">Home Services</h1>
+
+        <div className="box">
+          <input
+            className="inputSearch"
+            type="text"
+            placeholder="Search..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
+
+          <select
+            className="selected"
+            name="location"
+            id="location"
+            value={filter.location}
+            onChange={handleChange}
+          >
+            <option value="">Choose Location....</option>
+            <option value="Cebu">Cebu</option>
+            <option value="Cordova">Cordova</option>
+            <option value="Mandaue">Mandaue</option>
+            <option value="Lapu-Lapu">Lapu-Lapu</option>
+            <option value="Talisay">Talisay</option>
+          </select>
+
+          <div className="Paylabel">
+            <label htmlFor="">
+              Payment range:
+              <input
+                className="inputNum"
+                type="number"
+                placeholder="Starting range..."
+                name="minPay"
+                onChange={handleChange}
+                value={filter.minPay}
+              />
+              <input
+                className="inputNum"
+                type="number"
+                placeholder="Maximum range..."
+                name="maxPay"
+                onChange={handleChange}
+                value={filter.maxPay}
+              />
+            </label>
+          </div>
+        </div>
       </div>
-      <select
-        name="location"
-        id="location"
-        value={filter.location}
-        onChange={handleChange}
-      >
-        <option value="">Choose Location....</option>
-        <option value="Cebu">Cebu</option>
-        <option value="Cordova">Cordova</option>
-        <option value="Mandaue">Mandaue</option>
-        <option value="Lapu-Lapu">Lapu-Lapu</option>
-        <option value="Talisay">Talisay</option>
-      </select>
-      <label htmlFor="">
-        Payment range
-        <input
-          type="number"
-          placeholder="Starting range..."
-          name="minPay"
-          onChange={handleChange}
-          value={filter.minPay}
-        />
-        <input
-          type="number"
-          placeholder="Maximum range..."
-          name="maxPay"
-          onChange={handleChange}
-          value={filter.maxPay}
-        />
-      </label>
+
       <CatCards commissions={filteredCommissions} />
     </>
   );

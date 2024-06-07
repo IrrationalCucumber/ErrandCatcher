@@ -5,6 +5,7 @@ import Footer from "../../components/Footer";
 // import axios from "axios";
 import "./Landing.css";
 import { LandingMap } from "../../components/Map/Map";
+import { LandingServiceDetails } from "../../components/Dashbaord/Landing";
 
 const Landing = () => {
   return (
@@ -30,7 +31,7 @@ const Landing = () => {
             time and streamlining life.
           </p>
           <div className="ld_btn">
-            <Link to="sign-up" id="getStartedLink">
+            <Link to="/sign-up" id="getStartedLink">
               <i className="fa-solid fa-house"></i> GET STARTED
             </Link>
           </div>
@@ -44,6 +45,7 @@ const Landing = () => {
       <div className="landing__map">
         <LandingMap></LandingMap>
       </div>
+      <LandingServiceDetails />
       <section className="Services" id="Services">
         <h1>
           <span>S</span>ervices
