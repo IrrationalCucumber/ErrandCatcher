@@ -230,4 +230,20 @@ app.post("/process-payment", async (req, res) => {
   return res.send({ url: checkout.data.attributes.checkout_url });
 });
 
+// const bcrypt = require("bcrypt");
+
+// const plainPassword = "paul";
+// const hashedPassword =
+//   "$2y$04$ZB9ht9AaY1eSZL3.6H9oweFD.1LtixWhikEbkpPcbABS0iljLOhHG";
+
+// bcrypt.compare(plainPassword, hashedPassword, (err, isMatch) => {
+//   if (err) {
+//     console.error("Error comparing passwords:", err);
+//   } else if (isMatch) {
+//     console.log("Passwords match!");
+//   } else {
+//     console.log("Passwords do not match!");
+//   }
+// });
+
 module.exports;

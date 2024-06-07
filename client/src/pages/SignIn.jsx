@@ -32,8 +32,8 @@ const SignIn = () => {
       });
 
       console.log("Response from server:", res.data); //debug
-      const user = res.data[0];
-
+      const user = res.data;
+      console.log(user);
       //revert login() function for PrivateBrowser
       if (user != null) {
         const userData = {
@@ -45,8 +45,6 @@ const SignIn = () => {
         updateUser(userData);
         navigate(`/dashboard/home/`);
         //login();
-      } else {
-        setErrorMessage("Invalid password/username");
       }
       //handle me function
       if (rememberMe) {

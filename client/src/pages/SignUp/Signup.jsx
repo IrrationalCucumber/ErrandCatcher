@@ -83,18 +83,6 @@ const Signup = () => {
     resetForm();
   };
 
-  // const onSubmit = async (data) => {
-  //   try {
-  //     // Your HTTP request code for sign-up goes here
-  //     console.log(data);
-  //     // Redirect to login page after successful sign-up
-  //     window.location.href = "/sign-in";
-  //   } catch (error) {
-  //     console.error(error);
-  //     // Handle error
-  //   }
-  // };
-
   const handleChange = (e) => {
     // For the 'gender' field, directly set the value without using spread syntax
 
@@ -117,7 +105,7 @@ const Signup = () => {
       !account.regPassword ||
       !account.regPassword2 ||
       !account.email ||
-      !account.contactNumber ||
+      //!account.contactNumber ||
       !account.type
     ) {
       //error
@@ -136,7 +124,7 @@ const Signup = () => {
     try {
       account.dateCreated = getCurrentDate();
       await axios.post("http://localhost:8800/sign-up", account); // new enpoint
-      alert("Success");
+      //alert("Success");
       navigate("/sign-in");
     } catch (err) {
       console.log(err);
