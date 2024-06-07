@@ -214,7 +214,7 @@ export function NoUserNabar() {
   return (
     //IF NO USER
     <>
-      <nav className="navbar">
+      <nav className="navbar" style={{ position: "relative" }}>
         <div className="navbar-container justify-center">
           <Link
             // to={`/home/${userID}`}

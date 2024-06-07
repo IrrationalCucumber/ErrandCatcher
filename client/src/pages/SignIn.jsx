@@ -124,12 +124,14 @@ const SignIn = () => {
           <button
             type="button"
             onClick={handleClick}
-            style={{ backgroundColor: "#1679AB", 
-                    fontSize: "16px",
-                    width: "200px", 
-                    height:"40px", 
-                    borderRadius:"20px", 
-                    color:"#ffff" }}
+            style={{
+              backgroundColor: "#1679AB",
+              fontSize: "16px",
+              width: "200px",
+              height: "40px",
+              borderRadius: "20px",
+              color: "#ffff",
+            }}
           >
             Sign In
           </button>
