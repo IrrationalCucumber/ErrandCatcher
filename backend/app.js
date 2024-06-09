@@ -215,7 +215,7 @@ app.post("/process-payment/:employerID", async (req, res) => {
   const description = req.body.errand;
   const id = req.body.id;
   // const employerID = req.params.employerID;
-  const employerID = req.params;
+  const employerid = req.body.employerID;
 
   // const total = Math.round(distance) * 15 + baseAmount;
   // Paymongo api key in base64, convert api key to base64
@@ -235,22 +235,22 @@ app.post("/process-payment/:employerID", async (req, res) => {
   // extract or access data object from the Paymongo api response
   const checkoutId = checkout.data.id;
   const paymentId = checkout.data.attributes.payment_intent.id;
-  const currency = checkout.data.attributes.line_items.currency;
-  // FROM_UNIXTIME(paid) AS paid_datetime coverter  sample date: 1717515231
+  // const currency = checkout.data.attributes.line_items.currency;
+  // FROM_UNIXTIME(paid) AS paid_datetime coverter  sample date: 1717515231  
   const paid = checkout.data.attributes.created_at; // FROM_UNIXTIME(paid) AS paid_datetime coverter
 
   // Save the response Paymongo API
   const q =
-    "INSERT INTO errandtransaction (total, type, description, checkoutId, paymentId, currency, paid) VALUES ( ?, ?, ?, ?, ?, ?, FROM_UNIXTIME(?))";
+    `INSERT INTO invoice (total, type, description, checkoutId, paymentId, paid, invoiceErrandID, invoiceemployerID) VALUES ( ?, ?, ?, ?, ?, FROM_UNIXTIME(?), ?, ? )`;
   const values = [
     total,
     type,
     description,
     checkoutId,
     paymentId,
-    currency,
     paid,
-    employerID,
+    id,
+    employerid,
   ];
 
   db.query(q, values, (err, results) => {
@@ -287,7 +287,7 @@ app.get("/payment-details/:sessionId", async (req, res) => {
 app.get("/transactions/:employerID", (req, res) => {
   const { employerID } = req.params;
   const q =
-    "SELECT checkoutId, total, type, paymentId, description, DATE_FORMAT(paid, '%Y-%m-%dT%TZ') AS paid FROM errandtransaction WHERE employerID = ?";
+    "SELECT checkoutId, total, type, paymentId, description, DATE_FORMAT(paid, '%Y-%m-%dT%TZ') AS paid FROM invoice WHERE invoiceemployerID = ?";
 
   db.query(q, [employerID], (err, data) => {
     if (err) {
