@@ -95,7 +95,7 @@ function RequestPage() {
                 <button
                   className="RequestImage"
                   style={buttonStyle}
-                  onClick={() => handleImageButtonClick(request.images)}
+                  onClick={() => handleImageButtonClick(request)}
                 >
                   View Image
                 </button>
