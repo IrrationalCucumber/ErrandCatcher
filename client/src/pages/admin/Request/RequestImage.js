@@ -1,20 +1,21 @@
-import { DialogContent, DialogTitle } from "@mui/joy";
+import { DialogContent, DialogTitle, ModalClose } from "@mui/joy";
 
 const ImageModal = ({ request, handleClose }) => {
   return (
     <>
+      <ModalClose />
       <DialogTitle>{request.id}</DialogTitle>
       <DialogContent>
         <>
           <img
             src={`http://localhost:8800/images/docu/${request.id_picture_front}`}
             alt={`Image `}
-            // style={imageStyle}
+            style={imageStyle}
           />
           <img
             src={`http://localhost:8800/images/docu/${request.id_picture_back}`}
             alt={`Image `}
-            // style={imageStyle}
+            style={imageStyle}
           />
         </>
       </DialogContent>
@@ -81,7 +82,8 @@ const scrollContainerStyle = {
 };
 
 const imageStyle = {
-  padding: "10px",
+  padding: "20px",
+  margin: "10px",
   maxWidth: "100%",
 };
 
