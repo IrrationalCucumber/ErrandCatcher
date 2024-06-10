@@ -1,25 +1,44 @@
+import { DialogContent, DialogTitle } from "@mui/joy";
+
 const ImageModal = ({ request, handleClose }) => {
   return (
-    <div className="modal" style={modalStyle}>
-      <div className="modal-content" style={modalContentStyle}>
-        <span className="close" onClick={handleClose} style={closeStyle}>
-          &times;
-        </span>
-        <h2 style={{ margin: "20px" }}>Images</h2>
-        <div className="scroll-container" style={scrollContainerStyle}>
+    <>
+      <DialogTitle>{request.id}</DialogTitle>
+      <DialogContent>
+        <>
           <img
             src={`http://localhost:8800/images/docu/${request.id_picture_front}`}
             alt={`Image `}
-            style={imageStyle}
+            // style={imageStyle}
           />
           <img
             src={`http://localhost:8800/images/docu/${request.id_picture_back}`}
             alt={`Image `}
-            style={imageStyle}
+            // style={imageStyle}
           />
-        </div>
-      </div>
-    </div>
+        </>
+      </DialogContent>
+    </>
+    // <div className="modal" style={modalStyle}>
+    //   <div className="modal-content" style={modalContentStyle}>
+    //     <span className="close" onClick={handleClose} style={closeStyle}>
+    //       &times;
+    //     </span>
+    //     <h2 style={{ margin: "20px" }}>Images</h2>
+    //     <div className="scroll-container" style={scrollContainerStyle}>
+    //       <img
+    //         src={`http://localhost:8800/images/docu/${request.id_picture_front}`}
+    //         alt={`Image `}
+    //         style={imageStyle}
+    //       />
+    //       <img
+    //         src={`http://localhost:8800/images/docu/${request.id_picture_back}`}
+    //         alt={`Image `}
+    //         style={imageStyle}
+    //       />
+    //     </div>
+    //   </div>
+    // </div>
   );
 };
 

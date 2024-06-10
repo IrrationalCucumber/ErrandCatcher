@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import RequestImages from "./RequestImage";
 import "../Request/request.css";
+import { Modal, ModalDialog } from "@mui/joy";
 
 function RequestPage() {
   // Mock list of verification requests
@@ -60,68 +61,82 @@ function RequestPage() {
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  //request image modal
+  const [layout, setLayout] = useState(undefined);
+  const handleOpenModal = (request) => {
+    setLayout("fullscreen");
+    setSelectedImages(request);
+  };
+
   return (
-    <div className="containerReq">
-      <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
-        Verification Requests
-      </h1>
-      <table
-        style={{ margin: "0 auto", width: "80%", borderCollapse: "collapse" }}
-      >
-        <thead>
-          <tr>
-            <th style={{ ...tableHeaderStyle, width: "25%" }}>ID</th>
-            <th style={{ ...tableHeaderStyle, width: "40%" }}>User</th>
-            <th style={{ ...tableHeaderStyle, width: "30%" }}>Type</th>
-            <th style={{ ...tableHeaderStyle, width: "10%" }}>Status</th>
-            <th style={{ ...tableHeaderStyle, width: "25%" }}>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {requests.map((request) => (
-            <tr key={request.id} style={tableRowStyle}>
-              <td style={tableCellStyle}>{request.userID}</td>
-              <td style={tableCellStyle}>{request.username}</td>
-              <td style={tableCellStyle}>{request.accountType}</td>
-              <td style={tableCellStyle}>{request.requestStatus}</td>
-              <td style={tableCellStyle}>
-                <button
-                  style={buttonStyle}
-                  onClick={() => handleClick(request)}
-                >
-                  View
-                </button>
-                {/* for Image request */}
-                <button
-                  className="RequestImage"
-                  style={buttonStyle}
-                  onClick={() => handleImageButtonClick(request)}
-                >
-                  View Image
-                </button>
-              </td>
+    <>
+      <div className="containerReq">
+        <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
+          Verification Requests
+        </h1>
+        <table
+          style={{ margin: "0 auto", width: "80%", borderCollapse: "collapse" }}
+        >
+          <thead>
+            <tr>
+              <th style={{ ...tableHeaderStyle, width: "25%" }}>ID</th>
+              <th style={{ ...tableHeaderStyle, width: "40%" }}>User</th>
+              <th style={{ ...tableHeaderStyle, width: "30%" }}>Type</th>
+              <th style={{ ...tableHeaderStyle, width: "10%" }}>Status</th>
+              <th style={{ ...tableHeaderStyle, width: "25%" }}>Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <Pagination
-        itemsPerPage={itemsPerPage}
-        totalItems={requests.length}
-        paginate={paginate}
-      />
-      {showModal && (
-        <RequestModal
-          request={selectedRequest}
-          handleClose={handleCloseModal}
+          </thead>
+          <tbody>
+            {requests.map((request) => (
+              <tr key={request.id} style={tableRowStyle}>
+                <td style={tableCellStyle}>{request.userID}</td>
+                <td style={tableCellStyle}>{request.username}</td>
+                <td style={tableCellStyle}>{request.accountType}</td>
+                <td style={tableCellStyle}>{request.requestStatus}</td>
+                <td style={tableCellStyle}>
+                  <button
+                    style={buttonStyle}
+                    onClick={() => handleClick(request)}
+                  >
+                    View
+                  </button>
+                  {/* for Image request */}
+                  <button
+                    className="RequestImage"
+                    style={buttonStyle}
+                    onClick={() => handleOpenModal(request)}
+                  >
+                    View Image
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <Pagination
+          itemsPerPage={itemsPerPage}
+          totalItems={requests.length}
+          paginate={paginate}
         />
-      )}
-      {showImageModal && (
-        <RequestImages
-          request={selectedImages}
-          handleClose={handleCloseImageModal}
-        />
-      )}
-    </div>
+        {showModal && (
+          <RequestModal
+            request={selectedRequest}
+            handleClose={handleCloseModal}
+          />
+        )}
+        {showImageModal && (
+          <RequestImages
+            request={selectedImages}
+            handleClose={handleCloseImageModal}
+          />
+        )}
+      </div>
+      <Modal open={!!layout} onClose={() => setLayout(undefined)}>
+        <ModalDialog layout={layout}>
+          <RequestImages request={selectedImages} />
+        </ModalDialog>
+      </Modal>
+    </>
   );
 }
 
