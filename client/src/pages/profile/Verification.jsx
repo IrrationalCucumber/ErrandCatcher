@@ -221,10 +221,11 @@ function Verification() {
           <div className="input-rows2">
             <input
               type="file"
-              id="fileInput2"
-              name="image2"
+              id="fileInput1"
+              name="image1"
               accept="image/*"
               onChange={handleImage}
+              required
             />
             <input
               type="file"
@@ -232,6 +233,7 @@ function Verification() {
               name="image2"
               accept="image/*"
               onChange={handleImage}
+              required
             />
           </div>
           <button onClick={handleUpload}>SUBMIT</button>

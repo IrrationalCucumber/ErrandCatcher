@@ -6,6 +6,7 @@ import Pagination from "../../components/Pagination.js";
 import Table from "../../components/Table.js";
 import Select from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
+import { DisplayDate } from "../../components/DisplayDate.js";
 
 const CommissionList = () => {
   const [commissions, setCommissions] = useState([]);
@@ -216,9 +217,9 @@ const CommissionList = () => {
             `${Commission.userFirstname} ${Commission.userLastname}`,
             Commission.commissionType,
             Commission.commissionPay,
-            new Date(Commission.DatePosted).toLocaleDateString(),
+            DisplayDate(Commission.DatePosted),
             Commission.DateCompleted === ""
-              ? new Date(Commission.DateCompleted).toLocaleDateString()
+              ? DisplayDate(Commission.DateCompleted)
               : "",
             Commission.commissionStatus,
             <>
