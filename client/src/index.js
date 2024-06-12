@@ -57,7 +57,6 @@ import Service from "./pages/Services/Service";
 //restrict
 import { AuthProvider } from "./components/AuthContext";
 import AdminPage from "./pages/admin/AdminPage";
-import Auth from "./pages/Auth/Auth";
 
 const router = createBrowserRouter([
   {
