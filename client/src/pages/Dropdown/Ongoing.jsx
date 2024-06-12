@@ -4,6 +4,7 @@ import OngoingCards from "./OngoingCards";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../../components/AuthContext";
+import "./ongoing.css"
 
 function Ongoing() {
   /**
@@ -33,7 +34,7 @@ function Ongoing() {
   }, []);
 
   return (
-    <div>
+    <div className="concards">
       {/* No user ID */}
 
       <OngoingCards commissions={commissions} to={`/view-errand/${userID}`} />

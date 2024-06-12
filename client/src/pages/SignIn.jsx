@@ -32,8 +32,8 @@ const SignIn = () => {
       });
 
       console.log("Response from server:", res.data); //debug
-      const user = res.data[0];
-
+      const user = res.data;
+      console.log(user);
       //revert login() function for PrivateBrowser
       if (user != null) {
         const userData = {
@@ -45,8 +45,6 @@ const SignIn = () => {
         updateUser(userData);
         navigate(`/dashboard/home/`);
         //login();
-      } else {
-        setErrorMessage("Invalid password/username");
       }
       //handle me function
       if (rememberMe) {
@@ -108,7 +106,7 @@ const SignIn = () => {
         <label
           className="rem"
           htmlFor="remember Me"
-          style={{ paddingLeft: "85px", fontSize: "12px" }}
+          style={{ paddingLeft: "140px", fontSize: "12px" }}
         >
           Remember&nbsp;Me
           <input
@@ -124,7 +122,14 @@ const SignIn = () => {
           <button
             type="button"
             onClick={handleClick}
-            style={{ backgroundColor: "#1679AB", fontSize: "16px" }}
+            style={{
+              backgroundColor: "#1679AB",
+              fontSize: "16px",
+              width: "200px",
+              height: "40px",
+              borderRadius: "20px",
+              color: "#ffff",
+            }}
           >
             Sign In
           </button>

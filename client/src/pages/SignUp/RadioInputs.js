@@ -1,14 +1,18 @@
-//for the selection of the user
 import React from "react";
 
-function RadioInputs({ options, selectedOption, onChange }) {
+function RadioInputs({ selectedOption, onChange }) {
+  const options = [
+    { value: "employer", label: "I'm an Employer, looking for Catcher" },
+    { value: "catcher", label: "I'm a Catcher, looking for Errands" }
+  ];  
+
   return (
     <div className="radio-container">
       <div className="grid-container">
         {options.map((option, index) => (
           <div className="grid-item" key={index}>
             <div className="radio-wrapper">
-              <div className={`radio-header ${selectedOption === option.value ? "selected" : ""}`}>
+              <div className={`radio-header ${selectedOption === option.value ? "selected" : ""}`} >
                 <input
                   type="radio"
                   id={option.value}
@@ -18,13 +22,13 @@ function RadioInputs({ options, selectedOption, onChange }) {
                 />
                 <label htmlFor={option.value} className="radio-label">{option.label}</label>
               </div>
-              <div className="separator"></div>
+              {/* <div className="separator"></div>
               <div className="radio-description">
                 <h3>
-                  I'm {option.value === "employer" ? "an employer" : "a catcher"},
+                  I'm {option.value === "employer" ? "an employer" :  "a catcher"},
                   looking for {option.value === "employer" ? "catcher" : "errands"}.
                 </h3>
-              </div>
+              </div> */}
             </div>
           </div>
         ))}
@@ -56,7 +60,8 @@ function RadioInputs({ options, selectedOption, onChange }) {
           .radio-header {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
+            margin: 10px;
+            
           }
           
           .radio-header.selected {
@@ -76,6 +81,7 @@ function RadioInputs({ options, selectedOption, onChange }) {
           .radio-label {
             margin-left: 10px;
             color: black;
+            font-size: 130px; 
           }
           
           .separator {
