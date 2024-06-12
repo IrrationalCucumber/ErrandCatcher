@@ -13,6 +13,8 @@ import Pagination from "../../components/Pagination";
 import "./application.css";
 import { useAuth } from "../../components/AuthContext";
 import AddChatButton from "../../components/Chat/AddChatButton";
+import { DisplayDate } from "../../components/DisplayDate";
+
 
 function Application() {
   const { user } = useAuth();
@@ -110,7 +112,7 @@ function Application() {
 
   const headers = ["DATE", "EMPLOYER", "ERRAND TITLE", "STATUS", "ACTION", ""];
   const applicationData = currentItems.map((applicant) => [
-    formattedDate(applicant.applicationDate),
+    DisplayDate(applicant.applicationDate),
     `${applicant.userFirstname} ${applicant.userLastname}`,
     applicant.commissionTitle,
     applicant.applicationStatus,

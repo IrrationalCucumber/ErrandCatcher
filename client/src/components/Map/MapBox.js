@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import * as MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
 import axios from "axios";
-import "./MapBox.css";
+import "./css/MapBox.css";
 
 export default function Map({ accessToken, getDistanceCallback }) {
   const mapContainer = useRef(null);

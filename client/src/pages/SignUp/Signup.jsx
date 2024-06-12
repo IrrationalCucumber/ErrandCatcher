@@ -21,8 +21,10 @@ const Signup = () => {
   });
 
   //handle state of error message
-  const [employerErrorMessage, setEmployerErrorMessage] = useState("");
-  const [catcherErrorMessage, setCatcherErrorMessage] = useState("");
+  // const [employerErrorMessage, setEmployerErrorMessage] = useState("");
+  // const [catcherErrorMessage, setCatcherErrorMessage] = useState("");
+
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
   const resetForm = () => {
@@ -39,8 +41,9 @@ const Signup = () => {
       type: "",
       dateCreated: "",
     });
-    setEmployerErrorMessage("");
-    setCatcherErrorMessage("");
+    // setEmployerErrorMessage("");
+    // setCatcherErrorMessage("");
+    setErrorMessage("");
   };
 
   const getCurrentDate = () => {
@@ -80,18 +83,6 @@ const Signup = () => {
     resetForm();
   };
 
-  // const onSubmit = async (data) => {
-  //   try {
-  //     // Your HTTP request code for sign-up goes here
-  //     console.log(data);
-  //     // Redirect to login page after successful sign-up
-  //     window.location.href = "/sign-in";
-  //   } catch (error) {
-  //     console.error(error);
-  //     // Handle error
-  //   }
-  // };
-
   const handleChange = (e) => {
     // For the 'gender' field, directly set the value without using spread syntax
 
@@ -105,6 +96,7 @@ const Signup = () => {
 
   //save the data into db
   const handleClick = async (e) => {
+    e.preventDefault();
     //if fileds are empty
     //error message
     if (
@@ -113,15 +105,18 @@ const Signup = () => {
       !account.regPassword ||
       !account.regPassword2 ||
       !account.email ||
-      !account.contactNumber ||
+      //!account.contactNumber ||
       !account.type
     ) {
+      //error
+      setErrorMessage("Please fill in all required fields.");
+      return;
     } else if (account.regPassword.length < 8) {
-      setEmployerErrorMessage("Password is too short.");
+      setErrorMessage("Password is too short.");
 
       return;
     } else if (account.regPassword !== account.regPassword2) {
-      setEmployerErrorMessage("Password does not match.");
+      setErrorMessage("Password does not match.");
       return;
     }
     //save to db if no error
@@ -129,7 +124,7 @@ const Signup = () => {
     try {
       account.dateCreated = getCurrentDate();
       await axios.post("http://localhost:8800/sign-up", account); // new enpoint
-      alert("Success");
+      //alert("Success");
       navigate("/sign-in");
     } catch (err) {
       console.log(err);
@@ -147,7 +142,13 @@ const Signup = () => {
         textAlign: "center",
       }}
     >
-      <h2 style={{ fontFamily: "sans-serif", paddingTop: "20px" }}>
+      <h2
+        style={{
+          fontFamily: "sans-serif",
+          paddingTop: "20px",
+          color: "#005a80",
+        }}
+      >
         Errand Catcher
       </h2>
       <form>
@@ -220,6 +221,7 @@ const Signup = () => {
                   <div className="col">
                     <label className="SUlabel">Username</label>
                     <input
+                      // className={errorMessage ? "error" : ""}
                       type="text"
                       placeholder="Username"
                       onChange={handleChange}
@@ -232,6 +234,7 @@ const Signup = () => {
                   <div className="col">
                     <label className="SUlabel">Email Address</label>
                     <input
+                      // className={errorMessage ? "error" : ""}
                       type="email"
                       placeholder="Email Address"
                       onChange={handleChange}
@@ -252,6 +255,7 @@ const Signup = () => {
                   <div className="col">
                     <label className="SUlabel">First Name</label>
                     <input
+                      // className={errorMessage ? "error" : ""}
                       type="text"
                       placeholder="First Name"
                       onChange={handleChange}
@@ -263,6 +267,7 @@ const Signup = () => {
                   <div className="col">
                     <label className="SUlabel">Last Name</label>
                     <input
+                      // className={errorMessage ? "error" : ""}
                       type="text"
                       placeholder="Last Name"
                       onChange={handleChange}
@@ -283,6 +288,7 @@ const Signup = () => {
                   <div className="col">
                     <label className="SUlabel">Birthday</label>
                     <input
+                      // className={errorMessage ? "error" : ""}
                       type="date"
                       placeholder="Birthday"
                       required
@@ -294,6 +300,7 @@ const Signup = () => {
                   <div className="col">
                     <label className="SUlabel">Gender</label>
                     <select
+                      // className={errorMessage ? "error" : ""}
                       required
                       style={{ width: "100%" }}
                       value={account.gender}
@@ -317,6 +324,7 @@ const Signup = () => {
                   <div className="col">
                     <label className="SUlabel">Password</label>
                     <input
+                      // className={errorMessage ? "error" : ""}
                       type="password"
                       placeholder="Password"
                       onChange={handleChange}
@@ -329,6 +337,7 @@ const Signup = () => {
                   <div className="col">
                     <label className="SUlabel">Confirm Password</label>
                     <input
+                      // className={errorMessage ? "error" : ""}
                       type="password"
                       placeholder="Confirm Password"
                       onChange={handleChange}
@@ -347,9 +356,31 @@ const Signup = () => {
                     margin: "0 -15px",
                   }}
                 >
-                  <div className="col text-center">
-                    <button onClick={handleClick}>Sign Up</button>
+                  <div
+                    className="col text-center"
+                    style={{ paddingTop: "20px" }}
+                  >
+                    <button
+                      onClick={handleClick}
+                      style={{
+                        width: "200px",
+                        height: "30px",
+                        borderRadius: "10px",
+                        backgroundColor: "#005a80",
+                        color: "#fff",
+                        transition: "background-color 0.3s ease",
+                      }}
+                      className="signup-button"
+                    >
+                      Sign Up
+                    </button>
                   </div>
+                  {/* Error message display */}
+                  {errorMessage && (
+                    <div className="m-4" style={{ color: "red" }}>
+                      {errorMessage}
+                    </div>
+                  )}
                 </div>
                 <div className="m-4" style={{ paddingTop: "20px" }}>
                   Already have an account? <Link to="/sign-in">Sign in</Link>
@@ -440,6 +471,19 @@ const Signup = () => {
             color: #007bff;
             text-decoration: underline; 
             margin-right: 5px;
+          }
+
+          .signup-button {
+            width: 200px;
+            height: 30px;
+            border-radius: 10px;
+            background-color: #005a80;
+            color: #fff;
+            transition: background-color 0.3s ease;
+          }
+          
+          .signup-button:hover {
+            background-color: #04354a;
           }
         `}
       </style>

@@ -40,14 +40,14 @@ function Dashboard() {
             <>
               <Navbar
                 page1="REQUESTS"
-                one={`/dashboard/request`}
+                one={`/dashboard/admin/request`}
                 // {`admin-home/${userID}`}
                 page2="ACCOUNTS"
-                commissionList={`/dashboard/accounts`}
+                commissionList={`/dashboard/admin/accounts`}
                 page3="ERRANDS"
-                applicants={`/dashboard/commission-list`}
+                applicants={`/dashboard/admin/commission-list`}
                 page4="MAP"
-                map={`/dashboard/map`}
+                map={`/dashboard/admin/map`}
               />
             </>
           )}
