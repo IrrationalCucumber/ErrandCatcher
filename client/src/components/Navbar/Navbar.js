@@ -2,12 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-//import { Button } from "./NavButton";
 //import "./Navbar.css";
 import { useAuth } from "../AuthContext";
 import NotificationIcon from "./notif-icon";
 import NavDropdown from "./NavDropdown";
 import axios from "axios";
+import { Button } from "./NavButton";
 
 function Navbar(props) {
   const { user } = useAuth();
@@ -51,14 +51,6 @@ function Navbar(props) {
     fetchNotif();
   }, [userID]);
 
-  const handleLogout = () => {
-    // log uot user
-    // const navigate = useNavigate();
-    // const handleLogout = () => {
-    //logout();
-    //   navigate("/");
-    // };
-  };
   return (
     <>
       <nav className="navbar">
@@ -180,7 +172,7 @@ function Navbar(props) {
                     PROFILE
                   </Link>
                   <div className="sign-out-container">
-                    <button className="sign-out-button" onClick={handleLogout}>
+                    <button className="sign-out-button">
                       <i className="fa-solid fa-arrow-right-from-bracket"></i>
                     </button>
                   </div>
@@ -196,6 +188,83 @@ function Navbar(props) {
 }
 
 export default Navbar;
+
+export function NoUserNabar() {
+  //change the state of the menu
+  const [click, setClick] = useState(false);
+  const [button, setButton] = useState(true);
+  //reverse the state of the above funstion
+  const handleClick = () => setClick(!click);
+  const closeMobileMenu = () => setClick(false);
+
+  const showButton = () => {
+    if (window.innerWidth <= 960) {
+      setButton(false);
+    } else {
+      setButton(true);
+    }
+  };
+
+  useEffect(() => {
+    showButton();
+  }, []);
+
+  //handles the resizing of window
+  window.addEventListener("resize", showButton);
+  return (
+    //IF NO USER
+    <>
+      <nav className="navbar" style={{ position: "relative" }}>
+        <div className="navbar-container justify-center">
+          <Link
+            // to={`/home/${userID}`}
+            to={`/`}
+            className="navbar-logo"
+            onClick={closeMobileMenu}
+          >
+            <Link
+              //to={`/home/${userID}`}
+              to={`/`}
+              className="navbar-logo"
+              onClick={closeMobileMenu}
+            >
+              <div
+                className="logo-container"
+                style={{ backgroundColor: "transparent" }}
+              >
+                <img
+                  src="/ERicon.png"
+                  alt="ERRAND CATCHER Icon"
+                  className="logo-image"
+                  style={{
+                    width: "50px",
+                    height: "50px",
+                    background: "transparent",
+                  }} // Adjust the width and height as needed
+                />
+                <span className="logo-text">Errand Catcher</span>
+              </div>
+            </Link>
+          </Link>
+          <div className="menu-icon" onClick={handleClick}>
+            <i className={click ? "fas fa-times" : "fas fa-bars"}></i>
+          </div>
+          <ul className={click ? "nav-menu active" : "nav-menu"}>
+            <li className="nav-item"></li>
+            <li className="nav-item"></li>
+            <li className="nav-item"></li>
+            <li className="nav-item"></li>
+          </ul>
+          {button && (
+            <Button page={"/sign-in"} buttonStyle="btn--outline">
+              SIGN IN
+            </Button>
+          )}
+        </div>
+      </nav>
+    </>
+  );
+}
 
 // {button && (
 //<Button page={props.pageButton} buttonStyle="btn--outline">

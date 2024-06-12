@@ -13,26 +13,28 @@
   flex-wrap: wrap;
   /* justify-content: center; */
   margin-left: 5rem;
+  min-height: 70vh; /* if empty cards fix bottom footer
 }
 
 .cards__wrapper {
   display: relative;
   margin: 50px 0 45px 0;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjust the minmax value as needed */
-  grid-gap: 1rem;  
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(300px, 1fr)
+  ); /* Adjust the minmax value as needed */
+  grid-gap: 1rem;
 }
 
 .cards__items {
   display: flex;
   grid-template-columns: repeat(4, 1fr);
   flex-wrap: wrap;
-  gap: 20px; 
+  gap: 20px;
   justify-content: space-between;
   list-style: none;
   /*  margin: 0 -15px;
   gap: 35px;*/
-
-
 }
 
 .cards__item {
@@ -47,12 +49,11 @@
   border-radius: 10px;
   box-shadow: none; /* Add shadow for a card effect */
   transition: transform 0.3s ease; /* Add transition for hover effect */
-
 }
 
 .cards__item__link {
   display: flex;
-  flex-flow: column; 
+  flex-flow: column;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -70,13 +71,12 @@
   overflow: hidden;
   text-decoration: none;
   min-height: 85%;
-  box-shadow: 0 0 0 .5rem rgba(0, 0, 0, .1);
+  box-shadow: 0 0 0 0.5rem rgba(0, 0, 0, 0.1);
 }
 
-.cards__item__link:hover{
+.cards__item__link:hover {
   transform: scale(1.1);
 }
-
 
 .cards__item__pic-wrap {
   display: grid;
@@ -99,14 +99,14 @@
   /* border: 3px solid black; */
   border-radius: 10px;
   place-items: center;
-  box-shadow: 0 0 0 .5rem rgba(0, 0, 0, .1);    
+  box-shadow: 0 0 0 0.5rem rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
   flex-direction: column;
   box-sizing: border-box;
   scroll-behavior: smooth;
   background-color: transparent;
   overflow: hidden;
-  padding-top: 1px ;
+  padding-top: 1px;
   max-width: 14rem;
   height: 10rem;
 }
@@ -114,31 +114,31 @@
 .cards__item__img {
   height: 100%;
   width: 60%;
-  object-fit:contain;
+  object-fit: contain;
   transition: 0.5s;
   border-radius: 10px;
   background: transparent;
   float: left;
   /* margin: 5px 2px 5px 5px; */
   font-size: 15px;
-  text-align:left;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  text-align: left;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   object-fit: contain;
   transition: 0.5s;
-  border-radius: 10px; 
+  border-radius: 10px;
   padding-top: 10px;
-  background:transparent;
+  background: transparent;
 }
 
- .cards__item__img:hover {
+.cards__item__img:hover {
   transform: scale(1.1);
-} 
+}
 
 .cards__item__info {
   /* padding: 20px 10px 10px; */
   font-size: 12px;
   text-align: center;
-
 }
 
 .cards__item__text {
@@ -146,19 +146,20 @@
   font-size: 25px;
   font-weight: 600;
   line-height: 24px;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  color: rgb(17,16,16);
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  color: rgb(17, 16, 16);
   text-align: center;
   margin-left: 5px;
   padding-bottom: 10px;
-
 }
 
 .cards__item__location {
   font-size: 15px;
   font-weight: 500;
   text-align: center;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   padding-top: 0.5rem;
 }
 
@@ -176,7 +177,6 @@
   font-size: 16px;
   color: #888;
 }
-
 
 @media only screen and (min-width: 1200px) {
   .content__blog__container {

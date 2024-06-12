@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../../components/AuthContext";
+import Modals from "../../components/Modals";
 
 function OngoingCards({ commissions, to }) {
   const [isClicked, setIsClicked] = useState(false);
@@ -9,9 +10,66 @@ function OngoingCards({ commissions, to }) {
   const { user } = useAuth();
   const userID = user.userID;
 
-  const handleButtonClick = (e) => {
-    setIsClicked(true);
+  const [feedback, setFeedback] = useState({
+    catcherID: "",
+    commissionID: "",
+    feedbackComment: "",
+    feedbackCount: 0,
+    feebackDate: "",
+    employerID: "",
+  });
+  const [successMsg, setSuccessMsg] = useState("");
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [inputValue, setInputValue] = useState({ feedbacks: "" });
+
+  const getCurrentDate = () => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed, so add 1
+    const day = String(currentDate.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInputValue({ ...inputValue, [name]: value });
+    setFeedback({ ...feedback, feedbackCount: value });
+    setFeedback({ ...feedback, feedbackComment: value });
+    //setInputValue(e.target.value);
+  };
+
+  const handleStarClick = (rating) => {
+    // Update feedbackCount based on the star rating clicked
+    setFeedback({ ...feedback, feedbackCount: rating });
+  };
+
+  const handleSubmit = async (e) => {
+    // setIsClicked(true);
     // Add any other logic you want to perform when the button is clicked
+    e.preventDefault();
+    try {
+      //"http://localhost:8800/commission" - local computer
+      //"http://192.168.1.47:8800/commission" - netwrok
+      feedback.feebackDate = getCurrentDate();
+      //feedback.employerID = commission.
+
+      //feedback.commissionID = fetchLoc().commissionID;
+      const response = await axios.post("http://localhost:8800/rate", feedback);
+      setSuccessMsg(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+
+    console.log("Submitted value:", inputValue);
+    handleCloseModal();
   };
 
   const markAsCompleted = (commissionId) => {
@@ -146,8 +204,9 @@ function OngoingCards({ commissions, to }) {
                   {user.userType === "Employer" && (
                     <>
                       <button
+                        onClick={handleOpenModal}
                         style={{
-                          backgroundColor: isClicked ? "#fa9d6e" : "#facd46", // Change color when clicked
+                          backgroundColor: "#1679AB",
                           color: "#ffffff",
                           padding: "10px 10px",
                           border: "none",
@@ -160,18 +219,63 @@ function OngoingCards({ commissions, to }) {
                           fontWeight: "bold",
                           display: "block",
                           width: "130px",
-                          // Hover effects
-                          ":hover": {
-                            backgroundColor: isClicked ? "#fa9d6e" : "#ffbb33", // Change color on hover
-                          },
+                          // ":hover": {
+                          //   backgroundColor: isClicked ? "#fa9d6e" : "#ffbb33",
+                          // },
                         }}
-                        onClick={handleButtonClick}
                       >
                         Feedback
                       </button>
+
+                      {/* modal trigger if clicked */}
+                      <Modals isOpen={isModalOpen} onClose={handleCloseModal}>
+                        <h4>Rate Catcher:</h4>
+                        {[1, 2, 3, 4, 5].map((value) => (
+                          <span
+                            key={value}
+                            style={{
+                              cursor: "pointer",
+                              fontSize: "24px",
+                              color:
+                                value <= feedback.feedbackCount
+                                  ? "gold"
+                                  : "gray",
+                            }}
+                            onClick={() => handleStarClick(value)}
+                          >
+                            ★
+                          </span>
+                        ))}
+                        <h4>Feedback:</h4>
+                        <input
+                          type="text"
+                          value={inputValue.feedbackComment}
+                          onChange={handleInputChange}
+                          placeholder="Enter your comment here...."
+                          style={{
+                            marginBottom: "10px",
+                            width: "100%",
+                            padding: "10px",
+                            fontSize: "16px",
+                          }}
+                        />
+
+                        <div style={styles.buttonContainer}>
+                          <button style={styles.button} onClick={handleSubmit}>
+                            Post
+                          </button>
+                          <button
+                            style={styles.button}
+                            onClick={handleCloseModal}
+                          >
+                            Close
+                          </button>
+                        </div>
+                      </Modals>
+
                       <button
                         style={{
-                          backgroundColor: "#cccccc",
+                          backgroundColor: "grey",
                           color: "#ffffff",
                           padding: "10px 10px",
                           border: "none",
@@ -280,5 +384,31 @@ function OngoingCards({ commissions, to }) {
     </div>
   );
 }
+
+const styles = {
+  button: {
+    padding: "10px 20px",
+    fontSize: "16px",
+    color: "#fff",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    marginRight: "10px",
+    textAlign: "center",
+    backgroundColor: "#1679AB",
+    color: "white",
+    fontWeight: "bold",
+  },
+  buttonContainer: {
+    marginTop: "20px",
+    textAlign: "center",
+  },
+};
+
+// background-color: "#1679AB",
+//     color: "white",
+//     font-weight: "bold",
+//     cursor: pointer;
+//     border-radius: 10px;
 
 export default OngoingCards;
