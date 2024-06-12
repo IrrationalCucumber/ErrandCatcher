@@ -4,6 +4,7 @@
 
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "../AuthContext";
 
 function NavDropdown(props) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -17,6 +18,24 @@ function NavDropdown(props) {
 
   const profileLink = `/profile/me`; // URL for the profile page
   const signOutLink = "/sign-in"; // URL for the sign out page
+
+  const { logout } = useAuth();
+  const handleLogout = () => {
+    //   const userData = {
+    //     username: null,
+    //     userID: null,
+    //     userType: null,
+    //     status: null,
+    //   };
+    //   updateUser(userData);
+    //alert("clicked");
+    // log uot user
+
+    // const handleLogout = () => {
+    logout();
+
+    // };
+  };
 
   return (
     <div className="profile-container" style={{ position: "relative" }}>
@@ -70,7 +89,7 @@ function NavDropdown(props) {
             My Profile
           </Link>
           <Link
-            onClick={props.onClick}
+            onClick={handleLogout}
             to={signOutLink}
             style={{
               display: "block",

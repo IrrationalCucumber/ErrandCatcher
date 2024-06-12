@@ -13,11 +13,17 @@ const User = {
     db.query("SELECT * FROM  useraccount WHERE userID = ?", [id], callback);
   },
   //sign in
-  getSignIn: (username, email, password, callback) => {
+  getSignIn: (username, email, callback) => {
     db.query(
-      "SELECT * FROM UserAccount WHERE (username = ? OR userEmail = ?) AND password = ?",
-      [username, email, password],
-      callback
+      "SELECT * FROM UserAccount WHERE username = ? OR userEmail = ?",
+      [username, email],
+      (error, results) => {
+        if (error || results.length === 0) {
+          callback(error, null);
+          return;
+        }
+        callback(null, results[0]);
+      }
     );
   },
   // Add more CRUD operations as needed...
