@@ -28,6 +28,7 @@ const UpdateCommission = () => {
     destLng: 0,
     destLat: 0,
     method: "",
+    vehicle: "",
   });
 
   const [feedback, setFeedback] = useState({
@@ -122,6 +123,8 @@ const UpdateCommission = () => {
       //setImageURL(commissionTypeImages[e.target.value]);
     } else if (e.target.name === "comDescription") {
       setCommission((prev) => ({ ...prev, comDescription: e.target.value }));
+    } else if (e.target.name === "vehicle") {
+      setCommission((prev) => ({ ...prev, vehicle: e.target.value }));
     } else {
       // For other fields, use spread syntax as before
       setCommission((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -185,6 +188,7 @@ const UpdateCommission = () => {
           destLat: retrievedCommission.commissionDestLat,
           destLng: retrievedCommission.commissionDestLong,
           method: retrievedCommission.commissionPaymentMethod,
+          vehicle: retrievedCommission.commissionVehicle,
         });
       } catch (err) {
         console.log(err);
@@ -248,6 +252,8 @@ const UpdateCommission = () => {
               methodValue={commission.method}
               number="Contactno"
               numValue={commission.ContactNo}
+              vehicle="vehicle"
+              vehicleValue={commission.vehicle}
             />
           </div>
           {commission.comType !== "Delivery" &&
