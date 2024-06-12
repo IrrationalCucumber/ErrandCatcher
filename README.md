@@ -28,6 +28,8 @@
 
 - npm install @mui/joy @emotion/react @emotion/styled
 
+- `create new account` for application of Password enrcyption function in backend
+
 ### If you want to use previous backend code
 
 1.  GO TO backend>package.json

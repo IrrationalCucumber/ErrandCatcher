@@ -1,8 +1,8 @@
 import React from "react";
-import Navbar from "../components/Navbar/Navbar";
+import Navbar from "../../components/Navbar/Navbar";
 import { Outlet } from "react-router-dom";
-import Footer from "../components/Footer";
-import { useAuth } from "../components/AuthContext";
+import Footer from "../../components/Footer";
+import { useAuth } from "../../components/AuthContext";
 
 function Dashboard() {
   const { user } = useAuth();

@@ -1,25 +1,45 @@
-import React from "react";
+import { DialogContent, DialogTitle, ModalClose } from "@mui/joy";
 
-const ImageModal = ({ images, handleClose }) => {
+const ImageModal = ({ request, handleClose }) => {
   return (
-    <div className="modal" style={modalStyle}>
-      <div className="modal-content" style={modalContentStyle}>
-        <span className="close" onClick={handleClose} style={closeStyle}>
-          &times;
-        </span>
-        <h2 style={{ margin: "20px" }}>Images</h2>
-        <div className="scroll-container" style={scrollContainerStyle}>
-          {images.map((image, index) => (
-            <img
-              key={index}
-              src={image}
-              alt={`Image ${index + 1}`}
-              style={imageStyle}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <>
+      <ModalClose />
+      <DialogTitle>{request.id}</DialogTitle>
+      <DialogContent>
+        <>
+          <img
+            src={`http://localhost:8800/images/docu/${request.id_picture_front}`}
+            alt={`Image `}
+            style={imageStyle}
+          />
+          <img
+            src={`http://localhost:8800/images/docu/${request.id_picture_back}`}
+            alt={`Image `}
+            style={imageStyle}
+          />
+        </>
+      </DialogContent>
+    </>
+    // <div className="modal" style={modalStyle}>
+    //   <div className="modal-content" style={modalContentStyle}>
+    //     <span className="close" onClick={handleClose} style={closeStyle}>
+    //       &times;
+    //     </span>
+    //     <h2 style={{ margin: "20px" }}>Images</h2>
+    //     <div className="scroll-container" style={scrollContainerStyle}>
+    //       <img
+    //         src={`http://localhost:8800/images/docu/${request.id_picture_front}`}
+    //         alt={`Image `}
+    //         style={imageStyle}
+    //       />
+    //       <img
+    //         src={`http://localhost:8800/images/docu/${request.id_picture_back}`}
+    //         alt={`Image `}
+    //         style={imageStyle}
+    //       />
+    //     </div>
+    //   </div>
+    // </div>
   );
 };
 
@@ -62,7 +82,8 @@ const scrollContainerStyle = {
 };
 
 const imageStyle = {
-  padding: "10px",
+  padding: "20px",
+  margin: "10px",
   maxWidth: "100%",
 };
 
