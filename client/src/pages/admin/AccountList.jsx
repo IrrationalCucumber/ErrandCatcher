@@ -347,7 +347,11 @@ const AccountList = () => {
           onPageChange={paginate}
         />
       </div>
-      <Modal open={!!layout} onClose={() => setLayout(undefined)}>
+      <Modal
+        open={!!layout}
+        onClose={() => setLayout(undefined)}
+        className="accList_modal"
+      >
         <ModalDialog layout={layout} className="custom-dialog">
           <ModalClose />
           <DialogTitle>{account.username.toUpperCase()} PROFILE</DialogTitle>
