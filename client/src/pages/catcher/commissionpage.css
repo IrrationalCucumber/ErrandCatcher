@@ -44,10 +44,10 @@
     font-size: 12px;
 }
 
-.Commission-page th {
+/* .Commission-page th {
     background-color: #1679AB;
     color: #fff;
-}
+} */
 
 .Commission-page tr:last-child td {
     border-bottom: none;
