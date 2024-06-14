@@ -352,27 +352,14 @@ const AccountList = () => {
         onClose={() => setLayout(undefined)}
         className="accList_modal"
       >
-        <ModalDialog layout={layout} className="custom-dialog">
-          <ModalClose />
-          <DialogTitle>{account.username.toUpperCase()} PROFILE</DialogTitle>
-          <DialogContent
-            style={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              padding: "20px",
-            }}
-          >
-            <>
-              <div>
-                {/* <img
-                  src={
-                    `http://localhost:8800/images/profile/` +
-                    account.profileImage
-                  }
-                  alt="Profile"
-                  width={150}
-                  length={150}
-                /> */}
+      <ModalDialog className="custom-dialog">
+        <ModalClose />
+        <DialogTitle>{account.username.toUpperCase()} PROFILE</DialogTitle>
+        <DialogContent className="centered-modal-content">
+          <div className="profile-container">
+            {/* Left side - Profile information */}
+            <div className="profile-info">
+              <div className="modal-body">
                 <h4>USER: {currentId}</h4>
                 <h5>
                   <b>USERNAME: </b>
@@ -402,23 +389,21 @@ const AccountList = () => {
                   {account.status} <br />
                   <b>RATING: </b>
                   {rating} <br />
-                  {/* <b>ERRAND DONE: </b> {count.done} <br />
-                  <b>ERRAND EXPIRED: </b> {count.expired} <br />
-                  <b>ERRAND CANCELLED: </b> {count.cancel} <br /> */}
                 </h5>
               </div>
+            </div>
+            {/* Right side - Profile image */}
+            <div className="profile-image">
               <img
-                src={
-                  `http://localhost:8800/images/profile/` + account.profileImage
-                }
+                src={`http://localhost:8800/images/profile/` + account.profileImage}
                 alt="Profile"
                 width={150}
-                length={150}
-                style={{ marginRight: "20px" }}
+                height={150}
               />
-            </>
-          </DialogContent>
-        </ModalDialog>
+            </div>
+          </div>
+        </DialogContent>
+      </ModalDialog>
       </Modal>
       {/* <Link to="/profile/add" style={{ textDecoration: "none" }}>
         <button

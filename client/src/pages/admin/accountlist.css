@@ -78,9 +78,7 @@
   font-size: 12px;
 }
 
-.accounts th {
-  background-color: #ce9251;
-}
+
 
 .accounts tr:last-child td {
   border-bottom: none;
@@ -153,16 +151,25 @@
   background-color: #b97728; /* Darken the button color on hover */
 }
 
-.custom-modal {
-  width: 600px;
-  height: 400px;
+.custom-dialog {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+  padding: 20px;
 }
- /* Target the modal root class */
-@media (min-width: 768px) {
-  .accList_modal {
-   
-    width: 600px;
-  }
+
+.profile-container {
+  display: flex;
+  align-items: center;
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.profile-image {
+  margin-left: 20px; /* Adjust margin as needed */
 }
 
 @media (max-width: 767px) {
