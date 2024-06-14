@@ -78,10 +78,6 @@ h1 {
   font-size: 12px;
 }
 
-.commissions th {
-  background-color: #ce9251; /* Adjust background color as needed */
-}
-
 .commissions tr:last-child td {
   border-bottom: none; /* Remove bottom border for the last row */
 }
