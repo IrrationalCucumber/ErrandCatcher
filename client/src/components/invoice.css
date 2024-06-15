@@ -1,0 +1,76 @@
+.invoice {
+    margin: 20px auto;
+    max-width: 600px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    position: relative;
+  }
+  
+  .invoice h2 {
+    margin: 20px;
+  }
+  
+  .invoice-form {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+  }
+  
+  .invoice-info {
+    margin-bottom: 20px;
+  }
+  
+  .invoice-info label,
+  .invoice-items label,
+  .payment-info label {
+    display: block;
+    margin-bottom: 10px;
+    color: black;
+  }
+  
+  .invoice-items {
+    margin-bottom: 20px;
+  }
+  
+  .invoice-items div {
+    margin-bottom: 10px;
+  }
+  
+  .payment-info {
+    margin-top: 20px;
+    
+  }
+  
+  .payment-details label {
+    display: block;
+    margin-bottom: 10px;
+    margin-left: 90px;
+  }
+  
+  button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: black;
+  }
+  
+  .exit-button {
+    position: absolute;
+    top: 10px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .exit-button i {
+    font-size: 24px;
+    color: #ccc;
+  }
