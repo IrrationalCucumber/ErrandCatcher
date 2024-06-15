@@ -184,6 +184,8 @@ const Step2 = ({ onPrev, onNext }) => {
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
     // setCurrentStep(currentStep + 1);
+    setOpen(false);
+    alert("Successful upload file");
   };
 
   return (
