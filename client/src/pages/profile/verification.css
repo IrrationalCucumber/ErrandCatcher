@@ -81,6 +81,9 @@ body {
 .input-rows2 {
   display: flex;
   flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .label {

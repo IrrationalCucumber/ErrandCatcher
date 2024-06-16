@@ -140,6 +140,8 @@ const Step2 = ({ onPrev, onNext }) => {
 
   const [image1, setImage1] = useState("");
   const [image2, setImage2] = useState("");
+  const [preview1, setPreview1] = useState(null);
+  const [preview2, setPreview2] = useState(null);
 
   function handleImage(e) {
     // const selectedFiles = e.target.files;
@@ -152,10 +154,18 @@ const Step2 = ({ onPrev, onNext }) => {
     // }
     // // Set the images state with the selected files
     // setImages(selectedFiles);
-    if (e.target.name === "image1") {
-      setImage1(e.target.files[0]);
-    } else if (e.target.name === "image2") {
-      setImage2(e.target.files[0]);
+    const file = e.target.files[0];
+    if (file) {
+      const previewPic = URL.createObjectURL(file);
+      if (e.target.name === "image1") {
+        // setImage1(e.target.files[0]);
+        setImage1(file);
+        setPreview1(previewPic);
+      } else if (e.target.name === "image2") {
+        // setImage2(e.target.files[0]);
+        setImage2(file);
+        setPreview2(previewPic);
+      }
     }
   }
   // console.log(image1);
@@ -242,6 +252,20 @@ const Step2 = ({ onPrev, onNext }) => {
                 onChange={handleImage}
                 required
               />
+              {preview1 && (
+                <img
+                  src={preview1}
+                  alt="Preview"
+                  style={{
+                    maxWidth: "300px",
+                    marginTop: "15px",
+                    marginBottom: "15px",
+                    // display: "flex",
+                    // justifyContent: "center",
+                    // alignContent: "center",
+                  }}
+                />
+              )}
               <input
                 type="file"
                 id="fileInput2"
@@ -250,6 +274,17 @@ const Step2 = ({ onPrev, onNext }) => {
                 onChange={handleImage}
                 required
               />
+              {preview2 && (
+                <img
+                  src={preview2}
+                  alt="Preview"
+                  style={{
+                    maxWidth: "300px",
+                    marginTop: "10px",
+                    marginBottom: "15px",
+                  }}
+                />
+              )}
             </div>
             <div
               style={{
