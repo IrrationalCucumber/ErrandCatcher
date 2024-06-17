@@ -14,6 +14,8 @@ import DialogActions from "@mui/joy/DialogActions";
 import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
+import { Box } from "@mui/material";
+import VerifiedIcon from "@mui/icons-material/Verified";
 
 // Step 1: Component: Basic Info
 const Step1 = ({ onNext }) => {
@@ -268,21 +270,6 @@ const Step2 = ({ onPrev, onNext }) => {
                 onChange={handleImage}
                 required
               />
-              {/* previewwwwwwwwwwwwwwww picture hereeeeee!!!!! */}
-              {/* {preview1 && (
-                <img
-                  src={preview1}
-                  alt="Preview"
-                  style={{
-                    maxWidth: "300px",
-                    marginTop: "15px",
-                    marginBottom: "15px",
-                    // display: "flex",
-                    // justifyContent: "center",
-                    // alignContent: "center",
-                  }}
-                />
-              )} */}
               {preview1 && (
                 <div className="image-preview">
                   <img
@@ -307,6 +294,7 @@ const Step2 = ({ onPrev, onNext }) => {
                       cursor: "pointer",
                       top: "-1px",
                       right: "-16px",
+                      fontWeight: "900",
                     }}
                   >
                     X
@@ -322,17 +310,6 @@ const Step2 = ({ onPrev, onNext }) => {
                 onChange={handleImage}
                 required
               />
-              {/* {preview2 && (
-                <img
-                  src={preview2}
-                  alt="Preview"
-                  style={{
-                    maxWidth: "300px",
-                    marginTop: "10px",
-                    marginBottom: "15px",
-                  }}
-                />
-              )} */}
               {preview2 && (
                 <div className="image-preview">
                   <img
@@ -359,6 +336,7 @@ const Step2 = ({ onPrev, onNext }) => {
                       cursor: "pointer",
                       top: "-1px",
                       right: "-16px",
+                      fontWeight: "900",
                     }}
                   >
                     X
@@ -458,12 +436,31 @@ const Step3 = ({ onPrev }) => {
         <h1 style={{ display: "flex", justifyContent: "center" }}>
           Sending Verification to the Admin!
         </h1>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "100px",
+            margin: "110px",
+          }}
+        >
+          <VerifiedIcon
+            sx={{
+              fontSize: "large",
+              height: "600px",
+              width: "250px",
+              color: "skyblue",
+            }}
+          />
+        </Box>
         <p
           style={{
             marginBottom: "5px",
             // marginLeft: "150px",
             fontSize: "15px",
-            marginTop: "45vh",
+            marginTop: "16vh",
             display: "flex",
             justifyContent: "center",
             alignContent: "center",
