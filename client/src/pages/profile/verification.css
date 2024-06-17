@@ -86,6 +86,11 @@ body {
   align-items: center;
 }
 
+.image-preview {
+  margin: 10px;
+  position: relative;
+}
+
 .label {
   flex: 0 0 150px; /* Adjust label width as needed */
   text-align: left;

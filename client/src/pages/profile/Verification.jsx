@@ -172,6 +172,12 @@ const Step2 = ({ onPrev, onNext }) => {
   // console.log(image2);
   const handleUpload = async (e) => {
     e.preventDefault();
+
+    if (!image1 || !image2) {
+      setOpen(false);
+      alert("Please upload both image before submitting.");
+      return;
+    }
     const formData = new FormData();
     // for (const fileKey in files) {
     //   if (files.hasOwnProperty(fileKey)) {
@@ -197,6 +203,16 @@ const Step2 = ({ onPrev, onNext }) => {
     setOpen(false);
     alert("Successful upload file");
   };
+
+  function handleDelete(image) {
+    if (image === "image1") {
+      setImage1(null);
+      setPreview1(null);
+    } else if (image === "image2") {
+      setImage2(null);
+      setPreview2(null);
+    }
+  }
 
   return (
     <div>
@@ -252,7 +268,8 @@ const Step2 = ({ onPrev, onNext }) => {
                 onChange={handleImage}
                 required
               />
-              {preview1 && (
+              {/* previewwwwwwwwwwwwwwww picture hereeeeee!!!!! */}
+              {/* {preview1 && (
                 <img
                   src={preview1}
                   alt="Preview"
@@ -265,7 +282,38 @@ const Step2 = ({ onPrev, onNext }) => {
                     // alignContent: "center",
                   }}
                 />
+              )} */}
+              {preview1 && (
+                <div className="image-preview">
+                  <img
+                    src={preview1}
+                    alt="Preview"
+                    style={{
+                      maxWidth: "300px",
+                      marginTop: "15px",
+                      marginBottom: "15px",
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleDelete("image1")}
+                    style={{
+                      position: "absolute",
+                      borderRadius: "50%",
+                      padding: "5px 10px",
+                      backgroundColor: "#ff4d4d",
+                      color: "white",
+                      border: "none",
+                      cursor: "pointer",
+                      top: "-1px",
+                      right: "-16px",
+                    }}
+                  >
+                    X
+                  </button>
+                </div>
               )}
+
               <input
                 type="file"
                 id="fileInput2"
@@ -274,7 +322,7 @@ const Step2 = ({ onPrev, onNext }) => {
                 onChange={handleImage}
                 required
               />
-              {preview2 && (
+              {/* {preview2 && (
                 <img
                   src={preview2}
                   alt="Preview"
@@ -284,6 +332,38 @@ const Step2 = ({ onPrev, onNext }) => {
                     marginBottom: "15px",
                   }}
                 />
+              )} */}
+              {preview2 && (
+                <div className="image-preview">
+                  <img
+                    src={preview2}
+                    alt="Preview"
+                    style={{
+                      maxWidth: "300px",
+                      marginTop: "15px",
+                      marginBottom: "15px",
+                      position: "relative",
+                    }}
+                  />
+                  <button
+                    className="buttdel"
+                    type="button"
+                    onClick={() => handleDelete("image2")}
+                    style={{
+                      position: "absolute",
+                      borderRadius: "50%",
+                      padding: "5px 10px",
+                      backgroundColor: "#ff4d4d",
+                      color: "white",
+                      border: "none",
+                      cursor: "pointer",
+                      top: "-1px",
+                      right: "-16px",
+                    }}
+                  >
+                    X
+                  </button>
+                </div>
               )}
             </div>
             <div
