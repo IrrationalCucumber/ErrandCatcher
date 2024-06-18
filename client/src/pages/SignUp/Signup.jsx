@@ -21,10 +21,58 @@ const Signup = () => {
   });
 
   //handle state of error message
+  const [employerErrorMessage, setEmployerErrorMessage] = useState("");
+  const [catcherErrorMessage, setCatcherErrorMessage] = useState("");
+  const [errors, setErrors] = useState({});
+
+  // Error handling if empty fields 
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!account.regUsername) {
+      newErrors.username = 'Username is required';
+    }
+    if (!account.email) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(account.email)) {
+      newErrors.email = 'Email is invalid';
+    }
+    if (!account.firstName) {
+      newErrors.firstName = 'First Name is required';
+    }
+    if (!account.lastName) {
+      newErrors.lastName = 'Last Name is required';
+    }
+    if (!account.bday) {
+      newErrors.bday = 'Birthday is required';
+    }
+    if (!account.gender) {
+      newErrors.gender = 'Gender is required';
+    }
+    // Alphanumeric password
+    if (!account.regPassword) {
+      newErrors.regPassword = 'Password is required';
+    } else if (account.regPassword.length < 8) {
+      newErrors.regPassword = 'Password must be at least 8 characters long';
+    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/.test(account.regPassword)) {
+      newErrors.regPassword = 'Password must contain at least one uppercase letter, one lowercase letter, and one number';
+    }
+    if (!account.regPassword2) {
+      newErrors.regPassword2 = 'Confirm Password is required';
+    } else if (account.regPassword !== account.regPassword2) {
+      newErrors.regPassword2 = 'Passwords do not match';
+    }
+    console.log(account);
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+
+  };
+  //handle state of error message
   // const [employerErrorMessage, setEmployerErrorMessage] = useState("");
   // const [catcherErrorMessage, setCatcherErrorMessage] = useState("");
 
-  const [errorMessage, setErrorMessage] = useState("");
+  // const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
   const resetForm = () => {
@@ -41,9 +89,9 @@ const Signup = () => {
       type: "",
       dateCreated: "",
     });
-    // setEmployerErrorMessage("");
-    // setCatcherErrorMessage("");
-    setErrorMessage("");
+    setEmployerErrorMessage("");
+    setCatcherErrorMessage("");
+    // setErrorMessage("");
   };
 
   const getCurrentDate = () => {
@@ -97,37 +145,19 @@ const Signup = () => {
   //save the data into db
   const handleClick = async (e) => {
     e.preventDefault();
-    //if fileds are empty
-    //error message
-    if (
-      !account.firstName ||
-      !account.lastName ||
-      !account.regPassword ||
-      !account.regPassword2 ||
-      !account.email ||
-      //!account.contactNumber ||
-      !account.type
-    ) {
-      //error
-      setErrorMessage("Please fill in all required fields.");
-      return;
-    } else if (account.regPassword.length < 8) {
-      setErrorMessage("Password is too short.");
+    const isValid = validateForm();
 
-      return;
-    } else if (account.regPassword !== account.regPassword2) {
-      setErrorMessage("Password does not match.");
-      return;
-    }
-    //save to db if no error
-    e.preventDefault();
-    try {
-      account.dateCreated = getCurrentDate();
-      await axios.post("http://localhost:8800/sign-up", account); // new enpoint
-      //alert("Success");
-      navigate("/sign-in");
-    } catch (err) {
-      console.log(err);
+    if (isValid) {
+      console.log('Form submitted:', account);
+
+      try {
+        account.dateCreated = getCurrentDate();
+        await axios.post("http://localhost:8800/sign-up", account); // new enpoint
+        alert("Success");
+        navigate("/sign-in");
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
   //console.log(account);
@@ -192,10 +222,9 @@ const Signup = () => {
                   }}
                 >
                   {selectedOption
-                    ? `Join as ${
-                        selectedOption.charAt(0).toUpperCase() +
-                        selectedOption.slice(1)
-                      }`
+                    ? `Join as ${selectedOption.charAt(0).toUpperCase() +
+                    selectedOption.slice(1)
+                    }`
                     : "Create Account"}
                 </button>
               </div>
@@ -230,6 +259,7 @@ const Signup = () => {
                       autocomplete="off"
                       required
                     />
+                    {errors.username && <span style={{ color: "red" }}>{errors.username}</span>}
                   </div>
                   <div className="col">
                     <label className="SUlabel">Email Address</label>
@@ -242,6 +272,7 @@ const Signup = () => {
                       value={account.email}
                       required
                     />
+                    {errors.email && <span style={{ color: "red" }}>{errors.email}</span>}
                   </div>
                 </div>
                 <div
@@ -263,6 +294,7 @@ const Signup = () => {
                       value={account.firstName}
                       required
                     />
+                    {errors.firstName && <span style={{ color: "red" }}>{errors.firstName}</span>}
                   </div>
                   <div className="col">
                     <label className="SUlabel">Last Name</label>
@@ -275,6 +307,7 @@ const Signup = () => {
                       value={account.lastName}
                       required
                     />
+                    {errors.lastName && <span style={{ color: "red" }}>{errors.lastName}</span>}
                   </div>
                 </div>
                 <div
@@ -296,6 +329,7 @@ const Signup = () => {
                       value={account.bday}
                       onChange={handleChange}
                     />
+                    {errors.bday && <span style={{ color: "red" }}>{errors.bday}</span>}
                   </div>
                   <div className="col">
                     <label className="SUlabel">Gender</label>
@@ -311,6 +345,7 @@ const Signup = () => {
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
                     </select>
+                    {errors.gender && <span style={{ color: "red" }}>{errors.gender}</span>}
                   </div>
                 </div>
                 <div
@@ -333,6 +368,7 @@ const Signup = () => {
                       autoComplete="off"
                       required
                     />
+                    {errors.regPassword && <span style={{ color: "red" }}>{errors.regPassword}</span>}
                   </div>
                   <div className="col">
                     <label className="SUlabel">Confirm Password</label>
@@ -346,6 +382,7 @@ const Signup = () => {
                       autoComplete="off"
                       required
                     />
+                    {errors.regPassword2 && <span style={{ color: "red" }}>{errors.regPassword2}</span>}
                   </div>
                 </div>
                 <div
@@ -364,7 +401,7 @@ const Signup = () => {
                       onClick={handleClick}
                       style={{
                         width: "200px",
-                        height: "30px",
+                        height: "40px",
                         borderRadius: "10px",
                         backgroundColor: "#005a80",
                         color: "#fff",
@@ -376,11 +413,11 @@ const Signup = () => {
                     </button>
                   </div>
                   {/* Error message display */}
-                  {errorMessage && (
+                  {/* {errorMessage && (
                     <div className="m-4" style={{ color: "red" }}>
                       {errorMessage}
                     </div>
-                  )}
+                  )} */}
                 </div>
                 <div className="m-4" style={{ paddingTop: "20px" }}>
                   Already have an account? <Link to="/sign-in">Sign in</Link>
@@ -480,6 +517,8 @@ const Signup = () => {
             background-color: #005a80;
             color: #fff;
             transition: background-color 0.3s ease;
+            cursor: pointer;
+            border: none;
           }
           
           .signup-button:hover {

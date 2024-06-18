@@ -106,7 +106,7 @@ const SignIn = () => {
         <label
           className="rem"
           htmlFor="remember Me"
-          style={{ paddingLeft: "140px", fontSize: "12px" }}
+          // style={{ paddingLeft: "140px", fontSize: "12px" }}
         >
           Remember&nbsp;Me
           <input
@@ -118,21 +118,22 @@ const SignIn = () => {
         </label>
 
         <div className="button1">
-          <div className="button2"></div>
+          <div className="button2">
           <button
             type="button"
             onClick={handleClick}
-            style={{
-              backgroundColor: "#1679AB",
-              fontSize: "16px",
-              width: "200px",
-              height: "40px",
-              borderRadius: "20px",
-              color: "#ffff",
-            }}
+            // style={{
+            //   backgroundColor: "#1679AB",
+            //   fontSize: "16px",
+            //   width: "200px",
+            //   height: "40px",
+            //   borderRadius: "20px",
+            //   color: "#ffff",
+            // }}
           >
             Sign In
           </button>
+          </div>
         </div>
         <p className="cont2">
           <i>
