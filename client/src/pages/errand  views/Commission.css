@@ -120,7 +120,7 @@ select{
 
 @media screen and (min-width: 1100px){
     .btn{
-        width: 300px !important;
+        width: 230px !important;
         margin: 0;
     }
     .btn-container{

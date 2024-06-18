@@ -15,7 +15,7 @@ function Dashboard() {
               <Navbar
                 page1="ONGOING"
                 one={`/dashboard/ongoing`}
-                page2="COMMISSIONS"
+                page2="ERRANDS"
                 commissionList={`/dashboard/commissions`}
                 page3="APPLICANTS"
                 applicants={`/dashboard/applicants`}
