@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Footer from "../../components/Footer";
 // import axios from "axios";
 import "./Landing.css";
-import LandingMap from "../../components/Map/LandingMap";
+import { LandingMap } from "../../components/Map/Map";
 import { LandingServiceDetails } from "../../components/Dashbaord/Landing";
 
 const Landing = () => {

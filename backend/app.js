@@ -92,48 +92,48 @@ const updateExpiredRecords = () => {
 };
 // update the transaction record if deadline has passed
 //set satus to expired
-const updateExpiredTrans = () => {
-  const currentTime = new Date().toISOString().slice(0, 19).replace("T", " ");
-  const updateQuery = `
-    UPDATE errandtransaction t
-    JOIN commission c ON c.commissionID = t.transErrandID
-    SET t.errandStatus = 'Expired'
-    WHERE c.commissionDeadline < '${currentTime}' AND t.errandStatus = 'Ongoing';
-  `;
+// const updateExpiredTrans = () => {
+//   const currentTime = new Date().toISOString().slice(0, 19).replace("T", " ");
+//   const updateQuery = `
+//     UPDATE errandtransaction t
+//     JOIN commission c ON c.commissionID = t.transErrandID
+//     SET t.errandStatus = 'Expired'
+//     WHERE c.commissionDeadline < '${currentTime}' AND t.errandStatus = 'Ongoing';
+//   `;
 
-  db.query(updateQuery, (updateError, updateResults) => {
-    if (updateError) {
-      console.error("Error updating transactions:", updateError);
-      return;
-    }
+//   db.query(updateQuery, (updateError, updateResults) => {
+//     if (updateError) {
+//       console.error("Error updating transactions:", updateError);
+//       return;
+//     }
 
-    console.log(
-      `${updateResults.affectedRows} transactions updated to expired.`
-    );
+//     console.log(
+//       `${updateResults.affectedRows} transactions updated to expired.`
+//     );
 
-    if (updateResults.affectedRows > 0) {
-      const insertNotificationQuery = `
-        INSERT INTO notification (notifUserID, notificationType, notifDesc, notifDate)
-        SELECT transCatcherID, 'Expiration', 'Your transaction has expired.', NOW()
-        FROM errandtransaction
-        WHERE errandStatus = 'Expired';
-      `;
+//     if (updateResults.affectedRows > 0) {
+//       const insertNotificationQuery = `
+//         INSERT INTO notification (notifUserID, notificationType, notifDesc, notifDate)
+//         SELECT transCatcherID, 'Expiration', 'Your transaction has expired.', NOW()
+//         FROM errandtransaction
+//         WHERE errandStatus = 'Expired';
+//       `;
 
-      db.query(insertNotificationQuery, (insertError, insertResults) => {
-        if (insertError) {
-          console.error("Error inserting notifications:", insertError);
-          return;
-        }
+//       db.query(insertNotificationQuery, (insertError, insertResults) => {
+//         if (insertError) {
+//           console.error("Error inserting notifications:", insertError);
+//           return;
+//         }
 
-        console.log(`${insertResults.affectedRows} notifications inserted.`);
-      });
-    }
-  });
-};
+//         console.log(`${insertResults.affectedRows} notifications inserted.`);
+//       });
+//     }
+//   });
+// };
 
 // Schedule the update function to run every minute
 const scheduler = setInterval(updateExpiredRecords, 60 * 1000);
-const transScheduler = setInterval(updateExpiredTrans, 60 * 1000); //every min
+//const transScheduler = setInterval(updateExpiredTrans, 60 * 1000); //every min
 
 // Stop the scheduler after a certain duration (optional)
 // setTimeout(() => {

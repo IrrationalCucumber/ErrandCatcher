@@ -4,7 +4,6 @@ import Map from "../../components/Map/Map.js";
 import { useAuth } from "../../components/AuthContext";
 import maplibregl from "maplibre-gl";
 import axios from "axios";
-import Filter from "../../components/Map/Filter.jsx";
 
 function CommissionMap() {
   const { user } = useAuth();
@@ -32,7 +31,7 @@ function CommissionMap() {
     //refresh map for 5 sec
     const interval = setInterval(fetchErrand, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [user.userID]);
   /**
    * ERRAND MAP FILTER
    */
