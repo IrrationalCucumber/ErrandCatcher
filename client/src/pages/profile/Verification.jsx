@@ -16,6 +16,7 @@ import ModalDialog from "@mui/joy/ModalDialog";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 import { Box } from "@mui/material";
 import VerifiedIcon from "@mui/icons-material/Verified";
+import ImageIcon from "@mui/icons-material/Image";
 
 // Step 1: Component: Basic Info
 const Step1 = ({ onNext }) => {
@@ -241,7 +242,41 @@ const Step2 = ({ onPrev, onNext }) => {
               </p>
             </div>
             <div className="input-rows2">
-              <input type="file" id="fileInput1" accept="image/*" />
+              <input
+                type="file"
+                id="fileInput" //define id
+                accept="image/*"
+                style={{
+                  borderStyle: "dashed",
+                  borderWidth: "1px",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignContent: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  position: "relative",
+                  // set into display: none because i use label as input htmlFor attribute
+                  // remove display none for debug display file path name
+                  display: "none",
+                }}
+              />
+              <label
+                htmlFor="fileInput"
+                style={{
+                  borderStyle: "dashed",
+                  borderWidth: "1px",
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "10px",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  backgroundColor: "#f0f0f0",
+                }}
+              >
+                <ImageIcon />
+                Choose Image File
+              </label>
             </div>
             <div className="input-rows2">
               <label
@@ -269,7 +304,34 @@ const Step2 = ({ onPrev, onNext }) => {
                 accept="image/*"
                 onChange={handleImage}
                 required
+                style={{
+                  borderStyle: "dashed",
+                  borderWidth: "2px",
+                  display: "flex",
+                  alignContent: "center",
+                  marginBottom: "12px",
+                  //  i set into display: none because i use label as htmlFor attribute
+                  display: "none",
+                }}
               />
+              <label
+                htmlFor="fileInput1"
+                style={{
+                  borderStyle: "dashed",
+                  borderWidth: "1px",
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "10px",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  backgroundColor: "#f0f0f0",
+                }}
+              >
+                <ImageIcon />
+                Choose Image File
+              </label>
+
               {preview1 && (
                 <div className="image-preview">
                   <img
@@ -309,7 +371,32 @@ const Step2 = ({ onPrev, onNext }) => {
                 accept="image/*"
                 onChange={handleImage}
                 required
+                style={{
+                  borderStyle: "dashed",
+                  borderWidth: "2px",
+                  display: "flex",
+                  alignContent: "center",
+                  //  i set into display: none because i use label as htmlFor attribute
+                  display: "none",
+                }}
               />
+              <label
+                htmlFor="fileInput2"
+                style={{
+                  borderStyle: "dashed",
+                  borderWidth: "1px",
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "10px",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  backgroundColor: "#f0f0f0",
+                }}
+              >
+                <ImageIcon />
+                Choose Image File
+              </label>
               {preview2 && (
                 <div className="image-preview">
                   <img
