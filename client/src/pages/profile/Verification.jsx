@@ -180,6 +180,8 @@ const Step2 = ({ onPrev, onNext }) => {
       setOpen(false);
       alert("Please upload both image before submitting.");
       return;
+    } else {
+      onNext(); // Move to the next step
     }
     const formData = new FormData();
     // for (const fileKey in files) {
@@ -438,6 +440,14 @@ const Step2 = ({ onPrev, onNext }) => {
                 margin: "10px",
               }}
             >
+              <div>
+                <button className="btnn" type="button" onClick={onPrev}>
+                  Prev
+                </button>
+                {/* <button className="btnn" type="submit" style={{}}>
+                Next
+              </button> */}
+              </div>
               <ButtonGroup aria-label="spacing button group">
                 <Button
                   variant="outlined"
@@ -446,10 +456,18 @@ const Step2 = ({ onPrev, onNext }) => {
                     // Custom color
                     backgroundColor: "",
                     "&:hover": {
-                      backgroundColor: "skyblue", // Darker green on hover
+                      backgroundColor: "#1A97DE", // Darker green on hover
                     },
+                    margin: "20px",
+                    padding: "10px",
+                    width: "100px",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                    backgroundColor: "#1679ab",
+                    color: "#fff",
+                    border: "none",
+                    fontSize: "13px",
                   }}
-                  // endDecorator={<DeleteForever />}
                   onClick={() => handleOpenModal()}
                 >
                   Submit file
@@ -483,21 +501,16 @@ const Step2 = ({ onPrev, onNext }) => {
                     </DialogActions>
                   </ModalDialog>
                 </Modal>
-                {/* <Button
-                    onClick={() => handleDelete(commissionItem.commissionID)}
-                  >
-                    DELETE
-                  </Button> */}
               </ButtonGroup>
-            </div>
-            {/* <button className="btnn" onClick={handleUpload}>SUBMIT</button> */}
+              {/* </div>
+            <button className="btnn" onClick={handleUpload}>SUBMIT</button>
             <div className="input-rows" style={{ justifyContent: "center" }}>
               <button className="btnn" type="button" onClick={onPrev}>
                 Prev
-              </button>
-              <button className="btnn" type="submit" style={{}}>
+              </button> */}
+              {/* <button className="btnn" type="submit" style={{}}>
                 Next
-              </button>
+              </button> */}
             </div>
           </form>
         </div>
