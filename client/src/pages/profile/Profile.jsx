@@ -8,6 +8,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../components/AuthContext";
 import styled from "@emotion/styled";
+import Invoice from "../../components/Invoice";
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("about");
   const [verified, setVerified] = useState(false);
@@ -33,6 +34,39 @@ const Profile = () => {
     type: "",
     profileImage: "",
   });
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  // for handle invoice
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
+  const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8800/transactions/${userID}`
+        );
+        setTransactions(response.data);
+        setLoading(false);
+      } catch (err) {
+        console.log("Error fetching transactions:", err);
+        setError(err);
+        setLoading(false);
+      }
+    };
+    fetchTransactions();
+  }, [userID]);
+
   //RV & APS 02/03/24
   //useState for Status
   const [status, setStatus] = useState("");
@@ -366,6 +400,31 @@ const Profile = () => {
                   }`}
                 >
                   <label>THIS IS HISTORY WITH TRANSACTION</label>
+                  {transactions.length > 0 ? (
+                    transactions.map((transaction, index) => {
+                      const paidDate = new Date(
+                        transaction.paid
+                      ).toLocaleString(); // Convert the timestamp to a human-readable format
+
+                      return (
+                        <div style={{ margin: "20px" }} key={index}>
+                          <hr />
+                          <div style={{ padding: "4px" }}>
+                            <p>Transaction ID: {transaction.checkoutId}</p>
+                            <p>Payment Intent ID: {transaction.paymentId}</p>
+                            <p>Date Paid: {paidDate}</p>{" "}
+                            {/* Display the formatted date */}
+                            <p>Total Price: {transaction.total}</p>
+                            <p>Type: {transaction.type}</p>
+                            <p>Description: {transaction.description}</p>
+                          </div>
+                          <hr />
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <p>No transactions found.</p>
+                  )}
                 </div>
               )}
             </form>
