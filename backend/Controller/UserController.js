@@ -1,6 +1,9 @@
 // userController.js
 
 const User = require("../Model/User");
+//enryption
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 //profile upload
 const multer = require("multer");
 const path = require("path");
@@ -55,17 +58,34 @@ const userController = {
     const username = req.query.username;
     const email = req.query.email;
     const password = req.query.password;
-    User.getSignIn(username, email, password, (err, userID) => {
+    User.getSignIn(username, email, (err, user) => {
       if (err) {
         console.error("Error fetching user:", err);
         res.status(500).send("Internal Server Error");
         return;
       }
-      if (!userID) {
+      if (!user) {
         res.status(404).send("User not found");
         return;
       }
-      res.json(userID);
+      // // Log the retrieved user for debugging
+      // console.log("User fetched from DB:", user);
+      //decrypt
+      bcrypt.compare(password, user.password, (err, isMatch) => {
+        // console.log("Plain Text Password:", password);
+        // console.log("Hashed Password from DB:", user.password);
+        if (isMatch) {
+          res.json(user);
+        } else if (err) {
+          console.error("Error comparing passwords:", err);
+          res.status(500).send("Internal Server Error");
+          return;
+        } else if (!isMatch) {
+          // console.log("Password mismatch.");
+          res.status(401).json({ error: "Invalid username or password" });
+          return;
+        }
+      });
     });
   },
   //get account status of the user
@@ -107,21 +127,30 @@ const userController = {
   putUpdateUser: (req, res) => {
     const userID = req.params.id;
     const updatedData = req.body;
-    User.putUpdateUserById(userID, updatedData, (error, result) => {
-      if (error) {
-        console.error("Error updating user:", error);
-        res
-          .status(500)
-          .json({ error: "An error occurred while updating user" });
+    //encrypt new password
+    bcrypt.hash(updatedData.password, saltRounds, (err, hash) => {
+      if (err) {
+        console.error("Error hashign passowrd", err);
+        res.status(500).json({ error: "Error processing password" });
         return;
-      }
-      // Check if any rows were affected by the update operation
-      if (result.affectedRows === 0) {
-        res.status(404).json({ error: "User not found" });
-        return;
-      }
-      // User updated successfully
-      res.status(200).json({ message: "User updated successfully" });
+      } //replact text password to hashed password
+      updatedData.password = hash;
+      User.putUpdateUserById(userID, updatedData, (error, result) => {
+        if (error) {
+          console.error("Error updating user:", error);
+          res
+            .status(500)
+            .json({ error: "An error occurred while updating user" });
+          return;
+        }
+        // Check if any rows were affected by the update operation
+        if (result.affectedRows === 0) {
+          res.status(404).json({ error: "User not found" });
+          return;
+        }
+        // User updated successfully
+        res.status(200).json({ message: "User updated successfully" });
+      });
     });
   },
   //Update user status
@@ -148,16 +177,27 @@ const userController = {
   //sign in/ add new user
   postSignUp: (req, res) => {
     const newUserData = req.body;
-    User.postNewUser(newUserData, (error) => {
-      if (error) {
-        console.error("Error adding user:", error);
-        res
-          .status(500)
-          .json({ error: "An error occurred while adding new user" });
+
+    //hash/enrypt password
+    bcrypt.hash(newUserData.regPassword, saltRounds, (err, hash) => {
+      if (err) {
+        console.error("Error hashign passowrd", err);
+        res.status(500).json({ error: "Error processing password" });
         return;
-      }
-      // User added successfully
-      res.status(200).json({ message: "sign up successfully" });
+      } //replact text password to hashed password
+      newUserData.regPassword = hash;
+
+      User.postNewUser(newUserData, (error) => {
+        if (error) {
+          console.error("Error adding user:", error);
+          res
+            .status(500)
+            .json({ error: "An error occurred while adding new user" });
+          return;
+        }
+        // User added successfully
+        res.status(200).json({ message: "sign up successfully" });
+      });
     });
   },
 

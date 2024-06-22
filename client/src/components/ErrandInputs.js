@@ -9,8 +9,6 @@ import React from "react";
 import Textarea from "@mui/joy/Textarea";
 import Chip from "@mui/joy/Chip";
 import Input from "@mui/joy/Input";
-import Select from "@mui/joy/Select";
-import Option from "@mui/joy/Option";
 
 //icons
 import LocationOn from "@mui/icons-material/LocationOn";
@@ -18,11 +16,8 @@ import AddIcCallIcon from "@mui/icons-material/AddIcCall";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
-import Map, { handlePayment } from "./Map/MapBox";
-import { useState } from "react";
 
 function ErrandInputs(props) {
-  const [distance, setDistance] = useState(0);
   return (
     <>
       <div className="input-group">
@@ -287,7 +282,12 @@ function ErrandInputs(props) {
           />
           {props.typeValue !== "HomeService - Indoor" &&
             props.typeValue !== "HomeService - Outdoor" &&
-            props.typeValue !== "" && <p>₱15/km + ₱100</p>}
+            props.typeValue !== "" && (
+              <>
+                <p>₱15/km + ₱100</p>
+                <p>{props.distance} km</p>
+              </>
+            )}
         </div>
       </div>
 

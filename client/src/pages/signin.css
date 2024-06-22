@@ -1,4 +1,4 @@
-body .App .si{
+body .App .si {
   display: block;
   max-width: 850px;
   width: 100%;
@@ -18,25 +18,29 @@ body .App .si{
 }
 
 .errand-catcher {
-  font-size: 2rem; /* Adjust font size as needed */
-  font-weight: bold; /* Optionally, adjust font weight */
+  font-size: 2rem;
+  /* Adjust font size as needed */
+  font-weight: bold;
+  /* Optionally, adjust font weight */
 }
 
-.text{
+.text {
   text-align: left;
 }
 
-.rem{
+.rem {
   color: #333;
   padding-left: 0rem;
+  margin-left: 29%;
 }
 
-.contman{
+.contman {
   display: inline-block;
-  vertical-align:top;
-  width:50%
+  vertical-align: top;
+  width: 50%
 }
-.cont h1{
+
+.cont h1 {
   font-size: 26px;
   font-weight: 500;
   color: #333;
@@ -44,14 +48,15 @@ body .App .si{
   padding: 50px 30px;
 }
 
-.cont h3{
+.cont h3 {
   padding-top: 45px;
   font-size: 16px;
   max-width: 250px;
   width: 100%;
   margin: 0 auto;
 }
-.cont input{
+
+.cont input {
   font-size: 13px;
   max-width: 290px;
   width: 100%;
@@ -59,30 +64,52 @@ body .App .si{
   display: block;
   font-family: 'PT Sans', sans-serif;
 }
-.cont input[type="checkbox"]{
+
+.cont input[type="checkbox"] {
   display: inline-block;
   max-width: 43px;
   position: relative;
   top: 2px;
 }
-.cont .em, .cont .button1{
+
+.cont .em,
+.cont .button1 {
   max-width: 250px;
   width: 100%;
   margin: 8px auto;
   display: block;
   margin-top: 20px;
 }
-.cont .cont2{
+
+.button1 button {
+  border: none;
+  font-family: 'Neue Montreal', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  cursor: pointer;
+  width: 250px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #1679AB;
+  font-size: 16px;
+  color: #ffff;
+}
+
+button:hover {
+  background-color: #1A96D5;
+}
+
+.cont .cont2 {
   max-width: 250px;
   width: 100%;
   margin: 60px auto 8px auto;
   display: block;
   text-align: center;
 }
-.cont-tawo{
+
+.cont-tawo {
   height: 605px;
 }
-.cont-tawo img{
+
+.cont-tawo img {
   width: 425px;
   height: 606px;
   object-fit: cover;

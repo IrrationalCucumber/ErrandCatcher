@@ -30,10 +30,9 @@ const SignIn = () => {
       const res = await axios.get("http://localhost:8800/sign-in", {
         params: { username: username, password: password },
       });
-
-      console.log("Response from server:", res.data); //debug
-      const user = res.data[0];
-
+      //console.log("Response from server:", res.data); //debug
+      const user = res.data;
+      //console.log(user);
       //revert login() function for PrivateBrowser
       if (user != null) {
         const userData = {
@@ -45,8 +44,6 @@ const SignIn = () => {
         updateUser(userData);
         navigate(`/dashboard/home/`);
         //login();
-      } else {
-        setErrorMessage("Invalid password/username");
       }
       //handle me function
       if (rememberMe) {
@@ -56,6 +53,7 @@ const SignIn = () => {
       }
     } catch (err) {
       console.error("Error during sign-in:", err);
+      setErrorMessage("Invalid Password/Username");
     }
   };
   //handle rember me if check
@@ -109,7 +107,7 @@ const SignIn = () => {
         <label
           className="rem"
           htmlFor="remember Me"
-          style={{ paddingLeft: "140px", fontSize: "12px" }}
+          // style={{ paddingLeft: "140px", fontSize: "12px" }}
         >
           Remember&nbsp;Me
           <input
@@ -121,21 +119,22 @@ const SignIn = () => {
         </label>
 
         <div className="button1">
-          <div className="button2"></div>
-          <button
-            type="button"
-            onClick={handleClick}
-            style={{
-              backgroundColor: "#1679AB",
-              fontSize: "16px",
-              width: "200px",
-              height: "40px",
-              borderRadius: "20px",
-              color: "#ffff",
-            }}
-          >
-            Sign In
-          </button>
+          <div className="button2">
+            <button
+              type="button"
+              onClick={handleClick}
+              // style={{
+              //   backgroundColor: "#1679AB",
+              //   fontSize: "16px",
+              //   width: "200px",
+              //   height: "40px",
+              //   borderRadius: "20px",
+              //   color: "#ffff",
+              // }}
+            >
+              Sign In
+            </button>
+          </div>
         </div>
         <p className="cont2">
           <i>

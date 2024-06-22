@@ -14,6 +14,14 @@ import "./applicant.css";
 import Pagination from "../../components/Pagination";
 import ProfileModal from "../../components/Profile Modal/ProfileModal";
 import { useAuth } from "../../components/AuthContext";
+import Button from "@mui/joy/Button";
+import Divider from "@mui/joy/Divider";
+import DialogTitle from "@mui/joy/DialogTitle";
+import DialogContent from "@mui/joy/DialogContent";
+import DialogActions from "@mui/joy/DialogActions";
+import Modal from "@mui/joy/Modal";
+import ModalDialog from "@mui/joy/ModalDialog";
+import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 import { DisplayDate } from "../../components/DisplayDate";
 
 const EmployerApplicants = () => {
@@ -34,6 +42,16 @@ const EmployerApplicants = () => {
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [selectedApplicant, setSelectedApplicant] = useState(null);
   const [rating, setRating] = useState("");
+  const [openAccept, setOpenAccept] = useState(false);
+  const [openDecline, setOpenDecline] = useState(false);
+
+  const handleOpenAcceptModal = () => {
+    setOpenAccept(true);
+  };
+
+  const handleOpenDeclineModal = () => {
+    setOpenDecline(true);
+  };
 
   const handleViewProfile = (applicant) => {
     setSelectedApplicant(applicant);
@@ -94,36 +112,99 @@ const EmployerApplicants = () => {
     applicant.applicationStatus === "Pending" ? (
       <>
         <button
+          style={styles.button}
           className="accept action-btn"
-          onClick={() =>
-            handleAccept(
-              applicant.applicationID,
-              applicant.applicationErrandID,
-              applicant.catcherID
-            )
-          }
+          onClick={() => handleOpenAcceptModal()}
         >
           Accept
         </button>
+        {/* button accept modal */}
+        <Modal open={openAccept} onClose={() => setOpenAccept(false)}>
+          <ModalDialog>
+            <DialogTitle>
+              <WarningRoundedIcon />
+              Confirmation
+            </DialogTitle>
+            <Divider />
+            <DialogContent>
+              Are you sure you want to accept this applicant?
+            </DialogContent>
+            <DialogActions>
+              <Button
+                variant="solid"
+                color="success"
+                onClick={() =>
+                  handleAccept(
+                    applicant.applicationID,
+                    applicant.applicationErrandID,
+                    applicant.catcherID
+                  )
+                }
+              >
+                Accept
+              </Button>
+              <Button
+                variant="plain"
+                color="neutral"
+                onClick={() => setOpenAccept(false)}
+              >
+                Cancel
+              </Button>
+            </DialogActions>
+          </ModalDialog>
+        </Modal>
         <button
+          style={style1.button}
           className="decline action-btn"
-          onClick={() =>
-            handleDecline(
-              applicant.applicationID,
-              applicant.applicationErrandID,
-              applicant.catcherID
-            )
-          }
+          onClick={() => handleOpenDeclineModal()}
         >
           Decline
         </button>
+
+        <Modal open={openDecline} onClose={() => setOpenDecline(false)}>
+          <ModalDialog variant="outlined" role="alertdialog">
+            <DialogTitle>
+              <WarningRoundedIcon />
+              Confirmation
+            </DialogTitle>
+            <Divider />
+            <DialogContent>
+              Are you sure you want to decline this applicant?
+            </DialogContent>
+            <DialogActions>
+              <Button
+                variant="solid"
+                color="danger"
+                onClick={() =>
+                  handleDecline(
+                    applicant.applicationID,
+                    applicant.applicationErrandID,
+                    applicant.catcherID
+                  )
+                }
+              >
+                Decline
+              </Button>
+              <Button
+                variant="plain"
+                color="neutral"
+                onClick={() => setOpenDecline(false)}
+              >
+                Cancel
+              </Button>
+            </DialogActions>
+          </ModalDialog>
+        </Modal>
       </>
     ) : applicant.applicationStatus === "Accepted" ? (
       <button className="accepted action-btn">Accepted</button>
     ) : (
       <button className="declined action-btn">Declined</button>
     ),
-    <button onClick={() => handleViewProfile(applicant, applicant.username)}>
+    <button
+      style={style2.button}
+      onClick={() => handleViewProfile(applicant, applicant.username)}
+    >
       View Profile
     </button>,
   ]);
@@ -197,6 +278,8 @@ const EmployerApplicants = () => {
       //replace modular
       alert("You have accepted a Cather!");
       window.location.reload();
+      setOpenAccept(false);
+      // create set upload modal heree...................................................................
       //navigate(`/my-application/${userID}`);
     } catch (err) {
       console.log(err);
@@ -230,7 +313,7 @@ const EmployerApplicants = () => {
   };
   //console.log(applicants);
   return (
-    <div>
+    <div className="applicants-container">
       <div className="applicants">
         <h1 style={{ paddingBottom: "10px" }}>APPLICANTS</h1>
         <div className="search">
@@ -291,8 +374,51 @@ const EmployerApplicants = () => {
           />
         )}
       </div>
+      {/* <Footer/> */}
     </div>
   );
+};
+
+const styles = {
+  button: {
+    padding: "10px 20px",
+    fontSize: "16px",
+    backgroundColor: "#42a942",
+    color: "#fff",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    marginRight: "10px",
+    textAlign: "center",
+  },
+};
+
+const style1 = {
+  button: {
+    padding: "10px 20px",
+    fontSize: "16px",
+    backgroundColor: "#d9534f",
+    color: "#fff",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    marginRight: "10px",
+    textAlign: "center",
+  },
+};
+
+const style2 = {
+  button: {
+    padding: "10px 20px",
+    fontSize: "16px",
+    backgroundColor: "#378CE7",
+    color: "#fff",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    marginRight: "10px",
+    textAlign: "center",
+  },
 };
 
 export default EmployerApplicants;
