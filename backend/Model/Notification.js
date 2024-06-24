@@ -23,10 +23,10 @@ const Notif = {
 
   //add new notif
   postNotif: (notifData, callback) => {
-    const { userID, notificationType, notifDesc, notifDate } = notifData;
-    values = [userID, notificationType, notifDesc, notifDate];
+    const { userID, notificationType, notifDesc } = notifData;
+    values = [userID, notificationType, notifDesc];
     db.query(
-      "INSERT INTO notification (`notifUserID`, `notificationType`, `notifDesc`, `notifDate`) VALUES (?)",
+      "INSERT INTO notification (`notifUserID`, `notificationType`, `notifDesc`) VALUES (?)",
       [values],
       callback
     );
@@ -35,7 +35,7 @@ const Notif = {
   postNotifToCatcher: (type, desc, callback) => {
     db.query(
       `
-      INSERT INTO notification (notifUserID, notifDesc, notificationType, notifDate)
+      INSERT INTO notification (notifUserID, notifDesc, notificationType)
       SELECT userID, ?, ?, NOW() 
       FROM useraccount 
       WHERE accountType = 'Catcher';

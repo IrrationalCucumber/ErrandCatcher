@@ -20,7 +20,6 @@ const PostCommission = () => {
     comType: "",
     comDescription: "",
     comPay: 0,
-    DatePosted: "",
     //DateCompleted: "",
     Contactno: "",
     comLong: "",
@@ -95,7 +94,6 @@ const PostCommission = () => {
       const currentDate = getCurrentDate();
       const updatedCommission = {
         ...commission,
-        DatePosted: currentDate,
         empID: userID,
       };
       if (

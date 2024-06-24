@@ -81,10 +81,10 @@ const Trans = {
   },
   //add new transaction
   postNewTrans: (transData, callback) => {
-    const { comID, catcherID, dateAccepted } = transData;
-    values = [comID, catcherID, dateAccepted];
+    const { comID, catcherID } = transData;
+    values = [comID, catcherID];
     db.query(
-      "INSERT INTO errandtransaction (`transErrandID`, `transCatcherID`, `transDateAccepted`) VALUES (?)",
+      "INSERT INTO errandtransaction (`transErrandID`, `transCatcherID`) VALUES (?)",
       [values],
       callback
     );
