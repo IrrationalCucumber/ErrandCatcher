@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import NotificationItem from "../components/NotificationItem";
-import { useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar.js";
-import "../components//Notification.css"; // Combined CSS styles
+import Pagination from "../components/Pagination"; // Import Pagination component
+import "../components/Notification.css"; // Combined CSS styles
 import { useAuth } from "../components/AuthContext.js";
 
 function Notification() {
@@ -11,7 +11,11 @@ function Notification() {
   const { user } = useAuth();
   const userID = user.userID;
 
-  // Display all notifications
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5; // Set items per page to 5
+
+  // Fetch notifications
   useEffect(() => {
     const fetchNotif = async () => {
       try {
@@ -22,7 +26,17 @@ function Notification() {
       }
     };
     fetchNotif();
-  }, []);
+  }, [userID]);
+
+  // Calculate the indices for pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentNotifs = notifs.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Handle page change
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   // Function to format date
   const formatDate = (dateString) => {
@@ -30,10 +44,11 @@ function Notification() {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
-  // When user clicks 'mark as read', update db notif isRead to Yes
-  // const markAsRead = async (notificationID) => {
+  // Function to mark all notifications as read
+  // const markAsRead = async () => {
   //   try {
-  //     await axios.post(`http://localhost:8800/read-notif/${notificationID}/${userID}`);
+  //     await axios.post(`http://localhost:8800/read-notif/${userID}`);
+  //     fetchNotif(); // Refresh notifications
   //   } catch (err) {
   //     console.log(err);
   //   }
@@ -55,7 +70,7 @@ function Notification() {
               style={{ paddingLeft: "20px" }}
             />
             <button
-              //onClick={markAsRead}
+              // onClick={markAsRead}
               className="mark-read-button"
               style={{ textAlign: "center" }}
             >
@@ -68,17 +83,23 @@ function Notification() {
             </button>
           </div>
           <div className="notification-list">
-            {notifs.map((notif) => (
+            {currentNotifs.map((notif) => (
               <div className="notification-item" key={notif.notificationID}>
                 <NotificationItem
                   type={notif.notificationType}
                   desc={notif.notifDesc}
                   date={formatDate(notif.notifDate)} // Format the date
-                  // markAsRead={()=>markAsRead(notif.notificationID)}
+                  // markAsRead={() => markAsRead(notif.notificationID)}
                 />
               </div>
             ))}
           </div>
+          <Pagination
+            currentPage={currentPage}
+            itemsPerPage={itemsPerPage}
+            totalItems={notifs.length}
+            onPageChange={handlePageChange}
+          />
         </main>
       </div>
     </>

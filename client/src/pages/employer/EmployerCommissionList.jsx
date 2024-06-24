@@ -1,4 +1,5 @@
 //03-10-24 updated w/ filter
+//bootstrap
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -20,6 +21,7 @@ import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 //import Settings from "@mui/icons-material/Settings";
 import { useAuth } from "../../components/AuthContext.js";
 import { DisplayDate } from "../../components/DisplayDate.js";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const CommissionList = () => {
   const [commissions, setCommissions] = useState([]);
@@ -34,7 +36,7 @@ const CommissionList = () => {
   const userID = user.userID;
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(5);
   const [open, setOpen] = useState(false); // modal
   const [currentId, setCurrentId] = useState(null);
   const handleOpenModal = (id) => {
@@ -117,52 +119,58 @@ const CommissionList = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filterErrands.slice(indexOfFirstItem, indexOfLastItem);
 
+  const headers=[
+    "ID",
+    "ERRAND TITLE",
+    "TYPE",
+    "START DATE",
+    "DUE DATE",
+    "STATUS",
+    "ACTION",
+  ];
+  
+
   //need front end
   return (
-    <div>
-      <div className="Commission-page-container">
-        <div className="Commission-page">
-          <h1>Commission List</h1>
-          <div className="commissions">
-            <div className="search-filter">
-              <div className="search">
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  value={searchTerm.term}
-                  name="term"
-                  onChange={handleChange}
-                />
-                <button type="submit">
-                  <i className="fa fa-search"></i>
-                </button>
-              </div>
-              <div className="filter">
-                <select
-                  onChange={handleChange}
-                  name="status"
-                  value={searchTerm.status}
-                >
+    <div className="container mt-4">
+      <h1 className="header text-left mb-4" style={{fontSize:"24px"}}>Commission List</h1>
+      <div className="d-flex align-items-center mb-3">
+        <div className="input-group me-2">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search..."
+              aria-label="Search"
+              aria-describedby="search-addon"
+              name="term"
+              value={searchTerm.term}
+              onChange={handleChange}
+              style={{fontSize:"14px"}}
+            />
+          </div>
+            <select
+              className="form-select me-2"
+              onChange={handleChange}
+              value={searchTerm.status}
+              name='status'
+            >
                   <option value="">All Status</option>
                   <option value="Taken">Pending</option>
                   <option value="Completed">Completed</option>
                   <option value="Cancelled">Cancelled</option>
                   <option value="Available">Available</option>
                   <option value="Expired">Expired</option>
-                </select>
-              </div>
-            </div>
-
-            <Table
-              headers={[
-                "ID",
-                "ERRAND TITLE",
-                "TYPE",
-                "START DATE",
-                "DUE DATE",
-                "STATUS",
-                "ACTION",
-              ]}
+                  <option value="Caught">Caught</option>
+            </select>
+            <button
+              className="btn btn-primary btn-sm"
+              onClick={(e) => navigate(`/errand/post-commission`)}>
+              <i className="fa-solid fa-plus"></i> Add Errand
+            </button>
+      </div>
+      <div className="ecommission">
+      <Table
+              headers={headers}
               // update the data here
               data={currentItems.map((commissionItem) => [
                 commissionItem.commissionID,
@@ -226,23 +234,15 @@ const CommissionList = () => {
                 </React.Fragment>,
               ])}
             />
-          </div>
-        </div>
-        {/* Pagination controls */}
-        {commissions.length > 0 && (
+          {commissions.length > 0 && (
           <Pagination
+            currentPage={currentPage}
             itemsPerPage={itemsPerPage}
             totalItems={commissions.length}
-            paginate={paginate}
+            onPageChange={paginate}
           />
         )}
       </div>
-      <button
-        className="add-errand"
-        onClick={(e) => navigate(`/errand/post-commission`)}
-      >
-        <i className="fa-solid fa-plus"></i> Add Errand
-      </button>
     </div>
   );
 };

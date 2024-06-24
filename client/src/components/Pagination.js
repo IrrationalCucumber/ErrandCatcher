@@ -6,7 +6,7 @@
 //03-05-24 styling of the pagination is updated
 import React from 'react';
 
-const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
+const Pagination = ({ currentPage, itemsPerPage, totalItems, onPageChange }) => {
     const pageNumbers = [];
 
     for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
@@ -14,19 +14,39 @@ const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
     }
 
     return (
-        <nav style={{display: 'flex', justifyContent: 'center'}}>
-            <ul className='pagination'>
-                {pageNumbers.map(number => (
-                    <li key={number} className='page-item'>
-                        <button onClick={() => paginate(number)} 
-                        className='page-link'
-                        style={{borderRadius: '30px', margin: '10px'}}>
-                            {number}
-                        </button>
-                    </li>
-                ))}
-            </ul>
-        </nav>
+        <nav aria-label="Page navigation example" style={{ display: "flex", justifyContent: "center" }}>
+        <ul className="pagination justify-content-center">
+          <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+            <button
+              className="page-link"
+              onClick={() => onPageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </button>
+          </li>
+          {pageNumbers.map((number) => (
+            <li key={number} className={`page-item ${number === currentPage ? "active" : ""}`}>
+              <button
+                onClick={() => onPageChange(number)}
+                className="page-link"
+                
+              >
+                {number}
+              </button>
+            </li>
+          ))}
+          <li className={`page-item ${currentPage === pageNumbers.length ? "disabled" : ""}`}>
+            <button
+              className="page-link"
+              onClick={() => onPageChange(currentPage + 1)}
+              disabled={currentPage === pageNumbers.length}
+            >
+              Next
+            </button>
+          </li>
+        </ul>
+      </nav>
     );
 }
 

@@ -17,6 +17,7 @@ import ModalClose from "@mui/joy/ModalClose";
 import ModalDialog from "@mui/joy/ModalDialog";
 import DialogTitle from "@mui/joy/DialogTitle";
 import DialogContent from "@mui/joy/DialogContent";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const AccountList = () => {
   const [accounts, setAccounts] = useState([]);
@@ -38,7 +39,7 @@ const AccountList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   //Pagination --Ash
   //display data per page
-  const [itemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(5);
   //useEffect to handle error
   useEffect(() => {
     const fetchAllAccount = async () => {
@@ -197,10 +198,8 @@ const AccountList = () => {
   //Logic of Pagination
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentAccounts = filterAccounts.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
+  const currentAccounts = filterAccounts.slice(indexOfFirstItem, indexOfLastItem);
+
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const headers = [
@@ -297,90 +296,55 @@ const AccountList = () => {
   };
 
   return (
-    <div className="containerAcc">
-      <h1
-        className="header"
-        style={{
-          paddingLeft: "20px",
-          justifyContent: "center",
-          fontFamily:
-            "'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif",
-        }}
-      >
-        Account List
-      </h1>
-      <div
-        className="search"
-        style={{
-          paddingLeft: "20px",
-          marginBottom: "10px",
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        <input
-          type="text"
-          name="term"
-          placeholder="Search..."
-          value={searchTerm.term}
-          onChange={handleChange}
-          style={{
-            padding: "8px",
-            fontSize: "12px",
-            border: "1px solid #ccc",
-            borderRadius: "4px",
-            marginRight: "10px",
-            marginBottom: "10px",
-          }}
-        />
-        <select
-          className="ALtype"
-          name="type"
-          onChange={handleChange}
-          value={searchTerm.type}
-          style={{
-            padding: "8px",
-            fontSize: "12px",
-            border: "1px solid #ccc",
-            borderRadius: "4px",
-            marginRight: "10px",
-            marginBottom: "10px",
-            width: "150px",
-          }}
-        >
-          <option value="">Type</option>
-          <option value="Employer">Employer</option>
-          <option value="Catcher">Catcher</option>
-          <option value="admin">Admin</option>
-        </select>
-        <select
-          className="ALstatus"
-          name="status"
-          onChange={handleChange}
-          value={searchTerm.status}
-          style={{
-            padding: "8px",
-            fontSize: "12px",
-            border: "1px solid #ccc",
-            borderRadius: "4px",
-            marginRight: "10px",
-            marginBottom: "10px",
-            width: "150px",
-          }}
-        >
-          <option value="">Status</option>
-          <option value="Verified">Verified</option>
-          <option value="Unverified">Unverified</option>
-          <option value="Suspended">Suspended</option>
-        </select>
-      </div>
+    <div className="container mt-4">
+      <h1 className="header text-left mb-4" style={{fontSize:"24px"}}>Account List</h1>
+      <div className="d-flex align-items-center mb-3">
+    <div className="input-group me-2">
+      <input
+        type="text"
+        className="form-control"
+        placeholder="Search..."
+        aria-label="Search"
+        aria-describedby="search-addon"
+        name="term"
+        value={searchTerm.term}
+        onChange={handleChange}
+        style={{fontSize:"14px"}}
+      />
+    </div>
+    <select
+      className="form-select me-2"
+      name="type"
+      onChange={handleChange}
+      value={searchTerm.type}
+      style={{ fontSize: "14px", width: "80px" }}
+    >
+      <option value="">Type</option>
+      <option value="Employer">Employer</option>
+      <option value="Catcher">Catcher</option>
+      <option value="admin">Admin</option>
+    </select>
+    <select
+      className="form-select me-2"
+      name="status"
+      onChange={handleChange}
+      value={searchTerm.status}
+      style={{ fontSize: "14px", width: "100px" }}
+    >
+      <option value="">Status</option>
+      <option value="Verified">Verified</option>
+      <option value="Unverified">Unverified</option>
+      <option value="Suspended">Suspended</option>
+    </select>
+  </div>
       <div className="accounts">
         {/*table*/}
         <Table headers={headers} data={accountData} />
         <Pagination
+          currentPage={currentPage}
           itemsPerPage={itemsPerPage}
           totalItems={accounts.length}
-          paginate={paginate}
+          onPageChange={paginate}
         />
       </div>
       <Modal
@@ -388,27 +352,14 @@ const AccountList = () => {
         onClose={() => setLayout(undefined)}
         className="accList_modal"
       >
-        <ModalDialog layout={layout} className="custom-dialog">
-          <ModalClose />
-          <DialogTitle>{account.username.toUpperCase()} PROFILE</DialogTitle>
-          <DialogContent
-            style={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              padding: "20px",
-            }}
-          >
-            <>
-              <div>
-                {/* <img
-                  src={
-                    `http://localhost:8800/images/profile/` +
-                    account.profileImage
-                  }
-                  alt="Profile"
-                  width={150}
-                  length={150}
-                /> */}
+      <ModalDialog className="custom-dialog">
+        <ModalClose />
+        <DialogTitle>{account.username.toUpperCase()} PROFILE</DialogTitle>
+        <DialogContent className="centered-modal-content">
+          <div className="profile-container">
+            {/* Left side - Profile information */}
+            <div className="profile-info">
+              <div className="modal-body">
                 <h4>USER: {currentId}</h4>
                 <h5>
                   <b>USERNAME: </b>
@@ -438,25 +389,23 @@ const AccountList = () => {
                   {account.status} <br />
                   <b>RATING: </b>
                   {rating} <br />
-                  {/* <b>ERRAND DONE: </b> {count.done} <br />
-                  <b>ERRAND EXPIRED: </b> {count.expired} <br />
-                  <b>ERRAND CANCELLED: </b> {count.cancel} <br /> */}
                 </h5>
               </div>
+            </div>
+            {/* Right side - Profile image */}
+            <div className="profile-image">
               <img
-                src={
-                  `http://localhost:8800/images/profile/` + account.profileImage
-                }
+                src={`http://localhost:8800/images/profile/` + account.profileImage}
                 alt="Profile"
                 width={150}
-                length={150}
-                style={{ marginRight: "20px" }}
+                height={150}
               />
-            </>
-          </DialogContent>
-        </ModalDialog>
+            </div>
+          </div>
+        </DialogContent>
+      </ModalDialog>
       </Modal>
-      <Link to="/profile/add" style={{ textDecoration: "none" }}>
+      {/* <Link to="/profile/add" style={{ textDecoration: "none" }}>
         <button
           style={{
             marginLeft: "20px",
@@ -476,7 +425,7 @@ const AccountList = () => {
         >
           Add account
         </button>
-      </Link>
+      </Link> */}
     </div>
   );
 };

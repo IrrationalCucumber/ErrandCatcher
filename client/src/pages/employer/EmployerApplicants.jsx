@@ -23,8 +23,11 @@ import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 import { DisplayDate } from "../../components/DisplayDate";
+import mockApplicants from "./mockdata";
+import { Dropdown, Menu, MenuButton, MenuItem } from "@mui/joy";
 
 const EmployerApplicants = () => {
+  const [searchTerm, setSearchTerm] = useState("")
   const navigate = useNavigate();
   const { user } = useAuth();
   //pathname to array from
@@ -37,7 +40,7 @@ const EmployerApplicants = () => {
   const [currentPage, setCurrentPage] = useState(1);
   //Pagination --Ash
   //display data per page
-  const [itemsPerPage] = useState(10);
+  const itemsPerPage = 5;
   //ash
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [selectedApplicant, setSelectedApplicant] = useState(null);
@@ -97,27 +100,31 @@ const EmployerApplicants = () => {
     fetchAllAccount();
   }, [userID]);
 
+  // useEffect(() => {
+  //   setApplicants(mockApplicants);
+  // }, []);
+
   // Pagination
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  const indexOfLastItem = currentPage + itemsPerPage;
+  const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = applicants.slice(indexOfFirstItem, indexOfLastItem);
 
-  const headers = ["DATE", "CATCHER", "ERRAND TITLE", "ACTION", ""];
-  const applicantData = applicants.map((applicant) => [
+  const headers = ["DATE", "CATCHER", "ERRAND TITLE","STATUS", "ACTION"];
+  const applicantData = currentItems.map((applicant) => [
     //applicant.applicationID,
     DisplayDate(applicant.applicationDate),
     `${applicant.userFirstname} ${applicant.userLastname}`,
     applicant.commissionTitle,
     applicant.applicationStatus === "Pending" ? (
       <>
-        <button
+        {/* <button
           style={styles.button}
           className="accept action-btn"
           onClick={() => handleOpenAcceptModal()}
         >
           Accept
-        </button>
+        </button> */}
         {/* button accept modal */}
         <Modal open={openAccept} onClose={() => setOpenAccept(false)}>
           <ModalDialog>
@@ -153,13 +160,13 @@ const EmployerApplicants = () => {
             </DialogActions>
           </ModalDialog>
         </Modal>
-        <button
+        {/* <button
           style={style1.button}
           className="decline action-btn"
           onClick={() => handleOpenDeclineModal()}
         >
           Decline
-        </button>
+        </button> */}
 
         <Modal open={openDecline} onClose={() => setOpenDecline(false)}>
           <ModalDialog variant="outlined" role="alertdialog">
@@ -197,16 +204,25 @@ const EmployerApplicants = () => {
         </Modal>
       </>
     ) : applicant.applicationStatus === "Accepted" ? (
-      <button className="accepted action-btn">Accepted</button>
+      <span className="accepted action-btn" style={styles.button}>Accepted</span>
     ) : (
-      <button className="declined action-btn">Declined</button>
+      <span className="declined action-btn" style={style1.button}>Declined</span>
     ),
-    <button
-      style={style2.button}
-      onClick={() => handleViewProfile(applicant, applicant.username)}
-    >
-      View Profile
-    </button>,
+    // <button
+    //   style={style2.button}
+    //   onClick={() => handleViewProfile(applicant, applicant.username)}>
+    //   View Profile
+    // </button>,
+    <Dropdown>
+      <MenuButton>Action</MenuButton>
+      <Menu>
+        <MenuItem onClick={() => handleViewProfile(applicant, applicant.username)}>View</MenuItem>
+        <MenuItem className="accept action-btn"
+          onClick={() => handleOpenAcceptModal()}>Accept</MenuItem>
+        <MenuItem className="decline action-btn"
+          onClick={() => handleOpenDeclineModal()}>Decline</MenuItem>
+      </Menu>
+    </Dropdown>
   ]);
   //FOR NOTIFICATION
   //set variables for notification
@@ -313,30 +329,25 @@ const EmployerApplicants = () => {
   };
   //console.log(applicants);
   return (
-    <div className="applicants-container">
+    <div className="container mt-4">
+      <h1 className="header text-left mb-4" style={{fontSize:"24px"}}>Applicants</h1>
+      <div className="d-flex align-items-center mb-3">
+        <div className="input-group me-2">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search..."
+              aria-label="Search"
+              aria-describedby="search-addon"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{ fontSize: "14px", width: "280px !important" }}
+            />
+          </div>
+      </div>
       <div className="applicants">
-        <h1 style={{ paddingBottom: "10px" }}>APPLICANTS</h1>
-        <div className="search">
-          <input type="text" placeholder="Search..." />
-          <button type="submit" style={{ backgroundColor: "#1679AB" }}>
-            <i className="fa fa-search" place></i>
-          </button>
-          {/*<select name="type" id="">
-            <option value=""></option>
-            <option value="employer">Employer</option>
-            <option value="catcher">Catcher</option>
-            <option value="admin">Admin</option>
-          </select>
-          <select name="status" id="">
-            <option value=""></option>
-            <option value="verified">Verified</option>
-            <option value="unverified">Unverified</option>
-            <option value="Suspended">Suspended</option>
-          </select>*/}
-        </div>
         <Table headers={headers} data={applicantData} />
 
-        {/* added  by ash */}
 
         {showProfileModal && (
           <ProfileModal
@@ -348,6 +359,7 @@ const EmployerApplicants = () => {
             age={selectedApplicant.userAge}
             applicant={selectedApplicant}
             rating={rating}
+            actionType={openAccept ? 'accept' : 'view'}
             handleAccept={() =>
               handleAccept(
                 selectedApplicant.applicationID,
@@ -368,9 +380,10 @@ const EmployerApplicants = () => {
         {/* Pagination controls */}
         {applicants.length > 0 && (
           <Pagination
+            currentPage={currentPage}
             itemsPerPage={itemsPerPage}
             totalItems={applicants.length}
-            paginate={paginate}
+            onPageChange={paginate}
           />
         )}
       </div>
@@ -382,7 +395,7 @@ const EmployerApplicants = () => {
 const styles = {
   button: {
     padding: "10px 20px",
-    fontSize: "16px",
+    fontSize: "12px",
     backgroundColor: "#42a942",
     color: "#fff",
     border: "none",
@@ -396,7 +409,7 @@ const styles = {
 const style1 = {
   button: {
     padding: "10px 20px",
-    fontSize: "16px",
+    fontSize: "12px",
     backgroundColor: "#d9534f",
     color: "#fff",
     border: "none",
@@ -409,8 +422,8 @@ const style1 = {
 
 const style2 = {
   button: {
-    padding: "10px 20px",
-    fontSize: "16px",
+    padding: "10px",
+    fontSize: "12px",
     backgroundColor: "#378CE7",
     color: "#fff",
     border: "none",
@@ -418,6 +431,7 @@ const style2 = {
     cursor: "pointer",
     marginRight: "10px",
     textAlign: "center",
+    width: "120px"
   },
 };
 
