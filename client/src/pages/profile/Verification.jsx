@@ -17,6 +17,9 @@ import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 import { Box } from "@mui/material";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import ImageIcon from "@mui/icons-material/Image";
+import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
+import Grow from "@mui/material/Grow";
 
 // Step 1: Component: Basic Info
 const Step1 = ({ onNext }) => {
@@ -145,6 +148,7 @@ const Step2 = ({ onPrev, onNext }) => {
   const [image2, setImage2] = useState("");
   const [preview1, setPreview1] = useState(null);
   const [preview2, setPreview2] = useState(null);
+  const [alertOpen, setAlertOpen] = useState(false);
 
   function handleImage(e) {
     // const selectedFiles = e.target.files;
@@ -177,26 +181,18 @@ const Step2 = ({ onPrev, onNext }) => {
     e.preventDefault();
 
     if (!image1 || !image2) {
+      // setOpen(false);
+      // alert("Please upload both image before submitting.");
+      setAlertOpen(true);
+      console.log("please upload your images");
       setOpen(false);
-      alert("Please upload both image before submitting.");
+
       return;
     } else {
       onNext(); // Move to the next step
     }
     const formData = new FormData();
-    // for (const fileKey in files) {
-    //   if (files.hasOwnProperty(fileKey)) {
-    //     const fileArray = files[fileKey];
-    //     if (Array.isArray(fileArray)) {
-    //       fileArray.forEach((file) => {
-    //         formData.append("files", file);
-    //       });
-    //     } else {
-    //       formData.append("files", fileArray);
-    //     }
-    //   }
-    // }
-    //append them into one
+
     formData.append("image1", image1);
     formData.append("image2", image2);
     console.log(formData);
@@ -206,7 +202,7 @@ const Step2 = ({ onPrev, onNext }) => {
       .catch((err) => console.log(err));
     // setCurrentStep(currentStep + 1);
     setOpen(false);
-    alert("Successful upload file");
+    // alert("Successful upload file");
   };
 
   function handleDelete(image) {
@@ -448,6 +444,26 @@ const Step2 = ({ onPrev, onNext }) => {
                 Next
               </button> */}
               </div>
+              {/* alert error handling */}
+              {alertOpen && (
+                <Grow in={alertOpen} style={{ transformOrigin: "center" }}>
+                  <Alert
+                    variant="filled"
+                    severity="error"
+                    sx={{
+                      position: "fixed",
+                      right: "16px",
+                      top: "90px",
+                      fontSize: "15px",
+                      fontWeight: "bold",
+                      color: "white",
+                    }}
+                    onClose={() => setAlertOpen(false)}
+                  >
+                    Please upload both images before submitting.
+                  </Alert>
+                </Grow>
+              )}
               <ButtonGroup aria-label="spacing button group">
                 <Button
                   variant="outlined"
@@ -521,14 +537,7 @@ const Step2 = ({ onPrev, onNext }) => {
 
 // Step 3:
 const Step3 = ({ onPrev }) => {
-  const showAlert = () => {
-    alert(
-      "Please wait for the confirmation of your verification from the Admin!"
-    );
-  };
-  useEffect(() => {
-    showAlert();
-  }, []);
+  const [showSuccess, setShowSuccess] = useState(true);
 
   return (
     <div className="step">
@@ -555,6 +564,25 @@ const Step3 = ({ onPrev }) => {
             }}
           />
         </Box>
+        {showSuccess && (
+          <Grow in={showSuccess} style={{ transformOrigin: "center" }}>
+            <Alert
+              variant="filled"
+              severity="success"
+              sx={{
+                position: "fixed",
+                right: "16px",
+                top: "90px",
+                fontSize: "15px",
+                fontWeight: "bold",
+                color: "white",
+              }}
+              onClose={() => setShowSuccess(false)}
+            >
+              Wait Admin for the confirmation process.
+            </Alert>
+          </Grow>
+        )}
         <p
           style={{
             marginBottom: "5px",
