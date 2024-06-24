@@ -30,9 +30,9 @@ const Step1 = ({ onNext }) => {
       lastName.trim() === "" ||
       age.trim() === ""
     ) {
-      alert("Please fill in all the required fields.");
+      setAlertOpen(true);
     } else if (parseInt(age) < 18) {
-      alert("You must be at least 18 years old to proceed.");
+      setAgeLimit(true);
     } else {
       onNext(); // Move to the next step
     }
@@ -41,6 +41,8 @@ const Step1 = ({ onNext }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState("");
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [ageLimit, setAgeLimit] = useState(false);
 
   const handleAgeChange = (event) => {
     setAge(event.target.value);
@@ -59,14 +61,14 @@ const Step1 = ({ onNext }) => {
               placeholder="First name"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
-              required
+              // required
             ></input>
             <input
               type="text"
               placeholder="Last name"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
-              required
+              // required
             ></input>
           </div>
 
@@ -75,7 +77,7 @@ const Step1 = ({ onNext }) => {
             <input
               type="text"
               placeholder="Enter your Email Address"
-              required
+              // required
             ></input>
           </div>
 
@@ -86,7 +88,7 @@ const Step1 = ({ onNext }) => {
               value={age}
               onChange={handleAgeChange}
               placeholder=""
-              required
+              // required
             ></input>
 
             <label className="label">Gender</label>
@@ -99,7 +101,7 @@ const Step1 = ({ onNext }) => {
 
           <div className="input-rows">
             <label className="label">Birthdate</label>
-            <input type="date" required></input>
+            <input type="date"></input>
           </div>
 
           <div className="input-rows">
@@ -107,7 +109,7 @@ const Step1 = ({ onNext }) => {
             <input
               type="text"
               placeholder="Enter your address"
-              required
+              // required
             ></input>
           </div>
           <div className="input-rows">
@@ -115,7 +117,7 @@ const Step1 = ({ onNext }) => {
             <input
               type="text"
               placeholder="Enter your Contact Number"
-              required
+              // required
             ></input>
           </div>
           <div style={{ display: "flex", justifyContent: "center" }}>
@@ -123,6 +125,46 @@ const Step1 = ({ onNext }) => {
               Next
             </button>
           </div>
+          {/* alert error handling */}
+          {alertOpen && (
+            <Grow in={alertOpen} style={{ transformOrigin: "center" }}>
+              <Alert
+                variant="filled"
+                severity="error"
+                sx={{
+                  position: "fixed",
+                  right: "16px",
+                  top: "90px",
+                  fontSize: "15px",
+                  fontWeight: "bold",
+                  color: "white",
+                }}
+                onClose={() => setAlertOpen(false)}
+              >
+                Please fill in all the required fields.
+              </Alert>
+            </Grow>
+          )}
+
+          {ageLimit && (
+            <Grow in={ageLimit} style={{ transformOrigin: "center" }}>
+              <Alert
+                variant="filled"
+                severity="error"
+                sx={{
+                  position: "fixed",
+                  right: "16px",
+                  top: "90px",
+                  fontSize: "15px",
+                  fontWeight: "bold",
+                  color: "white",
+                }}
+                onClose={() => setAgeLimit(false)}
+              >
+                You must be at least 18 years old to proceed.
+              </Alert>
+            </Grow>
+          )}
         </div>
       </form>
     </div>
