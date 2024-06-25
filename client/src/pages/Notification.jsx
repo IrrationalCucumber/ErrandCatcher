@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import NotificationItem from "../components/NotificationItem";
-import { useLocation } from "react-router-dom";
 import { DisplayDate } from "../components/DisplayDate.js";
 import Navbar from "../components/Navbar/Navbar.js";
 import "../components//Notification.css"; // Combined CSS styles
 import { useAuth } from "../components/AuthContext.js";
+import { Button } from "@mui/joy";
+import CheckIcon from "@mui/icons-material/Check";
 
 function Notification() {
   const [notifs, setNotifs] = useState([]);
@@ -49,18 +50,16 @@ function Notification() {
               alt="notification_icon"
               style={{ paddingLeft: "20px" }}
             />
-            <button
+            <Button
               //onClick={markAsRead}
+              startDecorator={<CheckIcon />}
+              variant="outline"
+              color="plain"
               className="mark-read-button"
               style={{ textAlign: "center" }}
             >
-              <img
-                src="/images/check_icon.svg"
-                className="check-icon"
-                alt="check_icon"
-              />
               Mark all as Read
-            </button>
+            </Button>
           </div>
           <div className="notification-list">
             {notifs.map((notif) => (
