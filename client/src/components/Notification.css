@@ -80,11 +80,18 @@
   margin-top: -50px;
 }
 
-.mark-read-button {
+.button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: lightblue;
   border: none;
   cursor: pointer;
 }
 
+.button:hover {
+  background-color: cyan;
+}
 
 @media screen and (min-width: 380px) {
   .notification-title {
