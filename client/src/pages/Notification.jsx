@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import NotificationItem from "../components/NotificationItem";
 import { useLocation } from "react-router-dom";
+import { DisplayDate } from "../components/DisplayDate.js";
 import Navbar from "../components/Navbar/Navbar.js";
 import "../components//Notification.css"; // Combined CSS styles
 import { useAuth } from "../components/AuthContext.js";
@@ -23,12 +24,6 @@ function Notification() {
     };
     fetchNotif();
   }, []);
-
-  // Function to format date
-  const formatDate = (dateString) => {
-    const options = { month: "long", day: "numeric", year: "numeric" };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  };
 
   // When user clicks 'mark as read', update db notif isRead to Yes
   // const markAsRead = async (notificationID) => {
@@ -73,8 +68,10 @@ function Notification() {
                 <NotificationItem
                   type={notif.notificationType}
                   desc={notif.notifDesc}
-                  date={formatDate(notif.notifDate)} // Format the date
+                  date={DisplayDate(notif.notifDate)} // Format the date
+                  isRead={notif.isRead}
                   // markAsRead={()=>markAsRead(notif.notificationID)}
+                  // style={{ border: "5px solid green" }}
                 />
               </div>
             ))}
