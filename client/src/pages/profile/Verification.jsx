@@ -28,7 +28,8 @@ const Step1 = ({ onNext }) => {
     if (
       firstName.trim() === "" ||
       lastName.trim() === "" ||
-      age.trim() === ""
+      age.trim() === "" ||
+      date.trim() === ""
     ) {
       setAlertOpen(true);
     } else if (parseInt(age) < 18) {
@@ -41,6 +42,7 @@ const Step1 = ({ onNext }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState("");
+  const [date, setDate] = useState("");
   const [alertOpen, setAlertOpen] = useState(false);
   const [ageLimit, setAgeLimit] = useState(false);
 
@@ -101,7 +103,11 @@ const Step1 = ({ onNext }) => {
 
           <div className="input-rows">
             <label className="label">Birthdate</label>
-            <input type="date"></input>
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            ></input>
           </div>
 
           <div className="input-rows">
