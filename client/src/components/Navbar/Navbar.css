@@ -1,6 +1,6 @@
 .navbar {
-  background: #378CE7;
-  height: 80px;
+  background: #378ce7;
+  /* height: 80px; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,7 +8,7 @@
   position: sticky;
   top: 0;
   z-index: 999;
-} 
+}
 
 .navbar-container {
   display: flex;
@@ -43,8 +43,8 @@
   width: 60vw;
   justify-content: flex-end;
   margin-right: 2rem;
-    margin: 0;
-padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-item {
@@ -78,9 +78,32 @@ padding: 0;
   display: none;
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (min-width: 850px) and (max-width: 1180px) {
+  .navbar {
+    display: flex;
+    justify-content: start;
+  }
+  .nav-menu {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .navbar-container {
+    margin-left: 42px;
+  }
+}
+
+@media screen and (max-width: 994px) {
   .NavbarItems {
     position: relative;
+  }
+
+  .navbar-container {
+    margin-left: 42px;
+  }
+  .navbar {
+    display: flex;
+    justify-content: start;
   }
 
   .nav-menu {
@@ -110,7 +133,7 @@ padding: 0;
     text-decoration: none;
     padding: 1rem;
     height: 100%;
-    font-size: 1.2rem; 
+    font-size: 1.2rem;
   }
 
   .nav-links:hover {
@@ -121,12 +144,12 @@ padding: 0;
     transition: all 0.2s ease-out;
   }
 
-  .navbar-logo {
+  /* .navbar-logo {
     position: absolute;
     top: 0;
     left: 0;
     transform: translate(25%, 50%);
-  }
+  } */
 
   .menu-icon {
     display: block;
@@ -165,17 +188,14 @@ padding: 0;
   }
 }
 
-
-
 .notification-icon {
-  margin-right: 20px; 
+  margin-right: 20px;
   color: #fff;
 }
 
 .dropdown-container {
   position: relative;
   margin-top: 15px;
-  
 }
 
 .dropdown-content {
@@ -200,18 +220,17 @@ padding: 0;
   margin-right: 10px; /* Add margin between the image and text */
 }
 
-
 .logo-text {
-  font-size: 1.3rem; 
-  margin-left: 10px; 
+  font-size: 1.3rem;
+  margin-left: 10px;
   font-weight: bold;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
 .profile-signout-container {
   display: flex;
   align-items: center;
-  
 }
 
 .sign-out-container {
