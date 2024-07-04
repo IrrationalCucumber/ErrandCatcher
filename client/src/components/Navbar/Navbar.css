@@ -99,11 +99,10 @@
     display: flex;
     align-items: center;
     height: 100%;
-
   }
 
   .navbar-container {
-    margin-left: 20px;
+    margin-left: 4%;
   }
 }
 
@@ -115,7 +114,7 @@
   .navbar-container {
     margin-left: 42px;
   }
-  
+
   .navbar {
     display: flex;
     justify-content: start;
