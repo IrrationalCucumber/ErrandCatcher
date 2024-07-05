@@ -5,8 +5,7 @@ const Rating = {
     db.query(
       `SELECT f.*, u.username, u.userFirstname, u.userLastname
        FROM feedbackcommission f
-        JOIN useraccount u ON f.feedbackCatcherID = u.userID
-      ORDER BY f.feedbackDate DESC`,
+        JOIN useraccount u ON f.feedbackCatcherID = u.userID`,
       callback
     );
   },
