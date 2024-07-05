@@ -35,36 +35,48 @@ const Menu = () => {
         </button>
       </div>
       <section className="Menu" id="Menu">
-        <div className="box-container">
-          <div className="box">
-            <Link to={`/service/HomeService/${"HomeService"}`}>
-              <button style={{ backgroundColor: "white" }}>
-                <img src="/images/img6.png" alt="" />
-                <div className="content">
-                  <p style={{ paddingTop: "20px" }}>Home Service</p>
+        {/* bootstrap class applied */}
+        <div className="box-container  d-flex justify-content-center align-items-center">
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <div className="box">
+                  <Link to={`/service/HomeService/${"HomeService"}`}>
+                    <button style={{ backgroundColor: "white" }}>
+                      <img src="/images/img6.png" alt="" />
+                      <div className="content">
+                        <p style={{ paddingTop: "20px" }}>Home Service</p>
+                      </div>
+                    </button>
+                  </Link>
                 </div>
-              </button>
-            </Link>
-          </div>
-          <div className="box">
-            <Link to={`/service/Transpo/${"Transport"}`}>
-              <button style={{ backgroundColor: "white" }}>
-                <img src="/images/img4.png" alt="" />
-                <div className="content">
-                  <p style={{ paddingTop: "20px" }}>Transportation</p>
+              </div>
+              {/* <div class="row"></div> */}
+              <div class="col">
+                <div className="box">
+                  <Link to={`/service/Transpo/${"Transport"}`}>
+                    <button style={{ backgroundColor: "white" }}>
+                      <img src="/images/img4.png" alt="" />
+                      <div className="content">
+                        <p style={{ paddingTop: "20px" }}>Transportation</p>
+                      </div>
+                    </button>
+                  </Link>
                 </div>
-              </button>
-            </Link>
-          </div>
-          <div className="box">
-            <Link to={`/service/Delivery/${"Delivery"}`}>
-              <button style={{ backgroundColor: "white" }}>
-                <img src="/images/img5.png" alt="" />
-                <div className="content">
-                  <p style={{ paddingTop: "20px" }}>Delivery</p>
+              </div>
+              <div class="col">
+                <div className="box">
+                  <Link to={`/service/Delivery/${"Delivery"}`}>
+                    <button style={{ backgroundColor: "white" }}>
+                      <img src="/images/img5.png" alt="" />
+                      <div className="content">
+                        <p style={{ paddingTop: "20px" }}>Delivery</p>
+                      </div>
+                    </button>
+                  </Link>
                 </div>
-              </button>
-            </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
