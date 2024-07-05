@@ -96,6 +96,16 @@ const ratingController = {
       res.status(200).json({ message: "Feedback deleted successfully" });
     });
   },
+  //display top rated catcher
+  getTopRated: (req, res) => {
+    Rating.getTopRated((err, catchers) => {
+      if (err) {
+        console.log("Error: ", err);
+        res.status(500).send("Internal Server Error");
+      }
+      res.json(catchers);
+    });
+  },
 };
 
 module.exports = ratingController;

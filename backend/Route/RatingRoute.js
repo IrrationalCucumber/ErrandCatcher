@@ -10,5 +10,6 @@ router.get("/user-rating/:id", ratingController.getRatings); // for catch
 router.post("/rate", ratingController.postNewFeedback); // for emp
 router.put("/updating-feedback/:id", ratingController.putUpdateFeedback); //for emp
 router.delete("/delete-feedback/:id", ratingController.deleteFeedback); //for emp
+router.get("/top-rated", ratingController.getTopRated); /// top rated catcgers
 
 module.exports = router;

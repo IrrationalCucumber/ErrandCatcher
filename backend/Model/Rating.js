@@ -33,6 +33,22 @@ const Rating = {
       callback
     );
   },
+  //display top rated catchers
+  // limited to top 10
+  // from high to low
+  getTopRated: (callback) => {
+    db.query(
+      `SELECT avg(f.feedbackRate) as 'averageRate', u.username, u.accountType
+       FROM useraccount u
+       JOIN feedbackcommission f ON u.userID = f.feedbackCatcherID
+       WHERE u.accountType = 'Catcher'
+       GROUP BY u.userID
+       ORDER BY averageRate DESC 
+       LIMIT 10`,
+      callback
+    );
+  },
+
   //add new feeedback by employer
   postNewFeedback: (feedData, callback) => {
     const {
