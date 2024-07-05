@@ -3,6 +3,10 @@ import CatCards from "../../components/Cards/CatCards";
 import Navbar from "../../components/Navbar/Navbar";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import Search from "@mui/icons-material/Search";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import SyncAltIcon from "@mui/icons-material/SyncAlt";
 
 const Delivery = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -61,59 +65,104 @@ const Delivery = () => {
 
   return (
     <>
-      {/* <h1 className="headingTranspo">Transportation</h1> */}
-
-      <div className="search-barborder">
-        <h1 className="headingTranspo">Delivery</h1>
-
-        <div className="box">
-          <input
-            className="inputSearch"
-            type="text"
-            placeholder="Search..."
-            value={searchQuery}
-            onChange={handleSearchChange}
-          />
-
-          <select
-            className="selected"
-            name="location"
-            id="location"
-            value={filter.location}
-            onChange={handleChange}
-          >
-            <option value="">Choose Location....</option>
-            <option value="Cebu">Cebu</option>
-            <option value="Cordova">Cordova</option>
-            <option value="Mandaue">Mandaue</option>
-            <option value="Lapu-Lapu">Lapu-Lapu</option>
-            <option value="Talisay">Talisay</option>
-          </select>
-
-          <div className="Paylabel">
-            <label htmlFor="">
-              Payment range:
-              <input
-                className="inputNum"
-                type="number"
-                placeholder="Starting range..."
-                name="minPay"
-                onChange={handleChange}
-                value={filter.minPay}
-              />
-              <input
-                className="inputNum"
-                type="number"
-                placeholder="Maximum range..."
-                name="maxPay"
-                onChange={handleChange}
-                value={filter.maxPay}
-              />
-            </label>
-          </div>
+      <div class="row bg-primary">
+        <div class="col d-flex justify-content-center">
+          <h1 style={{ position: "relative", color: "white" }}>
+            <LocalShippingIcon
+              sx={{
+                color: "skyblue",
+                // position: "absolute",
+                marginRight: "7px",
+                left: "15px",
+                fontSize: 28,
+              }}
+            />
+            Delivery
+          </h1>
         </div>
       </div>
 
+      <div class="row ">
+        <div className="search-barborder">
+          {/* <div class="col">
+            <h1 className="headingTranspo">Transportation</h1>
+          </div> */}
+
+          <div className="box">
+            <Search
+              sx={{
+                position: "absolute",
+                color: "grey",
+                margin: "8px",
+              }}
+            />
+            <div class="col">
+              <input
+                style={{ paddingLeft: "32px" }}
+                className="inputSearch"
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={handleSearchChange}
+              />
+            </div>
+            <div class="col">
+              <LocationOnIcon
+                sx={{
+                  position: "absolute",
+                  color: "grey",
+                  margin: "8px",
+                }}
+              />
+              <select
+                style={{ paddingLeft: "32px" }}
+                className="selected"
+                name="location"
+                id="location"
+                value={filter.location}
+                onChange={handleChange}
+              >
+                <option value="">Choose Location....</option>
+                <option value="Cebu">Cebu</option>
+                <option value="Cordova">Cordova</option>
+                <option value="Mandaue">Mandaue</option>
+                <option value="Lapu-Lapu">Lapu-Lapu</option>
+                <option value="Talisay">Talisay</option>
+              </select>
+            </div>
+
+            <div class="col">
+              <div className="Paylabel">
+                <label htmlFor="">
+                  Payment Range:
+                  <input
+                    className="inputNum"
+                    type="number"
+                    placeholder="Starting range..."
+                    name="minPay"
+                    onChange={handleChange}
+                    value={filter.minPay}
+                  />
+                  <SyncAltIcon
+                    sx={{
+                      color: "#fff",
+                      fontSize: 24,
+                    }}
+                  />
+                  <input
+                    className="inputNum"
+                    type="number"
+                    placeholder="Maximum range..."
+                    name="maxPay"
+                    onChange={handleChange}
+                    value={filter.maxPay}
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <CatCards commissions={filteredCommissions} />
     </>
   );
