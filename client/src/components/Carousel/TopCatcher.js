@@ -6,7 +6,7 @@ export default function TopCatcher() {
   useEffect(() => {
     const fetchCatchers = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/all-feedbacks");
+        const res = await axios.get("http://localhost:8800/all-ratings");
         setCatchers(res.data);
       } catch (error) {}
     };
@@ -15,6 +15,9 @@ export default function TopCatcher() {
   return (
     <>
       <div>TopCatcher</div>
+      {catchers.map((catcher) => (
+        <div key={catcher.feedbackID}>{catcher.username}</div>
+      ))}
     </>
   );
 }
