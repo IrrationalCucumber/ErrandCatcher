@@ -26,7 +26,7 @@
 
 .search-barborder .inputSearch {
   border-radius: 25px;
-  padding: 12px;
+  /* padding: 12px; */
   width: 400px;
 }
 
@@ -73,4 +73,22 @@ select > .selected {
   align-items: center;
   justify-self: center;
   gap: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .search-barborder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    background-color: #378ce7;
+  }
+
+  .box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center;
+  }
 }
