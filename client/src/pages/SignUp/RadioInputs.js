@@ -1,18 +1,13 @@
 import React from "react";
 
-function RadioInputs({ selectedOption, onChange }) {
-  const options = [
-    { value: "employer", label: "I'm an Employer, looking for Catcher" },
-    { value: "catcher", label: "I'm a Catcher, looking for Errands" }
-  ];  
-
+function RadioInputs({ options, selectedOption, onChange }) {
   return (
     <div className="radio-container">
       <div className="grid-container">
         {options.map((option, index) => (
           <div className="grid-item" key={index}>
             <div className="radio-wrapper">
-              <div className={`radio-header ${selectedOption === option.value ? "selected" : ""}`} >
+              <div className={`radio-header ${selectedOption === option.value ? "selected" : ""}`}>
                 <input
                   type="radio"
                   id={option.value}
@@ -22,13 +17,15 @@ function RadioInputs({ selectedOption, onChange }) {
                 />
                 <label htmlFor={option.value} className="radio-label">{option.label}</label>
               </div>
-              {/* <div className="separator"></div>
+              <div className="separator"></div>
               <div className="radio-description">
                 <h3>
-                  I'm {option.value === "employer" ? "an employer" :  "a catcher"},
-                  looking for {option.value === "employer" ? "catcher" : "errands"}.
+                  {/* I'm {option.value === "employer" ? "an employer" : "a catcher"},
+                  looking for {option.value === "employer" ? "catcher" : "errands"}. */}
+                  I'm {option.value === "Employer" ? "an employer" : "a catcher"},
+                  looking for {option.value === "Employer" ? "catcher" : "errands"}.
                 </h3>
-              </div> */}
+              </div>
             </div>
           </div>
         ))}

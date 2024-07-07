@@ -83,14 +83,85 @@ CREATE TABLE `errandtransaction` (
   `transDateAccepted` datetime DEFAULT NULL,
   `transDateComplete` datetime DEFAULT NULL,
   `transReciept` varchar(100) DEFAULT NULL,
+  `total` DECIMAL(10, 2) DEFAULT NULL,
+  `type` VARCHAR(255) DEFAULT NULL,
+  `description` TEXT DEFAULT NULL,
+  `checkoutId` VARCHAR(255) DEFAULT NULL,
+  `employerID` INT DEFAULT NULL,
+  `paymentId` VARCHAR(255) DEFAULT NULL,
+  `currency` VARCHAR(10) DEFAULT NULL,
+  `paid` DATETIME DEFAULT NULL
   PRIMARY KEY (`transactID`),
   KEY `transErrandID_idx` (`transErrandID`),
   KEY `transCatcherID_idx` (`transCatcherID`),
+  KEY `employerID_idx` (`employerID`),
   CONSTRAINT `transCatcherID` FOREIGN KEY (`transCatcherID`) REFERENCES `useraccount` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `transErrandID` FOREIGN KEY (`transErrandID`) REFERENCES `commission` (`commissionID`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `transErrandID` FOREIGN KEY (`transErrandID`) REFERENCES `commission` (`commissionID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `employerID` FOREIGN KEY (`employerID`) REFERENCES `useraccount` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+-- added initial
+CREATE TABLE errandtransaction (
+    -- `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `total` DECIMAL(10, 2) DEFAULT NULL,
+    `type` VARCHAR(255) DEFAULT NULL,
+    `description` TEXT DEFAULT NULL,
+    `checkoutId` VARCHAR(255) DEFAULT NULL,
+    `employerID` INT DEFAULT NULL,
+    `paymentId` VARCHAR(255) DEFAULT NULL,
+    `currency` VARCHAR(10) DEFAULT NULL,
+    `paid` DATETIME DEFAULT NULL
+);
+ADD COLUMN `employerID` int DEFAULT NULL,
+ADD KEY `employerID_idx` (`employerID`),
+ADD CONSTRAINT `employerID` FOREIGN KEY (`employerID`) REFERENCES `useraccount` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+CREATE TABLE `errandtransaction` (
+  `transactID` int NOT NULL AUTO_INCREMENT,
+  `transErrandID` int DEFAULT NULL,
+  `transCatcherID` int DEFAULT NULL,
+  `errandStatus` varchar(45) DEFAULT 'Ongoing',
+  `transDateAccepted` datetime DEFAULT NULL,
+  `transDateComplete` datetime DEFAULT NULL,
+  `transReciept` varchar(100) DEFAULT NULL,
+  `total` DECIMAL(10, 2) DEFAULT NULL,
+  `type` VARCHAR(255) DEFAULT NULL,
+  `description` TEXT DEFAULT NULL,
+  `checkoutId` VARCHAR(255) DEFAULT NULL,
+  `employerID` INT DEFAULT NULL,
+  `paymentId` VARCHAR(255) DEFAULT NULL,
+  `currency` VARCHAR(10) DEFAULT NULL,
+  `paid` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`transactID`),
+  KEY `transErrandID_idx` (`transErrandID`),
+  KEY `transCatcherID_idx` (`transCatcherID`),
+  KEY `employerID_idx` (`employerID`),
+  CONSTRAINT `transCatcherID` FOREIGN KEY (`transCatcherID`) REFERENCES `useraccount` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `transErrandID` FOREIGN KEY (`transErrandID`) REFERENCES `commission` (`commissionID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `employerID` FOREIGN KEY (`employerID`) REFERENCES `useraccount` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
+)
+
+
+CREATE TABLE `invoice` (
+  `invoiceID` int NOT NULL AUTO_INCREMENT,
+  `invoiceErrandID` int DEFAULT NULL,
+  `invoiceCatcherID` int DEFAULT NULL,
+  `total` DECIMAL(10, 2) DEFAULT NULL COMMENT 'Total amount in centavos',
+  `type` VARCHAR(255) DEFAULT NULL,
+  `description` TEXT DEFAULT NULL,
+  `checkoutId` VARCHAR(255) DEFAULT NULL,
+  `invoiceemployerID` INT DEFAULT NULL,
+  `paymentId` VARCHAR(255) DEFAULT NULL,
+  `paid` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`invoiceID`),
+  KEY `invoiceErrandID_idx` (`invoiceErrandID`),
+  KEY `invoiceCatcherID_idx` (`invoiceCatcherID`),
+  KEY `invoiceemployerID_idx` (`invoiceemployerID`),
+  CONSTRAINT `invoiceCatcherID` FOREIGN KEY (`invoiceCatcherID`) REFERENCES `useraccount` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `invoiceErrandID` FOREIGN KEY (`invoiceErrandID`) REFERENCES `commission` (`commissionID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `invoiceemployerID` FOREIGN KEY (`invoiceemployerID`) REFERENCES `useraccount` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
+)
 --
 -- Table structure for table `feedbackcommission`
 --

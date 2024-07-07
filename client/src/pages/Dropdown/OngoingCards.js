@@ -10,6 +10,7 @@ function OngoingCards({ commissions, to }) {
   const [isClicked, setIsClicked] = useState(false);
   const [selectedCommissionId, setSelectedCommissionId] = useState(null);
   const { user } = useAuth();
+  const userID = user.userID;
 
   const [feedback, setFeedback] = useState({
     catcherID: "",
@@ -84,7 +85,7 @@ function OngoingCards({ commissions, to }) {
   };
 
   const handlePayment = (pay, type, fname, lname, id, comTitle) => {
-    const paymentUrl = "http://localhost:8800/process-payment";
+    const paymentUrl = `http://localhost:8800/process-payment/${userID}`;
     // Change the amount
     const amount = pay;
     const errType = type;
@@ -98,9 +99,13 @@ function OngoingCards({ commissions, to }) {
         name: name,
         errand: errand,
         id: id,
+        employerID: userID,
       })
       .then((response) => {
         window.open(response.data.url);
+      })
+      .catch((error) => {
+        console.error("There was an error processing the payment!", error);
       });
   };
 

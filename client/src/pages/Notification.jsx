@@ -1,10 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import NotificationItem from "../components/NotificationItem";
+import { DisplayDate } from "../components/DisplayDate.js";
 import Navbar from "../components/Navbar/Navbar.js";
 import Pagination from "../components/Pagination"; // Import Pagination component
 import "../components/Notification.css"; // Combined CSS styles
 import { useAuth } from "../components/AuthContext.js";
+import { Button } from "@mui/joy";
+import CheckIcon from "@mui/icons-material/Check";
 
 function Notification() {
   const [notifs, setNotifs] = useState([]);
@@ -38,14 +41,10 @@ function Notification() {
     setCurrentPage(pageNumber);
   };
 
-  // Function to format date
-  const formatDate = (dateString) => {
-    const options = { month: "long", day: "numeric", year: "numeric" };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  };
-
   // Function to mark all notifications as read
   // const markAsRead = async () => {
+  // When user clicks 'mark as read', update db notif isRead to Yes
+  // const markAsRead = async (notificationID) => {
   //   try {
   //     await axios.post(`http://localhost:8800/read-notif/${userID}`);
   //     fetchNotif(); // Refresh notifications
@@ -69,18 +68,16 @@ function Notification() {
               alt="notification_icon"
               style={{ paddingLeft: "20px" }}
             />
-            <button
-              // onClick={markAsRead}
+            <Button
+              //onClick={markAsRead}
+              startDecorator={<CheckIcon />}
+              variant="outline"
+              color="plain"
               className="mark-read-button"
               style={{ textAlign: "center" }}
             >
-              <img
-                src="/images/check_icon.svg"
-                className="check-icon"
-                alt="check_icon"
-              />
               Mark all as Read
-            </button>
+            </Button>
           </div>
           <div className="notification-list">
             {currentNotifs.map((notif) => (
@@ -88,8 +85,10 @@ function Notification() {
                 <NotificationItem
                   type={notif.notificationType}
                   desc={notif.notifDesc}
-                  date={formatDate(notif.notifDate)} // Format the date
-                  // markAsRead={() => markAsRead(notif.notificationID)}
+                  date={DisplayDate(notif.notifDate)} // Format the date
+                  isRead={notif.isRead}
+                  // markAsRead={()=>markAsRead(notif.notificationID)}
+                  // style={{ border: "5px solid green" }}
                 />
               </div>
             ))}
