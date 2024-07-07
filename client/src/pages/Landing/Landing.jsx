@@ -6,6 +6,7 @@ import Footer from "../../components/Footer";
 import "./Landing.css";
 import { LandingMap } from "../../components/Map/Map";
 import { LandingServiceDetails } from "../../components/Dashbaord/Landing";
+import TopCatcher from "../../components/Carousel/TopCatcher";
 
 const Landing = () => {
   return (
@@ -43,9 +44,10 @@ const Landing = () => {
         </div>
       </div>
       <div className="landing__map">
-        <LandingMap></LandingMap>
+        <LandingMap />
       </div>
       <LandingServiceDetails />
+      <TopCatcher />
       <section className="Services" id="Services">
         <h1>
           <span>S</span>ervices

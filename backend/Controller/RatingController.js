@@ -1,14 +1,14 @@
 const Rating = require("../Model/Rating");
 
 const ratingController = {
-  getAllFeedback: (res, req) => {
-    Rating.getAllFeedback((err, feeds) => {
+  getAllRatings: (req, res) => {
+    Rating.getAllFeedback((err, ratings) => {
       if (err) {
         console.error("Error fetching Feedbacks:", err);
         res.status(500).send("Internal Server Error");
         return;
       }
-      res.json(feeds);
+      res.json(ratings);
     });
   },
   //get catcher feedback
@@ -94,6 +94,16 @@ const ratingController = {
         return;
       }
       res.status(200).json({ message: "Feedback deleted successfully" });
+    });
+  },
+  //display top rated catcher
+  getTopRated: (req, res) => {
+    Rating.getTopRated((err, catchers) => {
+      if (err) {
+        console.log("Error: ", err);
+        res.status(500).send("Internal Server Error");
+      }
+      res.json(catchers);
     });
   },
 };
