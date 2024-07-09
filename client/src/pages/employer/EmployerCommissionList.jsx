@@ -152,80 +152,82 @@ const CommissionList = () => {
                 </select>
               </div>
             </div>
+            <div className="table-container">
+              <Table
+                headers={[
+                  "ID",
+                  "ERRAND TITLE",
+                  "TYPE",
+                  "START DATE",
+                  "DUE DATE",
+                  "STATUS",
+                  "ACTION",
+                ]}
+                // update the data here
+                data={currentItems.map((commissionItem) => [
+                  commissionItem.commissionID,
+                  commissionItem.commissionTitle,
+                  commissionItem.commissionType,
+                  DisplayDate(commissionItem.DatePosted),
+                  DisplayDate(commissionItem.commissionDeadline),
+                  commissionItem.commissionStatus,
 
-            <Table
-              headers={[
-                "ID",
-                "ERRAND TITLE",
-                "TYPE",
-                "START DATE",
-                "DUE DATE",
-                "STATUS",
-                "ACTION",
-              ]}
-              // update the data here
-              data={currentItems.map((commissionItem) => [
-                commissionItem.commissionID,
-                commissionItem.commissionTitle,
-                commissionItem.commissionType,
-                DisplayDate(commissionItem.DatePosted),
-                DisplayDate(commissionItem.commissionDeadline),
-                commissionItem.commissionStatus,
-                <React.Fragment>
-                  <ButtonGroup aria-label="spacing button group">
-                    <Button
-                      variant="outlined"
-                      color="danger"
-                      endDecorator={<DeleteForever />}
-                      onClick={() =>
-                        handleOpenModal(commissionItem.commissionID)
-                      }
-                    ></Button>
-                    <Modal open={open} onClose={() => setOpen(false)}>
-                      <ModalDialog variant="outlined" role="alertdialog">
-                        <DialogTitle>
-                          <WarningRoundedIcon />
-                          Confirmation
-                        </DialogTitle>
-                        <Divider />
-                        <DialogContent>
-                          Are you sure you want to discard Errand {currentId} ?
-                          {/* Display the current ID from state */}
-                        </DialogContent>
-                        <DialogActions>
-                          <Button
-                            variant="solid"
-                            color="danger"
-                            onClick={confirmDelete}
-                          >
-                            Delete
-                          </Button>
-                          <Button
-                            variant="plain"
-                            color="neutral"
-                            onClick={() => setOpen(false)}
-                          >
-                            Cancel
-                          </Button>
-                        </DialogActions>
-                      </ModalDialog>
-                    </Modal>
-                    {/* <Button
+                  <React.Fragment>
+                    <ButtonGroup aria-label="spacing button group">
+                      <Button
+                        variant="outlined"
+                        color="danger"
+                        endDecorator={<DeleteForever />}
+                        onClick={() =>
+                          handleOpenModal(commissionItem.commissionID)
+                        }
+                      ></Button>
+                      <Modal open={open} onClose={() => setOpen(false)}>
+                        <ModalDialog variant="outlined" role="alertdialog">
+                          <DialogTitle>
+                            <WarningRoundedIcon />
+                            Confirmation
+                          </DialogTitle>
+                          <Divider />
+                          <DialogContent>
+                            Are you sure you want to discard Errand {currentId}{" "}
+                            ?{/* Display the current ID from state */}
+                          </DialogContent>
+                          <DialogActions>
+                            <Button
+                              variant="solid"
+                              color="danger"
+                              onClick={confirmDelete}
+                            >
+                              Delete
+                            </Button>
+                            <Button
+                              variant="plain"
+                              color="neutral"
+                              onClick={() => setOpen(false)}
+                            >
+                              Cancel
+                            </Button>
+                          </DialogActions>
+                        </ModalDialog>
+                      </Modal>
+                      {/* <Button
                     onClick={() => handleDelete(commissionItem.commissionID)}
-                  >
+                    >
                     DELETE
-                  </Button> */}
-                    <Button>
-                      <Link
-                        to={`/errand/update-commission/${commissionItem.commissionID}`}
-                      >
-                        View
-                      </Link>
-                    </Button>
-                  </ButtonGroup>
-                </React.Fragment>,
-              ])}
-            />
+                    </Button> */}
+                      <Button>
+                        <Link
+                          to={`/errand/update-commission/${commissionItem.commissionID}`}
+                        >
+                          View
+                        </Link>
+                      </Button>
+                    </ButtonGroup>
+                  </React.Fragment>,
+                ])}
+              />
+            </div>
           </div>
         </div>
         {/* Pagination controls */}
