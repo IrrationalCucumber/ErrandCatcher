@@ -1,51 +1,52 @@
 .map-wrap {
-    position: relative;
-    width: 100%;
-    height: 100%; /* calculate height of the screen minus the heading */
-  }
+  position: relative;
+  width: 100%;
+  /* height: 100%; */ /* calculate height of the screen minus the heading */
+  height: calc(100vh - 77px);
+}
 
-  .map-post-wrap {
-    position: relative;
-    width: 100%;
-    height: calc(100vh - 77px); /* calculate height of the screen minus the heading */
-  }
-  
-  .map {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-  }
+.map-post-wrap {
+  position: relative;
+  width: 100%;
+  height: calc(
+    100vh - 77px
+  ); /* calculate height of the screen minus the heading */
+}
 
-    
-  .map-landing {
-    position: absolute;
-    width: 100%;
-    height: 83%;
-  }
+.map {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
 
-  .map__filter{
-    position: fixed;
-    width: 200px;
-    margin: auto;
-    padding: 10px;
-    top: 100px;
-   left: 20px;
-    z-index: 11;
-    height: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    
-  }
+.map-landing {
+  position: absolute;
+  width: 100%;
+  height: 83%;
+}
 
-  .map__filter:hover{
-    background-color: aliceblue;
-    border-radius: 10px;
-    border: 1px dotted;
-    background: rgba(141, 223, 255, 0.664);
-  }
+.map__filter {
+  position: absolute;
+  width: 200px;
+  margin: auto;
+  padding: 10px;
+  top: 2px;
+  left: 8px;
+  z-index: 11;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-  .map__filter__text{
-   padding: 5px 0 15px 0;
-  }
+.map__filter:hover {
+  background-color: aliceblue;
+  border-radius: 10px;
+  border: 1px dotted;
+  background: rgba(141, 223, 255, 0.664);
+}
+
+.map__filter__text {
+  padding: 5px 0 15px 0;
+}
