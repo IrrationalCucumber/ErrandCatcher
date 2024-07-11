@@ -334,7 +334,9 @@ const EmployerApplicants = () => {
             <option value="Suspended">Suspended</option>
           </select>*/}
         </div>
-        <Table headers={headers} data={applicantData} />
+        <div className="applicants-table">
+          <Table headers={headers} data={applicantData} />
+        </div>
 
         {/* added  by ash */}
 
@@ -382,7 +384,7 @@ const EmployerApplicants = () => {
 const styles = {
   button: {
     padding: "10px 20px",
-    fontSize: "16px",
+    fontSize: "12px",
     backgroundColor: "#42a942",
     color: "#fff",
     border: "none",
@@ -396,7 +398,7 @@ const styles = {
 const style1 = {
   button: {
     padding: "10px 20px",
-    fontSize: "16px",
+    fontSize: "12px",
     backgroundColor: "#d9534f",
     color: "#fff",
     border: "none",
@@ -410,13 +412,13 @@ const style1 = {
 const style2 = {
   button: {
     padding: "10px 20px",
-    fontSize: "16px",
+    fontSize: "12px",
     backgroundColor: "#378CE7",
     color: "#fff",
     border: "none",
     borderRadius: "5px",
     cursor: "pointer",
-    marginRight: "10px",
+    // marginRight: "10px",
     textAlign: "center",
   },
 };
