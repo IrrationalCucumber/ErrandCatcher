@@ -51,15 +51,16 @@ const Landing = () => {
           <span>S</span>ervices
         </h1>
         <div className="box-container">
+          {/* 1 */}
           <div className="box">
             <img src="/images/img1.png" alt="" />
             <div className="content">
-              <p style={{ paddingLeft: "65px" }}>Transportation</p>
+              <p style={{ textAlign: "center" }}>Transportation</p>
               <h3>
                 {" "}
                 <i
                   className="fas fa-map-marker-alt"
-                  style={{ paddingLeft: "90px" }}
+                  style={{ textAlign: "center" }}
                 ></i>{" "}
                 Mandaue City{" "}
               </h3>
@@ -73,16 +74,16 @@ const Landing = () => {
               </div>
             </div>
           </div>
-
+          {/* 2 */}
           <div className="box">
             <img src="/images/img2.png" alt="" />
             <div className="content">
-              <p style={{ paddingLeft: "110px" }}>Delivery</p>
+              <p style={{ textAlign: "center" }}>Delivery</p>
               <h3>
                 {" "}
                 <i
                   className="fas fa-map-marker-alt"
-                  style={{ paddingLeft: "90px" }}
+                  style={{ textAlign: "center" }}
                 ></i>{" "}
                 Lapu-Lapu City{" "}
               </h3>
@@ -97,16 +98,16 @@ const Landing = () => {
               </div>
             </div>
           </div>
-
+          {/* 3 */}
           <div className="box">
             <img src="/images/img3.png" alt="" />
             <div className="content">
-              <p style={{ paddingLeft: "70px" }}>Home Service</p>
+              <p style={{ textAlign: "center" }}>Home Service</p>
               <h3>
                 {" "}
                 <i
                   className="fas fa-map-marker-alt"
-                  style={{ paddingLeft: "100px" }}
+                  style={{}}
                 ></i>{" "}
                 Cebu City{" "}
               </h3>
@@ -120,15 +121,87 @@ const Landing = () => {
               </div>
             </div>
           </div>
+          {/* 4 */}
           <div className="box">
             <img src="/images/img1.png" alt="" />
             <div className="content">
-              <p style={{ paddingLeft: "60px" }}>Transportation</p>
+              <p style={{ textAlign: "center" }}>Transportation</p>
               <h3>
                 {" "}
                 <i
                   className="fas fa-map-marker-alt"
-                  style={{ paddingLeft: "100px" }}
+                  style={{}}
+                ></i>{" "}
+                Cebu City{" "}
+              </h3>
+
+              <div className="btn">
+                <a
+                  href="sign-up"
+                  style={{ backgroundColor: "#1679AB", fontSize: "16px" }}
+                >
+                  <i></i> Apply{" "}
+                </a>
+              </div>
+            </div>
+          </div>
+          {/* 5 */}
+          <div className="box">
+            <img src="/images/img2.png" alt="" />
+            <div className="content">
+              <p style={{ textAlign: "center" }}>Delivery</p>
+              <h3>
+                {" "}
+                <i
+                  className="fas fa-map-marker-alt"
+                  style={{}}
+                ></i>{" "}
+                Cordova{" "}
+              </h3>
+
+              <div className="btn">
+                <a
+                  href="sign-up"
+                  style={{ backgroundColor: "#1679AB", fontSize: "16px" }}
+                >
+                  <i></i> Apply{" "}
+                </a>
+              </div>
+            </div>
+          </div>
+          {/* 6 */}
+          <div className="box">
+            <img src="/images/img3.png" alt="" />
+            <div className="content">
+              <p style={{ textAlign: "center" }}>Home Service</p>
+              <h3>
+                {" "}
+                <i
+                  className="fas fa-map-marker-alt"
+                  style={{}}
+                ></i>{" "}
+                Cebu City{" "}
+              </h3>
+              <div className="btn">
+                <a
+                  href="sign-up"
+                  style={{ backgroundColor: "#1679AB", fontSize: "16px" }}
+                >
+                  <i></i> Apply{" "}
+                </a>
+              </div>
+            </div>
+          </div>
+          {/* 7 */}
+          <div className="box">
+            <img src="/images/img1.png" alt="" />
+            <div className="content">
+              <p style={{ textAlign: "center" }}>Transportation</p>
+              <h3>
+                {" "}
+                <i
+                  className="fas fa-map-marker-alt"
+                  style={{}}
                 ></i>{" "}
                 Cebu City{" "}
               </h3>
