@@ -9,10 +9,11 @@
   .products,
   .sign-up {
     display: flex;
-    height: 90vh;
+    height: auto;
     align-items: center;
     justify-content: center;
     font-size: 3rem;
+    padding-bottom: 2%;
   }
 
   .services {
