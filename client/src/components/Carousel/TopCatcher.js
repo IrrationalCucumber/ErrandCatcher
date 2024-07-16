@@ -58,6 +58,12 @@ export default function TopCatcher() {
         <div className="carousel-inner">
           <div className="carousel-item active" data-bs-interval="5000">
             <img src="/images/car.png" className="d-block w-50" alt="..." />
+            <div class="carousel-caption d-none d-md-block">
+              <h5>First slide label</h5>
+              <p>
+                Some representative placeholder content for the first slide.
+              </p>
+            </div>
           </div>
           <div className="carousel-item" data-bs-interval="5000">
             <img src="/images/hr.png" className="d-block w-50" alt="..." />
@@ -72,19 +78,17 @@ export default function TopCatcher() {
         <button
           className="carousel-control-prev"
           type="button"
-          data-bs-target="#carouselExampleAutoplaying"
+          data-bs-target="#carouselExampleIndicators"
           data-bs-slide="prev"
         >
-          <span
-            className="carousel-control-prev-icon"
-            aria-hidden="true"
-          ></span>
-          <span className="visually-hidden">Previous</span>
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
         </button>
+
         <button
           className="carousel-control-next"
           type="button"
-          data-bs-target="#carouselExampleAutoplaying"
+          data-bs-target="#carouselExampleIndicators"
           data-bs-slide="next"
         >
           <span
