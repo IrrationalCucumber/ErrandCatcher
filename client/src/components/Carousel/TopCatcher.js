@@ -24,9 +24,13 @@ export default function TopCatcher() {
       ))} */}
       <div
         id="carouselExampleIndicators"
-        className="carousel slide"
+        className="carousel carousel-dark slide"
         data-bs-ride="carousel"
       >
+        {/* 
+          Line Indicators 
+          User can preess to select what to display
+        */}
         <div className="carousel-indicators">
           <button
             type="button"
@@ -35,6 +39,7 @@ export default function TopCatcher() {
             className="active"
             aria-current="true"
             aria-label="Slide 1"
+            data-bs-ride="carousel"
           ></button>
           <button
             type="button"
@@ -49,21 +54,25 @@ export default function TopCatcher() {
             aria-label="Slide 3"
           ></button>
         </div>
+        {/* Item/Cards to display */}
         <div className="carousel-inner">
-          <div className="carousel-item active">
-            <img src="/images/car.png" className="d-block w-5" alt="..." />
+          <div className="carousel-item active" data-bs-interval="5000">
+            <img src="/images/car.png" className="d-block w-50" alt="..." />
           </div>
-          <div className="carousel-item">
-            <img src="/images/hr.png" className="d-block w-5" alt="..." />
+          <div className="carousel-item" data-bs-interval="5000">
+            <img src="/images/hr.png" className="d-block w-50" alt="..." />
           </div>
-          <div className="carousel-item">
-            <img src="/images/img2.png" className="d-block w-5" alt="..." />
+          <div className="carousel-item" data-bs-interval="5000">
+            <img src="/images/img2.png" className="d-block w-50" alt="..." />
           </div>
         </div>
+        {/* 
+          Previos and Next button
+        */}
         <button
           className="carousel-control-prev"
           type="button"
-          data-bs-target="#carouselExampleIndicators"
+          data-bs-target="#carouselExampleAutoplaying"
           data-bs-slide="prev"
         >
           <span
@@ -75,7 +84,7 @@ export default function TopCatcher() {
         <button
           className="carousel-control-next"
           type="button"
-          data-bs-target="#carouselExampleIndicators"
+          data-bs-target="#carouselExampleAutoplaying"
           data-bs-slide="next"
         >
           <span
