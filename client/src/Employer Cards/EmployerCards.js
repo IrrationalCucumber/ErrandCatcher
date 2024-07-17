@@ -3,6 +3,9 @@ import { Link, useLocation } from "react-router-dom";
 import "./employercard.css";
 import axios from "axios";
 import { useAuth } from "../components/AuthContext";
+import PostAddIcon from "@mui/icons-material/PostAdd";
+import GroupIcon from "@mui/icons-material/Group";
+import PendingActionsIcon from "@mui/icons-material/PendingActions";
 
 const EmployerCard = ({ employer }) => {
   const [counts, setCounts] = useState({
@@ -48,31 +51,75 @@ const EmployerCard = ({ employer }) => {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div className="count-details">
-          <Link
-            to={`/dashboard/commissions`}
-            className="count-section posts"
-            style={{ color: "black" }}
-          >
-            <p>{counts.numPosts}</p>
-            <h3>Posts</h3>
-          </Link>
-          <Link
-            to={`/dashboard/applicants`}
-            className="count-section applicants1"
-            style={{ color: "black" }}
-          >
-            <h3>Applicants</h3>
-            <p>{counts.numApplicants}</p>
-          </Link>
-          <Link
-            to={`/dashboard/commissions/${userID}`}
-            className="count-section errands"
-            style={{ color: "black" }}
-          >
-            <h3>Pending</h3>
-            <p>{counts.numErrands}</p>
-          </Link>
+        // bootstrap classes used
+        <div class="container">
+          <div className="count-details">
+            <div className="row d-flex ">
+              {/* <div class="row"> */}
+              <div class="col  d-flex justify-content-center">
+                {/* <div class="col"> */}
+
+                <Link
+                  to={`/dashboard/commissions`}
+                  className="count-section posts"
+                  style={{ color: "black" }}
+                >
+                  <h3 style={{ position: "relative" }}>
+                    <PostAddIcon
+                      sx={{
+                        color: "black",
+                        position: "absolute",
+                        right: "150px",
+                        fontSize: 28,
+                      }}
+                    />
+                    Posts
+                  </h3>
+                  <p>{counts.numPosts}</p>
+                </Link>
+              </div>
+              <div class="col d-flex justify-content-center">
+                <Link
+                  to={`/dashboard/applicants`}
+                  className="count-section applicants1"
+                  style={{ color: "black" }}
+                >
+                  <h3 style={{ position: "relative" }}>
+                    <GroupIcon
+                      sx={{
+                        color: "black",
+                        position: "absolute",
+                        right: "182px",
+                        fontSize: 28,
+                      }}
+                    />
+                    Applicants
+                  </h3>
+                  <p>{counts.numApplicants}</p>
+                </Link>
+              </div>
+              <div class="col d-flex justify-content-center">
+                <Link
+                  to={`/dashboard/commissions/${userID}`}
+                  className="count-section errands"
+                  style={{ color: "black" }}
+                >
+                  <h3 style={{ position: "relative" }}>
+                    <PendingActionsIcon
+                      sx={{
+                        color: "black",
+                        position: "absolute",
+                        right: "168px",
+                        fontSize: 28,
+                      }}
+                    />
+                    Pending
+                  </h3>
+                  <p>{counts.numErrands}</p>
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
