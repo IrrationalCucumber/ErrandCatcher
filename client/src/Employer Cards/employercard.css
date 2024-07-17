@@ -14,9 +14,12 @@
 .count-details {
   margin-top: 20px;
   display: grid;
-  flex-direction: column; /* Align sections vertically */
-  grid-template-columns: repeat(3, 1fr); /* Three columns */
-  grid-gap: 10px; /* Spacing between sections */
+  /* flex-direction: column; */
+  /* Align sections vertically */
+  /* grid-template-columns: repeat(3, 1fr); */
+  /* Three columns */
+  /* grid-gap: 10px; */
+  /* Spacing between sections */
 }
 
 .count-section {
