@@ -92,14 +92,14 @@ const Transportation = () => {
           </div> */}
 
           <div className="box">
-            <Search
-              sx={{
-                position: "absolute",
-                color: "grey",
-                margin: "8px",
-              }}
-            />
-            <div class="col">
+            <div class="col d-flex justify-content-start">
+              <Search
+                sx={{
+                  position: "absolute",
+                  color: "grey",
+                  margin: "11px",
+                }}
+              />
               <input
                 style={{ paddingLeft: "32px" }}
                 className="inputSearch"
@@ -142,7 +142,7 @@ const Transportation = () => {
                   <input
                     className="inputNum"
                     type="number"
-                    placeholder="Starting range..."
+                    placeholder="Minimum"
                     name="minPay"
                     onChange={handleChange}
                     value={filter.minPay}
@@ -156,7 +156,7 @@ const Transportation = () => {
                   <input
                     className="inputNum"
                     type="number"
-                    placeholder="Maximum range..."
+                    placeholder="Maximum"
                     name="maxPay"
                     onChange={handleChange}
                     value={filter.maxPay}

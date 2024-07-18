@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "../Services/Delivery.css";
 import CatCards from "../../components/Cards/CatCards";
 import Navbar from "../../components/Navbar/Navbar";
 import { useLocation } from "react-router-dom";
@@ -89,14 +90,14 @@ const Delivery = () => {
           </div> */}
 
           <div className="box">
-            <Search
-              sx={{
-                position: "absolute",
-                color: "grey",
-                margin: "8px",
-              }}
-            />
-            <div class="col">
+            <div class="col d-flex justify-content-start">
+              <Search
+                sx={{
+                  position: "absolute",
+                  color: "grey",
+                  margin: "11px",
+                }}
+              />
               <input
                 style={{ paddingLeft: "32px" }}
                 className="inputSearch"
@@ -139,7 +140,7 @@ const Delivery = () => {
                   <input
                     className="inputNum"
                     type="number"
-                    placeholder="Starting range..."
+                    placeholder="Minimum"
                     name="minPay"
                     onChange={handleChange}
                     value={filter.minPay}
@@ -153,7 +154,7 @@ const Delivery = () => {
                   <input
                     className="inputNum"
                     type="number"
-                    placeholder="Maximum range..."
+                    placeholder="Maximum"
                     name="maxPay"
                     onChange={handleChange}
                     value={filter.maxPay}
