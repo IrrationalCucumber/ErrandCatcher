@@ -50,7 +50,7 @@ export default function TopCatcher() {
             <div className="carousel-caption d-none d-md-block">
               <h4>{catcher.averageRate}</h4>
               <h5>{catcher.username}</h5>
-              <p>Some representative placeholder content for the slide.</p>
+              {/* <p>Some representative placeholder content for the slide.</p> */}
             </div>
           </div>
         ))}
