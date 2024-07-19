@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import StarRating from "../Display/StarRating";
 
 export default function TopCatcher() {
   const [catchers, setCatchers] = useState([]);
@@ -48,7 +49,8 @@ export default function TopCatcher() {
               change placeholder texts
             */}
             <div className="carousel-caption d-none d-md-block">
-              <h4>{catcher.averageRate}</h4>
+              <StarRating rating={catcher.averageRate} />
+              {/* <h5>{catcher.averageRate}</h5> */}
               <h5>{catcher.username}</h5>
               {/* <p>Some representative placeholder content for the slide.</p> */}
             </div>
