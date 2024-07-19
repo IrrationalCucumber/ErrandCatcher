@@ -2,11 +2,14 @@ import React from "react";
 import { Star, StarBorder, StarHalf } from "@mui/icons-material";
 
 export default function StarRating({ rating }) {
+  // Limit the rating to be between 0 and 5
+  const limitedRating = Math.min(Math.max(rating, 0), 5);
+
   // Create a function to generate the star components
   const renderStars = () => {
     let stars = [];
-    let integerPart = Math.floor(rating); // Full stars
-    let decimalPart = rating - integerPart; // Remaining part
+    let integerPart = Math.floor(limitedRating); // Full stars
+    let decimalPart = limitedRating - integerPart; // Remaining part
 
     // Add full stars
     for (let i = 0; i < integerPart; i++) {
