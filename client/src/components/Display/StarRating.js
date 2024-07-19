@@ -13,18 +13,18 @@ export default function StarRating({ rating }) {
 
     // Add full stars
     for (let i = 0; i < integerPart; i++) {
-      stars.push(<Star key={i} />);
+      stars.push(<Star key={i} sx={{ color: "gold" }} />);
     }
 
     // Add half star if applicable
     if (decimalPart >= 0.5) {
-      stars.push(<StarHalf key={integerPart} />);
+      stars.push(<StarHalf key={integerPart} sx={{ color: "gold" }} />);
       integerPart++; // To correctly count the total stars added
     }
 
     // Add empty stars to complete to 5 stars
     while (integerPart < 5) {
-      stars.push(<StarBorder key={integerPart} />);
+      stars.push(<StarBorder key={integerPart} sx={{ color: "gold" }} />);
       integerPart++;
     }
 
