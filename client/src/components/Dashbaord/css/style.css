@@ -1,9 +1,14 @@
 /* custom style */
 :root {
+  /* font */
   --ff-primary: "Roboto", sans-serif;
   --ff-accent: "Playfair Display", serif;
   --ff-para: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+
+  /* color */
+  --clr-primary: rgb(43, 137, 224);
+  --clr-secondary: rgba(68, 186, 255, 0.682);
 }
 
 .landing__cont {
@@ -25,7 +30,7 @@
   flex-direction: column;
 }
 
-.landing__service__btn__lt {
+/* .landing__service__btn__lt {
   position: relative;
   left: 30%;
   width: 150px;
@@ -41,9 +46,49 @@
   left: 30%;
   color: black;
   background: white;
+} */
+
+.landing__service__btn__lt {
+  padding: 1em 2em;
+  border: none;
+  border-radius: 45px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+  color: var(--clr-primary);
+  transition: all 1000ms;
+  font-size: 15px;
+  position: relative;
+  overflow: hidden;
+  outline: 2px solid var(--clr-secondary);
 }
 
-.landing__service__btn__rt {
+.landing__service__btn__lt:hover {
+  color: #ffffff;
+  transform: scale(1.1);
+  outline: 2px solid var(--clr-secondary);
+  box-shadow: 4px 5px 17px -4px #268391;
+  /* box-shadow: 4px 5px 17px -4px var(--clr-secondary); */
+}
+
+.landing__service__btn__lt::before {
+  content: "";
+  position: absolute;
+  left: -50px;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background-color: var(--clr-secondary);
+  transform: skewX(45deg);
+  z-index: -1;
+  transition: width 1000ms;
+}
+
+.landing__service__btn__lt:hover::before {
+  width: 250%;
+}
+
+/* .landing__service__btn__rt {
   position: relative;
   left: 50%;
   width: 150px;
@@ -58,6 +103,45 @@
   zoom: 1;
   color: black;
   background: white;
+} */
+
+.landing__service__btn__rt {
+  padding: 1em 2em;
+  border: none;
+  border-radius: 45px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+  color: var(--clr-primary);
+  transition: all 1000ms;
+  font-size: 15px;
+  position: relative;
+  overflow: hidden;
+  outline: 2px solid var(--clr-primary);
+}
+
+.landing__service__btn__rt:hover {
+  color: #ffffff;
+  transform: scale(1.1);
+  outline: 2px solid var(--clr-primary);
+  box-shadow: 4px 5px 17px -4px #268391;
+}
+
+.landing__service__btn__rt::before {
+  content: "";
+  position: absolute;
+  left: -50px;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background-color: var(--clr-primary);
+  transform: skewX(45deg);
+  z-index: -1;
+  transition: width 1000ms;
+}
+
+.landing__service__btn__rt:hover::before {
+  width: 250%;
 }
 
 /* .landing__bg__left {
@@ -125,6 +209,7 @@
   max-width: 700px;
   height: min(100%, 100vh);
   align-items: center;
+  justify-content: center;
   display: flex;
   border-radius: 50% 0 0 50%;
 }
