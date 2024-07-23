@@ -1,0 +1,29 @@
+.step h1{
+    text-align: center;
+}
+
+.step__button{
+    display: flex;
+    justify-content: center;
+}
+
+.step__grow{
+    transform-origin: center;
+}
+
+.step__alert{
+    position: fixed;
+    right: 16px;
+    top: 90px;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+}
+
+.step__age__alert{
+    position: fixed;
+    right: 16px;
+    top: 90px;
+    font-size: 15px;
+    color: white;
+}
