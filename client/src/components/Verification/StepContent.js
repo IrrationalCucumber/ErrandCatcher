@@ -27,9 +27,9 @@ export function Step1({ onNext }) {
     e.preventDefault();
     if (
       details.firstName.trim() === "" ||
-      details.lastName.trim() === "" ||
-      details.age.trim() === "" ||
-      details.date.trim() === ""
+      details.lastName.trim() === ""
+      // details.age.trim() === "" ||
+      // details.date.trim() === ""
     ) {
       setAlertOpen(true);
     } else if (parseInt(details.age) < 18) {
