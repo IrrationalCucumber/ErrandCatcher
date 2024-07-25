@@ -20,9 +20,11 @@ export default function StepContent() {
   return <div>StepContent</div>;
 }
 
-export function Step1({ onNext }) {
+export function Step1({ onNext, details, setDetail }) {
   const { user } = useAuth();
   const userID = user.userID;
+  //detaill to be passed to step 2
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
@@ -39,16 +41,16 @@ export function Step1({ onNext }) {
     }
   };
 
-  const [details, setDetail] = useState({
-    firstName: "",
-    lastName: "",
-    age: "",
-    date: "",
-    sex: "",
-    address: "",
-    email: "",
-    cnum: "",
-  });
+  // const [details, setDetail] = useState({
+  //   firstName: "",
+  //   lastName: "",
+  //   age: "",
+  //   date: "",
+  //   sex: "",
+  //   address: "",
+  //   email: "",
+  //   cnum: "",
+  // });
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -216,7 +218,7 @@ export function Step1({ onNext }) {
   );
 }
 
-export function Step2({ onPrev, onNext }) {
+export function Step2({ details, images, setImages, onNext, onPrev }) {
   const { user } = useAuth();
   const userID = user.userID;
   const [open, setOpen] = useState(false); // modal
@@ -230,10 +232,10 @@ export function Step2({ onPrev, onNext }) {
     setOpen(true);
   };
 
-  const [image1, setImage1] = useState("");
-  const [image2, setImage2] = useState("");
-  const [preview1, setPreview1] = useState(null);
-  const [preview2, setPreview2] = useState(null);
+  // const [image1, setImage1] = useState("");
+  // const [image2, setImage2] = useState("");
+  // const [preview1, setPreview1] = useState(null);
+  // const [preview2, setPreview2] = useState(null);
   const [alertOpen, setAlertOpen] = useState(false);
 
   function handleImage(e) {
@@ -251,13 +253,17 @@ export function Step2({ onPrev, onNext }) {
     if (file) {
       const previewPic = URL.createObjectURL(file);
       if (e.target.name === "image1") {
-        // setImage1(e.target.files[0]);
-        setImage1(file);
-        setPreview1(previewPic);
+        setImages((prevImages) => ({
+          ...prevImages,
+          image1: file,
+          preview1: previewPic,
+        }));
       } else if (e.target.name === "image2") {
-        // setImage2(e.target.files[0]);
-        setImage2(file);
-        setPreview2(previewPic);
+        setImages((prevImages) => ({
+          ...prevImages,
+          image2: file,
+          preview2: previewPic,
+        }));
       }
     }
   }
@@ -266,7 +272,7 @@ export function Step2({ onPrev, onNext }) {
   const handleUpload = async (e) => {
     e.preventDefault();
 
-    if (!image1 || !image2) {
+    if (!images.image1 || !images.image2) {
       // setOpen(false);
       // alert("Please upload both image before submitting.");
       setAlertOpen(true);
@@ -279,8 +285,8 @@ export function Step2({ onPrev, onNext }) {
     }
     const formData = new FormData();
 
-    formData.append("image1", image1);
-    formData.append("image2", image2);
+    formData.append("image1", images.image1);
+    formData.append("image2", images.image2);
     console.log(formData);
     await axios
       .post(`http://localhost:8800/upload/${userID}`, formData)
@@ -293,11 +299,11 @@ export function Step2({ onPrev, onNext }) {
 
   function handleDelete(image) {
     if (image === "image1") {
-      setImage1(null);
-      setPreview1(null);
+      setImages(null);
+      setImages(null);
     } else if (image === "image2") {
-      setImage2(null);
-      setPreview2(null);
+      setImages(null);
+      setImages(null);
     }
   }
 
@@ -416,10 +422,10 @@ export function Step2({ onPrev, onNext }) {
                 Choose Image File
               </label>
 
-              {preview1 && (
+              {images.preview1 && (
                 <div className="image-preview">
                   <img
-                    src={preview1}
+                    src={images.preview1}
                     alt="Preview"
                     style={{
                       maxWidth: "300px",
@@ -481,10 +487,10 @@ export function Step2({ onPrev, onNext }) {
                 <Image />
                 Choose Image File
               </label>
-              {preview2 && (
+              {images.preview2 && (
                 <div className="image-preview">
                   <img
-                    src={preview2}
+                    src={images.preview2}
                     alt="Preview"
                     style={{
                       maxWidth: "300px",
@@ -621,7 +627,7 @@ export function Step2({ onPrev, onNext }) {
   );
 }
 
-export function Step3({ onPrev }) {
+export function Step3({ details, images, onPrev }) {
   const [showSuccess, setShowSuccess] = useState(true);
 
   return (
@@ -630,6 +636,11 @@ export function Step3({ onPrev }) {
         <h1 style={{ display: "flex", justifyContent: "center" }}>
           Sending Verification to the Admin!
         </h1>
+        <h2>Step 3</h2>
+        <p>First Name: {details.firstName}</p>
+        <p>Last Name: {details.lastName}</p>
+        {images.preview1 && <img src={images.preview1} alt="Preview 1" />}
+        {/* <p>Image 2: {image2}</p> */}
         <Box
           sx={{
             display: "flex",
