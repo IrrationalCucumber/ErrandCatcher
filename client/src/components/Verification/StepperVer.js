@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Step1, Step2, Step3 } from "./StepContent";
+import { Step1, Step2, Step3, Step4 } from "./StepContent";
 import {
   Box,
   Step,
@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 
-const steps = ["Step 1", "Step 2", "Step 3"];
+const steps = ["Step 1", "Step 2", "Step 3", "Done"];
 
 export default function StepperVer() {
   const [activeStep, setActiveStep] = useState(0);
@@ -60,6 +60,8 @@ export default function StepperVer() {
         );
       case 2:
         return <Step3 details={details} images={images} onPrev={handleBack} />;
+      case 3:
+        return <Step4 />;
       default:
         return <Typography>Unknown Step</Typography>;
     }

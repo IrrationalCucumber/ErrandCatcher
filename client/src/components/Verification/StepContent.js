@@ -633,14 +633,9 @@ export function Step2({ details, images, setImages, onNext, onPrev }) {
 }
 
 export function Step3({ details, images, onPrev }) {
-  const [showSuccess, setShowSuccess] = useState(true);
-
   return (
     <div className="step">
       <form className="form-container">
-        <h1 style={{ display: "flex", justifyContent: "center" }}>
-          Sending Verification to the Admin!
-        </h1>
         <h2>Step 3</h2>
         <p>First Name: {details.firstName}</p>
         <p>Last Name: {details.lastName}</p>
@@ -666,6 +661,19 @@ export function Step3({ details, images, onPrev }) {
             }}
           />
         )}
+      </form>
+    </div>
+  );
+}
+
+export function Step4() {
+  const [showSuccess, setShowSuccess] = useState(true);
+  return (
+    <div className="step">
+      <form className="form-container">
+        <h1 style={{ display: "flex", justifyContent: "center" }}>
+          Sending Verification to the Admin!
+        </h1>
         <Box
           sx={{
             display: "flex",
