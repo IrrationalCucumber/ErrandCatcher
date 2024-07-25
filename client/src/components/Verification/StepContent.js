@@ -57,12 +57,12 @@ export function Step1({ onNext, details, setDetail }) {
       try {
         const res = await axios.get(`http://localhost:8800/user/${userID}`);
         const d = res.data[0];
-        console.log(res.data[0]);
+
         setDetail({
           firstName: d.userFirstname,
           lastName: d.userLastname,
           age: d.userAge,
-          date: new Date(d.userBirthday).toLocaleDateString(),
+          date: new Date(d.userBirthday).toISOString().substr(0, 10),
           sex: d.userGender,
           address: d.userGender,
           email: d.userEmail,
@@ -152,9 +152,8 @@ export function Step1({ onNext, details, setDetail }) {
             <label className="label">Birthdate</label>
             <input
               type="date"
-              name="date"
               value={details.date}
-              //   onChange={(e) => setDate(e.target.value)}
+              onChange={handleChange}
             ></input>
           </div>
 
