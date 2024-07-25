@@ -298,11 +298,17 @@ export function Step2({ details, images, setImages, onNext, onPrev }) {
 
   function handleDelete(image) {
     if (image === "image1") {
-      setImages(null);
-      setImages(null);
+      setImages((prevImages) => ({
+        ...prevImages,
+        image1: null,
+        preview1: "",
+      }));
     } else if (image === "image2") {
-      setImages(null);
-      setImages(null);
+      setImages((prevImages) => ({
+        ...prevImages,
+        image2: null,
+        preview2: "",
+      }));
     }
   }
 
