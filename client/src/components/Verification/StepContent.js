@@ -644,8 +644,28 @@ export function Step3({ details, images, onPrev }) {
         <h2>Step 3</h2>
         <p>First Name: {details.firstName}</p>
         <p>Last Name: {details.lastName}</p>
-        {images.preview1 && <img src={images.preview1} alt="Preview 1" />}
-        {/* <p>Image 2: {image2}</p> */}
+        {images.preview1 && (
+          <img
+            src={images.preview1}
+            alt="Preview 1"
+            style={{
+              maxWidth: "300px",
+              marginTop: "15px",
+              marginBottom: "15px",
+            }}
+          />
+        )}
+        {images.preview2 && (
+          <img
+            src={images.preview2}
+            alt="Preview 2"
+            style={{
+              maxWidth: "300px",
+              marginTop: "15px",
+              marginBottom: "15px",
+            }}
+          />
+        )}
         <Box
           sx={{
             display: "flex",
