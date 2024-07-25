@@ -15,6 +15,7 @@ import { Image, WarningRounded, Verified } from "@mui/icons-material";
 import { useAuth } from "../AuthContext";
 import axios from "axios";
 import "./css/style.css";
+import { useNavigate } from "react-router-dom";
 
 export default function StepContent() {
   return <div>StepContent</div>;
@@ -725,6 +726,29 @@ export function Step4() {
         >
           Explore the services in Errand Catcher
         </p>
+        <Button
+          variant="outlined"
+          color="green"
+          sx={{
+            // Custom color
+            backgroundColor: "",
+            "&:hover": {
+              backgroundColor: "#1A97DE", // Darker green on hover
+            },
+            margin: "20px",
+            padding: "10px",
+            width: "100px",
+            borderRadius: "5px",
+            cursor: "pointer",
+            backgroundColor: "#1679ab",
+            color: "#fff",
+            border: "none",
+            fontSize: "13px",
+          }}
+          onClick={useNavigate("/profile/me")}
+        >
+          Profile
+        </Button>
       </form>
     </div>
   );
