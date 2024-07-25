@@ -7,7 +7,7 @@ const Notif = {
   //users notifs
   getNotifById: (id, callback) => {
     db.query(
-      "SELECT * FROM notification WHERE isRead = 'no' AND notifUserID = ? ORDER BY notifDate DESC",
+      "SELECT * FROM notification WHERE notifUserID = ? ORDER BY notifDate DESC",
       [id],
       callback
     );

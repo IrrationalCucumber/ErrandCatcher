@@ -2,15 +2,13 @@
  *
  */
 import axios from "axios";
-import React, { useRef, useEffect, useState } from "react";
-import maplibregl from "maplibre-gl";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 //import "../style.css";
 import ErrandInputs from "../../components/ErrandInputs";
 import "./Commission.css"; // Import your CSS file
 import { useAuth } from "../../components/AuthContext";
-import Map from "../../components/Map/ViewMapBox";
-import MapLibre from "../../components/Map/MapLibre";
+import { ViewMap, ViewMapBox } from "../../components/Map/Map";
 
 const ErrandPage = () => {
   const [commission, setCommission] = useState({
@@ -42,7 +40,6 @@ const ErrandPage = () => {
   const commissionID = location.pathname.split("/")[3];
   const { user } = useAuth();
   const userID = user.userID;
-  const [distance, setDistance] = useState(0);
   const accessToken =
     "pk.eyJ1Ijoiam9pbmVyIiwiYSI6ImNsdmNjbnF4NjBoajQycWxoaHV5b2M1NzIifQ.Z7Pi_LfWyuc7a_z01zKMFg";
 
@@ -52,7 +49,7 @@ const ErrandPage = () => {
   const [isApplied, setIsApplied] = useState(false);
   // const [appID, setAppID] = useState("");
   useEffect(() => {
-    if (user.userType == "Catcher") {
+    if (user.userType === "Catcher") {
       const fetchApp = async () => {
         try {
           const res = await axios.get(
@@ -69,23 +66,7 @@ const ErrandPage = () => {
       };
       fetchApp();
     }
-  }, [isApplied, user.userType, userID]);
-
-  // Add a state to track the marker's longitude and latitude
-  const [markerLngLat, setMarkerLngLat] = useState([123.8854, 10.3157]); // Default values
-  //get the coordinates of the cerrand
-  const fetchLoc = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:8800/errand/${commissionID}`
-      );
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
-  };
+  }, [isApplied, user.userType, userID, commissionID]);
 
   //pre-fill the fields
   useEffect(() => {
@@ -133,43 +114,6 @@ const ErrandPage = () => {
 
     fetchCommission();
   }, [commissionID]);
-
-  //MAP
-  //variables for map
-  const mapContainer = useRef(null);
-  const map = useRef(null);
-  const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
-  const [zoom] = useState(10);
-
-  useEffect(() => {
-    if (map.current) return;
-
-    map.current = new maplibregl.Map({
-      container: mapContainer.current,
-      style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${API_KEY}`,
-      center: markerLngLat,
-      zoom: zoom,
-    });
-
-    map.current.addControl(new maplibregl.NavigationControl(), "top-right");
-
-    //display the current coordinate of the errand
-    fetchLoc().then((commissions) => {
-      commissions.forEach((commission) => {
-        const currentLng = commission.commissionLong;
-        const currentLat = commission.commissionLat;
-        const marker = new maplibregl.Marker({
-          color: "#FF0000",
-          //draggable: true,
-        }) // Red marker for commissions
-          .setLngLat([currentLng, currentLat])
-          .setPopup(
-            new maplibregl.Popup().setHTML(`<h3>The Errand is here!</h3>`)
-          )
-          .addTo(map.current);
-      });
-    });
-  }, [API_KEY, zoom]);
 
   //Transfer to update page
   const handleClick = (e) => {
@@ -278,25 +222,13 @@ const ErrandPage = () => {
           </div>
           {commission.comType !== "Delivery" &&
             commission.comType !== "Transportation" && (
-              <div className="map--wrap">
-                <div ref={mapContainer} className="map-small" />
-                {/* <MapLibre
-                    getCoords={(lat, long) => {
-                      setCommission((prev) => ({
-                        ...prev,
-                        comLat: lat,
-                        comLong: long,
-                      }));
-                    }}
-                  /> */}
-                <p className="coords">
-                  X: {commission.comLong} Y: {commission.comLat}
-                </p>
-              </div>
+              <>
+                <ViewMap id={commissionID} />
+              </>
             )}
           {commission.comType === "Delivery" && (
             <>
-              <Map
+              <ViewMapBox
                 accessToken={accessToken}
                 interactive={false}
                 getDistanceCallback={(distance, origin, destination) =>
@@ -315,7 +247,7 @@ const ErrandPage = () => {
           )}
           {commission.comType === "Transportation" && (
             <>
-              <Map
+              <ViewMapBox
                 accessToken={accessToken}
                 interactive={false}
                 getDistanceCallback={(distance, origin, destination) =>

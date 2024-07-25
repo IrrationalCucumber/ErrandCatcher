@@ -81,7 +81,7 @@ const userController = {
           res.status(500).send("Internal Server Error");
           return;
         } else if (!isMatch) {
-          console.log("Password mismatch.");
+          // console.log("Password mismatch.");
           res.status(401).json({ error: "Invalid username or password" });
           return;
         }
@@ -127,21 +127,30 @@ const userController = {
   putUpdateUser: (req, res) => {
     const userID = req.params.id;
     const updatedData = req.body;
-    User.putUpdateUserById(userID, updatedData, (error, result) => {
-      if (error) {
-        console.error("Error updating user:", error);
-        res
-          .status(500)
-          .json({ error: "An error occurred while updating user" });
+    //encrypt new password
+    bcrypt.hash(updatedData.password, saltRounds, (err, hash) => {
+      if (err) {
+        console.error("Error hashign passowrd", err);
+        res.status(500).json({ error: "Error processing password" });
         return;
-      }
-      // Check if any rows were affected by the update operation
-      if (result.affectedRows === 0) {
-        res.status(404).json({ error: "User not found" });
-        return;
-      }
-      // User updated successfully
-      res.status(200).json({ message: "User updated successfully" });
+      } //replact text password to hashed password
+      updatedData.password = hash;
+      User.putUpdateUserById(userID, updatedData, (error, result) => {
+        if (error) {
+          console.error("Error updating user:", error);
+          res
+            .status(500)
+            .json({ error: "An error occurred while updating user" });
+          return;
+        }
+        // Check if any rows were affected by the update operation
+        if (result.affectedRows === 0) {
+          res.status(404).json({ error: "User not found" });
+          return;
+        }
+        // User updated successfully
+        res.status(200).json({ message: "User updated successfully" });
+      });
     });
   },
   //Update user status
