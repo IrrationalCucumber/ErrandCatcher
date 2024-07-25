@@ -13,27 +13,53 @@ const steps = ["Step 1", "Step 2", "Step 3"];
 
 export default function StepperVer() {
   const [activeStep, setActiveStep] = useState(0);
-
+  // variables to store step's user data
+  //data will be pass around
+  const [details, setDetails] = useState({
+    firstName: "",
+    lastName: "",
+    age: "",
+    date: "",
+    sex: "",
+    address: "",
+    email: "",
+    cnum: "",
+  });
+  const [images, setImages] = useState({
+    image1: null,
+    image2: null,
+    preview1: "",
+    preview2: "",
+  });
+  //Hadnle changing steps
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
-
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
-
   const handleReset = () => {
     setActiveStep(0);
   };
-
+  //based on current step, render step contents
   const renderContent = (step) => {
     switch (step) {
       case 0:
-        return <Step1 onNext={handleNext} />;
+        return (
+          <Step1 details={details} setDetail={setDetails} onNext={handleNext} />
+        );
       case 1:
-        return <Step2 onNext={handleNext} onPrev={handleBack} />;
+        return (
+          <Step2
+            images={images}
+            setImages={setImages}
+            details={details}
+            onNext={handleNext}
+            onPrev={handleBack}
+          />
+        );
       case 2:
-        return <Step3 onPrev={handleBack} />;
+        return <Step3 details={details} images={images} onPrev={handleBack} />;
       default:
         return <Typography>Unknown Step</Typography>;
     }
