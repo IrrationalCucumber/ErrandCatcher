@@ -90,3 +90,12 @@ STEP 1
     justify-content: center;
     margin: 10px;
 }
+
+.step2__alert__error{
+    position: fixed;
+    right: 16px;
+    top: 90px;
+    font: 15px bold;
+    color: white;
+}
+

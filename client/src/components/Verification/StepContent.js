@@ -421,13 +421,9 @@ export function Step2({ images, setImages, onNext, onPrev }) {
                   <Alert
                     variant="filled"
                     severity="error"
+                    className="step2__alert__error"
                     sx={{
-                      position: "fixed",
-                      right: "16px",
-                      top: "90px",
-                      fontSize: "15px",
                       fontWeight: "bold",
-                      color: "white",
                     }}
                     onClose={() => setAlertOpen(false)}
                   >
@@ -439,6 +435,7 @@ export function Step2({ images, setImages, onNext, onPrev }) {
                 <Button
                   variant="outlined"
                   color="green"
+                  className="step2__nav__btn__sbmt"
                   sx={{
                     // Custom color
                     backgroundColor: "",
