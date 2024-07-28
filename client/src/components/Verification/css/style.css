@@ -14,23 +14,16 @@ STEP 1
     transform-origin: center;
 }
 
-.step__alert{
+.step__alert,.step__age__alert{
     position: fixed;
     right: 16px;
     top: 90px;
     font-size: 15px;
+    color: white;
+}
+.step__alert{ 
     font-weight: bold;
-    color: white;
 }
-
-.step__age__alert{
-    position: fixed;
-    right: 16px;
-    top: 90px;
-    font-size: 15px;
-    color: white;
-}
-
 /* STEP 2 */
 
 .label2 {
@@ -38,36 +31,33 @@ STEP 1
 }
 
 .input-rows2 p{
-    margin-bottom: 5px;
-    margin-left: 10px;
+    margin: 0 0 5px 10px;
     font-size: 10px;
+}
+.input-rows-2 input, .step__img__input, .step2__nav__button{
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
 }
 
 .input-rows-2 input{
     border: 1px dashed;
-    display: flex;
     flex-direction: column;
     align-content: center;
-    justify-content: center;
-    cursor: pointer;
     position: relative;
 }
 
 .step__img__input{
     border: 1px dashed;
-    display: flex;
     flex-direction: row;
     gap: 10px;
     align-items: center;
-    justify-content: center;
-    cursor: pointer;
     background-color: #f0f0f0;
 }
 /* image preview */
 .step2_img_preview{
     max-width: 300px;
-    margin-top: 15px;
-    margin-bottom: 15px;
+    margin: 15px 0 ;
     position: relative;
 }
 
@@ -86,8 +76,6 @@ STEP 1
 
 /* Step nav button */
 .step2__nav__button{
-    display: flex;
-    justify-content: center;
     margin: 10px;
 }
 
