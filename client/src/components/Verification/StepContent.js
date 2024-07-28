@@ -20,7 +20,8 @@ import { useNavigate } from "react-router-dom";
 export default function StepContent() {
   return <div>StepContent</div>;
 }
-
+// STEP 1
+//Basin info
 export function Step1({ onNext, details, setDetail }) {
   const { user } = useAuth();
   const userID = user.userID;
@@ -41,17 +42,6 @@ export function Step1({ onNext, details, setDetail }) {
       onNext(); // Move to the next step
     }
   };
-
-  // const [details, setDetail] = useState({
-  //   firstName: "",
-  //   lastName: "",
-  //   age: "",
-  //   date: "",
-  //   sex: "",
-  //   address: "",
-  //   email: "",
-  //   cnum: "",
-  // });
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -76,10 +66,6 @@ export function Step1({ onNext, details, setDetail }) {
     fetchDetails();
   }, [userID]);
 
-  //   const [firstName, setFirstName] = useState("");
-  //   const [lastName, setLastName] = useState("");
-  //   const [age, setAge] = useState("");
-  //   const [date, setDate] = useState("");
   const [alertOpen, setAlertOpen] = useState(false);
   const [ageLimit, setAgeLimit] = useState(false);
 
@@ -217,8 +203,9 @@ export function Step1({ onNext, details, setDetail }) {
     </div>
   );
 }
-
-export function Step2({ details, images, setImages, onNext, onPrev }) {
+//STEP 2
+// Upload Docu and ID
+export function Step2({ images, setImages, onNext, onPrev }) {
   const { user } = useAuth();
   const userID = user.userID;
   const [open, setOpen] = useState(false); // modal
@@ -316,26 +303,14 @@ export function Step2({ details, images, setImages, onNext, onPrev }) {
   return (
     <div>
       <div className="step">
-        <h1 style={{ textAlign: "center" }}>Upload Image</h1>
+        <h1>Upload Image</h1>
         <div className="form-group1">
           <form className="form-container" onSubmit={handleSubmit}>
             <div className="input-rows2">
-              <label
-                className="label2"
-                style={{ marginTop: "5px" }}
-                htmlFor="fileInput1"
-              >
+              <label className="label2" htmlFor="fileInput1">
                 Upload your documents in here
               </label>
-              <p
-                style={{
-                  marginBottom: "5px",
-                  marginLeft: "10px",
-                  fontSize: "10px",
-                }}
-              >
-                Upload your legal documents here
-              </p>
+              <p>Upload your legal documents here</p>
             </div>
             <div className="input-rows2">
               <input
@@ -343,33 +318,12 @@ export function Step2({ details, images, setImages, onNext, onPrev }) {
                 id="fileInput" //define id
                 accept="image/*"
                 style={{
-                  borderStyle: "dashed",
-                  borderWidth: "1px",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignContent: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  position: "relative",
                   // set into display: none because i use label as input htmlFor attribute
                   // remove display none for debug display file path name
                   display: "none",
                 }}
               />
-              <label
-                htmlFor="fileInput"
-                style={{
-                  borderStyle: "dashed",
-                  borderWidth: "1px",
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: "10px",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  backgroundColor: "#f0f0f0",
-                }}
-              >
+              <label htmlFor="fileInput" className="step__img__input">
                 <Image />
                 Choose Image File
               </label>
@@ -382,15 +336,7 @@ export function Step2({ details, images, setImages, onNext, onPrev }) {
               >
                 Upload your image here
               </label>
-              <p
-                style={{
-                  marginBottom: "5px",
-                  marginLeft: "10px",
-                  fontSize: "10px",
-                }}
-              >
-                Upload your identification card here
-              </p>
+              <p>Upload your identification card here</p>
             </div>
             <div className="input-rows2">
               <input
@@ -401,29 +347,11 @@ export function Step2({ details, images, setImages, onNext, onPrev }) {
                 onChange={handleImage}
                 required
                 style={{
-                  borderStyle: "dashed",
-                  borderWidth: "2px",
-                  display: "flex",
-                  alignContent: "center",
-                  marginBottom: "12px",
                   //  i set into display: none because i use label as htmlFor attribute
                   display: "none",
                 }}
               />
-              <label
-                htmlFor="fileInput1"
-                style={{
-                  borderStyle: "dashed",
-                  borderWidth: "1px",
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: "10px",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  backgroundColor: "#f0f0f0",
-                }}
-              >
+              <label htmlFor="fileInput1" className="step__img__input">
                 <Image />
                 Choose Image File
               </label>
@@ -433,27 +361,12 @@ export function Step2({ details, images, setImages, onNext, onPrev }) {
                   <img
                     src={images.preview1}
                     alt="Preview"
-                    style={{
-                      maxWidth: "300px",
-                      marginTop: "15px",
-                      marginBottom: "15px",
-                    }}
+                    className="step2_img_preview"
                   />
                   <button
                     type="button"
                     onClick={() => handleDelete("image1")}
-                    style={{
-                      position: "absolute",
-                      borderRadius: "50%",
-                      padding: "5px 10px",
-                      backgroundColor: "#ff4d4d",
-                      color: "white",
-                      border: "none",
-                      cursor: "pointer",
-                      top: "-1px",
-                      right: "-16px",
-                      fontWeight: "900",
-                    }}
+                    className="step2_img_preview_btn"
                   >
                     X
                   </button>
@@ -468,28 +381,11 @@ export function Step2({ details, images, setImages, onNext, onPrev }) {
                 onChange={handleImage}
                 required
                 style={{
-                  borderStyle: "dashed",
-                  borderWidth: "2px",
-                  display: "flex",
-                  alignContent: "center",
                   //  i set into display: none because i use label as htmlFor attribute
                   display: "none",
                 }}
               />
-              <label
-                htmlFor="fileInput2"
-                style={{
-                  borderStyle: "dashed",
-                  borderWidth: "1px",
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: "10px",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  backgroundColor: "#f0f0f0",
-                }}
-              >
+              <label htmlFor="fileInput2" className="step__img__input">
                 <Image />
                 Choose Image File
               </label>
@@ -498,42 +394,19 @@ export function Step2({ details, images, setImages, onNext, onPrev }) {
                   <img
                     src={images.preview2}
                     alt="Preview"
-                    style={{
-                      maxWidth: "300px",
-                      marginTop: "15px",
-                      marginBottom: "15px",
-                      position: "relative",
-                    }}
+                    className="step2_img_preview"
                   />
                   <button
-                    className="buttdel"
                     type="button"
                     onClick={() => handleDelete("image2")}
-                    style={{
-                      position: "absolute",
-                      borderRadius: "50%",
-                      padding: "5px 10px",
-                      backgroundColor: "#ff4d4d",
-                      color: "white",
-                      border: "none",
-                      cursor: "pointer",
-                      top: "-1px",
-                      right: "-16px",
-                      fontWeight: "900",
-                    }}
+                    className="step2_img_preview_btn"
                   >
                     X
                   </button>
                 </div>
               )}
             </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                margin: "10px",
-              }}
-            >
+            <div className="step2__nav__button">
               <div>
                 <button className="btnn" type="button" onClick={onPrev}>
                   Prev
@@ -632,7 +505,8 @@ export function Step2({ details, images, setImages, onNext, onPrev }) {
     </div>
   );
 }
-
+//STEP 3
+// SUmmary and Submit Request
 export function Step3({ details, images, onPrev }) {
   return (
     <div className="step">
@@ -666,7 +540,7 @@ export function Step3({ details, images, onPrev }) {
     </div>
   );
 }
-
+//Success
 export function Step4() {
   const [showSuccess, setShowSuccess] = useState(true);
   return (
