@@ -34,7 +34,7 @@ STEP 1
     margin: 0 0 5px 10px;
     font-size: 10px;
 }
-.input-rows-2 input, .step__img__input, .step2__nav__button{
+.input-rows-2 input, .step__img__input, .step2__nav__button, .done__nav__btn{
     display: flex;
     justify-content: center;
     cursor: pointer;
@@ -86,4 +86,22 @@ STEP 1
     font: 15px bold;
     color: white;
 }
+/* STEP 4 */
+.step4__box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    margin: 110px;
+}
+.step4__text{
+    margin-bottom: 5px;
+    font: 15px;
+    margin-top: 16vh;
+    display:flex;
+    justify-content: center;
+    align-content:center;
+}
+
 

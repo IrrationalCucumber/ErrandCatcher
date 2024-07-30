@@ -538,16 +538,7 @@ export function Step4() {
         <h1 style={{ display: "flex", justifyContent: "center" }}>
           Sending Verification to the Admin!
         </h1>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            height: "100px",
-            margin: "110px",
-          }}
-        >
+        <Box className="step4__box">
           <Verified
             sx={{
               fontSize: "large",
@@ -576,42 +567,24 @@ export function Step4() {
             </Alert>
           </Grow>
         )}
-        <p
-          style={{
-            marginBottom: "5px",
-            // marginLeft: "150px",
-            fontSize: "15px",
-            marginTop: "16vh",
-            display: "flex",
-            justifyContent: "center",
-            alignContent: "center",
-          }}
-        >
-          Explore the services in Errand Catcher
-        </p>
-        <Button
-          variant="outlined"
-          color="green"
-          sx={{
-            // Custom color
-            backgroundColor: "",
-            "&:hover": {
-              backgroundColor: "#1A97DE", // Darker green on hover
-            },
-            margin: "20px",
-            padding: "10px",
-            width: "100px",
-            borderRadius: "5px",
-            cursor: "pointer",
-            backgroundColor: "#1679ab",
-            color: "#fff",
-            border: "none",
-            fontSize: "13px",
-          }}
-          onClick={useNavigate("/profile/me")}
-        >
-          Profile
-        </Button>
+        <p className="step4__text">Explore the services in Errand Catcher</p>
+        <div className="done__nav__btn">
+          <Button
+            variant="outlined"
+            color="success"
+            size="lg"
+            sx={{
+              margin: "20px",
+              padding: "10px",
+              width: "100px",
+              borderRadius: "5px",
+              fontSize: "13px",
+            }}
+            onClick={useNavigate("/profile/me")}
+          >
+            Profile
+          </Button>
+        </div>
       </form>
     </div>
   );
