@@ -514,23 +514,15 @@ export function Step3({ details, images, onPrev }) {
         {images.preview1 && (
           <img
             src={images.preview1}
+            className="step3__img__preview"
             alt="Preview 1"
-            style={{
-              maxWidth: "300px",
-              marginTop: "15px",
-              marginBottom: "15px",
-            }}
           />
         )}
         {images.preview2 && (
           <img
             src={images.preview2}
+            className="step3__img__preview"
             alt="Preview 2"
-            style={{
-              maxWidth: "300px",
-              marginTop: "15px",
-              marginBottom: "15px",
-            }}
           />
         )}
       </form>

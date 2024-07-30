@@ -55,7 +55,7 @@ STEP 1
     background-color: #f0f0f0;
 }
 /* image preview */
-.step2_img_preview{
+.step2_img_preview, .step3__img__preview{
     max-width: 300px;
     margin: 15px 0 ;
     position: relative;
