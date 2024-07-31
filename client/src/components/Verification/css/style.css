@@ -1,0 +1,107 @@
+/*
+STEP 1
+*/
+.step h1{
+    text-align: center;
+}
+
+.step__button{
+    display: flex;
+    justify-content: center;
+}
+
+.step__grow{
+    transform-origin: center;
+}
+
+.step__alert,.step__age__alert{
+    position: fixed;
+    right: 16px;
+    top: 90px;
+    font-size: 15px;
+    color: white;
+}
+.step__alert{ 
+    font-weight: bold;
+}
+/* STEP 2 */
+
+.label2 {
+    margin-top: 5px;
+}
+
+.input-rows2 p{
+    margin: 0 0 5px 10px;
+    font-size: 10px;
+}
+.input-rows-2 input, .step__img__input, .step2__nav__button, .done__nav__btn{
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.input-rows-2 input{
+    border: 1px dashed;
+    flex-direction: column;
+    align-content: center;
+    position: relative;
+}
+
+.step__img__input{
+    border: 1px dashed;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    background-color: #f0f0f0;
+}
+/* image preview */
+.step2_img_preview, .step3__img__preview{
+    max-width: 300px;
+    margin: 15px 0 ;
+    position: relative;
+}
+
+.step2_img_preview_btn{
+    position: absolute;
+    border-radius: 50%;
+    padding: 5px 10px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    cursor: pointer;
+    top: -1px;
+    right: -15px;
+    font-weight: 900;
+}
+
+/* Step nav button */
+.step2__nav__button{
+    margin: 10px;
+}
+
+.step2__alert__error{
+    position: fixed;
+    right: 16px;
+    top: 90px;
+    font: 15px bold;
+    color: white;
+}
+/* STEP 4 */
+.step4__box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    margin: 110px;
+}
+.step4__text{
+    margin-bottom: 5px;
+    font: 15px;
+    margin-top: 16vh;
+    display:flex;
+    justify-content: center;
+    align-content:center;
+}
+
+
