@@ -256,33 +256,33 @@ export function Step2({ images, setImages, onNext, onPrev }) {
   }
   // console.log(image1);
   // console.log(image2);
-  const handleUpload = async (e) => {
-    e.preventDefault();
+  // const handleUpload = async (e) => {
+  //   e.preventDefault();
 
-    if (!images.image1 || !images.image2) {
-      // setOpen(false);
-      // alert("Please upload both image before submitting.");
-      setAlertOpen(true);
-      console.log("please upload your images");
-      setOpen(false);
+  //   if (!images.image1 || !images.image2) {
+  //     // setOpen(false);
+  //     // alert("Please upload both image before submitting.");
+  //     setAlertOpen(true);
+  //     console.log("please upload your images");
+  //     setOpen(false);
 
-      return;
-    } else {
-      onNext(); // Move to the next step
-    }
-    const formData = new FormData();
+  //     return;
+  //   } else {
+  //     onNext(); // Move to the next step
+  //   }
+  //   const formData = new FormData();
 
-    formData.append("image1", images.image1);
-    formData.append("image2", images.image2);
-    console.log(formData);
-    await axios
-      .post(`http://localhost:8800/upload/${userID}`, formData)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-    // setCurrentStep(currentStep + 1);
-    setOpen(false);
-    // alert("Successful upload file");
-  };
+  //   formData.append("image1", images.image1);
+  //   formData.append("image2", images.image2);
+  //   console.log(formData);
+  //   await axios
+  //     .post(`http://localhost:8800/upload/${userID}`, formData)
+  //     .then((res) => console.log(res))
+  //     .catch((err) => console.log(err));
+  //   // setCurrentStep(currentStep + 1);
+  //   setOpen(false);
+  //   // alert("Successful upload file");
+  // };
 
   function handleDelete(image) {
     if (image === "image1") {
@@ -505,6 +505,19 @@ export function Step2({ images, setImages, onNext, onPrev }) {
 //STEP 3
 // SUmmary and Submit Request
 export function Step3({ details, images, onPrev }) {
+  const onSubmit = async () => {
+    e.preventDefault();
+    //wrap file images into formdata
+    const formData = new FormData();
+
+    formData.append("image1", images.image1);
+    formData.append("image2", images.image2);
+    console.log(formData);
+    await axios
+      .post(`http://localhost:8800/upload/${userID}`, formData)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
   return (
     <div className="step">
       <form className="form-container">
@@ -525,6 +538,23 @@ export function Step3({ details, images, onPrev }) {
             alt="Preview 2"
           />
         )}
+        <div className="done__nav__btn">
+          <Button
+            variant="outlined"
+            color="success"
+            size="lg"
+            sx={{
+              margin: "20px",
+              padding: "10px",
+              width: "100px",
+              borderRadius: "5px",
+              fontSize: "13px",
+            }}
+            onClick={onSubmit}
+          >
+            Profile
+          </Button>
+        </div>
       </form>
     </div>
   );
