@@ -526,6 +526,10 @@ export function Step3({ details, images, onPrev }) {
         <h2>Step 3</h2>
         <p>First Name: {details.firstName}</p>
         <p>Last Name: {details.lastName}</p>
+        <p>Age: {details.age}</p>
+        <p>Birthday: {details.date}</p>
+        <p>Email: {details.email}</p>
+        <p>Contact #: {details.cnum}</p>
         {images.preview1 && (
           <img
             src={images.preview1}
