@@ -539,6 +539,10 @@ export function Step3({ details, images, onPrev }) {
           />
         )}
         <div className="done__nav__btn">
+          <Button className="btnn" onClick={onPrev}>
+            BACK
+          </Button>
+
           <Button
             variant="outlined"
             color="success"
@@ -552,7 +556,7 @@ export function Step3({ details, images, onPrev }) {
             }}
             onClick={onSubmit}
           >
-            Profile
+            Submit
           </Button>
         </div>
       </form>
