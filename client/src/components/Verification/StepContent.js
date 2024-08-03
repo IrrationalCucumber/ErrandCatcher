@@ -505,6 +505,8 @@ export function Step2({ images, setImages, onNext, onPrev }) {
 //STEP 3
 // SUmmary and Submit Request
 export function Step3({ details, images, onPrev }) {
+  const { user } = useAuth();
+  const userID = user.userID;
   const onSubmit = async () => {
     e.preventDefault();
     //wrap file images into formdata
