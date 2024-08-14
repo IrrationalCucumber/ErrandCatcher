@@ -23,11 +23,8 @@ export function LandingServiceDetails() {
             <h2>INDOOR SERVICES</h2>
             <p>Details</p>
             <p>
-              sample lng ni... Errand Catchers offer a convenient solution for
-              individuals requiring assistance with various task and chores.
-              Whether it involves grocery shopping, picking up prescriptions,
-              mailing packages, or managing daily errands, these services focus
-              on saving time and streamlining life.
+              From organizing your space to managing household chores, our
+              indoor services are designed to make your home life stress-free.
             </p>
           </div>
         </section>
@@ -36,11 +33,8 @@ export function LandingServiceDetails() {
             <h2>OUTDOOR SERVICES</h2>
             <p>Details</p>
             <p>
-              sample lng ni... Errand Catchers offer a convenient solution for
-              individuals requiring assistance with various task and chores.
-              Whether it involves grocery shopping, picking up prescriptions,
-              mailing packages, or managing daily errands, these services focus
-              on saving time and streamlining life.
+              Whether it’s yard work, pet walking, or running outdoor errands,
+              we handle all the tasks you need outside your home.
             </p>
           </div>
           <div
@@ -67,11 +61,8 @@ export function LandingServiceDetails() {
             <h2>DELIVERY</h2>
             <p>Details</p>
             <p>
-              sample lng ni... Errand Catchers offer a convenient solution for
-              individuals requiring assistance with various task and chores.
-              Whether it involves grocery shopping, picking up prescriptions,
-              mailing packages, or managing daily errands, these services focus
-              on saving time and streamlining life.
+              Need something delivered? Whether it's groceries, packages, or
+              special orders, we've got you covered.
             </p>
           </div>
         </section>
@@ -80,11 +71,9 @@ export function LandingServiceDetails() {
             <h2>TRANSPORTATION</h2>
             <p>Details</p>
             <p>
-              sample lng ni... Errand Catchers offer a convenient solution for
-              individuals requiring assistance with various task and chores.
-              Whether it involves grocery shopping, picking up prescriptions,
-              mailing packages, or managing daily errands, these services focus
-              on saving time and streamlining life.
+              Whether you need a ride to an important appointment, a stress-free
+              airport transfer, or a comfortable vehicle for a road trip, our
+              transportation services have you covered.
             </p>
           </div>
           <div
