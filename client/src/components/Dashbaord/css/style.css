@@ -1,7 +1,8 @@
 /* custom style */
 :root {
   /* font */
-  --ff-primary: "Roboto", sans-serif;
+  --ff-primary: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   --ff-accent: "Playfair Display", serif;
   --ff-para: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
@@ -169,22 +170,26 @@
 }
 
 .landing__text__left > h2 {
-  font-family: var(--ff-primary);
-  font-weight: bold;
+  font-family: var(--clr-primary);
+  font-weight: 800;
+  font-size: 2.5rem;
   letter-spacing: 1px;
 }
 
 .landing__text__right p {
-  font-family: var(--ff-para);
-  font-size: 1.2rem;
-  line-height: 2rem;
-  letter-spacing: 1px;
+  font-family: sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 1.25rem;
+  line-height: 36px;
+  letter-spacing: 0.32px;
 }
 
 .landing__text__right > h2 {
-  font-family: var(--ff-primary);
-  font-weight: bold;
-  letter-spacing: 1px;
+  font-family: var(--clr-primary);
+  font-weight: 800;
+  font-size: 2.5rem;
+  letter-spacing: -0.44px;
+  line-height: 52.8px;
 }
 
 .landing__bg__left {
@@ -226,9 +231,39 @@
      
   } */
 
-@media screen and (max-width: 600px) {
-  .landing__cont > * {
+@media screen and (max-width: 700px) {
+  /* .landing__cont > * {
     width: 100vw;
+  } */
+
+  .landing__text__right > h2 {
+    backdrop-filter: blur(10px);
+    text-shadow: 0px 1px 1px black;
+  }
+
+  .landing__text__left > h2 {
+    backdrop-filter: blur(10px);
+    text-shadow: 0px 1px 1px black;
+  }
+
+  .landing__text__right {
+    width: 55%;
+    height: inherit;
+    right: 0;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .landing__text__left {
+    width: 55%;
+    height: inherit;
+    right: 0;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .wrapper > .landing__cont {
