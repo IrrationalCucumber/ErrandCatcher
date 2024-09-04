@@ -20,6 +20,9 @@ import ProfilePage from "./pages/profile/ProfilePage";
 import ViewCommission from "./pages/errand  views/ViewCommission";
 import Errands from "./pages/errand  views/Errands";
 import ErrorElement from "./pages/ErrorElement";
+//CHAT
+import Chat from "./pages/Chat/Chat";
+import ChatPage from "./pages/Chat/ChatPage";
 import Us from "./pages/Dashboard/Us";
 import About from "./pages/Dashboard/About";
 import Contact from "./pages/Dashboard/Contact";
@@ -221,6 +224,16 @@ const router = createBrowserRouter([
       {
         path: "contact",
         element: <Contact />,
+      },
+    ],
+  },
+  {
+    path: "/chat/",
+    element: <Chat />,
+    children: [
+      {
+        path: "c/",
+        element: <ChatPage />,
       },
     ],
   },

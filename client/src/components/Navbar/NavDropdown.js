@@ -89,7 +89,19 @@ function NavDropdown(props) {
             My Profile
           </Link>
           <Link
-            onClick={handleLogout}
+            to="/chat/c"
+            style={{
+              display: "block",
+              padding: "12px 16px",
+              textDecoration: "none",
+              color: "black",
+            }}
+          >
+            Messages
+          </Link>
+          <Link
+            onClick={props.onClick}
+
             to={signOutLink}
             style={{
               display: "block",
