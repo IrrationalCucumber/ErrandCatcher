@@ -1,30 +1,29 @@
-//03-05-24 table.js is updated to make the td be onclick
-
 import React from 'react';
-//import './Table.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const Table = ({ headers, data, onCellClick }) => {
-  const handleCellClick = (rowIndex,cellIndex) => {
-    if(onCellClick){
+  const handleCellClick = (rowIndex, cellIndex) => {
+    if (onCellClick) {
       onCellClick(rowIndex, cellIndex);
     }
   };
 
   return (
-    <table className='commissions-table'>
-      <thead>
-        <tr>
+    <table className="table table-hover">
+      <thead className="thead-primary"> {/* Primary color header */}
+        <tr className='table-primary'>
           {headers.map((header, index) => (
-            <th key={index}>{header}</th>
+            <th key={index} scope="col">{header}</th>
           ))}
         </tr>
       </thead>
       <tbody>
-              {/*added onclick to the td */}
         {data.map((row, rowIndex) => (
           <tr key={rowIndex}>
             {row.map((cell, cellIndex) => (
-              <td key={cellIndex} onClick={() => handleCellClick(rowIndex, cellIndex)}>{cell}</td>
+              <td key={cellIndex} onClick={() => handleCellClick(rowIndex, cellIndex)}>
+                {cell}
+              </td>
             ))}
           </tr>
         ))}
@@ -34,3 +33,4 @@ const Table = ({ headers, data, onCellClick }) => {
 };
 
 export default Table;
+

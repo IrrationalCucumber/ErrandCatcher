@@ -7,6 +7,7 @@ import Table from "../../components/Table.js";
 import Select from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
 import { DisplayDate } from "../../components/DisplayDate.js";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const CommissionList = () => {
   const [commissions, setCommissions] = useState([]);
@@ -23,7 +24,7 @@ const CommissionList = () => {
 
   //Pagination --Ash
   //display data per page
-  const [itemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(5);
 
   //handle error
   //rretrieve data
@@ -66,34 +67,58 @@ const CommissionList = () => {
   };
 
   //filter
-  const filterErrands = commissions.filter((commission) => {
-    const type = commission.commissionType
-      .toLowerCase()
-      .includes(searchTerm.type.toLowerCase());
-    const termMatch = commission.commissionTitle
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
-    const termMatch2 = commission.userFirstname
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
-    const termMatch3 = commission.userLastname
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
-    const status = commission.commissionStatus.includes(searchTerm.status);
+  //encountered error on my side - ash
+  // const filterErrands = commissions.filter((commission) => {
+  //   const type = commission.commissionType
+  //     .toLowerCase()
+  //     .includes(searchTerm.type.toLowerCase());
+  //   const termMatch = commission.commissionTitle
+  //     .toLowerCase()
+  //     .includes(searchTerm.term.toLowerCase());
+  //   const termMatch2 = commission.userFirstname
+  //     .toLowerCase()
+  //     .includes(searchTerm.term.toLowerCase());
+  //   const termMatch3 = commission.userLastname
+  //     .toLowerCase()
+  //     .includes(searchTerm.term.toLowerCase());
+  //   const status = commission.commissionStatus.includes(searchTerm.status);
 
+  //   return type && (termMatch || termMatch2 || termMatch3) && status;
+  // });
+
+  const filterErrands = commissions.filter((commission) => {
+    const type = commission.commissionType?.toLowerCase().includes(searchTerm.type.toLowerCase()) ?? true;
+    const termMatch = commission.commissionTitle?.toLowerCase().includes(searchTerm.term.toLowerCase()) ?? true;
+    const termMatch2 = commission.userFirstname?.toLowerCase().includes(searchTerm.term.toLowerCase()) ?? true;
+    const termMatch3 = commission.userLastname?.toLowerCase().includes(searchTerm.term.toLowerCase()) ?? true;
+    const status = commission.commissionStatus?.includes(searchTerm.status) ?? true;
+  
     return type && (termMatch || termMatch2 || termMatch3) && status;
   });
+  
 
   //Logic of Pagination
-  const indexOfLastItem = currentPage + itemsPerPage;
+  const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filterErrands.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  const headers=[
+    "ID",
+    "Title",
+    "Employer",
+    "Type",
+    "Payment",
+    "Posted",
+    "Completed",
+    "Status",
+    "Action",
+  ];
+
   //need front end
   return (
-    <div>
+    <div className="container mt-4">
       {/* <NavBar
        page1="REQUESTS"
         one={`/request/${userID}`}
@@ -105,112 +130,51 @@ const CommissionList = () => {
         page4="MAP"
         map={`/map/${userID}`}
       /> */}
-      <div className="commissions">
-        <h1
-          style={{
-            marginTop: "10px",
-            marginBottom: "10px",
-            fontFamily:
-              "'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif",
-          }}
-        >
-          Errand List
-        </h1>
-        <div
-          className="search"
-          style={{
-            marginTop: "10px",
-            marginBottom: "10px",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
+      <h1 className="header text-left mb-4" style={{fontSize:"24px"}}>Errand List</h1>
+      <div className="d-flex align-items-center mb-3">
+        <div className="input-group me-2">
           <input
             type="text"
-            name="term"
+            className="form-control"
             placeholder="Search..."
+            aria-label="Search"
+            aria-describedby="search-addon"
+            name="term"
             value={searchTerm.term}
             onChange={handleChange}
-            style={{
-              padding: "8px",
-              fontSize: "12px",
-              border: "1px solid #ccc",
-              borderRadius: "4px",
-              marginRight: "0",
-              marginBottom: "10px",
-            }}
+            style={{fontSize:"14px"}}
           />
-          {/* <button
-            type="submit"
-            //onClick={fetchSearchResults}
-            style={{
-              padding: "8px",
-              fontSize: "12px",
-              cursor: "pointer",
-              border: "none",
-              backgroundColor: "#CE9251",
-              color: "white",
-              borderRadius: "4px",
-              marginBottom: "10px",
-              marginRight: "10px",
-            }}
-          >
-            <i className="fa fa-search"></i>
-          </button> */}
-
-          <div
-            className="filter"
-            style={{ display: "flex", alignItems: "center" }}
-          >
-            <select
-              className="CLstatus"
-              onChange={handleChange}
-              value={searchTerm.status}
-              name="status"
-              defaultValue={""}
-            >
+        </div>
+        <select
+            className="form-select me-2"
+            onChange={handleChange}
+            value={searchTerm.status}
+            name="status"
+            style={{fontSize:"14px", width:"80px"}}
+        >
               <option value="">Status</option>
               <option value="Pending">Pending</option>
               <option value="Completed">Completed</option>
               <option value="Cancelled">Cancelled</option>
               <option value="Expired">Expired</option>
               <option value="Caught">Caught</option>
-            </select>
-            <select
-              className="CLtype"
+        </select>
+        <select
+              className="form-select me-2"
               onChange={handleChange}
               value={searchTerm.type}
               name="type"
-              style={{
-                padding: "8px",
-                fontSize: "12px",
-                border: "1px solid #ccc",
-                borderRadius: "4px",
-                marginRight: "10px",
-                marginBottom: "10px",
-                width: "150px",
-              }}
-            >
+              style={{fontSize:"14px", width:"80px"}}
+        >
               <option value="">Type</option>
               <option value="Home">Home</option>
               <option value="Transportation">Transportation</option>
               <option value="Delivery">Delivery</option>
-            </select>
-          </div>
-        </div>
-
+        </select>
+      </div>
+      <div className="commissions">
         <Table
-          headers={[
-            "ID",
-            "Title",
-            "Employer",
-            "Type",
-            "Payment",
-            "Posted",
-            "Completed",
-            "Status",
-            "Action",
-          ]}
+          headers={headers}
           data={currentItems.map((Commission) => [
             Commission.commissionID,
             Commission.commissionTitle,
@@ -237,9 +201,10 @@ const CommissionList = () => {
         {/* Pagination controls */}
         {commissions.length > 0 && (
           <Pagination
+            currentPage={currentPage}
             itemsPerPage={itemsPerPage}
             totalItems={commissions.length}
-            paginate={paginate}
+            onPageChange={paginate}
           />
         )}
       </div>

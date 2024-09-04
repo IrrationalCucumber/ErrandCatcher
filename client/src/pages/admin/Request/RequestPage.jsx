@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Pagination from "../../../components/Pagination";
 import RequestModal from "./RequestModal";
+import RequestImages from "./RequestImage";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import RequestImages from "./RequestImage";
-import "../Request/request.css";
-import { Modal, ModalDialog } from "@mui/joy";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function RequestPage() {
-  // Mock list of verification requests
   const [requests, setRequests] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5);
+  const itemsPerPage = 5; // Fixed items per page
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [selectedImages, setSelectedImages] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -20,7 +18,6 @@ function RequestPage() {
   const userID = location.pathname.split("/")[2];
 
   useEffect(() => {
-    // Simulate fetching data (you can replace this with actual API calls)
     const fetchData = async () => {
       try {
         const res = await axios.get(`http://localhost:8800/requests`);
@@ -29,117 +26,95 @@ function RequestPage() {
         console.log(err);
       }
     };
-
     fetchData();
   }, []);
 
   const handleClick = (request) => {
-    setSelectedRequest(request); // Set selected request
-    setShowModal(true); // Show modal
+    setSelectedRequest(request);
+    setShowModal(true);
   };
 
-  // Function to handle click on RequestImage button
   const handleImageButtonClick = (requestImages) => {
     setSelectedImages(requestImages);
     setShowImageModal(true);
   };
 
   const handleCloseModal = () => {
-    setShowModal(false); // Hide modal
+    setShowModal(false);
   };
 
-  // Function to close image modal
   const handleCloseImageModal = () => {
     setShowImageModal(false);
   };
 
-  // Get current items
+  // Calculate current items for pagination
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentRequests = requests.slice(indexOfFirstItem, indexOfLastItem);
 
-  // Change page
+  // Handle page change
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  //request image modal
-  const [layout, setLayout] = useState(undefined);
-  const handleOpenModal = (request) => {
-    setLayout("fullscreen");
-    setSelectedImages(request);
-  };
-
   return (
-    <>
-      <div className="containerReq">
-        <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
-          Verification Requests
-        </h1>
-        <table
-          style={{ margin: "0 auto", width: "80%", borderCollapse: "collapse" }}
-        >
-          <thead>
-            <tr>
-              <th style={{ ...tableHeaderStyle, width: "10%" }}>ID</th>
-              <th style={{ ...tableHeaderStyle, width: "30%" }}>User</th>
-              <th style={{ ...tableHeaderStyle, width: "25%" }}>Type</th>
-              <th style={{ ...tableHeaderStyle, width: "10%" }}>Status</th>
-              <th style={{ ...tableHeaderStyle, width: "20%" }}>DOCUMENTS</th>
-              <th style={{ ...tableHeaderStyle, width: "25%" }}>Action</th>
+    <div>
+      <h1 style={{ textAlign: "center", padding: "20px", fontSize:"20px" }}>
+        Verification Requests
+      </h1>
+      <table style={{ margin: "0 auto", width: "80%", borderCollapse: "collapse" }}>
+        <thead>
+          <tr className="table-primary">
+            <th style={{ ...tableHeaderStyle, width: "15%" }}>ID</th>
+            <th style={{ ...tableHeaderStyle, width: "30%" }}>User</th>
+            <th style={{ ...tableHeaderStyle, width: "15%" }}>Type</th>
+            <th style={{ ...tableHeaderStyle, width: "15%" }}>Status</th>
+            <th style={{ ...tableHeaderStyle, width: "30%" }}>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {currentRequests.map((request) => (
+            <tr key={request.id} style={tableRowStyle}>
+              <td style={tableCellStyle}>{request.userID}</td>
+              <td style={tableCellStyle}>{request.username}</td>
+              <td style={tableCellStyle}>{request.accountType}</td>
+              <td style={tableCellStyle}>{request.requestStatus}</td>
+              <td style={tableCellStyle}>
+                <button
+                  style={buttonStyle}
+                  onClick={() => handleClick(request)}
+                >
+                  View
+                </button>
+                <button
+                  className="RequestImage"
+                  style={buttonStyle}
+                  onClick={() => handleImageButtonClick(request.images)}
+                >
+                  View Image
+                </button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {requests.map((request) => (
-              <tr key={request.id} style={tableRowStyle}>
-                <td style={tableCellStyle}>{request.userID}</td>
-                <td style={tableCellStyle}>{request.username}</td>
-                <td style={tableCellStyle}>{request.accountType}</td>
-                <td style={tableCellStyle}>{request.requestStatus}</td>
-                <td style={tableCellStyle}>
-                  {/* for Image request */}
-                  <button
-                    className="RequestImage"
-                    style={buttonStyle}
-                    onClick={() => handleOpenModal(request)}
-                  >
-                    View
-                  </button>
-                </td>
-                <td style={tableCellStyle}>
-                  <button
-                    style={buttonStyle}
-                    onClick={() => handleClick(request)}
-                  >
-                    Action
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <Pagination
-          itemsPerPage={itemsPerPage}
-          totalItems={requests.length}
-          paginate={paginate}
+          ))}
+        </tbody>
+      </table>
+      <Pagination 
+        currentPage={currentPage}
+        itemsPerPage={itemsPerPage}
+        totalItems={requests.length}
+        onPageChange={paginate}
+      />
+      {showModal && (
+        <RequestModal
+          request={selectedRequest}
+          handleClose={handleCloseModal}
         />
-        {showModal && (
-          <RequestModal
-            request={selectedRequest}
-            handleClose={handleCloseModal}
-          />
-        )}
-        {showImageModal && (
-          <RequestImages
-            request={selectedImages}
-            handleClose={handleCloseImageModal}
-          />
-        )}
-      </div>
-      <Modal open={!!layout} onClose={() => setLayout(undefined)}>
-        <ModalDialog layout={layout}>
-          <RequestImages request={selectedImages} />
-        </ModalDialog>
-      </Modal>
-    </>
+      )}
+      {showImageModal && (
+        <RequestImages
+          request={selectedImages}
+          handleClose={handleCloseImageModal}
+        />
+      )}
+    </div>
   );
 }
 

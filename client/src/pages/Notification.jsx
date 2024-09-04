@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import NotificationItem from "../components/NotificationItem";
 import { DisplayDate } from "../components/DisplayDate.js";
 import Navbar from "../components/Navbar/Navbar.js";
-import "../components//Notification.css"; // Combined CSS styles
+import Pagination from "../components/Pagination"; // Import Pagination component
+import "../components/Notification.css"; // Combined CSS styles
 import { useAuth } from "../components/AuthContext.js";
 import { Button } from "@mui/joy";
 import CheckIcon from "@mui/icons-material/Check";
@@ -13,7 +14,11 @@ function Notification() {
   const { user } = useAuth();
   const userID = user.userID;
 
-  // Display all notifications
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5; // Set items per page to 5
+
+  // Fetch notifications
   useEffect(() => {
     const fetchNotif = async () => {
       try {
@@ -24,12 +29,25 @@ function Notification() {
       }
     };
     fetchNotif();
-  }, []);
+  }, [userID]);
 
+  // Calculate the indices for pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentNotifs = notifs.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Handle page change
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  // Function to mark all notifications as read
+  // const markAsRead = async () => {
   // When user clicks 'mark as read', update db notif isRead to Yes
   // const markAsRead = async (notificationID) => {
   //   try {
-  //     await axios.post(`http://localhost:8800/read-notif/${notificationID}/${userID}`);
+  //     await axios.post(`http://localhost:8800/read-notif/${userID}`);
+  //     fetchNotif(); // Refresh notifications
   //   } catch (err) {
   //     console.log(err);
   //   }
@@ -62,7 +80,7 @@ function Notification() {
             </Button>
           </div>
           <div className="notification-list">
-            {notifs.map((notif) => (
+            {currentNotifs.map((notif) => (
               <div className="notification-item" key={notif.notificationID}>
                 <NotificationItem
                   type={notif.notificationType}
@@ -75,6 +93,12 @@ function Notification() {
               </div>
             ))}
           </div>
+          <Pagination
+            currentPage={currentPage}
+            itemsPerPage={itemsPerPage}
+            totalItems={notifs.length}
+            onPageChange={handlePageChange}
+          />
         </main>
       </div>
     </>
