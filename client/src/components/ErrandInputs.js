@@ -247,12 +247,12 @@ function ErrandInputs(props) {
         </div>
         {/* PAYMENT METOD */}
         <div className="input-group">
-          <div className="cols1">
+          <div className="col1">
             <label style={{ color: "black" }} htmlFor="">
               Payment Method
             </label>
           </div>
-          <div className="cols2">
+          <div className="col2">
             <select
               name={props.method}
               onChange={props.handleChange}
