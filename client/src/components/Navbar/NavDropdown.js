@@ -18,6 +18,7 @@ function NavDropdown(props) {
 
   const profileLink = `/profile/me`; // URL for the profile page
   const signOutLink = "/sign-in"; // URL for the sign out page
+  const historyLink = "/history"; // URL for the history page
 
   const { logout } = useAuth();
   const handleLogout = () => {
@@ -88,6 +89,19 @@ function NavDropdown(props) {
           >
             My Profile
           </Link>
+
+          <Link
+            to={historyLink}
+            style={{
+              display: "block",
+              padding: "12px 16px",
+              textDecoration: "none",
+              color: "black",
+            }}
+          >
+            History
+          </Link>
+
           <Link
             onClick={handleLogout}
             to={signOutLink}
