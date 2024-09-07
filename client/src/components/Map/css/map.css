@@ -26,12 +26,12 @@
 }
 
 .map__filter {
-  position: absolute;
+  position: fixed;
   width: 200px;
   margin: auto;
   padding: 10px;
-  top: 2px;
-  left: 8px;
+  top: 100px;
+  left: 20px;
   z-index: 11;
   height: 100px;
   display: flex;
