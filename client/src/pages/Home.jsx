@@ -6,7 +6,7 @@ import Cards from "../components/Cards/Cards";
 import Menu from "./Menu";
 import axios from "axios";
 import { useAuth } from "../components/AuthContext";
-import { HeroSection } from "../components/HeroSection";
+import { HeroSection } from "../Banner/HeroSection";
 
 const Home = () => {
   const { user } = useAuth();
@@ -56,6 +56,7 @@ const Home = () => {
               type={user.userType.toLocaleUpperCase()}
               username={user.username}
             />
+
             <Menu />
           </>
         )}
