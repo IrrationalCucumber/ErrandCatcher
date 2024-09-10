@@ -509,16 +509,23 @@ export function Step3({ details, images, onPrev }) {
   const userID = user.userID;
   const onSubmit = async (e) => {
     e.preventDefault();
-    //wrap file images into formdata
-    const formData = new FormData();
+    try {
+      //wrap file images into formdata
+      const formData = new FormData();
 
-    formData.append("image1", images.image1);
-    formData.append("image2", images.image2);
-    console.log(formData);
-    await axios
-      .post(`http://localhost:8800/upload/${userID}`, formData)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      formData.append("image1", images.image1);
+      formData.append("image2", images.image2);
+      console.log(formData);
+      //upload docs to server
+      await axios
+        .post(`http://localhost:8800/upload/${userID}`, formData)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+      //update accound data
+      await axios.put("http://localhost:8800/update/" + userID, details);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="step">
