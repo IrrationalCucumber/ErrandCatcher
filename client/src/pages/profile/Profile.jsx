@@ -218,16 +218,6 @@ const Profile = () => {
                 <label className="username">{account.username}</label>
                 {/* Verification Icon */}
                 {/* Verification Icon */}
-                {account.status == "Unverified" && (
-                  <Link to={`/verification/${userID}`}>
-                    <i
-                      className="fa-regular fa-circle-check"
-                      style={{ color: "gray", cursor: "pointer" }}
-                    >
-                      UNVERIFIED
-                    </i>
-                  </Link>
-                )}
                 {account.status === "Verified" ? (
                   <>
                     <i
