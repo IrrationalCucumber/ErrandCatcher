@@ -66,7 +66,16 @@
   align-items: center;
 }
 
-.ld_btn a {
+.ld_btn, .btns {
+  position: relative;
+  display: flex;
+  margin: 20px 10px ;
+  width: 400px;
+  align-items: center;
+  flex-direction: column;
+}
+
+.ld_btn{
   background-color: transparent;
   color: #1a1919;
   letter-spacing: 3px;
@@ -75,14 +84,17 @@
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   border-radius: 2px;
   border: solid var(--primary);
-  text-decoration: none;
   transition: all 0.3s ease-out;
   font-size: 12px;
   /* margin-left: 20%; */
   padding: 8px 100px;
-  width: 100%;
 }
-.btns a {
+
+.ld_btn a, .btns a{
+  text-decoration: none;
+}
+
+.btns {
   background-color: #f4f6fc;
   color: #1a1919;
   letter-spacing: 3px;
@@ -91,12 +103,10 @@
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   border-radius: 2px;
   border: solid var(--primary);
-  text-decoration: none;
   transition: all 0.3s ease-out;
   font-size: 12px;
   /* margin-left: 20%; */
   padding: 8px 95px;
-  width: 100%;
 }
 
 @media (max-width: 1099px) {
@@ -137,12 +147,12 @@
   }
 }
 
-.ld_btn a:hover {
+.ld_btn :hover {
   background: #f4f6fc;
   color: rgb(8, 8, 8);
 }
 
-.btns a:hover {
+.btns :hover {
   background-color: transparent;
   color: #1a1919;
 }
