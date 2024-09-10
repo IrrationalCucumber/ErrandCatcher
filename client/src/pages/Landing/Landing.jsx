@@ -31,15 +31,17 @@ const Landing = () => {
             packages, or managing daily errands, these services focus on saving
             time and streamlining life.
           </p>
-          <div className="ld_btn">
-            <Link to="/sign-up" id="getStartedLink">
-              <i className="fa-solid fa-house"></i> GET STARTED
-            </Link>
-          </div>
-          <div className="btns">
-            <Link to="map">
-              <i className="fa fa-eye"></i> VIEW ERRANDS{" "}
-            </Link>
+          <div className="btnn_con">
+            <div className="ld_btn">
+              <Link to="/sign-up" id="getStartedLink">
+                <i className="fa-solid fa-house"></i> GET STARTED
+              </Link>
+            </div>
+            <div className="btns">
+              <Link to="map">
+                <i className="fa fa-eye"></i> VIEW ERRANDS{" "}
+              </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -53,15 +55,16 @@ const Landing = () => {
           <span>S</span>ervices
         </h1>
         <div className="box-container">
+          {/* 1 */}
           <div className="box">
             <img src="/images/img1.png" alt="" />
             <div className="content">
-              <p style={{ paddingLeft: "65px" }}>Transportation</p>
+              <p style={{ textAlign: "center" }}>Transportation</p>
               <h3>
                 {" "}
                 <i
                   className="fas fa-map-marker-alt"
-                  style={{ paddingLeft: "90px" }}
+                  style={{ textAlign: "center" }}
                 ></i>{" "}
                 Mandaue City{" "}
               </h3>
@@ -75,16 +78,16 @@ const Landing = () => {
               </div>
             </div>
           </div>
-
+          {/* 2 */}
           <div className="box">
             <img src="/images/img2.png" alt="" />
             <div className="content">
-              <p style={{ paddingLeft: "110px" }}>Delivery</p>
+              <p style={{ textAlign: "center" }}>Delivery</p>
               <h3>
                 {" "}
                 <i
                   className="fas fa-map-marker-alt"
-                  style={{ paddingLeft: "90px" }}
+                  style={{ textAlign: "center" }}
                 ></i>{" "}
                 Lapu-Lapu City{" "}
               </h3>
@@ -99,18 +102,14 @@ const Landing = () => {
               </div>
             </div>
           </div>
-
+          {/* 3 */}
           <div className="box">
             <img src="/images/img3.png" alt="" />
             <div className="content">
-              <p style={{ paddingLeft: "70px" }}>Home Service</p>
+              <p style={{ textAlign: "center" }}>Home Service</p>
               <h3>
                 {" "}
-                <i
-                  className="fas fa-map-marker-alt"
-                  style={{ paddingLeft: "100px" }}
-                ></i>{" "}
-                Cebu City{" "}
+                <i className="fas fa-map-marker-alt" style={{}}></i> Cebu City{" "}
               </h3>
               <div className="btn">
                 <a
@@ -122,17 +121,76 @@ const Landing = () => {
               </div>
             </div>
           </div>
+          {/* 4 */}
           <div className="box">
             <img src="/images/img1.png" alt="" />
             <div className="content">
-              <p style={{ paddingLeft: "60px" }}>Transportation</p>
+              <p style={{ textAlign: "center" }}>Transportation</p>
+              <h3>
+                {" "}
+                <i className="fas fa-map-marker-alt" style={{}}></i> Cebu City{" "}
+              </h3>
+
+              <div className="btn">
+                <a
+                  href="sign-up"
+                  style={{ backgroundColor: "#1679AB", fontSize: "16px" }}
+                >
+                  <i></i> Apply{" "}
+                </a>
+              </div>
+            </div>
+          </div>
+          {/* 5 */}
+          <div className="box">
+            <img src="/images/img2.png" alt="" />
+            <div className="content">
+              <p style={{ textAlign: "center" }}>Delivery</p>
               <h3>
                 {" "}
                 <i
                   className="fas fa-map-marker-alt"
-                  style={{ paddingLeft: "100px" }}
-                ></i>{" "}
-                Cebu City{" "}
+                  style={{}}
+                ></i> Cordova{" "}
+              </h3>
+
+              <div className="btn">
+                <a
+                  href="sign-up"
+                  style={{ backgroundColor: "#1679AB", fontSize: "16px" }}
+                >
+                  <i></i> Apply{" "}
+                </a>
+              </div>
+            </div>
+          </div>
+          {/* 6 */}
+          <div className="box">
+            <img src="/images/img3.png" alt="" />
+            <div className="content">
+              <p style={{ textAlign: "center" }}>Home Service</p>
+              <h3>
+                {" "}
+                <i className="fas fa-map-marker-alt" style={{}}></i> Cebu City{" "}
+              </h3>
+              <div className="btn">
+                <a
+                  href="sign-up"
+                  style={{ backgroundColor: "#1679AB", fontSize: "16px" }}
+                >
+                  <i></i> Apply{" "}
+                </a>
+              </div>
+            </div>
+          </div>
+          {/* 7 */}
+          <div className="box">
+            <img src="/images/img1.png" alt="" />
+            <div className="content">
+              <p style={{ textAlign: "center" }}>Transportation</p>
+              <h3>
+                {" "}
+                <i className="fas fa-map-marker-alt" style={{}}></i> Cebu City{" "}
               </h3>
 
               <div className="btn">

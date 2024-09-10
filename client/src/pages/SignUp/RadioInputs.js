@@ -7,7 +7,11 @@ function RadioInputs({ options, selectedOption, onChange }) {
         {options.map((option, index) => (
           <div className="grid-item" key={index}>
             <div className="radio-wrapper">
-              <div className={`radio-header ${selectedOption === option.value ? "selected" : ""}`}>
+              <div
+                className={`radio-header ${
+                  selectedOption === option.value ? "selected" : ""
+                }`}
+              >
                 <input
                   type="radio"
                   id={option.value}
@@ -15,15 +19,19 @@ function RadioInputs({ options, selectedOption, onChange }) {
                   checked={selectedOption === option.value}
                   onChange={onChange}
                 />
-                <label htmlFor={option.value} className="radio-label">{option.label}</label>
+                <label htmlFor={option.value} className="radio-label">
+                  {option.label}
+                </label>
               </div>
               <div className="separator"></div>
               <div className="radio-description">
                 <h3>
                   {/* I'm {option.value === "employer" ? "an employer" : "a catcher"},
                   looking for {option.value === "employer" ? "catcher" : "errands"}. */}
-                  I'm {option.value === "Employer" ? "an employer" : "a catcher"},
-                  looking for {option.value === "Employer" ? "catcher" : "errands"}.
+                  I'm{" "}
+                  {option.value === "Employer" ? "an employer" : "a catcher"},
+                  looking for{" "}
+                  {option.value === "Employer" ? "catcher" : "errands"}.
                 </h3>
               </div>
             </div>
@@ -89,6 +97,37 @@ function RadioInputs({ options, selectedOption, onChange }) {
           .radio-description {
             margin: 20px;
           }
+
+
+          @media screen and (max-width: 964px) {
+           
+            .radio-wrapper {
+            border: 1px solid #0073aa;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            
+          }
+            
+           .radio-description {
+            margin: 20px;
+            height: 500px;
+            // color: rgb(0, 90, 128);
+            display: flex;
+            justify-content: center;
+
+          }
+
+          .radio-description h3 {
+            font-size: 1.5rem;
+            // font-weight: 900; 
+          }
+
+        }
         `}
       </style>
     </div>
