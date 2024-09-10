@@ -13,9 +13,9 @@ function Dashboard() {
           {user.userType === "Employer" && (
             <>
               <Navbar
-                page1="ONGOING"
+                page1="ONGOING ERRANDS"
                 one={`/dashboard/ongoing`}
-                page2="COMMISSIONS"
+                page2="YOUR ERRANDS"
                 commissionList={`/dashboard/commissions`}
                 page3="APPLICANTS"
                 applicants={`/dashboard/applicants`}
@@ -27,7 +27,7 @@ function Dashboard() {
           {user.userType === "Catcher" && (
             <>
               <Navbar
-                page2="COMMISSIONS"
+                page2="ERRANDS"
                 commissionList={`/dashboard/catcher-errands`}
                 page3="APPLICATIONS"
                 applicants={`/dashboard/my-application`}
