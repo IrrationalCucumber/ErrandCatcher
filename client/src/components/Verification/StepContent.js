@@ -471,7 +471,7 @@ export function Step2({ images, setImages, onNext, onPrev }) {
                       <Button
                         variant="plain"
                         color="neutral"
-                        onClick={handleUpload} // Upload the file if Yes
+                        onClick={onNext} // Upload the file if Yes
                       >
                         Yes
                       </Button>
@@ -507,7 +507,7 @@ export function Step2({ images, setImages, onNext, onPrev }) {
 export function Step3({ details, images, onPrev }) {
   const { user } = useAuth();
   const userID = user.userID;
-  const onSubmit = async () => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     //wrap file images into formdata
     const formData = new FormData();
