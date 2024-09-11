@@ -38,7 +38,7 @@ const Landing = () => {
               </Link>
             </div>
             <div className="btns">
-              <Link to="map">
+              <Link to="/sign-in">
                 <i className="fa fa-eye"></i> SIGN BACK IN
               </Link>
             </div>
