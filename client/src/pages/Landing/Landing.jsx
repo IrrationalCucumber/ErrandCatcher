@@ -33,13 +33,13 @@ const Landing = () => {
           </p>
           <div className="btnn_con">
             <div className="ld_btn">
-              <Link to="/sign-up" id="getStartedLink">
+              <Link to="/sign-up">
                 <i className="fa-solid fa-house"></i> GET STARTED
               </Link>
             </div>
             <div className="btns">
-              <Link to="map">
-                <i className="fa fa-eye"></i> VIEW ERRANDS{" "}
+              <Link to="/sign-in">
+                <i className="fa fa-eye"></i> SIGN BACK IN
               </Link>
             </div>
           </div>
