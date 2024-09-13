@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../components/AuthContext";
 import axios from "axios";
 import "../pages/history.css";
+import Navbar from "../components/Navbar/Navbar";
 
 const History = () => {
   const { user } = useAuth();
@@ -28,42 +29,44 @@ const History = () => {
   }, [userID]);
 
   return (
-    <div className="history-container">
-      <h1>Transaction History</h1>
+    <>
+      <Navbar />
+      <div className="history-container">
+        <h1>Transaction History</h1>
+        {transactions.length > 0 ? (
+          transactions.map((transaction, index) => {
+            const paidDate = new Date(transaction.paid).toLocaleString();
 
-      {transactions.length > 0 ? (
-        transactions.map((transaction, index) => {
-          const paidDate = new Date(transaction.paid).toLocaleString();
-
-          return (
-            <div className="transaction-card" key={index}>
-              <div className="transaction-details">
-                <p>
-                  <strong>Transaction ID:</strong> {transaction.checkoutId}
-                </p>
-                <p>
-                  <strong>Payment Intent ID:</strong> {transaction.paymentId}
-                </p>
-                <p>
-                  <strong>Date Paid:</strong> {paidDate}
-                </p>
-                <p>
-                  <strong>Total Price:</strong> ${transaction.total}
-                </p>
-                <p>
-                  <strong>Type:</strong> {transaction.type}
-                </p>
-                <p>
-                  <strong>Description:</strong> {transaction.description}
-                </p>
+            return (
+              <div className="transaction-card" key={index}>
+                <div className="transaction-details">
+                  <p>
+                    <strong>Transaction ID:</strong> {transaction.checkoutId}
+                  </p>
+                  <p>
+                    <strong>Payment Intent ID:</strong> {transaction.paymentId}
+                  </p>
+                  <p>
+                    <strong>Date Paid:</strong> {paidDate}
+                  </p>
+                  <p>
+                    <strong>Total Price:</strong> ${transaction.total}
+                  </p>
+                  <p>
+                    <strong>Type:</strong> {transaction.type}
+                  </p>
+                  <p>
+                    <strong>Description:</strong> {transaction.description}
+                  </p>
+                </div>
               </div>
-            </div>
-          );
-        })
-      ) : (
-        <p>No transactions found.</p>
-      )}
-    </div>
+            );
+          })
+        ) : (
+          <p>No transactions found.</p>
+        )}
+      </div>
+    </>
   );
 };
 
