@@ -31,13 +31,16 @@ body .App .si {
 .rem {
   color: #333;
   padding-left: 0rem;
-  margin-left: 29%;
+  align-items: inherit;
+  max-width: 290px;
+  margin: 13px auto;
+  display: block;
 }
 
 .contman {
   display: inline-block;
   vertical-align: top;
-  width: 50%
+  width: 50%;
 }
 
 .cont h1 {
@@ -62,7 +65,7 @@ body .App .si {
   width: 100%;
   margin: 13px auto;
   display: block;
-  font-family: 'PT Sans', sans-serif;
+  font-family: "PT Sans", sans-serif;
 }
 
 .cont input[type="checkbox"] {
@@ -83,18 +86,18 @@ body .App .si {
 
 .button1 button {
   border: none;
-  font-family: 'Neue Montreal', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: "Neue Montreal", "Helvetica Neue", Helvetica, Arial, sans-serif;
   cursor: pointer;
   width: 250px;
   height: 40px;
   border-radius: 20px;
-  background-color: #1679AB;
+  background-color: #1679ab;
   font-size: 16px;
   color: #ffff;
 }
 
 button:hover {
-  background-color: #1A96D5;
+  background-color: #1a96d5;
 }
 
 .cont .cont2 {
@@ -113,4 +116,22 @@ button:hover {
   width: 425px;
   height: 606px;
   object-fit: cover;
+}
+
+@media screen and (max-width: 768px) {
+  .contman {
+    display: block;
+    /* vertical-align: top; */
+    width: 100%;
+  }
+
+  .cont-tawo {
+    display: none;
+    height: none;
+    width: none;
+  }
+
+  .contman-cont-tawo {
+    display: none;
+  }
 }
