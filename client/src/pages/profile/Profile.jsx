@@ -3,18 +3,13 @@ import React, { useEffect, useState } from "react";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faCertificate } from "@fortawesome/free-solid-svg-icons";
 import "./profile.css";
-import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../components/AuthContext";
-import styled from "@emotion/styled";
-import Invoice from "../../components/Invoice";
 const Profile = () => {
-  const [activeTab, setActiveTab] = useState("about");
   const [verified, setVerified] = useState(false);
   //APS - 03/03/24
   //get userID from url
-  const location = useLocation();
   const { user } = useAuth();
   const userID = user.userID;
   //variable for account details
@@ -35,41 +30,8 @@ const Profile = () => {
     profileImage: "",
   });
 
-  const [isOpen, setIsOpen] = useState(false);
-
-  // for handle invoice
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
-
-  const handleClose = () => {
-    setIsOpen(false);
-  };
-
-  const [transactions, setTransactions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchTransactions = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8800/transactions/${userID}`
-        );
-        setTransactions(response.data);
-        setLoading(false);
-      } catch (err) {
-        console.log("Error fetching transactions:", err);
-        setError(err);
-        setLoading(false);
-      }
-    };
-    fetchTransactions();
-  }, [userID]);
-
   //RV & APS 02/03/24
   //useState for Status
-  const [status, setStatus] = useState("");
   //pre-fill the fields
   useEffect(() => {
     const fetchAccount = async () => {
@@ -99,7 +61,7 @@ const Profile = () => {
           profileImage: retrievedAccount.profileImage,
         });
         //setStatus(res.data);
-        if (account.status.toUpperCase() == "VERIFIED") {
+        if (account.status.toUpperCase() === "VERIFIED") {
           setVerified(true);
           console.log(verified);
         }
@@ -109,7 +71,7 @@ const Profile = () => {
     };
 
     fetchAccount();
-  }, [userID]);
+  }, [userID, account.status, verified]);
 
   const handleChange = (e) => {
     // For the 'gender' field, directly set the value without using spread syntax
@@ -192,7 +154,7 @@ const Profile = () => {
                 <div className="image-container">
                   <img
                     src={`http://localhost:8800/images/profile/${account.profileImage}`}
-                    alt="Profile Image"
+                    alt="PRofile"
                     width={250}
                     height={250}
                     style={{ padding: "20px" }}
@@ -218,7 +180,7 @@ const Profile = () => {
                 <label className="username">{account.username}</label>
                 {/* Verification Icon */}
                 {/* Verification Icon */}
-                {account.status == "Unverified" && (
+                {account.status === "Unverified" && (
                   <Link to={`/verification/${userID}`}>
                     <i
                       className="fa-regular fa-circle-check"
