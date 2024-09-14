@@ -21,8 +21,8 @@ const Signup = () => {
   });
 
   //handle state of error message
-  const [employerErrorMessage, setEmployerErrorMessage] = useState("");
-  const [catcherErrorMessage, setCatcherErrorMessage] = useState("");
+  // const [employerErrorMessage, setEmployerErrorMessage] = useState("");
+  // const [catcherErrorMessage, setCatcherErrorMessage] = useState("");
   const [errors, setErrors] = useState({});
 
   // Error handling if empty fields
@@ -93,8 +93,8 @@ const Signup = () => {
       type: "",
       dateCreated: "",
     });
-    setEmployerErrorMessage("");
-    setCatcherErrorMessage("");
+    // setEmployerErrorMessage("");
+    // setCatcherErrorMessage("");
     // setErrorMessage("");
   };
 
@@ -120,7 +120,7 @@ const Signup = () => {
   const handleTypeChange = () => {
     setSelectedType(selectedOption);
     console.log(selectedOption);
-    if (selectedOption == "Catcher") {
+    if (selectedOption === "Catcher") {
       // Checkbox is checked, store one value
       setAccount((prev) => ({ ...prev, type: "Catcher" }));
     } else {
