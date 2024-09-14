@@ -59,6 +59,7 @@ import Service from "./pages/Services/Service";
 //restrict
 import { AuthProvider } from "./components/AuthContext";
 import AdminPage from "./pages/admin/AdminPage";
+import History from "./pages/History";
 
 const router = createBrowserRouter([
   {
@@ -207,6 +208,7 @@ const router = createBrowserRouter([
     path: "sign-up",
     element: <SignUp />,
   },
+  { path: "/history", element: <History /> },
 
   { path: "/test", element: <MapComponent /> },
   //MISCILLANOUS PAGES
