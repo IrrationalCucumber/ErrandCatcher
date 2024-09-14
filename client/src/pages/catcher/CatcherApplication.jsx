@@ -63,16 +63,19 @@ function Application() {
     // const type = apply.commissionType
     //   .toLowerCase()
     //   .includes(searchTerm.type.toLowerCase());
+
+    // If value is null, use an empty string or a default value : ('')
     const termMatch = apply.commissionTitle
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
+      ?.toLowerCase()
+      .includes(searchTerm.term?.toLowerCase() ?? '');
     const termMatch2 = apply.userFirstname
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
+      ?.toLowerCase()
+      .includes(searchTerm.term?.toLowerCase() ?? '');
     const termMatch3 = apply.userLastname
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
-    const status = apply.applicationStatus.includes(searchTerm.status);
+      ?.toLowerCase()
+      .includes(searchTerm.term?.toLowerCase() ?? '');
+    const status = apply.applicationStatus
+      ?.includes(searchTerm.status ?? '');
 
     return (termMatch || termMatch2 || termMatch3) && status;
   });
@@ -98,7 +101,7 @@ function Application() {
       </button>
     ) : (
       <button
-        className=""
+        className="delete action-btn"
         onClick={() => handleDelete(applicant.applicationID)}
       >
         DELETE
@@ -168,7 +171,7 @@ function Application() {
       <div className="application-container">
         <div className="application">
           <h1>Application</h1>
-          <div className="search">
+          <div className="searchApplication">
             <input
               type="text"
               placeholder="Search Employer or Errand title..."
