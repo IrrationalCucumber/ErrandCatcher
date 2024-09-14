@@ -273,160 +273,101 @@ const Profile = () => {
           </div>
           <div className="info-form">
             <form>
-              <div className="toggle-button">
-                <span
-                  className={activeTab === "about" ? "active about-label" : ""}
-                  onClick={() => setActiveTab("about")}
-                >
-                  About
-                </span>
-                <span
-                  className={
-                    activeTab === "history" ? "active history-label" : ""
-                  }
-                  onClick={() => setActiveTab("history")}
-                >
-                  Transaction
-                </span>
-              </div>
-              {activeTab === "about" && (
-                <div
-                  className={`about-section ${
-                    activeTab !== "about" ? "hidden" : ""
-                  }`}
-                >
-                  {/* About section content */}
-                  <div className="input-row">
-                    <label className="PP">Name:</label>
-                    <input
-                      type="text"
-                      className="display-data"
-                      placeholder="Name"
-                      name="fname"
-                      value={account.fname}
-                      onChange={handleChange}
-                    ></input>
+              <div className="about-section">
+                {/* About section content */}
+                <div className="input-row">
+                  <label className="PP">Name:</label>
+                  <input
+                    type="text"
+                    className="display-data"
+                    placeholder="Name"
+                    name="fname"
+                    value={account.fname}
+                    onChange={handleChange}
+                  ></input>
 
-                    <input
-                      type="text"
-                      className="display-data"
-                      value={account.lname}
-                      placeholder="username"
-                      onChange={handleChange}
-                      name="lname"
-                    ></input>
-                  </div>
-                  <div className="input-row">
-                    <label className="PP">Age</label>
-                    <input
-                      type="number"
-                      name="age"
-                      className="display-data1"
-                      placeholder="Age"
-                      value={account.age}
-                      onChange={handleChange}
-                      min={1}
-                      max={99}
-                    ></input>
-                  </div>
-                  <div className="input-row">
-                    <label className="PP">Birth Date</label>
-                    <input
-                      type="date"
-                      className="display-data1"
-                      value={account.bday}
-                      placeholder="Date of birth"
-                    ></input>
-                  </div>
-                  <div className="input-row">
-                    <label className="PP">Gender</label>
-                    <select
-                      className="display-data1"
-                      value={account.gender}
-                      onChange={handleChange}
-                      name="gender"
-                    >
-                      gender
-                      <option value="">Choose gender....</option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                    </select>
-                  </div>
-                  <div className="input-row">
-                    <label className="PP">Contact Number:</label>
-                    <input
-                      type="number"
-                      className="display-data"
-                      placeholder="Contact Number"
-                      name="contact"
-                      value={account.contact}
-                      onChange={handleChange}
-                    ></input>
-                  </div>
-                  <div className="input-row">
-                    <label className="PP">Email Address:</label>
-                    <input
-                      type="email"
-                      className="display-data"
-                      placeholder="Email Address"
-                      value={account.email}
-                      name="email"
-                      onChange={handleChange}
-                    ></input>
-                  </div>
-                  <div className="input-row">
-                    <label className="PP">Address:</label>
-                    <textarea
-                      type="text"
-                      className="display-data"
-                      placeholder="Address"
-                      value={account.address}
-                      name="address"
-                      onChange={handleChange}
-                    ></textarea>
-                  </div>
-                  <button
-                    onClick={handleClick}
-                    style={{ borderRadius: "10px" }}
+                  <input
+                    type="text"
+                    className="display-data"
+                    value={account.lname}
+                    placeholder="username"
+                    onChange={handleChange}
+                    name="lname"
+                  ></input>
+                </div>
+                <div className="input-row">
+                  <label className="PP">Age</label>
+                  <input
+                    type="number"
+                    name="age"
+                    className="display-data1"
+                    placeholder="Age"
+                    value={account.age}
+                    onChange={handleChange}
+                    min={1}
+                    max={99}
+                  ></input>
+                </div>
+                <div className="input-row">
+                  <label className="PP">Birth Date</label>
+                  <input
+                    type="date"
+                    className="display-data1"
+                    value={account.bday}
+                    placeholder="Date of birth"
+                  ></input>
+                </div>
+                <div className="input-row">
+                  <label className="PP">Gender</label>
+                  <select
+                    className="display-data1"
+                    value={account.gender}
+                    onChange={handleChange}
+                    name="gender"
                   >
-                    Save
-                  </button>
+                    gender
+                    <option value="">Choose gender....</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
                 </div>
-              )}
-              {activeTab === "history" && (
-                <div
-                  className={`history-section ${
-                    activeTab !== "history" ? "hidden" : ""
-                  }`}
-                >
-                  <label>THIS IS HISTORY WITH TRANSACTION</label>
-                  {transactions.length > 0 ? (
-                    transactions.map((transaction, index) => {
-                      const paidDate = new Date(
-                        transaction.paid
-                      ).toLocaleString(); // Convert the timestamp to a human-readable format
-
-                      return (
-                        <div style={{ margin: "20px" }} key={index}>
-                          <hr />
-                          <div style={{ padding: "4px" }}>
-                            <p>Transaction ID: {transaction.checkoutId}</p>
-                            <p>Payment Intent ID: {transaction.paymentId}</p>
-                            <p>Date Paid: {paidDate}</p>{" "}
-                            {/* Display the formatted date */}
-                            <p>Total Price: {transaction.total}</p>
-                            <p>Type: {transaction.type}</p>
-                            <p>Description: {transaction.description}</p>
-                          </div>
-                          <hr />
-                        </div>
-                      );
-                    })
-                  ) : (
-                    <p>No transactions found.</p>
-                  )}
+                <div className="input-row">
+                  <label className="PP">Contact Number:</label>
+                  <input
+                    type="number"
+                    className="display-data"
+                    placeholder="Contact Number"
+                    name="contact"
+                    value={account.contact}
+                    onChange={handleChange}
+                  ></input>
                 </div>
-              )}
+                <div className="input-row">
+                  <label className="PP">Email Address:</label>
+                  <input
+                    type="email"
+                    className="display-data"
+                    placeholder="Email Address"
+                    value={account.email}
+                    name="email"
+                    onChange={handleChange}
+                  ></input>
+                </div>
+                <div className="input-row">
+                  <label className="PP">Address:</label>
+                  <textarea
+                    type="text"
+                    className="display-data"
+                    placeholder="Address"
+                    value={account.address}
+                    name="address"
+                    onChange={handleChange}
+                  ></textarea>
+                </div>
+                <button onClick={handleClick} style={{ borderRadius: "10px" }}>
+                  Save
+                </button>
+              </div>
             </form>
           </div>
         </div>
