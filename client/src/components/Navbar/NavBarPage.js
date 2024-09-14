@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "./NavButton";
 import "./Navbar.css";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 function Navbar() {
   //change the state of the menu
@@ -38,7 +39,7 @@ function Navbar() {
       <nav className="navbar">
         <div className="navbar-container">
           <Link className="navbar-logo" onClick={goBack}>
-            <i class="fa-solid fa-arrow-left"></i>
+            <ArrowBackIcon />
           </Link>
           <div className="menu-icon" onClick={handleClick}>
             <i className={click ? "fas fa-times" : "fas fa-bars"}></i>
