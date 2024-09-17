@@ -5,11 +5,12 @@ import Cards from "../components/Cards/Cards";
 //import Footer from "../components/Footer";
 import "./Menu.css";
 //import CardItem from '../components/CardItem';
+import { useAuth } from "../components/AuthContext";
+import SearchBar from "../components/Search Bar/SearchBar";
 
 const Menu = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const location = useLocation();
-  const userID = location.pathname.split("/")[2];
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   const handleSearchChange = (event) => {
@@ -18,6 +19,13 @@ const Menu = () => {
 
   return (
     <>
+      <SearchBar
+        value={searchQuery}
+        onClick={(e) => {
+          navigate(`/search/${searchQuery}`);
+        }}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
       <div className="search-bar">
         <input
           type="text"
@@ -124,7 +132,11 @@ const Menu = () => {
 
                 </div>
             </section> */}
-      <Cards />
+      {user.userType.toLocaleUpperCase() === "catcher" && (
+        <>
+          <Cards />
+        </>
+      )}
     </>
   );
 };
