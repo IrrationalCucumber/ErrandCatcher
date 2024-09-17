@@ -88,6 +88,17 @@ const verifyController = {
       res.status(200).json({ message: "Request updated successfully" });
     });
   },
+  //get count of pending request
+  getRequestCount: (req, res) => {
+    Verify.getRequestCount((err, data) => {
+      if (err) {
+        console.error("Error fetching request:", err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      res.json(data);
+    });
+  },
 };
 
 module.exports = verifyController;

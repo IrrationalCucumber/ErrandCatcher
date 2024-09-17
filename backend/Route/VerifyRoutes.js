@@ -6,5 +6,6 @@ router.get("/requests", verifyController.getAllRequest);
 router.get("/request/:id", verifyController.getRequestByID);
 router.post("/upload/:id", verifyController.uploadRequest);
 router.put("/done-request/:id", verifyController.putUpdateRequest);
+router.get("/request-count", verifyController.getRequestCount);
 
 module.exports = router;
