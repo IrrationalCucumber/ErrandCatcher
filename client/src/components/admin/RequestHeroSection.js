@@ -32,3 +32,21 @@ function RequestHeroSection() {
 }
 
 export default RequestHeroSection;
+
+export function AdminHeroSection() {
+  return (
+    <>
+      <div className="admin__hero__section">
+        SAMPLE TEXT
+        <div className="adminHS__box__wrapper">
+          <div className="adminHS__left__box">
+            <h1>ACCOUNT</h1>
+          </div>
+          <div className="adminHS__right__box">
+            <h1>ERRAND</h1>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
