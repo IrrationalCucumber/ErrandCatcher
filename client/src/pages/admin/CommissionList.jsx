@@ -199,8 +199,8 @@ const CommissionList = () => {
             "Employer",
             "Type",
             "Payment",
-            "Posted",
-            "Completed",
+            "Date Posted",
+            "Date Completed",
             "Status",
             "Action",
           ]}
@@ -209,7 +209,7 @@ const CommissionList = () => {
             Commission.commissionTitle,
             `${Commission.userFirstname} ${Commission.userLastname}`,
             Commission.commissionType,
-            Commission.commissionPay,
+            "Php " + Commission.commissionPay,
             DisplayDate(Commission.DatePosted),
             Commission.DateCompleted === ""
               ? DisplayDate(Commission.DateCompleted)
