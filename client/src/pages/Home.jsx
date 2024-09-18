@@ -7,7 +7,9 @@ import Menu from "./Menu";
 import axios from "axios";
 import { useAuth } from "../components/AuthContext";
 import { HeroSection } from "../Banner/HeroSection";
-import RequestHeroSection from "../components/admin/RequestHeroSection";
+import RequestHeroSection, {
+  AdminHeroSection,
+} from "../components/admin/RequestHeroSection";
 
 const Home = () => {
   const { user } = useAuth();
@@ -80,6 +82,7 @@ const Home = () => {
             />
             <Menu />
             <RequestHeroSection />
+            <AdminHeroSection />
           </>
         )}
         {/* <Footer /> */}
