@@ -94,17 +94,6 @@ const CommissionList = () => {
   //need front end
   return (
     <div>
-      {/* <NavBar
-       page1="REQUESTS"
-        one={`/request/${userID}`}
-        // {`admin-home/${userID}`}
-        page2="ACCOUNTS"
-        commissionList={`/accounts/${userID}`}
-        page3="ERRANDS"
-        applicants={`/commission-list/${userID}`}
-        page4="MAP"
-        map={`/map/${userID}`}
-      /> */}
       <div className="commissions">
         <h1
           style={{
@@ -123,6 +112,7 @@ const CommissionList = () => {
             marginBottom: "10px",
             display: "flex",
             alignItems: "center",
+            width: "50%",
           }}
         >
           <input
@@ -136,8 +126,7 @@ const CommissionList = () => {
               fontSize: "12px",
               border: "1px solid #ccc",
               borderRadius: "4px",
-              marginRight: "0",
-              marginBottom: "10px",
+              margin: "10px 0px 10px 0px",
             }}
           />
           {/* <button
@@ -159,15 +148,21 @@ const CommissionList = () => {
           </button> */}
 
           <div
-            className="filter"
-            style={{ display: "flex", alignItems: "center" }}
+            className="filter__admin__accountList"
+            style={{ display: "flex", alignItems: "center", width: "60%" }}
           >
             <select
               className="CLstatus"
+              name="status"
               onChange={handleChange}
               value={searchTerm.status}
-              name="status"
-              defaultValue={""}
+              style={{
+                padding: "8px",
+                fontSize: "12px",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+                margin: "10px 20px",
+              }}
             >
               <option value="">Status</option>
               <option value="Pending">Pending</option>
@@ -182,13 +177,11 @@ const CommissionList = () => {
               value={searchTerm.type}
               name="type"
               style={{
-                padding: "8px",
+                padding: "8px 10px 8px 10px",
                 fontSize: "12px",
                 border: "1px solid #ccc",
                 borderRadius: "4px",
-                marginRight: "10px",
-                marginBottom: "10px",
-                width: "150px",
+                margin: "10px",
               }}
             >
               <option value="">Type</option>
