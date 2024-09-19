@@ -1,9 +1,37 @@
 /*commissionpage.css*/
 .Commission-page-container {
     display: flex;
-    justify-content: space-between; /* Center content horizontally */
+    justify-content: space-between;
+    /* Center content horizontally */
     align-items: flex-start;
+    margin: 20px;
 }
+
+.searcherrand{
+    display: flex;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+
+.Commission-page button.cancel-btn {
+    /* background-color: #dc3545;
+      color: white; */
+    padding: 10px 20px;
+    font-size: 12px;
+    background-color: rgb(217, 83, 79);
+    color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.Commission-page button.cancel-btn:hover {
+    background-color: #c82333;
+}
+
 
 .Commission-page {
     margin: 20px;
@@ -18,8 +46,10 @@
 }
 
 .Commission-page-divider {
-    border-top: 1px solid #ccc; /* Top border */
-    margin: 20px 0; /* Margin top and bottom */
+    border-top: 1px solid #ccc;
+    /* Top border */
+    margin: 20px 0;
+    /* Margin top and bottom */
 }
 
 .Commission-page-divider .table-wrapper {
