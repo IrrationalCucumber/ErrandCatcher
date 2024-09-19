@@ -1,6 +1,6 @@
 import React from "react";
 import "./HeroSection.css";
-import "../App.css";
+import "../../App.css";
 
 export function HeroSection(props) {
   return (
