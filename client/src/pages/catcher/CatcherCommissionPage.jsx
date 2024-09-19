@@ -59,14 +59,14 @@ function CommissionPage() {
   //filter
   const filterErrands = commissions.filter((commission) => {
     const type = commission.commissionType
-      .toLowerCase()
-      .includes(searchTerm.type.toLowerCase());
+      ?.toLowerCase()
+      .includes(searchTerm.type.toLowerCase() ?? '');
     const termMatch = commission.commissionTitle
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
+      ?.toLowerCase()
+      .includes(searchTerm.term.toLowerCase()) ?? '';
     const termMatch2 = commission.userFirstname
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
+      ?.toLowerCase()
+      .includes(searchTerm.term.toLowerCase()) ?? '';
     let deadline = true;
     if (searchTerm.date) {
       deadline = commission.commissionDeadline >= searchTerm.date;
@@ -136,7 +136,7 @@ function CommissionPage() {
           {" "}
           {/* Apply Commission-page class here */}
           <h1>Commission</h1>
-          <div className="search">
+          <div className="searcherrand">
             <input
               type="text"
               placeholder="Search Errand title..."
@@ -175,6 +175,7 @@ function CommissionPage() {
               commission.errandStatus,
               commission.errandStatus === "Ongoing" ? (
                 <button
+                  className="cancel-btn"
                   onClick={() =>
                     handleCancel(commission.transactID, commission.employerID)
                   }
