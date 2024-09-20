@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../../components/AuthContext";
 import Modals from "../../components/Modals";
+import "./ongoing.css"
 
 function OngoingCards({ commissions, to }) {
   const [isClicked, setIsClicked] = useState(false);
@@ -149,56 +150,61 @@ function OngoingCards({ commissions, to }) {
                   )}
                   {user.userType === "Catcher" && (
                     <>
-                      <button
-                        onClick={() => markAsCompleted(commission.commissionID)}
-                        style={{
-                          backgroundColor: "#cccccc",
-                          color: "#ffffff",
-                          padding: "10px 10px",
-                          border: "none",
-                          borderRadius: "4px",
-                          cursor: "pointer",
-                          marginTop: "5px",
-                          marginBottom: "10px",
-                          transition: "background-color 0.3s",
-                          fontSize: "12px",
-                          fontWeight: "bold",
-                          display: "block",
-                        }}
-                        onMouseOver={(e) => {
-                          e.target.style.backgroundColor = "#00cc00";
-                        }}
-                        onMouseOut={(e) => {
-                          e.target.style.backgroundColor = "#cccccc";
-                        }}
-                      >
-                        Mark as Completed
-                      </button>
-                      <button
-                        onClick={() => cancel(commission.commissionID)}
-                        style={{
-                          backgroundColor: "#cccccc",
-                          color: "#ffffff",
-                          padding: "10px 10px",
-                          border: "none",
-                          borderRadius: "4px",
-                          cursor: "pointer",
-                          marginTop: "5px",
-                          marginBottom: "10px",
-                          transition: "background-color 0.3s",
-                          fontSize: "12px",
-                          fontWeight: "bold",
-                          display: "block",
-                        }}
-                        onMouseOver={(e) => {
-                          e.target.style.backgroundColor = "#00cc00";
-                        }}
-                        onMouseOut={(e) => {
-                          e.target.style.backgroundColor = "#cccccc";
-                        }}
-                      >
-                        Cancel
-                      </button>
+                      <div className="btnstatus">
+
+                        <button
+                          onClick={() => markAsCompleted(commission.commissionID)}
+                          style={{
+                            backgroundColor: "#cccccc",
+                            color: "#ffffff",
+                            padding: "10px 10px",
+                            border: "none",
+                            borderRadius: "4px",
+                            cursor: "pointer",
+                            marginTop: "5px",
+                            marginBottom: "10px",
+                            transition: "background-color 0.3s",
+                            fontSize: "12px",
+                            fontWeight: "bold",
+                            display: "block",
+                          }}
+                          onMouseOver={(e) => {
+                            e.target.style.backgroundColor = "#00cc00";
+                          }}
+                          onMouseOut={(e) => {
+                            e.target.style.backgroundColor = "#cccccc";
+                          }}
+                        >
+                          Mark as Completed
+                        </button>
+                        <button
+                          onClick={() => cancel(commission.commissionID)}
+                          style={{
+                            backgroundColor: "#cccccc",
+                            color: "#ffffff",
+                            padding: "10px 10px",
+                            border: "none",
+                            borderRadius: "4px",
+                            cursor: "pointer",
+                            marginTop: "5px",
+                            marginBottom: "10px",
+                            transition: "background-color 0.3s",
+                            fontSize: "12px",
+                            fontWeight: "bold",
+                            display: "block",
+                          }}
+                          onMouseOver={(e) => {
+                            e.target.style.backgroundColor = "#00cc00";
+                          }}
+                          onMouseOut={(e) => {
+                            e.target.style.backgroundColor = "#cccccc";
+                          }}
+                        >
+                          Cancel
+                        </button>
+
+                      </div>
+
                     </>
                   )}
                   {user.userType === "Employer" && (
@@ -331,25 +337,25 @@ function OngoingCards({ commissions, to }) {
           .Oncards__items {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px; 
-            justify-content: space-between;
+            gap: 32px; 
+            justify-content: flex-start;
             width: 100%;
           }
 
-          .Oncard {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 20px;
-            // justify-content: flex-end;
-            width: calc(25% - 20px); /* Adjust the width to fit 4 cards per row */
-            height: 400px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            box-shadow: none;
-            transition: transform 0.3s ease;
-            border: groove;
-          }
+          // .Oncard {
+          //   display: flex;
+          //   flex-direction: column;
+          //   align-items: center;
+          //   padding-top: 20px;
+          //   // justify-content: flex-end;
+          //   width: calc(25% - 20px); /* Adjust the width to fit 4 cards per row */
+          //   height: 400px;
+          //   margin-bottom: 20px;
+          //   border-radius: 10px;
+          //   box-shadow: none;
+          //   transition: transform 0.3s ease;
+          //   border: groove;
+          // }
 
           .Oncard__img {
             width: 200px;
