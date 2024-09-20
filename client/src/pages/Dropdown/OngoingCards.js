@@ -4,6 +4,14 @@ import axios from "axios";
 import { useAuth } from "../../components/AuthContext";
 import Modals from "../../components/Modals";
 import "./ongoing.css"
+import Button from "@mui/joy/Button";
+import Divider from "@mui/joy/Divider";
+import DialogTitle from "@mui/joy/DialogTitle";
+import DialogContent from "@mui/joy/DialogContent";
+import DialogActions from "@mui/joy/DialogActions";
+import Modal from "@mui/joy/Modal";
+import ModalDialog from "@mui/joy/ModalDialog";
+import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 
 function OngoingCards({ commissions, to }) {
   const [isClicked, setIsClicked] = useState(false);
@@ -72,6 +80,20 @@ function OngoingCards({ commissions, to }) {
     console.log("Submitted value:", inputValue);
     handleCloseModal();
   };
+
+  const [openMark, setOpenMark] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+
+  const handleOpenMarkModal = () => {
+    setOpenMark(true);
+    console.log("marked");
+  };
+
+  const handleOpenCancelModal = () => {
+    setOpenDelete(true);
+    console.log("canceled");
+  };
+
 
   const markAsCompleted = (commissionId) => {
     // Perform the logic to mark the commission as completed
@@ -153,7 +175,9 @@ function OngoingCards({ commissions, to }) {
                       <div className="btnstatus">
 
                         <button
-                          onClick={() => markAsCompleted(commission.commissionID)}
+                          // onClick={() => markAsCompleted(commission.commissionID)}
+                          // onClick={handleOpenModal}
+                          onClick={() => handleOpenMarkModal()}
                           style={{
                             backgroundColor: "#cccccc",
                             color: "#ffffff",
@@ -177,8 +201,10 @@ function OngoingCards({ commissions, to }) {
                         >
                           Mark as Completed
                         </button>
+
                         <button
-                          onClick={() => cancel(commission.commissionID)}
+                          // onClick={() => cancel(commission.commissionID)}
+                          onClick={handleOpenCancelModal}
                           style={{
                             backgroundColor: "#cccccc",
                             color: "#ffffff",
@@ -204,6 +230,70 @@ function OngoingCards({ commissions, to }) {
                         </button>
 
                       </div>
+
+                      {/* marked as completed model */}
+                      <Modal open={openMark} onClose={() => setOpenMark(false)}>
+                        <ModalDialog>
+                          <DialogTitle>
+                            <WarningRoundedIcon />
+                            Confirmation
+                          </DialogTitle>
+                          <Divider />
+                          <DialogContent>
+                            Are you sure you want to Mark as Completed this errand?
+                          </DialogContent>
+                          <DialogActions>
+                            <Button
+                              variant="solid"
+                              color="success"
+                              onClick={() =>
+                                markAsCompleted(commission.commissionID)
+                              }
+                            >
+                              Yes
+                            </Button>
+                            <Button
+                              variant="plain"
+                              color="neutral"
+                              onClick={() => setOpenMark(false)}
+                            >
+                              No
+                            </Button>
+                          </DialogActions>
+                        </ModalDialog>
+                      </Modal>
+
+                      {/* cancel modal */}
+                      <Modal open={openDelete} onClose={() => setOpenDelete(false)}>
+                        <ModalDialog>
+                          <DialogTitle>
+                            <WarningRoundedIcon />
+                            Confirmation
+                          </DialogTitle>
+                          <Divider />
+                          <DialogContent>
+                            Are you sure you want to Cancel this errand?
+                          </DialogContent>
+                          <DialogActions>
+                            <Button
+                              variant="solid"
+                              color='danger'
+                              onClick={() =>
+                                cancel(commission.commissionID)
+                              }
+                            >
+                              Yes
+                            </Button>
+                            <Button
+                              variant="plain"
+                              color="neutral"
+                              onClick={() => setOpenDelete(false)}
+                            >
+                              No
+                            </Button>
+                          </DialogActions>
+                        </ModalDialog>
+                      </Modal>
 
                     </>
                   )}
