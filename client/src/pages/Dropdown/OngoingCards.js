@@ -94,15 +94,91 @@ function OngoingCards({ commissions, to }) {
     console.log("canceled");
   };
 
+  //set variables for notification
+  const [notif, setNotif] = useState({
+    userID: "", //this is the employer/ userID of the commission
+    notificationType: "", //notif description
+    notifDesc: "", //contents of the notif
+    notifDate: "", //time and date notif is added
+  });
 
-  const markAsCompleted = (commissionId) => {
-    // Perform the logic to mark the commission as completed
-    console.log(`Commission ${commissionId} marked as completed`);
+  //get current time and date for notif
+  const getTimeAndDate = () => {
+    const currentDate = new Date();
+    // Get the date components
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(currentDate.getDate()).padStart(2, "0");
+    // Get the time components
+    const hours = String(currentDate.getHours()).padStart(2, "0");
+    const minutes = String(currentDate.getMinutes()).padStart(2, "0");
+    const seconds = String(currentDate.getSeconds()).padStart(2, "0");
+
+    // Create a string representing the current date and time
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   };
 
-  const cancel = (commissionId) => {
-    // Perform the logic to cancel the commission
-    console.log(`Commission ${commissionId} cancelled`);
+
+  // const markAsCompleted = (commissionId) => {
+  //   // Perform the logic to mark the commission as completed
+  //   console.log(`Commission ${commissionId} marked as completed`);
+  //   setOpenMark(false);
+  // };
+
+  // const cancel = (commissionId) => {
+  //   // Perform the logic to cancel the commission
+  //   console.log(`Commission ${commissionId} cancelled`);
+  //   setOpenDelete(false);
+  // };
+
+
+  // cancel transaction
+  const handleCancel = async (transactID, employerID) => {
+    try {
+      //alert(employerID);
+
+      // add a notification to the commission's employer
+      notif.notifDesc = "A Catcher has cancelled in doing an errand";
+      notif.userID = employerID;
+      notif.notificationType = "Errand Cancelled";
+      notif.notifDate = getTimeAndDate();
+
+      await axios.post("http://localhost:8800/notify", notif);
+      //cancel the transaction
+      await axios.put(`http://localhost:8800/cancel-trans/${transactID}`, {
+        params: { date: getTimeAndDate() },
+      });
+
+      setOpenDelete(false);
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // complete transaction
+  const handleComplete = async (transactID, employerID) => {
+    try {
+      //alert(employerID);
+
+      // add a notification to the commission's employer
+      notif.notifDesc = "A Catcher has mark completed an errand";
+      notif.userID = employerID;
+      notif.notificationType = "Errand completed";
+      notif.notifDate = getTimeAndDate();
+
+      await axios.post("http://localhost:8800/notify", notif);
+      //complete the transaction
+      await axios.put(`http://localhost:8800/complete-trans/${transactID}`, {
+        params: { date: getTimeAndDate() },
+      });
+      console.log("status: completed");
+
+      setOpenMark(false);
+
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handlePayment = (pay, type, fname, lname, id, comTitle) => {
@@ -247,7 +323,8 @@ function OngoingCards({ commissions, to }) {
                               variant="solid"
                               color="success"
                               onClick={() =>
-                                markAsCompleted(commission.commissionID)
+                                // markAsCompleted(commission.commissionID)
+                                handleComplete(commission.transactID, commission.employerID)
                               }
                             >
                               Yes
@@ -279,7 +356,8 @@ function OngoingCards({ commissions, to }) {
                               variant="solid"
                               color='danger'
                               onClick={() =>
-                                cancel(commission.commissionID)
+                                // cancel(commission.commissionID)
+                                handleCancel(commission.transactID, commission.employerID)
                               }
                             >
                               Yes
