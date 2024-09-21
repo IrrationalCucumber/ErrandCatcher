@@ -126,6 +126,7 @@ function OngoingCards({ commissions, to }) {
                   >
                     {commission.commissionTitle}
                   </h1>
+                  <h4>{commission.errandStatus}</h4>
                   <p className="type" style={{ paddingTop: "10px" }}>
                     Type: {commission.commissionType}
                   </p>
@@ -201,109 +202,113 @@ function OngoingCards({ commissions, to }) {
                       </button>
                     </>
                   )}
-                  {user.userType === "Employer" && (
-                    <>
-                      <button
-                        onClick={handleOpenModal}
-                        style={{
-                          backgroundColor: "#1679AB",
-                          color: "#ffffff",
-                          padding: "10px 10px",
-                          border: "none",
-                          borderRadius: "4px",
-                          cursor: "pointer",
-                          marginTop: "5px",
-                          marginBottom: "10px",
-                          transition: "background-color 0.3s",
-                          fontSize: "12px",
-                          fontWeight: "bold",
-                          display: "block",
-                          width: "130px",
-                          // ":hover": {
-                          //   backgroundColor: isClicked ? "#fa9d6e" : "#ffbb33",
-                          // },
-                        }}
-                      >
-                        Feedback
-                      </button>
-
-                      {/* modal trigger if clicked */}
-                      <Modals isOpen={isModalOpen} onClose={handleCloseModal}>
-                        <h4>Rate Catcher:</h4>
-                        {[1, 2, 3, 4, 5].map((value) => (
-                          <span
-                            key={value}
-                            style={{
-                              cursor: "pointer",
-                              fontSize: "24px",
-                              color:
-                                value <= feedback.feedbackCount
-                                  ? "gold"
-                                  : "gray",
-                            }}
-                            onClick={() => handleStarClick(value)}
-                          >
-                            ★
-                          </span>
-                        ))}
-                        <h4>Feedback:</h4>
-                        <input
-                          type="text"
-                          value={inputValue.feedbackComment}
-                          onChange={handleInputChange}
-                          placeholder="Enter your comment here...."
+                  {user.userType === "Employer" &&
+                    commission.errandStatus === "Complete" && (
+                      <>
+                        <button
+                          onClick={handleOpenModal}
                           style={{
+                            backgroundColor: "#1679AB",
+                            color: "#ffffff",
+                            padding: "10px 10px",
+                            border: "none",
+                            borderRadius: "4px",
+                            cursor: "pointer",
+                            marginTop: "5px",
                             marginBottom: "10px",
-                            width: "100%",
-                            padding: "10px",
-                            fontSize: "16px",
+                            transition: "background-color 0.3s",
+                            fontSize: "12px",
+                            fontWeight: "bold",
+                            display: "block",
+                            width: "130px",
+                            // ":hover": {
+                            //   backgroundColor: isClicked ? "#fa9d6e" : "#ffbb33",
+                            // },
                           }}
-                        />
+                        >
+                          Feedback
+                        </button>
 
-                        <div style={styles.buttonContainer}>
-                          <button style={styles.button} onClick={handleSubmit}>
-                            Post
-                          </button>
-                          <button
-                            style={styles.button}
-                            onClick={handleCloseModal}
-                          >
-                            Close
-                          </button>
-                        </div>
-                      </Modals>
+                        {/* modal trigger if clicked */}
+                        <Modals isOpen={isModalOpen} onClose={handleCloseModal}>
+                          <h4>Rate Catcher:</h4>
+                          {[1, 2, 3, 4, 5].map((value) => (
+                            <span
+                              key={value}
+                              style={{
+                                cursor: "pointer",
+                                fontSize: "24px",
+                                color:
+                                  value <= feedback.feedbackCount
+                                    ? "gold"
+                                    : "gray",
+                              }}
+                              onClick={() => handleStarClick(value)}
+                            >
+                              ★
+                            </span>
+                          ))}
+                          <h4>Feedback:</h4>
+                          <input
+                            type="text"
+                            value={inputValue.feedbackComment}
+                            onChange={handleInputChange}
+                            placeholder="Enter your comment here...."
+                            style={{
+                              marginBottom: "10px",
+                              width: "100%",
+                              padding: "10px",
+                              fontSize: "16px",
+                            }}
+                          />
 
-                      <button
-                        style={{
-                          backgroundColor: "grey",
-                          color: "#ffffff",
-                          padding: "10px 10px",
-                          border: "none",
-                          borderRadius: "4px",
-                          cursor: "pointer",
-                          marginTop: "5px",
-                          marginBottom: "10px",
-                          transition: "background-color 0.3s",
-                          fontSize: "12px",
-                          fontWeight: "bold",
-                          display: "block",
-                          width: "130px",
-                        }}
-                        onClick={() => {
-                          handlePayment(
-                            commission.commissionPay,
-                            commission.commissionType,
-                            commission.userFirstname,
-                            commission.userLastname,
-                            commission.transactID,
-                            commission.commissionTitle
-                          );
-                        }}
-                      >
-                        Payment
-                      </button>
-                    </>
-                  )}
+                          <div style={styles.buttonContainer}>
+                            <button
+                              style={styles.button}
+                              onClick={handleSubmit}
+                            >
+                              Post
+                            </button>
+                            <button
+                              style={styles.button}
+                              onClick={handleCloseModal}
+                            >
+                              Close
+                            </button>
+                          </div>
+                        </Modals>
+
+                        <button
+                          style={{
+                            backgroundColor: "grey",
+                            color: "#ffffff",
+                            padding: "10px 10px",
+                            border: "none",
+                            borderRadius: "4px",
+                            cursor: "pointer",
+                            marginTop: "5px",
+                            marginBottom: "10px",
+                            transition: "background-color 0.3s",
+                            fontSize: "12px",
+                            fontWeight: "bold",
+                            display: "block",
+                            width: "130px",
+                          }}
+                          onClick={() => {
+                            handlePayment(
+                              commission.commissionPay,
+                              commission.commissionType,
+                              commission.userFirstname,
+                              commission.userLastname,
+                              commission.transactID,
+                              commission.commissionTitle
+                            );
+                          }}
+                        >
+                          Payment
+                        </button>
+                      </>
+                    )}
                 </div>
               </div>
             ))}
