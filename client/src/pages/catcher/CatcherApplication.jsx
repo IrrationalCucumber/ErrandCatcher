@@ -13,6 +13,14 @@ import Pagination from "../../components/Pagination";
 import "./application.css";
 import { useAuth } from "../../components/AuthContext";
 import { DisplayDate } from "../../components/DisplayDate";
+import Button from "@mui/joy/Button";
+import Divider from "@mui/joy/Divider";
+import DialogTitle from "@mui/joy/DialogTitle";
+import DialogContent from "@mui/joy/DialogContent";
+import DialogActions from "@mui/joy/DialogActions";
+import Modal from "@mui/joy/Modal";
+import ModalDialog from "@mui/joy/ModalDialog";
+import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 
 function Application() {
   const { user } = useAuth();
@@ -26,6 +34,19 @@ function Application() {
     type: "",
     status: "",
   });
+
+  const [openCancel, setOpenCancel] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+
+  const handleOpenCancelModal = () => {
+    setOpenCancel(true);
+    console.log("1st cancel");
+  };
+
+  const handleOpenDeleteModal = () => {
+    setOpenDelete(true);
+    console.log("2nd delete");
+  };
 
   //data
   //useEffect to handle error
@@ -63,16 +84,19 @@ function Application() {
     // const type = apply.commissionType
     //   .toLowerCase()
     //   .includes(searchTerm.type.toLowerCase());
+
+    // If value is null, use an empty string or a default value : ('')
     const termMatch = apply.commissionTitle
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
+      ?.toLowerCase()
+      .includes(searchTerm.term?.toLowerCase() ?? '');
     const termMatch2 = apply.userFirstname
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
+      ?.toLowerCase()
+      .includes(searchTerm.term?.toLowerCase() ?? '');
     const termMatch3 = apply.userLastname
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
-    const status = apply.applicationStatus.includes(searchTerm.status);
+      ?.toLowerCase()
+      .includes(searchTerm.term?.toLowerCase() ?? '');
+    const status = apply.applicationStatus
+      ?.includes(searchTerm.status ?? '');
 
     return (termMatch || termMatch2 || termMatch3) && status;
   });
@@ -90,19 +114,89 @@ function Application() {
     applicant.commissionTitle,
     applicant.applicationStatus,
     applicant.applicationStatus === "Pending" ? (
-      <button
-        className="cancel action-btn"
-        onClick={() => handleCancel(applicant.applicationID)}
-      >
-        Cancel
-      </button>
+      <>
+        <button
+          className="cancel action-btn"
+          // onClick={() => handleCancel(applicant.applicationID)}
+          onClick={() => handleOpenCancelModal()}
+        >
+          Cancel
+        </button>
+
+        <Modal open={openCancel} onClose={() => setOpenCancel(false)}>
+          <ModalDialog>
+            <DialogTitle>
+              <WarningRoundedIcon />
+              Confirmation
+            </DialogTitle>
+            <Divider />
+            <DialogContent>
+              Are you sure you want to cancel this application?
+            </DialogContent>
+            <DialogActions>
+              <Button
+                variant="solid"
+                color="danger"
+                onClick={() =>
+                  handleCancel(applicant.applicationID)
+                  // console.log("clicked cancel")
+                }
+              >
+                Yes
+              </Button>
+              <Button
+                variant="plain"
+                color="neutral"
+                onClick={() => setOpenCancel(false)}
+              >
+                No
+              </Button>
+            </DialogActions>
+          </ModalDialog>
+        </Modal>
+      </>
     ) : (
-      <button
-        className=""
-        onClick={() => handleDelete(applicant.applicationID)}
-      >
-        DELETE
-      </button>
+      <>
+        <button
+          className="delete action-btn"
+          // onClick={() => handleDelete(applicant.applicationID)}
+          onClick={() => handleOpenDeleteModal()}
+        >
+          DELETE
+        </button>
+
+        <Modal open={openDelete} onClose={() => setOpenDelete(false)}>
+          <ModalDialog>
+            <DialogTitle>
+              <WarningRoundedIcon />
+              Confirmation
+            </DialogTitle>
+            <Divider />
+            <DialogContent>
+              Are you sure you want to delete this application?
+            </DialogContent>
+            <DialogActions>
+              <Button
+                variant="solid"
+                color='success'
+                onClick={() =>
+                  handleCancel(applicant.applicationID)
+                  // console.log("clicked delete")
+                }
+              >
+                Yes
+              </Button>
+              <Button
+                variant="plain"
+                color="neutral"
+                onClick={() => setOpenDelete(false)}
+              >
+                No
+              </Button>
+            </DialogActions>
+          </ModalDialog>
+        </Modal>
+      </>
     ), // handle other statuses or add a default action
   ]);
   //set variables for notification
@@ -168,7 +262,7 @@ function Application() {
       <div className="application-container">
         <div className="application">
           <h1>Application</h1>
-          <div className="search">
+          <div className="searchApplication">
             <input
               type="text"
               placeholder="Search Employer or Errand title..."
