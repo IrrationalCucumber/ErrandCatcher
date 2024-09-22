@@ -180,7 +180,7 @@ function Application() {
                 variant="solid"
                 color='success'
                 onClick={() =>
-                  handleCancel(applicant.applicationID)
+                  handleDelete(applicant.applicationID)
                   // console.log("clicked delete")
                 }
               >
