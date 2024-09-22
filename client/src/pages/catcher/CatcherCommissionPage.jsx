@@ -192,22 +192,26 @@ function CommissionPage() {
               DisplayDate(commission.commissionDeadline),
               commission.errandStatus,
               commission.errandStatus === "Ongoing" ? (
-                <button
-                  onClick={() =>
-                    handleCancel(commission.transactID, commission.employerID)
-                  }
-                >
-                  CANCEL
-                </button>
-              ) : (
-                <button
-                  onClick={() =>
-                    handleCancel(commission.transactID, commission.employerID)
-                  }
-                >
-                  COMPLETE
-                </button>
-              ),
+                <>
+                  <button
+                    onClick={() =>
+                      handleCancel(commission.transactID, commission.employerID)
+                    }
+                  >
+                    CANCEL
+                  </button>
+                  <button
+                    onClick={() =>
+                      handleComplete(
+                        commission.transactID,
+                        commission.employerID
+                      )
+                    }
+                  >
+                    COMPLETE
+                  </button>
+                </>
+              ) : null,
             ])}
           />
         </div>
