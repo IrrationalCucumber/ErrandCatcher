@@ -217,8 +217,8 @@ app.get("/success-payment/:id", (req, res) => {
         paymentData.checkoutId,
         paymentData.paymentId,
         paymentData.paid,
-        id,
-        paymentData.employerID,
+        paymentData.errandID,
+        paymentData.employerid,
       ],
       (err, data) => {
         if (err) {
@@ -261,9 +261,10 @@ app.post("/process-payment/:employerID", async (req, res) => {
   // times 100 to proply display as default is centavo
   const total = amount * 100;
   const description = req.body.errand;
-  const id = req.body.id;
-  const employerID = req.params.employerID;
-  // const employerid = req.body.employerID;
+  const id = req.body.id; // transactionID
+  // const employerID = req.params.employerID;
+  const employerid = req.body.employerID;
+  const errandID = req.body.errandID;
 
   // const total = Math.round(distance) * 15 + baseAmount;
   // Paymongo api key in base64, convert api key to base64
@@ -289,8 +290,9 @@ app.post("/process-payment/:employerID", async (req, res) => {
 
   // Store the data temporarily using the transaction ID as the key
   paymentDataStorage[id] = {
-    employerID,
+    employerid,
     amount,
+    errandID,
     type,
     total,
     description,

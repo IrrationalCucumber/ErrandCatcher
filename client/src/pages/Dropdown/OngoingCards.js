@@ -82,13 +82,14 @@ function OngoingCards({ commissions, to }) {
     console.log(`Commission ${commissionId} cancelled`);
   };
 
-  const handlePayment = (pay, type, fname, lname, id, comTitle) => {
+  const handlePayment = (pay, type, fname, lname, id, comTitle, erID) => {
     const paymentUrl = `http://localhost:8800/process-payment/${userID}`;
     // Change the amount
     const amount = pay;
     const errType = type;
     const name = fname + " " + lname;
     const errand = id + " " + comTitle;
+    const errandID = erID;
 
     axios
       .post(paymentUrl, {
@@ -96,8 +97,9 @@ function OngoingCards({ commissions, to }) {
         type: errType,
         name: name,
         errand: errand,
-        id: id,
+        id: id, // transactionID
         employerID: userID,
+        errandID: errandID,
       })
       .then((response) => {
         window.open(response.data.url);
@@ -296,7 +298,8 @@ function OngoingCards({ commissions, to }) {
                             commission.userFirstname,
                             commission.userLastname,
                             commission.transactID,
-                            commission.commissionTitle
+                            commission.commissionTitle,
+                            commission.commissionID
                           );
                         }}
                       >
