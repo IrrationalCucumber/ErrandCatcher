@@ -231,7 +231,10 @@ app.get("/success-payment/:id", (req, res) => {
         // Clear the temporary data after saving to the database
         delete paymentDataStorage[id];
 
-        return res.send("Payment successful and details saved.");
+        // return res.send("Payment successful and details saved.");
+        // path: "/paymentsuccess",
+        return res.redirect("http://localhost:3000/paymentsuccess");
+        
       }
     );
   });
@@ -240,7 +243,12 @@ app.get("/success-payment/:id", (req, res) => {
 // Route when user cancels payment
 app.get("/cancel-payment", (req, res) => {
   console.log(req.body);
-  return res.send("cancel");
+
+  // return res.send("cancel");
+  // return res.json({ message: "Payment has been cancelled." });
+  // path: "/paymentcancel",
+  return res.redirect("http://localhost:3000/paymentcancel");
+   
 });
 
 // Route to process payment
