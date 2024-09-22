@@ -213,8 +213,9 @@ app.post("/process-payment/:employerID", async (req, res) => {
   // times 100 to proply display as default is centavo
   const total = amount * 100;
   const description = req.body.errand;
-  const id = req.body.id;
+  const id = req.body.id; // transactionID
   // const employerID = req.params.employerID;
+  const errandID = req.body.errandID;
   const employerid = req.body.employerID;
 
   // const total = Math.round(distance) * 15 + baseAmount;
@@ -236,12 +237,11 @@ app.post("/process-payment/:employerID", async (req, res) => {
   const checkoutId = checkout.data.id;
   const paymentId = checkout.data.attributes.payment_intent.id;
   // const currency = checkout.data.attributes.line_items.currency;
-  // FROM_UNIXTIME(paid) AS paid_datetime coverter  sample date: 1717515231  
+  // FROM_UNIXTIME(paid) AS paid_datetime coverter  sample date: 1717515231
   const paid = checkout.data.attributes.created_at; // FROM_UNIXTIME(paid) AS paid_datetime coverter
 
   // Save the response Paymongo API
-  const q =
-    `INSERT INTO invoice (total, type, description, checkoutId, paymentId, paid, invoiceErrandID, invoiceemployerID) VALUES ( ?, ?, ?, ?, ?, FROM_UNIXTIME(?), ?, ? )`;
+  const q = `INSERT INTO invoice (total, type, description, checkoutId, paymentId, paid, invoiceErrandID, invoiceemployerID) VALUES ( ?, ?, ?, ?, ?, FROM_UNIXTIME(?), ?, ? )`;
   const values = [
     total,
     type,
@@ -249,7 +249,7 @@ app.post("/process-payment/:employerID", async (req, res) => {
     checkoutId,
     paymentId,
     paid,
-    id,
+    errandID, //transactionID
     employerid,
   ];
 
