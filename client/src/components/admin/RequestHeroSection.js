@@ -34,15 +34,23 @@ function RequestHeroSection() {
 export default RequestHeroSection;
 
 export function AdminHeroSection() {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="admin__hero__section">
         SAMPLE TEXT
         <div className="adminHS__box__wrapper">
-          <div className="adminHS__left__box">
+          <div
+            className="adminHS__left__box"
+            onClick={(e) => navigate("/dashboard/admin/account")}
+          >
             <h1>ACCOUNT</h1>
           </div>
-          <div className="adminHS__right__box">
+          <div
+            className="adminHS__right__box"
+            onClick={(e) => navigate("/dashboard/admin/errands")}
+          >
             <h1>ERRAND</h1>
           </div>
         </div>
