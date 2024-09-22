@@ -60,6 +60,8 @@ import Service from "./pages/Services/Service";
 import { AuthProvider } from "./components/AuthContext";
 import AdminPage from "./pages/admin/AdminPage";
 import History from "./pages/History";
+import PaymentCancel from "./pages/PaymentCancel";
+import PaymentSuccess from "./pages/PaymentSuccess";
 
 const router = createBrowserRouter([
   {
@@ -210,6 +212,16 @@ const router = createBrowserRouter([
   },
   { path: "/history", element: <History /> },
 
+  // PROCESS PAYMENTS 
+  {
+    path: "/paymentcancel",
+    element: <PaymentCancel />
+  },
+  {
+    path: "/paymentsuccess",
+    element: <PaymentSuccess />
+  },
+  
   { path: "/test", element: <MapComponent /> },
   //MISCILLANOUS PAGES
   {
