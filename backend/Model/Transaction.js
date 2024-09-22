@@ -99,6 +99,16 @@ const Trans = {
       callback
     );
   },
+  //update errand status of transaction table
+  //for acatcher
+  putUpdateErrandTrans: (id, status, userID, callback) => {
+    db.query(
+      `UPDATE errandTransaction SET errandStatus = ? WHERE transactID = ? AND transCatcherID = ?`[
+        (status, id, userID)
+      ],
+      callback
+    );
+  },
 };
 
 module.exports = Trans;

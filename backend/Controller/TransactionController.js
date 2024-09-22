@@ -160,6 +160,7 @@ const transConstroller = {
   },
   /**
    * UPDATE Transaction
+   * EMPLOYER
    */
   //update if tranaction is complete/cancelled
   //pair up with updaet status for erand
@@ -191,6 +192,40 @@ const transConstroller = {
         return;
       }
       res.status(200).json({ message: "Transaction updated successfully" });
+    });
+  },
+  /**
+   * UPDATE TRANSACTION
+   * CATCHER
+   */
+  putCompleteErrand: (res, req) => {
+    const id = req.params.id; //transID
+    const status = req.params.status;
+    const userID = req.paramas.userID;
+    Trans.putUpdateErrandTrans(id, status, userID, (err) => {
+      if (err) {
+        console.error("Error updating Errand Status:", err);
+        res
+          .status(500)
+          .json({ error: "An error occurred while updating errand status" });
+        return;
+      }
+      res.status(200).json({ message: "Errand Updated" });
+    });
+  },
+  putCancelErrand: (res, req) => {
+    const id = req.params.id; //transID
+    const status = req.params.status;
+    const userID = req.paramas.userID; // catcher
+    Trans.putUpdateErrandTrans(id, status, userID, (err) => {
+      if (err) {
+        console.error("Error updating Errand Status:", err);
+        res
+          .status(500)
+          .json({ error: "An error occurred while updating errand status" });
+        return;
+      }
+      res.status(200).json({ message: "Errand Cancelled" });
     });
   },
 };

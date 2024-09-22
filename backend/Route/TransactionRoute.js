@@ -15,7 +15,9 @@ router.get("/pending-errands/:id", transConstroller.getTakenErrand);
 router.get("/employer/ongoing/:id", transConstroller.getOngoingErrand);
 router.get("/employer/cancelled/:id", transConstroller.getCancelledErrand);
 router.post("/add-trans/", transConstroller.postNewTrans);
-router.put("/cancel-trans/:id", transConstroller.putCancelTrans);
-router.put("/complete-trans/:id", transConstroller.putCompleteTrans);
+router.put("/cancel-trans/:id", transConstroller.putCancelTrans); // for emp
+router.put("/complete-trans/:id", transConstroller.putCompleteTrans); // fro emp
+router.put("/catcher/cancel/:id/:userID", transConstroller.putCancelErrand); //for catcher
+router.put("/catcher/complete/:id/:userID", transConstroller.putCompleteErrand); // for catch
 
 module.exports = router;
