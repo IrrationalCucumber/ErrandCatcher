@@ -4,7 +4,7 @@ import OngoingCards from "./OngoingCards";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../../components/AuthContext";
-import "./ongoing.css"
+import "./ongoing.css";
 
 function Ongoing() {
   /**
@@ -21,7 +21,7 @@ function Ongoing() {
     const fetchAllCommission = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/employer/ongoing/${userID}`
+          `http://localhost:8800/pending-errands/${userID}`
         );
         //"http://localhost:8800/commission" - local computer
         //"http://192.168.1.47:8800/commission" - netwrok
