@@ -10,6 +10,14 @@ import { useLocation } from "react-router-dom";
 import { useAuth } from "../../components/AuthContext";
 import OngoingCards from "../Dropdown/OngoingCards";
 import { DisplayDate } from "../../components/DisplayDate";
+import Button from "@mui/joy/Button";
+import Divider from "@mui/joy/Divider";
+import DialogTitle from "@mui/joy/DialogTitle";
+import DialogContent from "@mui/joy/DialogContent";
+import DialogActions from "@mui/joy/DialogActions";
+import Modal from "@mui/joy/Modal";
+import ModalDialog from "@mui/joy/ModalDialog";
+import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 
 function CommissionPage() {
   const headers = ["DATE", "EMPLOYER", "ERRAND TITLE", "STATUS"];
@@ -24,6 +32,13 @@ function CommissionPage() {
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
+  // modal
+  const [openCancel, setOpenCancel] = useState(false);
+
+  const handleOpenCancelModal = () => {
+    setOpenCancel(true);
+    console.log("canceled");
+  };
 
   //getuserID
   const { user } = useAuth();
@@ -59,14 +74,16 @@ function CommissionPage() {
   //filter
   const filterErrands = commissions.filter((commission) => {
     const type = commission.commissionType
-      .toLowerCase()
-      .includes(searchTerm.type.toLowerCase());
-    const termMatch = commission.commissionTitle
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
-    const termMatch2 = commission.userFirstname
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
+      ?.toLowerCase()
+      .includes(searchTerm.type.toLowerCase() ?? "");
+    const termMatch =
+      commission.commissionTitle
+        ?.toLowerCase()
+        .includes(searchTerm.term.toLowerCase()) ?? "";
+    const termMatch2 =
+      commission.userFirstname
+        ?.toLowerCase()
+        .includes(searchTerm.term.toLowerCase()) ?? "";
     let deadline = true;
     if (searchTerm.date) {
       deadline = commission.commissionDeadline >= searchTerm.date;
@@ -194,22 +211,51 @@ function CommissionPage() {
               commission.errandStatus === "Ongoing" ? (
                 <>
                   <button
-                    onClick={() =>
-                      handleCancel(commission.transactID, commission.employerID)
-                    }
+                    className="cancel-btn"
+                    // onClick={() =>
+                    //   handleCancel(commission.transactID, commission.employerID)
+                    // }
+                    onClick={handleOpenCancelModal}
                   >
                     CANCEL
                   </button>
-                  <button
-                    onClick={() =>
-                      handleComplete(
-                        commission.transactID,
-                        commission.employerID
-                      )
-                    }
-                  >
-                    COMPLETE
-                  </button>
+
+                  {/*cancel modal */}
+                  <Modal open={openCancel} onClose={() => setOpenCancel(false)}>
+                    <ModalDialog>
+                      <DialogTitle>
+                        <WarningRoundedIcon />
+                        Confirmation
+                      </DialogTitle>
+                      <Divider />
+                      <DialogContent>
+                        Are you sure you want to Cancel this errand?
+                      </DialogContent>
+                      <DialogActions>
+                        <Button
+                          variant="solid"
+                          color="danger"
+                          onClick={
+                            () =>
+                              handleCancel(
+                                commission.transactID,
+                                commission.employerID
+                              )
+                            // console.log("cancel commission")
+                          }
+                        >
+                          Yes
+                        </Button>
+                        <Button
+                          variant="plain"
+                          color="neutral"
+                          onClick={() => setOpenCancel(false)}
+                        >
+                          No
+                        </Button>
+                      </DialogActions>
+                    </ModalDialog>
+                  </Modal>
                 </>
               ) : null,
             ])}

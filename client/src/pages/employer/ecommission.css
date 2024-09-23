@@ -58,6 +58,7 @@
 
 .Commission-page th {
   background-color: #1679ab;
+  color: #fff;
 }
 
 .Commission-page tr:last-child td {
@@ -137,7 +138,7 @@
     text-align: center;
     border-bottom: 1px solid #ddd;
     border-right: 1px solid #ddd;
-    color: black;
+    /* color: black; */
     width: 140px;
     font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
       "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
