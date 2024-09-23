@@ -477,7 +477,8 @@ function OngoingCards({ commissions, to }) {
                             commission.userFirstname,
                             commission.userLastname,
                             commission.transactID,
-                            commission.commissionTitle
+                            commission.commissionTitle,
+                            commission.commissionID
                           );
                         }}
                       >
