@@ -36,6 +36,14 @@ const Verify = {
       callback
     );
   },
+  //get rqest count
+  getRequestCount: (callback) => {
+    db.query(
+      `SELECT count(*) as c FROM verification_request
+        WHERE requestStatus = 'Pending'`,
+      callback
+    );
+  },
 };
 
 module.exports = Verify;

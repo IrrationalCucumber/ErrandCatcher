@@ -49,7 +49,7 @@ function Dashboard() {
                 page2="ACCOUNTS"
                 commissionList={`/dashboard/admin/accounts`}
                 page3="ERRANDS"
-                applicants={`/dashboard/admin/commission-list`}
+                applicants={`/dashboard/admin/errand-list`}
                 page4="MAP"
                 map={`/dashboard/admin/map`}
               />
