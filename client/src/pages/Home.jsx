@@ -6,11 +6,10 @@ import Cards from "../components/Cards/Cards";
 import Menu from "./Menu";
 import axios from "axios";
 import { useAuth } from "../components/AuthContext";
-import { HeroSection } from "../Banner/HeroSection";
+import { HeroSection } from "../components/Banner/HeroSection";
 import RequestHeroSection, {
   AdminHeroSection,
 } from "../components/admin/RequestHeroSection";
-
 
 const Home = () => {
   const { user } = useAuth();
