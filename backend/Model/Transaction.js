@@ -73,7 +73,7 @@ const Trans = {
         FROM errandtransaction t
         JOIN commission c ON t.transErrandID = c.commissionID
         JOIN useraccount ua ON t.transCatcherID = ua.userID
-    WHERE c.employerID = ? AND t.errandStatus = ?
+    WHERE c.employerID = ? AND t.transStatus = ?
     `,
       [id, status],
       callback
@@ -90,11 +90,21 @@ const Trans = {
     );
   },
   //update transactionn if complete
+  //emp
   putUpdateTransaction: (id, status, date, callback) => {
     const { dateComplete } = date;
     db.query(
-      `UPDATE errandTransaction SET errandStatus = ?, transDateComplete = ? WHERE transactID = ?`,
+      `UPDATE errandTransaction SET transStatus = ?, transDateComplete = ? WHERE transactID = ?`,
       [status, dateComplete, id],
+      callback
+    );
+  },
+  //update errand status of transaction table
+  //for acatcher
+  putUpdateErrandTrans: (id, status, userID, callback) => {
+    db.query(
+      `UPDATE errandTransaction SET errandStatus = ? WHERE transactID = ? AND transCatcherID = ?`,
+      [status, id, userID],
       callback
     );
   },

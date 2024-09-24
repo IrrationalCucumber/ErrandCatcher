@@ -48,7 +48,7 @@ function CommissionPage() {
     const fetchAllCommission = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/catcher/ongoing/${userID}`
+          `http://localhost:8800/accepted-errand/${userID}`
         );
         //"http://localhost:8800/commission" - local computer
         //"http://192.168.1.47:8800/commission" - netwrok
@@ -75,13 +75,15 @@ function CommissionPage() {
   const filterErrands = commissions.filter((commission) => {
     const type = commission.commissionType
       ?.toLowerCase()
-      .includes(searchTerm.type.toLowerCase() ?? '');
-    const termMatch = commission.commissionTitle
-      ?.toLowerCase()
-      .includes(searchTerm.term.toLowerCase()) ?? '';
-    const termMatch2 = commission.userFirstname
-      ?.toLowerCase()
-      .includes(searchTerm.term.toLowerCase()) ?? '';
+      .includes(searchTerm.type.toLowerCase() ?? "");
+    const termMatch =
+      commission.commissionTitle
+        ?.toLowerCase()
+        .includes(searchTerm.term.toLowerCase()) ?? "";
+    const termMatch2 =
+      commission.userFirstname
+        ?.toLowerCase()
+        .includes(searchTerm.term.toLowerCase()) ?? "";
     let deadline = true;
     if (searchTerm.date) {
       deadline = commission.commissionDeadline >= searchTerm.date;
@@ -124,7 +126,7 @@ function CommissionPage() {
   //CANCEL TRANSACTION
   const handleCancel = async (transactID, employerID) => {
     try {
-      //alert(employerID);
+      // alert(transactID);
 
       // add a notification to the commission's employer
       notif.notifDesc = "A Catcher has cancelled in doing an errand";
@@ -133,14 +135,30 @@ function CommissionPage() {
       notif.notifDate = getTimeAndDate();
       await axios.post("http://localhost:8800/notify", notif);
       //cancel the transaction
-      await axios.put(`http://localhost:8800/cancel-trans/${transactID}`, {
-        params: { date: getTimeAndDate() },
-      });
+      await axios.put(
+        `http://localhost:8800/catcher/cancel/${transactID}/${userID}`
+      );
       /**
        * ADD METHOD TO CHANGE ALSO THE STATUS OF ERRAND TO CANCELLED
        */
     } catch (err) {
       console.log(err);
+    }
+  };
+  //ERRAND IS DONE
+  const handleComplete = async (transID, empID) => {
+    try {
+      notif.notifDesc = "A Catcher has completed your errand";
+      notif.userID = empID;
+      notif.notificationType = "Errand Completed";
+      notif.notifDate = getTimeAndDate();
+      await axios.post("http://localhost:8800/notify", notif);
+      //cancel the transaction
+      await axios.put(
+        `http://localhost:8800/catcher/complete/${transID}/${userID}`
+      );
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -150,8 +168,10 @@ function CommissionPage() {
         <div className="Commission-page">
           {" "}
           {/* Apply Commission-page class here */}
-          <h1>Commission</h1>
-          <div className="searcherrand">
+          <h1>
+            Errands you have <i>Catched</i>
+          </h1>
+          <div className="search">
             <input
               type="text"
               placeholder="Search Errand title..."
@@ -184,7 +204,7 @@ function CommissionPage() {
             ]}
             data={currentItems.map((commission, rowIndex) => [
               `${commission.userFirstname} ${commission.userLastname}`,
-              commission.commissionTitle,
+              commission.transactID,
               commission.commissionStart,
               DisplayDate(commission.commissionDeadline),
               commission.errandStatus,
@@ -214,9 +234,13 @@ function CommissionPage() {
                       <DialogActions>
                         <Button
                           variant="solid"
-                          color='danger'
-                          onClick={() =>
-                            handleCancel(commission.transactID, commission.employerID)
+                          color="danger"
+                          onClick={
+                            () =>
+                              handleCancel(
+                                commission.transactID,
+                                commission.employerID
+                              )
                             // console.log("cancel commission")
                           }
                         >
