@@ -80,7 +80,7 @@ const router = createBrowserRouter([
             element: <AccountList />,
           },
           {
-            path: "commission-list",
+            path: "errand-list",
             element: <CommissionList />,
           },
           {

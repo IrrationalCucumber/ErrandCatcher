@@ -43,15 +43,15 @@ export function AdminHeroSection() {
         <div className="adminHS__box__wrapper">
           <div
             className="adminHS__left__box"
-            onClick={(e) => navigate("/dashboard/admin/account")}
+            onClick={(e) => navigate("/dashboard/admin/accounts")}
           >
-            <h1>ACCOUNT</h1>
+            <h1 className="adminHS__txt">ACCOUNT</h1>
           </div>
           <div
             className="adminHS__right__box"
-            onClick={(e) => navigate("/dashboard/admin/errands")}
+            onClick={(e) => navigate("/dashboard/admin/errand-list")}
           >
-            <h1>ERRAND</h1>
+            <h1 className="adminHS__txt">ERRAND</h1>
           </div>
         </div>
       </div>
