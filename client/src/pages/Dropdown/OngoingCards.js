@@ -181,13 +181,14 @@ function OngoingCards({ commissions, to }) {
     }
   };
 
-  const handlePayment = (pay, type, fname, lname, id, comTitle) => {
+  const handlePayment = (pay, type, fname, lname, id, comTitle, erID) => {
     const paymentUrl = `http://localhost:8800/process-payment/${userID}`;
     // Change the amount
     const amount = pay;
     const errType = type;
     const name = fname + " " + lname;
     const errand = id + " " + comTitle;
+    const errandID = erID;
 
     axios
       .post(paymentUrl, {
@@ -195,8 +196,9 @@ function OngoingCards({ commissions, to }) {
         type: errType,
         name: name,
         errand: errand,
-        id: id,
+        id: id, // transactionID
         employerID: userID,
+        errandID: errandID,
       })
       .then((response) => {
         window.open(response.data.url);
@@ -452,37 +454,38 @@ function OngoingCards({ commissions, to }) {
                           </div>
                         </Modals>
 
-                        <button
-                          style={{
-                            backgroundColor: "grey",
-                            color: "#ffffff",
-                            padding: "10px 10px",
-                            border: "none",
-                            borderRadius: "4px",
-                            cursor: "pointer",
-                            marginTop: "5px",
-                            marginBottom: "10px",
-                            transition: "background-color 0.3s",
-                            fontSize: "12px",
-                            fontWeight: "bold",
-                            display: "block",
-                            width: "130px",
-                          }}
-                          onClick={() => {
-                            handlePayment(
-                              commission.commissionPay,
-                              commission.commissionType,
-                              commission.userFirstname,
-                              commission.userLastname,
-                              commission.transactID,
-                              commission.commissionTitle
-                            );
-                          }}
-                        >
-                          Payment
-                        </button>
-                      </>
-                    )}
+                      <button
+                        style={{
+                          backgroundColor: "grey",
+                          color: "#ffffff",
+                          padding: "10px 10px",
+                          border: "none",
+                          borderRadius: "4px",
+                          cursor: "pointer",
+                          marginTop: "5px",
+                          marginBottom: "10px",
+                          transition: "background-color 0.3s",
+                          fontSize: "12px",
+                          fontWeight: "bold",
+                          display: "block",
+                          width: "130px",
+                        }}
+                        onClick={() => {
+                          handlePayment(
+                            commission.commissionPay,
+                            commission.commissionType,
+                            commission.userFirstname,
+                            commission.userLastname,
+                            commission.transactID,
+                            commission.commissionTitle,
+                            commission.commissionID
+                          );
+                        }}
+                      >
+                        Payment
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             ))}
