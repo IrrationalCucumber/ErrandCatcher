@@ -1,5 +1,43 @@
-.concards{
+.concards {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+}
+
+.Oncard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    /* // justify-content: flex-end; */
+    width: calc(25% - 20px);
+    /* Adjust the width to fit 4 cards per row */
+    height: auto;
+    /* height: 400px; */
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: none;
+    transition: transform 0.3s ease;
+    border: groove;
+}
+
+.btnstatus {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+}
+
+
+@media screen and (min-width: 350px) {
+    .Oncard {
+        /* margin-bottom: 2rem; */
+        border: groove;
+        width: auto;
+        height: auto;
+        padding: 20px;
+
+    }
+
 }
