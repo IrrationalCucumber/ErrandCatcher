@@ -52,12 +52,13 @@
 3. Find the save folder of Errand Catcher.
    ![image](https://github.com/user-attachments/assets/4dd31fb6-1745-4431-a38d-e5e92cd89b2e)
 4. Select the SQL type file for import
+
    ![image](https://github.com/user-attachments/assets/c9c2048f-4a2a-45aa-8c63-24948c387440)
-5. Select 'errandcatcher' or the database in you machine
+6. Select 'errandcatcher' or the database in you machine
    ![image](https://github.com/user-attachments/assets/f41fa805-cae6-47e3-8d4f-7865c53a2fc3)
-6. Choose the type of import you want
+7. Choose the type of import you want
    ![image](https://github.com/user-attachments/assets/b31f8d43-319d-4cc5-bf0b-9e4501e65216)
-7. Click 'Start Import' button at the bottom
+8. Click 'Start Import' button at the bottom
    ![image](https://github.com/user-attachments/assets/1870b9ba-120f-4b60-be98-8e554377c300)
 
 
