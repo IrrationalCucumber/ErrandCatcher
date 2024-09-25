@@ -27,7 +27,8 @@
   height: 120px;
   width: 250px;
   padding: 12px;
-  border: transparent; /* Distribute space evenly among sections */
+  border: transparent;
+  /* Distribute space evenly among sections */
   text-decoration: none;
   color: black;
   display: inline-block;
@@ -49,17 +50,34 @@
 }
 
 .posts {
-  background-color: #fcdd2ee0; /* Golden yellow */
- 
+  /* background-color: #fcdd2ee0;  */
+  /* Golden yellow */
+  background: rgb(0, 175, 245);
+  background: linear-gradient(346deg, rgba(0, 175, 245, 1) 0%, rgba(0, 227, 183, 1) 100%);
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); */
+
+
 }
 
 .applicants1 {
-  background-color: #87cfebe0; /* Sky blue */
-  
+  /* background-color: #87cfebe0;  */
+  /* Sky blue */
+  background: rgb(135, 207, 235);
+  background: linear-gradient(346deg, rgba(135, 207, 235, 1) 0%, rgba(203, 204, 230, 1) 100%);
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); */
+
 }
 
 .errands {
-  background-color: #ffa07ae0; /* Light salmon */
+  background: rgb(238, 174, 202);
+  background: linear-gradient(153deg, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+  /* border-radius: 8px; */
+  /* background-color: #ffa07ae0;  */
+  /* Light salmon */
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); */
 
 }
 
