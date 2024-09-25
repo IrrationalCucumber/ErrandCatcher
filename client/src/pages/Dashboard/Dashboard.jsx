@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import { Outlet } from "react-router-dom";
 import Footer from "../../components/Footer";
 import { useAuth } from "../../components/AuthContext";
+import "./css/navbar.css";
 
 function Dashboard() {
   const { user } = useAuth();
@@ -13,6 +14,7 @@ function Dashboard() {
           {user.userType === "Employer" && (
             <>
               <Navbar
+                navbar_ui={"navbar__employer"}
                 page1="ONGOING ERRANDS"
                 one={`/dashboard/ongoing`}
                 page2="YOUR ERRANDS"
@@ -27,6 +29,7 @@ function Dashboard() {
           {user.userType === "Catcher" && (
             <>
               <Navbar
+                navbar_ui={"navbar__catcher"}
                 page2="ERRANDS"
                 commissionList={`/dashboard/catcher-errands`}
                 page3="APPLICATIONS"
@@ -39,13 +42,14 @@ function Dashboard() {
           {user.userType.toLocaleUpperCase() === "ADMIN" && (
             <>
               <Navbar
+                navbar_ui={"navbar"}
                 page1="REQUESTS"
                 one={`/dashboard/admin/request`}
                 // {`admin-home/${userID}`}
                 page2="ACCOUNTS"
                 commissionList={`/dashboard/admin/accounts`}
                 page3="ERRANDS"
-                applicants={`/dashboard/admin/commission-list`}
+                applicants={`/dashboard/admin/errand-list`}
                 page4="MAP"
                 map={`/dashboard/admin/map`}
               />

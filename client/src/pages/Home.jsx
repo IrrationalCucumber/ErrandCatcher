@@ -6,6 +6,10 @@ import Cards from "../components/Cards/Cards";
 import Menu from "./Menu";
 import axios from "axios";
 import { useAuth } from "../components/AuthContext";
+import { HeroSection } from "../components/Banner/HeroSection";
+import RequestHeroSection, {
+  AdminHeroSection,
+} from "../components/admin/RequestHeroSection";
 
 const Home = () => {
   const { user } = useAuth();
@@ -25,11 +29,17 @@ const Home = () => {
               page4="MAP"
               map={`/e-map/${userID}`}
             /> */}
+            <HeroSection
+              type={user.userType.toLocaleUpperCase()}
+              username={user.username}
+            />
             <EmployerCard />
+
             <StickyButton
               buttonText="Post Errand"
               destination={`/errand/post-commission`}
             />
+
             <Cards />
           </>
         )}
@@ -45,6 +55,11 @@ const Home = () => {
               map={`/e-map/${userID}`}
               page4="MAP"
             /> */}
+            <HeroSection
+              type={user.userType.toLocaleUpperCase()}
+              username={user.username}
+            />
+
             <Menu />
           </>
         )}
@@ -61,7 +76,13 @@ const Home = () => {
               page4="MAP"
               map={`/map/${userID}`}
  /> */}
+            <HeroSection
+              type={user.userType.toLocaleUpperCase()}
+              username={user.username}
+            />
             <Menu />
+            <RequestHeroSection />
+            <AdminHeroSection />
           </>
         )}
         {/* <Footer /> */}

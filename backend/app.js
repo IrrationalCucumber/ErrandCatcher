@@ -177,30 +177,78 @@ app.get("/trans-count/:userID", (req, res) => {
 const processPayment = require("./ProcessPayment");
 const getProcessPayment = require("./GetProcessPayment");
 
+// Temporary storage
+let paymentDataStorage = {};
+
 // Route when use succeeds in payment, update the necessary data in the database
 app.get("/success-payment/:id", (req, res) => {
   console.log(req.body);
   const id = req.params.id;
-  // const checkoutId = req.query.checkoutId; // Extracting checkoutId from query parameters
-  const { checkoutId, employerID } = req.query; // Including employerID in the query parameters initial
+
+  // Retrieve stored data using the transaction ID
+  const paymentData = paymentDataStorage[id];
+
+  if (!paymentData) {
+    return res
+      .status(400)
+      .json({ error: "No payment data found for this transaction." });
+  }
+
   const currentTime = new Date().toISOString().slice(0, 19).replace("T", " ");
-  const q = `UPDATE errandtransaction 
+
+  const q1 = `UPDATE errandtransaction 
             SET errandStatus = 'Complete', transDateComplete = ? 
-            WHERE transactID = ? AND checkoutId = ? AND employerID = ?`;
-  db.query(q, [currentTime, id, checkoutId, employerID], (err, data) => {
+            WHERE transactID = ?`;
+
+  const q2 = `INSERT INTO invoice (total, type, description, checkoutId, paymentId, paid, invoiceErrandID, invoiceemployerID) VALUES ( ?, ?, ?, ?, ?, FROM_UNIXTIME(?), ?, ? )`;
+
+  db.query(q1, [currentTime, id], (err, data) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: "An error occurred" });
     }
-    // return res.json(data); // Assuming you only expect one row of results
-    return res.send("Payment successful");
+
+    db.query(
+      q2,
+      [
+        paymentData.total,
+        paymentData.type,
+        paymentData.description,
+        paymentData.checkoutId,
+        paymentData.paymentId,
+        paymentData.paid,
+        paymentData.errandID,
+        paymentData.employerid,
+      ],
+      (err, data) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({
+            error: "An error occurred while saving the payment details.",
+          });
+        }
+
+        // Clear the temporary data after saving to the database
+        delete paymentDataStorage[id];
+
+        // return res.send("Payment successful and details saved.");
+        // path: "/paymentsuccess",
+        return res.redirect("http://localhost:3000/paymentsuccess");
+        
+      }
+    );
   });
 });
 
 // Route when user cancels payment
 app.get("/cancel-payment", (req, res) => {
   console.log(req.body);
-  return res.send("cancel");
+
+  // return res.send("cancel");
+  // return res.json({ message: "Payment has been cancelled." });
+  // path: "/paymentcancel",
+  return res.redirect("http://localhost:3000/paymentcancel");
+   
 });
 
 // Route to process payment
@@ -213,9 +261,10 @@ app.post("/process-payment/:employerID", async (req, res) => {
   // times 100 to proply display as default is centavo
   const total = amount * 100;
   const description = req.body.errand;
-  const id = req.body.id;
+  const id = req.body.id; // transactionID
   // const employerID = req.params.employerID;
   const employerid = req.body.employerID;
+  const errandID = req.body.errandID;
 
   // const total = Math.round(distance) * 15 + baseAmount;
   // Paymongo api key in base64, convert api key to base64
@@ -233,36 +282,29 @@ app.post("/process-payment/:employerID", async (req, res) => {
   console.log(checkout.data);
 
   // extract or access data object from the Paymongo api response
-  const checkoutId = checkout.data.id;
-  const paymentId = checkout.data.attributes.payment_intent.id;
+  // const checkoutId = checkout.data.id;
+  // const paymentId = checkout.data.attributes.payment_intent.id;
   // const currency = checkout.data.attributes.line_items.currency;
-  // FROM_UNIXTIME(paid) AS paid_datetime coverter  sample date: 1717515231  
-  const paid = checkout.data.attributes.created_at; // FROM_UNIXTIME(paid) AS paid_datetime coverter
+  // FROM_UNIXTIME(paid) AS paid_datetime coverter  sample date: 1717515231
+  // const paid = checkout.data.attributes.created_at; // FROM_UNIXTIME(paid) AS paid_datetime coverter
 
-  // Save the response Paymongo API
-  const q =
-    `INSERT INTO invoice (total, type, description, checkoutId, paymentId, paid, invoiceErrandID, invoiceemployerID) VALUES ( ?, ?, ?, ?, ?, FROM_UNIXTIME(?), ?, ? )`;
-  const values = [
-    total,
-    type,
-    description,
-    checkoutId,
-    paymentId,
-    paid,
-    id,
+  // Store the data temporarily using the transaction ID as the key
+  paymentDataStorage[id] = {
     employerid,
-  ];
+    amount,
+    errandID,
+    type,
+    total,
+    description,
+    paymentId: checkout.data.attributes.payment_intent.id,
+    checkoutId: checkout.data.id,
+    paid: checkout.data.attributes.created_at,
+  };
 
-  db.query(q, values, (err, results) => {
-    if (err) {
-      console.error("Error saving payment to the database:", err);
-      return res.status(500).send("Internal Server Error");
-    }
-    // Redirect user to PayMongo's checkout page
-    return res.send({
-      url: checkout.data.attributes.checkout_url,
-      checkoutId: checkoutId,
-    });
+  // Redirect user to PayMongo's checkout page
+  return res.send({
+    url: checkout.data.attributes.checkout_url,
+    checkoutId: checkout.data.id,
   });
 });
 
