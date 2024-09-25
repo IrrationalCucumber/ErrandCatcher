@@ -171,7 +171,7 @@ function CommissionPage() {
           <h1>
             Errands you have <i>Catched</i>
           </h1>
-          <div className="search">
+          <div className="searcherrand">
             <input
               type="text"
               placeholder="Search Errand title..."
