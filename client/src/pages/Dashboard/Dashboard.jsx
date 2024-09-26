@@ -7,6 +7,7 @@ import "./css/navbar.css";
 
 function Dashboard() {
   const { user } = useAuth();
+  const type = user.userType.toLocaleLowerCase();
   return (
     <>
       {user ? (
@@ -56,7 +57,7 @@ function Dashboard() {
             </>
           )}
           <Outlet />
-          <Footer />
+          <Footer footerUserType={`footer-container__${type}`} />
         </>
       ) : (
         <p>Not signed in</p>
