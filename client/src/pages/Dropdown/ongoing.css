@@ -57,3 +57,24 @@
     padding: 2px 5px;
 }
 
+.ongoing__cards__button{
+    padding: 5px;
+    border:none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.3s;
+    color: #ffffff;
+    font: 12px;
+    display: block;
+    width: 130px;
+}
+
+.ongoing__cards__buttons{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 15px;
+    margin: auto;
+}

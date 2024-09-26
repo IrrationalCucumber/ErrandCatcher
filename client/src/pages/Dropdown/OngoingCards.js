@@ -405,110 +405,98 @@ function OngoingCards({ commissions, to }) {
                       </Modal>
                     </>
                   )}
-                  {user.userType === "Employer" && (
-                    <>
-                      <button
-                        onClick={handleOpenModal}
-                        style={{
-                          backgroundColor: "#1679AB",
-                          color: "#ffffff",
-                          padding: "10px 10px",
-                          border: "none",
-                          borderRadius: "4px",
-                          cursor: "pointer",
-                          marginTop: "5px",
-                          marginBottom: "10px",
-                          transition: "background-color 0.3s",
-                          fontSize: "12px",
-                          fontWeight: "bold",
-                          display: "block",
-                          width: "130px",
-                          // ":hover": {
-                          //   backgroundColor: isClicked ? "#fa9d6e" : "#ffbb33",
-                          // },
-                        }}
-                      >
-                        Feedback
-                      </button>
-
-                      {/* modal trigger if clicked */}
-                      <Modals isOpen={isModalOpen} onClose={handleCloseModal}>
-                        <h4>Rate Catcher:</h4>
-                        {[1, 2, 3, 4, 5].map((value) => (
-                          <span
-                            key={value}
-                            style={{
-                              cursor: "pointer",
-                              fontSize: "24px",
-                              color:
-                                value <= feedback.feedbackCount
-                                  ? "gold"
-                                  : "gray",
-                            }}
-                            onClick={() => handleStarClick(value)}
-                          >
-                            ★
-                          </span>
-                        ))}
-                        <h4>Feedback:</h4>
-                        <input
-                          type="text"
-                          value={inputValue.feedbackComment}
-                          onChange={handleInputChange}
-                          placeholder="Enter your comment here...."
+                  {user.userType === "Employer" &&
+                    commission.errandStatus === "Complete" && (
+                      <>
+                        <div
+                          className="ongoing__cards__buttons"
                           style={{
-                            marginBottom: "10px",
-                            width: "100%",
-                            padding: "10px",
-                            fontSize: "16px",
+                            position: "relative",
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
                           }}
-                        />
-
-                        <div style={styles.buttonContainer}>
-                          <button style={styles.button} onClick={handleSubmit}>
-                            Post
+                        >
+                          <button
+                            onClick={handleOpenModal}
+                            className="ongoing__cards__button"
+                            style={{
+                              backgroundColor: "#1679AB",
+                            }}
+                          >
+                            Feedback
                           </button>
                           <button
-                            style={styles.button}
-                            onClick={handleCloseModal}
+                            className="ongoing__cards__button"
+                            style={{
+                              backgroundColor: "grey",
+                            }}
+                            onClick={() => {
+                              handlePayment(
+                                commission.commissionPay,
+                                commission.commissionType,
+                                commission.userFirstname,
+                                commission.userLastname,
+                                commission.transactID,
+                                commission.commissionTitle,
+                                commission.commissionID
+                              );
+                            }}
                           >
-                            Close
+                            Payment
                           </button>
                         </div>
-                      </Modals>
 
-                      <button
-                        style={{
-                          backgroundColor: "grey",
-                          color: "#ffffff",
-                          padding: "10px 10px",
-                          border: "none",
-                          borderRadius: "4px",
-                          cursor: "pointer",
-                          marginTop: "5px",
-                          marginBottom: "10px",
-                          transition: "background-color 0.3s",
-                          fontSize: "12px",
-                          fontWeight: "bold",
-                          display: "block",
-                          width: "130px",
-                        }}
-                        onClick={() => {
-                          handlePayment(
-                            commission.commissionPay,
-                            commission.commissionType,
-                            commission.userFirstname,
-                            commission.userLastname,
-                            commission.transactID,
-                            commission.commissionTitle,
-                            commission.commissionID
-                          );
-                        }}
-                      >
-                        Payment
-                      </button>
-                    </>
-                  )}
+                        {/* modal trigger if clicked */}
+                        <Modals isOpen={isModalOpen} onClose={handleCloseModal}>
+                          <h4>Rate Catcher:</h4>
+                          {[1, 2, 3, 4, 5].map((value) => (
+                            <span
+                              key={value}
+                              style={{
+                                cursor: "pointer",
+                                fontSize: "24px",
+                                color:
+                                  value <= feedback.feedbackCount
+                                    ? "gold"
+                                    : "gray",
+                              }}
+                              onClick={() => handleStarClick(value)}
+                            >
+                              ★
+                            </span>
+                          ))}
+                          <h4>Feedback:</h4>
+                          <input
+                            type="text"
+                            value={inputValue.feedbackComment}
+                            onChange={handleInputChange}
+                            placeholder="Enter your comment here...."
+                            style={{
+                              marginBottom: "10px",
+                              width: "100%",
+                              padding: "10px",
+                              fontSize: "16px",
+                            }}
+                          />
+
+                          <div style={styles.buttonContainer}>
+                            <button
+                              style={styles.button}
+                              onClick={handleSubmit}
+                            >
+                              Post
+                            </button>
+                            <button
+                              style={styles.button}
+                              onClick={handleCloseModal}
+                            >
+                              Close
+                            </button>
+                          </div>
+                        </Modals>
+                      </>
+                    )}
                 </div>
               </div>
             ))}
