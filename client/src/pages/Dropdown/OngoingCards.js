@@ -3,19 +3,22 @@ import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../../components/AuthContext";
 import Modals from "../../components/Modals";
-import "./ongoing.css"
-import Button from "@mui/joy/Button";
-import Divider from "@mui/joy/Divider";
-import DialogTitle from "@mui/joy/DialogTitle";
-import DialogContent from "@mui/joy/DialogContent";
-import DialogActions from "@mui/joy/DialogActions";
-import Modal from "@mui/joy/Modal";
-import ModalDialog from "@mui/joy/ModalDialog";
+import "./ongoing.css";
+import {
+  Button,
+  Divider,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Modal,
+  ModalDialog,
+  Chip,
+  Typography,
+} from "@mui/joy";
+
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 
 function OngoingCards({ commissions, to }) {
-  const [isClicked, setIsClicked] = useState(false);
-  const [selectedCommissionId, setSelectedCommissionId] = useState(null);
   const { user } = useAuth();
   const userID = user.userID;
 
@@ -118,7 +121,6 @@ function OngoingCards({ commissions, to }) {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   };
 
-
   // const markAsCompleted = (commissionId) => {
   //   // Perform the logic to mark the commission as completed
   //   console.log(`Commission ${commissionId} marked as completed`);
@@ -130,7 +132,6 @@ function OngoingCards({ commissions, to }) {
   //   console.log(`Commission ${commissionId} cancelled`);
   //   setOpenDelete(false);
   // };
-
 
   // cancel transaction
   const handleCancel = async (transactID, employerID) => {
@@ -150,7 +151,6 @@ function OngoingCards({ commissions, to }) {
       });
 
       setOpenDelete(false);
-
     } catch (err) {
       console.log(err);
     }
@@ -175,7 +175,6 @@ function OngoingCards({ commissions, to }) {
       console.log("status: completed");
 
       setOpenMark(false);
-
     } catch (err) {
       console.log(err);
     }
@@ -221,38 +220,58 @@ function OngoingCards({ commissions, to }) {
                   className="Oncard__img"
                 />
                 <div className="Oncard__info">
-                  <h1
-                    className="title"
-                    style={{ fontSize: "16px", paddingTop: "10px" }}
-                  >
+                  <Typography level="h1" color="neutral" variant="plain">
                     {commission.commissionTitle}
-                  </h1>
-                  <h4>{commission.errandStatus}</h4>
-                  <p className="type" style={{ paddingTop: "10px" }}>
-                    Type: {commission.commissionType}
-                  </p>
-                  <p style={{ paddingTop: "10px" }}>
-                    Location: {commission.commissionLocation}
-                  </p>
-                  <p>Payment: {commission.commissionPay}</p>
-                  <Link
-                    to={`${to}/${commission.commissionID}`}
-                    className="Oncard__link"
+                  </Typography>
+                  <Chip color="success" size="md" variant="outlined">
+                    {commission.errandStatus}
+                  </Chip>
+                  <Typography className="ongoing__cards__txt" level="body-sm">
+                    {commission.commissionType}
+                  </Typography>
+                  <Typography className="ongoing__cards__txt" level="body-md">
+                    {commission.commissionLocation}
+                  </Typography>
+                  <Typography className="ongoing__cards__txt" level="title-sm">
+                    Payment:
+                    <Typography
+                      color="success"
+                      level="title-sm"
+                      variant="outlined"
+                    >
+                      Php {commission.commissionPay}
+                    </Typography>
+                  </Typography>
+                  <Typography
+                    className="ongoing__cards__txt"
+                    color="primary"
+                    level="title-sm"
                   >
-                    View Errand
-                  </Link>
+                    <Link
+                      to={`/errand/view-errand/${commission.commissionID}`}
+                      className="Oncard__link"
+                    >
+                      View Errand
+                    </Link>
+                  </Typography>
+
                   {user.userType === "Employer" && (
                     <>
-                      <p>CATCHER: {commission.transCatcherID}</p>
-                      <p>
+                      <Typography
+                        color="neutral"
+                        level="title-lg"
+                        variant="plain"
+                      >
+                        CATCHER:
+                      </Typography>
+                      <Typography color="primary" level="h3" variant="soft">
                         {commission.userFirstname} {commission.userLastname}
-                      </p>
+                      </Typography>
                     </>
                   )}
                   {user.userType === "Catcher" && (
                     <>
                       <div className="btnstatus">
-
                         <button
                           // onClick={() => markAsCompleted(commission.commissionID)}
                           // onClick={handleOpenModal}
@@ -307,7 +326,6 @@ function OngoingCards({ commissions, to }) {
                         >
                           Cancel
                         </button>
-
                       </div>
 
                       {/* marked as completed model */}
@@ -319,7 +337,8 @@ function OngoingCards({ commissions, to }) {
                           </DialogTitle>
                           <Divider />
                           <DialogContent>
-                            Are you sure you want to Mark as Completed this errand?
+                            Are you sure you want to Mark as Completed this
+                            errand?
                           </DialogContent>
                           <DialogActions>
                             <Button
@@ -327,7 +346,10 @@ function OngoingCards({ commissions, to }) {
                               color="success"
                               onClick={() =>
                                 // markAsCompleted(commission.commissionID)
-                                handleComplete(commission.transactID, commission.employerID)
+                                handleComplete(
+                                  commission.transactID,
+                                  commission.employerID
+                                )
                               }
                             >
                               Yes
@@ -344,7 +366,10 @@ function OngoingCards({ commissions, to }) {
                       </Modal>
 
                       {/* cancel modal */}
-                      <Modal open={openDelete} onClose={() => setOpenDelete(false)}>
+                      <Modal
+                        open={openDelete}
+                        onClose={() => setOpenDelete(false)}
+                      >
                         <ModalDialog>
                           <DialogTitle>
                             <WarningRoundedIcon />
@@ -357,10 +382,13 @@ function OngoingCards({ commissions, to }) {
                           <DialogActions>
                             <Button
                               variant="solid"
-                              color='danger'
+                              color="danger"
                               onClick={() =>
                                 // cancel(commission.commissionID)
-                                handleCancel(commission.transactID, commission.employerID)
+                                handleCancel(
+                                  commission.transactID,
+                                  commission.employerID
+                                )
                               }
                             >
                               Yes
@@ -375,84 +403,79 @@ function OngoingCards({ commissions, to }) {
                           </DialogActions>
                         </ModalDialog>
                       </Modal>
-
                     </>
                   )}
-                  {user.userType === "Employer" &&
-                    commission.errandStatus === "Complete" && (
-                      <>
-                        <button
-                          onClick={handleOpenModal}
-                          style={{
-                            backgroundColor: "#1679AB",
-                            color: "#ffffff",
-                            padding: "10px 10px",
-                            border: "none",
-                            borderRadius: "4px",
-                            cursor: "pointer",
-                            marginTop: "5px",
-                            marginBottom: "10px",
-                            transition: "background-color 0.3s",
-                            fontSize: "12px",
-                            fontWeight: "bold",
-                            display: "block",
-                            width: "130px",
-                            // ":hover": {
-                            //   backgroundColor: isClicked ? "#fa9d6e" : "#ffbb33",
-                            // },
-                          }}
-                        >
-                          Feedback
-                        </button>
+                  {user.userType === "Employer" && (
+                    <>
+                      <button
+                        onClick={handleOpenModal}
+                        style={{
+                          backgroundColor: "#1679AB",
+                          color: "#ffffff",
+                          padding: "10px 10px",
+                          border: "none",
+                          borderRadius: "4px",
+                          cursor: "pointer",
+                          marginTop: "5px",
+                          marginBottom: "10px",
+                          transition: "background-color 0.3s",
+                          fontSize: "12px",
+                          fontWeight: "bold",
+                          display: "block",
+                          width: "130px",
+                          // ":hover": {
+                          //   backgroundColor: isClicked ? "#fa9d6e" : "#ffbb33",
+                          // },
+                        }}
+                      >
+                        Feedback
+                      </button>
 
-                        {/* modal trigger if clicked */}
-                        <Modals isOpen={isModalOpen} onClose={handleCloseModal}>
-                          <h4>Rate Catcher:</h4>
-                          {[1, 2, 3, 4, 5].map((value) => (
-                            <span
-                              key={value}
-                              style={{
-                                cursor: "pointer",
-                                fontSize: "24px",
-                                color:
-                                  value <= feedback.feedbackCount
-                                    ? "gold"
-                                    : "gray",
-                              }}
-                              onClick={() => handleStarClick(value)}
-                            >
-                              ★
-                            </span>
-                          ))}
-                          <h4>Feedback:</h4>
-                          <input
-                            type="text"
-                            value={inputValue.feedbackComment}
-                            onChange={handleInputChange}
-                            placeholder="Enter your comment here...."
+                      {/* modal trigger if clicked */}
+                      <Modals isOpen={isModalOpen} onClose={handleCloseModal}>
+                        <h4>Rate Catcher:</h4>
+                        {[1, 2, 3, 4, 5].map((value) => (
+                          <span
+                            key={value}
                             style={{
-                              marginBottom: "10px",
-                              width: "100%",
-                              padding: "10px",
-                              fontSize: "16px",
+                              cursor: "pointer",
+                              fontSize: "24px",
+                              color:
+                                value <= feedback.feedbackCount
+                                  ? "gold"
+                                  : "gray",
                             }}
-                          />
+                            onClick={() => handleStarClick(value)}
+                          >
+                            ★
+                          </span>
+                        ))}
+                        <h4>Feedback:</h4>
+                        <input
+                          type="text"
+                          value={inputValue.feedbackComment}
+                          onChange={handleInputChange}
+                          placeholder="Enter your comment here...."
+                          style={{
+                            marginBottom: "10px",
+                            width: "100%",
+                            padding: "10px",
+                            fontSize: "16px",
+                          }}
+                        />
 
-                          <div style={styles.buttonContainer}>
-                            <button
-                              style={styles.button}
-                              onClick={handleSubmit}
-                            >
-                              Post
-                            </button>
-                            <button
-                              style={styles.button}
-                              onClick={handleCloseModal}
-                            >
-                              Close
-                            </button>
-                          </div>
-                        </Modals>
+                        <div style={styles.buttonContainer}>
+                          <button style={styles.button} onClick={handleSubmit}>
+                            Post
+                          </button>
+                          <button
+                            style={styles.button}
+                            onClick={handleCloseModal}
+                          >
+                            Close
+                          </button>
+                        </div>
+                      </Modals>
 
                       <button
                         style={{
@@ -539,10 +562,7 @@ function OngoingCards({ commissions, to }) {
 
           }
 
-          .Oncard__info {
-            font-size: 12px;
-            text-align: center;
-          }
+
 
           .Oncard__link {
             color: #252e48;

@@ -10,7 +10,7 @@
     align-items: center;
     padding-top: 20px;
     /* // justify-content: flex-end; */
-    width: calc(25% - 20px);
+    width: calc(30% - 25px);
     /* Adjust the width to fit 4 cards per row */
     height: auto;
     /* height: 400px; */
@@ -34,10 +34,26 @@
     .Oncard {
         /* margin-bottom: 2rem; */
         border: groove;
-        width: auto;
+        width: 25%;
         height: auto;
         padding: 20px;
 
     }
 
 }
+
+.ongoing_title{
+    font-size: 20px;
+    padding: 10px 0 0 0;
+}
+
+.Oncard__info{
+    padding: 10px 20px;
+    text-align: center;
+    margin: 5px;
+}
+
+.ongoing__cards__txt{
+    padding: 2px 5px;
+}
+
