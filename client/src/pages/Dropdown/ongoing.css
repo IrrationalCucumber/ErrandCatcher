@@ -57,14 +57,16 @@
     padding: 2px 5px;
 }
 
-.ongoing__cards__button, .ongoing__cards__button__complete, .ongoing__cards__button__cancel{
+.ongoing__cards__button,
+ .ongoing__cards__button__complete,
+  .ongoing__cards__button__cancel, .ongoing__cards__button__feedback{
     padding: 5px;
     border:none;
     border-radius: 4px;
     cursor: pointer;
     margin: 5px;
     transition: background-color 0.3s;
-    color: #ffffff;
+    color: #727070;
     font: 12px;
     display: block;
     width: 130px;
@@ -77,6 +79,17 @@
     align-items: center;
     padding: 10px 15px;
     margin: auto;
+}
+
+.ongoing__cards__button__feedback{
+    background-color: #ffff;
+    color: rgb(209, 168, 33);
+    border: solid rgb(209, 168, 33) 1px;
+}
+
+.ongoing__cards__button__feedback:hover{
+     background-color: rgb(209, 168, 33);
+    color: #fff;
 }
 
 .ongoing__cards__button__cancel{
@@ -94,4 +107,5 @@
 
 .ongoing__cards__button:hover, .ongoing__cards__button__complete:hover{
     background-color: green;
+    color: #ffff;
 }

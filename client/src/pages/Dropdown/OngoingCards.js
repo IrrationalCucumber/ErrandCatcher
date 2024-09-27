@@ -368,98 +368,81 @@ function OngoingCards({ commissions, to }) {
                       </Modal>
                     </>
                   )}
-                  {user.userType === "Employer" &&
-                    commission.errandStatus === "Complete" && (
-                      <>
-                        <div
-                          className="ongoing__cards__buttons"
-                          style={{
-                            position: "relative",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
+                  {user.userType === "Employer" && (
+                    // commission.errandStatus === "Complete" &&
+                    <>
+                      <div className="ongoing__cards__buttons">
+                        <button
+                          onClick={handleOpenModal}
+                          className="ongoing__cards__button__feedback"
+                        >
+                          Feedback
+                        </button>
+                        <button
+                          className="ongoing__cards__button"
+                          onClick={() => {
+                            handlePayment(
+                              commission.commissionPay,
+                              commission.commissionType,
+                              commission.userFirstname,
+                              commission.userLastname,
+                              commission.transactID,
+                              commission.commissionTitle,
+                              commission.commissionID
+                            );
                           }}
                         >
-                          <button
-                            onClick={handleOpenModal}
-                            className="ongoing__cards__button"
+                          Payment
+                        </button>
+                      </div>
+
+                      {/* modal trigger if clicked */}
+                      <Modals isOpen={isModalOpen} onClose={handleCloseModal}>
+                        <h4>Rate Catcher:</h4>
+                        {[1, 2, 3, 4, 5].map((value) => (
+                          <span
+                            key={value}
                             style={{
-                              backgroundColor: "#1679AB",
+                              cursor: "pointer",
+                              fontSize: "24px",
+                              color:
+                                value <= feedback.feedbackCount
+                                  ? "gold"
+                                  : "gray",
                             }}
+                            onClick={() => handleStarClick(value)}
                           >
-                            Feedback
+                            ★
+                          </span>
+                        ))}
+                        <h4>Feedback:</h4>
+                        <input
+                          type="text"
+                          value={inputValue.feedbackComment}
+                          onChange={handleInputChange}
+                          placeholder="Enter your comment here...."
+                          style={{
+                            marginBottom: "10px",
+                            width: "100%",
+                            padding: "10px",
+                            fontSize: "16px",
+                          }}
+                        />
+
+                        <div style={styles.buttonContainer}>
+                          <button style={styles.button} onClick={handleSubmit}>
+                            Post
                           </button>
                           <button
-                            className="ongoing__cards__button"
-                            style={{
-                              backgroundColor: "grey",
-                            }}
-                            onClick={() => {
-                              handlePayment(
-                                commission.commissionPay,
-                                commission.commissionType,
-                                commission.userFirstname,
-                                commission.userLastname,
-                                commission.transactID,
-                                commission.commissionTitle,
-                                commission.commissionID
-                              );
-                            }}
+                            style={styles.button}
+                            onClick={handleCloseModal}
                           >
-                            Payment
+                            Close
                           </button>
                         </div>
-
-                        {/* modal trigger if clicked */}
-                        <Modals isOpen={isModalOpen} onClose={handleCloseModal}>
-                          <h4>Rate Catcher:</h4>
-                          {[1, 2, 3, 4, 5].map((value) => (
-                            <span
-                              key={value}
-                              style={{
-                                cursor: "pointer",
-                                fontSize: "24px",
-                                color:
-                                  value <= feedback.feedbackCount
-                                    ? "gold"
-                                    : "gray",
-                              }}
-                              onClick={() => handleStarClick(value)}
-                            >
-                              ★
-                            </span>
-                          ))}
-                          <h4>Feedback:</h4>
-                          <input
-                            type="text"
-                            value={inputValue.feedbackComment}
-                            onChange={handleInputChange}
-                            placeholder="Enter your comment here...."
-                            style={{
-                              marginBottom: "10px",
-                              width: "100%",
-                              padding: "10px",
-                              fontSize: "16px",
-                            }}
-                          />
-
-                          <div style={styles.buttonContainer}>
-                            <button
-                              style={styles.button}
-                              onClick={handleSubmit}
-                            >
-                              Post
-                            </button>
-                            <button
-                              style={styles.button}
-                              onClick={handleCloseModal}
-                            >
-                              Close
-                            </button>
-                          </div>
-                        </Modals>
-                      </>
-                    )}
+                      </Modals>
+                    </>
+                  )}
                 </div>
               </div>
             ))}
