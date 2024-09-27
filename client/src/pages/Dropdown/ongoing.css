@@ -57,7 +57,7 @@
     padding: 2px 5px;
 }
 
-.ongoing__cards__button{
+.ongoing__cards__button, .ongoing__cards__button__complete, .ongoing__cards__button__cancel{
     padding: 5px;
     border:none;
     border-radius: 4px;
@@ -77,4 +77,21 @@
     align-items: center;
     padding: 10px 15px;
     margin: auto;
+}
+
+.ongoing__cards__button__cancel{
+    background-color: red;
+}
+
+.ongoing__cards__button__cancel:hover{
+    background-color: #db9292;
+    color: red;
+}
+
+.ongoing__cards__button__complete{
+    background-color: #992ae4;
+}
+
+.ongoing__cards__button:hover, .ongoing__cards__button__complete:hover{
+    background-color: green;
 }

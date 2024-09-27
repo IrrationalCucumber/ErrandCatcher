@@ -269,33 +269,15 @@ function OngoingCards({ commissions, to }) {
                       </Typography>
                     </>
                   )}
+                  {/* BUTTONS 
+                    APPEAR ONLY IF CATCHER
+                  */}
                   {user.userType === "Catcher" && (
                     <>
-                      <div className="btnstatus">
+                      <div className="ongoing__cards__buttons">
                         <button
-                          // onClick={() => markAsCompleted(commission.commissionID)}
-                          // onClick={handleOpenModal}
+                          className="ongoing__cards__button__complete"
                           onClick={() => handleOpenMarkModal()}
-                          style={{
-                            backgroundColor: "#cccccc",
-                            color: "#ffffff",
-                            padding: "10px 10px",
-                            border: "none",
-                            borderRadius: "4px",
-                            cursor: "pointer",
-                            marginTop: "5px",
-                            marginBottom: "10px",
-                            transition: "background-color 0.3s",
-                            fontSize: "12px",
-                            fontWeight: "bold",
-                            display: "block",
-                          }}
-                          onMouseOver={(e) => {
-                            e.target.style.backgroundColor = "#00cc00";
-                          }}
-                          onMouseOut={(e) => {
-                            e.target.style.backgroundColor = "#cccccc";
-                          }}
                         >
                           Mark as Completed
                         </button>
@@ -303,26 +285,7 @@ function OngoingCards({ commissions, to }) {
                         <button
                           // onClick={() => cancel(commission.commissionID)}
                           onClick={handleOpenCancelModal}
-                          style={{
-                            backgroundColor: "#cccccc",
-                            color: "#ffffff",
-                            padding: "10px 10px",
-                            border: "none",
-                            borderRadius: "4px",
-                            cursor: "pointer",
-                            marginTop: "5px",
-                            marginBottom: "10px",
-                            transition: "background-color 0.3s",
-                            fontSize: "12px",
-                            fontWeight: "bold",
-                            display: "block",
-                          }}
-                          onMouseOver={(e) => {
-                            e.target.style.backgroundColor = "#00cc00";
-                          }}
-                          onMouseOut={(e) => {
-                            e.target.style.backgroundColor = "#cccccc";
-                          }}
+                          className="ongoing__cards__button__cancel"
                         >
                           Cancel
                         </button>
