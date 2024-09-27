@@ -214,11 +214,30 @@ function OngoingCards({ commissions, to }) {
           <div className="Oncards__items">
             {commissions.map((commission) => (
               <div className="Oncard" key={commission.id}>
-                <img
-                  src="/images/hr.png"
-                  alt="Commission"
-                  className="Oncard__img"
-                />
+                {(commission.commissionType === "HomeService - Indoor" ||
+                  commission.commissionType === "HomeService - Outdoor") && (
+                  <img
+                    src="/images/hr.png"
+                    alt="Commission"
+                    className="Oncard__img"
+                  />
+                )}
+
+                {commission.commissionType === "Transportation" && (
+                  <img
+                    src="/images/img5.png"
+                    alt="Commission"
+                    className="Oncard__img"
+                  />
+                )}
+                {commission.commissionType === "Delivery" && (
+                  <img
+                    src="/images/img4.png"
+                    alt="Commission"
+                    className="Oncard__img"
+                  />
+                )}
+
                 <div className="Oncard__info">
                   <Typography level="h1" color="neutral" variant="plain">
                     {commission.commissionTitle}
@@ -368,81 +387,84 @@ function OngoingCards({ commissions, to }) {
                       </Modal>
                     </>
                   )}
-                  {user.userType === "Employer" && (
-                    // commission.errandStatus === "Complete" &&
-                    <>
-                      <div className="ongoing__cards__buttons">
-                        <button
-                          onClick={handleOpenModal}
-                          className="ongoing__cards__button__feedback"
-                        >
-                          Feedback
-                        </button>
-                        <button
-                          className="ongoing__cards__button"
-                          onClick={() => {
-                            handlePayment(
-                              commission.commissionPay,
-                              commission.commissionType,
-                              commission.userFirstname,
-                              commission.userLastname,
-                              commission.transactID,
-                              commission.commissionTitle,
-                              commission.commissionID
-                            );
-                          }}
-                        >
-                          Payment
-                        </button>
-                      </div>
-
-                      {/* modal trigger if clicked */}
-                      <Modals isOpen={isModalOpen} onClose={handleCloseModal}>
-                        <h4>Rate Catcher:</h4>
-                        {[1, 2, 3, 4, 5].map((value) => (
-                          <span
-                            key={value}
-                            style={{
-                              cursor: "pointer",
-                              fontSize: "24px",
-                              color:
-                                value <= feedback.feedbackCount
-                                  ? "gold"
-                                  : "gray",
-                            }}
-                            onClick={() => handleStarClick(value)}
+                  {user.userType === "Employer" &&
+                    commission.errandStatus === "Complete" && (
+                      <>
+                        <div className="ongoing__cards__buttons">
+                          <button
+                            onClick={handleOpenModal}
+                            className="ongoing__cards__button__feedback"
                           >
-                            ★
-                          </span>
-                        ))}
-                        <h4>Feedback:</h4>
-                        <input
-                          type="text"
-                          value={inputValue.feedbackComment}
-                          onChange={handleInputChange}
-                          placeholder="Enter your comment here...."
-                          style={{
-                            marginBottom: "10px",
-                            width: "100%",
-                            padding: "10px",
-                            fontSize: "16px",
-                          }}
-                        />
-
-                        <div style={styles.buttonContainer}>
-                          <button style={styles.button} onClick={handleSubmit}>
-                            Post
+                            Feedback
                           </button>
                           <button
-                            style={styles.button}
-                            onClick={handleCloseModal}
+                            className="ongoing__cards__button"
+                            onClick={() => {
+                              handlePayment(
+                                commission.commissionPay,
+                                commission.commissionType,
+                                commission.userFirstname,
+                                commission.userLastname,
+                                commission.transactID,
+                                commission.commissionTitle,
+                                commission.commissionID
+                              );
+                            }}
                           >
-                            Close
+                            Payment
                           </button>
                         </div>
-                      </Modals>
-                    </>
-                  )}
+
+                        {/* modal trigger if clicked */}
+                        <Modals isOpen={isModalOpen} onClose={handleCloseModal}>
+                          <h4>Rate Catcher:</h4>
+                          {[1, 2, 3, 4, 5].map((value) => (
+                            <span
+                              key={value}
+                              style={{
+                                cursor: "pointer",
+                                fontSize: "24px",
+                                color:
+                                  value <= feedback.feedbackCount
+                                    ? "gold"
+                                    : "gray",
+                              }}
+                              onClick={() => handleStarClick(value)}
+                            >
+                              ★
+                            </span>
+                          ))}
+                          <h4>Feedback:</h4>
+                          <input
+                            type="text"
+                            value={inputValue.feedbackComment}
+                            onChange={handleInputChange}
+                            placeholder="Enter your comment here...."
+                            style={{
+                              marginBottom: "10px",
+                              width: "100%",
+                              padding: "10px",
+                              fontSize: "16px",
+                            }}
+                          />
+
+                          <div style={styles.buttonContainer}>
+                            <button
+                              style={styles.button}
+                              onClick={handleSubmit}
+                            >
+                              Post
+                            </button>
+                            <button
+                              style={styles.button}
+                              onClick={handleCloseModal}
+                            >
+                              Close
+                            </button>
+                          </div>
+                        </Modals>
+                      </>
+                    )}
                 </div>
               </div>
             ))}
@@ -489,14 +511,6 @@ function OngoingCards({ commissions, to }) {
           //   transition: transform 0.3s ease;
           //   border: groove;
           // }
-
-          .Oncard__img {
-            width: 200px;
-            height: 200px;
-
-          }
-
-
 
           .Oncard__link {
             color: #252e48;

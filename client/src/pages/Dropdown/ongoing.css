@@ -4,6 +4,12 @@
     flex-direction: column;
 }
 
+.Oncard__img {
+    width: 100%;
+    height: 200px;
+    padding: 2px;
+  }
+
 .Oncard {
     display: flex;
     flex-direction: column;
