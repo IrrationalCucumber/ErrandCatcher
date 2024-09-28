@@ -16,3 +16,13 @@ export function HeroSection(props) {
 export function bannerHeroSection() {
   return <div>Hi</div>;
 }
+
+export function BannerEmployerPages(props) {
+  return (
+    <>
+      <div className="employer__hero__container">
+        <h1>{props.bannerMessage}</h1>
+      </div>
+    </>
+  );
+}

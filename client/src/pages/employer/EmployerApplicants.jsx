@@ -6,9 +6,8 @@
 //03-28-24 added view profile but modal doesnt have data
 
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import NavBar from "../../components/Navbar/Navbar";
 import Table from "../../components/Table";
 import "./applicant.css";
 import Pagination from "../../components/Pagination";
@@ -315,6 +314,11 @@ const EmployerApplicants = () => {
   return (
     <div className="applicants-container">
       <div className="applicants">
+        {/* 
+        
+        BANNER PLACE HERE 
+        
+        */}
         <h1 style={{ paddingBottom: "10px" }}>APPLICANTS</h1>
         <div className="search">
           <input type="text" placeholder="Search..." />
