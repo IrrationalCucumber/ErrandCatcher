@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar/Navbar";
-import EmployerCard from "../Employer Cards/EmployerCards";
+import EmployerCard from "../components/Employer Cards/EmployerCards";
 import StickyButton from "../components/Sticky Button/StickyButton";
 import Cards from "../components/Cards/Cards";
 import Menu from "./Menu";
