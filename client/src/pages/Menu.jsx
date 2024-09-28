@@ -27,7 +27,7 @@ const Menu = () => {
         onChange={(e) => setSearchQuery(e.target.value)}
       />
       <div className="search-bar">
-        <input
+        {/* <input
           type="text"
           placeholder="Search..."
           value={searchQuery}
@@ -40,7 +40,7 @@ const Menu = () => {
           style={{ backgroundColor: "#1679AB" }}
         >
           Search
-        </button>
+        </button> */}
       </div>
       <section className="Menu" id="Menu">
         {/* bootstrap class applied */}
