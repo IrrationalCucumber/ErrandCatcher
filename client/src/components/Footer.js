@@ -3,10 +3,10 @@ import { Button } from "./Navbar/NavButton";
 import { Link } from "react-router-dom";
 import "./Footer.css";
 
-function Footer() {
+function Footer(props) {
   return (
     <footer>
-      <div className="footer-container">
+      <div className={props.footerUserType}>
         <section className="footer-subscription">
           <div className="input-areas"></div>
         </section>

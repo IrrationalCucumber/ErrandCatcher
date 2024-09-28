@@ -5,8 +5,8 @@
 
 .applicants {
   display: flex;
-  /* align-items: flex-start;
-  margin: 20px; */
+  /* align-items: flex-start; */
+  margin: 20px;
   flex-direction: column;
   min-height: 100vh;
 }
@@ -101,6 +101,60 @@
 
 .applicants-table button.delete:hover {
   background-color: #c82333;
+}
+
+.applicants td:nth-child(4) {
+  text-align: center;
+}
+
+.applicants td:nth-child(5) {
+  text-align: center;
+}
+
+@media (max-width: 979px) {
+  .applicants td:nth-child(4) {
+    min-width: 100%;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .applicants td:nth-child(5) {
+    min-width: 100%;
+    text-align: center;
+  }
+
+  .applicants td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    color: black;
+    width: 140px;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    font-size: 12px;
+  }
+
+  .applicants th {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    color: white;
+    width: 140px;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    font-size: 1rem;
+  }
+
+  .applicants-container {
+    margin: 20px;
+  }
+
+  .applicants-table {
+    overflow-x: auto;
+  }
 }
 
 .pagination-container {
