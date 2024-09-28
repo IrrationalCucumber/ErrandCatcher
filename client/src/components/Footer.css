@@ -1,5 +1,8 @@
-.footer-container {
+.footer-container__admin {
   background-color: #378ce7;
+}
+
+.footer-container__admin, .footer-container__catcher, .footer-container__employer{
   padding: 1rem 0 1rem 0;
   display: flex;
   flex-direction: column;
@@ -10,6 +13,14 @@
   /* position: stick; */
   margin-top: auto;
   width: 100%;
+}
+
+.footer-container__catcher{
+  background-color: #37d2e7;
+}
+
+.footer-container__employer{
+  background-color: #9237e7;
 }
 
 .footer-subscription {

@@ -71,3 +71,28 @@ video {
 .btn{
     width: 100%;
 }
+
+/* 
+    ONGOING HERO SECTION
+    adrean-26/09/24
+*/
+.ongoing-hero-container{
+    /* background: url('../../../public/images/banner_epmloyer.jpg') center center/cover no-repeat; */
+    height: 25vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2); */
+    object-fit: contain;
+    background: linear-gradient(#9837e7, rgb(176, 118, 214), rgb(194, 178, 206))
+}
+
+.ongoing-hero-container > h1{
+    
+    color: #fff;
+    font-size: 45px;
+    margin: -25px;
+}
+

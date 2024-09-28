@@ -13,8 +13,14 @@ export function HeroSection(props) {
   );
 }
 
-export function bannerHeroSection() {
-  return <div>Hi</div>;
+export function BannerOngoingSection(props) {
+  return (
+    <div className="ongoing-hero-container">
+      <h1>
+        Your currently <i>Catched</i> errands, {props.username}
+      </h1>
+    </div>
+  );
 }
 
 export function BannerEmployerPages(props) {
