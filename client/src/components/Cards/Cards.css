@@ -1,6 +1,9 @@
 .cards {
   /* padding: 4rem; */
   background-color: #fff;
+  position: relative;
+  padding: 20px 10px;
+  margin: 10px;
 }
 
 /* h1 {
