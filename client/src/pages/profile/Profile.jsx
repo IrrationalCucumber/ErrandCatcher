@@ -168,7 +168,7 @@ const Profile = () => {
         userID={userID}
         click={handleClick}
       />
-      <div className="profile">
+      {/* <div className="profile">
         <div className="profile-info">
           <div className="description-form">
             <form>
@@ -198,11 +198,9 @@ const Profile = () => {
                   </button>
                 </div>
               </div>
-              {/*username changed when user sign up*/}
+              //username changed when user sign up
               <div className="username-container">
                 <label className="username">{account.username}</label>
-                {/* Verification Icon */}
-                {/* Verification Icon */}
                 {account.status === "Unverified" && (
                   <Link to={`/verification/${userID}`}>
                     <i
@@ -232,14 +230,6 @@ const Profile = () => {
                     </i>
                   </Link>
                 )}
-
-                {/* <FontAwesomeIcon
-                  icon={faCertificate}
-                  style={{
-                    marginLeft: "5px",
-                    color: verified ? "green" : "gray",
-                  }}
-                /> */}
               </div>
               {account.type === "Catcher" && (
                 <div className="rating-box">
@@ -259,7 +249,7 @@ const Profile = () => {
           <div className="info-form">
             <form>
               <div className="about-section">
-                {/* About section content */}
+                // About section content 
                 <div className="input-row">
                   <label className="PP">Name:</label>
                   <input
@@ -356,7 +346,7 @@ const Profile = () => {
             </form>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
