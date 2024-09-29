@@ -67,7 +67,7 @@ function UserProfile(props) {
               <div className="verified">{props.status}</div>
             </>
           ) : (
-            <Link to={`/profile/verification`}>
+            <Link to={`/profile/verification`} style={{ textDecoration: 'none' }}>
               <div className="unverified">{props.status}</div>
             </Link>
           )}
