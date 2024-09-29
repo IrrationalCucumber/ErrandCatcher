@@ -1,28 +1,81 @@
-import React from "react";
+import React, { useState } from "react";
 import "./profile.css";
 import StarRating from "../Display/StarRating";
 import { Link } from "react-router-dom";
 
 function UserProfile(props) {
+
+  const [preview, setPreview] = useState(null);
+  const [image, setImage] = useState(null);
+
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+    setPreview(URL.createObjectURL(file));
+
+    if (props.handleImage) {
+      props.handleImage(e);
+    }
+  };
+
+  const handleDeleteImage = () => {
+    setImage(null);
+    setPreview(null);
+  };
+
   return (
     <>
       <div className="profile-page-container">
         {/* Left Profile Section */}
         <div className="profile-left">
-          {props.profileImg ? (
-            <img
-              src={`http://localhost:8800/images/profile/${props.profileImg}`}
-              alt="ProfPic"
-            />
+          {preview ? (
+            <>
+              {/* Display Preview Image */}
+              <img
+                src={preview}
+                alt="Preview Image"
+                // width={250}
+                // height={250}
+                style={{
+                  padding: "20px",
+                  border: "1px solid skyblue",
+                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)"
+                }}
+              />
+              <button
+                onClick={handleDeleteImage}
+                style={{
+                  width: "100px",
+                  marginBottom: "16px",
+                  marginTop: "16px",
+                  height: "40px",
+                }}
+              >
+                Delete
+              </button>
+            </>
           ) : (
-            <img src="/images/employer.png" alt="Profile Picture" />
+            // If no preview, show existing profile image or default
+            <>
+              {props.profileImg ? (
+                <img
+                  src={`http://localhost:8800/images/profile/${props.profileImg}`}
+                  alt="ProfPic"
+                />
+              ) : (
+                <img
+                  src="/images/employer.png"
+                  alt="Profile Picture"
+                />
+              )}
+            </>
           )}
 
           <div className="upload-container">
             <input
               type="file"
               id="file"
-              onChange={props.handleImage}
+              onChange={handleImage}
               style={{ width: "100px" }}
             />
             <button onClick={props.handleUpload}>
