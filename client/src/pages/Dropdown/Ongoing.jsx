@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../../components/AuthContext";
 import "./ongoing.css";
+import { BannerOngoingSection } from "../../components/Banner/HeroSection";
 
 function Ongoing() {
   /**
@@ -36,7 +37,7 @@ function Ongoing() {
   return (
     <div className="concards">
       {/* No user ID */}
-
+      <BannerOngoingSection username={user.username} />
       <OngoingCards commissions={commissions} to={`/view-errand/${userID}`} />
     </div>
   );

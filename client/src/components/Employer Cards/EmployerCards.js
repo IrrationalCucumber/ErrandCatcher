@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./employercard.css";
 import axios from "axios";
-import { useAuth } from "../components/AuthContext";
+import { useAuth } from "../AuthContext";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import GroupIcon from "@mui/icons-material/Group";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
