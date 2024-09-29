@@ -6,6 +6,7 @@ import "./profile.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../components/AuthContext";
+import UserProfile from "../../components/Profile/UserProfile";
 const Profile = () => {
   const [verified, setVerified] = useState(false);
   //APS - 03/03/24
@@ -145,6 +146,28 @@ const Profile = () => {
 
   return (
     <div>
+      <UserProfile
+        profileImg={account.profileImage}
+        address={account.address}
+        cnum={account.contact}
+        email={account.email}
+        rate={rating}
+        type={account.type}
+        desc={account.desc}
+        handleChange={handleChange}
+        handleImage={handleImage}
+        handleUpload={handleUpload}
+        //right hemisphere
+        username={account.username}
+        fname={account.fname}
+        lname={account.lname}
+        sex={account.gender}
+        age={account.age}
+        bday={account.bday}
+        status={account.status}
+        userID={userID}
+        click={handleClick}
+      />
       <div className="profile">
         <div className="profile-info">
           <div className="description-form">
