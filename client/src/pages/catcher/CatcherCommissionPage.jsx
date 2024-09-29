@@ -204,7 +204,7 @@ function CommissionPage() {
             ]}
             data={currentItems.map((commission, rowIndex) => [
               `${commission.userFirstname} ${commission.userLastname}`,
-              commission.transactID,
+              commission.commissionTitle,
               commission.commissionStart,
               DisplayDate(commission.commissionDeadline),
               commission.errandStatus,
