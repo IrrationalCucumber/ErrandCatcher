@@ -74,6 +74,18 @@
     font-size: 18px;
 }
 
+.profile-left input[type="text"],
+.profile-left input[type="number"],
+.profile-left input[type="email"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 18px;
+}
+
+
 .profile-right .buttons {
     display: flex;
     justify-content: center;

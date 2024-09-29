@@ -34,12 +34,41 @@ function UserProfile(props) {
           </div>
 
           <div className="info">
-            {props.address}
+            {/* {props.address} */}
+            <label htmlFor="first-name"> Address:</label>
+            <input
+              type="text"
+              // className="display-data"
+              placeholder="Address"
+              name="address"
+              value={props.address}
+              onChange={props.handleChange}
+            ></input>
             <br />
-            {props.email}
+            {/* {props.email} */}
+            <label htmlFor="first-name"> Email Address:</label>
+            <input
+              type="email"
+              // className="display-data"
+              placeholder="Email Address"
+              name="email"
+              value={props.email}
+              onChange={props.handleChange}
+            ></input>
             <br />
-            {props.cnum}
+            {/* {props.cnum} */}
+            <label htmlFor="first-name"> Contact Number:</label>
+            <input
+              type="number"
+              // className="display-data"
+              placeholder="Contact Number"
+              name="cnum"
+              value={props.cnum}
+              onChange={props.handleChange}
+            ></input>
+            <br />
           </div>
+          <br />
           <textarea
             className="description"
             placeholder="Description"
