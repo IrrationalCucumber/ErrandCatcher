@@ -195,7 +195,7 @@ const Profile = () => {
         sex={account.gender}
         age={account.age}
         bday={account.bday}
-        status={account.status}
+        status={account.status.toLocaleUpperCase()}
         userID={userID}
         click={handleClick}
       />
