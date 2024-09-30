@@ -7,6 +7,9 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../components/AuthContext";
 import UserProfile from "../../components/Profile/UserProfile";
+import { Alert, Button } from "@mui/joy";
+import WarningIcon from "@mui/icons-material/Warning";
+import CloseIcon from "@mui/icons-material/Close";
 const Profile = () => {
   const [verified, setVerified] = useState(false);
   //APS - 03/03/24
@@ -111,14 +114,21 @@ const Profile = () => {
     setImage(e.target.files[0]);
   }
 
+  const [showAlert, setShowAlert] = useState(false);
   const handleUpload = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("image", image);
-    await axios
-      .post(`http://localhost:8800/update-pic/${userID}`, formData)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    if (image === "") {
+      setShowAlert(true); // Update state to show alert
+      return; // Prevent further execution if no image is found
+    } else {
+      setShowAlert(false);
+      const formData = new FormData();
+      formData.append("image", image);
+      await axios
+        .post(`http://localhost:8800/update-pic/${userID}`, formData)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    }
   };
 
   //sSave CHanges
@@ -146,6 +156,27 @@ const Profile = () => {
 
   return (
     <div>
+      {showAlert && (
+        <Alert
+          color="danger"
+          size="lg"
+          variant="soft"
+          startDecorator={<WarningIcon />}
+          endDecorator={
+            <Button
+              size="sm"
+              variant="solid"
+              color="danger"
+              onClick={(e) => setShowAlert(false)}
+            >
+              <CloseIcon />
+            </Button>
+          }
+        >
+          No file found!
+        </Alert>
+      )}
+
       <UserProfile
         profileImg={account.profileImage}
         address={account.address}
