@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import "./profile.css";
 import StarRating from "../Display/StarRating";
 import { Link } from "react-router-dom";
+import { Button, Input } from "@mui/joy";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
 
 function UserProfile(props) {
-
   const [preview, setPreview] = useState(null);
   const [image, setImage] = useState(null);
 
@@ -39,7 +40,7 @@ function UserProfile(props) {
                 style={{
                   padding: "20px",
                   border: "1px solid skyblue",
-                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)"
+                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
                 }}
               />
               <button
@@ -63,10 +64,7 @@ function UserProfile(props) {
                   alt="ProfPic"
                 />
               ) : (
-                <img
-                  src="/images/employer.png"
-                  alt="Profile Picture"
-                />
+                <img src="/images/employer.png" alt="Profile Picture" />
               )}
             </>
           )}
@@ -78,47 +76,46 @@ function UserProfile(props) {
               onChange={handleImage}
               style={{ width: "100px" }}
             />
-            <button onClick={props.handleUpload}>
-              <i
-                className="fa-solid fa-arrow-up-from-bracket"
-                style={{ color: "#fff", width: "20px" }}
-              ></i>
-            </button>
+
+            <Button
+              loading={false}
+              onClick={props.handleUpload}
+              size="md"
+              variant="solid"
+            >
+              <FileUploadIcon />
+            </Button>
           </div>
 
           <div className="info">
             {/* {props.address} */}
-            <label htmlFor="first-name"> Address:</label>
+
             <input
               type="text"
-              // className="display-data"
+              className="profile__info__left"
               placeholder="Address"
               name="address"
               value={props.address}
               onChange={props.handleChange}
-            ></input>
-            <br />
+            />
             {/* {props.email} */}
-            <label htmlFor="first-name"> Email Address:</label>
             <input
               type="email"
-              // className="display-data"
+              className="profile__info__left"
               placeholder="Email Address"
               name="email"
               value={props.email}
               onChange={props.handleChange}
-            ></input>
-            <br />
+            />
             {/* {props.cnum} */}
-            <label htmlFor="first-name"> Contact Number:</label>
             <input
               type="number"
-              // className="display-data"
+              className="profile__info__left"
               placeholder="Contact Number"
               name="cnum"
               value={props.cnum}
               onChange={props.handleChange}
-            ></input>
+            />
             <br />
           </div>
           <br />
@@ -149,7 +146,10 @@ function UserProfile(props) {
               <div className="verified">{props.status}</div>
             </>
           ) : (
-            <Link to={`/profile/verification`} style={{ textDecoration: 'none' }}>
+            <Link
+              to={`/profile/verification`}
+              style={{ textDecoration: "none" }}
+            >
               <div className="unverified">{props.status}</div>
             </Link>
           )}
