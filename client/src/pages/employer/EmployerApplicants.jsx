@@ -6,9 +6,8 @@
 //03-28-24 added view profile but modal doesnt have data
 
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import NavBar from "../../components/Navbar/Navbar";
 import Table from "../../components/Table";
 import "./applicant.css";
 import Pagination from "../../components/Pagination";
@@ -23,6 +22,7 @@ import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 import { DisplayDate } from "../../components/DisplayDate";
+import { BannerEmployerPages } from "../../components/Banner/HeroSection";
 
 const EmployerApplicants = () => {
   const navigate = useNavigate();
@@ -313,15 +313,19 @@ const EmployerApplicants = () => {
   };
   //console.log(applicants);
   return (
-    <div className="applicants-container">
-      <div className="applicants">
-        <h1 style={{ paddingBottom: "10px" }}>APPLICANTS</h1>
-        <div className="search">
-          <input type="text" placeholder="Search..." />
-          <button type="submit" style={{ backgroundColor: "#1679AB" }}>
-            <i className="fa fa-search" place></i>
-          </button>
-          {/*<select name="type" id="">
+    <>
+      <BannerEmployerPages
+        bannerMessage={`Here are your Applicants, ${user.username}`}
+      />
+      <div className="applicants-container">
+        <div className="applicants">
+          <h1 style={{ paddingBottom: "10px" }}>APPLICANTS</h1>
+          <div className="search">
+            <input type="text" placeholder="Search..." />
+            <button type="submit" style={{ backgroundColor: "#1679AB" }}>
+              <i className="fa fa-search" place></i>
+            </button>
+            {/*<select name="type" id="">
             <option value=""></option>
             <option value="employer">Employer</option>
             <option value="catcher">Catcher</option>
@@ -333,51 +337,52 @@ const EmployerApplicants = () => {
             <option value="unverified">Unverified</option>
             <option value="Suspended">Suspended</option>
           </select>*/}
-        </div>
-        <div className="applicants-table">
-          <Table headers={headers} data={applicantData} />
-        </div>
+          </div>
+          <div className="applicants-table">
+            <Table headers={headers} data={applicantData} />
+          </div>
 
-        {/* added  by ash */}
+          {/* added  by ash */}
 
-        {showProfileModal && (
-          <ProfileModal
-            username={selectedApplicant.username}
-            fname={selectedApplicant.userFirstname}
-            lname={selectedApplicant.userLastname}
-            email={selectedApplicant.userEmail}
-            num={selectedApplicant.userContactNum}
-            age={selectedApplicant.userAge}
-            applicant={selectedApplicant}
-            rating={rating}
-            handleAccept={() =>
-              handleAccept(
-                selectedApplicant.applicationID,
-                selectedApplicant.applicationErrandID,
-                selectedApplicant.catcherID
-              )
-            }
-            handleDecline={() =>
-              handleDecline(
-                selectedApplicant.applicationID,
-                selectedApplicant.applicationErrandID,
-                selectedApplicant.catcherID
-              )
-            }
-            closeModal={handleCloseProfileModal}
-          />
-        )}
-        {/* Pagination controls */}
-        {applicants.length > 0 && (
-          <Pagination
-            itemsPerPage={itemsPerPage}
-            totalItems={applicants.length}
-            paginate={paginate}
-          />
-        )}
+          {showProfileModal && (
+            <ProfileModal
+              username={selectedApplicant.username}
+              fname={selectedApplicant.userFirstname}
+              lname={selectedApplicant.userLastname}
+              email={selectedApplicant.userEmail}
+              num={selectedApplicant.userContactNum}
+              age={selectedApplicant.userAge}
+              applicant={selectedApplicant}
+              rating={rating}
+              handleAccept={() =>
+                handleAccept(
+                  selectedApplicant.applicationID,
+                  selectedApplicant.applicationErrandID,
+                  selectedApplicant.catcherID
+                )
+              }
+              handleDecline={() =>
+                handleDecline(
+                  selectedApplicant.applicationID,
+                  selectedApplicant.applicationErrandID,
+                  selectedApplicant.catcherID
+                )
+              }
+              closeModal={handleCloseProfileModal}
+            />
+          )}
+          {/* Pagination controls */}
+          {applicants.length > 0 && (
+            <Pagination
+              itemsPerPage={itemsPerPage}
+              totalItems={applicants.length}
+              paginate={paginate}
+            />
+          )}
+        </div>
+        {/* <Footer/> */}
       </div>
-      {/* <Footer/> */}
-    </div>
+    </>
   );
 };
 

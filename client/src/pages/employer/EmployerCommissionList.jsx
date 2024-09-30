@@ -20,6 +20,7 @@ import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 //import Settings from "@mui/icons-material/Settings";
 import { useAuth } from "../../components/AuthContext.js";
 import { DisplayDate } from "../../components/DisplayDate.js";
+import { BannerEmployerPages } from "../../components/Banner/HeroSection.js";
 
 const CommissionList = () => {
   const [commissions, setCommissions] = useState([]);
@@ -120,6 +121,9 @@ const CommissionList = () => {
   //need front end
   return (
     <div>
+      <BannerEmployerPages
+        bannerMessage={`These is/are what you have posted so far, ${user.username}`}
+      />
       <div className="Commission-page-container">
         <div className="Commission-page">
           <h1>Commission List</h1>
