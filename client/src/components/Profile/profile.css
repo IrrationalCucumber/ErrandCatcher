@@ -10,6 +10,7 @@
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
+
 .profile-left, .profile-right {
     flex: 1;
     margin-right: 30px;
@@ -78,12 +79,35 @@
 .profile-left input[type="number"],
 .profile-left input[type="email"] {
     width: 100%;
-    padding: 12px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 18px;
+    display: flex;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    font-size: 16px;
+    outline: none;
+    text-align: center; /* Center the text */
+    background-color: transparent; /* Ensures no background */  
+    transition: border-bottom 0.3s ease; /* Smooth transition for border */
 }
+
+.profile-left input[type="text"]:focus,
+.profile-left input[type="number"]:focus,
+.profile-left input[type="email"]:focus {
+    background-color: #e4dfdf88;
+  border-bottom: 1px solid rgb(49, 47, 47); /* Add underline on focus */
+}
+
+/* Remove the increment (spinner) in number inputs */
+.profile-left input[type="number"] {
+    -moz-appearance: textfield; /* For Firefox */
+}
+
+.profile-left input[type="number"]::-webkit-outer-spin-button,
+.profile-left input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none; /* For Chrome, Safari, and Edge */
+    margin: 0;
+}
+
 
 
 .profile-right .buttons {
@@ -134,3 +158,17 @@
 .rating {
     color: #333;
 }
+
+.upload-container {
+    display: flex;
+    padding: 10px;
+    align-items: center; /* Align items vertically */
+  }
+  
+  .upload-container button {
+    width: 35px;
+    height: 45px;
+  }
+  .upload-container input[type="file"] {
+    margin-right: 10px; /* Add margin between the file input and the button */
+  }
