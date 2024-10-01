@@ -88,15 +88,14 @@ function Application() {
     // If value is null, use an empty string or a default value : ('')
     const termMatch = apply.commissionTitle
       ?.toLowerCase()
-      .includes(searchTerm.term?.toLowerCase() ?? '');
+      .includes(searchTerm.term?.toLowerCase() ?? "");
     const termMatch2 = apply.userFirstname
       ?.toLowerCase()
-      .includes(searchTerm.term?.toLowerCase() ?? '');
+      .includes(searchTerm.term?.toLowerCase() ?? "");
     const termMatch3 = apply.userLastname
       ?.toLowerCase()
-      .includes(searchTerm.term?.toLowerCase() ?? '');
-    const status = apply.applicationStatus
-      ?.includes(searchTerm.status ?? '');
+      .includes(searchTerm.term?.toLowerCase() ?? "");
+    const status = apply.applicationStatus?.includes(searchTerm.status ?? "");
 
     return (termMatch || termMatch2 || termMatch3) && status;
   });
@@ -107,7 +106,13 @@ function Application() {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filterApply.slice(indexOfFirstItem, indexOfLastItem);
 
-  const headers = ["DATE", "EMPLOYER", "ERRAND TITLE", "STATUS", "ACTION"];
+  const headers = [
+    "DATE APPLIED",
+    "EMPLOYER",
+    "ERRAND TITLE",
+    "STATUS",
+    "ACTION",
+  ];
   const applicationData = currentItems.map((applicant) => [
     DisplayDate(applicant.applicationDate),
     `${applicant.userFirstname} ${applicant.userLastname}`,
@@ -137,8 +142,8 @@ function Application() {
               <Button
                 variant="solid"
                 color="danger"
-                onClick={() =>
-                  handleCancel(applicant.applicationID)
+                onClick={
+                  () => handleCancel(applicant.applicationID)
                   // console.log("clicked cancel")
                 }
               >
@@ -178,9 +183,9 @@ function Application() {
             <DialogActions>
               <Button
                 variant="solid"
-                color='success'
-                onClick={() =>
-                  handleDelete(applicant.applicationID)
+                color="success"
+                onClick={
+                  () => handleDelete(applicant.applicationID)
                   // console.log("clicked delete")
                 }
               >
