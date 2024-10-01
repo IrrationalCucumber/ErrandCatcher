@@ -6,6 +6,10 @@ import "./profile.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../components/AuthContext";
+import UserProfile from "../../components/Profile/UserProfile";
+import { Alert, Button } from "@mui/joy";
+import WarningIcon from "@mui/icons-material/Warning";
+import CloseIcon from "@mui/icons-material/Close";
 const Profile = () => {
   const [verified, setVerified] = useState(false);
   //APS - 03/03/24
@@ -110,14 +114,21 @@ const Profile = () => {
     setImage(e.target.files[0]);
   }
 
+  const [showAlert, setShowAlert] = useState(false);
   const handleUpload = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("image", image);
-    await axios
-      .post(`http://localhost:8800/update-pic/${userID}`, formData)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    if (image === "") {
+      setShowAlert(true); // Update state to show alert
+      return; // Prevent further execution if no image is found
+    } else {
+      setShowAlert(false);
+      const formData = new FormData();
+      formData.append("image", image);
+      await axios
+        .post(`http://localhost:8800/update-pic/${userID}`, formData)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    }
   };
 
   //sSave CHanges
@@ -145,7 +156,50 @@ const Profile = () => {
 
   return (
     <div>
-      <div className="profile">
+      {showAlert && (
+        <Alert
+          color="danger"
+          size="lg"
+          variant="soft"
+          startDecorator={<WarningIcon />}
+          endDecorator={
+            <Button
+              size="sm"
+              variant="solid"
+              color="danger"
+              onClick={(e) => setShowAlert(false)}
+            >
+              <CloseIcon />
+            </Button>
+          }
+        >
+          No file found!
+        </Alert>
+      )}
+
+      <UserProfile
+        profileImg={account.profileImage}
+        address={account.address}
+        cnum={account.contact}
+        email={account.email}
+        rate={rating}
+        type={account.type}
+        desc={account.desc}
+        handleChange={handleChange}
+        handleImage={handleImage}
+        handleUpload={handleUpload}
+        //right hemisphere
+        username={account.username}
+        fname={account.fname}
+        lname={account.lname}
+        sex={account.gender}
+        age={account.age}
+        bday={account.bday}
+        status={account.status.toLocaleUpperCase()}
+        userID={userID}
+        click={handleClick}
+      />
+      {/* <div className="profile">
         <div className="profile-info">
           <div className="description-form">
             <form>
@@ -175,11 +229,9 @@ const Profile = () => {
                   </button>
                 </div>
               </div>
-              {/*username changed when user sign up*/}
+              //username changed when user sign up
               <div className="username-container">
                 <label className="username">{account.username}</label>
-                {/* Verification Icon */}
-                {/* Verification Icon */}
                 {account.status === "Unverified" && (
                   <Link to={`/verification/${userID}`}>
                     <i
@@ -209,14 +261,6 @@ const Profile = () => {
                     </i>
                   </Link>
                 )}
-
-                {/* <FontAwesomeIcon
-                  icon={faCertificate}
-                  style={{
-                    marginLeft: "5px",
-                    color: verified ? "green" : "gray",
-                  }}
-                /> */}
               </div>
               {account.type === "Catcher" && (
                 <div className="rating-box">
@@ -236,7 +280,7 @@ const Profile = () => {
           <div className="info-form">
             <form>
               <div className="about-section">
-                {/* About section content */}
+                // About section content 
                 <div className="input-row">
                   <label className="PP">Name:</label>
                   <input
@@ -333,7 +377,7 @@ const Profile = () => {
             </form>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

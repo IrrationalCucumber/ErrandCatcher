@@ -174,7 +174,9 @@
 }
 
 .display-data1 {
-  height: 30px; /* Adjust the height as needed */
+  height: 3rem; /* Adjust the height as needed */
+  font-size: 18px;
+  padding: 12px;
 }
 
 .file {
