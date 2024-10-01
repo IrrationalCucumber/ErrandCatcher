@@ -143,14 +143,16 @@ function UserProfile(props) {
         <div className="profile-right">
           {props.status === "Verified" ? (
             <>
-              <div className="verified">{props.status}</div>
+              <div className="verified">{props.status.toLocaleUpperCase()}</div>
             </>
           ) : (
             <Link
               to={`/profile/verification`}
               style={{ textDecoration: "none" }}
             >
-              <div className="unverified">{props.status}</div>
+              <div className="unverified">
+                {props.status.toLocaleUpperCase()}
+              </div>
             </Link>
           )}
           <label htmlFor="username">Username :</label>
