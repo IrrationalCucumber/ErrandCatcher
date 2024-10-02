@@ -104,7 +104,6 @@ function CommissionPage() {
     userID: "", //this is the employer/ userID of the commission
     notificationType: "", //notif description
     notifDesc: "", //contents of the notif
-    notifDate: "", //time and date notif is added
   });
   //get current date
   //for cancel and notif
@@ -132,7 +131,6 @@ function CommissionPage() {
       notif.notifDesc = "A Catcher has cancelled in doing an errand";
       notif.userID = employerID;
       notif.notificationType = "Errand Cancelled";
-      notif.notifDate = getTimeAndDate();
       await axios.post("http://localhost:8800/notify", notif);
       //cancel the transaction
       await axios.put(

@@ -110,7 +110,6 @@ const User = {
       //bday,
       //address,
       type,
-      dateCreated,
     } = userData;
     values = [
       regUsername,
@@ -124,10 +123,9 @@ const User = {
       // bday,
       //address,
       type,
-      dateCreated,
     ];
     db.query(
-      "INSERT INTO useraccount (`username`, `password`, `userLastname`, `userFirstname`, `userEmail`,`userContactNum`, `accountType`, `dateCreated` ) VALUES (?)",
+      "INSERT INTO useraccount (`username`, `password`, `userLastname`, `userFirstname`, `userEmail`,`userContactNum`, `accountType` ) VALUES (?)",
       [values],
       callback
     );
