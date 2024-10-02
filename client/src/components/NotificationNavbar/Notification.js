@@ -45,7 +45,7 @@ function Notification(props) {
           size="lg"
           color="primary"
           sx={{
-            maxHeight: "300px", // Set maximum height
+            maxHeight: "350px", // Set maximum height
             overflowY: "auto", // Enable vertical scroll
           }}
         >
