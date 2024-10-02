@@ -226,10 +226,9 @@ const Signup = () => {
                   }}
                 >
                   {selectedOption
-                    ? `Join as ${
-                        selectedOption.charAt(0).toUpperCase() +
-                        selectedOption.slice(1)
-                      }`
+                    ? `Join as ${selectedOption.charAt(0).toUpperCase() +
+                    selectedOption.slice(1)
+                    }`
                     : "Create Account"}
                 </button>
               </div>
@@ -264,9 +263,9 @@ const Signup = () => {
                       autocomplete="off"
                       required
                     />
-                    {errors.username && (
-                      <span style={{ color: "red" }}>{errors.username}</span>
-                    )}
+                    <div className="err"> {errors.username && (
+                      <span style={{ color: "#f02849", fontSize: "14px" }}>{errors.username}</span>
+                    )}</div>
                   </div>
                   <div className="col">
                     <label className="SUlabel">Email Address</label>
@@ -280,7 +279,7 @@ const Signup = () => {
                       required
                     />
                     {errors.email && (
-                      <span style={{ color: "red" }}>{errors.email}</span>
+                      <span style={{ color: "#f02849", fontSize: "14px" }}>{errors.email}</span>
                     )}
                   </div>
                 </div>
@@ -305,7 +304,7 @@ const Signup = () => {
                       required
                     />
                     {errors.regPassword && (
-                      <span style={{ color: "red" }}>{errors.regPassword}</span>
+                      <span style={{ color: "#f02849", fontSize: "14px" }}>{errors.regPassword}</span>
                     )}
                   </div>
                   <div className="col">
@@ -321,7 +320,7 @@ const Signup = () => {
                       required
                     />
                     {errors.regPassword2 && (
-                      <span style={{ color: "red" }}>
+                      <span style={{ color: "#f02849", fontSize: "14px" }}>
                         {errors.regPassword2}
                       </span>
                     )}
@@ -347,7 +346,7 @@ const Signup = () => {
                       required
                     />
                     {errors.firstName && (
-                      <span style={{ color: "red" }}>{errors.firstName}</span>
+                      <span style={{ color: "#f02849", fontSize: "14px" }}>{errors.firstName}</span>
                     )}
                   </div>
                   <div className="col">
@@ -362,7 +361,7 @@ const Signup = () => {
                       required
                     />
                     {errors.lastName && (
-                      <span style={{ color: "red" }}>{errors.lastName}</span>
+                      <span style={{ color: "#f02849", fontSize: "14px" }}>{errors.lastName}</span>
                     )}
                   </div>
                 </div>
@@ -386,7 +385,7 @@ const Signup = () => {
                       onChange={handleChange}
                     />
                     {errors.bday && (
-                      <span style={{ color: "red" }}>{errors.bday}</span>
+                      <span style={{ color: "#f02849", fontSize: "14px" }}>{errors.bday}</span>
                     )}
                   </div>
                   <div className="col">
@@ -404,7 +403,7 @@ const Signup = () => {
                       <option value="Female">Female</option>
                     </select>
                     {errors.gender && (
-                      <span style={{ color: "red" }}>{errors.gender}</span>
+                      <span style={{ color: "#f02849", fontSize: "14px" }}>{errors.gender}</span>
                     )}
                   </div>
                 </div>
@@ -481,10 +480,11 @@ const Signup = () => {
           .SUcontainer input[type="text"],
           .SUcontainer input[type="email"],
           .SUcontainer input[type="password"],
+          .SUcontainer input[type="date"],
           .SUcontainer select {
             width: calc(50% - 5px);
             padding: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 6px;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
