@@ -1,6 +1,6 @@
 import { Badge, Dropdown, Menu, MenuButton, MenuItem } from "@mui/joy";
 import React, { useEffect, useState } from "react";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 import axios from "axios";
 import { useAuth } from "../AuthContext";
 
@@ -20,20 +20,26 @@ function Notification(props) {
       }
     };
     fetchNotif();
-  }, []);
+  }, [user.userID]);
   return (
     <div>
       <Dropdown>
         <MenuButton variant="plain" size="sm">
           <Badge badgeContent={props.count}>
-            <NotificationsNoneIcon />
+            <NotificationsIcon />
           </Badge>
         </MenuButton>
-        {notifs.map((notif) => {
-          <Menu key={notif.notificationID} variant="soft" size="md">
-            <MenuItem>{notif.notificationType}</MenuItem>
-          </Menu>;
-        })}
+        <Menu variant="soft" size="lg" color="primary">
+          {notifs.length > 0 ? (
+            notifs.map((notif) => (
+              <MenuItem key={notif.notificationID}>
+                {notif.notificationType}
+              </MenuItem>
+            ))
+          ) : (
+            <MenuItem>No new notifications</MenuItem>
+          )}
+        </Menu>
       </Dropdown>
     </div>
   );
