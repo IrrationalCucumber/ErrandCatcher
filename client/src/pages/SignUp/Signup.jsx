@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import RadioInputs from "./RadioInputs";
 //import "./Error.css";
+import "./passignup.css";
 
 const Signup = () => {
   const [account, setAccount] = useState({
@@ -349,10 +350,17 @@ const Signup = () => {
                       autoComplete="off"
                       required
                     />
-                    <div>Password strength: {strength}</div>
                     {errors.regPassword && (
                       <span style={{ color: "#f02849", fontSize: "14px" }}>{errors.regPassword}</span>
                     )}
+                    <div
+                      className={`password-strength ${strength === "Weak" ? "strength-weak" :
+                        strength === "Medium" ? "strength-medium" :
+                          strength === "Strong" ? "strength-strong" : ""
+                        }`}
+                    >
+                      Password strength: {strength}
+                    </div>
                   </div>
                   <div className="col">
                     <label className="SUlabel">Confirm Password</label>
