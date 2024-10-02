@@ -20,6 +20,8 @@ const Signup = () => {
     dateCreated: "",
   });
 
+  const [strength, setStrength] = useState("");
+
   //handle state of error message
   // const [employerErrorMessage, setEmployerErrorMessage] = useState("");
   // const [catcherErrorMessage, setCatcherErrorMessage] = useState("");
@@ -98,6 +100,35 @@ const Signup = () => {
     // setErrorMessage("");
   };
 
+  function evaluatePasswordStrength(password) {
+    let score = 0;
+
+    if (!password) return '';
+
+    // Check password length
+    if (password.length > 8) score += 1;
+    // Contains lowercase
+    if (/[a-z]/.test(password)) score += 1;
+    // Contains uppercase
+    if (/[A-Z]/.test(password)) score += 1;
+    // Contains numbers
+    if (/\d/.test(password)) score += 1;
+    // Contains special characters
+    if (/[^A-Za-z0-9]/.test(password)) score += 1;
+
+    switch (score) {
+      case 0:
+      case 1:
+      case 2:
+        return "Weak";
+      case 3:
+        return "Medium";
+      case 4:
+      case 5:
+        return "Strong";
+    }
+  }
+
   const getCurrentDate = () => {
     const currentDate = new Date();
     const year = currentDate.getFullYear();
@@ -123,7 +154,7 @@ const Signup = () => {
     // Format the date as yyyy-mm-dd
     return `${year}-${month < 10 ? "0" + month : month}-${day < 10 ? "0" + day : day}`;
   };
-  
+
   const handleOptionChange = (e) => {
     setSelectedOption(e.target.value);
   };
@@ -175,7 +206,7 @@ const Signup = () => {
       }
     }
   };
-  //console.log(account);
+  console.log(account);
 
   return (
     <div
@@ -308,12 +339,17 @@ const Signup = () => {
                       // className={errorMessage ? "error" : ""}
                       type="password"
                       placeholder="Password"
-                      onChange={handleChange}
+                      // onChange={handleChange}
+                      onChange={(event) => {
+                        setAccount((prev) => ({ ...prev, [event.target.name]: event.target.value }));
+                        setStrength(evaluatePasswordStrength(event.target.value));
+                      }}
                       name="regPassword"
                       value={account.regPassword}
                       autoComplete="off"
                       required
                     />
+                    <div>Password strength: {strength}</div>
                     {errors.regPassword && (
                       <span style={{ color: "#f02849", fontSize: "14px" }}>{errors.regPassword}</span>
                     )}
