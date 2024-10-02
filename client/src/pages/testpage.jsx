@@ -1,13 +1,7 @@
-import React from "react";
-import Cards from "../components/Cards/Cards";
-//import Menu from './Menu'
+import React, { useState } from "react";
 
 function testpage() {
-  return (
-    <div>
-      <Cards />
-    </div>
-  );
+  return <div></div>;
 }
 
 export default testpage;

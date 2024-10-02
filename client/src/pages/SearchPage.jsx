@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Cards from "../components/Cards/CatCards";
 import axios from "axios";
-import Navbar from "../components/Navbar/Navbar";
+import Navbar from "../components/Navbar/NavBarPage";
 import { useAuth } from "../components/AuthContext";
+import Search from "@mui/icons-material/Search";
+import LocationOn from "@mui/icons-material/LocationOn";
 
 function SearchPage() {
   const [commissions, setCommissions] = useState([]);
@@ -40,7 +42,7 @@ function SearchPage() {
       }
     };
     fetchAllCommission();
-    setMessage("You have search for " + term);
+    setMessage("You have search for '" + term + "'");
     // }
     //add 'term' as dependencies
     // to trigger if its empty
@@ -81,7 +83,23 @@ function SearchPage() {
   return (
     <>
       <Navbar />
-      {message}
+      <div class="row bg-primary">
+        <div class="col d-flex justify-content-center">
+          <h1 style={{ position: "relative", color: "white" }}>
+            <Search
+              sx={{
+                color: "skyblue",
+                // position: "absolute",
+                marginRight: "7px",
+                left: "15px",
+                fontSize: 28,
+              }}
+            />
+            {message}
+          </h1>
+        </div>
+      </div>
+
       {/* FILTERS */}
       {/* <div className="search-bar">
         <input
@@ -98,42 +116,70 @@ function SearchPage() {
           Search
         </button>
       </div> */}
-      <select name="type" id="type" value={filter.type} onChange={handleChange}>
-        <option value="">Choose Location....</option>
-        <option value="HomeService">Home Service</option>
-        <option value="Delivery">Delivery</option>
-        <option value="Transportation">Transportation</option>
-      </select>
-      <select
-        name="location"
-        id="location"
-        value={filter.location}
-        onChange={handleChange}
-      >
-        <option value="">Choose Location....</option>
-        <option value="Cebu">Cebu</option>
-        <option value="Cordova">Cordova</option>
-        <option value="Mandaue">Mandaue</option>
-        <option value="Lapu-Lapu">Lapu-Lapu</option>
-        <option value="Talisay">Talisay</option>
-      </select>
-      <label htmlFor="">
-        Payment range
-        <input
-          type="number"
-          placeholder="Starting range..."
-          name="minPay"
-          onChange={handleChange}
-          value={filter.minPay}
-        />
-        <input
-          type="number"
-          placeholder="Maximum range..."
-          name="maxPay"
-          onChange={handleChange}
-          value={filter.maxPay}
-        />
-      </label>
+      <div className="row">
+        <div className="search-barborder">
+          <div className="box">
+            <div className="col">
+              <select
+                name="type"
+                id="type"
+                value={filter.type}
+                onChange={handleChange}
+              >
+                <option value="">Choose Errand Type....</option>
+                <option value="HomeService">Home Service</option>
+                <option value="Delivery">Delivery</option>
+                <option value="Transportation">Transportation</option>
+              </select>
+            </div>
+            <div className="col">
+              <LocationOn
+                sx={{
+                  position: "absolute",
+                  color: "grey",
+                  margin: "8px",
+                }}
+              />
+              <select
+                name="location"
+                id="location"
+                className="selected"
+                value={filter.location}
+                onChange={handleChange}
+              >
+                <option value="">Choose Location....</option>
+                <option value="Cebu">Cebu</option>
+                <option value="Cordova">Cordova</option>
+                <option value="Mandaue">Mandaue</option>
+                <option value="Lapu-Lapu">Lapu-Lapu</option>
+                <option value="Talisay">Talisay</option>
+              </select>
+            </div>
+            <div class="col">
+              <div className="Paylabel">
+                <label htmlFor="">
+                  Payment range
+                  <input
+                    type="number"
+                    placeholder="Starting range..."
+                    name="minPay"
+                    onChange={handleChange}
+                    value={filter.minPay}
+                  />
+                  <input
+                    type="number"
+                    placeholder="Maximum range..."
+                    name="maxPay"
+                    onChange={handleChange}
+                    value={filter.maxPay}
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <Cards commissions={filteredCommissions} />
     </>
   );

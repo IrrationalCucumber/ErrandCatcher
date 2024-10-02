@@ -22,3 +22,13 @@ export function BannerOngoingSection(props) {
     </div>
   );
 }
+
+export function BannerEmployerPages(props) {
+  return (
+    <>
+      <div className="employer__hero__container">
+        <h1>{props.bannerMessage}</h1>
+      </div>
+    </>
+  );
+}
