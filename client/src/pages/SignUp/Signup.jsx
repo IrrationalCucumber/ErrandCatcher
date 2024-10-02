@@ -113,6 +113,17 @@ const Signup = () => {
     { label: "Catcher", value: "Catcher" },
   ];
 
+  // Get the current date and calculate the date (18 years ago)
+  const getMaxDate = () => {
+    const today = new Date();
+    const year = today.getFullYear() - 18; // adjust year restricted
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+
+    // Format the date as yyyy-mm-dd
+    return `${year}-${month < 10 ? "0" + month : month}-${day < 10 ? "0" + day : day}`;
+  };
+  
   const handleOptionChange = (e) => {
     setSelectedOption(e.target.value);
   };
@@ -383,6 +394,7 @@ const Signup = () => {
                       name="bday"
                       value={account.bday}
                       onChange={handleChange}
+                      max={getMaxDate()}
                     />
                     {errors.bday && (
                       <span style={{ color: "#f02849", fontSize: "14px" }}>{errors.bday}</span>
