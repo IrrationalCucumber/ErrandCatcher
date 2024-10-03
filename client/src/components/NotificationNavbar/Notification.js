@@ -13,10 +13,12 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import axios from "axios";
 import { useAuth } from "../AuthContext";
 import { DisplayDate } from "../DisplayDate";
+import { useNavigate } from "react-router-dom";
 
 function Notification(props) {
   const [notifs, setNotifs] = useState([]);
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   // Fetch and display all user's unread notifications
   useEffect(() => {
@@ -56,7 +58,7 @@ function Notification(props) {
     <div>
       <Dropdown>
         <MenuButton variant="plain" size="sm">
-          <Badge badgeContent={props.count || notifs.length}>
+          <Badge badgeContent={props.count}>
             <NotificationsIcon />
           </Badge>
         </MenuButton>
@@ -72,19 +74,14 @@ function Notification(props) {
           {/* "Mark All as Read" Button */}
           {filterNotif.length > 0 && (
             <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
-              <Button
-                size="sm"
-                color="primary"
-                onClick={handleMarkAllAsRead}
-                disabled={notifs.every((notif) => notif.isRead)}
-              >
+              <Button size="sm" color="primary" onClick={handleMarkAllAsRead}>
                 Mark All as Read
               </Button>
             </Box>
           )}
 
-          {notifs.length > 0 ? (
-            notifs.map((notif) => (
+          {filterNotif.length > 0 ? (
+            filterNotif.map((notif) => (
               <MenuItem
                 key={notif.notificationID}
                 sx={{ display: "block", padding: 2 }}
@@ -129,6 +126,17 @@ function Notification(props) {
           ) : (
             <MenuItem>No new notifications</MenuItem>
           )}
+          {/* "View All Notifications" Button */}
+
+          <Box sx={{ display: "flex", justifyContent: "center", mt: 1 }}>
+            <Button
+              size="sm"
+              color="primary"
+              onClick={(e) => navigate(`/notifications`)}
+            >
+              View All Notifications
+            </Button>
+          </Box>
         </Menu>
       </Dropdown>
     </div>
