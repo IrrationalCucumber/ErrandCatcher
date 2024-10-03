@@ -48,7 +48,7 @@ const Notif = {
   // update the notif to read
   putReadNotif: (notifID, id, callback) => {
     db.query(
-      `UPDATE notification SET isRead = 'yes' WHERE notificationID = (?) AND userID = (?)`,
+      `UPDATE notification SET isRead = 'yes' WHERE notificationID = (?) AND notifUserID = (?)`,
       [notifID, id],
       callback
     );
@@ -56,7 +56,7 @@ const Notif = {
   //update all notif of user to isRead
   putReadAllNotif: (id, callback) => {
     db.query(
-      `UPDATE notification SET isRead = 'yes' WHERE userID = (?)`,
+      `UPDATE notification SET isRead = 'yes' WHERE notifUserID = ?`,
       [id],
       callback
     );
