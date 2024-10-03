@@ -30,8 +30,8 @@ export function Step1({ onNext, details, setDetail }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
-      details.firstName.trim() === "" ||
-      details.lastName.trim() === ""
+      details.firstName === "" ||
+      details.lastName === ""
       // details.age.trim() === "" ||
       // details.date.trim() === ""
     ) {
@@ -79,6 +79,17 @@ export function Step1({ onNext, details, setDetail }) {
     }
   };
 
+  // Get the current date and calculate the date (18 years ago)
+  const getMaxDate = () => {
+    const today = new Date();
+    const year = today.getFullYear() - 18; // adjust year restricted
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+
+    // Format the date as yyyy-mm-dd
+    return `${year}-${month < 10 ? "0" + month : month}-${day < 10 ? "0" + day : day}`;
+  };
+
   return (
     <div className="step">
       <h1>Basic Information</h1>
@@ -93,7 +104,7 @@ export function Step1({ onNext, details, setDetail }) {
               name="firstname"
               value={details.firstName}
               onChange={handleChange}
-              // required
+            // required
             ></input>
             <input
               type="text"
@@ -101,7 +112,7 @@ export function Step1({ onNext, details, setDetail }) {
               value={details.lastName}
               name="lastname"
               onChange={handleChange}
-              // required
+            // required
             ></input>
           </div>
 
@@ -112,7 +123,7 @@ export function Step1({ onNext, details, setDetail }) {
               value={details.email}
               name="email"
               placeholder="Enter your Email Address"
-              // required
+            // required
             ></input>
           </div>
 
@@ -124,7 +135,7 @@ export function Step1({ onNext, details, setDetail }) {
               name="age"
               onChange={handleChange}
               placeholder=""
-              // required
+            // required
             ></input>
 
             <label className="label">Gender</label>
@@ -141,6 +152,7 @@ export function Step1({ onNext, details, setDetail }) {
               type="date"
               value={details.date}
               onChange={handleChange}
+              max={getMaxDate()}
             ></input>
           </div>
 
@@ -151,7 +163,7 @@ export function Step1({ onNext, details, setDetail }) {
               placeholder="Enter your address"
               name="address"
               value={details.address}
-              // required
+            // required
             ></input>
           </div>
           <div className="input-rows">
@@ -161,7 +173,7 @@ export function Step1({ onNext, details, setDetail }) {
               value={details.cnum}
               name="cnum"
               placeholder="Enter your Contact Number"
-              // required
+            // required
             ></input>
           </div>
           <div className="step__button">
