@@ -235,7 +235,7 @@ const Landing = () => {
         </div>
       </section>
 
-      <Footer />
+      <Footer footerUserType="footer-container__admin" />
     </>
   );
 };

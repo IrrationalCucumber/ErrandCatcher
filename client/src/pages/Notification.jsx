@@ -37,7 +37,7 @@ function Notification() {
 
   return (
     <>
-      <Navbar />
+      <Navbar navbar_ui={`navbar__${user.userType.toLowerCase()}`} />
       <div className="notification-container">
         <main className="notification-main">
           <div className="notification-header">

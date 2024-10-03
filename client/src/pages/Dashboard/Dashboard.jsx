@@ -43,7 +43,7 @@ function Dashboard() {
           {user.userType.toLocaleUpperCase() === "ADMIN" && (
             <>
               <Navbar
-                navbar_ui={"navbar"}
+                navbar_ui={"navbar__admin"}
                 page1="REQUESTS"
                 one={`/dashboard/admin/request`}
                 // {`admin-home/${userID}`}
