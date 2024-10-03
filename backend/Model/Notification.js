@@ -15,7 +15,7 @@ const Notif = {
   // notiff count of user
   getNotifCount: (id, callback) => {
     db.query(
-      "select count(*) as 'c' from notification where notifUserID = ? ",
+      "select count(*) as 'c' from notification where notifUserID = ? AND isRead = 'no'",
       [id],
       callback
     );
