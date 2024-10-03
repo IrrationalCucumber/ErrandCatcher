@@ -130,6 +130,32 @@ const Signup = () => {
     }
   }
 
+  const getStrengthColor = (strength) => {
+    switch (strength) {
+      case "Weak":
+        return "red";
+      case "Medium":
+        return "orange";
+      case "Strong":
+        return "green";
+      default:
+        return "transparent";
+    }
+  };
+
+  const getStrengthWidth = (strength) => {
+    switch (strength) {
+      case "Weak":
+        return "30%";
+      case "Medium":
+        return "66%";
+      case "Strong":
+        return "100%";
+      default:
+        return "0";
+    }
+  };
+
   const getCurrentDate = () => {
     const currentDate = new Date();
     const year = currentDate.getFullYear();
@@ -353,14 +379,28 @@ const Signup = () => {
                     {errors.regPassword && (
                       <span style={{ color: "#f02849", fontSize: "14px" }}>{errors.regPassword}</span>
                     )}
-                    <div
-                      className={`password-strength ${strength === "Weak" ? "strength-weak" :
-                        strength === "Medium" ? "strength-medium" :
-                          strength === "Strong" ? "strength-strong" : ""
-                        }`}
-                    >
-                      Password strength: {strength}
-                    </div>
+                    {account.regPassword && (
+                      <>
+                        <div
+                          className={`password-strength ${strength === "Weak" ? "strength-weak" :
+                            strength === "Medium" ? "strength-medium" :
+                              strength === "Strong" ? "strength-strong" : ""
+                            }`}
+                        >
+                          Password strength: {strength}
+                        </div>
+
+                        <div className="strength-meter">
+                          <div
+                            className="strength-meter-fill"
+                            style={{
+                              width: getStrengthWidth(strength),
+                              backgroundColor: getStrengthColor(strength),
+                            }}
+                          />
+                        </div>
+                      </>
+                    )}
                   </div>
                   <div className="col">
                     <label className="SUlabel">Confirm Password</label>

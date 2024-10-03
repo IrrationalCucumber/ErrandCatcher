@@ -31,10 +31,13 @@
     background-color: #e0e0e0;
     border-radius: 5px;
     margin-top: 5px;
+    overflow: hidden;  
   }
   
   .strength-meter-fill {
     height: 100%;
     border-radius: 5px;
+    width: 0%;
+    transition: width 0.5s ease, background-color 0.5s ease; 
   }
   
