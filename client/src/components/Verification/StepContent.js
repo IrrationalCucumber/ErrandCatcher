@@ -30,8 +30,8 @@ export function Step1({ onNext, details, setDetail }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
-      details.firstName.trim() === "" ||
-      details.lastName.trim() === ""
+      details.firstName === "" ||
+      details.lastName === ""
       // details.age.trim() === "" ||
       // details.date.trim() === ""
     ) {
@@ -79,6 +79,17 @@ export function Step1({ onNext, details, setDetail }) {
     }
   };
 
+  // Get the current date and calculate the date (18 years ago)
+  const getMaxDate = () => {
+    const today = new Date();
+    const year = today.getFullYear() - 18; // adjust year restricted
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+
+    // Format the date as yyyy-mm-dd
+    return `${year}-${month < 10 ? "0" + month : month}-${day < 10 ? "0" + day : day}`;
+  };
+
   return (
     <div className="step">
       <h1>Basic Information</h1>
@@ -93,7 +104,7 @@ export function Step1({ onNext, details, setDetail }) {
               name="firstname"
               value={details.firstName}
               onChange={handleChange}
-              // required
+            // required
             ></input>
             <input
               type="text"
@@ -101,7 +112,7 @@ export function Step1({ onNext, details, setDetail }) {
               value={details.lastName}
               name="lastname"
               onChange={handleChange}
-              // required
+            // required
             ></input>
           </div>
 
@@ -112,7 +123,7 @@ export function Step1({ onNext, details, setDetail }) {
               value={details.email}
               name="email"
               placeholder="Enter your Email Address"
-              // required
+            // required
             ></input>
           </div>
 
@@ -124,7 +135,7 @@ export function Step1({ onNext, details, setDetail }) {
               name="age"
               onChange={handleChange}
               placeholder=""
-              // required
+            // required
             ></input>
 
             <label className="label">Gender</label>
@@ -141,6 +152,7 @@ export function Step1({ onNext, details, setDetail }) {
               type="date"
               value={details.date}
               onChange={handleChange}
+              max={getMaxDate()}
             ></input>
           </div>
 
@@ -151,7 +163,7 @@ export function Step1({ onNext, details, setDetail }) {
               placeholder="Enter your address"
               name="address"
               value={details.address}
-              // required
+            // required
             ></input>
           </div>
           <div className="input-rows">
@@ -161,7 +173,7 @@ export function Step1({ onNext, details, setDetail }) {
               value={details.cnum}
               name="cnum"
               placeholder="Enter your Contact Number"
-              // required
+            // required
             ></input>
           </div>
           <div className="step__button">
@@ -256,33 +268,33 @@ export function Step2({ images, setImages, onNext, onPrev }) {
   }
   // console.log(image1);
   // console.log(image2);
-  const handleUpload = async (e) => {
-    e.preventDefault();
+  // const handleUpload = async (e) => {
+  //   e.preventDefault();
 
-    if (!images.image1 || !images.image2) {
-      // setOpen(false);
-      // alert("Please upload both image before submitting.");
-      setAlertOpen(true);
-      console.log("please upload your images");
-      setOpen(false);
+  //   if (!images.image1 || !images.image2) {
+  //     // setOpen(false);
+  //     // alert("Please upload both image before submitting.");
+  //     setAlertOpen(true);
+  //     console.log("please upload your images");
+  //     setOpen(false);
 
-      return;
-    } else {
-      onNext(); // Move to the next step
-    }
-    const formData = new FormData();
+  //     return;
+  //   } else {
+  //     onNext(); // Move to the next step
+  //   }
+  //   const formData = new FormData();
 
-    formData.append("image1", images.image1);
-    formData.append("image2", images.image2);
-    console.log(formData);
-    await axios
-      .post(`http://localhost:8800/upload/${userID}`, formData)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-    // setCurrentStep(currentStep + 1);
-    setOpen(false);
-    // alert("Successful upload file");
-  };
+  //   formData.append("image1", images.image1);
+  //   formData.append("image2", images.image2);
+  //   console.log(formData);
+  //   await axios
+  //     .post(`http://localhost:8800/upload/${userID}`, formData)
+  //     .then((res) => console.log(res))
+  //     .catch((err) => console.log(err));
+  //   // setCurrentStep(currentStep + 1);
+  //   setOpen(false);
+  //   // alert("Successful upload file");
+  // };
 
   function handleDelete(image) {
     if (image === "image1") {
@@ -471,7 +483,7 @@ export function Step2({ images, setImages, onNext, onPrev }) {
                       <Button
                         variant="plain"
                         color="neutral"
-                        onClick={handleUpload} // Upload the file if Yes
+                        onClick={onNext} // Upload the file if Yes
                       >
                         Yes
                       </Button>
@@ -505,12 +517,38 @@ export function Step2({ images, setImages, onNext, onPrev }) {
 //STEP 3
 // SUmmary and Submit Request
 export function Step3({ details, images, onPrev }) {
+  const { user } = useAuth();
+  const userID = user.userID;
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      //wrap file images into formdata
+      const formData = new FormData();
+
+      formData.append("image1", images.image1);
+      formData.append("image2", images.image2);
+      console.log(formData);
+      //upload docs to server
+      await axios
+        .post(`http://localhost:8800/upload/${userID}`, formData)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+      //update accound data
+      await axios.put("http://localhost:8800/update/" + userID, details);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="step">
       <form className="form-container">
         <h2>Step 3</h2>
         <p>First Name: {details.firstName}</p>
         <p>Last Name: {details.lastName}</p>
+        <p>Age: {details.age}</p>
+        <p>Birthday: {details.date}</p>
+        <p>Email: {details.email}</p>
+        <p>Contact #: {details.cnum}</p>
         {images.preview1 && (
           <img
             src={images.preview1}
@@ -525,6 +563,27 @@ export function Step3({ details, images, onPrev }) {
             alt="Preview 2"
           />
         )}
+        <div className="done__nav__btn">
+          <Button className="btnn" onClick={onPrev}>
+            BACK
+          </Button>
+
+          <Button
+            variant="outlined"
+            color="success"
+            size="lg"
+            sx={{
+              margin: "20px",
+              padding: "10px",
+              width: "100px",
+              borderRadius: "5px",
+              fontSize: "13px",
+            }}
+            onClick={onSubmit}
+          >
+            Submit
+          </Button>
+        </div>
       </form>
     </div>
   );

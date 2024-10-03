@@ -242,6 +242,7 @@ const Profile = () => {
                     </i>
                   </Link>
                 )}
+
                 {account.status === "Verified" ? (
                   <>
                     <i
