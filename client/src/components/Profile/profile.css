@@ -151,7 +151,7 @@
     font-size: 20px;
 }
 
-.profile-right .buttons button:last-child, button:first-child {
+.profile-right .buttons button:last-child {
     margin-left: 25px;
 }
 
