@@ -108,12 +108,8 @@ function ApplicationQualificationModal(props) {
       application.applicationDate = getCurrentDate();
       application.comID = props.commissionID;
       application.catcherID = props.userID;
+      application.qualifications = qualificationsString;
 
-      // Update the application state with the combined string
-      setApplication({
-        ...application, // Keep other properties intact
-        qualifications: qualificationsString, // Add qualifications string
-      });
       console.log(application); // Check the updated commission object
       await axios.post("http://localhost:8800/apply", application);
 
