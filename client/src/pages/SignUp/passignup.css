@@ -1,0 +1,43 @@
+.password-input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+  
+  .password-strength {
+    margin-top: 5px;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .strength-weak {
+    color: red;
+  }
+  
+  .strength-medium {
+    color: orange;
+  }
+  
+  .strength-strong {
+    color: green;
+  }
+  
+  .strength-meter {
+    height: 5px;
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    margin-top: 5px;
+    overflow: hidden;  
+  }
+  
+  .strength-meter-fill {
+    height: 100%;
+    border-radius: 5px;
+    width: 0%;
+    transition: width 0.5s ease, background-color 0.5s ease; 
+  }
+  
