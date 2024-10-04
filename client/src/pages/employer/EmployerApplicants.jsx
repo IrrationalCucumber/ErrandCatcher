@@ -103,11 +103,19 @@ const EmployerApplicants = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = applicants.slice(indexOfFirstItem, indexOfLastItem);
 
-  const headers = ["DATE", "CATCHER", "ERRAND TITLE", "ACTION", ""];
+  const headers = [
+    "DATE",
+    "CATCHER",
+    "QUALIFICATION",
+    "ERRAND TITLE",
+    "ACTION",
+    "",
+  ];
   const applicantData = applicants.map((applicant) => [
     //applicant.applicationID,
     DisplayDate(applicant.applicationDate),
     `${applicant.userFirstname} ${applicant.userLastname}`,
+    applicant.applicationQualification,
     applicant.commissionTitle,
     applicant.applicationStatus === "Pending" ? (
       <>
