@@ -230,6 +230,7 @@ const ErrandPage = () => {
           commissionID={commissionID}
           open={open}
           close={() => setOpen(false)}
+          type={commission.comType}
         />
       </div>
     </>

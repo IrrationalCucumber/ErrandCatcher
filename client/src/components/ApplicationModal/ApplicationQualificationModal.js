@@ -45,37 +45,62 @@ function ApplicationQualificationModal(props) {
   const [licenseType, setLicenseType] = useState("");
   const [drivingExperience, setDrivingExperience] = useState("");
   const [vehicleType, setVehicleType] = useState("");
+  const [generalExperience, setGeneralExperience] = useState("");
+  const [skills, setSkills] = useState("");
   const [error, setError] = useState("");
 
   //click event for apply
   const handleApply = async (e) => {
-    // Qualification check logic
-    if (!hasLicense) {
-      setError("You must have a license to apply.");
-      return;
-    }
-    if (!licenseType) {
-      setError("Please select a license type.");
-      return;
-    }
-    if (!drivingExperience || drivingExperience <= 0) {
-      setError("Please enter your driving experience.");
-      return;
-    }
-    if (!vehicleType) {
-      setError("Please select a vehicle type.");
-      return;
-    }
-
-    // Clear errors if all checks pass
-    setError("");
-
-    // Create a combined string for qualifications
-    const qualificationsString = `License: ${
-      hasLicense ? "Yes" : "No"
-    }, Type: ${licenseType}, Experience: ${drivingExperience} years, Vehicle: ${vehicleType}`;
-
     e.preventDefault();
+    let qualificationsString = "";
+    // Qualification check logic based on job type
+    if (props.type === "Transportation" || props.type === "Delivery") {
+      // Transportation-specific checks
+      if (!hasLicense) {
+        setError("You must have a license to apply.");
+        return;
+      }
+      if (!licenseType) {
+        setError("Please select a license type.");
+        return;
+      }
+      if (!drivingExperience || drivingExperience <= 0) {
+        setError("Please enter your driving experience.");
+        return;
+      }
+      if (!vehicleType) {
+        setError("Please select a vehicle type.");
+        return;
+      }
+
+      // Clear errors if all checks pass
+      setError("");
+
+      // Create a combined string for qualifications (transportation job)
+      qualificationsString = `License: ${
+        hasLicense ? "Yes" : "No"
+      }, Type: ${licenseType}, Experience: ${drivingExperience} years, Vehicle: ${vehicleType}`;
+    } else if (
+      props.type === "HomeService - Indoor" ||
+      props.type === "HomeService - Outdoor"
+    ) {
+      // General job qualification checks (e.g., indoor/outdoor jobs)
+      if (!generalExperience || generalExperience <= 0) {
+        setError("Please enter your experience.");
+        return;
+      }
+      if (!skills) {
+        setError("Please list your skills.");
+        return;
+      }
+
+      // Clear errors if all checks pass
+      setError("");
+
+      // Create a combined string for qualifications (general job)
+      qualificationsString = `Experience: ${generalExperience} years, Skills: ${skills}`;
+    }
+
     try {
       //console.log(userID); // Check if userID is correct
 
@@ -83,12 +108,12 @@ function ApplicationQualificationModal(props) {
       application.applicationDate = getCurrentDate();
       application.comID = props.commissionID;
       application.catcherID = props.userID;
+
       // Update the application state with the combined string
       setApplication({
         ...application, // Keep other properties intact
         qualifications: qualificationsString, // Add qualifications string
       });
-
       console.log(application); // Check the updated commission object
       await axios.post("http://localhost:8800/apply", application);
 
@@ -122,60 +147,98 @@ function ApplicationQualificationModal(props) {
             </Typography>
 
             <Box>
-              {/* License Check */}
-              <FormControl>
-                <FormLabel>Do you have a driver's license?</FormLabel>
-                <Checkbox
-                  label="Yes, I have a driver's license"
-                  checked={hasLicense}
-                  onChange={(e) => setHasLicense(e.target.checked)}
-                />
-              </FormControl>
+              {(props.type === "Transportation" ||
+                props.type === "Delivery") && (
+                <>
+                  {/* License Check */}
+                  <FormControl>
+                    <FormLabel>Do you have a driver's license?</FormLabel>
+                    <Checkbox
+                      label="Yes, I have a driver's license"
+                      checked={hasLicense}
+                      onChange={(e) => setHasLicense(e.target.checked)}
+                    />
+                  </FormControl>
 
-              {/* License Type */}
-              {hasLicense && (
-                <FormControl>
-                  <FormLabel>License Type</FormLabel>
-                  <RadioGroup
-                    value={licenseType}
-                    onChange={(e) => setLicenseType(e.target.value)}
-                  >
-                    <Radio value="Non-Professional" label="Non-Professional" />
-                    <Radio value="Professional" label="Professional" />
-                  </RadioGroup>
-                </FormControl>
+                  {/* License Type */}
+                  {hasLicense && (
+                    <FormControl>
+                      <FormLabel>License Type</FormLabel>
+                      <RadioGroup
+                        value={licenseType}
+                        onChange={(e) => setLicenseType(e.target.value)}
+                      >
+                        <Radio
+                          value="Non-Professional"
+                          label="Non-Professional"
+                        />
+                        <Radio value="Professional" label="Professional" />
+                      </RadioGroup>
+                    </FormControl>
+                  )}
+
+                  {/* Driving Experience */}
+                  {hasLicense && (
+                    <FormControl>
+                      <FormLabel>Driving Experience (in years)</FormLabel>
+                      <Input
+                        type="number"
+                        min="0"
+                        value={drivingExperience}
+                        onChange={(e) => setDrivingExperience(e.target.value)}
+                        placeholder="Enter number of years"
+                      />
+                    </FormControl>
+                  )}
+
+                  {/* Vehicle Type */}
+                  {hasLicense && (
+                    <FormControl>
+                      <FormLabel>Vehicle Type</FormLabel>
+                      <RadioGroup
+                        value={vehicleType}
+                        onChange={(e) => setVehicleType(e.target.value)}
+                      >
+                        <Radio value="motorcycle" label="Motorcycle" />
+                        <Radio value="sedan" label="Sedan" />
+                        <Radio value="SUV" label="SUV" />
+                        <Radio value="Pickup" label="Pickup" />
+                        <Radio value="Van" label="Van" />
+                        <Radio value="Truck" label="Truck" />
+                      </RadioGroup>
+                    </FormControl>
+                  )}
+                </>
               )}
+              {/* General (Indoor/Outdoor) Qualification */}
+              {(props.type === "HomeService - Indoor" ||
+                props.type === "HomeService - Outdoor") && (
+                <>
+                  {/* General Experience */}
+                  <FormControl>
+                    <FormLabel>Years of Experience</FormLabel>
+                    <Input
+                      type="number"
+                      min="0"
+                      value={generalExperience}
+                      onChange={(e) => setGeneralExperience(e.target.value)}
+                      placeholder="Enter number of years"
+                    />
+                  </FormControl>
 
-              {/* Driving Experience */}
-              {hasLicense && (
-                <FormControl>
-                  <FormLabel>Driving Experience (in years)</FormLabel>
-                  <Input
-                    type="number"
-                    min="0"
-                    value={drivingExperience}
-                    onChange={(e) => setDrivingExperience(e.target.value)}
-                    placeholder="Enter number of years"
-                  />
-                </FormControl>
-              )}
-
-              {/* Vehicle Type */}
-              {hasLicense && (
-                <FormControl>
-                  <FormLabel>Vehicle Type</FormLabel>
-                  <RadioGroup
-                    value={vehicleType}
-                    onChange={(e) => setVehicleType(e.target.value)}
-                  >
-                    <Radio value="motorcycle" label="Motorcycle" />
-                    <Radio value="sedan" label="Sedan" />
-                    <Radio value="SUV" label="SUV" />
-                    <Radio value="Pickup" label="Pickup" />
-                    <Radio value="Van" label="Van" />
-                    <Radio value="Truck" label="Truck" />
-                  </RadioGroup>
-                </FormControl>
+                  {/* Skills */}
+                  <FormControl>
+                    <FormLabel>
+                      Skills (e.g., Carpentry, Cleaning, etc.)
+                    </FormLabel>
+                    <Input
+                      type="text"
+                      value={skills}
+                      onChange={(e) => setSkills(e.target.value)}
+                      placeholder="Enter skills"
+                    />
+                  </FormControl>
+                </>
               )}
 
               {/* Error Message */}
