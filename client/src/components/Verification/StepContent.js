@@ -540,6 +540,11 @@ export function Step3({ details, images, onPrev }) {
   const userID = user.userID;
   const [open, setOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setOpen(true);
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -552,6 +557,7 @@ export function Step3({ details, images, onPrev }) {
       }
       //wrap file images into formdata
       const formData = new FormData();
+      setOpen(false);
 
       formData.append("image1", images.image1);
       formData.append("image2", images.image2);
@@ -564,6 +570,7 @@ export function Step3({ details, images, onPrev }) {
         .catch((err) => console.log(err));
       //update accound data
       await axios.put("http://localhost:8800/update/" + userID, details);
+      setOpen(false);
     } catch (error) {
       console.log(error);
     }
@@ -610,7 +617,18 @@ export function Step3({ details, images, onPrev }) {
         )}
 
         <div className="done__nav__btn">
-          <Button className="btnn" onClick={onPrev}>
+          <Button
+            className="btnn"
+            onClick={onPrev}
+            size="lg"
+            sx={{
+              margin: "20px",
+              padding: "10px",
+              width: "100px",
+              borderRadius: "5px",
+              fontSize: "13px",
+            }}
+          >
             BACK
           </Button>
 
@@ -625,10 +643,41 @@ export function Step3({ details, images, onPrev }) {
               borderRadius: "5px",
               fontSize: "13px",
             }}
-            onClick={onSubmit}
+            // onClick={onSubmit}
+            onClick={() => handleOpenModal()}
           >
             Submit
           </Button>
+
+          <Modal open={open} onClose={() => setOpen(false)}>
+            <ModalDialog variant="outlined" role="alertdialog">
+              <DialogTitle>
+                <WarningRounded />
+                Confirmation
+              </DialogTitle>
+              <Divider />
+              <DialogContent>
+                Are you sure you want to submit all your documents?
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  variant="plain"
+                  color="neutral"
+                  // Upload the file if Yes
+                  onClick={onSubmit}
+                >
+                  Yes
+                </Button>
+                <Button
+                  variant="plain"
+                  color="neutral"
+                  onClick={() => setOpen(false)}
+                >
+                  Cancel
+                </Button>
+              </DialogActions>
+            </ModalDialog>
+          </Modal>
         </div>
       </form>
     </div>
