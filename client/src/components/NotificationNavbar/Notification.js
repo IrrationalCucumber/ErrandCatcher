@@ -25,7 +25,7 @@ function Notification(props) {
     const fetchNotif = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/my-notif/${user.userID}`
+          `http://localhost:8800/unread-notifs/${user.userID}`
         );
         setNotifs(res.data);
       } catch (err) {
@@ -33,13 +33,9 @@ function Notification(props) {
       }
     };
     fetchNotif();
+    const intervalNotif = setInterval(fetchNotif, 1000);
+    return () => clearInterval(intervalNotif);
   }, [user.userID]);
-
-  //filter notif to just unread
-  const filterNotif = notifs.filter((notif) => {
-    const unread = notif.isRead.includes("no");
-    return unread;
-  });
 
   // Function to mark all notifications as read
   const handleMarkAllAsRead = async () => {
@@ -72,7 +68,7 @@ function Notification(props) {
           }}
         >
           {/* "Mark All as Read" Button */}
-          {filterNotif.length > 0 && (
+          {notifs.length > 0 && (
             <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
               <Button size="sm" color="primary" onClick={handleMarkAllAsRead}>
                 Mark All as Read
@@ -80,8 +76,8 @@ function Notification(props) {
             </Box>
           )}
 
-          {filterNotif.length > 0 ? (
-            filterNotif.map((notif) => (
+          {notifs.length > 0 ? (
+            notifs.map((notif) => (
               <MenuItem
                 key={notif.notificationID}
                 sx={{ display: "block", padding: 2 }}

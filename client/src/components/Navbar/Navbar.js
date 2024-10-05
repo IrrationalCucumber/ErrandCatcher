@@ -50,6 +50,8 @@ function Navbar(props) {
       }
     };
     fetchNotif();
+    const intervalNotif = setInterval(fetchNotif, 1000);
+    return () => clearInterval(intervalNotif);
   }, [userID]);
 
   return (
