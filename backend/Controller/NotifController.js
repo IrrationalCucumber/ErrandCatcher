@@ -105,6 +105,17 @@ const notifController = {
       res.status(200).json({ message: "Success" });
     });
   },
+  getUnreadNotif: (req, res) => {
+    const id = req.params.id;
+    Notif.getUnreadNotifByID(id, (err, notifs) => {
+      if (err) {
+        console.error("Error fetching notifs:", err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      res.json(notifs);
+    });
+  },
 };
 
 module.exports = notifController;

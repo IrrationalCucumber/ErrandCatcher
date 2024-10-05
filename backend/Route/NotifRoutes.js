@@ -10,5 +10,6 @@ router.post("/notify", notifController.postNotif); // add new notif
 router.put("/read-notif/:notifID/:id", notifController.putReadNotif); // update notif isRead
 router.post("/notify-catcher", notifController.postNotifToCatcher); // notify all catchers of new post
 router.put("/read-all/:id", notifController.putReadAllNotif); //read all notif of user
+router.get("/unread-notifs/:id", notifController.getUnreadNotif); //unread notif of user
 
 module.exports = router;

@@ -61,6 +61,14 @@ const Notif = {
       callback
     );
   },
+  //users unread notifs
+  getUnreadNotifByID: (id, callback) => {
+    db.query(
+      "SELECT * FROM notification WHERE notifUserID = ? AND isRead = 'no' ORDER BY notifDate DESC",
+      [id],
+      callback
+    );
+  },
 };
 
 module.exports = Notif;
