@@ -29,12 +29,18 @@ export function Step1({ onNext, details, setDetail }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(details);
     if (
       details.firstName === "" ||
-      details.lastName === ""
-      // details.age.trim() === "" ||
-      // details.date.trim() === ""
+      details.lastName === "" ||
+      details.email == "" ||
+      details.address == "" ||
+      details.sex == "" ||
+      details.age === "" ||
+      details.date === "" ||
+      details.cnum == ""
     ) {
+      console.log("Fields are empty bruh");
       setAlertOpen(true);
     } else if (parseInt(details.age) < 18) {
       setAgeLimit(true);
@@ -90,6 +96,11 @@ export function Step1({ onNext, details, setDetail }) {
     return `${year}-${month < 10 ? "0" + month : month}-${day < 10 ? "0" + day : day}`;
   };
 
+  // debug lng
+  // const sample =  details.firstName;
+  // let detail = { firstName: "", lastName: ""};
+  // let { firstName, lastName } = detail
+
   return (
     <div className="step">
       <h1>Basic Information</h1>
@@ -101,7 +112,7 @@ export function Step1({ onNext, details, setDetail }) {
             <input
               type="text"
               placeholder="First name"
-              name="firstname"
+              name="firstName"
               value={details.firstName}
               onChange={handleChange}
             // required
@@ -110,7 +121,7 @@ export function Step1({ onNext, details, setDetail }) {
               type="text"
               placeholder="Last name"
               value={details.lastName}
-              name="lastname"
+              name="lastName"
               onChange={handleChange}
             // required
             ></input>
@@ -123,6 +134,7 @@ export function Step1({ onNext, details, setDetail }) {
               value={details.email}
               name="email"
               placeholder="Enter your Email Address"
+              onChange={handleChange}
             // required
             ></input>
           </div>
@@ -139,7 +151,11 @@ export function Step1({ onNext, details, setDetail }) {
             ></input>
 
             <label className="label">Gender</label>
-            <select className="select" value={details.sex} name="sex">
+            <select
+              className="select"
+              value={details.sex}
+              name="sex"
+              onChange={handleChange}>
               <option value=""></option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
@@ -163,16 +179,18 @@ export function Step1({ onNext, details, setDetail }) {
               placeholder="Enter your address"
               name="address"
               value={details.address}
+              onChange={handleChange}
             // required
             ></input>
           </div>
           <div className="input-rows">
             <label className="label">Contact Number</label>
             <input
-              type="text"
+              type="number"
               value={details.cnum}
               name="cnum"
               placeholder="Enter your Contact Number"
+              onChange={handleChange}
             // required
             ></input>
           </div>
