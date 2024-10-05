@@ -167,6 +167,7 @@ export function Step1({ onNext, details, setDetail }) {
             <input
               type="date"
               value={details.date}
+              name="date"
               onChange={handleChange}
               max={getMaxDate()}
             ></input>
@@ -537,15 +538,25 @@ export function Step2({ images, setImages, onNext, onPrev }) {
 export function Step3({ details, images, onPrev }) {
   const { user } = useAuth();
   const userID = user.userID;
+  const [open, setOpen] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
+      if (!images.image1 || !images.image2) {
+        setAlertOpen(true);
+        console.log("please enter images");
+        setOpen(false);
+
+        return;
+      }
       //wrap file images into formdata
       const formData = new FormData();
 
       formData.append("image1", images.image1);
       formData.append("image2", images.image2);
       console.log(formData);
+      console.log("info successfully sent to server")
       //upload docs to server
       await axios
         .post(`http://localhost:8800/upload/${userID}`, formData)
@@ -581,6 +592,23 @@ export function Step3({ details, images, onPrev }) {
             alt="Preview 2"
           />
         )}
+
+        {alertOpen && (
+          <Grow in={alertOpen} style={{ transformOrigin: "center" }}>
+            <Alert
+              variant="filled"
+              severity="error"
+              className="step2__alert__error"
+              sx={{
+                fontWeight: "bold",
+              }}
+              onClose={() => setAlertOpen(false)}
+            >
+              Please upload both images before submitting.
+            </Alert>
+          </Grow>
+        )}
+
         <div className="done__nav__btn">
           <Button className="btnn" onClick={onPrev}>
             BACK
