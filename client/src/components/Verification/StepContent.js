@@ -690,7 +690,7 @@ export function Step4() {
     <div className="step">
       <form className="form-container">
         <h1 style={{ display: "flex", justifyContent: "center" }}>
-          Sending Verification to the Admin!
+          Submitting Verification to the Admin!
         </h1>
         <Box className="step4__box">
           <Verified
