@@ -8,7 +8,7 @@ video {
 
 .hero-container{
     background: url('../../../public/images/banner_epmloyer.jpg') center center/cover no-repeat;
-    height: 100vh;
+    height: 50vh;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -20,14 +20,14 @@ video {
 
 .hero-container > h1{
     color: #fff;
-    font-size: 100px;
-    margin-top: -100px;
+    font-size: 75px;
+    margin-top: -60px;
 }
 
 .hero-container > p {
-    margin-top: 8px;
+    margin-top: 5px;
     color: #fff;
-    font-size: 32px;
+    font-size: 25px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
@@ -46,20 +46,20 @@ video {
 
 @media screen and (max-width: 960px){
     .hero-container > h1{
-        font-size: 70;
-        margin-top: -150px;
+        font-size: 50;
+        margin-top: -30px;
     }
     
 }
 
 @media screen and (max-width: 768px) {
     .hero-container > h1{
-        font-size: 50px;
-        margin-top: -100px;
+        font-size: 30px;
+        margin-top: -20px;
     }
     
     .hero-container > p{
-        font-size: 30px;
+        font-size: 20px;
     }
 }
 
@@ -96,3 +96,21 @@ video {
     margin: -25px;
 }
 
+
+.employer__hero__container{
+    height: 25vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2); */
+    object-fit: contain;
+    background: linear-gradient(#9837e7, rgb(176, 118, 214), rgb(194, 178, 206))
+}
+
+.employer__hero__container>h1{
+    color: #fff;
+    font-size: 45px;
+    margin: -25px;
+}

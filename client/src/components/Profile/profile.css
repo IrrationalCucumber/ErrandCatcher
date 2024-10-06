@@ -1,0 +1,174 @@
+.profile-page-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+
+.profile-left, .profile-right {
+    flex: 1;
+    margin-right: 30px;
+}
+
+.profile-left img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+}
+
+.profile-left {
+    text-align: center;
+}
+
+.profile-left .info {
+    margin-top: 20px;
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+.profile-left ul {
+    list-style-type: disc;
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+.profile-left li::marker {
+    color: white;
+}
+
+.profile-left .rating {
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.profile-right {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-right h2 {
+    font-size: 28px;
+    margin-bottom: 25px;
+}
+
+.profile-right label {
+    display: block;
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.profile-right input[type="text"],
+ .profile-right input[type="number"],
+ .profile-right input[type="date"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 18px;
+}
+
+.profile-left input[type="text"],
+.profile-left input[type="number"],
+.profile-left input[type="email"] {
+    width: 100%;
+    display: flex;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    font-size: 16px;
+    outline: none;
+    text-align: center; /* Center the text */
+    background-color: transparent; /* Ensures no background */  
+    transition: border-bottom 0.3s ease; /* Smooth transition for border */
+}
+
+.profile-left input[type="text"]:focus,
+.profile-left input[type="number"]:focus,
+.profile-left input[type="email"]:focus {
+    background-color: #e4dfdf88;
+  border-bottom: 1px solid rgb(49, 47, 47); /* Add underline on focus */
+}
+
+/* Remove the increment (spinner) in number inputs */
+.profile-left input[type="number"] {
+    -moz-appearance: textfield; /* For Firefox */
+}
+
+.profile-left input[type="number"]::-webkit-outer-spin-button,
+.profile-left input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none; /* For Chrome, Safari, and Edge */
+    margin: 0;
+}
+
+
+
+.profile-right .buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.profile-right .buttons button {
+    background-color: #ccc;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 6px;
+    margin-right: 15px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.profile-right .buttons button:hover {
+    background-color: #bbb;
+}
+
+.unverified {
+    background-color: red;
+    color: white;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 20px;
+}
+
+.verified{
+    background-color: none;
+    color: rgb(9, 238, 40);
+    padding: 15px;
+    border: rgb(33, 233, 33) 2px solid;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 20px;
+}
+
+.profile-right .buttons button:last-child {
+    margin-left: 25px;
+}
+
+.rating {
+    color: #333;
+}
+
+.upload-container {
+    display: flex;
+    padding: 10px;
+    align-items: center; /* Align items vertically */
+  }
+  
+  .upload-container button {
+    width: 35px;
+    height: 45px;
+  }
+  .upload-container input[type="file"] {
+    margin-right: 10px; /* Add margin between the file input and the button */
+  }

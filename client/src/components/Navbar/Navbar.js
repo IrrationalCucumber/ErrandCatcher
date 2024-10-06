@@ -8,6 +8,7 @@ import NotificationIcon from "./notif-icon";
 import NavDropdown from "./NavDropdown";
 import axios from "axios";
 import { Button } from "./NavButton";
+import Notification from "../NotificationNavbar/Notification";
 
 function Navbar(props) {
   const { user } = useAuth();
@@ -49,6 +50,8 @@ function Navbar(props) {
       }
     };
     fetchNotif();
+    const intervalNotif = setInterval(fetchNotif, 1000);
+    return () => clearInterval(intervalNotif);
   }, [userID]);
 
   return (
@@ -135,13 +138,16 @@ function Navbar(props) {
                 style={{ marginTop: "1.7rem" }}
               >
                 {button ? (
-                  <NotificationIcon
-                    to={`/notifications`}
-                    hasNotification={true}
-                    onClick={() => console.log("Notification clicked!")}
-                    style={{ color: "white" }}
-                    notificationCount={parseInt(notifCount)}
-                  />
+                  <>
+                    <Notification count={notifCount} />
+                    {/* <NotificationIcon
+                      to={`/notifications`}
+                      hasNotification={true}
+                      onClick={() => console.log("Notification clicked!")}
+                      style={{ color: "white" }}
+                      notificationCount={parseInt(notifCount)}
+                    /> */}
+                  </>
                 ) : (
                   <div>
                     <Link
