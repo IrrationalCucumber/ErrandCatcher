@@ -91,6 +91,31 @@ const notifController = {
       res.status(200).json({ message: "Notification updated successfully" });
     });
   },
+  //Read all notif of user
+  putReadAllNotif: (req, res) => {
+    const id = req.params.id;
+    Notif.putReadAllNotif(id, (err, result) => {
+      if (err) {
+        console.error("Error updating Notification:", err);
+        res
+          .status(500)
+          .json({ err: "An error occurred while updating notification" });
+        return;
+      }
+      res.status(200).json({ message: "Success" });
+    });
+  },
+  getUnreadNotif: (req, res) => {
+    const id = req.params.id;
+    Notif.getUnreadNotifByID(id, (err, notifs) => {
+      if (err) {
+        console.error("Error fetching notifs:", err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      res.json(notifs);
+    });
+  },
 };
 
 module.exports = notifController;

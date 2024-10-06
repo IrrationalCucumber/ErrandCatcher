@@ -6,23 +6,26 @@ import {
   MenuItem,
   Typography,
   Box,
+  Button,
 } from "@mui/joy";
 import React, { useEffect, useState } from "react";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import axios from "axios";
 import { useAuth } from "../AuthContext";
 import { DisplayDate } from "../DisplayDate";
+import { useNavigate } from "react-router-dom";
 
 function Notification(props) {
   const [notifs, setNotifs] = useState([]);
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   // Fetch and display all user's unread notifications
   useEffect(() => {
     const fetchNotif = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/my-notif/${user.userID}`
+          `http://localhost:8800/unread-notifs/${user.userID}`
         );
         setNotifs(res.data);
       } catch (err) {
@@ -30,13 +33,28 @@ function Notification(props) {
       }
     };
     fetchNotif();
+    const intervalNotif = setInterval(fetchNotif, 1000);
+    return () => clearInterval(intervalNotif);
   }, [user.userID]);
+
+  // Function to mark all notifications as read
+  const handleMarkAllAsRead = async () => {
+    try {
+      await axios.put(`http://localhost:8800/read-all/${user.userID}`);
+      // Update the notification list in the UI
+      setNotifs((prevNotifs) =>
+        prevNotifs.map((notif) => ({ ...notif, isRead: true }))
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div>
       <Dropdown>
         <MenuButton variant="plain" size="sm">
-          <Badge badgeContent={props.count || notifs.length}>
+          <Badge badgeContent={props.count}>
             <NotificationsIcon />
           </Badge>
         </MenuButton>
@@ -49,6 +67,15 @@ function Notification(props) {
             overflowY: "auto", // Enable vertical scroll
           }}
         >
+          {/* "Mark All as Read" Button */}
+          {notifs.length > 0 && (
+            <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
+              <Button size="sm" color="primary" onClick={handleMarkAllAsRead}>
+                Mark All as Read
+              </Button>
+            </Box>
+          )}
+
           {notifs.length > 0 ? (
             notifs.map((notif) => (
               <MenuItem
@@ -56,9 +83,23 @@ function Notification(props) {
                 sx={{ display: "block", padding: 2 }}
               >
                 <Box sx={{ display: "flex", flexDirection: "column" }}>
-                  <Typography color="primary" level="title-lg" variant="plain">
-                    {notif.notificationType}
-                  </Typography>
+                  {notif.isRead === "no" ? (
+                    <Typography
+                      color="primary"
+                      level="title-lg"
+                      variant="plain"
+                    >
+                      {notif.notificationType}
+                    </Typography>
+                  ) : (
+                    <Typography
+                      color="neutral"
+                      level="title-lg"
+                      variant="plain"
+                    >
+                      {notif.notificationType}
+                    </Typography>
+                  )}
                   <Typography
                     color="neutral"
                     level="body-md"
@@ -76,28 +117,22 @@ function Notification(props) {
                     {DisplayDate(notif.notifDate)}
                   </Typography>
                 </Box>
-                {/* {notif.isRead ? (
-                  <Typography
-                    variant="caption"
-                    color="green"
-                    sx={{ marginTop: 1 }}
-                  >
-                    Read
-                  </Typography>
-                ) : (
-                  <Typography
-                    variant="caption"
-                    color="red"
-                    sx={{ marginTop: 1 }}
-                  >
-                    Unread
-                  </Typography>
-                )} */}
               </MenuItem>
             ))
           ) : (
             <MenuItem>No new notifications</MenuItem>
           )}
+          {/* "View All Notifications" Button */}
+
+          <Box sx={{ display: "flex", justifyContent: "center", mt: 1 }}>
+            <Button
+              size="sm"
+              color="primary"
+              onClick={(e) => navigate(`/notifications`)}
+            >
+              View All Notifications
+            </Button>
+          </Box>
         </Menu>
       </Dropdown>
     </div>

@@ -15,7 +15,7 @@ const Notif = {
   // notiff count of user
   getNotifCount: (id, callback) => {
     db.query(
-      "select count(*) as 'c' from notification where notifUserID = ? ",
+      "select count(*) as 'c' from notification where notifUserID = ? AND isRead = 'no'",
       [id],
       callback
     );
@@ -48,8 +48,24 @@ const Notif = {
   // update the notif to read
   putReadNotif: (notifID, id, callback) => {
     db.query(
-      `UPDATE notification SET isRead = 'yes' WHERE notificationID = (?) AND userID = (?)`,
+      `UPDATE notification SET isRead = 'yes' WHERE notificationID = (?) AND notifUserID = (?)`,
       [notifID, id],
+      callback
+    );
+  },
+  //update all notif of user to isRead
+  putReadAllNotif: (id, callback) => {
+    db.query(
+      `UPDATE notification SET isRead = 'yes' WHERE notifUserID = ?`,
+      [id],
+      callback
+    );
+  },
+  //users unread notifs
+  getUnreadNotifByID: (id, callback) => {
+    db.query(
+      "SELECT * FROM notification WHERE notifUserID = ? AND isRead = 'no' ORDER BY notifDate DESC",
+      [id],
       callback
     );
   },
