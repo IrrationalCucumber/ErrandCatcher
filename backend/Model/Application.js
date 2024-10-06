@@ -40,10 +40,10 @@ const Apply = {
   // /apply
   //add an application
   postApply: (applyData, callback) => {
-    const { catcherID, comID, applicationDate } = applyData;
-    values = [catcherID, comID, applicationDate];
+    const { catcherID, comID, applicationDate, qualifications } = applyData;
+    values = [catcherID, comID, applicationDate, qualifications];
     db.query(
-      "INSERT INTO application (`catcherID`,`applicationErrandID`, `applicationDate`) VALUES (?)",
+      "INSERT INTO application (`catcherID`,`applicationErrandID`, `applicationDate`, `applicationQualification`) VALUES (?)",
       [values],
       callback
     );
