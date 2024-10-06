@@ -10,13 +10,13 @@ const Signup = () => {
   const [account, setAccount] = useState({
     regUsername: "",
     regPassword: "",
-    firstName: "",
-    lastName: "",
     regPassword2: "",
-    bday: "",
+    lastName: "",
+    firstName: "",
     gender: "",
+    bday: "",
     email: "",
-    contactNumber: "",
+    // contactNumber: "",
     type: "",
     dateCreated: "",
   });
@@ -104,7 +104,7 @@ const Signup = () => {
   function evaluatePasswordStrength(password) {
     let score = 0;
 
-    if (!password) return '';
+    if (!password) return "";
 
     // Check password length
     if (password.length > 8) score += 1;
@@ -179,7 +179,9 @@ const Signup = () => {
     const day = today.getDate();
 
     // Format the date as yyyy-mm-dd
-    return `${year}-${month < 10 ? "0" + month : month}-${day < 10 ? "0" + day : day}`;
+    return `${year}-${month < 10 ? "0" + month : month}-${
+      day < 10 ? "0" + day : day
+    }`;
   };
 
   const handleOptionChange = (e) => {
@@ -295,9 +297,10 @@ const Signup = () => {
                   }}
                 >
                   {selectedOption
-                    ? `Join as ${selectedOption.charAt(0).toUpperCase() +
-                    selectedOption.slice(1)
-                    }`
+                    ? `Join as ${
+                        selectedOption.charAt(0).toUpperCase() +
+                        selectedOption.slice(1)
+                      }`
                     : "Create Account"}
                 </button>
               </div>
@@ -332,9 +335,14 @@ const Signup = () => {
                       autocomplete="off"
                       required
                     />
-                    <div className="err"> {errors.username && (
-                      <span style={{ color: "#f02849", fontSize: "14px" }}>{errors.username}</span>
-                    )}</div>
+                    <div className="err">
+                      {" "}
+                      {errors.username && (
+                        <span style={{ color: "#f02849", fontSize: "14px" }}>
+                          {errors.username}
+                        </span>
+                      )}
+                    </div>
                   </div>
                   <div className="col">
                     <label className="SUlabel">Email Address</label>
@@ -348,7 +356,9 @@ const Signup = () => {
                       required
                     />
                     {errors.email && (
-                      <span style={{ color: "#f02849", fontSize: "14px" }}>{errors.email}</span>
+                      <span style={{ color: "#f02849", fontSize: "14px" }}>
+                        {errors.email}
+                      </span>
                     )}
                   </div>
                 </div>
@@ -368,8 +378,13 @@ const Signup = () => {
                       placeholder="Password"
                       // onChange={handleChange}
                       onChange={(event) => {
-                        setAccount((prev) => ({ ...prev, [event.target.name]: event.target.value }));
-                        setStrength(evaluatePasswordStrength(event.target.value));
+                        setAccount((prev) => ({
+                          ...prev,
+                          [event.target.name]: event.target.value,
+                        }));
+                        setStrength(
+                          evaluatePasswordStrength(event.target.value)
+                        );
                       }}
                       name="regPassword"
                       value={account.regPassword}
@@ -377,15 +392,22 @@ const Signup = () => {
                       required
                     />
                     {errors.regPassword && (
-                      <span style={{ color: "#f02849", fontSize: "14px" }}>{errors.regPassword}</span>
+                      <span style={{ color: "#f02849", fontSize: "14px" }}>
+                        {errors.regPassword}
+                      </span>
                     )}
                     {account.regPassword && (
                       <>
                         <div
-                          className={`password-strength ${strength === "Weak" ? "strength-weak" :
-                            strength === "Medium" ? "strength-medium" :
-                              strength === "Strong" ? "strength-strong" : ""
-                            }`}
+                          className={`password-strength ${
+                            strength === "Weak"
+                              ? "strength-weak"
+                              : strength === "Medium"
+                              ? "strength-medium"
+                              : strength === "Strong"
+                              ? "strength-strong"
+                              : ""
+                          }`}
                         >
                           Password strength: {strength}
                         </div>
@@ -441,7 +463,9 @@ const Signup = () => {
                       required
                     />
                     {errors.firstName && (
-                      <span style={{ color: "#f02849", fontSize: "14px" }}>{errors.firstName}</span>
+                      <span style={{ color: "#f02849", fontSize: "14px" }}>
+                        {errors.firstName}
+                      </span>
                     )}
                   </div>
                   <div className="col">
@@ -456,7 +480,9 @@ const Signup = () => {
                       required
                     />
                     {errors.lastName && (
-                      <span style={{ color: "#f02849", fontSize: "14px" }}>{errors.lastName}</span>
+                      <span style={{ color: "#f02849", fontSize: "14px" }}>
+                        {errors.lastName}
+                      </span>
                     )}
                   </div>
                 </div>
@@ -481,7 +507,9 @@ const Signup = () => {
                       max={getMaxDate()}
                     />
                     {errors.bday && (
-                      <span style={{ color: "#f02849", fontSize: "14px" }}>{errors.bday}</span>
+                      <span style={{ color: "#f02849", fontSize: "14px" }}>
+                        {errors.bday}
+                      </span>
                     )}
                   </div>
                   <div className="col">
@@ -499,7 +527,9 @@ const Signup = () => {
                       <option value="Female">Female</option>
                     </select>
                     {errors.gender && (
-                      <span style={{ color: "#f02849", fontSize: "14px" }}>{errors.gender}</span>
+                      <span style={{ color: "#f02849", fontSize: "14px" }}>
+                        {errors.gender}
+                      </span>
                     )}
                   </div>
                 </div>
