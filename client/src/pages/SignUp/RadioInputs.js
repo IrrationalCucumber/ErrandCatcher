@@ -207,6 +207,10 @@ function RadioInputs({ options, selectedOption, onChange }) {
             color: #fff;
           }
 
+          .radio-wrapper.selected .radio-label {
+             color: white;
+          }
+
           .radio-header {
             display: flex;
             align-items: center;
@@ -229,7 +233,11 @@ function RadioInputs({ options, selectedOption, onChange }) {
           .radio-label {
             margin-left: 10px;
             color: black;
-            font-size: 1.3rem; 
+            font-size: 1.5rem; 
+            cursor: pointer;
+            font-weight: 800;
+            line-height: 1.2;
+            // letter-spacing: 1px;
           }
           
           .separator {
