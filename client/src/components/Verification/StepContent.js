@@ -29,12 +29,18 @@ export function Step1({ onNext, details, setDetail }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(details);
     if (
       details.firstName === "" ||
-      details.lastName === ""
-      // details.age.trim() === "" ||
-      // details.date.trim() === ""
+      details.lastName === "" ||
+      details.email == "" ||
+      details.address == "" ||
+      details.sex == "" ||
+      details.age === "" ||
+      details.date === "" ||
+      details.cnum == ""
     ) {
+      console.log("Fields are empty bruh");
       setAlertOpen(true);
     } else if (parseInt(details.age) < 18) {
       setAgeLimit(true);
@@ -90,6 +96,11 @@ export function Step1({ onNext, details, setDetail }) {
     return `${year}-${month < 10 ? "0" + month : month}-${day < 10 ? "0" + day : day}`;
   };
 
+  // debug lng
+  // const sample =  details.firstName;
+  // let detail = { firstName: "", lastName: ""};
+  // let { firstName, lastName } = detail
+
   return (
     <div className="step">
       <h1>Basic Information</h1>
@@ -101,7 +112,7 @@ export function Step1({ onNext, details, setDetail }) {
             <input
               type="text"
               placeholder="First name"
-              name="firstname"
+              name="firstName"
               value={details.firstName}
               onChange={handleChange}
             // required
@@ -110,7 +121,7 @@ export function Step1({ onNext, details, setDetail }) {
               type="text"
               placeholder="Last name"
               value={details.lastName}
-              name="lastname"
+              name="lastName"
               onChange={handleChange}
             // required
             ></input>
@@ -123,6 +134,7 @@ export function Step1({ onNext, details, setDetail }) {
               value={details.email}
               name="email"
               placeholder="Enter your Email Address"
+              onChange={handleChange}
             // required
             ></input>
           </div>
@@ -139,7 +151,11 @@ export function Step1({ onNext, details, setDetail }) {
             ></input>
 
             <label className="label">Gender</label>
-            <select className="select" value={details.sex} name="sex">
+            <select
+              className="select"
+              value={details.sex}
+              name="sex"
+              onChange={handleChange}>
               <option value=""></option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
@@ -151,6 +167,7 @@ export function Step1({ onNext, details, setDetail }) {
             <input
               type="date"
               value={details.date}
+              name="date"
               onChange={handleChange}
               max={getMaxDate()}
             ></input>
@@ -163,16 +180,18 @@ export function Step1({ onNext, details, setDetail }) {
               placeholder="Enter your address"
               name="address"
               value={details.address}
+              onChange={handleChange}
             // required
             ></input>
           </div>
           <div className="input-rows">
             <label className="label">Contact Number</label>
             <input
-              type="text"
+              type="number"
               value={details.cnum}
               name="cnum"
               placeholder="Enter your Contact Number"
+              onChange={handleChange}
             // required
             ></input>
           </div>
@@ -519,15 +538,31 @@ export function Step2({ images, setImages, onNext, onPrev }) {
 export function Step3({ details, images, onPrev }) {
   const { user } = useAuth();
   const userID = user.userID;
+  const [open, setOpen] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setOpen(true);
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
+      if (!images.image1 || !images.image2) {
+        setAlertOpen(true);
+        console.log("please enter images");
+        setOpen(false);
+
+        return;
+      }
       //wrap file images into formdata
       const formData = new FormData();
+      setOpen(false);
 
       formData.append("image1", images.image1);
       formData.append("image2", images.image2);
       console.log(formData);
+      console.log("info successfully sent to server")
       //upload docs to server
       await axios
         .post(`http://localhost:8800/upload/${userID}`, formData)
@@ -535,6 +570,7 @@ export function Step3({ details, images, onPrev }) {
         .catch((err) => console.log(err));
       //update accound data
       await axios.put("http://localhost:8800/update/" + userID, details);
+      setOpen(false);
     } catch (error) {
       console.log(error);
     }
@@ -563,8 +599,36 @@ export function Step3({ details, images, onPrev }) {
             alt="Preview 2"
           />
         )}
+
+        {alertOpen && (
+          <Grow in={alertOpen} style={{ transformOrigin: "center" }}>
+            <Alert
+              variant="filled"
+              severity="error"
+              className="step2__alert__error"
+              sx={{
+                fontWeight: "bold",
+              }}
+              onClose={() => setAlertOpen(false)}
+            >
+              Please upload both images before submitting.
+            </Alert>
+          </Grow>
+        )}
+
         <div className="done__nav__btn">
-          <Button className="btnn" onClick={onPrev}>
+          <Button
+            className="btnn"
+            onClick={onPrev}
+            size="lg"
+            sx={{
+              margin: "20px",
+              padding: "10px",
+              width: "100px",
+              borderRadius: "5px",
+              fontSize: "13px",
+            }}
+          >
             BACK
           </Button>
 
@@ -579,10 +643,41 @@ export function Step3({ details, images, onPrev }) {
               borderRadius: "5px",
               fontSize: "13px",
             }}
-            onClick={onSubmit}
+            // onClick={onSubmit}
+            onClick={() => handleOpenModal()}
           >
             Submit
           </Button>
+
+          <Modal open={open} onClose={() => setOpen(false)}>
+            <ModalDialog variant="outlined" role="alertdialog">
+              <DialogTitle>
+                <WarningRounded />
+                Confirmation
+              </DialogTitle>
+              <Divider />
+              <DialogContent>
+                Are you sure you want to submit all your documents?
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  variant="plain"
+                  color="neutral"
+                  // Upload the file if Yes
+                  onClick={onSubmit}
+                >
+                  Yes
+                </Button>
+                <Button
+                  variant="plain"
+                  color="neutral"
+                  onClick={() => setOpen(false)}
+                >
+                  Cancel
+                </Button>
+              </DialogActions>
+            </ModalDialog>
+          </Modal>
         </div>
       </form>
     </div>
@@ -595,7 +690,7 @@ export function Step4() {
     <div className="step">
       <form className="form-container">
         <h1 style={{ display: "flex", justifyContent: "center" }}>
-          Sending Verification to the Admin!
+          Submitting Verification to the Admin!
         </h1>
         <Box className="step4__box">
           <Verified
