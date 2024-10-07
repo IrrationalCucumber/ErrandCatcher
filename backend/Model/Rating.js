@@ -38,7 +38,7 @@ const Rating = {
   // from high to low
   getTopRated: (callback) => {
     db.query(
-      `SELECT avg(f.feedbackRate) as 'averageRate', u.username, u.accountType
+      `SELECT avg(f.feedbackRate) as 'averageRate', u.username, u.accountType, u.profileImage
        FROM useraccount u
        JOIN feedbackcommission f ON u.userID = f.feedbackCatcherID
        WHERE u.accountType = 'Catcher'
