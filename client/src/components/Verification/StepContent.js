@@ -61,7 +61,7 @@ export function Step1({ onNext, details, setDetail }) {
           age: d.userAge,
           date: new Date(d.userBirthday).toISOString().substr(0, 10),
           sex: d.userGender,
-          address: d.userGender,
+          address: d.userAddress,
           email: d.userEmail,
           cnum: d.userContactNum,
         });
@@ -93,7 +93,9 @@ export function Step1({ onNext, details, setDetail }) {
     const day = today.getDate();
 
     // Format the date as yyyy-mm-dd
-    return `${year}-${month < 10 ? "0" + month : month}-${day < 10 ? "0" + day : day}`;
+    return `${year}-${month < 10 ? "0" + month : month}-${
+      day < 10 ? "0" + day : day
+    }`;
   };
 
   // debug lng
@@ -115,7 +117,7 @@ export function Step1({ onNext, details, setDetail }) {
               name="firstName"
               value={details.firstName}
               onChange={handleChange}
-            // required
+              // required
             ></input>
             <input
               type="text"
@@ -123,7 +125,7 @@ export function Step1({ onNext, details, setDetail }) {
               value={details.lastName}
               name="lastName"
               onChange={handleChange}
-            // required
+              // required
             ></input>
           </div>
 
@@ -135,7 +137,7 @@ export function Step1({ onNext, details, setDetail }) {
               name="email"
               placeholder="Enter your Email Address"
               onChange={handleChange}
-            // required
+              // required
             ></input>
           </div>
 
@@ -147,7 +149,7 @@ export function Step1({ onNext, details, setDetail }) {
               name="age"
               onChange={handleChange}
               placeholder=""
-            // required
+              // required
             ></input>
 
             <label className="label">Gender</label>
@@ -155,7 +157,8 @@ export function Step1({ onNext, details, setDetail }) {
               className="select"
               value={details.sex}
               name="sex"
-              onChange={handleChange}>
+              onChange={handleChange}
+            >
               <option value=""></option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
@@ -181,7 +184,7 @@ export function Step1({ onNext, details, setDetail }) {
               name="address"
               value={details.address}
               onChange={handleChange}
-            // required
+              // required
             ></input>
           </div>
           <div className="input-rows">
@@ -192,7 +195,7 @@ export function Step1({ onNext, details, setDetail }) {
               name="cnum"
               placeholder="Enter your Contact Number"
               onChange={handleChange}
-            // required
+              // required
             ></input>
           </div>
           <div className="step__button">
@@ -562,7 +565,7 @@ export function Step3({ details, images, onPrev }) {
       formData.append("image1", images.image1);
       formData.append("image2", images.image2);
       console.log(formData);
-      console.log("info successfully sent to server")
+      console.log("info successfully sent to server");
       //upload docs to server
       await axios
         .post(`http://localhost:8800/upload/${userID}`, formData)

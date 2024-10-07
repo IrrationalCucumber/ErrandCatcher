@@ -46,14 +46,14 @@ function NavDropdown(props) {
           backgroundColor: "transparent",
           border: "1px solid white",
           borderRadius: "5px",
-          padding: "10px",
+          padding: "5px 10px 10px 10px",
         }}
       >
         <button
           className="dropbtn"
           onClick={toggleDropdown}
           style={{
-            fontSize: "16px",
+            fontSize: "14px",
             border: "none",
             outline: "none",
             color: "white",

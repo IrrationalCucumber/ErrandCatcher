@@ -121,6 +121,13 @@ function ErrandInputs(props) {
             onChange={props.handleChange}
             name={props.start}
             value={props.startValue}
+            slotProps={{
+              input: {
+                min: new Date().toISOString().split("T")[0],
+              },
+            }}
+            //max={new Date().toISOString().slice(0, 19).replace("T", " ")}
+            //min={new Date().toISOString().split("T")[0]}
           />
         </div>
       </div>
@@ -140,6 +147,11 @@ function ErrandInputs(props) {
             onChange={props.handleChange}
             name={props.deadline}
             value={props.dlValue}
+            slotProps={{
+              input: {
+                min: new Date().toISOString().split("T")[0],
+              },
+            }}
           />
         </div>
       </div>
@@ -241,9 +253,33 @@ function ErrandInputs(props) {
             props.typeValue !== "" && (
               <label style={{ color: "black" }}>Fee: </label>
             )}
-          {props.typeValue === "HomeService" && props.typeValue === "" && (
+          {(props.typeValue === "HomeService - Indoor" ||
+            props.typeValue === "HomeService - Outdoor" ||
+            props.typeValue === "") && (
             <label style={{ color: "black" }}>Fee: </label>
           )}
+          <div className="col2">
+            <Input
+              color="neutral"
+              disabled={props.readOnly}
+              size="lg"
+              variant={props.variant}
+              type="number"
+              startDecorator="₱"
+              placeholder="0.00"
+              onChange={props.handleChange}
+              name={props.pay}
+              value={props.payValue}
+            />
+            {props.typeValue !== "HomeService - Indoor" &&
+              props.typeValue !== "HomeService - Outdoor" &&
+              props.typeValue !== "" && (
+                <>
+                  <p>₱15/km + ₱100</p>
+                  <p>{props.distance} km</p>
+                </>
+              )}
+          </div>
         </div>
         {/* PAYMENT METOD */}
         <div className="input-group">
@@ -266,28 +302,6 @@ function ErrandInputs(props) {
               <option value="credit card">Credit Card</option>
             </select>
           </div>
-        </div>
-        <div className="col2">
-          <Input
-            color="neutral"
-            disabled={props.readOnly}
-            size="lg"
-            variant={props.variant}
-            type="number"
-            startDecorator="₱"
-            placeholder="0.00"
-            onChange={props.handleChange}
-            name={props.pay}
-            value={props.payValue}
-          />
-          {props.typeValue !== "HomeService - Indoor" &&
-            props.typeValue !== "HomeService - Outdoor" &&
-            props.typeValue !== "" && (
-              <>
-                <p>₱15/km + ₱100</p>
-                <p>{props.distance} km</p>
-              </>
-            )}
         </div>
       </div>
 

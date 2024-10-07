@@ -27,8 +27,8 @@ function OngoingCards({ commissions, to }) {
     commissionID: "",
     feedbackComment: "",
     feedbackCount: 0,
-    feebackDate: "",
-    employerID: "",
+    feedbackDate: "",
+    feedbackPosterID: "",
   });
   const [successMsg, setSuccessMsg] = useState("");
 
@@ -63,14 +63,17 @@ function OngoingCards({ commissions, to }) {
     setFeedback({ ...feedback, feedbackCount: rating });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (commissionID, catcherID) => {
     // setIsClicked(true);
     // Add any other logic you want to perform when the button is clicked
-    e.preventDefault();
+    //e.preventDefault();
     try {
       //"http://localhost:8800/commission" - local computer
       //"http://192.168.1.47:8800/commission" - netwrok
-      feedback.feebackDate = getCurrentDate();
+      feedback.feedbackDate = getCurrentDate();
+      feedback.catcherID = catcherID;
+      feedback.feedbackPosterID = user.userID;
+      feedback.commissionID = commissionID;
       //feedback.employerID = commission.
 
       //feedback.commissionID = fetchLoc().commissionID;
@@ -434,6 +437,7 @@ function OngoingCards({ commissions, to }) {
                               ★
                             </span>
                           ))}
+                          {commission.transCatcherID}
                           <h4>Feedback:</h4>
                           <input
                             type="text"
@@ -451,7 +455,12 @@ function OngoingCards({ commissions, to }) {
                           <div style={styles.buttonContainer}>
                             <button
                               style={styles.button}
-                              onClick={handleSubmit}
+                              onClick={(e) =>
+                                handleSubmit(
+                                  commission.commissionID,
+                                  commission.transCatcherID
+                                )
+                              }
                             >
                               Post
                             </button>

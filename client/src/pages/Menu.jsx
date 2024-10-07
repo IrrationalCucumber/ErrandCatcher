@@ -26,7 +26,7 @@ const Menu = () => {
         }}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
-      <div className="search-bar">
+      {/* <div className="search-bar">
         {/* <input
           type="text"
           placeholder="Search..."
@@ -40,8 +40,8 @@ const Menu = () => {
           style={{ backgroundColor: "#1679AB" }}
         >
           Search
-        </button> */}
-      </div>
+        </button> 
+      </div> */}
       <section className="Menu" id="Menu">
         {/* bootstrap class applied */}
         <div className="box-container d-flex justify-content-center align-items-center">

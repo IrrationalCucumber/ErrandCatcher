@@ -10,6 +10,7 @@ import { HeroSection } from "../components/Banner/HeroSection";
 import RequestHeroSection, {
   AdminHeroSection,
 } from "../components/admin/RequestHeroSection";
+import { HomeMap } from "../components/Map/Map";
 
 const Home = () => {
   const { user } = useAuth();
@@ -34,11 +35,14 @@ const Home = () => {
               username={user.username}
             />
             <EmployerCard />
+            <div className="landing__map">
+              <HomeMap id={user.userID} />
+            </div>
 
-            <StickyButton
+            {/* <StickyButton
               buttonText="Post Errand"
               destination={`/errand/post-commission`}
-            />
+            /> */}
 
             <Cards />
           </>

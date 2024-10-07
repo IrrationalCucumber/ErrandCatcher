@@ -40,11 +40,25 @@ export default function TopCatcher() {
               temp image
               Change image to profile or something appropriate
             */}
-            <img
+            {/* <img
               src="/images/catcher.png"
               className="d-block w-100"
               alt="..."
-            />
+            /> */}
+            <>
+              {catcher.profileImage !== null ? (
+                <img
+                  src={`http://localhost:8800/images/profile/${catcher.profileImage}`}
+                  alt="ProfPic"
+                />
+              ) : (
+                <img
+                  src="/images/catcher.png"
+                  className="d-block w-100"
+                  alt="..."
+                />
+              )}
+            </>
             {/* 
               change placeholder texts
             */}
