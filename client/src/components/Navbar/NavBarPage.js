@@ -36,10 +36,40 @@ function Navbar() {
 
   return (
     <>
-      <nav className="navbar">
-        <div className="navbar-container">
-          <Link className="navbar-logo" onClick={goBack}>
+      <nav className="navbar__page">
+        <div className="navbar-container justify-center">
+          {/* <Link className="navbar-logo" onClick={goBack}>
             <ArrowBackIcon />
+          </Link> */}
+          <Link
+            // to={`/home/${userID}`}
+            to={`/dashboard/home`}
+            className="navbar-logo"
+            onClick={closeMobileMenu}
+          >
+            <Link
+              //to={`/home/${userID}`}
+              to={`/dashboard/home`}
+              className="navbar-logo"
+              onClick={closeMobileMenu}
+            >
+              <div
+                className="logo-container"
+                style={{ backgroundColor: "transparent" }}
+              >
+                <img
+                  src="/ERicon.png"
+                  alt="ERRAND CATCHER Icon"
+                  className="logo-image"
+                  style={{
+                    width: "50px",
+                    height: "50px",
+                    background: "transparent",
+                  }} // Adjust the width and height as needed
+                />
+                <span className="logo-text">Errand Catcher</span>
+              </div>
+            </Link>
           </Link>
           <div className="menu-icon" onClick={handleClick}>
             <i className={click ? "fas fa-times" : "fas fa-bars"}></i>
