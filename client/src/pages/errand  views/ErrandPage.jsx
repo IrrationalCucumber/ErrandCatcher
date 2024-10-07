@@ -42,7 +42,7 @@ const ErrandPage = () => {
   const { user } = useAuth();
   const userID = user.userID;
   const accessToken =
-    "pk.eyJ1Ijoiam9pbmVyIiwiYSI6ImNsdmNjbnF4NjBoajQycWxoaHV5b2M1NzIifQ.Z7Pi_LfWyuc7a_z01zKMFg";
+    "pk.eyJ1IjoibWlyYWthNDQiLCJhIjoiY20xcWVhejZ0MGVzdjJscTF5ZWVwaXBzdSJ9.aLYnU19L7neFq2Y7J_UXhQ";
 
   //APS - 19/03/24
   //CHeck if Catcher already applied

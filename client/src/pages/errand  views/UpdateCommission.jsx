@@ -28,7 +28,7 @@ const UpdateCommission = () => {
 
   const [distance, setDistance] = useState(0);
   const accessToken =
-    "pk.eyJ1Ijoiam9pbmVyIiwiYSI6ImNsdmNjbnF4NjBoajQycWxoaHV5b2M1NzIifQ.Z7Pi_LfWyuc7a_z01zKMFg";
+    "pk.eyJ1IjoibWlyYWthNDQiLCJhIjoiY20xcWVhejZ0MGVzdjJscTF5ZWVwaXBzdSJ9.aLYnU19L7neFq2Y7J_UXhQ";
 
   const navigate = useNavigate();
   const location = useLocation();
