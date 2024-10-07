@@ -68,7 +68,7 @@ const Rating = {
       feedbackPosterID,
     ];
     db.query(
-      "INSERT INTO feedbackcommission (`feedbackCommissionID`, `feedbackCatcherID` , `feedbackComment`, `feedbackCount`, `feedbackDate`, `feedbackPosterID`) VALUES (?)",
+      "INSERT INTO feedbackcommission (`feedbackErrandID`, `feedbackCatcherID` , `feedbackComment`, `feedbackRate`, `feedbackDate`, `feedbackPosterID`) VALUES (?)",
       [values],
       callback
     );
