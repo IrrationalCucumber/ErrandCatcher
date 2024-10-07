@@ -7,7 +7,7 @@ import {
   Stepper,
   Button,
   Typography,
-  Container
+  Container,
 } from "@mui/material";
 
 const steps = ["Step 1", "Step 2", "Step 3", "Done"];
@@ -71,12 +71,14 @@ export default function StepperVer() {
   return (
     <div>
       <Container maxWidth="md">
-        <Box sx={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center"
-        }}>
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
           <Stepper activeStep={activeStep}>
             {steps.map((label, index) => (
               <Step key={index}>
@@ -86,22 +88,24 @@ export default function StepperVer() {
           </Stepper>
           <Box sx={{ mt: 2, mb: 1 }}>{renderContent(activeStep)}</Box>
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-            <Button
+            {/* <Button
               color="inherit"
               disabled={activeStep === 0}
               onClick={handleBack}
               sx={{ mr: 1 }}
             >
               Back
-            </Button>
+            </Button> */}
             <Box sx={{ flex: "1 1 auto" }} />
-            <Button onClick={handleNext}>
+            {/* <Button onClick={handleNext}>
               {activeStep === steps.length - 1 ? "Finish" : "Next"}
-            </Button>
+            </Button> */}
           </Box>
           {activeStep === steps.length && (
             <Box sx={{ mt: 2, mb: 1 }}>
-              <Typography>All steps completed - you&apos;re finished</Typography>
+              <Typography>
+                All steps completed - you&apos;re finished
+              </Typography>
               <Button onClick={handleReset}>Reset</Button>
             </Box>
           )}
