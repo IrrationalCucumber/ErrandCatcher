@@ -11,7 +11,7 @@ textarea {
 
 label {
   color: black;
-  font-size: 14px !important;
+  /* font-size: 14px !important; */
   width: 100% !important;
 }
 
@@ -117,9 +117,9 @@ select {
   }
 }
 @media screen and (min-width: 440px) {
-  label {
+  /* label {
     font-size: 14px !important;
-  }
+  } */
 
   .errand-cont {
     width: 95%;
