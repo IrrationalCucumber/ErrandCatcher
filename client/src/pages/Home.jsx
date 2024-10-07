@@ -35,10 +35,10 @@ const Home = () => {
             />
             <EmployerCard />
 
-            <StickyButton
+            {/* <StickyButton
               buttonText="Post Errand"
               destination={`/errand/post-commission`}
-            />
+            /> */}
 
             <Cards />
           </>
