@@ -68,7 +68,7 @@
   display: flex;
   align-items: center;
   text-decoration: none;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0rem;
   height: 100%;
   margin-right: 20px;
 }

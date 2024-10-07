@@ -97,7 +97,7 @@ function Navbar(props) {
                 to={props.one}
                 className="nav-links"
                 onClick={closeMobileMenu}
-                style={{ fontSize: "16px" }}
+                style={{ fontSize: "15px" }}
               >
                 {props.page1}
               </Link>
@@ -107,7 +107,7 @@ function Navbar(props) {
                 to={props.commissionList}
                 className="nav-links"
                 onClick={closeMobileMenu}
-                style={{ fontSize: "16px" }}
+                style={{ fontSize: "15px" }}
               >
                 {props.page2}
               </Link>
@@ -117,7 +117,7 @@ function Navbar(props) {
                 to={props.applicants}
                 className="nav-links"
                 onClick={closeMobileMenu}
-                style={{ fontSize: "16px" }}
+                style={{ fontSize: "15px" }}
               >
                 {props.page3}
               </Link>
@@ -127,7 +127,7 @@ function Navbar(props) {
                 to={props.map}
                 className="nav-links"
                 onClick={closeMobileMenu}
-                style={{ fontSize: "16px" }}
+                style={{ fontSize: "15px" }}
               >
                 {props.page4}
               </Link>
@@ -173,7 +173,7 @@ function Navbar(props) {
                     to={`/profile/me`}
                     className="nav-links"
                     onClick={closeMobileMenu}
-                    style={{ fontSize: "16px" }}
+                    style={{ fontSize: "12px" }}
                   >
                     PROFILE
                   </Link>
