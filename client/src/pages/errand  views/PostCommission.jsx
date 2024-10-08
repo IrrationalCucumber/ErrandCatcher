@@ -8,6 +8,7 @@ import ErrandInputs from "../../components/ErrandInputs";
 import { MapLibre, PostMapBox } from "../../components/Map/Map";
 //image --ash
 import { useAuth } from "../../components/AuthContext";
+import { Box, Button } from "@mui/joy";
 
 const PostCommission = () => {
   const [commission, setCommission] = useState({
@@ -217,9 +218,14 @@ const PostCommission = () => {
             </>
           )}
         </div>
-        <button onClick={handleClick} className="btn btn-yellow" style={{}}>
+        {/* <button onClick={handleClick} className="btn btn-yellow" style={{}}>
           POST
-        </button>
+        </button> */}
+        <Box sx={{ display: "flex", marginLeft: 2 }}>
+          <Button sx={{width: "200px", borderRadius: "20px"}} size="lg" color="primary" onClick={handleClick}>
+            POST
+          </Button>
+        </Box>
       </div>
     </>
   );

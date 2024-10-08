@@ -411,9 +411,9 @@ export function PostMapBox({ accessToken, getDistanceCallback }) {
   const map = useRef(null);
 
   // Initial state of map, e.g position and zoom
-  const [lng, setLng] = useState(123.8983);
-  const [lat, setLat] = useState(10.2981);
-  const [zoom, setZoom] = useState(16.5);
+  const [lng, setLng] = useState(123.9568);
+  const [lat, setLat] = useState(10.2867);
+  const [zoom, setZoom] = useState(11.68);
 
   const directions = useRef(null);
   //   const [isReady, setReady] = useState(false);
