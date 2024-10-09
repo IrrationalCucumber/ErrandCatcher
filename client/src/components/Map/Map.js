@@ -406,7 +406,7 @@ export function ViewMapBox({
 
 //post errand
 //For transpo/delivery type errand only
-export function PostMapBox({ accessToken, getDistanceCallback }) {
+export function PostMapBox({ accessToken, getDistanceCallback, customDestination, customOrigin }) {
   const mapContainer = useRef(null);
   const map = useRef(null);
 
@@ -467,7 +467,35 @@ export function PostMapBox({ accessToken, getDistanceCallback }) {
     });
 
     map.current.addControl(directions.current);
-  });
+
+    // Listen for route changes and update distance/origin/destination coordinates
+    directions.current.on("route", (e) => {
+      const route = e.route[0];
+      const originCoordinates = route.legs[0].steps[0].maneuver.location;
+      const destinationCoordinates = route.legs[0].steps[route.legs[0].steps.length - 1].maneuver.location;
+
+      // Callback to parent component with the distance and coordinates
+      getDistanceCallback(route.distance, originCoordinates, destinationCoordinates);
+    });
+
+  }, [accessToken]);
+
+
+  // Sync starting location (origin) with custom input
+  useEffect(() => {
+    if (directions.current && customOrigin) {
+      directions.current.setOrigin(customOrigin); // Set custom starting location (origin)
+    }
+  }, [customOrigin]);
+
+  // Sync destination with custom input
+  useEffect(() => {
+    if (directions.current && customDestination) {
+      // Update Mapbox Directions destination based on custom input
+      directions.current.setDestination(customDestination);
+    }
+
+  }, [customDestination]);
 
   return (
     <div className="main-map">

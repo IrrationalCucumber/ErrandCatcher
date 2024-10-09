@@ -55,6 +55,22 @@ const PostCommission = () => {
     }
   };
 
+  const handleStartLocationSelect = (coordinates) => {
+    setCommission((prev) => ({
+      ...prev,
+      comLat: coordinates[1], // Set latitude for starting location
+      comLong: coordinates[0], // Set longitude for starting location
+    }));
+  };
+
+  const handleLocationSelect = (coordinates) => {
+    setCommission((prev) => ({
+      ...prev,
+      comDestLat: coordinates[1], // Set latitude for destination
+      comDestLong: coordinates[0], // Set longitude for destination
+    }));
+  };
+
   useEffect(() => {
     if (
       commission.comType === "Delivery" ||
@@ -153,6 +169,10 @@ const PostCommission = () => {
               deadline="comDeadline"
               location="comLocation"
               to="comTo"
+              toValue={commission.comTo}
+              accessToken={accessToken}
+              onStartLocationSelect={handleStartLocationSelect}
+              onLocationSelect={handleLocationSelect}
               type="comType"
               typeValue={commission.comType}
               desc="comDescription"
@@ -204,6 +224,9 @@ const PostCommission = () => {
                     comDestLat: destinationCoordinates[1],
                   }));
                 }}
+                // Sync input with Mapbox
+                customOrigin={commission.comLocation}
+                customDestination={commission.comTo}
               />
             </>
           )}
@@ -222,7 +245,7 @@ const PostCommission = () => {
           POST
         </button> */}
         <Box sx={{ display: "flex", marginLeft: 2 }}>
-          <Button sx={{width: "200px", borderRadius: "20px"}} size="lg" color="primary" onClick={handleClick}>
+          <Button sx={{ width: "200px", borderRadius: "20px" }} size="lg" color="primary" onClick={handleClick}>
             POST
           </Button>
         </Box>
