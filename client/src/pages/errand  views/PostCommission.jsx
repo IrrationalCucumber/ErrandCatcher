@@ -244,11 +244,13 @@ const PostCommission = () => {
         {/* <button onClick={handleClick} className="btn btn-yellow" style={{}}>
           POST
         </button> */}
-        <Box sx={{ display: "flex", marginLeft: 2 }}>
-          <Button sx={{ width: "200px", borderRadius: "20px" }} size="lg" color="primary" onClick={handleClick}>
-            POST
-          </Button>
-        </Box>
+        <div className="butonn">
+          <Box sx={{ display: "flex", marginLeft: 2 }}>
+            <Button sx={{ width: "200px", borderRadius: "20px" }} size="lg" color="primary" onClick={handleClick}>
+              POST
+            </Button>
+          </Box>
+        </div>  
       </div>
     </>
   );
