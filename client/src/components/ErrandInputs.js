@@ -46,6 +46,7 @@ function ErrandInputs(props) {
             access_token: props.accessToken, // Add your Mapbox access token
             autocomplete: true,
             limit: 5,
+            country: "PH", // Restrict oy Philippines
           },
         }
       );
@@ -74,6 +75,7 @@ function ErrandInputs(props) {
             access_token: props.accessToken, // Add your Mapbox access token
             autocomplete: true,
             limit: 5,
+            country: "PH",
           },
         }
       );
