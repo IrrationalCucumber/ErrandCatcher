@@ -28,6 +28,9 @@ function ErrandInputs(props) {
   const [destQuery, setDestQuery] = useState(props.toValue); // For destination input
   const [destCoordinates, setDestCoordinates] = useState(null); // For selected destination coordinates
 
+  const [isStartSelected, setIsStartSelected] = useState(false); // New state to track if a suggestion was clicked
+  const [isDestSelected, setIsDestSelected] = useState(false);   // Same for destination
+
   // Fetch suggestions for start location from Mapbox API
   const fetchStartSuggestions = async (searchText) => {
     if (!searchText) {
@@ -86,6 +89,8 @@ function ErrandInputs(props) {
 
   // Debounce for start suggestions
   useEffect(() => {
+    if (isStartSelected) return; // If a suggestion was clicked, skip fetching
+
     const timeoutId = setTimeout(() => {
       fetchStartSuggestions(startQuery);
     }, 300); // Debounce time (300ms)
@@ -95,6 +100,8 @@ function ErrandInputs(props) {
 
   // Debounce for destination suggestions
   useEffect(() => {
+    if (isDestSelected) return; // If a suggestion was clicked, skip fetching
+
     const timeoutId = setTimeout(() => {
       fetchDestSuggestions(destQuery);
     }, 300); // Debounce time (300ms)
@@ -106,7 +113,8 @@ function ErrandInputs(props) {
   const handleStartSuggestionClick = (suggestion) => {
     setStartQuery(suggestion.place_name);
     setStartCoordinates(suggestion.coordinates);
-    setStartSuggestions([]);
+    setStartSuggestions([]); // Clear suggestions
+    setIsStartSelected(true); // Mark that a suggestion was clicked
 
     // Sync with parent component
     props.handleChange({
@@ -121,11 +129,19 @@ function ErrandInputs(props) {
     }
   };
 
+  // Reset the `isStartSelected` state when the user types
+  const handleStartQueryChange = (e) => {
+    // onChange={(e) => setStartQuery(e.target.value)}
+    setStartQuery(e.target.value);
+    setIsStartSelected(false); // Reset the state when the user starts typing again
+  };
+
   // Handle destination location suggestion click
   const handleDestSuggestionClick = (suggestion) => {
     setDestQuery(suggestion.place_name);
     setDestCoordinates(suggestion.coordinates);
-    setDestSuggestions([]);
+    setDestSuggestions([]); // clear suggestions
+    setIsDestSelected(true); // Mark that a suggestion was clicked
 
     // Sync with parent component
     props.handleChange({
@@ -138,6 +154,12 @@ function ErrandInputs(props) {
     if (props.onLocationSelect) {
       props.onLocationSelect(suggestion.coordinates);
     }
+  };
+
+  const handleDestQueryChange = (e) => {
+    // onChange={(e) => setStartQuery(e.target.value)}
+    setDestQuery(e.target.value);
+    setIsDestSelected(false); // Reset the state when the user starts typing again
   };
 
   return (
@@ -315,7 +337,7 @@ function ErrandInputs(props) {
             startDecorator={<LocationOn />}
             type="text"
             placeholder="Location"
-            onChange={(e) => setStartQuery(e.target.value)}
+            onChange={handleStartQueryChange}
             value={startQuery} // Sync input value
             name={props.location}
           />
@@ -350,7 +372,7 @@ function ErrandInputs(props) {
               type="text"
               placeholder="Destination"
               name={props.to}
-              onChange={(e) => setDestQuery(e.target.value)}
+              onChange={handleDestQueryChange}
               value={destQuery} // Sync input value
             />
             {/* search suggestion */}
@@ -384,7 +406,7 @@ function ErrandInputs(props) {
               variant={props.variant}
               type="text"
               placeholder="Destination"
-              onChange={(e) => setDestQuery(e.target.value)}
+              onChange={handleDestQueryChange}
               value={destQuery} // Sync input value
               name={props.to}
               style={{
@@ -542,6 +564,7 @@ function ErrandInputs(props) {
           background-color: white;
           z-index: 1000;
           width: 100%;
+          font-size: 13px;
         }     
           
         .suggestion-item {
