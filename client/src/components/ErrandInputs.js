@@ -16,17 +16,16 @@ import AddIcCallIcon from "@mui/icons-material/AddIcCall";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
+import { Typography } from "@mui/joy";
 
 function ErrandInputs(props) {
   return (
     <>
-      <div className="input-group">
-        {props.status === "Available" && (
-          <>
+      {/* <div className="input-group"> */}
+      {props.status === "Available" && (
+        <>
+          <div className="input-group">
             <div className="col1">
-              <label style={{ color: "black" }}>{props.statusHeader}</label>
-            </div>
-            <div className="col2">
               <Chip
                 size="lg"
                 variant="solid"
@@ -36,14 +35,13 @@ function ErrandInputs(props) {
                 {props.status}
               </Chip>
             </div>
-          </>
-        )}
-        {props.status === "Expired" && (
-          <>
+          </div>
+        </>
+      )}
+      {props.status === "Expired" && (
+        <>
+          <div className="input-group">
             <div className="col1">
-              <label style={{ color: "black" }}>{props.statusHeader}</label>
-            </div>
-            <div className="col2">
               <Chip
                 size="lg"
                 variant="solid"
@@ -53,14 +51,13 @@ function ErrandInputs(props) {
                 {props.status}
               </Chip>
             </div>
-          </>
-        )}
-        {props.status === "Unavailable" && (
-          <>
+          </div>
+        </>
+      )}
+      {props.status === "Unavailable" && (
+        <>
+          <div className="input-group">
             <div className="col1">
-              <label style={{ color: "black" }}>{props.statusHeader}</label>
-            </div>
-            <div className="col2">
               <Chip
                 size="lg"
                 variant="solid"
@@ -70,26 +67,33 @@ function ErrandInputs(props) {
                 {props.status}
               </Chip>
             </div>
-          </>
-        )}
-      </div>
-      {/* ERRAND POSTER */}
-      {props.employer !== "" && props.fname !== "" && (
-        <>
-          <div className="input-group">
-            <div className="col1">
-              <label style={{ color: "black" }}>{props.employer}</label>
-            </div>
-            <div className="col2">
-              {props.fname} {props.lname}
-            </div>
           </div>
         </>
       )}
+      {/* </div> */}
+      {/* ERRAND POSTER */}
+      {props.employer ? (
+        <>
+          <div className="input-group">
+            <div className="col1">
+              <Typography level="title-lg" variant="plain">
+                {props.employer}
+              </Typography>
+            </div>
+            <div className="col2">
+              <Typography color="primary" level="title-lg" variant="plain">
+                {props.fname} {props.lname}
+              </Typography>
+            </div>
+          </div>
+        </>
+      ) : null}
       {/* commission title */}
       <div className="input-group">
         <div className="col1">
-          <label style={{ color: "black" }}>Title</label>
+          <Typography level="title-lg" variant="plain">
+            Title
+          </Typography>
         </div>
         <div className="col2">
           <Input
@@ -108,7 +112,9 @@ function ErrandInputs(props) {
       {/*start date*/}
       <div className="input-group">
         <div className="col1">
-          <label style={{ color: "black" }}>Start </label>
+          <Typography level="title-lg" variant="plain">
+            Start
+          </Typography>
         </div>
         <div className="col2">
           <Input
@@ -126,15 +132,15 @@ function ErrandInputs(props) {
                 min: new Date().toISOString().split("T")[0],
               },
             }}
-            //max={new Date().toISOString().slice(0, 19).replace("T", " ")}
-            //min={new Date().toISOString().split("T")[0]}
           />
         </div>
       </div>
       {/* deadline */}
       <div className="input-group">
         <div className="col1">
-          <label style={{ color: "black" }}>End</label>
+          <Typography level="title-lg" variant="plain">
+            End
+          </Typography>
         </div>
         <div className="col2">
           <Input
@@ -158,9 +164,9 @@ function ErrandInputs(props) {
       {/* commission type */}
       <div className="input-group">
         <div className="col1">
-          <label style={{ color: "black" }} htmlFor="">
+          <Typography level="title-lg" variant="plain">
             Errand Type
-          </label>
+          </Typography>
         </div>
         <div className="col2">
           <select
@@ -182,7 +188,14 @@ function ErrandInputs(props) {
       {/* location */}
       <div className="input-group">
         <div className="col1">
-          <label style={{ color: "black" }}>Where</label>
+          <Typography level="title-lg" variant="plain">
+            {props.typeValue === "Delivery" ||
+            props.typeValue === "Transportation" ? (
+              <>From</>
+            ) : (
+              <>Where</>
+            )}
+          </Typography>
         </div>
         <div className="col2">
           <Input
@@ -203,7 +216,9 @@ function ErrandInputs(props) {
       {props.typeValue === "Transport" && (
         <div className="input-group">
           <div className="col1">
-            <label style={{ color: "black" }}>Destination</label>
+            <Typography level="title-lg" variant="plain">
+              To
+            </Typography>
           </div>
           <div className="col2">
             <Input
@@ -224,7 +239,7 @@ function ErrandInputs(props) {
       {props.typeValue === "Delivery" && (
         <div className="input-group">
           <div className="col1">
-            <label style={{ color: "black" }}>Destination</label>
+            <label style={{ color: "black" }}>To</label>
           </div>
           <div className="col2">
             <Input
@@ -251,12 +266,16 @@ function ErrandInputs(props) {
           {props.typeValue !== "HomeService - Indoor" &&
             props.typeValue !== "HomeService - Outdoor" &&
             props.typeValue !== "" && (
-              <label style={{ color: "black" }}>Fee: </label>
+              <Typography level="title-lg" variant="plain">
+                Payment
+              </Typography>
             )}
           {(props.typeValue === "HomeService - Indoor" ||
             props.typeValue === "HomeService - Outdoor" ||
             props.typeValue === "") && (
-            <label style={{ color: "black" }}>Fee: </label>
+            <Typography level="title-lg" variant="plain">
+              Payment
+            </Typography>
           )}
           <div className="col2">
             <Input
@@ -284,9 +303,9 @@ function ErrandInputs(props) {
         {/* PAYMENT METOD */}
         <div className="input-group">
           <div className="col1">
-            <label style={{ color: "black" }} htmlFor="">
+            <Typography level="title-lg" variant="plain">
               Payment Method
-            </label>
+            </Typography>
           </div>
           <div className="col2">
             <select
@@ -308,7 +327,9 @@ function ErrandInputs(props) {
       {/* contact number */}
       <div className="input-group">
         <div className="col1">
-          <label style={{ color: "black" }}>Contact Number</label>
+          <Typography level="title-lg" variant="plain">
+            Contact Number
+          </Typography>
         </div>
         <div className="col2">
           <Input
@@ -327,7 +348,9 @@ function ErrandInputs(props) {
       </div>
       <div className="input-group">
         <div className="col1">
-          <label style={{ color: "black" }}>Description</label>
+          <Typography level="title-lg" variant="plain">
+            Description
+          </Typography>
         </div>
         <div className="col2">
           <Textarea
