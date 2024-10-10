@@ -100,15 +100,18 @@
 
 .ongoing__cards__button__cancel{
     background-color: red;
+    color: #fff;
 }
 
 .ongoing__cards__button__cancel:hover{
     background-color: #db9292;
     color: red;
+    color: #fff;
 }
 
 .ongoing__cards__button__complete{
     background-color: #992ae4;
+    color: #fff;
 }
 
 .ongoing__cards__button:hover, .ongoing__cards__button__complete:hover{
