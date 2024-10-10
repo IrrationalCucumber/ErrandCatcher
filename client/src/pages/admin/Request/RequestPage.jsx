@@ -176,6 +176,7 @@ const tableRowStyle = {
   ":hover": {
     backgroundColor: "#f2f2f2",
   },
+  borderBottom: "1px solid #ddd",
 };
 
 const buttonStyle = {
