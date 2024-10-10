@@ -84,9 +84,9 @@ function RequestPage() {
               <th style={{ ...tableHeaderStyle, width: "10%" }}>ID</th>
               <th style={{ ...tableHeaderStyle, width: "30%" }}>User</th>
               <th style={{ ...tableHeaderStyle, width: "25%" }}>Type</th>
-              <th style={{ ...tableHeaderStyle, width: "10%" }}>Status</th>
-              <th style={{ ...tableHeaderStyle, width: "20%" }}>DOCUMENTS</th>
-              <th style={{ ...tableHeaderStyle, width: "25%" }}>Action</th>
+              <th style={{ ...tableHeaderStyle, width: "10%", textAlign: "center" }}>Status</th>
+              <th style={{ ...tableHeaderStyle, width: "20%", textAlign: "center" }}>DOCUMENTS</th>
+              <th style={{ ...tableHeaderStyle, width: "25%", textAlign: "center" }}>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -110,7 +110,7 @@ function RequestPage() {
                       }} />}
                   {request.requestStatus}
                 </td>
-                <td style={tableCellStyle}>
+                <td style={{ tableCellStyle, textAlign: "center" }}>
                   {/* for Image request */}
                   <button
                     className="RequestImage"
@@ -122,7 +122,7 @@ function RequestPage() {
                 </td>
                 <td style={tableCellStyle}>
                   <button
-                    style={buttonStyle}
+                    style={buttonStyleac}
                     onClick={() => handleClick(request)}
                   >
                     Action
@@ -179,7 +179,22 @@ const tableRowStyle = {
 };
 
 const buttonStyle = {
-  backgroundColor: "#4CAF50",
+  backgroundColor: "#ded5c6",
+  // backgroundColor: "#4CAF50",
+  border: "none",
+  color: "black",
+  padding: "8px 20px",
+  textAlign: "center",
+  textDecoration: "none",
+  display: "inline-block",
+  fontSize: "12px",
+  margin: "4px 2px",
+  cursor: "pointer",
+  borderRadius: "5px",
+};
+
+const buttonStyleac = {
+  backgroundColor: "#378ce7",
   border: "none",
   color: "white",
   padding: "8px 20px",

@@ -43,6 +43,7 @@ const RequestModal = ({ request, handleClose }) => {
       await axios.post("http://localhost:8800/notify", notif);
       //update request to complete
       await axios.put(`http://localhost:8800/done-request/${requestID}`);
+      handleClose();
     } catch (err) {
       console.log(err);
     }
@@ -65,6 +66,7 @@ const RequestModal = ({ request, handleClose }) => {
       await axios.post("http://localhost:8800/notify", notif);
       //update request to complete
       await axios.put(`http://localhost:8800/done-request/${requestID}`);
+      handleClose();
     } catch (err) {
       console.log(err);
     }
