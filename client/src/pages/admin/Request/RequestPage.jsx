@@ -6,6 +6,8 @@ import axios from "axios";
 import RequestImages from "./RequestImage";
 import "../Request/request.css";
 import { Modal, ModalDialog } from "@mui/joy";
+import VerifiedIcon from '@mui/icons-material/Verified';
+import PendingIcon from '@mui/icons-material/Pending';
 
 function RequestPage() {
   // Mock list of verification requests
@@ -93,7 +95,21 @@ function RequestPage() {
                 <td style={tableCellStyle}>{request.userID}</td>
                 <td style={tableCellStyle}>{request.username}</td>
                 <td style={tableCellStyle}>{request.accountType}</td>
-                <td style={tableCellStyle}>{request.requestStatus}</td>
+                {/* <td style={tableCellStyle}>{request.requestStatus}</td> */}
+                <td style={tableCellStyle}>
+                  {request.requestStatus === "Complete" ?
+                    <VerifiedIcon color="success"
+                      sx={{
+                        paddingRight: "2px",
+                        fontSize: "large",
+                      }} /> :
+                    <PendingIcon color="error"
+                      sx={{
+                        paddingRight: "2px",
+                        fontSize: "large",
+                      }} />}
+                  {request.requestStatus}
+                </td>
                 <td style={tableCellStyle}>
                   {/* for Image request */}
                   <button

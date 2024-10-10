@@ -137,7 +137,7 @@ const RequestModal = ({ request, handleClose }) => {
             }
             style={Veributton}
           >
-            VerifY
+            Verify
           </button>
           <button
             onClick={(e) =>
