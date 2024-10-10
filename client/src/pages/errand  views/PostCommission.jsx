@@ -165,6 +165,7 @@ const PostCommission = () => {
               lat={commission.comLat}
               destlong={commission.comDestLong}
               destlat={commission.comDestLat}
+              distance={distance}
             />
           </div>
           {commission.comType !== "Delivery" &&

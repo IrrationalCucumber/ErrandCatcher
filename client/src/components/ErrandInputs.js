@@ -239,7 +239,9 @@ function ErrandInputs(props) {
       {props.typeValue === "Delivery" && (
         <div className="input-group">
           <div className="col1">
-            <label style={{ color: "black" }}>To</label>
+            <Typography level="title-lg" variant="plain">
+              To
+            </Typography>
           </div>
           <div className="col2">
             <Input
@@ -294,8 +296,14 @@ function ErrandInputs(props) {
               props.typeValue !== "HomeService - Outdoor" &&
               props.typeValue !== "" && (
                 <>
-                  <p>₱15/km + ₱100</p>
-                  <p>{props.distance} km</p>
+                  <Typography color="neutral" level="body-md" variant="plain">
+                    15/km + ₱100
+                  </Typography>
+                  {props.distance ? (
+                    <Typography color="neutral" level="body-md" variant="plain">
+                      {props.distance} km
+                    </Typography>
+                  ) : null}
                 </>
               )}
           </div>
