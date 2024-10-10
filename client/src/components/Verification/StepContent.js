@@ -93,9 +93,8 @@ export function Step1({ onNext, details, setDetail }) {
     const day = today.getDate();
 
     // Format the date as yyyy-mm-dd
-    return `${year}-${month < 10 ? "0" + month : month}-${
-      day < 10 ? "0" + day : day
-    }`;
+    return `${year}-${month < 10 ? "0" + month : month}-${day < 10 ? "0" + day : day
+      }`;
   };
 
   // debug lng
@@ -117,7 +116,7 @@ export function Step1({ onNext, details, setDetail }) {
               name="firstName"
               value={details.firstName}
               onChange={handleChange}
-              // required
+            // required
             ></input>
             <input
               type="text"
@@ -125,7 +124,7 @@ export function Step1({ onNext, details, setDetail }) {
               value={details.lastName}
               name="lastName"
               onChange={handleChange}
-              // required
+            // required
             ></input>
           </div>
 
@@ -137,7 +136,7 @@ export function Step1({ onNext, details, setDetail }) {
               name="email"
               placeholder="Enter your Email Address"
               onChange={handleChange}
-              // required
+            // required
             ></input>
           </div>
 
@@ -149,7 +148,7 @@ export function Step1({ onNext, details, setDetail }) {
               name="age"
               onChange={handleChange}
               placeholder=""
-              // required
+            // required
             ></input>
 
             <label className="label">Gender</label>
@@ -184,7 +183,7 @@ export function Step1({ onNext, details, setDetail }) {
               name="address"
               value={details.address}
               onChange={handleChange}
-              // required
+            // required
             ></input>
           </div>
           <div className="input-rows">
@@ -195,7 +194,7 @@ export function Step1({ onNext, details, setDetail }) {
               name="cnum"
               placeholder="Enter your Contact Number"
               onChange={handleChange}
-              // required
+            // required
             ></input>
           </div>
           <div className="step__button">
@@ -246,7 +245,7 @@ export function Step2({ images, setImages, onNext, onPrev }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onNext();
+    onNext(); // move next
   };
 
   const handleOpenModal = () => {
@@ -538,7 +537,7 @@ export function Step2({ images, setImages, onNext, onPrev }) {
 }
 //STEP 3
 // SUmmary and Submit Request
-export function Step3({ details, images, onPrev }) {
+export function Step3({ details, images, onPrev, onNext }) {
   const { user } = useAuth();
   const userID = user.userID;
   const [open, setOpen] = useState(false);
@@ -558,9 +557,10 @@ export function Step3({ details, images, onPrev }) {
 
         return;
       }
+
+      onNext();
       //wrap file images into formdata
       const formData = new FormData();
-      setOpen(false);
 
       formData.append("image1", images.image1);
       formData.append("image2", images.image2);
@@ -573,7 +573,7 @@ export function Step3({ details, images, onPrev }) {
         .catch((err) => console.log(err));
       //update accound data
       await axios.put("http://localhost:8800/update/" + userID, details);
-      setOpen(false);
+
     } catch (error) {
       console.log(error);
     }
