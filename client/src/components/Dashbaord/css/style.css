@@ -24,11 +24,15 @@
 
 .landing__text__right {
   width: 55%;
-  height: inherit;
   right: 0;
   color: white;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 70px;
+  margin: 60px;
+  text-shadow: 3px 3px 3px rgb(0 0 0 / 60%);
 }
 
 /* .landing__service__btn__lt {
@@ -225,6 +229,13 @@
   width: 55%;
   right: 0;
   color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 70px;
+  margin: 60px;
+  text-shadow: 3px 3px 3px rgb(0 0 0 / 60%);
 }
 /* 
   .landing__cont:hover{

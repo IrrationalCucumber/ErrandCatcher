@@ -21,7 +21,7 @@ export function LandingServiceDetails() {
           </div>
           <div className="landing__text__right">
             <h2>INDOOR SERVICES</h2>
-            <p>Details</p>
+            <p>Details:</p>
             <p>
               From organizing your space to managing household chores, our
               indoor services are designed to make your home life stress-free.
@@ -31,7 +31,7 @@ export function LandingServiceDetails() {
         <section className="landing__cont">
           <div className="landing__text__left">
             <h2>OUTDOOR SERVICES</h2>
-            <p>Details</p>
+            <p>Details:</p>
             <p>
               Whether it’s yard work, pet walking, or running outdoor errands,
               we handle all the tasks you need outside your home.
@@ -59,7 +59,7 @@ export function LandingServiceDetails() {
           </div>
           <div className="landing__text__right">
             <h2>DELIVERY</h2>
-            <p>Details</p>
+            <p>Details:</p>
             <p>
               Need something delivered? Whether it's groceries, packages, or
               special orders, we've got you covered.
@@ -69,7 +69,7 @@ export function LandingServiceDetails() {
         <section className="landing__cont">
           <div className="landing__text__left">
             <h2>TRANSPORTATION</h2>
-            <p>Details</p>
+            <p>Details:</p>
             <p>
               Whether you need a ride to an important appointment, a stress-free
               airport transfer, or a comfortable vehicle for a road trip, our
