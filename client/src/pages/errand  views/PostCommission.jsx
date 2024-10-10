@@ -130,13 +130,15 @@ const PostCommission = () => {
             !commission.Contactno ||
             !commission.comDescription
           )
-            alert("Empty fields");
+            setAlerMsg("Some fields are missing!");
+          setShowAlert(true);
         }
       } else if (commission.comPay < minimum) {
         setAlerMsg("The salary is lower than the suggested payment!");
         setShowAlert(true);
       } else if (commission.comLat === "" && commission.comLong === "") {
-        alert("Looks like you havent set the location in the Map");
+        setAlerMsg("Looks like you havent set the location in the Map");
+        setShowAlert(true);
       } else {
         await axios.post("http://localhost:8800/commission", updatedCommission);
         await axios.post("http://localhost:8800/notify-catcher");
