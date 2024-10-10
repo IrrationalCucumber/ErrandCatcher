@@ -301,7 +301,7 @@ function ErrandInputs(props) {
           </div>
         </div>
         {/* PAYMENT METOD */}
-        <div className="input-group">
+        {/* <div className="input-group">
           <div className="col1">
             <Typography level="title-lg" variant="plain">
               Payment Method
@@ -321,7 +321,7 @@ function ErrandInputs(props) {
               <option value="credit card">Credit Card</option>
             </select>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* contact number */}
