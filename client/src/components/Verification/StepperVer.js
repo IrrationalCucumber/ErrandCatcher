@@ -60,7 +60,7 @@ export default function StepperVer() {
           />
         );
       case 2:
-        return <Step3 details={details} images={images} onPrev={handleBack} />;
+        return <Step3 details={details} images={images} onPrev={handleBack} onNext={handleNext} />;
       case 3:
         return <Step4 />;
       default:
