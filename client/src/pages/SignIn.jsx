@@ -67,85 +67,130 @@ const SignIn = () => {
 
   return (
     <div className="si">
-      <div className="cont contman">
-        <div className="si-txt">
-          <h1>
-            <span className="welcome">Welcome</span> to{" "}
-            <span className="errand-catcher" style={{ color: "#1679AB" }}>
-              ERRAND CATCHER
+      <div className="wrap">
+        <div className="form">
+          <h1 className="form-title">Log in to Errand Catcher</h1>
+          <div className="input-container">
+            <input
+              className={errorMessage ? "error" : ""}
+              name="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              type="text"
+              placeholder="Enter username" />
+            <span>
             </span>
-          </h1>
-          <div className="text">
-            <div className="sign"></div>
-            <h3>Sign-in Now</h3>
           </div>
-        </div>
-        <input
-          className={errorMessage ? "error" : ""}
-          name="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          type="text"
-          placeholder="Username"
-        />
-        <input
-          className={errorMessage ? "error" : ""}
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          type="password"
-          placeholder="Password"
-        />
-        <div className="em">
-          {errorMessage != "" && (
-            <Alert color="danger" size="lg" variant="outlined">
-              <i style={{ fontSize: 12 }}>{errorMessage}</i>
-            </Alert>
-          )}
-        </div>
-        <label
-          className="rem"
-          htmlFor="remember Me"
-          // style={{ paddingLeft: "140px", fontSize: "12px" }}
-        >
-          Remember&nbsp;Me
-          <input
-            type="checkbox"
-            id="rememberMe"
-            checked={rememberMe}
-            onChange={handleRememberMeChange}
-          />
-        </label>
+          <div className="input-container">
+            <input className={errorMessage ? "error" : ""}
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+              placeholder="Enter password" />
 
-        <div className="button1">
-          <div className="button2">
-            <button
-              type="button"
-              onClick={handleClick}
-              // style={{
-              //   backgroundColor: "#1679AB",
-              //   fontSize: "16px",
-              //   width: "200px",
-              //   height: "40px",
-              //   borderRadius: "20px",
-              //   color: "#ffff",
-              // }}
-            >
-              Sign In
-            </button>
           </div>
+          {/* error message */}
+          <div className="em">
+            {errorMessage != "" && (
+              <Alert color="danger" size="lg" variant="outlined">
+                <i style={{ fontSize: 12 }}>{errorMessage}</i>
+              </Alert>
+            )}
+          </div>
+          <button className="submit" type="button" onClick={handleClick}>
+            Sign in
+          </button>
+          <p class="signup-link">
+            No account?
+            <Link to="/sign-up"> Sign-up!</Link>
+          </p>
+
         </div>
-        <p className="cont2">
-          <i>
-            Don't have an Account? <Link to="/sign-up"> Sign-up!</Link>
-          </i>
-        </p>
-      </div>
-      <div className="contman cont-tawo">
-        <img src="http://localhost:3000/images/tawo.png" alt="" />
       </div>
     </div>
   );
 };
 
 export default SignIn;
+
+
+// <div className="si">
+//   <div className="cont contman">
+//     <div className="si-txt">
+//       <h1>
+//         <span className="welcome">Welcome</span> to{" "}
+//         <span className="errand-catcher" style={{ color: "#1679AB" }}>
+//           ERRAND CATCHER
+//         </span>
+//       </h1>
+//       <div className="text">
+//         <div className="sign"></div>
+//         <h3>Sign-in Now</h3>
+//       </div>
+//     </div>
+//     <input
+//       className={errorMessage ? "error" : ""}
+//       name="username"
+//       value={username}
+//       onChange={(e) => setUsername(e.target.value)}
+//       type="text"
+//       placeholder="Username"
+//     />
+//     <input
+//       className={errorMessage ? "error" : ""}
+//       name="password"
+//       value={password}
+//       onChange={(e) => setPassword(e.target.value)}
+//       type="password"
+//       placeholder="Password"
+//     />
+//     <div className="em">
+//       {errorMessage != "" && (
+//         <Alert color="danger" size="lg" variant="outlined">
+//           <i style={{ fontSize: 12 }}>{errorMessage}</i>
+//         </Alert>
+//       )}
+//     </div>
+//     <label
+//       className="rem"
+//       htmlFor="remember Me"
+//       // style={{ paddingLeft: "140px", fontSize: "12px" }}
+//     >
+//       Remember&nbsp;Me
+//       <input
+//         type="checkbox"
+//         id="rememberMe"
+//         checked={rememberMe}
+//         onChange={handleRememberMeChange}
+//       />
+//     </label>
+
+//     <div className="button1">
+//       <div className="button2">
+//         <button
+//           type="button"
+//           onClick={handleClick}
+//           // style={{
+//           //   backgroundColor: "#1679AB",
+//           //   fontSize: "16px",
+//           //   width: "200px",
+//           //   height: "40px",
+//           //   borderRadius: "20px",
+//           //   color: "#ffff",
+//           // }}
+//         >
+//           Sign In
+//         </button>
+//       </div>
+//     </div>
+//     <p className="cont2">
+//       <i>
+//         Don't have an Account? <Link to="/sign-up"> Sign-up!</Link>
+//       </i>
+//     </p>
+//   </div>
+//   <div className="contman cont-tawo">
+//     <img src="http://localhost:3000/images/tawo.png" alt="" />
+//   </div>
+// </div>
