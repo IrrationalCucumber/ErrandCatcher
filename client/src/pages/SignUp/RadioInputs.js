@@ -142,16 +142,23 @@ export default RadioInputs;
 import React from "react";
 
 function RadioInputs({ options, selectedOption, onChange }) {
+  const handleWrapperClick = (optionValue) => {
+    onChange({ target: { value: optionValue } });
+    // Apply the 'animate' class to the clicked radio-wrapper
+    const wrapper = document.getElementById(`wrapper-${optionValue}`);
+    wrapper.classList.add('animate');
+    setTimeout(() => wrapper.classList.remove('animate'), 100);
+  };
+
   return (
     <div className="radio-container">
       <div className="grid-container">
         {options.map((option, index) => (
           <div className="grid-item" key={index}>
             <div
-              className={`radio-wrapper ${
-                selectedOption === option.value ? "selected" : ""
-              }`}
-              onClick={() => onChange({ target: { value: option.value } })}
+              id={`wrapper-${option.value}`}
+              className={`radio-wrapper ${selectedOption === option.value ? "selected" : ""}`}
+              onClick={() => handleWrapperClick(option.value)}
             >
               <div className="radio-header">
                 <input
@@ -183,23 +190,24 @@ function RadioInputs({ options, selectedOption, onChange }) {
           .radio-container {
             margin-bottom: 20px;
           }
-          
+
           .grid-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             grid-gap: 20px;
           }
-          
+
           .grid-item {
             margin-bottom: 20px;
           }
-          
+
           .radio-wrapper {
             border: 1px solid #0073aa;
             border-radius: 5px;
             padding: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
           }
 
           .radio-wrapper.selected {
@@ -208,7 +216,7 @@ function RadioInputs({ options, selectedOption, onChange }) {
           }
 
           .radio-wrapper.selected .radio-label {
-             color: white;
+            color: white;
           }
 
           .radio-header {
@@ -217,36 +225,34 @@ function RadioInputs({ options, selectedOption, onChange }) {
             margin: 10px;
           }
 
-          .radio-header.selected {
-            background-color: #0073aa;
-            color: #fff;
-          }
-
-          .radio-header.selected .radio-label {
-            color: white;
-          }
-          
           .radio-header input[type="radio"] {
             display: none;
           }
-          
+
           .radio-label {
             margin-left: 10px;
             color: black;
-            font-size: 1.5rem; 
+            font-size: 1.5rem;
             cursor: pointer;
             font-weight: 800;
             line-height: 1.2;
-            // letter-spacing: 1px;
           }
-          
+
           .separator {
             border-bottom: 1px solid #ccc;
             margin: 10px 0;
           }
-          
+
           .radio-description {
             margin: 20px;
+          }
+
+          .radio-wrapper.animate {
+            background-color: #0073aa;
+            color: white;
+            transform: scale(0.95);
+            box-shadow: 0 2px 25px rgba(0, 115, 170, 0.5);
+            transition: transform 0.1s, box-shadow 0.25s;
           }
 
           @media screen and (max-width: 964px) {
@@ -273,4 +279,3 @@ function RadioInputs({ options, selectedOption, onChange }) {
 }
 
 export default RadioInputs;
-
