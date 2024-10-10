@@ -8,6 +8,9 @@ import ErrandInputs from "../../components/ErrandInputs";
 import { MapLibre, PostMapBox } from "../../components/Map/Map";
 //image --ash
 import { useAuth } from "../../components/AuthContext";
+import { Alert, IconButton } from "@mui/joy";
+import WarningIcon from "@mui/icons-material/Warning";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
 const PostCommission = () => {
   const [commission, setCommission] = useState({
@@ -42,6 +45,9 @@ const PostCommission = () => {
     "pk.eyJ1IjoibWlyYWthNDQiLCJhIjoiY20xcWVhejZ0MGVzdjJscTF5ZWVwaXBzdSJ9.aLYnU19L7neFq2Y7J_UXhQ";
   // Add a state to track the marker's longitude and latitude
   // const [markerLngLat, setMarkerLngLat] = useState([123.8854, 10.3157]); // Default values
+  //alert feedback
+  const [alertMesg, setAlerMsg] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
 
   //update the info that will be stored
   const handleChange = (e) => {
@@ -54,6 +60,8 @@ const PostCommission = () => {
     }
   };
 
+  //set minimum pay for delvery and transpo
+  const [minimum, setMinimum] = useState();
   useEffect(() => {
     if (
       commission.comType === "Delivery" ||
@@ -63,7 +71,7 @@ const PostCommission = () => {
       const baseAmount = 100;
       const total = Math.round(km) * 15 + baseAmount;
       // Correctly update commission state without losing other fields
-
+      setMinimum(total);
       setCommission((prev) => ({
         ...prev,
         comPay: total,
@@ -124,6 +132,9 @@ const PostCommission = () => {
           )
             alert("Empty fields");
         }
+      } else if (commission.comPay < minimum) {
+        setAlerMsg("The salary is lower than the suggested payment!");
+        setShowAlert(true);
       } else if (commission.comLat === "" && commission.comLong === "") {
         alert("Looks like you havent set the location in the Map");
       } else {
@@ -141,6 +152,25 @@ const PostCommission = () => {
 
   return (
     <>
+      {showAlert && (
+        <Alert
+          color="danger"
+          size="md"
+          variant="solid"
+          startDecorator={<WarningIcon />}
+          endDecorator={
+            <IconButton
+              variant="soft"
+              color="danger"
+              onClick={() => setShowAlert(false)}
+            >
+              <CloseRoundedIcon />
+            </IconButton>
+          }
+        >
+          {alertMesg}
+        </Alert>
+      )}
       <div className="errand-cont">
         <div className="input-cont">
           <div className="errand-inputs">
@@ -166,6 +196,7 @@ const PostCommission = () => {
               destlong={commission.comDestLong}
               destlat={commission.comDestLat}
               distance={distance}
+              minimum={minimum}
             />
           </div>
           {commission.comType !== "Delivery" &&
