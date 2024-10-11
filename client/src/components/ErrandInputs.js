@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 // import "./ErrandInput.css";
 /**
  * 13/04/24
@@ -19,6 +20,154 @@ import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
 import { Typography } from "@mui/joy";
 
 function ErrandInputs(props) {
+  const [startSuggestions, setStartSuggestions] = useState([]);
+  const [startQuery, setStartQuery] = useState(""); // For starting location input (props.location)
+  const [startCoordinates, setStartCoordinates] = useState(null); // For selected starting location coordinates
+
+  const [destSuggestions, setDestSuggestions] = useState([]);
+  const [destQuery, setDestQuery] = useState(props.toValue); // For destination input
+  const [destCoordinates, setDestCoordinates] = useState(null); // For selected destination coordinates
+
+  const [isStartSelected, setIsStartSelected] = useState(false); // New state to track if a suggestion was clicked
+  const [isDestSelected, setIsDestSelected] = useState(false); // Same for destination
+
+  // Fetch suggestions for start location from Mapbox API
+  const fetchStartSuggestions = async (searchText) => {
+    if (!searchText) {
+      setStartSuggestions([]);
+      return;
+    }
+
+    try {
+      const response = await axios.get(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${searchText}.json`,
+        {
+          params: {
+            access_token: props.accessToken, // Add your Mapbox access token
+            autocomplete: true,
+            limit: 5,
+            country: "PH", // Restrict oy Philippines
+          },
+        }
+      );
+      const features = response.data.features || [];
+      setStartSuggestions(
+        features.map((feature) => ({
+          place_name: feature.place_name,
+          coordinates: feature.geometry.coordinates,
+        }))
+      );
+    } catch (error) {
+      console.error("Error fetching start suggestions:", error);
+    }
+  };
+
+  // Fetch suggestions for destination location from Mapbox API
+  const fetchDestSuggestions = async (searchText) => {
+    if (!searchText) {
+      setDestSuggestions([]);
+      return;
+    }
+
+    try {
+      const response = await axios.get(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${searchText}.json`,
+        {
+          params: {
+            access_token: props.accessToken, // Add your Mapbox access token
+            autocomplete: true,
+            limit: 5,
+            country: "PH",
+          },
+        }
+      );
+      const features = response.data.features || [];
+      setDestSuggestions(
+        features.map((feature) => ({
+          place_name: feature.place_name,
+          coordinates: feature.geometry.coordinates,
+        }))
+      );
+    } catch (error) {
+      console.error("Error fetching destination suggestions:", error);
+    }
+  };
+
+  // Debounce for start suggestions
+  useEffect(() => {
+    if (isStartSelected) return; // If a suggestion was clicked, skip fetching
+
+    const timeoutId = setTimeout(() => {
+      fetchStartSuggestions(startQuery);
+    }, 300); // Debounce time (300ms)
+
+    return () => clearTimeout(timeoutId);
+  }, [startQuery]);
+
+  // Debounce for destination suggestions
+  useEffect(() => {
+    if (isDestSelected) return; // If a suggestion was clicked, skip fetching
+
+    const timeoutId = setTimeout(() => {
+      fetchDestSuggestions(destQuery);
+    }, 300); // Debounce time (300ms)
+
+    return () => clearTimeout(timeoutId);
+  }, [destQuery]);
+
+  // Handle start location suggestion click
+  const handleStartSuggestionClick = (suggestion) => {
+    setStartQuery(suggestion.place_name);
+    setStartCoordinates(suggestion.coordinates);
+    setStartSuggestions([]); // Clear suggestions
+    setIsStartSelected(true); // Mark that a suggestion was clicked
+
+    // Sync with parent component
+    props.handleChange({
+      target: {
+        name: props.location,
+        value: suggestion.place_name,
+      },
+    });
+
+    if (props.onStartLocationSelect) {
+      props.onStartLocationSelect(suggestion.coordinates);
+    }
+  };
+
+  // Reset the `isStartSelected` state when the user types
+  const handleStartQueryChange = (e) => {
+    // onChange={(e) => setStartQuery(e.target.value)}
+    setStartQuery(e.target.value);
+    setIsStartSelected(false); // Reset the state when the user starts typing again
+  };
+
+  // Handle destination location suggestion click
+  const handleDestSuggestionClick = (suggestion) => {
+    setDestQuery(suggestion.place_name);
+    setDestCoordinates(suggestion.coordinates);
+    setDestSuggestions([]); // clear suggestions
+    setIsDestSelected(true); // Mark that a suggestion was clicked
+
+    // Sync with parent component
+    props.handleChange({
+      target: {
+        name: props.to,
+        value: suggestion.place_name,
+      },
+    });
+
+    if (props.onLocationSelect) {
+      props.onLocationSelect(suggestion.coordinates);
+    }
+  };
+
+  const handleDestQueryChange = (e) => {
+    // onChange={(e) => setStartQuery(e.target.value)}
+    setDestQuery(e.target.value);
+    setIsDestSelected(false); // Reset the state when the user starts typing again
+  };
+
   return (
     <>
       {/* <div className="input-group"> */}
@@ -206,10 +355,24 @@ function ErrandInputs(props) {
             startDecorator={<LocationOn />}
             type="text"
             placeholder="Location"
-            onChange={props.handleChange}
+            onChange={handleStartQueryChange}
+            value={startQuery} // Sync input value
             name={props.location}
-            value={props.locValue}
           />
+          {/* search suggestion */}
+          {startSuggestions.length > 0 && (
+            <ul className="suggestions-list">
+              {startSuggestions.map((suggestion, index) => (
+                <li
+                  key={index}
+                  onClick={() => handleStartSuggestionClick(suggestion)}
+                  className="suggestion-item"
+                >
+                  {suggestion.place_name}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
       {/* Display when Transport Type is selected */}
@@ -228,10 +391,24 @@ function ErrandInputs(props) {
               variant={props.variant}
               type="text"
               placeholder="Destination"
-              onChange={props.handleChange}
               name={props.to}
-              value={props.toValue}
+              onChange={handleDestQueryChange}
+              value={destQuery} // Sync input value
             />
+            {/* search suggestion */}
+            {destSuggestions.length > 0 && (
+              <ul className="suggestions-list">
+                {destSuggestions.map((suggestion, index) => (
+                  <li
+                    key={index}
+                    onClick={() => handleDestSuggestionClick(suggestion)}
+                    className="suggestion-item"
+                  >
+                    {suggestion.place_name}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
       )}
@@ -251,14 +428,28 @@ function ErrandInputs(props) {
               variant={props.variant}
               type="text"
               placeholder="Destination"
-              onChange={props.handleChange}
+              onChange={handleDestQueryChange}
+              value={destQuery} // Sync input value
               name={props.to}
-              value={props.toValue}
               style={{
                 fontFamily:
                   "Lucida Sans, Lucida Sans Regular, Lucida Grande, Lucida Sans Unicode, Geneva, Verdana, sans-serif",
               }}
             />
+            {/* search suggestion */}
+            {destSuggestions.length > 0 && (
+              <ul className="suggestions-list">
+                {destSuggestions.map((suggestion, index) => (
+                  <li
+                    key={index}
+                    onClick={() => handleDestSuggestionClick(suggestion)}
+                    className="suggestion-item"
+                  >
+                    {suggestion.place_name}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
       )}
@@ -396,6 +587,33 @@ function ErrandInputs(props) {
           />
         </>
       )} */}
+      <style>
+        {`
+        .suggestions-list {
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          max-height: 200px;
+          overflow-y: auto;
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          position: absolute;
+          background-color: white;
+          z-index: 1000;
+          width: 100%;
+          font-size: 13px;
+        }     
+          
+        .suggestion-item {
+          padding: 10px;
+          cursor: pointer;
+        }
+        
+        .suggestion-item:hover {
+          background-color: #f0f0f0;
+        }
+      `}
+      </style>
     </>
   );
 }

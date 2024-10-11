@@ -21,7 +21,7 @@ label {
   /* height: auto; */
   margin-left: 60px;
   padding-bottom: 10px;
-  border: solid;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
 .input-cont {
@@ -47,6 +47,7 @@ label {
   justify-content: space-between;
   align-items: center;
 }
+
 .col1,
 .col2 {
   width: 100%;
@@ -65,6 +66,7 @@ select {
   position: relative;
   right: 90px;
 }
+
 .cols1 {
   text-align: start;
   width: 150px;
@@ -84,6 +86,7 @@ select {
   height: 490px;
   z-index: 10;
 }
+
 .map--wrap {
   height: 490px;
   z-index: 10;
@@ -93,6 +96,7 @@ select {
   background-color: #1679ab;
   color: #fff;
 }
+
 .btn {
   margin-top: 20px;
   width: 80% !important;
@@ -101,11 +105,13 @@ select {
   padding: 10px;
   text-align: center;
 }
+
 .btn-container {
   display: flex;
   justify-content: center;
   padding-left: 20px;
 }
+
 @media screen and (min-width: 320px) and (max-width: 439) {
   .input-cont {
     flex-direction: column;
@@ -116,6 +122,7 @@ select {
     width: 100%;
   }
 }
+
 @media screen and (min-width: 440px) {
   /* label {
     font-size: 14px !important;
@@ -125,8 +132,14 @@ select {
     width: 95%;
     margin: 0 auto;
   }
+
+  .butonn {
+    margin-top: 18px;
+  }
 }
+
 @media screen and (min-width: 780px) {
+
   .input-cont,
   .btn {
     max-width: 700px;
@@ -139,18 +152,22 @@ select {
     width: 300px !important;
     margin: 0;
   }
+
   .btn-container {
     display: flex;
     justify-content: flex-start;
   }
+
   .input-cont {
     flex-direction: row;
     max-width: none;
     gap: 20px;
   }
+
   .errand-inputs {
     width: 50%;
   }
+
   .map--wrap,
   .map-wrap {
     height: 490px !important;
@@ -158,12 +175,14 @@ select {
     display: block;
     flex-basis: 50%;
   }
+
   .map-small {
     min-height: 620px;
   }
 }
 
 @media screen and (min-width: 1300px) {
+
   .input-cont,
   .errand-cont {
     margin: auto;
