@@ -346,34 +346,56 @@ function ErrandInputs(props) {
             )}
           </Typography>
         </div>
-        <div className="col2">
-          <Input
-            color="neutral"
-            disabled={props.readOnly}
-            size="lg"
-            variant={props.variant}
-            startDecorator={<LocationOn />}
-            type="text"
-            placeholder="Location"
-            onChange={handleStartQueryChange}
-            value={startQuery} // Sync input value
-            name={props.location}
-          />
-          {/* search suggestion */}
-          {startSuggestions.length > 0 && (
-            <ul className="suggestions-list">
-              {startSuggestions.map((suggestion, index) => (
-                <li
-                  key={index}
-                  onClick={() => handleStartSuggestionClick(suggestion)}
-                  className="suggestion-item"
-                >
-                  {suggestion.place_name}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        {(props.typeValue === "HomeService - Indoor" ||
+          props.typeValue === "HomeService - Outdoor") && (
+          <>
+            <div className="col2">
+              <Input
+                color="neutral"
+                disabled={props.readOnly}
+                size="lg"
+                variant={props.variant}
+                startDecorator={<LocationOn />}
+                type="text"
+                placeholder="Location"
+                onChange={props.handleChange}
+                value={props.locValue} // Sync input value
+                name={props.location}
+              />
+            </div>
+          </>
+        )}
+        {(props.typeValue === "Transportation" ||
+          props.typeValue === "Delivery") && (
+          <div className="col2">
+            <Input
+              color="neutral"
+              disabled={props.readOnly}
+              size="lg"
+              variant={props.variant}
+              startDecorator={<LocationOn />}
+              type="text"
+              placeholder="Location"
+              onChange={handleStartQueryChange}
+              value={startQuery} // Sync input value
+              name={props.location}
+            />
+            {/* search suggestion */}
+            {startSuggestions.length > 0 && (
+              <ul className="suggestions-list">
+                {startSuggestions.map((suggestion, index) => (
+                  <li
+                    key={index}
+                    onClick={() => handleStartSuggestionClick(suggestion)}
+                    className="suggestion-item"
+                  >
+                    {suggestion.place_name}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
       </div>
       {/* Display when Transport Type is selected */}
       {props.typeValue === "Transport" && (
