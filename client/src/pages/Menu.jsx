@@ -7,6 +7,9 @@ import "./Menu.css";
 //import CardItem from '../components/CardItem';
 import { useAuth } from "../components/AuthContext";
 import SearchBar from "../components/Search Bar/SearchBar";
+import OtherHousesIcon from '@mui/icons-material/OtherHouses';
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 
 const Menu = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -50,8 +53,9 @@ const Menu = () => {
               <div class="col">
                 <div className="box">
                   <Link to={`/service/HomeService/${"HomeService"}`}>
-                    <button style={{ backgroundColor: "white" }}>
-                      <img src="/images/img6.png" alt="" />
+                    <button style={{}}>
+                      {/* <img src="/images/img6.png" alt="" /> */}
+                      <OtherHousesIcon sx={{ color: '#0073aa', fontSize: 100 }} />
                       <div className="content">
                         <p style={{ paddingTop: "20px" }}>Home Service</p>
                       </div>
@@ -62,8 +66,9 @@ const Menu = () => {
               <div class="col">
                 <div className="box">
                   <Link to={`/service/Transpo/${"Transport"}`}>
-                    <button style={{ backgroundColor: "white" }}>
-                      <img src="/images/img4.png" alt="" />
+                    <button style={{}}>
+                      {/* <img src="/images/img4.png" alt="" /> */}
+                      <DirectionsCarIcon sx={{ color: '#0073aa', fontSize: 100 }} />
                       <div className="content">
                         <p style={{ paddingTop: "20px" }}>Transportation</p>
                       </div>
@@ -74,8 +79,9 @@ const Menu = () => {
               <div class="col">
                 <div className="box">
                   <Link to={`/service/Delivery/${"Delivery"}`}>
-                    <button style={{ backgroundColor: "white" }}>
-                      <img src="/images/img5.png" alt="" />
+                    <button style={{}}>
+                      {/* <img src="/images/img5.png" alt="" /> */}
+                      <LocalShippingIcon sx={{ color: '#0073aa', fontSize: 100 }} />
                       <div className="content">
                         <p style={{ paddingTop: "20px" }}>Delivery</p>
                       </div>
