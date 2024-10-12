@@ -4,10 +4,13 @@ import StarRating from "../Display/StarRating";
 import { Link } from "react-router-dom";
 import { Button, Input } from "@mui/joy";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
+import { Image } from "@mui/icons-material";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function UserProfile(props) {
   const [preview, setPreview] = useState(null);
   const [image, setImage] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -46,13 +49,16 @@ function UserProfile(props) {
               <button
                 onClick={handleDeleteImage}
                 style={{
-                  width: "100px",
-                  marginBottom: "16px",
-                  marginTop: "16px",
-                  height: "40px",
+                  border: "none",
+                  backgroundColor: isHovered ? "#ffcccc" : "transparent",
+                  cursor: "pointer",
+                  transition: "background-color 0.3s ease",
                 }}
               >
-                Delete
+                <DeleteIcon
+                  sx={{ fontSize: 30 }}
+                  color="error"
+                />
               </button>
             </>
           ) : (
@@ -74,8 +80,21 @@ function UserProfile(props) {
               type="file"
               id="file"
               onChange={handleImage}
-              style={{ width: "100px" }}
+              style={{ display: "none" }}
             />
+            <label htmlFor="file"
+              style={{
+                // border: "1px dashed black",
+                border: "none",
+                flexDirection: "row",
+                gap: "10px",
+                alignItems: "center",
+                backgroundColor: "#f0f0f0",
+                maxWidth: "18rem"
+              }}>
+              <Image color="primary" />
+              Choose Image File
+            </label>
 
             <Button
               loading={false}
