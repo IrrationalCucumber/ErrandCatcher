@@ -43,6 +43,7 @@ const ErrandPage = () => {
   const userID = user.userID;
   const accessToken =
     "pk.eyJ1IjoibWlyYWthNDQiLCJhIjoiY20xcWVhejZ0MGVzdjJscTF5ZWVwaXBzdSJ9.aLYnU19L7neFq2Y7J_UXhQ";
+  const [distance, setDistance] = useState();
 
   //APS - 19/03/24
   //CHeck if Catcher already applied
@@ -152,6 +153,7 @@ const ErrandPage = () => {
               descValue={commission.comDescription}
               payValue={commission.comPay}
               numValue={commission.ContactNo}
+              distance={distance}
             />
           </div>
           {commission.comType !== "Delivery" &&
@@ -165,9 +167,10 @@ const ErrandPage = () => {
               <ViewMapBox
                 accessToken={accessToken}
                 interactive={false}
-                getDistanceCallback={(distance, origin, destination) =>
-                  console.log(distance, origin, destination)
-                }
+                getDistanceCallback={(distance, origin, destination) => {
+                  console.log(distance, origin, destination);
+                  setDistance(distance);
+                }}
                 initialOrigin={{
                   lat: commission.comLat,
                   lng: commission.comLong,
@@ -184,9 +187,10 @@ const ErrandPage = () => {
               <ViewMapBox
                 accessToken={accessToken}
                 interactive={false}
-                getDistanceCallback={(distance, origin, destination) =>
-                  console.log(distance, origin, destination)
-                }
+                getDistanceCallback={(distance, origin, destination) => {
+                  console.log(distance, origin, destination);
+                  setDistance(distance);
+                }}
                 initialOrigin={{
                   lat: commission.comLat,
                   lng: commission.comLong,

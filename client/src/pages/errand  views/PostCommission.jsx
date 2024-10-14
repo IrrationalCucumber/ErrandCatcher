@@ -8,6 +8,9 @@ import ErrandInputs from "../../components/ErrandInputs";
 import { MapLibre, PostMapBox } from "../../components/Map/Map";
 //image --ash
 import { useAuth } from "../../components/AuthContext";
+import { Alert, IconButton } from "@mui/joy";
+import WarningIcon from "@mui/icons-material/Warning";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { Box, Button } from "@mui/joy";
 
 const PostCommission = () => {
@@ -43,6 +46,9 @@ const PostCommission = () => {
     "pk.eyJ1IjoibWlyYWthNDQiLCJhIjoiY20xcWVhejZ0MGVzdjJscTF5ZWVwaXBzdSJ9.aLYnU19L7neFq2Y7J_UXhQ";
   // Add a state to track the marker's longitude and latitude
   // const [markerLngLat, setMarkerLngLat] = useState([123.8854, 10.3157]); // Default values
+  //alert feedback
+  const [alertMesg, setAlerMsg] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
 
   //update the info that will be stored
   const handleChange = (e) => {
@@ -55,6 +61,8 @@ const PostCommission = () => {
     }
   };
 
+  //set minimum pay for delvery and transpo
+  const [minimum, setMinimum] = useState();
   const handleStartLocationSelect = (coordinates) => {
     setCommission((prev) => ({
       ...prev,
@@ -80,7 +88,7 @@ const PostCommission = () => {
       const baseAmount = 100;
       const total = Math.round(km) * 15 + baseAmount;
       // Correctly update commission state without losing other fields
-
+      setMinimum(total);
       setCommission((prev) => ({
         ...prev,
         comPay: total,
@@ -139,10 +147,15 @@ const PostCommission = () => {
             !commission.Contactno ||
             !commission.comDescription
           )
-            alert("Empty fields");
+            setAlerMsg("Some fields are missing!");
+          setShowAlert(true);
         }
+      } else if (commission.comPay < minimum) {
+        setAlerMsg("The salary is lower than the suggested payment!");
+        setShowAlert(true);
       } else if (commission.comLat === "" && commission.comLong === "") {
-        alert("Looks like you havent set the location in the Map");
+        setAlerMsg("Looks like you havent set the location in the Map");
+        setShowAlert(true);
       } else {
         await axios.post("http://localhost:8800/commission", updatedCommission);
         await axios.post("http://localhost:8800/notify-catcher");
@@ -158,6 +171,25 @@ const PostCommission = () => {
 
   return (
     <>
+      {showAlert && (
+        <Alert
+          color="danger"
+          size="md"
+          variant="solid"
+          startDecorator={<WarningIcon />}
+          endDecorator={
+            <IconButton
+              variant="soft"
+              color="danger"
+              onClick={() => setShowAlert(false)}
+            >
+              <CloseRoundedIcon />
+            </IconButton>
+          }
+        >
+          {alertMesg}
+        </Alert>
+      )}
       <div className="errand-cont">
         <div className="input-cont">
           <div className="errand-inputs">
@@ -186,6 +218,8 @@ const PostCommission = () => {
               lat={commission.comLat}
               destlong={commission.comDestLong}
               destlat={commission.comDestLat}
+              distance={distance}
+              minimum={minimum}
             />
           </div>
           {commission.comType !== "Delivery" &&
@@ -246,11 +280,16 @@ const PostCommission = () => {
         </button> */}
         <div className="butonn">
           <Box sx={{ display: "flex", marginLeft: 2 }}>
-            <Button sx={{ width: "200px", borderRadius: "20px" }} size="lg" color="primary" onClick={handleClick}>
+            <Button
+              sx={{ width: "200px", borderRadius: "20px" }}
+              size="lg"
+              color="primary"
+              onClick={handleClick}
+            >
               POST
             </Button>
           </Box>
-        </div>  
+        </div>
       </div>
     </>
   );
