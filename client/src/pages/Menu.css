@@ -42,9 +42,23 @@
   padding: 5px 0 10px 0;
 }
 
-.Menu .box {
-  border: 2px solid black;
-  border-radius: 10px;
+.box button {
+  border: none;
+}
+
+.box button:hover {
+  border-color: #2260ff;
+  background-color: #78aae4;
+}
+
+.box button:hover::before {
+  transform: scale(1);
+  opacity: 1;
+}
+
+*/ .Menu .box button .Menu .box {
+  /* border: 2px solid black; */
+  /* border-radius: 10px; */
   /* box-shadow: 0 0 0 .5rem rgba(0, 0, 0, .1);     */
   margin: 10px 0 0 10px;
   flex-direction: column;
@@ -52,20 +66,27 @@
   scroll-behavior: smooth;
   overflow: hidden;
   max-width: 20rem;
-  height: 15rem;
+  /* height: 15rem; */
+  /* border-color: #2260ff;
+  background-color: #78aae4; */
+  border-color: #2260ff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
 
 .Menu .box button {
   position: inherit;
   width: 20rem;
   height: 15rem;
-  background: #cdcdd5;
-  padding: 10px 10px 10px 30px;
+  /* background: #cdcdd5; */
+  /* padding: 10px 10px 10px 30px; */
 }
+
 .Menu .box button:hover {
-  background: #78aae4;
+  /* background: #78aae4; */
+  background: #cdcdd5;
   color: rgb(8, 8, 8);
 }
+
 .Menu .box img {
   height: 50px;
   width: 70px;
@@ -78,20 +99,23 @@
 }
 
 .Menu .content p {
-  font-size: 15px;
-  font-weight: 1000;
-  text-align: justify;
-  padding-left: 5.5rem;
-
-  padding-bottom: 5px;
-  color: rgb(17, 16, 16);
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: 1.50rem;
+  font-weight: 700;
+  text-align: center;
+  /* padding-left: 5.5rem; */
+  /* padding-bottom: 5px; */
+  /* color: rgb(17, 16, 16); */
+  /* font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif; */
+  color: #0073aa;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .Menu1 {
   margin: 50px;
 }
+
 .Menu1 .box-container {
   flex-wrap: wrap;
   gap: 2rem;
@@ -125,6 +149,7 @@
 .Menu1 .box-container :hover {
   transform: scale(1.1);
 }
+
 .Menu1 .box img {
   height: 50%;
   width: 75%;
@@ -143,6 +168,7 @@
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   padding-top: 1rem;
 }
+
 .Menu1 .box-container .box .content h3 {
   font-size: 15px;
   font-weight: 600;

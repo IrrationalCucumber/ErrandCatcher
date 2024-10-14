@@ -6,7 +6,7 @@ video {
     z-index: -1;
 }
 
-.hero-container{
+.hero-container {
     background: url('../../../public/images/banner_epmloyer.jpg') center center/cover no-repeat;
     height: 50vh;
     width: 100%;
@@ -18,10 +18,16 @@ video {
     object-fit: contain;
 }
 
-.hero-container > h1{
-    color: #fff;
+.hero-container > h1 {
+    /* color: #fff; */
+    color: #f3f3f4;
     font-size: 75px;
     margin-top: -60px;
+    font-weight: 700;
+    line-height: 1.75;
+    font-style: oblique;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .hero-container > p {
@@ -36,39 +42,39 @@ video {
 
 }
 
-.hero-btns .btn{
+.hero-btns .btn {
     margin: 6px;
 }
 
-.fa-play-circle{
+.fa-play-circle {
     margin-left: 4px;
 }
 
-@media screen and (max-width: 960px){
-    .hero-container > h1{
+@media screen and (max-width: 960px) {
+    .hero-container > h1 {
         font-size: 50;
         margin-top: -30px;
     }
-    
+
 }
 
 @media screen and (max-width: 768px) {
-    .hero-container > h1{
-        font-size: 30px;
+    .hero-container > h1 {
+        font-size: 45px;
         margin-top: -20px;
     }
-    
-    .hero-container > p{
+
+    .hero-container > p {
         font-size: 20px;
     }
 }
 
-.btn-mobile{
+.btn-mobile {
     display: block;
     text-decoration: none;
 }
 
-.btn{
+.btn {
     width: 100%;
 }
 
@@ -76,7 +82,7 @@ video {
     ONGOING HERO SECTION
     adrean-26/09/24
 */
-.ongoing-hero-container{
+.ongoing-hero-container {
     /* background: url('../../../public/images/banner_epmloyer.jpg') center center/cover no-repeat; */
     height: 25vh;
     width: 100%;
@@ -89,15 +95,15 @@ video {
     background: linear-gradient(#9837e7, rgb(176, 118, 214), rgb(194, 178, 206))
 }
 
-.ongoing-hero-container > h1{
-    
+.ongoing-hero-container > h1 {
+
     color: #fff;
     font-size: 45px;
     margin: -25px;
 }
 
 
-.employer__hero__container{
+.employer__hero__container {
     height: 25vh;
     width: 100%;
     display: flex;
@@ -109,7 +115,7 @@ video {
     background: linear-gradient(#9837e7, rgb(176, 118, 214), rgb(194, 178, 206))
 }
 
-.employer__hero__container>h1{
+.employer__hero__container > h1 {
     color: #fff;
     font-size: 45px;
     margin: -25px;

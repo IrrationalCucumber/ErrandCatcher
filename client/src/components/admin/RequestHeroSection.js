@@ -20,7 +20,14 @@ function RequestHeroSection() {
   }, [request]);
   return (
     <div className="request__hero__section">
-      <h2>Total number of Account Verification request:</h2>
+      <h2
+        style={{
+          color: "white",
+          fontFamily: "system-ui",
+          fontWeight: "700",
+          letterSpacing: "1px",
+        }}>
+        Total number of Account Verification request:</h2>
       <h1>{request}</h1>
       <div className="hero-btns">
         <Button onClick={(e) => navigate(`/dashboard/admin/request`)}>

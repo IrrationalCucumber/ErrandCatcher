@@ -16,7 +16,6 @@
   flex-wrap: wrap;
   /* justify-content: center; */
   margin-left: 5rem;
-  min-height: 70vh; /* if empty cards fix bottom footer
 }
 
 .cards__wrapper {
