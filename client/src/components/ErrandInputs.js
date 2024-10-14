@@ -513,7 +513,9 @@ function ErrandInputs(props) {
                   <Typography color="neutral" level="body-md" variant="plain">
                     15/km + ₱100
                   </Typography>
-                  min{props.minimum}
+                  <Typography color="neutral" level="body-sm" variant="plain">
+                    <i>Suggested Pay: {props.minimum}</i>
+                  </Typography>
                   {props.distance ? (
                     <Typography color="neutral" level="body-md" variant="plain">
                       {props.distance} km
