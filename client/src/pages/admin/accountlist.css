@@ -79,7 +79,9 @@
 }
 
 .accounts th {
-  background-color: #ce9251;
+  /* background-color: #ce9251; */
+  background-color: #1679AB;
+  color: white;
 }
 
 .accounts tr:last-child td {

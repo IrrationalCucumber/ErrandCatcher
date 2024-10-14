@@ -335,6 +335,7 @@ const AccountList = () => {
           marginBottom: "10px",
           display: "flex",
           alignItems: "center",
+          width: "60%",
         }}
       >
         <input
@@ -350,6 +351,7 @@ const AccountList = () => {
             borderRadius: "4px",
             marginRight: "10px",
             marginBottom: "10px",
+            maxWidth: "450px",
           }}
         />
         <select
@@ -483,7 +485,8 @@ const AccountList = () => {
             fontSize: "12px",
             cursor: "pointer",
             border: "none",
-            backgroundColor: "#CE9251",
+            // backgroundColor: "#CE9251",
+            backgroundColor: "#1679AB",
             color: "white",
             borderRadius: "4px",
             display: "inline-block",
