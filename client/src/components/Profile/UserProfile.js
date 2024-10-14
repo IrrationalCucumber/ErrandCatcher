@@ -4,8 +4,8 @@ import StarRating from "../Display/StarRating";
 import { Link } from "react-router-dom";
 import { Button, Input } from "@mui/joy";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
-import { Image } from "@mui/icons-material";
 import DeleteIcon from '@mui/icons-material/Delete';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 
 function UserProfile(props) {
   const [preview, setPreview] = useState(null);
@@ -87,12 +87,15 @@ function UserProfile(props) {
                 // border: "1px dashed black",
                 border: "none",
                 flexDirection: "row",
-                gap: "10px",
+                gap: "4px",
                 alignItems: "center",
                 backgroundColor: "#f0f0f0",
-                maxWidth: "18rem"
+                maxWidth: "18rem",
+                display: "flex",
+                alignContent: "center",
+                justifyContent: "center"
               }}>
-              <Image color="primary" />
+              <AddAPhotoIcon color="primary" />
               Choose Image File
             </label>
 
