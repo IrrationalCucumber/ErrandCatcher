@@ -366,7 +366,8 @@ function ErrandInputs(props) {
           </>
         )}
         {(props.typeValue === "Transportation" ||
-          props.typeValue === "Delivery") && (
+          props.typeValue === "Delivery" ||
+          props.typeValue === "") && (
           <div className="col2">
             <Input
               color="neutral"
