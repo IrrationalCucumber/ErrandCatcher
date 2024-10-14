@@ -17,6 +17,9 @@ import ModalClose from "@mui/joy/ModalClose";
 import ModalDialog from "@mui/joy/ModalDialog";
 import DialogTitle from "@mui/joy/DialogTitle";
 import DialogContent from "@mui/joy/DialogContent";
+import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
+import ErrorIcon from '@mui/icons-material/Error';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const AccountList = () => {
   const [accounts, setAccounts] = useState([]);
@@ -220,7 +223,23 @@ const AccountList = () => {
     account.userEmail,
     account.accountType,
     DisplayDate(account.dateCreated),
-    account.accountStatus,
+    // account.accountStatus,
+    account.accountStatus === "Verified" ? (
+      <>
+        <VerifiedUserIcon style={{ color: "green" }} />
+        <span> Verified</span>
+      </>
+    ) : account.accountStatus === "Unverified" ? (
+      <>
+        <ErrorIcon style={{ color: "orange" }} />
+        <span> Unverified</span>
+      </>
+    ) : account.accountStatus === "Suspended" ? (
+      <>
+        <CancelIcon style={{ color: "red" }} />
+        <span> Suspended</span>
+      </>
+    ) : null, // handle any other status if necessary..
     <Dropdown>
       <MenuButton>ACTIONS</MenuButton>
       <Menu>
