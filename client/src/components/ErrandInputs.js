@@ -17,6 +17,7 @@ import AddIcCallIcon from "@mui/icons-material/AddIcCall";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
+import WhereToVoteIcon from "@mui/icons-material/WhereToVote";
 import { Typography } from "@mui/joy";
 
 function ErrandInputs(props) {
@@ -399,7 +400,8 @@ function ErrandInputs(props) {
         )}
       </div>
       {/* Display when Transport Type is selected */}
-      {props.typeValue === "Transport" && (
+      {(props.typeValue === "Transportation" ||
+        props.typeValue === "Delivery") && (
         <div className="input-group">
           <div className="col1">
             <Typography level="title-lg" variant="plain">
@@ -412,52 +414,12 @@ function ErrandInputs(props) {
               disabled={props.readOnly}
               size="lg"
               variant={props.variant}
+              startDecorator={<WhereToVoteIcon />}
               type="text"
               placeholder="Enter destination of errand..."
               name={props.to}
               onChange={handleDestQueryChange}
               value={destQuery} // Sync input value
-            />
-            {/* search suggestion */}
-            {destSuggestions.length > 0 && (
-              <ul className="suggestions-list">
-                {destSuggestions.map((suggestion, index) => (
-                  <li
-                    key={index}
-                    onClick={() => handleDestSuggestionClick(suggestion)}
-                    className="suggestion-item"
-                  >
-                    {suggestion.place_name}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </div>
-      )}
-      {/* Display when Delivery Type is selected */}
-      {props.typeValue === "Delivery" && (
-        <div className="input-group">
-          <div className="col1">
-            <Typography level="title-lg" variant="plain">
-              To
-            </Typography>
-          </div>
-          <div className="col2">
-            <Input
-              color="neutral"
-              disabled={props.readOnly}
-              size="lg"
-              variant={props.variant}
-              type="text"
-              placeholder="Enter drop-off of errand..."
-              onChange={handleDestQueryChange}
-              value={destQuery} // Sync input value
-              name={props.to}
-              style={{
-                fontFamily:
-                  "Lucida Sans, Lucida Sans Regular, Lucida Grande, Lucida Sans Unicode, Geneva, Verdana, sans-serif",
-              }}
             />
             {/* search suggestion */}
             {destSuggestions.length > 0 && (
