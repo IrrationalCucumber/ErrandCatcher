@@ -480,18 +480,19 @@ function ErrandInputs(props) {
       <div className="input-group">
         <div className="col1">
           {props.typeValue !== "HomeService - Indoor" &&
-            props.typeValue !== "HomeService - Outdoor" &&
-            props.typeValue !== "" && (
-              <Typography level="title-lg" variant="plain">
-                Payment
-              </Typography>
-            )}
-          {(props.typeValue === "HomeService - Indoor" ||
-            props.typeValue === "HomeService - Outdoor" ||
-            props.typeValue === "") && (
+          props.typeValue !== "HomeService - Outdoor" &&
+          props.typeValue !== "" ? (
             <Typography level="title-lg" variant="plain">
               Payment
             </Typography>
+          ) : (
+            (props.typeValue === "HomeService - Indoor" ||
+              props.typeValue === "HomeService - Outdoor" ||
+              props.typeValue === "") && (
+              <Typography level="title-lg" variant="plain">
+                Payment
+              </Typography>
+            )
           )}
           <div className="col2">
             <Input
