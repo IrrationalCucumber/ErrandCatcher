@@ -251,7 +251,7 @@ function ErrandInputs(props) {
             size="lg"
             variant={props.variant}
             type="text"
-            placeholder="Errand Title"
+            placeholder="Enter the title here..."
             onChange={props.handleChange}
             name={props.title}
             value={props.titleValue}
@@ -272,7 +272,7 @@ function ErrandInputs(props) {
             size="lg"
             variant={props.variant}
             type="date"
-            placeholder="Start Date"
+            placeholder="Enter when to begin..."
             onChange={props.handleChange}
             name={props.start}
             value={props.startValue}
@@ -298,7 +298,7 @@ function ErrandInputs(props) {
             size="lg"
             variant={props.variant}
             type="date"
-            placeholder="Deadline"
+            placeholder="Enter date of deadline"
             onChange={props.handleChange}
             name={props.deadline}
             value={props.dlValue}
@@ -324,7 +324,7 @@ function ErrandInputs(props) {
             value={props.typeValue}
             disabled={props.readOnly}
           >
-            <option value="">Choose type....</option>
+            <option value="">Choose type of Errand....</option>
             <option value="HomeService - Indoor">Home Service - Indoor</option>
             <option value="HomeService - Outdoor">
               Home Service - Outdoor
@@ -357,7 +357,7 @@ function ErrandInputs(props) {
                 variant={props.variant}
                 startDecorator={<LocationOn />}
                 type="text"
-                placeholder="Location"
+                placeholder="Enter location of errand..."
                 onChange={props.handleChange}
                 value={props.locValue} // Sync input value
                 name={props.location}
@@ -375,7 +375,7 @@ function ErrandInputs(props) {
               variant={props.variant}
               startDecorator={<LocationOn />}
               type="text"
-              placeholder="Location"
+              placeholder="Enter place for pickup..."
               onChange={handleStartQueryChange}
               value={startQuery} // Sync input value
               name={props.location}
@@ -412,7 +412,7 @@ function ErrandInputs(props) {
               size="lg"
               variant={props.variant}
               type="text"
-              placeholder="Destination"
+              placeholder="Enter destination of errand..."
               name={props.to}
               onChange={handleDestQueryChange}
               value={destQuery} // Sync input value
@@ -449,7 +449,7 @@ function ErrandInputs(props) {
               size="lg"
               variant={props.variant}
               type="text"
-              placeholder="Destination"
+              placeholder="Enter drop-off of errand..."
               onChange={handleDestQueryChange}
               value={destQuery} // Sync input value
               name={props.to}
@@ -561,7 +561,7 @@ function ErrandInputs(props) {
             variant={props.variant}
             startDecorator={<AddIcCallIcon />}
             type="tel"
-            placeholder="Phone/Telephone number"
+            placeholder="Enter contact number..."
             onChange={props.handleChange}
             name={props.number}
             value={props.numValue}
@@ -582,7 +582,7 @@ function ErrandInputs(props) {
             variant={props.variant}
             minRows={5}
             maxRows={5}
-            placeholder="Write here..."
+            placeholder="Write instruction/details for the errand...."
             onChange={props.handleChange}
             name={props.desc}
             value={props.descValue}
