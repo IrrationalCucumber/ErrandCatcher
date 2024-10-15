@@ -6,14 +6,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../AuthContext";
-import {
-  Card,
-  CardContent,
-  CardCover,
-  CardOverflow,
-  List,
-  ListItem,
-} from "@mui/joy";
+import { Card, CardContent, List, ListItem } from "@mui/joy";
 import StarRating from "../Display/StarRating";
 import { DisplayDate } from "../DisplayDate";
 
@@ -57,7 +50,7 @@ export function MyFeedback() {
               size="lg"
               variant="soft"
               sx={{
-                width: "90%",
+                width: "100%",
                 "--Card-radius": "0px",
                 "--Card-padding": "20px",
                 "&:hover": {
