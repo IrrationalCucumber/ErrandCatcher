@@ -20,6 +20,9 @@ import DialogContent from "@mui/joy/DialogContent";
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import ErrorIcon from '@mui/icons-material/Error';
 import CancelIcon from '@mui/icons-material/Cancel';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import HailIcon from '@mui/icons-material/Hail';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 
 const AccountList = () => {
   const [accounts, setAccounts] = useState([]);
@@ -221,7 +224,23 @@ const AccountList = () => {
     account.username,
     `${account.userFirstname} ${account.userLastname}`,
     account.userEmail,
-    account.accountType,
+    // account.accountType,
+    account.accountType === "Employer" ? (
+      <>
+        <HailIcon style={{ color: "green" }} />
+        <span> Employer</span>
+      </>
+    ) : account.accountType === "Catcher" ? (
+      <>
+        <AssignmentIndIcon style={{ color: "purple" }} />
+        <span> Catcher</span>
+      </>
+    ) : account.accountType === "Admin" ? (
+      <>
+        <ManageAccountsIcon style={{ color: "red" }} />
+        <span> Admin</span>
+      </>
+    ) : null, // handle any other status if necessary..
     DisplayDate(account.dateCreated),
     // account.accountStatus,
     account.accountStatus === "Verified" ? (

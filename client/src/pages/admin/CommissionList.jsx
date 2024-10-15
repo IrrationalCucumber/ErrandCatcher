@@ -7,6 +7,18 @@ import Table from "../../components/Table.js";
 import Select from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
 import { DisplayDate } from "../../components/DisplayDate.js";
+import OtherHousesIcon from '@mui/icons-material/OtherHouses';
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import CameraOutdoorIcon from '@mui/icons-material/CameraOutdoor';
+
+import PendingIcon from '@mui/icons-material/Pending';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
+import TimerOffIcon from '@mui/icons-material/TimerOff';
+import HandshakeIcon from '@mui/icons-material/Handshake';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+
 
 const CommissionList = () => {
   const [commissions, setCommissions] = useState([]);
@@ -170,6 +182,7 @@ const CommissionList = () => {
               <option value="Cancelled">Cancelled</option>
               <option value="Expired">Expired</option>
               <option value="Caught">Caught</option>
+              <option value="Available">Available</option>
             </select>
             <select
               className="CLtype"
@@ -208,13 +221,65 @@ const CommissionList = () => {
             Commission.commissionID,
             Commission.commissionTitle,
             `${Commission.userFirstname} ${Commission.userLastname}`,
-            Commission.commissionType,
+            // Commission.commissionType,
+            Commission.commissionType === "HomeService - Indoor" ? (
+              <>
+                <OtherHousesIcon style={{ color: "purple" }} />
+                <span> Home Service Indoor</span>
+              </>
+            ) : Commission.commissionType === "HomeService - Outdoor" ? (
+              <>
+                <CameraOutdoorIcon style={{ color: "brown" }} />
+                <span> Home Service Outdoor</span>
+              </>
+            ) : Commission.commissionType === "Delivery" ? (
+              <>
+                <DirectionsCarIcon style={{ color: "darkblue" }} />
+                <span> Delivery</span>
+              </>
+            ) : Commission.commissionType === "Transportation" ? (
+              <>
+                <LocalShippingIcon style={{ color: "orange" }} />
+                <span> Transportation</span>
+              </>
+            ) : null,
             "Php " + Commission.commissionPay,
             DisplayDate(Commission.DatePosted),
             Commission.DateCompleted === ""
               ? DisplayDate(Commission.DateCompleted)
               : "",
-            Commission.commissionStatus,
+            // Commission.commissionStatus,
+            Commission.commissionStatus === "Pending" ? (
+              <>
+                <PendingIcon style={{ color: "purple" }} />
+                <span> Pending</span>
+              </>
+            ) : Commission.commissionStatus === "Completed" ? (
+              <>
+                <CheckCircleIcon style={{ color: "green" }} />
+                <span> Completed</span>
+              </>
+            ) : Commission.commissionStatus === "Canceled" ? (
+              <>
+                <CancelIcon style={{ color: "orange" }} />
+                <span> Canceled</span>
+              </>
+            ) : Commission.commissionStatus === "Expired" ? (
+              <>
+                <TimerOffIcon style={{ color: "orange" }} />
+                <span> Expired</span>
+              </>
+            ) : Commission.commissionStatus === "Caught" ? (
+              <>
+                <HandshakeIcon style={{ color: "green" }} />
+                <span> Caught</span>
+              </>
+            ) : Commission.commissionStatus === "Available" ? (
+              <>
+                <EventAvailableIcon style={{ color: "darkgreen" }} />
+                <span> Available</span>
+              </>
+            ) : null,
             <>
               {/* <button onClick={() => handleDelete(Commission.commissionID)}>
               <i class="fa-solid fa-trash"></i>
