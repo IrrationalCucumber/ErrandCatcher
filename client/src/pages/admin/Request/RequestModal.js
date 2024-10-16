@@ -101,7 +101,7 @@ const RequestModal = ({ request, handleClose }) => {
         <span className="close" onClick={handleClose} style={closeStyle}>
           <i className="far fa-circle-xmark"></i>
         </span>
-        <h2 style={{ margin: "20px" }}>Verification Request Details</h2>
+        <h2 style={headingStyle}>Verification Request Details</h2>
         <p>
           <strong>Full Name:</strong> {request.userFirstname}{" "}
           {request.userLastname}
@@ -133,36 +133,66 @@ const RequestModal = ({ request, handleClose }) => {
           </div>
         )}
         <div>
-          <button
-            onClick={(e) =>
-              handleVerify(request.requestUserID, request.requestID)
-            }
-            style={Veributton}
-          >
-            Verify
-          </button>
-          <button
-            onClick={(e) =>
-              handleUnverify(request.requestUserID, request.requestID)
-            }
-            style={Veributton}
-          >
-            Suspend
-          </button>
+          <div style={buttonContainerStyle} >
+            <button
+              onClick={(e) =>
+                handleVerify(request.requestUserID, request.requestID)
+              }
+              style={Veributton}
+            >
+              Verify
+            </button>
+            <button
+              onClick={(e) =>
+                handleUnverify(request.requestUserID, request.requestID)
+              }
+              style={UnVeributton}
+            >
+              Suspend
+            </button>
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-const Veributton = {
-  width: "100px",
-  height: "30px",
-  borderRadius: "10px",
+const buttonContainerStyle = {
+  display: "flex",
+  justifyContent: "flex-start",
+  marginTop: "20px",
+  gap: "11px"
+};
 
-  margin: "20px",
-  gap: "20px",
+const Veributton = {
+  // width: "100px",
+  // height: "30px",
+  // borderRadius: "10px",
+
+  // margin: "20px",
+  // gap: "20px",
+  // cursor: "pointer",
+  padding: "10px 20px",
+  backgroundColor: "#007bff",
+  color: "#ffffff",
+  border: "none",
+  borderRadius: "5px",
   cursor: "pointer",
+  fontWeight: "500",
+  fontSize: "14px",
+  transition: "background-color 0.3s ease",
+};
+
+const UnVeributton = {
+  padding: "10px 20px",
+  backgroundColor: "#dc3545",
+  color: "#ffffff",
+  border: "none",
+  borderRadius: "5px",
+  cursor: "pointer",
+  fontWeight: "500",
+  fontSize: "14px",
+  transition: "background-color 0.3s ease",
 };
 
 Veributton[":hover"] = {
@@ -175,10 +205,17 @@ Veributton[":active"] = {
   color: "white",
 };
 
+const headingStyle = {
+  marginBottom: "20px",
+  fontSize: "24px",
+  fontWeight: "700",
+  color: "rgb(22, 121, 171)",
+};
+
 const modalStyle = {
   display: "block",
   position: "fixed",
-  zIndex: "1",
+  // zIndex: "1",
   left: "0",
   top: "0",
   width: "100%",
@@ -188,8 +225,11 @@ const modalStyle = {
 };
 
 const modalContentStyle = {
+  position: "absolute",
+  top: "12%",
+  left: "31%",
   backgroundColor: "#fefefe",
-  margin: "15% auto",
+  // margin: "15% auto",
   padding: "20px",
   border: "1px solid #888",
   width: "80%",
@@ -200,9 +240,14 @@ const modalContentStyle = {
 
 const closeStyle = {
   color: "#aaa",
-  float: "right",
+  float: "left",
+  position: "absolute",
+  right: "3%",
+  top: "1%",
   fontSize: "28px",
   fontWeight: "bold",
+  color: "#dc3545",
+  cursor: "pointer"
 };
 
 export default RequestModal;
