@@ -24,15 +24,18 @@
 
 .landing__text__right {
   width: 55%;
+  max-width: 100%;
   right: 0;
   color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 70px;
+  padding: 0 10px;
   margin: 60px;
   text-shadow: 3px 3px 3px rgb(0 0 0 / 60%);
+  font-size: 50px;
+  line-height: 1.6;
 }
 
 /* .landing__service__btn__lt {
@@ -167,10 +170,9 @@
 
 .landing__text__left p {
   font-family: var(--ff-para);
-  font-size: 1.2rem;
-  line-height: 2rem;
-  padding: 5px;
-  letter-spacing: 1px;
+  font-size: 25px;
+  line-height: 36px;
+  letter-spacing: 0.32px;
 }
 
 .landing__text__left > h2 {
@@ -183,7 +185,7 @@
 .landing__text__right p {
   font-family: sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  font-size: 1.25rem;
+  font-size: 25px;
   line-height: 36px;
   letter-spacing: 0.32px;
 }
@@ -233,9 +235,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 70px;
+  padding: 0 10px;
   margin: 60px;
   text-shadow: 3px 3px 3px rgb(0 0 0 / 60%);
+  font-size: 50px;
+  line-height: 1.6;
 }
 /* 
   .landing__cont:hover{
@@ -259,22 +263,26 @@
 
   .landing__text__right {
     width: 55%;
-    height: inherit;
     right: 0;
     color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    font-size: 1em;
+    line-height: 1.5;
+    word-wrap: break-word;
   }
 
   .landing__text__left {
     width: 55%;
-    height: inherit;
     right: 0;
     color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    font-size: 1em;
+    line-height: 1.5;
+    word-wrap: break-word;
   }
 
   .wrapper > .landing__cont {
