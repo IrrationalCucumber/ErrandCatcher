@@ -3,3 +3,28 @@
   flex-direction: column;
   min-height: 100vh;
 }
+
+.tableRow {
+  border-bottom: 1px solid #ddd;
+  transition: background-color 0.3s ease;
+}
+
+.tableRow:hover {
+  background-color: #e8e6e6;
+
+}
+
+
+@media screen and (max-width: 888px) {
+
+  .containerReq {
+    width: auto;
+    /* border: solid; */
+  }
+
+  .tableRow {
+    width: 100%;
+    font-size: 14px;
+    overflow-x: auto;
+  }
+}

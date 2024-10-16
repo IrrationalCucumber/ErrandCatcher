@@ -8,6 +8,9 @@ import "../Request/request.css";
 import { Modal, ModalDialog } from "@mui/joy";
 import VerifiedIcon from '@mui/icons-material/Verified';
 import PendingIcon from '@mui/icons-material/Pending';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import HailIcon from '@mui/icons-material/Hail';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 
 function RequestPage() {
   // Mock list of verification requests
@@ -76,62 +79,92 @@ function RequestPage() {
         <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
           Verification Requests
         </h1>
-        <table
-          style={{ margin: "0 auto", width: "80%", borderCollapse: "collapse" }}
-        >
-          <thead>
-            <tr>
-              <th style={{ ...tableHeaderStyle, width: "10%" }}>ID</th>
-              <th style={{ ...tableHeaderStyle, width: "30%" }}>User</th>
-              <th style={{ ...tableHeaderStyle, width: "25%" }}>Type</th>
-              <th style={{ ...tableHeaderStyle, width: "10%", textAlign: "center" }}>Status</th>
-              <th style={{ ...tableHeaderStyle, width: "20%", textAlign: "center" }}>DOCUMENTS</th>
-              <th style={{ ...tableHeaderStyle, width: "25%", textAlign: "center" }}>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {requests.map((request) => (
-              <tr key={request.id} style={tableRowStyle}>
-                <td style={tableCellStyle}>{request.userID}</td>
-                <td style={tableCellStyle}>{request.username}</td>
-                <td style={tableCellStyle}>{request.accountType}</td>
-                {/* <td style={tableCellStyle}>{request.requestStatus}</td> */}
-                <td style={tableCellStyle}>
-                  {request.requestStatus === "Complete" ?
-                    <VerifiedIcon color="success"
-                      sx={{
-                        paddingRight: "2px",
-                        fontSize: "large",
-                      }} /> :
-                    <PendingIcon color="error"
-                      sx={{
-                        paddingRight: "2px",
-                        fontSize: "large",
-                      }} />}
-                  {request.requestStatus}
-                </td>
-                <td style={{ tableCellStyle, textAlign: "center" }}>
-                  {/* for Image request */}
-                  <button
-                    className="RequestImage"
-                    style={buttonStyle}
-                    onClick={() => handleOpenModal(request)}
-                  >
-                    View
-                  </button>
-                </td>
-                <td style={tableCellStyle}>
-                  <button
-                    style={buttonStyleac}
-                    onClick={() => handleClick(request)}
-                  >
-                    Action
-                  </button>
-                </td>
+        <div style={{ overflow: "auto" }}>
+          <table
+            style={{ margin: "0 auto", width: "80%", borderCollapse: "collapse" }}
+          >
+            <thead>
+              <tr style={{ background: "#1679AB" }}>
+                <th style={{ ...tableHeaderStyle, width: "10%" }}>ID</th>
+                <th style={{ ...tableHeaderStyle, width: "30%" }}>User</th>
+                <th style={{ ...tableHeaderStyle, width: "25%" }}>Type</th>
+                <th style={{ ...tableHeaderStyle, width: "10%", textAlign: "center" }}>Status</th>
+                <th style={{ ...tableHeaderStyle, width: "20%", textAlign: "center" }}>Documents</th>
+                <th style={{ ...tableHeaderStyle, width: "25%", textAlign: "center" }}>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {requests.map((request) => (
+                <tr key={request.id} style={tableRowStyle} className="tableRow">
+                  <td style={tableCellStyle}>{request.userID}</td>
+                  <td style={tableCellStyle}>{request.username}</td>
+                  {/* <td style={tableCellStyle}>{request.accountType}</td> */}
+                  <td style={tableCellStyle}>
+                    {request.accountType === "Employer" ? (
+                      <HailIcon
+                        color="success"
+                        sx={{
+                          paddingRight: "2px",
+                          fontSize: "large",
+                        }}
+                      />
+                    ) : request.accountType === "Catcher" ? (
+                      <AssignmentIndIcon
+                        color="purple"
+                        sx={{
+                          paddingRight: "2px",
+                          fontSize: "large",
+                        }}
+                      />
+                    ) : request.accountType === "Admin" ? (
+                      <ManageAccountsIcon
+                        color="primary"
+                        sx={{
+                          paddingRight: "2px",
+                          fontSize: "large",
+                        }}
+                      />
+                    ) : null}
+                    {request.accountType}
+                  </td>
+                  {/* <td style={tableCellStyle}>{request.requestStatus}</td> */}
+                  <td style={tableCellStyle}>
+                    {request.requestStatus === "Complete" ?
+                      <VerifiedIcon color="success"
+                        sx={{
+                          paddingRight: "2px",
+                          fontSize: "large",
+                        }} /> :
+                      <PendingIcon color="error"
+                        sx={{
+                          paddingRight: "2px",
+                          fontSize: "large",
+                        }} />}
+                    {request.requestStatus}
+                  </td>
+                  <td style={{ tableCellStyle, textAlign: "center" }}>
+                    {/* for Image request */}
+                    <button
+                      className="RequestImage"
+                      style={buttonStyle}
+                      onClick={() => handleOpenModal(request)}
+                    >
+                      View
+                    </button>
+                  </td>
+                  <td style={tableCellStyle}>
+                    <button
+                      style={buttonStyleac}
+                      onClick={() => handleClick(request)}
+                    >
+                      Action
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
         <Pagination
           itemsPerPage={itemsPerPage}
           totalItems={requests.length}
@@ -160,16 +193,20 @@ function RequestPage() {
 }
 
 const tableHeaderStyle = {
-  backgroundColor: "#f2f2f2",
+  // backgroundColor: "#f2f2f2",
+  backgroundColor: "#1679AB",
   padding: "10px",
   textAlign: "left",
   fontSize: "12px",
+  color: "white",
 };
 
 const tableCellStyle = {
   padding: "10px",
   borderBottom: "1px solid #ddd",
   fontSize: "12px",
+  color: "black",
+  border: "1px solid #ddd"
 };
 
 const tableRowStyle = {
