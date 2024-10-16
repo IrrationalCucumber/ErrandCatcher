@@ -85,7 +85,9 @@ export function MyPostedFeedback() {
   useEffect(() => {
     const fetchFeedback = async () => {
       try {
-        const res = await axios.get(``);
+        const res = await axios.get(
+          `http://localhost:8800/posted-feedbacks/${user.userID}`
+        );
         setFeedback(res.data);
       } catch (error) {
         console.log(error);
