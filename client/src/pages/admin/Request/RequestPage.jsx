@@ -23,6 +23,11 @@ function RequestPage() {
   const [showImageModal, setShowImageModal] = useState(false);
   const location = useLocation();
   const userID = location.pathname.split("/")[2];
+  const [searchTerm, setSearchTerm] = useState({
+    term: "",
+    type: "",
+    status: "",
+  });
 
   useEffect(() => {
     // Simulate fetching data (you can replace this with actual API calls)
@@ -58,10 +63,40 @@ function RequestPage() {
     setShowImageModal(false);
   };
 
+  const handleChange = (e) => {
+    // For the 'gender' field, directly set the value without using spread syntax
+    if (e.target.name === "status") {
+      setSearchTerm((prev) => ({ ...prev, status: e.target.value }));
+    } else if (e.target.name === "type") {
+      setSearchTerm((prev) => ({ ...prev, type: e.target.value }));
+    } else {
+      // For other fields, use spread syntax as before
+      setSearchTerm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    }
+  };
+
+  const filterAccounts = requests.filter((request) => {
+    const type = request.accountType
+      .toLowerCase()
+      .includes(searchTerm.type.toLowerCase());
+    const termMatch = request.username
+      .toLowerCase()
+      .includes(searchTerm.term.toLowerCase());
+    const termMatch2 = request.userEmail
+      .toLowerCase()
+      .includes(searchTerm.term.toLowerCase());
+    const status = request.requestStatus.includes(searchTerm.status);
+
+    return type && (termMatch || termMatch2) && status;
+  });
+
   // Get current items
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentRequests = requests.slice(indexOfFirstItem, indexOfLastItem);
+  const currentRequests = filterAccounts.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
 
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -79,6 +114,76 @@ function RequestPage() {
         <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
           Verification Requests
         </h1>
+        <div
+          className="search"
+          style={{
+            paddingLeft: "120px",
+            marginBottom: "10px",
+            display: "flex",
+            alignItems: "center",
+            width: "60%",
+          }}
+        >
+          <input
+            type="text"
+            name="term"
+            placeholder="Search..."
+            value={searchTerm.term}
+            onChange={handleChange}
+            style={{
+              padding: "8px",
+              fontSize: "12px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              marginRight: "10px",
+              marginBottom: "10px",
+              maxWidth: "450px",
+              // margin: "0 auto"
+            }}
+          />
+
+          <select
+            className="ALtype"
+            name="type"
+            onChange={handleChange}
+            value={searchTerm.type}
+            style={{
+              padding: "8px",
+              fontSize: "12px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              marginRight: "10px",
+              marginBottom: "10px",
+              width: "150px",
+            }}
+          >
+            <option value="">Type</option>
+            <option value="Employer">Employer</option>
+            <option value="Catcher">Catcher</option>
+            <option value="admin">Admin</option>
+          </select>
+
+          <select
+            className="ALstatus"
+            name="status"
+            onChange={handleChange}
+            value={searchTerm.status}
+            style={{
+              padding: "8px",
+              fontSize: "12px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              marginRight: "10px",
+              marginBottom: "10px",
+              width: "150px",
+            }}
+          >
+            <option value="">Status</option>
+            <option value="Complete">Complete</option>
+            <option value="Pending">Pending</option>
+            {/* <option value="Suspended">Suspended</option> */}
+          </select>
+        </div>
         <div style={{ overflow: "auto" }}>
           <table
             style={{ margin: "0 auto", width: "80%", borderCollapse: "collapse" }}
@@ -94,7 +199,7 @@ function RequestPage() {
               </tr>
             </thead>
             <tbody>
-              {requests.map((request) => (
+              {currentRequests.map((request) => (
                 <tr key={request.id} style={tableRowStyle} className="tableRow">
                   <td style={tableCellStyle}>{request.userID}</td>
                   <td style={tableCellStyle}>{request.username}</td>
