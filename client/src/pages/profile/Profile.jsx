@@ -131,21 +131,34 @@ const Profile = () => {
     }
   };
 
+  //Alert feedback
+  const [message, setMessage] = useState("")
+  const [alertColor, setAlertColor] = useState("")
   //sSave CHanges
   const handleClick = async (e) => {
     //const updatedAccount = { ...account };
     //refresh the page when button is clicked
     e.preventDefault();
     try {
-      await axios.put("http://localhost:8800/update/" + userID, account);
       const formData = new FormData();
-      formData.append("image", image);
-      await axios
-        .post(`http://localhost:8800/update-pic/${userID}`, formData)
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+      if (image === "") {
+        setMessage("NO IMAGE")
+        setAlertColor("danger")
+        setShowAlert(true)
+      }
+      else {
+        setMessage("")
+        formData.append("image", image);
+        await axios
+          .post(`http://localhost:8800/update-pic/${userID}`, formData)
+          .then((res) => console.log(res))
+          .catch((err) => console.log(err));
 
-      alert("Profile updated *Replace this*");
+        await axios.put("http://localhost:8800/update/" + userID, account);
+        setMessage("Profile updated *Replace this*");
+        setAlertColor("success")
+        setShowAlert(true)
+      }
       console.log(account);
       //window.location.reload();
     } catch (err) {
@@ -158,7 +171,7 @@ const Profile = () => {
     <div>
       {showAlert && (
         <Alert
-          color="danger"
+          color={alertColor}
           size="lg"
           variant="soft"
           startDecorator={<WarningIcon />}
@@ -166,14 +179,14 @@ const Profile = () => {
             <Button
               size="sm"
               variant="solid"
-              color="danger"
+              color={alertColor}
               onClick={(e) => setShowAlert(false)}
             >
               <CloseIcon />
             </Button>
           }
         >
-          No file found!
+          {message}
         </Alert>
       )}
 

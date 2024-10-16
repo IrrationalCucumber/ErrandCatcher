@@ -236,6 +236,7 @@ function RadioInputs({ options, selectedOption, onChange }) {
             cursor: pointer;
             font-weight: 800;
             line-height: 1.2;
+            color: #0073aa;
           }
 
           .separator {

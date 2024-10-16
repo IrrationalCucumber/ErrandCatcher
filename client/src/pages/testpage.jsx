@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 
-function testpage() {
-  return <div></div>;
+function Testpage() {
+  return (
+    <>
+      <div>Hello World testing</div>
+    </>
+  )
 }
 
-export default testpage;
+export default Testpage;

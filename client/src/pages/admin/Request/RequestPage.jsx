@@ -6,6 +6,8 @@ import axios from "axios";
 import RequestImages from "./RequestImage";
 import "../Request/request.css";
 import { Modal, ModalDialog } from "@mui/joy";
+import VerifiedIcon from '@mui/icons-material/Verified';
+import PendingIcon from '@mui/icons-material/Pending';
 
 function RequestPage() {
   // Mock list of verification requests
@@ -82,9 +84,9 @@ function RequestPage() {
               <th style={{ ...tableHeaderStyle, width: "10%" }}>ID</th>
               <th style={{ ...tableHeaderStyle, width: "30%" }}>User</th>
               <th style={{ ...tableHeaderStyle, width: "25%" }}>Type</th>
-              <th style={{ ...tableHeaderStyle, width: "10%" }}>Status</th>
-              <th style={{ ...tableHeaderStyle, width: "20%" }}>DOCUMENTS</th>
-              <th style={{ ...tableHeaderStyle, width: "25%" }}>Action</th>
+              <th style={{ ...tableHeaderStyle, width: "10%", textAlign: "center" }}>Status</th>
+              <th style={{ ...tableHeaderStyle, width: "20%", textAlign: "center" }}>DOCUMENTS</th>
+              <th style={{ ...tableHeaderStyle, width: "25%", textAlign: "center" }}>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -93,8 +95,22 @@ function RequestPage() {
                 <td style={tableCellStyle}>{request.userID}</td>
                 <td style={tableCellStyle}>{request.username}</td>
                 <td style={tableCellStyle}>{request.accountType}</td>
-                <td style={tableCellStyle}>{request.requestStatus}</td>
+                {/* <td style={tableCellStyle}>{request.requestStatus}</td> */}
                 <td style={tableCellStyle}>
+                  {request.requestStatus === "Complete" ?
+                    <VerifiedIcon color="success"
+                      sx={{
+                        paddingRight: "2px",
+                        fontSize: "large",
+                      }} /> :
+                    <PendingIcon color="error"
+                      sx={{
+                        paddingRight: "2px",
+                        fontSize: "large",
+                      }} />}
+                  {request.requestStatus}
+                </td>
+                <td style={{ tableCellStyle, textAlign: "center" }}>
                   {/* for Image request */}
                   <button
                     className="RequestImage"
@@ -106,7 +122,7 @@ function RequestPage() {
                 </td>
                 <td style={tableCellStyle}>
                   <button
-                    style={buttonStyle}
+                    style={buttonStyleac}
                     onClick={() => handleClick(request)}
                   >
                     Action
@@ -160,10 +176,26 @@ const tableRowStyle = {
   ":hover": {
     backgroundColor: "#f2f2f2",
   },
+  borderBottom: "1px solid #ddd",
 };
 
 const buttonStyle = {
-  backgroundColor: "#4CAF50",
+  backgroundColor: "#ded5c6",
+  // backgroundColor: "#4CAF50",
+  border: "none",
+  color: "black",
+  padding: "8px 20px",
+  textAlign: "center",
+  textDecoration: "none",
+  display: "inline-block",
+  fontSize: "12px",
+  margin: "4px 2px",
+  cursor: "pointer",
+  borderRadius: "5px",
+};
+
+const buttonStyleac = {
+  backgroundColor: "#378ce7",
   border: "none",
   color: "white",
   padding: "8px 20px",
