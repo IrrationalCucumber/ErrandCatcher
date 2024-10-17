@@ -115,14 +115,14 @@ function RequestPage() {
           Verification Requests
         </h1>
         <div
-          className="search"
-          style={{
-            paddingLeft: "120px",
-            marginBottom: "10px",
-            display: "flex",
-            alignItems: "center",
-            width: "60%",
-          }}
+          className="searchReqAdmin"
+          // style={{
+          //   paddingLeft: "120px",
+          //   marginBottom: "10px",
+          //   display: "flex",
+          //   alignItems: "center",
+          //   width: "60%",
+          // }}
         >
           <input
             type="text"
@@ -304,6 +304,7 @@ const tableHeaderStyle = {
   textAlign: "left",
   fontSize: "12px",
   color: "white",
+  textAlign: "center",
 };
 
 const tableCellStyle = {

@@ -210,10 +210,15 @@ const headingStyle = {
   fontSize: "24px",
   fontWeight: "700",
   color: "rgb(22, 121, 171)",
+  textAlign: "center",
+
 };
 
 const modalStyle = {
-  display: "block",
+  // display: "block",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
   position: "fixed",
   // zIndex: "1",
   left: "0",
@@ -225,9 +230,9 @@ const modalStyle = {
 };
 
 const modalContentStyle = {
-  position: "absolute",
-  top: "12%",
-  left: "31%",
+  // position: "absolute",
+  // top: "12%",
+  // left: "31%",
   backgroundColor: "#fefefe",
   // margin: "15% auto",
   padding: "20px",
@@ -239,7 +244,7 @@ const modalContentStyle = {
 };
 
 const closeStyle = {
-  color: "#aaa",
+  // color: "#aaa",
   float: "left",
   position: "absolute",
   right: "3%",
