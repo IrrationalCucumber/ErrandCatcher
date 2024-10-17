@@ -118,6 +118,8 @@ const Profile = () => {
   const handleUpload = async (e) => {
     e.preventDefault();
     if (image === "") {
+      setMessage("Please choose your image before uploading");
+      setAlertColor("warning");
       setShowAlert(true); // Update state to show alert
       return; // Prevent further execution if no image is found
     } else {
@@ -141,13 +143,26 @@ const Profile = () => {
     e.preventDefault();
     try {
       const formData = new FormData();
-      if (image === "") {
-        setMessage("NO IMAGE")
+      if (
+        image === "" ||
+        account.address === "" ||
+        account.age === "" ||
+        account.bday === "" ||
+        account.contact === "" ||
+        // account.desc === "" ||
+        account.email === "" ||
+        account.fname === "" ||
+        account.gender === "" ||
+        account.lname === "" ||
+        account.username === ""
+      ) {
+        setMessage("Please input all the fields before saving!")
         setAlertColor("danger")
         setShowAlert(true)
       }
       else {
-        setMessage("")
+        setMessage("Saved");
+        setAlertColor("success");
         formData.append("image", image);
         await axios
           .post(`http://localhost:8800/update-pic/${userID}`, formData)
@@ -171,9 +186,17 @@ const Profile = () => {
     <div>
       {showAlert && (
         <Alert
+          sx={{
+            position: "fixed",
+            bottom: 16,
+            right: 16,
+            zIndex: 9999,
+            transform: showAlert ? "translateX(0)" : "translateX(100%)",
+            transition: "transform 0.5s ease-in-out",
+          }}
           color={alertColor}
           size="lg"
-          variant="soft"
+          variant="solid"
           startDecorator={<WarningIcon />}
           endDecorator={
             <Button
