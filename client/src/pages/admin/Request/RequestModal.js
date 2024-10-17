@@ -1,5 +1,17 @@
 import axios from "axios";
 import React, { useState } from "react";
+import {
+  Button,
+  DialogActions,
+  DialogContent,
+  ButtonGroup,
+  Modal,
+  ModalDialog,
+  DialogTitle,
+  Divider,
+  Box,
+} from "@mui/joy";
+import { WarningRounded } from "@mui/icons-material";
 
 const RequestModal = ({ request, handleClose }) => {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
@@ -11,6 +23,18 @@ const RequestModal = ({ request, handleClose }) => {
     notifDesc: "", //contents of the notif
     notifDate: "", //time and date notif is added
   });
+
+  const [open, setOpen] = useState(false);
+  const [openSus, setOpenSus] = useState(false);
+
+  const handleOpenModal = () => {
+    setOpen(true);
+  };
+
+  const handleOpenSusModal = () => {
+    setOpenSus(true);
+  };
+
   //get current time and date for notif
   const getTimeAndDate = () => {
     const currentDate = new Date();
@@ -47,6 +71,7 @@ const RequestModal = ({ request, handleClose }) => {
     } catch (err) {
       console.log(err);
     }
+    console.log("Verified")
   };
 
   const handleUnverify = async (requestUserID, requestID) => {
@@ -70,6 +95,7 @@ const RequestModal = ({ request, handleClose }) => {
     } catch (err) {
       console.log(err);
     }
+    console.log("unVerified")
   };
 
   const formattedDate = (theDate) => {
@@ -135,17 +161,19 @@ const RequestModal = ({ request, handleClose }) => {
         <div>
           <div style={buttonContainerStyle} >
             <button
-              onClick={(e) =>
-                handleVerify(request.requestUserID, request.requestID)
-              }
+              // onClick={(e) =>
+              //   handleVerify(request.requestUserID, request.requestID)
+              // }
+              onClick={() => handleOpenModal()}
               style={Veributton}
             >
               Verify
             </button>
             <button
-              onClick={(e) =>
-                handleUnverify(request.requestUserID, request.requestID)
-              }
+              // onClick={(e) =>
+              //   handleUnverify(request.requestUserID, request.requestID)
+              // }
+              onClick={() => handleOpenSusModal()}
               style={UnVeributton}
             >
               Suspend
@@ -153,6 +181,106 @@ const RequestModal = ({ request, handleClose }) => {
           </div>
         </div>
       </div>
+
+      <ButtonGroup aria-label="spacing button group">
+        {/* verified modal */}
+        <Modal open={open} onClose={() => setOpen(false)}>
+          <ModalDialog variant="outlined" role="alertdialog">
+            <DialogTitle>
+              <WarningRounded />
+              Confirmation
+            </DialogTitle>
+            <Divider />
+            <DialogContent>
+              Are you sure you want to verify this account?
+            </DialogContent>
+            <DialogActions>
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{
+                  backgroundColor: '#28a745',
+                  color: 'white',
+                  '&:hover': {
+                    backgroundColor: '#218838',
+
+                  }
+                }}
+                onClick={(e) =>
+                  handleVerify(request.requestUserID, request.requestID)
+                }
+              >
+                Yes
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => setOpen(false)}
+                sx={{
+                  backgroundColor: '#dc3545',
+                  color: 'white',
+                  '&:hover': {
+                    backgroundColor: '#c82333',
+
+                  }
+                }}
+              >
+                Cancel
+              </Button>
+            </DialogActions>
+          </ModalDialog>
+        </Modal>
+      </ButtonGroup>
+
+      <ButtonGroup aria-label="spacing button group">
+        {/* unverified modal*/}
+        <Modal open={openSus} onClose={() => setOpenSus(false)}>
+          <ModalDialog variant="outlined" role="alertdialog">
+            <DialogTitle>
+              <WarningRounded />
+              Confirmation
+            </DialogTitle>
+            <Divider />
+            <DialogContent>
+              Are you sure you want to Unverify this account?
+            </DialogContent>
+            <DialogActions>
+              <Button
+                variant="contained"
+                color="white"
+                sx={{
+                  backgroundColor: '#28a745',
+                  color: 'white',
+                  '&:hover': {
+                    backgroundColor: '#218838',
+
+                  }
+                }}
+                onClick={(e) =>
+                  handleUnverify(request.requestUserID, request.requestID)
+                }
+              >
+                Yes
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => setOpenSus(false)}
+                sx={{
+                  backgroundColor: '#dc3545',
+                  color: 'white',
+                  '&:hover': {
+                    backgroundColor: '#c82333',
+
+                  }
+                }}
+              >
+                Cancel
+              </Button>
+            </DialogActions>
+          </ModalDialog>
+        </Modal>
+      </ButtonGroup>
     </div>
   );
 };
