@@ -17,6 +17,7 @@ import AddIcCallIcon from "@mui/icons-material/AddIcCall";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
+import WhereToVoteIcon from "@mui/icons-material/WhereToVote";
 import { Typography } from "@mui/joy";
 
 function ErrandInputs(props) {
@@ -366,7 +367,8 @@ function ErrandInputs(props) {
           </>
         )}
         {(props.typeValue === "Transportation" ||
-          props.typeValue === "Delivery") && (
+          props.typeValue === "Delivery" ||
+          props.typeValue === "") && (
           <div className="col2">
             <Input
               color="neutral"
@@ -398,7 +400,8 @@ function ErrandInputs(props) {
         )}
       </div>
       {/* Display when Transport Type is selected */}
-      {props.typeValue === "Transport" && (
+      {(props.typeValue === "Transportation" ||
+        props.typeValue === "Delivery") && (
         <div className="input-group">
           <div className="col1">
             <Typography level="title-lg" variant="plain">
@@ -411,6 +414,7 @@ function ErrandInputs(props) {
               disabled={props.readOnly}
               size="lg"
               variant={props.variant}
+              startDecorator={<WhereToVoteIcon />}
               type="text"
               placeholder="Enter destination of errand..."
               name={props.to}
@@ -434,63 +438,23 @@ function ErrandInputs(props) {
           </div>
         </div>
       )}
-      {/* Display when Delivery Type is selected */}
-      {props.typeValue === "Delivery" && (
-        <div className="input-group">
-          <div className="col1">
-            <Typography level="title-lg" variant="plain">
-              To
-            </Typography>
-          </div>
-          <div className="col2">
-            <Input
-              color="neutral"
-              disabled={props.readOnly}
-              size="lg"
-              variant={props.variant}
-              type="text"
-              placeholder="Enter drop-off of errand..."
-              onChange={handleDestQueryChange}
-              value={destQuery} // Sync input value
-              name={props.to}
-              style={{
-                fontFamily:
-                  "Lucida Sans, Lucida Sans Regular, Lucida Grande, Lucida Sans Unicode, Geneva, Verdana, sans-serif",
-              }}
-            />
-            {/* search suggestion */}
-            {destSuggestions.length > 0 && (
-              <ul className="suggestions-list">
-                {destSuggestions.map((suggestion, index) => (
-                  <li
-                    key={index}
-                    onClick={() => handleDestSuggestionClick(suggestion)}
-                    className="suggestion-item"
-                  >
-                    {suggestion.place_name}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </div>
-      )}
       {/* Amount */}
       <div className="input-group">
         <div className="col1">
           {props.typeValue !== "HomeService - Indoor" &&
-            props.typeValue !== "HomeService - Outdoor" &&
-            props.typeValue !== "" && (
-              <Typography level="title-lg" variant="plain">
-                Payment
-              </Typography>
-            )}
-          {(props.typeValue === "HomeService - Indoor" ||
-            props.typeValue === "HomeService - Outdoor" ||
-            props.typeValue === "") && (
+          props.typeValue !== "HomeService - Outdoor" &&
+          props.typeValue !== "" ? (
             <Typography level="title-lg" variant="plain">
               Payment
             </Typography>
+          ) : (
+            (props.typeValue === "HomeService - Indoor" ||
+              props.typeValue === "HomeService - Outdoor" ||
+              props.typeValue === "") && (
+              <Typography level="title-lg" variant="plain">
+                Payment
+              </Typography>
+            )
           )}
           <div className="col2">
             <Input
@@ -512,7 +476,9 @@ function ErrandInputs(props) {
                   <Typography color="neutral" level="body-md" variant="plain">
                     15/km + ₱100
                   </Typography>
-                  min{props.minimum}
+                  <Typography color="neutral" level="body-sm" variant="plain">
+                    <i>Suggested Pay: {props.minimum}</i>
+                  </Typography>
                   {props.distance ? (
                     <Typography color="neutral" level="body-md" variant="plain">
                       {props.distance} km
