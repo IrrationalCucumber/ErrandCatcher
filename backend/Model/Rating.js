@@ -12,7 +12,10 @@ const Rating = {
   //get feedback based on catcher id
   getFeedbackById: (id, callback) => {
     db.query(
-      `SELECT * FROM feedbackcommission WHERE feedbackCatcherID = (?) ORDER BY feedbackDate DESC`,
+      `SELECT f.*, u.username, u.userLastname, u.userFirstname
+       FROM feedbackcommission f 
+       JOIN useraccount u on f.feedbackPosterID = u.userID
+       WHERE feedbackCatcherID = (?) ORDER BY feedbackDate DESC`,
       [id],
       callback
     );
