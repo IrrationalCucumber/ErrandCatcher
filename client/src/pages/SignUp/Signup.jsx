@@ -33,7 +33,7 @@ const Signup = () => {
     const newErrors = {};
 
     if (!account.regUsername) {
-      newErrors.username = "Username is required";
+      newErrors.regUsername = "Username is required";
     }
     if (!account.email) {
       newErrors.email = "Email is required";
@@ -179,9 +179,8 @@ const Signup = () => {
     const day = today.getDate();
 
     // Format the date as yyyy-mm-dd
-    return `${year}-${month < 10 ? "0" + month : month}-${
-      day < 10 ? "0" + day : day
-    }`;
+    return `${year}-${month < 10 ? "0" + month : month}-${day < 10 ? "0" + day : day
+      }`;
   };
 
   const handleOptionChange = (e) => {
@@ -297,10 +296,9 @@ const Signup = () => {
                   }}
                 >
                   {selectedOption
-                    ? `Join as ${
-                        selectedOption.charAt(0).toUpperCase() +
-                        selectedOption.slice(1)
-                      }`
+                    ? `Join as ${selectedOption.charAt(0).toUpperCase() +
+                    selectedOption.slice(1)
+                    }`
                     : "Create Account"}
                 </button>
               </div>
@@ -327,6 +325,7 @@ const Signup = () => {
                     <label className="SUlabel">Username</label>
                     <input
                       // className={errorMessage ? "error" : ""}
+                      className={errors.regUsername ? "error" : ""}
                       type="text"
                       placeholder="Username"
                       onChange={handleChange}
@@ -337,9 +336,9 @@ const Signup = () => {
                     />
                     <div className="err">
                       {" "}
-                      {errors.username && (
+                      {errors.regUsername && (
                         <span style={{ color: "#f02849", fontSize: "14px" }}>
-                          {errors.username}
+                          {errors.regUsername}
                         </span>
                       )}
                     </div>
@@ -348,6 +347,7 @@ const Signup = () => {
                     <label className="SUlabel">Email Address</label>
                     <input
                       // className={errorMessage ? "error" : ""}
+                      className={errors.email ? "error" : ""}
                       type="email"
                       placeholder="Email Address"
                       onChange={handleChange}
@@ -374,6 +374,7 @@ const Signup = () => {
                     <label className="SUlabel">Password</label>
                     <input
                       // className={errorMessage ? "error" : ""}
+                      className={errors.regPassword ? "error" : ""}
                       type="password"
                       placeholder="Password"
                       // onChange={handleChange}
@@ -399,15 +400,14 @@ const Signup = () => {
                     {account.regPassword && (
                       <>
                         <div
-                          className={`password-strength ${
-                            strength === "Weak"
-                              ? "strength-weak"
-                              : strength === "Medium"
+                          className={`password-strength ${strength === "Weak"
+                            ? "strength-weak"
+                            : strength === "Medium"
                               ? "strength-medium"
                               : strength === "Strong"
-                              ? "strength-strong"
-                              : ""
-                          }`}
+                                ? "strength-strong"
+                                : ""
+                            }`}
                         >
                           Password strength: {strength}
                         </div>
@@ -428,6 +428,7 @@ const Signup = () => {
                     <label className="SUlabel">Confirm Password</label>
                     <input
                       // className={errorMessage ? "error" : ""}
+                      className={errors.regPassword2 ? "error" : ""}
                       type="password"
                       placeholder="Confirm Password"
                       onChange={handleChange}
@@ -455,6 +456,7 @@ const Signup = () => {
                     <label className="SUlabel">First Name</label>
                     <input
                       // className={errorMessage ? "error" : ""}
+                      className={errors.firstName ? "error" : ""}
                       type="text"
                       placeholder="First Name"
                       onChange={handleChange}
@@ -472,6 +474,7 @@ const Signup = () => {
                     <label className="SUlabel">Last Name</label>
                     <input
                       // className={errorMessage ? "error" : ""}
+                      className={errors.lastName ? "error" : ""}
                       type="text"
                       placeholder="Last Name"
                       onChange={handleChange}
@@ -498,6 +501,7 @@ const Signup = () => {
                     <label className="SUlabel">Birthday</label>
                     <input
                       // className={errorMessage ? "error" : ""}
+                      className={errors.bday ? "error" : ""}
                       type="date"
                       placeholder="Birthday"
                       required
@@ -516,6 +520,7 @@ const Signup = () => {
                     <label className="SUlabel">Gender</label>
                     <select
                       // className={errorMessage ? "error" : ""}
+                      className={errors.gender ? "error" : ""}
                       required
                       style={{ width: "100%" }}
                       value={account.gender}
@@ -614,6 +619,17 @@ const Signup = () => {
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
+            text-align: start;
+          }
+
+          .SUcontainer input.error {
+            border: 0.1px solid red;
+            font-size: 16px;
+          }
+
+          .SUcontainer select.error {
+            border: 0.1px solid red;
+            font-size: 16px;
           }
 
           .SUcontainer button[type="submit"] {

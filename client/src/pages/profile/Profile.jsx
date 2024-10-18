@@ -10,6 +10,7 @@ import UserProfile from "../../components/Profile/UserProfile";
 import { Alert, Button } from "@mui/joy";
 import WarningIcon from "@mui/icons-material/Warning";
 import CloseIcon from "@mui/icons-material/Close";
+import UpdateIcon from '@mui/icons-material/Update';
 const Profile = () => {
   const [verified, setVerified] = useState(false);
   //APS - 03/03/24
@@ -118,10 +119,16 @@ const Profile = () => {
   const handleUpload = async (e) => {
     e.preventDefault();
     if (image === "") {
+      setMessage("Please choose your image before uploading");
+      setAlertColor("warning");
+      setIconLert(<WarningIcon />);
       setShowAlert(true); // Update state to show alert
       return; // Prevent further execution if no image is found
     } else {
-      setShowAlert(false);
+      setMessage("Image picture has been updated");
+      setAlertColor("success");
+      setIconLert(<UpdateIcon />);
+      setShowAlert(true);
       const formData = new FormData();
       formData.append("image", image);
       await axios
@@ -132,8 +139,9 @@ const Profile = () => {
   };
 
   //Alert feedback
-  const [message, setMessage] = useState("")
-  const [alertColor, setAlertColor] = useState("")
+  const [message, setMessage] = useState("");
+  const [alertColor, setAlertColor] = useState("");
+  const [iconlert, setIconLert] = useState(null);
   //sSave CHanges
   const handleClick = async (e) => {
     //const updatedAccount = { ...account };
@@ -141,13 +149,27 @@ const Profile = () => {
     e.preventDefault();
     try {
       const formData = new FormData();
-      if (image === "") {
-        setMessage("NO IMAGE")
-        setAlertColor("danger")
-        setShowAlert(true)
+      if (
+        image === "" ||
+        account.address === "" ||
+        account.age === "" ||
+        account.bday === "" ||
+        account.contact === "" ||
+        // account.desc === "" ||
+        account.email === "" ||
+        account.fname === "" ||
+        account.gender === "" ||
+        account.lname === "" ||
+        account.username === ""
+      ) {
+        setMessage("Please input all the fields before saving!");
+        setAlertColor("danger");
+        setIconLert(<WarningIcon />);
+        setShowAlert(true);
       }
       else {
-        setMessage("")
+        setMessage("Saved");
+        setAlertColor("success");
         formData.append("image", image);
         await axios
           .post(`http://localhost:8800/update-pic/${userID}`, formData)
@@ -155,9 +177,10 @@ const Profile = () => {
           .catch((err) => console.log(err));
 
         await axios.put("http://localhost:8800/update/" + userID, account);
-        setMessage("Profile updated *Replace this*");
-        setAlertColor("success")
-        setShowAlert(true)
+        setMessage("Profile details have been updated");
+        setAlertColor("success");
+        setIconLert(<UpdateIcon />);
+        setShowAlert(true);
       }
       console.log(account);
       //window.location.reload();
@@ -171,10 +194,19 @@ const Profile = () => {
     <div>
       {showAlert && (
         <Alert
+          sx={{
+            position: "fixed",
+            bottom: 16,
+            right: 16,
+            zIndex: 9999,
+            transform: showAlert ? "translateX(0)" : "translateX(100%)",
+            transition: "transform 0.5s ease-in-out",
+          }}
           color={alertColor}
           size="lg"
-          variant="soft"
-          startDecorator={<WarningIcon />}
+          variant="solid"
+          // icon={iconlert}
+          startDecorator={iconlert}
           endDecorator={
             <Button
               size="sm"
