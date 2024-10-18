@@ -3,3 +3,49 @@
   flex-direction: column;
   min-height: 100vh;
 }
+
+.tableRow {
+  border-bottom: 1px solid #ddd;
+  transition: background-color 0.3s ease;
+}
+
+.tableRow:hover {
+  background-color: #e8e6e6;
+
+}
+
+.searchReqAdmin {
+  margin-left: 120px;
+  /* padding-left: 120px; */
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  /* align-items: center; */
+  width: 60%;
+  gap: 10px;
+}
+
+@media screen and (max-width: 888px) {
+
+  .containerReq {
+    width: auto;
+    /* border: solid; */
+  }
+
+  .tableRow {
+    width: 100%;
+    font-size: 14px;
+    overflow-x: auto;
+  }
+
+  .searchReqAdmin {
+    margin-left: 3.8em;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 78%;
+    gap: 8px;
+  }
+
+}

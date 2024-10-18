@@ -1,0 +1,22 @@
+.commissions-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+@media screen and (max-width: 888px) {
+
+    .table-containerr {
+        overflow-x: auto;
+        /* border: solid; */
+    }
+
+    .commissions-table {
+        width: 100%;
+        font-size: 14px;
+    }
+}
