@@ -12,6 +12,9 @@ import {
   Box,
 } from "@mui/joy";
 import { WarningRounded } from "@mui/icons-material";
+import Snackbar from '@mui/joy/Snackbar';
+import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const RequestModal = ({ request, handleClose }) => {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
@@ -26,6 +29,8 @@ const RequestModal = ({ request, handleClose }) => {
 
   const [open, setOpen] = useState(false);
   const [openSus, setOpenSus] = useState(false);
+  const [opensnack, setOpenSnack] = useState(false);
+  const [opensnackun, setOpenSnackUn] = useState(false);
 
   const handleOpenModal = () => {
     setOpen(true);
@@ -67,7 +72,15 @@ const RequestModal = ({ request, handleClose }) => {
       await axios.post("http://localhost:8800/notify", notif);
       //update request to complete
       await axios.put(`http://localhost:8800/done-request/${requestID}`);
-      handleClose();
+      setOpenSnack(true);
+
+      // Close the modal after 3 seconds
+      setOpen(false);
+      // delay
+      setTimeout(() => {
+        handleClose();
+      }, 3000);
+
     } catch (err) {
       console.log(err);
     }
@@ -91,7 +104,16 @@ const RequestModal = ({ request, handleClose }) => {
       await axios.post("http://localhost:8800/notify", notif);
       //update request to complete
       await axios.put(`http://localhost:8800/done-request/${requestID}`);
-      handleClose();
+      // handleClose();
+      setOpenSnackUn(true);
+
+      // Close the modal after 3 seconds
+      setOpenSus(false);
+      // delay
+      setTimeout(() => {
+        handleClose();
+      }, 3000);
+
     } catch (err) {
       console.log(err);
     }
@@ -281,6 +303,51 @@ const RequestModal = ({ request, handleClose }) => {
           </ModalDialog>
         </Modal>
       </ButtonGroup>
+
+      {/* verified message */}
+      <Snackbar
+        variant="solid"
+        color="success"
+        size="lg"
+        open={opensnack}
+        onClose={() => setOpenSnack(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        startDecorator={<VerifiedUserIcon />}
+        endDecorator={
+          <Button
+            onClick={() => setOpenSnack(false)}
+            size="sm"
+            variant="soft"
+            color="success"
+          >
+            Dismiss
+          </Button>
+        }
+      >
+        The account was successfully Verified.
+      </Snackbar>
+      {/* suspended message */}
+      <Snackbar
+        variant="solid"
+        color="danger"
+        size="lg"
+        open={opensnackun}
+        onClose={() => setOpenSnackUn(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        startDecorator={<CancelIcon />}
+        endDecorator={
+          <Button
+            onClick={() => setOpenSnackUn(false)}
+            size="sm"
+            variant="soft"
+            color="success"
+          >
+            Dismiss
+          </Button>
+        }
+      >
+        The account was successfully Suspended.
+      </Snackbar>
     </div>
   );
 };
