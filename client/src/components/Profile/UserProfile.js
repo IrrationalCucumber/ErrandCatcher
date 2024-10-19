@@ -137,7 +137,7 @@ function UserProfile(props) {
               // className="profile__info__left"
               className={`profile__info__left ${props.validationErrors.contact ? "error" : ""}`}
               placeholder="Contact Number"
-              name="cnum"
+              name="contact"
               value={props.cnum}
               onChange={props.handleChange}
             />
@@ -242,6 +242,7 @@ function UserProfile(props) {
           <input
             type="date"
             className={`display-data1 ${props.validationErrors.bday ? "error" : ""}`}
+            name="bday"
             // className="display-data1"
             value={props.bday}
             onChange={props.handleChange}

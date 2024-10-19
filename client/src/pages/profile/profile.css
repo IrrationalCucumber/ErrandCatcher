@@ -173,11 +173,20 @@
   resize: none;
 }
 
+/* profile page new test*/
 .display-data1 {
   height: 4rem; /* Adjust the height as needed */
   width: 100%;
   font-size: 18px;
   padding: 12px;
+}
+
+.display-data1 .error {
+  height: 4rem; /* Adjust the height as needed */
+  width: 100%;
+  font-size: 18px;
+  padding: 12px;
+  border: 2px solid #dc3545;
 }
 
 .file {

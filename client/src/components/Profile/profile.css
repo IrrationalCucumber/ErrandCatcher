@@ -65,6 +65,7 @@
     font-size: 18px;
 }
 
+
 .profile-right input[type="text"],
 .profile-right input[type="number"],
 .profile-right input[type="date"] {
@@ -102,11 +103,33 @@
     /* Add underline on focus */
 }
 
-.profile-left input[type="text"],
-.profile-left input[type="number"] .error {
+.profile-left input[type="text"].error,
+.profile-left input[type="email"].error,
+.profile-left input[type="number"].error {
     border: 2px solid #dc3545;
-    text-align: start;
-    color: red;
+    /* color: red; */
+    /* text-align: start; */
+}
+
+/* age */
+input[type="number"].error {
+    border: 2px solid #dc3545;
+    color: black;
+}
+
+.profile-right input[type="date"].error {
+    border: 2px solid #dc3545;
+}
+
+select .display-data1 .error {
+    height: 4rem;
+    /* Adjust the height as needed */
+    width: 100%;
+    font-size: 18px;
+    padding: 12px;
+    border: 2px solid #dc3545;
+    /* text-align: start;
+    color: red; */
 }
 
 .error::placeholder {
