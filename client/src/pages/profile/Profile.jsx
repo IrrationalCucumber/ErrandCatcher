@@ -147,10 +147,10 @@ const Profile = () => {
       setShowAlert(true);
       const formData = new FormData();
       formData.append("image", image);
-      // await axios
-      //   .post(`http://localhost:8800/update-pic/${userID}`, formData)
-      //   .then((res) => console.log(res))
-      //   .catch((err) => console.log(err));
+      await axios
+        .post(`http://localhost:8800/update-pic/${userID}`, formData)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
     }
   };
 
@@ -196,12 +196,12 @@ const Profile = () => {
         setMessage("Saved");
         setAlertColor("success");
         formData.append("image", image);
-        // await axios
-        //   .post(`http://localhost:8800/update-pic/${userID}`, formData)
-        //   .then((res) => console.log(res))
-        //   .catch((err) => console.log(err));
+        await axios
+          .post(`http://localhost:8800/update-pic/${userID}`, formData)
+          .then((res) => console.log(res))
+          .catch((err) => console.log(err));
 
-        // await axios.put("http://localhost:8800/update/" + userID, account);
+        await axios.put("http://localhost:8800/update/" + userID, account);
         setMessage("Profile details have been updated");
         setAlertColor("success");
         setIconLert(<UpdateIcon />);
