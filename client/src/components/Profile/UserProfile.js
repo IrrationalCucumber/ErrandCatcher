@@ -114,7 +114,8 @@ function UserProfile(props) {
 
             <input
               type="text"
-              className="profile__info__left"
+              // className="profile__info__left"
+              className={`profile__info__left ${props.validationErrors.address ? "error" : ""}`}
               placeholder="Address"
               name="address"
               value={props.address}
@@ -123,7 +124,8 @@ function UserProfile(props) {
             {/* {props.email} */}
             <input
               type="email"
-              className="profile__info__left"
+              // className="profile__info__left"
+              className={`profile__info__left ${props.validationErrors.email ? "error" : ""}`}
               placeholder="Email Address"
               name="email"
               value={props.email}
@@ -132,7 +134,8 @@ function UserProfile(props) {
             {/* {props.cnum} */}
             <input
               type="number"
-              className="profile__info__left"
+              // className="profile__info__left"
+              className={`profile__info__left ${props.validationErrors.contact ? "error" : ""}`}
               placeholder="Contact Number"
               name="cnum"
               value={props.cnum}
@@ -180,6 +183,7 @@ function UserProfile(props) {
           <label htmlFor="username">Username :</label>
           <input
             type="text"
+            className={props.validationErrors.username ? "error" : ""}
             // className="display-data"
             placeholder="Username"
             name="username"
@@ -190,6 +194,7 @@ function UserProfile(props) {
           <label htmlFor="first-name">First name :</label>
           <input
             type="text"
+            className={props.validationErrors.fname ? "error" : ""}
             // className="display-data"
             placeholder="Name"
             name="fname"
@@ -200,6 +205,7 @@ function UserProfile(props) {
           <label htmlFor="last-name">Last name :</label>
           <input
             type="text"
+            className={props.validationErrors.lname ? "error" : ""}
             // className="display-data"
             placeholder="Last name"
             name="lname"
@@ -209,7 +215,8 @@ function UserProfile(props) {
 
           <label htmlFor="sex">Sex :</label>
           <select
-            className="display-data1"
+            // className="display-data1"
+            className={`display-data1 ${props.validationErrors.sex ? "error" : ""}`}
             value={props.sex}
             onChange={props.handleChange}
             name="gender"
@@ -223,6 +230,7 @@ function UserProfile(props) {
           <label htmlFor="age">Age :</label>
           <input
             type="number"
+            className={props.validationErrors.age ? "error" : ""}
             name="age"
             // className="display-data1"
             placeholder="Age"
@@ -233,7 +241,8 @@ function UserProfile(props) {
           ></input>
           <input
             type="date"
-            className="display-data1"
+            className={`display-data1 ${props.validationErrors.bday ? "error" : ""}`}
+            // className="display-data1"
             value={props.bday}
             onChange={props.handleChange}
             placeholder="Date of birth"

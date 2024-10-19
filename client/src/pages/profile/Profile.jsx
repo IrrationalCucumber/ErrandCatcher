@@ -35,6 +35,22 @@ const Profile = () => {
     profileImage: "",
   });
 
+  const [validationErrors, setValidationErrors] = useState({
+    username: false,
+    // password: false,
+    lname: false,
+    fname: false,
+    gender: false,
+    age: false,
+    bday: false,
+    // desc: false,
+    email: false,
+    address: false,
+    contact: false,
+    profileImage: false,
+    // Add other fields...
+  });
+
   //RV & APS 02/03/24
   //useState for Status
   //pre-fill the fields
@@ -131,10 +147,10 @@ const Profile = () => {
       setShowAlert(true);
       const formData = new FormData();
       formData.append("image", image);
-      await axios
-        .post(`http://localhost:8800/update-pic/${userID}`, formData)
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+      // await axios
+      //   .post(`http://localhost:8800/update-pic/${userID}`, formData)
+      //   .then((res) => console.log(res))
+      //   .catch((err) => console.log(err));
     }
   };
 
@@ -142,26 +158,35 @@ const Profile = () => {
   const [message, setMessage] = useState("");
   const [alertColor, setAlertColor] = useState("");
   const [iconlert, setIconLert] = useState(null);
-  //sSave CHanges
+
+  //Save CHanges
   const handleClick = async (e) => {
     //const updatedAccount = { ...account };
     //refresh the page when button is clicked
     e.preventDefault();
+
+    const newValidationErrors = {
+      email: account.email === "",
+      address: account.address === "",
+      username: account.username === "",
+      lname: account.lname === "",
+      fname: account.fname === "",
+      gender: account.gender === "",
+      age: account.age === "",
+      bday: account.bday === "",
+      contact: account.contact === "",
+      profileImage: account.profileImage === "",
+      // desc: false,
+      // Add other fields here
+    };
+
+    setValidationErrors(newValidationErrors);
+
+    const hasError = Object.values(newValidationErrors).some((error) => error);
+
     try {
       const formData = new FormData();
-      if (
-        image === "" ||
-        account.address === "" ||
-        account.age === "" ||
-        account.bday === "" ||
-        account.contact === "" ||
-        // account.desc === "" ||
-        account.email === "" ||
-        account.fname === "" ||
-        account.gender === "" ||
-        account.lname === "" ||
-        account.username === ""
-      ) {
+      if (hasError) {
         setMessage("Please input all the fields before saving!");
         setAlertColor("danger");
         setIconLert(<WarningIcon />);
@@ -171,12 +196,12 @@ const Profile = () => {
         setMessage("Saved");
         setAlertColor("success");
         formData.append("image", image);
-        await axios
-          .post(`http://localhost:8800/update-pic/${userID}`, formData)
-          .then((res) => console.log(res))
-          .catch((err) => console.log(err));
+        // await axios
+        //   .post(`http://localhost:8800/update-pic/${userID}`, formData)
+        //   .then((res) => console.log(res))
+        //   .catch((err) => console.log(err));
 
-        await axios.put("http://localhost:8800/update/" + userID, account);
+        // await axios.put("http://localhost:8800/update/" + userID, account);
         setMessage("Profile details have been updated");
         setAlertColor("success");
         setIconLert(<UpdateIcon />);
@@ -233,6 +258,7 @@ const Profile = () => {
         handleChange={handleChange}
         handleImage={handleImage}
         handleUpload={handleUpload}
+        validationErrors={validationErrors}
         //right hemisphere
         username={account.username}
         fname={account.fname}
