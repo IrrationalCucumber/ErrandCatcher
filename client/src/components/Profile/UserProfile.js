@@ -213,10 +213,10 @@ function UserProfile(props) {
             onChange={props.handleChange}
           ></input>
 
-          <label htmlFor="sex">Sex :</label>
+          <label htmlFor="sex">Gender :</label>
           <select
             // className="display-data1"
-            className={`display-data1 ${props.validationErrors.sex ? "error" : ""}`}
+            className={`display-data1 ${props.validationErrors.gender ? "error" : ""}`}
             value={props.sex}
             onChange={props.handleChange}
             name="gender"
