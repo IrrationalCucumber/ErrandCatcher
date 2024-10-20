@@ -12,9 +12,9 @@ import {
   Box,
 } from "@mui/joy";
 import { WarningRounded } from "@mui/icons-material";
-import Snackbar from '@mui/joy/Snackbar';
-import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
-import CancelIcon from '@mui/icons-material/Cancel';
+import Snackbar from "@mui/joy/Snackbar";
+import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 const RequestModal = ({ request, handleClose }) => {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
@@ -80,11 +80,10 @@ const RequestModal = ({ request, handleClose }) => {
       setTimeout(() => {
         handleClose();
       }, 3000);
-
     } catch (err) {
       console.log(err);
     }
-    console.log("Verified")
+    console.log("Verified");
   };
 
   const handleUnverify = async (requestUserID, requestID) => {
@@ -113,11 +112,10 @@ const RequestModal = ({ request, handleClose }) => {
       setTimeout(() => {
         handleClose();
       }, 3000);
-
     } catch (err) {
       console.log(err);
     }
-    console.log("unVerified")
+    console.log("unVerified");
   };
 
   const formattedDate = (theDate) => {
@@ -181,7 +179,7 @@ const RequestModal = ({ request, handleClose }) => {
           </div>
         )}
         <div>
-          <div style={buttonContainerStyle} >
+          <div style={buttonContainerStyle}>
             <button
               // onClick={(e) =>
               //   handleVerify(request.requestUserID, request.requestID)
@@ -214,19 +212,18 @@ const RequestModal = ({ request, handleClose }) => {
             </DialogTitle>
             <Divider />
             <DialogContent>
-              Are you sure you want to verify this account?
+              Are you sure you want to Verify this account?
             </DialogContent>
             <DialogActions>
               <Button
                 variant="contained"
                 color="primary"
                 sx={{
-                  backgroundColor: '#28a745',
-                  color: 'white',
-                  '&:hover': {
-                    backgroundColor: '#218838',
-
-                  }
+                  backgroundColor: "#28a745",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "#218838",
+                  },
                 }}
                 onClick={(e) =>
                   handleVerify(request.requestUserID, request.requestID)
@@ -239,12 +236,11 @@ const RequestModal = ({ request, handleClose }) => {
                 color="primary"
                 onClick={() => setOpen(false)}
                 sx={{
-                  backgroundColor: '#dc3545',
-                  color: 'white',
-                  '&:hover': {
-                    backgroundColor: '#c82333',
-
-                  }
+                  backgroundColor: "#dc3545",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "#c82333",
+                  },
                 }}
               >
                 Cancel
@@ -264,19 +260,18 @@ const RequestModal = ({ request, handleClose }) => {
             </DialogTitle>
             <Divider />
             <DialogContent>
-              Are you sure you want to Unverify this account?
+              Are you sure you want to Suspend this account?
             </DialogContent>
             <DialogActions>
               <Button
                 variant="contained"
                 color="white"
                 sx={{
-                  backgroundColor: '#28a745',
-                  color: 'white',
-                  '&:hover': {
-                    backgroundColor: '#218838',
-
-                  }
+                  backgroundColor: "#28a745",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "#218838",
+                  },
                 }}
                 onClick={(e) =>
                   handleUnverify(request.requestUserID, request.requestID)
@@ -289,12 +284,11 @@ const RequestModal = ({ request, handleClose }) => {
                 color="primary"
                 onClick={() => setOpenSus(false)}
                 sx={{
-                  backgroundColor: '#dc3545',
-                  color: 'white',
-                  '&:hover': {
-                    backgroundColor: '#c82333',
-
-                  }
+                  backgroundColor: "#dc3545",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "#c82333",
+                  },
                 }}
               >
                 Cancel
@@ -311,7 +305,7 @@ const RequestModal = ({ request, handleClose }) => {
         size="lg"
         open={opensnack}
         onClose={() => setOpenSnack(false)}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         startDecorator={<VerifiedUserIcon />}
         endDecorator={
           <Button
@@ -333,7 +327,7 @@ const RequestModal = ({ request, handleClose }) => {
         size="lg"
         open={opensnackun}
         onClose={() => setOpenSnackUn(false)}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         startDecorator={<CancelIcon />}
         endDecorator={
           <Button
@@ -356,7 +350,7 @@ const buttonContainerStyle = {
   display: "flex",
   justifyContent: "flex-start",
   marginTop: "20px",
-  gap: "11px"
+  gap: "11px",
 };
 
 const Veributton = {
@@ -406,7 +400,6 @@ const headingStyle = {
   fontWeight: "700",
   color: "rgb(22, 121, 171)",
   textAlign: "center",
-
 };
 
 const modalStyle = {
@@ -447,7 +440,7 @@ const closeStyle = {
   fontSize: "28px",
   fontWeight: "bold",
   color: "#dc3545",
-  cursor: "pointer"
+  cursor: "pointer",
 };
 
 export default RequestModal;

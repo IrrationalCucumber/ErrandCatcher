@@ -17,12 +17,12 @@ import ModalClose from "@mui/joy/ModalClose";
 import ModalDialog from "@mui/joy/ModalDialog";
 import DialogTitle from "@mui/joy/DialogTitle";
 import DialogContent from "@mui/joy/DialogContent";
-import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
-import ErrorIcon from '@mui/icons-material/Error';
-import CancelIcon from '@mui/icons-material/Cancel';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-import HailIcon from '@mui/icons-material/Hail';
-import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
+import ErrorIcon from "@mui/icons-material/Error";
+import CancelIcon from "@mui/icons-material/Cancel";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import HailIcon from "@mui/icons-material/Hail";
+import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 
 const AccountList = () => {
   const [accounts, setAccounts] = useState([]);
@@ -187,14 +187,14 @@ const AccountList = () => {
   //filter
   const filterAccounts = accounts.filter((account) => {
     const type = account.accountType
-      .toLowerCase()
-      .includes(searchTerm.type.toLowerCase());
+      ?.toLowerCase()
+      .includes(searchTerm.type.toLowerCase() ?? "");
     const termMatch = account.username
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
+      ?.toLowerCase()
+      .includes(searchTerm.term.toLowerCase() ?? "");
     const termMatch2 = account.userEmail
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
+      ?.toLowerCase()
+      .includes(searchTerm.term.toLowerCase() ?? "");
     const status = account.accountStatus.includes(searchTerm.status);
 
     return type && (termMatch || termMatch2) && status;
