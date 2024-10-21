@@ -272,52 +272,57 @@ function ApplicationQualificationModal(props) {
                       placeholder="Enter skills"
                     />
                   </FormControl> */}
-                  <h3>Select or Add Skills</h3>
+                  <FormControl>
+                    <h3>Select or Add Skills</h3>
 
-                  {/* Predefined skills list */}
-                  <div>
-                    <h4>Available Skills</h4>
-                    {availableSkills.map((skill) => (
-                      <button key={skill} onClick={() => handleAddSkill(skill)}>
-                        {skill}
-                      </button>
-                    ))}
-                  </div>
+                    {/* Predefined skills list */}
+                    <div>
+                      <h4>Available Skills</h4>
+                      {availableSkills.map((skill) => (
+                        <button
+                          key={skill}
+                          onClick={() => handleAddSkill(skill)}
+                        >
+                          {skill}
+                        </button>
+                      ))}
+                    </div>
 
-                  {/* Custom skill input */}
-                  <div>
-                    <h4>Add a Custom Skill</h4>
-                    <input
-                      type="text"
-                      value={inputSkill}
-                      onChange={(e) => setInputSkill(e.target.value)}
-                      placeholder="Enter a skill"
-                    />
-                    <button onClick={handleAddCustomSkill}>Add Skill</button>
-                  </div>
+                    {/* Custom skill input */}
+                    <div>
+                      <h4>Add a Custom Skill</h4>
+                      <input
+                        type="text"
+                        value={inputSkill}
+                        onChange={(e) => setInputSkill(e.target.value)}
+                        placeholder="Enter a skill"
+                      />
+                      <button onClick={handleAddCustomSkill}>Add Skill</button>
+                    </div>
 
-                  {/* Display selected skills */}
-                  <div>
-                    <h4>Selected Skills</h4>
-                    {selectedSkills.length > 0 ? (
-                      selectedSkills.map((skill) => (
-                        <div key={skill}>
-                          {skill}{" "}
-                          <button onClick={() => handleRemoveSkill(skill)}>
-                            Remove
-                          </button>
-                        </div>
-                      ))
-                    ) : (
-                      <p>No skills selected.</p>
-                    )}
-                  </div>
+                    {/* Display selected skills */}
+                    <div>
+                      <h4>Selected Skills</h4>
+                      {selectedSkills.length > 0 ? (
+                        selectedSkills.map((skill) => (
+                          <div key={skill}>
+                            {skill}{" "}
+                            <button onClick={() => handleRemoveSkill(skill)}>
+                              Remove
+                            </button>
+                          </div>
+                        ))
+                      ) : (
+                        <p>No skills selected.</p>
+                      )}
+                    </div>
 
-                  {/* Comma-separated string of selected skills */}
-                  <div>
-                    <h4>Skills as Comma-Separated String:</h4>
-                    <p>{selectedSkills.join(",")}</p>
-                  </div>
+                    {/* Comma-separated string of selected skills */}
+                    <div>
+                      <h4>Skills as Comma-Separated String:</h4>
+                      <p>{selectedSkills.join(",")}</p>
+                    </div>
+                  </FormControl>
                 </>
               )}
 
