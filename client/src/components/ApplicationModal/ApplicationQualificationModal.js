@@ -312,19 +312,19 @@ function ApplicationQualificationModal(props) {
                       <h4>Selected Skills</h4>
                       {selectedSkills.length > 0 ? (
                         selectedSkills.map((skill) => (
-                          <div key={skill}>
-                            <Chip
-                              color="primary"
-                              variant="solid"
-                              endDecorator={
-                                <ChipDelete
-                                  onDelete={() => handleRemoveSkill(skill)}
-                                />
-                              }
-                            >
-                              {skill}
-                            </Chip>
-                          </div>
+                          <Chip
+                            key={skill}
+                            color="primary"
+                            variant="solid"
+                            size="lg"
+                            endDecorator={
+                              <ChipDelete
+                                onDelete={() => handleRemoveSkill(skill)}
+                              />
+                            }
+                          >
+                            {skill}
+                          </Chip>
                         ))
                       ) : (
                         <p>No skills selected.</p>
