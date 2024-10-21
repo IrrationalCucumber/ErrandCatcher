@@ -13,10 +13,50 @@ import {
   Input,
   Button,
   ModalOverflow,
+  Chip,
+  ChipDelete,
 } from "@mui/joy";
+import AddIcon from "@mui/icons-material/Add";
 import axios from "axios";
 
 function ApplicationQualificationModal(props) {
+  //SKill tags
+  // State to hold the selected skills
+  const [selectedSkills, setSelectedSkills] = useState([]);
+  const [inputSkill, setInputSkill] = useState("");
+
+  // Predefined list of skills (you can fetch this from the backend)
+  const availableSkills = [
+    "Communication",
+    "Teamwork",
+    "Problem Solving",
+    "Hardworking",
+    "Leadership",
+    "Time Management",
+  ];
+
+  // Function to add a skill to the selectedSkills array
+  const handleAddSkill = (skill) => {
+    if (!selectedSkills.includes(skill)) {
+      setSelectedSkills([...selectedSkills, skill]);
+    }
+  };
+
+  // Function to add a custom skill from input
+  const handleAddCustomSkill = () => {
+    if (inputSkill && !selectedSkills.includes(inputSkill)) {
+      setSelectedSkills([...selectedSkills, inputSkill]);
+      setInputSkill(""); // Clear the input
+    }
+  };
+
+  // Function to remove a skill from the selectedSkills array
+  const handleRemoveSkill = (skillToRemove) => {
+    setSelectedSkills(
+      selectedSkills.filter((skill) => skill !== skillToRemove)
+    );
+  };
+
   // Application state
   const [application, setApplication] = useState({
     catcherID: "",
@@ -89,7 +129,7 @@ function ApplicationQualificationModal(props) {
         setError("Please enter your experience.");
         return;
       }
-      if (!skills) {
+      if (!selectedSkills) {
         setError("Please list your skills.");
         return;
       }
@@ -98,7 +138,7 @@ function ApplicationQualificationModal(props) {
       setError("");
 
       // Create a combined string for qualifications (general job)
-      qualificationsString = `Experience: ${generalExperience} years, Skills: ${skills}`;
+      qualificationsString = `Experience: ${generalExperience} years, Skills: ${selectedSkills}`;
     }
 
     try {
@@ -111,17 +151,18 @@ function ApplicationQualificationModal(props) {
       application.qualifications = qualificationsString;
 
       console.log(application); // Check the updated commission object
-      await axios.post("http://localhost:8800/apply", application);
+      //await axios.post("http://localhost:8800/apply", application);
 
       //add a notification to the commission's employer
-      notif.notifDesc = "A Catcher has applied to on of your errand";
-      notif.userID = props.employerID;
-      notif.notificationType = "Errand Application";
+      // notif.notifDesc = "A Catcher has applied to on of your errand";
+      // notif.userID = props.employerID;
+      // notif.notificationType = "Errand Application";
 
-      await axios.post("http://localhost:8800/notify", notif);
+      // await axios.post("http://localhost:8800/notify", notif);
       alert("You have applied to this Errand!");
+      alert(application.qualifications);
       //navigate(`/application/${userID}`);
-      console.log(notif); // check variables state
+      //console.log(notif); // check variables state
       props.close();
     } catch (err) {
       console.log(err);
@@ -223,7 +264,7 @@ function ApplicationQualificationModal(props) {
                   </FormControl>
 
                   {/* Skills */}
-                  <FormControl>
+                  {/* <FormControl>
                     <FormLabel>
                       Skills (e.g., Carpentry, Cleaning, etc.)
                     </FormLabel>
@@ -233,6 +274,68 @@ function ApplicationQualificationModal(props) {
                       onChange={(e) => setSkills(e.target.value)}
                       placeholder="Enter skills"
                     />
+                  </FormControl> */}
+                  <FormControl>
+                    <h3>Select or Add Skills</h3>
+
+                    {/* Predefined skills list */}
+                    <div>
+                      <h4>Available Skills</h4>
+                      {availableSkills.map((skill) => (
+                        <Chip
+                          key={skill}
+                          onClick={() => handleAddSkill(skill)}
+                          color="success"
+                          variant="solid"
+                          size="lg"
+                          startDecorator={<AddIcon />}
+                        >
+                          {skill}
+                        </Chip>
+                      ))}
+                    </div>
+
+                    {/* Custom skill input */}
+                    <div>
+                      <h4>Add a Custom Skill</h4>
+                      <input
+                        type="text"
+                        value={inputSkill}
+                        onChange={(e) => setInputSkill(e.target.value)}
+                        placeholder="Enter a skill"
+                      />
+                      <button onClick={handleAddCustomSkill}>Add Skill</button>
+                    </div>
+
+                    {/* Display selected skills */}
+                    <div>
+                      <h4>Selected Skills</h4>
+                      {selectedSkills.length > 0 ? (
+                        selectedSkills.map((skill) => (
+                          <Chip
+                            key={skill}
+                            color="primary"
+                            variant="solid"
+                            size="lg"
+                            endDecorator={
+                              <ChipDelete
+                                onDelete={() => handleRemoveSkill(skill)}
+                              />
+                            }
+                          >
+                            {skill}
+                          </Chip>
+                        ))
+                      ) : (
+                        <p>No skills selected.</p>
+                      )}
+                    </div>
+
+                    {/* Comma-separated string of selected skills */}
+                    {/* <div>
+                      <h4>Skills as Comma-Separated String:</h4>
+                      <p>{selectedSkills.join(",")}</p>
+                    </div> */}
                   </FormControl>
                 </>
               )}
