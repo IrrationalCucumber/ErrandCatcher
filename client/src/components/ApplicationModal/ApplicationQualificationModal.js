@@ -16,6 +16,7 @@ import {
   Chip,
   ChipDelete,
 } from "@mui/joy";
+import AddIcon from "@mui/icons-material/Add";
 import axios from "axios";
 
 function ApplicationQualificationModal(props) {
@@ -281,12 +282,16 @@ function ApplicationQualificationModal(props) {
                     <div>
                       <h4>Available Skills</h4>
                       {availableSkills.map((skill) => (
-                        <button
+                        <Chip
                           key={skill}
                           onClick={() => handleAddSkill(skill)}
+                          color="success"
+                          variant="solid"
+                          size="lg"
+                          startDecorator={<AddIcon />}
                         >
                           {skill}
-                        </button>
+                        </Chip>
                       ))}
                     </div>
 
