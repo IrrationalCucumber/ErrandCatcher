@@ -11,6 +11,8 @@ import RequestHeroSection, {
   AdminHeroSection,
 } from "../components/admin/RequestHeroSection";
 import { HomeMap } from "../components/Map/Map";
+import { Sheet } from "@mui/joy";
+import { MyFeedback, MyPostedFeedback } from "../components/Dashbaord/Feedback";
 
 const Home = () => {
   const { user } = useAuth();
@@ -45,6 +47,16 @@ const Home = () => {
             /> */}
 
             <Cards />
+            <Sheet
+              color="primary"
+              sx={{
+                width: "90%",
+                height: "500px",
+                overflowY: "auto",
+              }}
+            >
+              <MyPostedFeedback />
+            </Sheet>
           </>
         )}
         {user.userType === "Catcher" && (
@@ -65,6 +77,16 @@ const Home = () => {
             />
 
             <Menu />
+            <Sheet
+              color="primary"
+              sx={{
+                width: "90%",
+                height: "500px",
+                overflowY: "auto",
+              }}
+            >
+              <MyFeedback />
+            </Sheet>
           </>
         )}
         {user.userType.toLocaleUpperCase() === "ADMIN" && (
