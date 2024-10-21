@@ -13,6 +13,8 @@ import {
   Input,
   Button,
   ModalOverflow,
+  Chip,
+  ChipDelete,
 } from "@mui/joy";
 import axios from "axios";
 
@@ -306,10 +308,17 @@ function ApplicationQualificationModal(props) {
                       {selectedSkills.length > 0 ? (
                         selectedSkills.map((skill) => (
                           <div key={skill}>
-                            {skill}{" "}
-                            <button onClick={() => handleRemoveSkill(skill)}>
-                              Remove
-                            </button>
+                            <Chip
+                              color="primary"
+                              variant="solid"
+                              endDecorator={
+                                <ChipDelete
+                                  onDelete={() => handleRemoveSkill(skill)}
+                                />
+                              }
+                            >
+                              {skill}
+                            </Chip>
                           </div>
                         ))
                       ) : (
