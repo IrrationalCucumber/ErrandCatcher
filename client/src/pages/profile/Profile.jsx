@@ -20,7 +20,7 @@ const Profile = () => {
   //variable for account details
   const [account, setAccount] = useState({
     username: "",
-    password: "",
+    // password: "", // comment ky mo error endpoint update..
     lname: "",
     fname: "",
     gender: "",
@@ -34,6 +34,9 @@ const Profile = () => {
     type: "",
     profileImage: "",
   });
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [tempAccount, setTempAccount] = useState(account); // Store temporary edits
 
   const [validationErrors, setValidationErrors] = useState({
     username: false,
@@ -65,9 +68,9 @@ const Profile = () => {
           .substr(0, 10);
 
         // Update the state with retrieved account data
-        setAccount({
+        const updatedAccount = {
           username: retrievedAccount.username,
-          password: retrievedAccount.password,
+          // password: retrievedAccount.password,
           lname: retrievedAccount.userLastname,
           fname: retrievedAccount.userFirstname,
           gender: retrievedAccount.userGender,
@@ -80,7 +83,11 @@ const Profile = () => {
           status: retrievedAccount.accountStatus,
           type: retrievedAccount.accountType,
           profileImage: retrievedAccount.profileImage,
-        });
+        };
+
+        setAccount(updatedAccount);
+        setTempAccount(updatedAccount);
+
         //setStatus(res.data);
         if (account.status.toUpperCase() === "VERIFIED") {
           setVerified(true);
@@ -97,16 +104,33 @@ const Profile = () => {
   const handleChange = (e) => {
     // For the 'gender' field, directly set the value without using spread syntax
     if (e.target.name === "gender") {
-      setAccount((prev) => ({ ...prev, gender: e.target.value }));
+      setTempAccount((prev) => ({ ...prev, gender: e.target.value }));
     } else if (e.target.name === "type") {
-      setAccount((prev) => ({ ...prev, type: e.target.value }));
+      setTempAccount((prev) => ({ ...prev, type: e.target.value }));
     } else if (e.target.name === "desc") {
-      setAccount((prev) => ({ ...prev, desc: e.target.value }));
+      setTempAccount((prev) => ({ ...prev, desc: e.target.value }));
     } else {
       // For other fields, use spread syntax as before
-      setAccount((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+      setTempAccount((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     }
   };
+  console.log(tempAccount); // actual
+  console.log(account); // delay
+
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  // const handleSave = () => {
+  //   setAccount(tempAccount); // Save changes to the actual account
+  //   setIsEditing(false);
+  // };
+
+  const handleCancel = () => {
+    setTempAccount(account); // Revert changes
+    setIsEditing(false);
+  };
+
   //APS - 03/03/24
   //get the rating of the user
   const [rating, setRating] = useState("");
@@ -147,10 +171,10 @@ const Profile = () => {
       setShowAlert(true);
       const formData = new FormData();
       formData.append("image", image);
-      await axios
-        .post(`http://localhost:8800/update-pic/${userID}`, formData)
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+      // await axios
+      //   .post(`http://localhost:8800/update-pic/${userID}`, formData)
+      //   .then((res) => console.log(res))
+      //   .catch((err) => console.log(err));
     }
   };
 
@@ -165,17 +189,18 @@ const Profile = () => {
     //refresh the page when button is clicked
     e.preventDefault();
 
+    // change Eror check
     const newValidationErrors = {
-      email: account.email === "",
-      address: account.address === "",
-      username: account.username === "",
-      lname: account.lname === "",
-      fname: account.fname === "",
-      gender: account.gender === "",
-      age: account.age === "",
-      bday: account.bday === "",
-      contact: account.contact === "",
-      profileImage: account.profileImage === "",
+      email: tempAccount.email === "",
+      address: tempAccount.address === "",
+      username: tempAccount.username === "",
+      lname: tempAccount.lname === "",
+      fname: tempAccount.fname === "",
+      gender: tempAccount.gender === "",
+      age: tempAccount.age === "",
+      bday: tempAccount.bday === "",
+      contact: tempAccount.contact === "",
+      // profileImage: account.profileImage === "",
       // desc: false,
       // Add other fields here
     };
@@ -196,24 +221,26 @@ const Profile = () => {
         setMessage("Saved");
         setAlertColor("success");
         formData.append("image", image);
-        await axios
-          .post(`http://localhost:8800/update-pic/${userID}`, formData)
-          .then((res) => console.log(res))
-          .catch((err) => console.log(err));
+        setAccount(tempAccount); // Save changes to the actual account
+        setIsEditing(false); // Exit edit mode
+        // await axios
+        //   .post(`http://localhost:8800/update-pic/${userID}`, formData)
+        //   .then((res) => console.log(res))
+        //   .catch((err) => console.log(err));
 
-        await axios.put("http://localhost:8800/update/" + userID, account);
         setMessage("Profile details have been updated");
         setAlertColor("success");
         setIconLert(<UpdateIcon />);
+        await axios.put("http://localhost:8800/update/" + userID, tempAccount);
         setShowAlert(true);
       }
-      console.log(account);
+      // console.log(account);
       //window.location.reload();
     } catch (err) {
       console.log(err);
     }
   };
-  console.log(account);
+  // console.log(account);
 
   return (
     <div>
@@ -248,27 +275,30 @@ const Profile = () => {
       )}
 
       <UserProfile
-        profileImg={account.profileImage}
-        address={account.address}
-        cnum={account.contact}
-        email={account.email}
+        profileImg={tempAccount.profileImage}
+        address={tempAccount.address}
+        cnum={tempAccount.contact}
+        email={tempAccount.email}
         rate={rating}
-        type={account.type}
-        desc={account.desc}
+        type={tempAccount.type}
+        desc={tempAccount.desc}
         handleChange={handleChange}
         handleImage={handleImage}
         handleUpload={handleUpload}
         validationErrors={validationErrors}
         //right hemisphere
-        username={account.username}
-        fname={account.fname}
-        lname={account.lname}
-        sex={account.gender}
-        age={account.age}
-        bday={account.bday}
-        status={account.status}
+        username={tempAccount.username}
+        fname={tempAccount.fname}
+        lname={tempAccount.lname}
+        sex={tempAccount.gender}
+        age={tempAccount.age}
+        bday={tempAccount.bday}
+        status={tempAccount.status}
         userID={userID}
         click={handleClick}
+        isEditing={isEditing}
+        clickEdit={handleEdit}
+        clickCancel={handleCancel}
       />
       {/* <div className="profile">
         <div className="profile-info">
