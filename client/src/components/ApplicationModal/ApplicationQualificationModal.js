@@ -126,7 +126,7 @@ function ApplicationQualificationModal(props) {
         setError("Please enter your experience.");
         return;
       }
-      if (!skills) {
+      if (!selectedSkills) {
         setError("Please list your skills.");
         return;
       }
@@ -135,7 +135,7 @@ function ApplicationQualificationModal(props) {
       setError("");
 
       // Create a combined string for qualifications (general job)
-      qualificationsString = `Experience: ${generalExperience} years, Skills: ${skills}`;
+      qualificationsString = `Experience: ${generalExperience} years, Skills: ${selectedSkills}`;
     }
 
     try {
@@ -148,17 +148,18 @@ function ApplicationQualificationModal(props) {
       application.qualifications = qualificationsString;
 
       console.log(application); // Check the updated commission object
-      await axios.post("http://localhost:8800/apply", application);
+      //await axios.post("http://localhost:8800/apply", application);
 
       //add a notification to the commission's employer
-      notif.notifDesc = "A Catcher has applied to on of your errand";
-      notif.userID = props.employerID;
-      notif.notificationType = "Errand Application";
+      // notif.notifDesc = "A Catcher has applied to on of your errand";
+      // notif.userID = props.employerID;
+      // notif.notificationType = "Errand Application";
 
-      await axios.post("http://localhost:8800/notify", notif);
+      // await axios.post("http://localhost:8800/notify", notif);
       alert("You have applied to this Errand!");
+      alert(application.qualifications);
       //navigate(`/application/${userID}`);
-      console.log(notif); // check variables state
+      //console.log(notif); // check variables state
       props.close();
     } catch (err) {
       console.log(err);
@@ -260,7 +261,7 @@ function ApplicationQualificationModal(props) {
                   </FormControl>
 
                   {/* Skills */}
-                  <FormControl>
+                  {/* <FormControl>
                     <FormLabel>
                       Skills (e.g., Carpentry, Cleaning, etc.)
                     </FormLabel>
@@ -270,7 +271,7 @@ function ApplicationQualificationModal(props) {
                       onChange={(e) => setSkills(e.target.value)}
                       placeholder="Enter skills"
                     />
-                  </FormControl>
+                  </FormControl> */}
                   <h3>Select or Add Skills</h3>
 
                   {/* Predefined skills list */}
