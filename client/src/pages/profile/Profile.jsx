@@ -171,10 +171,10 @@ const Profile = () => {
       setShowAlert(true);
       const formData = new FormData();
       formData.append("image", image);
-      // await axios
-      //   .post(`http://localhost:8800/update-pic/${userID}`, formData)
-      //   .then((res) => console.log(res))
-      //   .catch((err) => console.log(err));
+      await axios
+        .post(`http://localhost:8800/update-pic/${userID}`, formData)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
     }
   };
 
@@ -211,7 +211,19 @@ const Profile = () => {
 
     try {
       const formData = new FormData();
-      if (hasError) {
+      if (parseInt(tempAccount.age) < 18) {
+        setMessage("You must be at least 18 years old to proceed.");
+        setAlertColor("danger");
+        setIconLert(<WarningIcon />);
+        setShowAlert(true);
+      }
+      else if (!/\S+@\S+\.\S+/.test(tempAccount.email)) {
+        setMessage("Invalid email please try again.");
+        setAlertColor("danger");
+        setIconLert(<WarningIcon />);
+        setShowAlert(true);
+      }
+      else if (hasError) {
         setMessage("Please input all the fields before saving!");
         setAlertColor("danger");
         setIconLert(<WarningIcon />);

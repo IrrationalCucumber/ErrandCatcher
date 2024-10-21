@@ -243,7 +243,7 @@ function UserProfile(props) {
             placeholder="Age"
             value={props.age}
             onChange={props.handleChange}
-            min={1}
+            min={18}
             max={99}
             disabled={!props.isEditing}
           ></input>
