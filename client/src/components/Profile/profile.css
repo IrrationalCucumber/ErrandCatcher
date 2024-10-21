@@ -11,7 +11,8 @@
 }
 
 
-.profile-left, .profile-right {
+.profile-left,
+.profile-right {
     flex: 1;
     margin-right: 30px;
 }
@@ -64,9 +65,10 @@
     font-size: 18px;
 }
 
+
 .profile-right input[type="text"],
- .profile-right input[type="number"],
- .profile-right input[type="date"] {
+.profile-right input[type="number"],
+.profile-right input[type="date"] {
     width: 100%;
     padding: 12px;
     margin-bottom: 20px;
@@ -85,26 +87,95 @@
     border: none;
     font-size: 16px;
     outline: none;
-    text-align: center; /* Center the text */
-    background-color: transparent; /* Ensures no background */  
-    transition: border-bottom 0.3s ease; /* Smooth transition for border */
+    text-align: center;
+    /* Center the text */
+    background-color: transparent;
+    /* Ensures no background */
+    transition: border-bottom 0.3s ease;
+    /* Smooth transition for border */
 }
 
 .profile-left input[type="text"]:focus,
 .profile-left input[type="number"]:focus,
 .profile-left input[type="email"]:focus {
     background-color: #e4dfdf88;
-  border-bottom: 1px solid rgb(49, 47, 47); /* Add underline on focus */
+    border-bottom: 1px solid rgb(49, 47, 47);
+    /* Add underline on focus */
+}
+
+.profile-left input[type="text"].error,
+.profile-left input[type="email"].error,
+.profile-left input[type="number"].error {
+    border: 2px solid #dc3545;
+    /* color: red; */
+    /* text-align: start; */
+}
+
+.profile-right input[type="text"].error,
+.profile-right input[type="number"].error,
+.profile-right input[type="date"].error {
+    border: 2px solid #dc3545;
+    /* color: red; */
+    /* text-align: start; */
+}
+
+/* age */
+input[type="number"].error {
+    border: 2px solid #dc3545;
+    color: black;
+}
+
+.profile-right input[type="date"].error {
+    border: 2px solid #dc3545;
+}
+
+select .display-data1 .error {
+    height: 4rem;
+    /* Adjust the height as needed */
+    width: 100%;
+    font-size: 18px;
+    padding: 12px;
+    border: 2px solid #dc3545;
+    /* text-align: start;
+    color: red; */
+}
+
+.error::placeholder {
+    color: #dc3545;
+    opacity: 1;
+}
+
+/* gender */
+.display-data1.error {
+    border: 2px solid red;
+}
+
+.display-data1 {
+    height: 4rem;
+    font-size: 18px;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 18px;
+}
+
+.display-data1:focus {
+    background-color: #e4dfdf88;
+    border-bottom: 1px solid rgb(49, 47, 47);
 }
 
 /* Remove the increment (spinner) in number inputs */
 .profile-left input[type="number"] {
-    -moz-appearance: textfield; /* For Firefox */
+    -moz-appearance: textfield;
+    /* For Firefox */
 }
 
 .profile-left input[type="number"]::-webkit-outer-spin-button,
 .profile-left input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none; /* For Chrome, Safari, and Edge */
+    -webkit-appearance: none;
+    /* For Chrome, Safari, and Edge */
     margin: 0;
 }
 
@@ -140,7 +211,7 @@
     font-size: 20px;
 }
 
-.verified{
+.verified {
     background-color: none;
     color: rgb(9, 238, 40);
     padding: 15px;
@@ -162,15 +233,18 @@
 .upload-container {
     display: flex;
     padding: 10px;
-    align-items: center; /* Align items vertically */
+    align-items: center;
+    /* Align items vertically */
     justify-content: center;
     gap: 8px;
-  }
-  
-  .upload-container button {
+}
+
+.upload-container button {
     width: 35px;
     height: 45px;
-  }
-  .upload-container input[type="file"] {
-    margin-right: 10px; /* Add margin between the file input and the button */
-  }
+}
+
+.upload-container input[type="file"] {
+    margin-right: 10px;
+    /* Add margin between the file input and the button */
+}
