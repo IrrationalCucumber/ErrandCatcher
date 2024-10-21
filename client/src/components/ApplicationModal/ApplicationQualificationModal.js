@@ -332,10 +332,10 @@ function ApplicationQualificationModal(props) {
                     </div>
 
                     {/* Comma-separated string of selected skills */}
-                    <div>
+                    {/* <div>
                       <h4>Skills as Comma-Separated String:</h4>
                       <p>{selectedSkills.join(",")}</p>
-                    </div>
+                    </div> */}
                   </FormControl>
                 </>
               )}
