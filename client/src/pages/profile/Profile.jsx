@@ -216,19 +216,15 @@ const Profile = () => {
     setValidationErrors(newValidationErrors);
 
     const hasError = Object.values(newValidationErrors).some((error) => error);
+    // (parseInt(tempAccount.age) < 18)
 
     try {
       const formData = new FormData();
-      if (parseInt(tempAccount.age) < 18) {
-        // setMessage("You must be at least 18 years old to proceed.");
-        // setAlertColor("danger");
-        // setIconLert(<WarningIcon />);
-        // setShowAlert(true);
-
-        setSnacIcon(<CancelIcon />);
-        setSnacMess("You must be at least 18 years old to proceed.");
-        setSnacColor("danger");
-        setOpenSnack(true);
+      if (hasError) {
+        setMessage("Please input all the fields before saving!");
+        setAlertColor("danger");
+        setIconLert(<WarningIcon />);
+        setShowAlert(true);
       }
       else if (!/\S+@\S+\.\S+/.test(tempAccount.email)) {
         setMessage("Invalid email please try again.");
@@ -236,11 +232,11 @@ const Profile = () => {
         setIconLert(<WarningIcon />);
         setShowAlert(true);
       }
-      else if (hasError) {
-        setMessage("Please input all the fields before saving!");
-        setAlertColor("danger");
-        setIconLert(<WarningIcon />);
-        setShowAlert(true);
+      else if (parseInt(tempAccount.age) < 18) {
+        setSnacIcon(<CancelIcon />);
+        setSnacMess("You must be at least 18 years old to proceed.");
+        setSnacColor("danger");
+        setOpenSnack(true);
       }
       else {
         // setMessage("Saved");
@@ -310,7 +306,7 @@ const Profile = () => {
         open={opensnack}
         onClose={() => setOpenSnack(false)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        // autoHideDuration={5000}
+        autoHideDuration={5000}
         startDecorator={snacIcon}
         endDecorator={
           <Button
