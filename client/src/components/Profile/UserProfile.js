@@ -228,10 +228,10 @@ function UserProfile(props) {
             name="gender"
             disabled={!props.isEditing}
           >
-            gender
+            {/* gender */}
             <option value="">Choose gender....</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
           </select>
 
           <label htmlFor="age">Age :</label>
