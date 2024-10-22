@@ -17,6 +17,12 @@ import ModalClose from "@mui/joy/ModalClose";
 import ModalDialog from "@mui/joy/ModalDialog";
 import DialogTitle from "@mui/joy/DialogTitle";
 import DialogContent from "@mui/joy/DialogContent";
+import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
+import ErrorIcon from "@mui/icons-material/Error";
+import CancelIcon from "@mui/icons-material/Cancel";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import HailIcon from "@mui/icons-material/Hail";
+import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 
 const AccountList = () => {
   const [accounts, setAccounts] = useState([]);
@@ -181,14 +187,14 @@ const AccountList = () => {
   //filter
   const filterAccounts = accounts.filter((account) => {
     const type = account.accountType
-      .toLowerCase()
-      .includes(searchTerm.type.toLowerCase());
+      ?.toLowerCase()
+      .includes(searchTerm.type.toLowerCase() ?? "");
     const termMatch = account.username
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
+      ?.toLowerCase()
+      .includes(searchTerm.term.toLowerCase() ?? "");
     const termMatch2 = account.userEmail
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
+      ?.toLowerCase()
+      .includes(searchTerm.term.toLowerCase() ?? "");
     const status = account.accountStatus.includes(searchTerm.status);
 
     return type && (termMatch || termMatch2) && status;
@@ -218,9 +224,41 @@ const AccountList = () => {
     account.username,
     `${account.userFirstname} ${account.userLastname}`,
     account.userEmail,
-    account.accountType,
+    // account.accountType,
+    account.accountType === "Employer" ? (
+      <>
+        <HailIcon style={{ color: "green" }} />
+        <span> Employer</span>
+      </>
+    ) : account.accountType === "Catcher" ? (
+      <>
+        <AssignmentIndIcon style={{ color: "purple" }} />
+        <span> Catcher</span>
+      </>
+    ) : account.accountType === "Admin" ? (
+      <>
+        <ManageAccountsIcon style={{ color: "red" }} />
+        <span> Admin</span>
+      </>
+    ) : null, // handle any other status if necessary..
     DisplayDate(account.dateCreated),
-    account.accountStatus,
+    // account.accountStatus,
+    account.accountStatus === "Verified" ? (
+      <>
+        <VerifiedUserIcon style={{ color: "green" }} />
+        <span> Verified</span>
+      </>
+    ) : account.accountStatus === "Unverified" ? (
+      <>
+        <ErrorIcon style={{ color: "orange" }} />
+        <span> Unverified</span>
+      </>
+    ) : account.accountStatus === "Suspended" ? (
+      <>
+        <CancelIcon style={{ color: "red" }} />
+        <span> Suspended</span>
+      </>
+    ) : null, // handle any other status if necessary..
     <Dropdown>
       <MenuButton>ACTIONS</MenuButton>
       <Menu>
@@ -316,6 +354,7 @@ const AccountList = () => {
           marginBottom: "10px",
           display: "flex",
           alignItems: "center",
+          width: "60%",
         }}
       >
         <input
@@ -331,6 +370,7 @@ const AccountList = () => {
             borderRadius: "4px",
             marginRight: "10px",
             marginBottom: "10px",
+            maxWidth: "450px",
           }}
         />
         <select
@@ -464,7 +504,8 @@ const AccountList = () => {
             fontSize: "12px",
             cursor: "pointer",
             border: "none",
-            backgroundColor: "#CE9251",
+            // backgroundColor: "#CE9251",
+            backgroundColor: "#1679AB",
             color: "white",
             borderRadius: "4px",
             display: "inline-block",

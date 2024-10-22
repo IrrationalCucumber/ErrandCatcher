@@ -472,7 +472,7 @@
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   color: white;
-  text-shadow: 0px 1px 1px black;
+  text-shadow: 1px 1px 1px black;
   padding-top: 0.5rem;
 }
 
