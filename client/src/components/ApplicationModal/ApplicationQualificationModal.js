@@ -253,7 +253,15 @@ function ApplicationQualificationModal(props) {
                 <>
                   {/* General Experience */}
                   <FormControl>
-                    <FormLabel>Years of Experience</FormLabel>
+                    <FormLabel>
+                      <Typography
+                        color="neutral"
+                        level="title-md"
+                        variant="plain"
+                      >
+                        Years of Experience
+                      </Typography>
+                    </FormLabel>
                     <Input
                       type="number"
                       min="0"
@@ -276,11 +284,28 @@ function ApplicationQualificationModal(props) {
                     />
                   </FormControl> */}
                   <FormControl>
-                    <h3>Select or Add Skills</h3>
+                    <FormLabel>
+                      <Typography
+                        color="neutral"
+                        level="title-md"
+                        variant="plain"
+                      >
+                        Select or Add Skills
+                      </Typography>
+                    </FormLabel>
 
                     {/* Predefined skills list */}
+                    <FormLabel>
+                      <Typography
+                        color="primary"
+                        level="body-md"
+                        variant="plain"
+                      >
+                        Select your Skill/s
+                      </Typography>
+                    </FormLabel>
+
                     <div>
-                      <h4>Available Skills</h4>
                       {availableSkills.map((skill) => (
                         <Chip
                           key={skill}
@@ -296,20 +321,45 @@ function ApplicationQualificationModal(props) {
                     </div>
 
                     {/* Custom skill input */}
-                    <div>
-                      <h4>Add a Custom Skill</h4>
-                      <input
-                        type="text"
-                        value={inputSkill}
-                        onChange={(e) => setInputSkill(e.target.value)}
-                        placeholder="Enter a skill"
-                      />
-                      <button onClick={handleAddCustomSkill}>Add Skill</button>
-                    </div>
+
+                    <FormLabel>
+                      <Typography
+                        color="primary"
+                        level="body-md"
+                        variant="plain"
+                      >
+                        Or add new skill
+                      </Typography>
+                    </FormLabel>
+
+                    <Input
+                      type="text"
+                      value={inputSkill}
+                      onChange={(e) => setInputSkill(e.target.value)}
+                      placeholder="Enter a skill"
+                    />
+                    <Box margin={1} textAlign="e">
+                      <Button
+                        onClick={handleAddCustomSkill}
+                        size="md"
+                        variant="outlined"
+                      >
+                        Add Skill
+                      </Button>
+                    </Box>
 
                     {/* Display selected skills */}
                     <div>
-                      <h4>Selected Skills</h4>
+                      <FormLabel>
+                        <Typography
+                          color="neutral"
+                          level="title-lg"
+                          variant="plain"
+                        >
+                          Your selected skills:
+                        </Typography>
+                      </FormLabel>
+
                       {selectedSkills.length > 0 ? (
                         selectedSkills.map((skill) => (
                           <Chip
@@ -327,7 +377,15 @@ function ApplicationQualificationModal(props) {
                           </Chip>
                         ))
                       ) : (
-                        <p>No skills selected.</p>
+                        <FormLabel>
+                          <Typography
+                            color="warning"
+                            level="body-md"
+                            variant="outlined"
+                          >
+                            No skills selected.
+                          </Typography>
+                        </FormLabel>
                       )}
                     </div>
 
