@@ -11,6 +11,8 @@ import { Alert, Button } from "@mui/joy";
 import WarningIcon from "@mui/icons-material/Warning";
 import CloseIcon from "@mui/icons-material/Close";
 import UpdateIcon from '@mui/icons-material/Update';
+import Snackbar from '@mui/joy/Snackbar';
+import CancelIcon from '@mui/icons-material/Cancel';
 const Profile = () => {
   const [verified, setVerified] = useState(false);
   //APS - 03/03/24
@@ -183,6 +185,12 @@ const Profile = () => {
   const [alertColor, setAlertColor] = useState("");
   const [iconlert, setIconLert] = useState(null);
 
+  // Snackbar feedback 
+  const [opensnack, setOpenSnack] = useState(false);
+  const [snacColor, setSnacColor] = useState("");
+  const [snacIcon, setSnacIcon] = useState(null);
+  const [snacMess, setSnacMess] = useState("");
+
   //Save CHanges
   const handleClick = async (e) => {
     //const updatedAccount = { ...account };
@@ -212,10 +220,15 @@ const Profile = () => {
     try {
       const formData = new FormData();
       if (parseInt(tempAccount.age) < 18) {
-        setMessage("You must be at least 18 years old to proceed.");
-        setAlertColor("danger");
-        setIconLert(<WarningIcon />);
-        setShowAlert(true);
+        // setMessage("You must be at least 18 years old to proceed.");
+        // setAlertColor("danger");
+        // setIconLert(<WarningIcon />);
+        // setShowAlert(true);
+
+        setSnacIcon(<CancelIcon />);
+        setSnacMess("You must be at least 18 years old to proceed.");
+        setSnacColor("danger");
+        setOpenSnack(true);
       }
       else if (!/\S+@\S+\.\S+/.test(tempAccount.email)) {
         setMessage("Invalid email please try again.");
@@ -230,8 +243,8 @@ const Profile = () => {
         setShowAlert(true);
       }
       else {
-        setMessage("Saved");
-        setAlertColor("success");
+        // setMessage("Saved");
+        // setAlertColor("success");
         formData.append("image", image);
         setAccount(tempAccount); // Save changes to the actual account
         setIsEditing(false); // Exit edit mode
@@ -240,11 +253,15 @@ const Profile = () => {
         //   .then((res) => console.log(res))
         //   .catch((err) => console.log(err));
 
-        setMessage("Profile details have been updated");
-        setAlertColor("success");
-        setIconLert(<UpdateIcon />);
+        // setMessage("Profile details have been updated");
+        // setAlertColor("success");
+        // setIconLert(<UpdateIcon />);
+        setSnacIcon(<UpdateIcon />);
+        setSnacMess("Profile details have been updated.");
+        setSnacColor("success");
+        setOpenSnack(true);
         await axios.put("http://localhost:8800/update/" + userID, tempAccount);
-        setShowAlert(true);
+        // setShowAlert(true);
       }
       // console.log(account);
       //window.location.reload();
@@ -285,6 +302,36 @@ const Profile = () => {
           {message}
         </Alert>
       )}
+
+      <Snackbar
+        variant="solid"
+        color={snacColor}
+        size="lg"
+        open={opensnack}
+        onClose={() => setOpenSnack(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        // autoHideDuration={5000}
+        startDecorator={snacIcon}
+        endDecorator={
+          <Button
+            onClick={() => setOpenSnack(false)}
+            size="sm"
+            variant="soft"
+            color={snacColor}
+          >
+            Dismiss
+          </Button>
+        }
+        sx={{
+          fontSize: '1rem',
+          fontWeight: 'bold',
+          fontFamily: 'Arial, sans-serif',
+          // padding: '19px',
+          borderRadius: '8px',
+        }}
+      >
+        {snacMess}
+      </Snackbar>
 
       <UserProfile
         profileImg={tempAccount.profileImage}
