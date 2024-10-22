@@ -10,6 +10,9 @@ import UserProfile from "../../components/Profile/UserProfile";
 import { Alert, Button } from "@mui/joy";
 import WarningIcon from "@mui/icons-material/Warning";
 import CloseIcon from "@mui/icons-material/Close";
+import UpdateIcon from '@mui/icons-material/Update';
+import Snackbar from '@mui/joy/Snackbar';
+import CancelIcon from '@mui/icons-material/Cancel';
 const Profile = () => {
   const [verified, setVerified] = useState(false);
   //APS - 03/03/24
@@ -19,7 +22,7 @@ const Profile = () => {
   //variable for account details
   const [account, setAccount] = useState({
     username: "",
-    password: "",
+    // password: "", // comment ky mo error endpoint update..
     lname: "",
     fname: "",
     gender: "",
@@ -32,6 +35,25 @@ const Profile = () => {
     status: "",
     type: "",
     profileImage: "",
+  });
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [tempAccount, setTempAccount] = useState(account); // Store temporary edits
+
+  const [validationErrors, setValidationErrors] = useState({
+    username: false,
+    // password: false,
+    lname: false,
+    fname: false,
+    gender: false,
+    age: false,
+    bday: false,
+    // desc: false,
+    email: false,
+    address: false,
+    contact: false,
+    profileImage: false,
+    // Add other fields...
   });
 
   //RV & APS 02/03/24
@@ -48,9 +70,9 @@ const Profile = () => {
           .substr(0, 10);
 
         // Update the state with retrieved account data
-        setAccount({
+        const updatedAccount = {
           username: retrievedAccount.username,
-          password: retrievedAccount.password,
+          // password: retrievedAccount.password,
           lname: retrievedAccount.userLastname,
           fname: retrievedAccount.userFirstname,
           gender: retrievedAccount.userGender,
@@ -63,7 +85,11 @@ const Profile = () => {
           status: retrievedAccount.accountStatus,
           type: retrievedAccount.accountType,
           profileImage: retrievedAccount.profileImage,
-        });
+        };
+
+        setAccount(updatedAccount);
+        setTempAccount(updatedAccount);
+
         //setStatus(res.data);
         if (account.status.toUpperCase() === "VERIFIED") {
           setVerified(true);
@@ -80,16 +106,33 @@ const Profile = () => {
   const handleChange = (e) => {
     // For the 'gender' field, directly set the value without using spread syntax
     if (e.target.name === "gender") {
-      setAccount((prev) => ({ ...prev, gender: e.target.value }));
+      setTempAccount((prev) => ({ ...prev, gender: e.target.value }));
     } else if (e.target.name === "type") {
-      setAccount((prev) => ({ ...prev, type: e.target.value }));
+      setTempAccount((prev) => ({ ...prev, type: e.target.value }));
     } else if (e.target.name === "desc") {
-      setAccount((prev) => ({ ...prev, desc: e.target.value }));
+      setTempAccount((prev) => ({ ...prev, desc: e.target.value }));
     } else {
       // For other fields, use spread syntax as before
-      setAccount((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+      setTempAccount((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     }
   };
+  console.log(tempAccount); // actual
+  console.log(account); // delay
+
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  // const handleSave = () => {
+  //   setAccount(tempAccount); // Save changes to the actual account
+  //   setIsEditing(false);
+  // };
+
+  const handleCancel = () => {
+    setTempAccount(account); // Revert changes
+    setIsEditing(false);
+  };
+
   //APS - 03/03/24
   //get the rating of the user
   const [rating, setRating] = useState("");
@@ -118,10 +161,16 @@ const Profile = () => {
   const handleUpload = async (e) => {
     e.preventDefault();
     if (image === "") {
+      setMessage("Please choose your image before uploading");
+      setAlertColor("warning");
+      setIconLert(<WarningIcon />);
       setShowAlert(true); // Update state to show alert
       return; // Prevent further execution if no image is found
     } else {
-      setShowAlert(false);
+      setMessage("Image picture has been updated");
+      setAlertColor("success");
+      setIconLert(<UpdateIcon />);
+      setShowAlert(true);
       const formData = new FormData();
       formData.append("image", image);
       await axios
@@ -132,49 +181,109 @@ const Profile = () => {
   };
 
   //Alert feedback
-  const [message, setMessage] = useState("")
-  const [alertColor, setAlertColor] = useState("")
-  //sSave CHanges
+  const [message, setMessage] = useState("");
+  const [alertColor, setAlertColor] = useState("");
+  const [iconlert, setIconLert] = useState(null);
+
+  // Snackbar feedback 
+  const [opensnack, setOpenSnack] = useState(false);
+  const [snacColor, setSnacColor] = useState("");
+  const [snacIcon, setSnacIcon] = useState(null);
+  const [snacMess, setSnacMess] = useState("");
+
+  //Save CHanges
   const handleClick = async (e) => {
     //const updatedAccount = { ...account };
     //refresh the page when button is clicked
     e.preventDefault();
+
+    // change Eror check
+    const newValidationErrors = {
+      email: tempAccount.email === "",
+      address: tempAccount.address === "",
+      username: tempAccount.username === "",
+      lname: tempAccount.lname === "",
+      fname: tempAccount.fname === "",
+      gender: tempAccount.gender === "",
+      age: tempAccount.age === "",
+      bday: tempAccount.bday === "",
+      contact: tempAccount.contact === "",
+      // profileImage: account.profileImage === "",
+      // desc: false,
+      // Add other fields here
+    };
+
+    setValidationErrors(newValidationErrors);
+
+    const hasError = Object.values(newValidationErrors).some((error) => error);
+    // (parseInt(tempAccount.age) < 18)
+
     try {
       const formData = new FormData();
-      if (image === "") {
-        setMessage("NO IMAGE")
-        setAlertColor("danger")
-        setShowAlert(true)
+      if (hasError) {
+        setMessage("Please input all the fields before saving!");
+        setAlertColor("danger");
+        setIconLert(<WarningIcon />);
+        setShowAlert(true);
+      }
+      else if (!/\S+@\S+\.\S+/.test(tempAccount.email)) {
+        setMessage("Invalid email please try again.");
+        setAlertColor("danger");
+        setIconLert(<WarningIcon />);
+        setShowAlert(true);
+      }
+      else if (parseInt(tempAccount.age) < 18) {
+        setSnacIcon(<CancelIcon />);
+        setSnacMess("You must be at least 18 years old to proceed.");
+        setSnacColor("danger");
+        setOpenSnack(true);
       }
       else {
-        setMessage("")
+        // setMessage("Saved");
+        // setAlertColor("success");
         formData.append("image", image);
-        await axios
-          .post(`http://localhost:8800/update-pic/${userID}`, formData)
-          .then((res) => console.log(res))
-          .catch((err) => console.log(err));
+        setAccount(tempAccount); // Save changes to the actual account
+        setIsEditing(false); // Exit edit mode
+        // await axios
+        //   .post(`http://localhost:8800/update-pic/${userID}`, formData)
+        //   .then((res) => console.log(res))
+        //   .catch((err) => console.log(err));
 
-        await axios.put("http://localhost:8800/update/" + userID, account);
-        setMessage("Profile updated *Replace this*");
-        setAlertColor("success")
-        setShowAlert(true)
+        // setMessage("Profile details have been updated");
+        // setAlertColor("success");
+        // setIconLert(<UpdateIcon />);
+        setSnacIcon(<UpdateIcon />);
+        setSnacMess("Profile details have been updated.");
+        setSnacColor("success");
+        setOpenSnack(true);
+        await axios.put("http://localhost:8800/update/" + userID, tempAccount);
+        // setShowAlert(true);
       }
-      console.log(account);
+      // console.log(account);
       //window.location.reload();
     } catch (err) {
       console.log(err);
     }
   };
-  console.log(account);
+  // console.log(account);
 
   return (
     <div>
       {showAlert && (
         <Alert
+          sx={{
+            position: "fixed",
+            bottom: 16,
+            right: 16,
+            zIndex: 9999,
+            transform: showAlert ? "translateX(0)" : "translateX(100%)",
+            transition: "transform 0.5s ease-in-out",
+          }}
           color={alertColor}
           size="lg"
-          variant="soft"
-          startDecorator={<WarningIcon />}
+          variant="solid"
+          // icon={iconlert}
+          startDecorator={iconlert}
           endDecorator={
             <Button
               size="sm"
@@ -190,27 +299,61 @@ const Profile = () => {
         </Alert>
       )}
 
+      <Snackbar
+        variant="solid"
+        color={snacColor}
+        size="lg"
+        open={opensnack}
+        onClose={() => setOpenSnack(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        autoHideDuration={5000}
+        startDecorator={snacIcon}
+        endDecorator={
+          <Button
+            onClick={() => setOpenSnack(false)}
+            size="sm"
+            variant="soft"
+            color={snacColor}
+          >
+            Dismiss
+          </Button>
+        }
+        sx={{
+          fontSize: '1rem',
+          fontWeight: 'bold',
+          fontFamily: 'Arial, sans-serif',
+          // padding: '19px',
+          borderRadius: '8px',
+        }}
+      >
+        {snacMess}
+      </Snackbar>
+
       <UserProfile
-        profileImg={account.profileImage}
-        address={account.address}
-        cnum={account.contact}
-        email={account.email}
+        profileImg={tempAccount.profileImage}
+        address={tempAccount.address}
+        cnum={tempAccount.contact}
+        email={tempAccount.email}
         rate={rating}
-        type={account.type}
-        desc={account.desc}
+        type={tempAccount.type}
+        desc={tempAccount.desc}
         handleChange={handleChange}
         handleImage={handleImage}
         handleUpload={handleUpload}
+        validationErrors={validationErrors}
         //right hemisphere
-        username={account.username}
-        fname={account.fname}
-        lname={account.lname}
-        sex={account.gender}
-        age={account.age}
-        bday={account.bday}
-        status={account.status}
+        username={tempAccount.username}
+        fname={tempAccount.fname}
+        lname={tempAccount.lname}
+        sex={tempAccount.gender}
+        age={tempAccount.age}
+        bday={tempAccount.bday}
+        status={tempAccount.status}
         userID={userID}
         click={handleClick}
+        isEditing={isEditing}
+        clickEdit={handleEdit}
+        clickCancel={handleCancel}
       />
       {/* <div className="profile">
         <div className="profile-info">

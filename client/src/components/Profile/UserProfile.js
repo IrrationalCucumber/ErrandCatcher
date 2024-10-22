@@ -114,29 +114,35 @@ function UserProfile(props) {
 
             <input
               type="text"
-              className="profile__info__left"
+              // className="profile__info__left"
+              className={`profile__info__left ${props.validationErrors.address ? "error" : ""}`}
               placeholder="Address"
               name="address"
               value={props.address}
               onChange={props.handleChange}
+              disabled={!props.isEditing}
             />
             {/* {props.email} */}
             <input
               type="email"
-              className="profile__info__left"
+              // className="profile__info__left"
+              className={`profile__info__left ${props.validationErrors.email ? "error" : ""}`}
               placeholder="Email Address"
               name="email"
               value={props.email}
               onChange={props.handleChange}
+              disabled={!props.isEditing}
             />
             {/* {props.cnum} */}
             <input
               type="number"
-              className="profile__info__left"
+              // className="profile__info__left"
+              className={`profile__info__left ${props.validationErrors.contact ? "error" : ""}`}
               placeholder="Contact Number"
-              name="cnum"
+              name="contact"
               value={props.cnum}
               onChange={props.handleChange}
+              disabled={!props.isEditing}
             />
             <br />
           </div>
@@ -180,68 +186,88 @@ function UserProfile(props) {
           <label htmlFor="username">Username :</label>
           <input
             type="text"
+            className={props.validationErrors.username ? "error" : ""}
             // className="display-data"
             placeholder="Username"
             name="username"
             value={props.username}
             onChange={props.handleChange}
+            disabled={!props.isEditing}
           ></input>
 
           <label htmlFor="first-name">First name :</label>
           <input
             type="text"
+            className={props.validationErrors.fname ? "error" : ""}
             // className="display-data"
             placeholder="Name"
             name="fname"
             value={props.fname}
             onChange={props.handleChange}
+            disabled={!props.isEditing}
           ></input>
 
           <label htmlFor="last-name">Last name :</label>
           <input
             type="text"
+            className={props.validationErrors.lname ? "error" : ""}
             // className="display-data"
             placeholder="Last name"
             name="lname"
             value={props.lname}
             onChange={props.handleChange}
+            disabled={!props.isEditing}
           ></input>
 
-          <label htmlFor="sex">Sex :</label>
+          <label htmlFor="sex">Gender :</label>
           <select
-            className="display-data1"
+            // className="display-data1"
+            className={`display-data1 ${props.validationErrors.gender ? "error" : ""}`}
             value={props.sex}
             onChange={props.handleChange}
             name="gender"
+            disabled={!props.isEditing}
           >
-            gender
+            {/* gender */}
             <option value="">Choose gender....</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
           </select>
 
           <label htmlFor="age">Age :</label>
           <input
             type="number"
+            className={props.validationErrors.age ? "error" : ""}
             name="age"
             // className="display-data1"
             placeholder="Age"
             value={props.age}
             onChange={props.handleChange}
-            min={1}
+            min={18}
             max={99}
+            disabled={!props.isEditing}
           ></input>
           <input
             type="date"
-            className="display-data1"
+            className={`display-data1 ${props.validationErrors.bday ? "error" : ""}`}
+            name="bday"
+            // className="display-data1"
             value={props.bday}
             onChange={props.handleChange}
             placeholder="Date of birth"
+            disabled={!props.isEditing}
           ></input>
 
           <div className="buttons">
-            {/* <button>Edit</button> */}
-            <button onClick={props.click}>Save</button>
+            {props.isEditing ? (
+              <>
+                {/* <button>Edit</button> */}
+                <button onClick={props.clickCancel}>Cancel</button>
+                <button onClick={props.click}>Save</button>
+              </>
+            ) : (
+              <button onClick={props.clickEdit}>Edit</button>
+            )}
           </div>
         </div>
       </div>

@@ -14,8 +14,7 @@ h1 {
   margin-bottom: 20px;
 }
 
-.loading,
-.error {
+.loading {
   text-align: center;
   font-size: 18px;
   color: #888;
