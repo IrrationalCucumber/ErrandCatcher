@@ -8,15 +8,15 @@
     width: 100%;
     height: 200px;
     padding: 2px;
-  }
+}
 
 .Oncard {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top: 20px;
-    /* // justify-content: flex-end; */
-    width: calc(30% - 25px);
+    max-width: 250px;
+    /* width: calc(30% - 25px); */
     /* Adjust the width to fit 4 cards per row */
     height: auto;
     /* height: 400px; */
@@ -36,38 +36,49 @@
 }
 
 
-@media screen and (min-width: 350px) {
+@media screen and (max-width: 560px) {
     .Oncard {
         /* margin-bottom: 2rem; */
         border: groove;
-        width: 25%;
+        /* width: 100%; */
+        max-width: 90%;
+        width: 250px;
         height: auto;
         padding: 20px;
+    }
 
+    .Oncards__items {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: flex-start;
+        width: 100%;
+        flex-direction: column;
     }
 
 }
 
-.ongoing_title{
+.ongoing_title {
     font-size: 20px;
     padding: 10px 0 0 0;
 }
 
-.Oncard__info{
+.Oncard__info {
     padding: 10px 20px;
     text-align: center;
     margin: 5px;
 }
 
-.ongoing__cards__txt{
+.ongoing__cards__txt {
     padding: 2px 5px;
 }
 
 .ongoing__cards__button,
- .ongoing__cards__button__complete,
-  .ongoing__cards__button__cancel, .ongoing__cards__button__feedback{
+.ongoing__cards__button__complete,
+.ongoing__cards__button__cancel,
+.ongoing__cards__button__feedback {
     padding: 5px;
-    border:none;
+    border: none;
     border-radius: 4px;
     cursor: pointer;
     margin: 5px;
@@ -78,7 +89,7 @@
     width: 130px;
 }
 
-.ongoing__cards__buttons{
+.ongoing__cards__buttons {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -87,34 +98,35 @@
     margin: auto;
 }
 
-.ongoing__cards__button__feedback{
+.ongoing__cards__button__feedback {
     background-color: #ffff;
     color: rgb(209, 168, 33);
     border: solid rgb(209, 168, 33) 1px;
 }
 
-.ongoing__cards__button__feedback:hover{
-     background-color: rgb(209, 168, 33);
+.ongoing__cards__button__feedback:hover {
+    background-color: rgb(209, 168, 33);
     color: #fff;
 }
 
-.ongoing__cards__button__cancel{
+.ongoing__cards__button__cancel {
     background-color: red;
     color: #fff;
 }
 
-.ongoing__cards__button__cancel:hover{
+.ongoing__cards__button__cancel:hover {
     background-color: #db9292;
     color: red;
     color: #fff;
 }
 
-.ongoing__cards__button__complete{
+.ongoing__cards__button__complete {
     background-color: #992ae4;
     color: #fff;
 }
 
-.ongoing__cards__button:hover, .ongoing__cards__button__complete:hover{
+.ongoing__cards__button:hover,
+.ongoing__cards__button__complete:hover {
     background-color: green;
     color: #ffff;
 }
