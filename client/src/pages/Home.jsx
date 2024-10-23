@@ -6,7 +6,10 @@ import Cards from "../components/Cards/Cards";
 import Menu from "./Menu";
 import axios from "axios";
 import { useAuth } from "../components/AuthContext";
-import { HeroSection } from "../components/Banner/HeroSection";
+import {
+  BannerEmployerPostErrand,
+  HeroSection,
+} from "../components/Banner/HeroSection";
 import RequestHeroSection, {
   AdminHeroSection,
 } from "../components/admin/RequestHeroSection";
@@ -37,15 +40,14 @@ const Home = () => {
               username={user.username}
             />
             <EmployerCard />
+            <BannerEmployerPostErrand />
             <div className="landing__map">
               <HomeMap id={user.userID} />
             </div>
-
             {/* <StickyButton
               buttonText="Post Errand"
               destination={`/errand/post-commission`}
             /> */}
-
             <Cards />
             <Sheet
               color="primary"

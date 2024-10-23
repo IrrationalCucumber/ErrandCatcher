@@ -1,6 +1,8 @@
 import React from "react";
 import "./HeroSection.css";
 import "../../App.css";
+import { Button, Sheet, Typography } from "@mui/joy";
+import { useNavigate } from "react-router-dom";
 
 export function HeroSection(props) {
   return (
@@ -29,6 +31,38 @@ export function BannerEmployerPages(props) {
       <div className="employer__hero__container">
         <h1>{props.bannerMessage}</h1>
       </div>
+    </>
+  );
+}
+
+export function BannerEmployerPostErrand() {
+  const navigate = useNavigate();
+  return (
+    <>
+      <Sheet
+        color="neutral"
+        variant="soft"
+        // className="employer__hero__container__post"
+        sx={{
+          p: 5,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Typography color="primary" level="h1" variant="plain" sx={{ p: 2 }}>
+          Hey there, want to add an Errand?
+        </Typography>
+        <Button
+          onClick={() => navigate(`/errand/post-commission`)}
+          color="primary"
+          size="lg"
+          variant="outlined"
+          sx={{ p: 3 }}
+        >
+          CLICK HERE!
+        </Button>
+      </Sheet>
     </>
   );
 }
