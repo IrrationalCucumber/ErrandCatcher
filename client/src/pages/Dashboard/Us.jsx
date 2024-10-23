@@ -17,6 +17,7 @@ function Us() {
           {user.userType === "Employer" && (
             <>
               <Navbar
+                navbar_ui={"navbar__employer"}
                 page1="ONGOING"
                 one={`/dashboard/ongoing`}
                 page2="COMMISSIONS"
@@ -31,6 +32,7 @@ function Us() {
           {user.userType === "Catcher" && (
             <>
               <Navbar
+                navbar_ui={"navbar__catcher"}
                 page2="COMMISSIONS"
                 commissionList={`/dashboard/catcher-errands`}
                 page3="APPLICATIONS"
@@ -43,6 +45,7 @@ function Us() {
           {user.userType.toLocaleUpperCase() === "ADMIN" && (
             <>
               <Navbar
+                navbar_ui={"navbar__admin"}
                 page1="REQUESTS"
                 one={`/dashboard/admin/request`}
                 // {`admin-home/${userID}`}
@@ -59,7 +62,9 @@ function Us() {
       )}
 
       <Outlet />
-      <Footer />
+      <Footer
+        footerUserType={`footer-container__${user.userType.toLocaleLowerCase()}`}
+      />
     </>
   );
 }
