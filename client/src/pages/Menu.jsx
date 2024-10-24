@@ -54,16 +54,23 @@ const Menu = () => {
       <Backdrop
         sx={{
           color: '#fff',
-          zIndex: (theme) => theme.zIndex.drawer + 1
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+
         }}
         open={loading}
       >
-        <Typography variant="h6"
+        <CircularProgress
+          color="inherit"
+          size="6rem"
           sx={{
-            marginTop: '16px',
-            marginRight: "100px"
-          }}>
-          <CircularProgress color="inherit" size="5rem" />
+            marginBottom: '32px'
+          }} />
+        <Typography variant="h5" >
           <HourglassBottomIcon /> Loading... Please wait
         </Typography>
       </Backdrop>
