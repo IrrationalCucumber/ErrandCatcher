@@ -10,9 +10,17 @@ import SearchBar from "../components/Search Bar/SearchBar";
 import OtherHousesIcon from '@mui/icons-material/OtherHouses';
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import {
+  Backdrop,
+  CircularProgress,
+  Typography
+}
+  from '@mui/material';
+import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
 
 const Menu = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(false);
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -20,15 +28,46 @@ const Menu = () => {
     setSearchQuery(event.target.value);
   };
 
+  const handleSearch = () => {
+    // Trigger loading state
+    if (searchQuery === "") {
+      alert("Please input your fields");
+    }
+    else {
+      setLoading(true);
+      // 3 seconds cd
+      setTimeout(() => {
+        setLoading(false); // Remove the loading spinner
+        navigate(`/search/${searchQuery}`);
+      }, 3000);
+    }
+  };
+
   return (
     <>
       <SearchBar
         value={searchQuery}
-        onClick={(e) => {
-          navigate(`/search/${searchQuery}`);
-        }}
+        onClick={handleSearch}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
+
+      <Backdrop
+        sx={{
+          color: '#fff',
+          zIndex: (theme) => theme.zIndex.drawer + 1
+        }}
+        open={loading}
+      >
+        <Typography variant="h6"
+          sx={{
+            marginTop: '16px',
+            marginRight: "100px"
+          }}>
+          <CircularProgress color="inherit" size="5rem" />
+          <HourglassBottomIcon /> Loading... Please wait
+        </Typography>
+      </Backdrop>
+
       {/* <div className="search-bar">
         {/* <input
           type="text"
@@ -138,11 +177,13 @@ const Menu = () => {
 
                 </div>
             </section> */}
-      {user.userType.toLocaleUpperCase() === "catcher" && (
-        <>
-          <Cards />
-        </>
-      )}
+      {
+        user.userType.toLocaleUpperCase() === "catcher" && (
+          <>
+            <Cards />
+          </>
+        )
+      }
     </>
   );
 };
