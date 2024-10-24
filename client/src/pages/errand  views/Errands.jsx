@@ -10,9 +10,7 @@ function Errands() {
     <>
       <Navbar />
       <Outlet />
-      <Footer
-        footerUserType={`footer-container__${user.userType.toLocaleLowerCase()}`}
-      />
+      <Footer footerUserType={`footer-container__admin`} />
     </>
   );
 }
