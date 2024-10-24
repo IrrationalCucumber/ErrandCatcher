@@ -13,6 +13,7 @@
 .Oncard {
     display: flex;
     flex-direction: column;
+    /* justify-content: space-around; */
     align-items: center;
     padding-top: 20px;
     max-width: 250px;
@@ -66,7 +67,10 @@
 .Oncard__info {
     padding: 10px 20px;
     text-align: center;
-    margin: 5px;
+    /* margin: 5px; */
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center; */
 }
 
 .ongoing__cards__txt {
@@ -96,6 +100,12 @@
     align-items: center;
     padding: 10px 15px;
     margin: auto;
+}
+
+.Oncard .ongoing__cards__buttons{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2px;
 }
 
 .ongoing__cards__button__feedback {
