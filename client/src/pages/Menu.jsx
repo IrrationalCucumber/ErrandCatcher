@@ -10,12 +10,7 @@ import SearchBar from "../components/Search Bar/SearchBar";
 import OtherHousesIcon from '@mui/icons-material/OtherHouses';
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import {
-  Backdrop,
-  CircularProgress,
-  Typography
-}
-  from '@mui/material';
+import LoadingBackdrop from "../components/LoadingSpinner";
 import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
 
 const Menu = () => {
@@ -51,29 +46,11 @@ const Menu = () => {
         onChange={(e) => setSearchQuery(e.target.value)}
       />
 
-      <Backdrop
-        sx={{
-          color: '#fff',
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100vh',
-
-        }}
+      <LoadingBackdrop
         open={loading}
-      >
-        <CircularProgress
-          color="inherit"
-          size="6rem"
-          sx={{
-            marginBottom: '32px'
-          }} />
-        <Typography variant="h5" >
-          <HourglassBottomIcon /> Loading... Please wait
-        </Typography>
-      </Backdrop>
+        text="Loading... Please wait"
+        icons={<HourglassBottomIcon/>}
+      />
 
       {/* <div className="search-bar">
         {/* <input
