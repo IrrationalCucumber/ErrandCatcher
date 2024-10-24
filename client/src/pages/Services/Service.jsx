@@ -12,7 +12,9 @@ function Service() {
         <>
           <Navbar />
           <Outlet />
-          <Footer />
+          <Footer
+            footerUserType={`footer-container__${user.userType.toLocaleLowerCase()}`}
+          />
         </>
       ) : (
         <p>Not signed in</p>
