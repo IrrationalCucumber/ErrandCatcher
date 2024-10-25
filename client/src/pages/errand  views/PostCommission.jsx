@@ -12,6 +12,9 @@ import { Alert, IconButton } from "@mui/joy";
 import WarningIcon from "@mui/icons-material/Warning";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { Box, Button } from "@mui/joy";
+import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
+import LoadingBackdrop from "../../components/LoadingSpinner";
+
 
 const PostCommission = () => {
   const [commission, setCommission] = useState({
@@ -49,6 +52,7 @@ const PostCommission = () => {
   //alert feedback
   const [alertMesg, setAlerMsg] = useState("");
   const [showAlert, setShowAlert] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   //update the info that will be stored
   const handleChange = (e) => {
@@ -132,6 +136,18 @@ const PostCommission = () => {
         !commission.Contactno ||
         !commission.comDescription
       ) {
+        setAlerMsg("Some fields are missing!");
+        setShowAlert(true);
+
+        // setLoading(true);
+        // // 3 seconds cd
+        // setTimeout(() => {
+        //   setLoading(false);
+
+        //   setAlerMsg("Some fields are missing!");
+        //   setShowAlert(true);
+
+        // }, 3000);
         if (
           commission.comType === "Delivery" ||
           commission.comType === "Transportation"
@@ -160,8 +176,18 @@ const PostCommission = () => {
         await axios.post("http://localhost:8800/commission", updatedCommission);
         await axios.post("http://localhost:8800/notify-catcher");
 
-        alert("You have Posted an Errand!");
-        navigate(`/dashboard/commissions`);
+        // alert("You have Posted an Errand!");
+        // navigate(`/dashboard/commissions`);
+
+        setLoading(true);
+        // 2 seconds cd
+        setTimeout(() => {
+          setLoading(false);
+
+          alert("You have Posted an Errand!");
+          navigate(`/dashboard/commissions`);
+
+        }, 2000);
         // setOpen(true);
       }
     } catch (err) {
@@ -190,6 +216,12 @@ const PostCommission = () => {
           {alertMesg}
         </Alert>
       )}
+      <LoadingBackdrop
+        open={loading}
+        text="Loading... Please wait while Posting Your Errand"
+        icons={<HourglassBottomIcon />}
+      />
+
       <div className="errand-cont">
         <div className="input-cont">
           <div className="errand-inputs">
