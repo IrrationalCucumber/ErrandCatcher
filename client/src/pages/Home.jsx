@@ -16,6 +16,7 @@ import RequestHeroSection, {
 import { HomeMap } from "../components/Map/Map";
 import { Sheet } from "@mui/joy";
 import { MyFeedback, MyPostedFeedback } from "../components/Dashbaord/Feedback";
+import TopCatcher from "../components/Carousel/TopCatcher";
 
 const Home = () => {
   const { user } = useAuth();
@@ -89,21 +90,11 @@ const Home = () => {
             >
               <MyFeedback />
             </Sheet>
+            <TopCatcher />
           </>
         )}
         {user.userType.toLocaleUpperCase() === "ADMIN" && (
           <>
-            {/* <Navbar
-              page1="REQUESTS"
-              one={`/request/${userID}`}
-              // {`admin-home/${userID}`}
-              page2="ACCOUNTS"
-              commissionList={`/accounts/${userID}`}
-              page3="ERRANDS"
-              applicants={`/commission-list/${userID}`}
-              page4="MAP"
-              map={`/map/${userID}`}
- /> */}
             <HeroSection
               type={user.userType.toLocaleUpperCase()}
               username={user.username}
@@ -111,6 +102,7 @@ const Home = () => {
             <Menu />
             <RequestHeroSection />
             <AdminHeroSection />
+            <TopCatcher />
           </>
         )}
         {/* <Footer /> */}
