@@ -41,6 +41,8 @@ body .App .si {
   display: inline-block;
   vertical-align: top;
   width: 50%;
+  /* background-color: #f1f5f9; */
+  height: 100vh;
 }
 
 .cont h1 {
@@ -66,6 +68,23 @@ body .App .si {
   margin: 13px auto;
   display: block;
   font-family: "PT Sans", sans-serif;
+  border-radius: 6px;
+  /* border-color: #cbd5e1; */
+  border-style: solid;
+  padding: 8px 12px;
+  line-height: 24px;
+  /* box-shadow: #0000 0px 0px 0px 0px; */
+
+}
+
+.cont input[type="text"]:focus,
+.cont input[type="password"]:focus {
+  /* background-color: #e8f0fe;
+  background-color: #f1f5f9; */
+  /* border-color: #6366f1; */
+  /* rgb(22, 121, 171) */
+  border: 1.8px solid rgb(22, 121, 171);
+  outline: none;
 }
 
 .cont input[type="checkbox"] {
@@ -109,12 +128,17 @@ button:hover {
 }
 
 .cont-tawo {
-  height: 605px;
+  /* height: 605px; */
+  height: 100vh;
+  background-color: #f1f5f9;
+  /* background-size: cover; */
+  /* background-position: 100% 50%; */
 }
 
 .cont-tawo img {
   width: 425px;
-  height: 606px;
+  /* height: 606px; */
+  height: 100vh;
   object-fit: cover;
 }
 
@@ -133,5 +157,10 @@ button:hover {
 
   .contman-cont-tawo {
     display: none;
+  }
+
+  .cont-tawo img {
+    height: 100vh;
+    object-fit: cover;
   }
 }

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../components/AuthContext";
 import axios from "axios";
 import "../pages/history.css";
-import Navbar from "../components/Navbar/Navbar";
+// import Navbar from "../components/Navbar/Navbar";
+import NavbarPage from "../components/Navbar/NavBarPage";
 
 const History = () => {
   const { user } = useAuth();
@@ -74,7 +75,8 @@ const History = () => {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
+      <NavbarPage />
       <div className="history-container">
         <h1>Transaction History</h1>
 
@@ -85,7 +87,7 @@ const History = () => {
         {/* data from database */}
         {transactions.length > 0 ? (
           transactions.map((transaction, index) => {
-            
+
             const paidDate = new Date(transaction.paid).toLocaleString();
             return (
               <div className="transaction-card" key={index}>
