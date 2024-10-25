@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import "./profile.css";
 import StarRating from "../Display/StarRating";
 import { Link } from "react-router-dom";
-import { Button, Input } from "@mui/joy";
+import { Button, Input, Sheet, Typography } from "@mui/joy";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import { Capitalize, DisplayDate } from "../Display/DsiplayFunctions";
 
 function UserProfile(props) {
   const [preview, setPreview] = useState(null);
@@ -311,29 +312,36 @@ export function ViewUserProfile(props) {
           <div className="info">
             {/* {props.address} */}
 
-            <input
-              type="text"
+            <Typography
               className="profile__info__left"
-              placeholder="Address"
-              name="address"
-              value={props.address}
-            />
+              color="neutral"
+              level="h4"
+              variant="plain"
+              sx={{ p: 1 }}
+            >
+              {props.address}
+            </Typography>
             {/* {props.email} */}
-            <input
-              type="email"
+            <Typography
               className="profile__info__left"
-              placeholder="Email Address"
-              name="email"
-              value={props.email}
-            />
+              color="neutral"
+              level="h4"
+              variant="plain"
+              sx={{ p: 1 }}
+            >
+              {props.email}
+            </Typography>
             {/* {props.cnum} */}
-            <input
-              type="number"
-              className="profile__info__left"
-              placeholder="Contact Number"
-              name="contact"
-              value={props.cnum}
-            />
+
+            <Typography
+              color="neutral"
+              level="h4"
+              variant="plain"
+              sx={{ p: 1 }}
+            >
+              {props.cnum}
+            </Typography>
+
             <br />
           </div>
           <br />
@@ -342,6 +350,7 @@ export function ViewUserProfile(props) {
             placeholder="Description"
             name="desc"
             value={props.desc}
+            disabled
           ></textarea>
 
           <div className="rating">
@@ -362,68 +371,71 @@ export function ViewUserProfile(props) {
               <div className="verified">{props.status.toLocaleUpperCase()}</div>
             </>
           ) : (
-            <Link
-              to={`/profile/verification`}
-              style={{ textDecoration: "none" }}
-            >
-              <div className="unverified">
-                {props.status.toLocaleUpperCase()}
-              </div>
-            </Link>
+            <div className="unverified">{props.status.toLocaleUpperCase()}</div>
           )}
-          <label htmlFor="username">Username :</label>
-          <input
-            type="text"
-            className="display-data"
-            placeholder="Username"
-            name="username"
-            value={props.username}
-          ></input>
+          <Sheet sx={{ pt: 2, pb: 1, pr: 0, pl: 0 }}>
+            <Typography
+              color="neutral"
+              level="title-lg"
+              variant="plain"
+              sx={{ p: 0.5 }}
+            >
+              Username :
+            </Typography>
+            <Typography color="neutral" level="h3" variant="outlined">
+              {props.username}
+            </Typography>
+          </Sheet>
 
-          <label htmlFor="first-name">First name :</label>
-          <input
-            type="text"
-            className="display-data"
-            placeholder="Name"
-            name="fname"
-            value={props.fname}
-          ></input>
+          <Sheet sx={{ pt: 2, pb: 1, pr: 0, pl: 0 }}>
+            <Typography color="neutral" level="title-lg" variant="plain">
+              Firt Name :
+            </Typography>
+            <Typography color="neutral" level="h3" variant="outlined">
+              {Capitalize(props.fname)}
+            </Typography>
+          </Sheet>
 
-          <label htmlFor="last-name">Last name :</label>
-          <input
-            type="text"
-            className="display-data"
-            placeholder="Last name"
-            name="lname"
-            value={props.lname}
-          ></input>
+          <Sheet sx={{ pt: 2, pb: 1, pr: 0, pl: 0 }}>
+            <Typography color="neutral" level="title-lg" variant="plain">
+              Last Name :
+            </Typography>
+            <Typography color="neutral" level="h3" variant="outlined">
+              {Capitalize(props.lname)}
+            </Typography>
+          </Sheet>
 
-          <label htmlFor="sex">Gender :</label>
-          {/* CHANGE INTO DIPLAY ONLY
-            NOT SELECT
-          */}
-          <select className="display-data1" value={props.sex} name="gender">
-            {/* gender */}
-            <option value="">Choose gender....</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </select>
+          <Sheet sx={{ pt: 2, pb: 1, pr: 0, pl: 0 }}>
+            <Typography color="neutral" level="title-lg" variant="plain">
+              Gender :
+            </Typography>
+            <Typography color="neutral" level="h3" variant="outlined">
+              {Capitalize(props.sex)}
+            </Typography>
+          </Sheet>
 
-          <label htmlFor="age">Age :</label>
-          <input
-            type="number"
-            name="age"
-            className="display-data1"
-            placeholder="Age"
-            value={props.age}
-          ></input>
-          <input
-            type="date"
-            name="bday"
-            className="display-data1"
-            value={props.bday}
-            placeholder="Date of birth"
-          ></input>
+          <Sheet sx={{ pt: 2, pb: 1, pr: 0, pl: 0 }}>
+            <Typography color="neutral" level="title-lg" variant="plain">
+              Birthdate :
+            </Typography>
+            <Typography color="neutral" level="h3" variant="outlined">
+              {DisplayDate(props.bday)}
+            </Typography>
+          </Sheet>
+
+          <Sheet sx={{ pt: 2, pb: 1, pr: 0, pl: 0 }}>
+            <Typography
+              color="neutral"
+              level="title-lg"
+              variant="plain"
+              sx={{ p: 0.5 }}
+            >
+              Age :
+            </Typography>
+            <Typography color="neutral" level="h3" variant="outlined">
+              {props.age}
+            </Typography>
+          </Sheet>
         </div>
       </div>
     </>
