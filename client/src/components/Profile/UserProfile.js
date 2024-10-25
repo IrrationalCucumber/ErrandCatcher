@@ -296,81 +296,17 @@ export function ViewUserProfile(props) {
       <div className="profile-page-container">
         {/* Left Profile Section */}
         <div className="profile-left">
-          {preview ? (
-            <>
-              {/* Display Preview Image */}
+          {/* If no preview, show existing profile image or default */}
+          <>
+            {props.profileImg ? (
               <img
-                src={preview}
-                alt="Preview Image"
-                // width={250}
-                // height={250}
-                style={{
-                  padding: "20px",
-                  border: "1px solid skyblue",
-                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
-                }}
+                src={`http://localhost:8800/images/profile/${props.profileImg}`}
+                alt="ProfPic"
               />
-              <button
-                onClick={handleDeleteImage}
-                style={{
-                  border: "none",
-                  backgroundColor: isHovered ? "#ffcccc" : "transparent",
-                  cursor: "pointer",
-                  transition: "background-color 0.3s ease",
-                }}
-              >
-                <DeleteIcon sx={{ fontSize: 30 }} color="error" />
-              </button>
-            </>
-          ) : (
-            // If no preview, show existing profile image or default
-            <>
-              {props.profileImg ? (
-                <img
-                  src={`http://localhost:8800/images/profile/${props.profileImg}`}
-                  alt="ProfPic"
-                />
-              ) : (
-                <img src="/images/employer.png" alt="Profile Picture" />
-              )}
-            </>
-          )}
-
-          <div className="upload-container">
-            <input
-              type="file"
-              id="file"
-              onChange={handleImage}
-              style={{ display: "none" }}
-            />
-            <label
-              htmlFor="file"
-              style={{
-                // border: "1px dashed black",
-                border: "none",
-                flexDirection: "row",
-                gap: "4px",
-                alignItems: "center",
-                backgroundColor: "#f0f0f0",
-                maxWidth: "18rem",
-                display: "flex",
-                alignContent: "center",
-                justifyContent: "center",
-              }}
-            >
-              <AddAPhotoIcon color="primary" />
-              Choose Image File
-            </label>
-
-            <Button
-              loading={false}
-              onClick={props.handleUpload}
-              size="md"
-              variant="solid"
-            >
-              <FileUploadIcon />
-            </Button>
-          </div>
+            ) : (
+              <img src="/images/employer.png" alt="Profile Picture" />
+            )}
+          </>
 
           <div className="info">
             {/* {props.address} */}
