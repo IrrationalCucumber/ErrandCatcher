@@ -343,17 +343,16 @@ export function ViewUserProfile(props) {
             name="desc"
             value={props.desc}
           ></textarea>
-          {props.type === "Catcher" && (
-            <div className="rating">
-              Overall Rating:
-              <span>
-                <StarRating rating={props.rate} />
-                <p>
-                  <i>{props.rate}</i>
-                </p>
-              </span>
-            </div>
-          )}
+
+          <div className="rating">
+            Overall Rating:
+            <span>
+              <StarRating rating={props.rate} />
+              <p>
+                <i>{props.rate}</i>
+              </p>
+            </span>
+          </div>
         </div>
 
         {/* Right Profile Section */}
