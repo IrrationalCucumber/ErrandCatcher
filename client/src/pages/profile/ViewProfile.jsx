@@ -8,6 +8,7 @@ import NavbarPage from "../../components/Navbar/NavBarPage";
 import "./profile.css";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { ViewUserProfile } from "../../components/Profile/UserProfile";
 
 function ViewProfile() {
   const [activeTab, setActiveTab] = useState("about");
@@ -106,155 +107,23 @@ function ViewProfile() {
   return (
     <div>
       <NavbarPage />
-      <div className="profile">
-        <div className="profile-info">
-          <div className="description-form">
-            <form>
-              <div className="FileContainer">
-                <img
-                  src={
-                    `http://localhost:8800/images/profile/` +
-                    account.profileImage
-                  }
-                  alt="Profile"
-                  width={150}
-                  length={150}
-                />
-              </div>
-              {/*username changed when user sign up*/}
-              <div className="username-container">
-                <label className="username">{account.username}</label>
-                {/* Verification Icon */}
-                <i
-                  class={
-                    verified
-                      ? "fa-solid fa-circle-check"
-                      : "fa-regular fa-circle-check"
-                  }
-                  style={{
-                    marginLeft: "5px",
-                    color: verified ? "green" : "gray",
-                  }}
-                >
-                  {status}
-                </i>
-                {/* <FontAwesomeIcon
-              icon={faCertificate}
-              style={{
-                marginLeft: "5px",
-                color: verified ? "green" : "gray",
-              }}
-            /> */}
-              </div>
-              <div className="rating-box">
-                <label className="Rating">Rating</label>
-                <label className="RateNo">{rating} /5</label>
-              </div>
-              <textarea
-                className="description"
-                placeholder="Description"
-              ></textarea>
-            </form>
-          </div>
-          <div className="info-form">
-            <form>
-              <div className="toggle-button">
-                <span
-                  className={activeTab === "about" ? "active about-label" : ""}
-                  onClick={() => setActiveTab("about")}
-                >
-                  About
-                </span>
-                <span
-                  className={
-                    activeTab === "history" ? "active history-label" : ""
-                  }
-                  onClick={() => setActiveTab("history")}
-                >
-                  History
-                </span>
-              </div>
-              {activeTab === "about" && (
-                <div
-                  className={`about-section ${
-                    activeTab !== "about" ? "hidden" : ""
-                  }`}
-                >
-                  {/* About section content */}
-                  <div className="input-row">
-                    <label className="PP">Name:</label>
-                    <textarea
-                      type="text"
-                      className="display-data"
-                      placeholder="Name"
-                      value={account.fname + " " + account.lname}
-                    ></textarea>
-                  </div>
-                  <div className="input-row">
-                    <label className="PP">Age</label>
-                    <textarea
-                      type="number"
-                      className="display-data1"
-                      placeholder="Age"
-                      value={account.age}
-                    ></textarea>
-                  </div>
-                  <div className="input-row">
-                    <label className="PP">Birth Date</label>
-                    <textarea
-                      type="number"
-                      className="display-data1"
-                      placeholder="Date of birth"
-                    ></textarea>
-                  </div>
-                  <div className="input-row">
-                    <label className="PP">Gender</label>
-                    <select className="display-data1">
-                      gender
-                      <option value="">Choose gender....</option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                    </select>
-                  </div>
-                  <div className="input-row">
-                    <label className="PP">Contact Number:</label>
-                    <textarea
-                      type="number"
-                      className="display-data"
-                      placeholder="Contact Number"
-                    ></textarea>
-                  </div>
-                  <div className="input-row">
-                    <label className="PP">Email Address:</label>
-                    <textarea
-                      type="text"
-                      className="display-data"
-                      placeholder="Email Address"
-                    ></textarea>
-                  </div>
-                  <div className="input-row">
-                    <label className="PP">Address:</label>
-                    <textarea
-                      type="text"
-                      className="display-data"
-                      placeholder="Address"
-                    ></textarea>
-                  </div>
-                </div>
-              )}
-              {activeTab === "history" && (
-                <div
-                  className={`history-section ${
-                    activeTab !== "history" ? "hidden" : ""
-                  }`}
-                >
-                  <label>THIS IS HISTORY WITH TRANSACTION</label>
-                </div>
-              )}
-            </form>
-          </div>
-        </div>
-      </div>
+      <ViewUserProfile
+        profileImg={account.profileImage}
+        address={account.address}
+        cnum={account.contact}
+        email={account.email}
+        rate={rating}
+        type={account.type}
+        desc={account.desc}
+        //right hemisphere
+        username={account.username}
+        fname={account.fname}
+        lname={account.lname}
+        sex={account.gender}
+        age={account.age}
+        bday={account.bday}
+        status={account.status}
+      />
     </div>
   );
 }
