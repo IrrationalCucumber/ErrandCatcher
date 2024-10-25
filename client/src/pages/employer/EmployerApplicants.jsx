@@ -211,7 +211,8 @@ const EmployerApplicants = () => {
     ),
     <button
       style={style2.button}
-      onClick={() => handleViewProfile(applicant, applicant.username)}
+      // onClick={() => handleViewProfile(applicant, applicant.username)}
+      onClick={() => navigate(`/profile/user/${applicant.catcherID})`)}
     >
       View Profile
     </button>,
