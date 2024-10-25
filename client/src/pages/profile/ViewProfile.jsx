@@ -68,28 +68,6 @@ function ViewProfile() {
     fetchAccount();
   }, [userID]);
 
-  //useState for Status
-  const [status, setStatus] = useState("");
-  //update display for status
-  useEffect(() => {
-    const fetchStatus = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:8800/user-verify/${userID}`
-        );
-        //console.log(res.data[0].accountStatus);
-        setStatus(res.data[0].accountStatus);
-        if (status.toUpperCase === "VERIFIED") {
-          setVerified(true);
-          console.log(verified);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchStatus();
-  }, [status, userID, verified]);
-
   //get the rating of the user
   const [rating, setRating] = useState("");
   useEffect(() => {
@@ -108,7 +86,6 @@ function ViewProfile() {
   }, [userID]);
   return (
     <div>
-      <NavbarPage />
       <ViewUserProfile
         profileImg={account.profileImage}
         address={account.address}
