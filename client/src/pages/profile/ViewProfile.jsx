@@ -30,6 +30,7 @@ function ViewProfile() {
     address: "",
     desc: "",
     profileImage: "",
+    status: "",
   });
 
   //pre-fill the fields
@@ -57,6 +58,7 @@ function ViewProfile() {
           address: retrievedAccount.userAddress,
           desc: retrievedAccount.userDesc,
           profileImage: retrievedAccount.profileImage,
+          status: retrievedAccount.accountStatus,
         });
       } catch (err) {
         console.log(err);
