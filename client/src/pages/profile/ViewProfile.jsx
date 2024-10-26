@@ -10,12 +10,11 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { ViewUserProfile } from "../../components/Profile/UserProfile";
 
-function ViewProfile() {
-  const [activeTab, setActiveTab] = useState("about");
-  const [verified, setVerified] = useState(false);
+function ViewProfile(id) {
   //get userID from url
-  const location = useLocation();
-  const userID = location.pathname.split("/")[3];
+  const userID = id.id;
+  console.log(id.id);
+
   //variable for account details
   const [account, setAccount] = useState({
     username: "",

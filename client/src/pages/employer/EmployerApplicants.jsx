@@ -19,10 +19,12 @@ import DialogTitle from "@mui/joy/DialogTitle";
 import DialogContent from "@mui/joy/DialogContent";
 import DialogActions from "@mui/joy/DialogActions";
 import Modal from "@mui/joy/Modal";
+import { ModalClose } from "@mui/joy";
 import ModalDialog from "@mui/joy/ModalDialog";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 import { DisplayDate } from "../../components/DisplayDate";
 import { BannerEmployerPages } from "../../components/Banner/HeroSection";
+import ViewProfile from "../profile/ViewProfile";
 
 const EmployerApplicants = () => {
   const navigate = useNavigate();
@@ -40,8 +42,7 @@ const EmployerApplicants = () => {
   const [itemsPerPage] = useState(10);
   //ash
   const [showProfileModal, setShowProfileModal] = useState(false);
-  const [selectedApplicant, setSelectedApplicant] = useState(null);
-  const [rating, setRating] = useState("");
+  const [selectedApplicant, setSelectedApplicant] = useState("");
   const [openAccept, setOpenAccept] = useState(false);
   const [openDecline, setOpenDecline] = useState(false);
 
@@ -52,32 +53,11 @@ const EmployerApplicants = () => {
   const handleOpenDeclineModal = () => {
     setOpenDecline(true);
   };
-
-  const handleViewProfile = (applicant) => {
-    setSelectedApplicant(applicant);
-    //display rating of acathcer
-    const fetchRating = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:8800/user-rating/${applicant.catcherID}`
-        );
-        // if rating is null
-        if (res.data[0].c == null) {
-          setRating(0);
-        } else {
-          setRating(res.data[0].c);
-        }
-        // console.log(res.data[0].c);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchRating();
+  //modal to view profile page of appicant
+  const handleViewProfile = (id) => {
+    setSelectedApplicant(id);
+    console.log(id);
     setShowProfileModal(true);
-  };
-
-  const handleCloseProfileModal = () => {
-    setShowProfileModal(false);
   };
 
   //useEffect to handle error
@@ -211,8 +191,8 @@ const EmployerApplicants = () => {
     ),
     <button
       style={style2.button}
-      // onClick={() => handleViewProfile(applicant, applicant.username)}
-      onClick={() => navigate(`/profile/user/${applicant.catcherID})`)}
+      onClick={() => handleViewProfile(applicant.catcherID)}
+      // onClick={() => navigate(`/profile/user/${applicant.catcherID})`)}
     >
       View Profile
     </button>,
@@ -334,52 +314,24 @@ const EmployerApplicants = () => {
             <button type="submit" style={{ backgroundColor: "#1679AB" }}>
               <i className="fa fa-search" place></i>
             </button>
-            {/*<select name="type" id="">
-            <option value=""></option>
-            <option value="employer">Employer</option>
-            <option value="catcher">Catcher</option>
-            <option value="admin">Admin</option>
-          </select>
-          <select name="status" id="">
-            <option value=""></option>
-            <option value="verified">Verified</option>
-            <option value="unverified">Unverified</option>
-            <option value="Suspended">Suspended</option>
-          </select>*/}
           </div>
           <div className="applicants-table">
             <Table headers={headers} data={applicantData} />
           </div>
 
-          {/* added  by ash */}
+          {/* added  by ash 
+            Modal for Profile of Applicant
+          */}
+          <Modal
+            open={showProfileModal}
+            onClose={() => setShowProfileModal(false)}
+          >
+            <ModalDialog layout="fullscreen" sx={{ overflowY: "auto" }}>
+              <ModalClose />
+              <ViewProfile id={selectedApplicant} />
+            </ModalDialog>
+          </Modal>
 
-          {showProfileModal && (
-            <ProfileModal
-              username={selectedApplicant.username}
-              fname={selectedApplicant.userFirstname}
-              lname={selectedApplicant.userLastname}
-              email={selectedApplicant.userEmail}
-              num={selectedApplicant.userContactNum}
-              age={selectedApplicant.userAge}
-              applicant={selectedApplicant}
-              rating={rating}
-              handleAccept={() =>
-                handleAccept(
-                  selectedApplicant.applicationID,
-                  selectedApplicant.applicationErrandID,
-                  selectedApplicant.catcherID
-                )
-              }
-              handleDecline={() =>
-                handleDecline(
-                  selectedApplicant.applicationID,
-                  selectedApplicant.applicationErrandID,
-                  selectedApplicant.catcherID
-                )
-              }
-              closeModal={handleCloseProfileModal}
-            />
-          )}
           {/* Pagination controls */}
           {applicants.length > 0 && (
             <Pagination
