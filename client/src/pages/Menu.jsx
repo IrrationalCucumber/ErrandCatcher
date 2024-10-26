@@ -48,8 +48,8 @@ const Menu = () => {
 
       <LoadingBackdrop
         open={loading}
-        text="Loading... Please wait"
-        icons={<HourglassBottomIcon/>}
+        text={`Searching for Errand: "${searchQuery}" please wait a seconds...`}
+        icons={<HourglassBottomIcon />}
       />
 
       {/* <div className="search-bar">
