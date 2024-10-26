@@ -14,6 +14,8 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { Box, Button } from "@mui/joy";
 import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
 import LoadingBackdrop from "../../components/LoadingSpinner";
+import Snackbar from "@mui/joy/Snackbar";
+import PostAddIcon from '@mui/icons-material/PostAdd';
 
 
 const PostCommission = () => {
@@ -53,6 +55,7 @@ const PostCommission = () => {
   const [alertMesg, setAlerMsg] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [opensnack, setOpenSnack] = useState(false);
 
   //update the info that will be stored
   const handleChange = (e) => {
@@ -184,8 +187,9 @@ const PostCommission = () => {
         setTimeout(() => {
           setLoading(false);
 
-          alert("You have Posted an Errand!");
-          navigate(`/dashboard/commissions`);
+          setOpenSnack(true);
+          // alert("You have Posted an Errand!");
+          // navigate(`/dashboard/commissions`);
 
         }, 2000);
         // setOpen(true);
@@ -216,6 +220,28 @@ const PostCommission = () => {
           {alertMesg}
         </Alert>
       )}
+      <Snackbar
+        variant="solid"
+        color="success"
+        size="lg"
+        open={opensnack}
+        onClose={() => setOpenSnack(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        // autoHideDuration={5000}
+        startDecorator={<PostAddIcon />}
+        endDecorator={
+          <Button
+            onClick={() => navigate(`/dashboard/commissions`)}
+            size="sm"
+            variant="soft"
+            color="success"
+          >
+            Dismiss
+          </Button>
+        }
+      >
+        Successfully You have Posted an Errand!
+      </Snackbar>
       <LoadingBackdrop
         open={loading}
         text="Loading... Please wait while Posting Your Errand"
