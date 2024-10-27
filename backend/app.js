@@ -200,7 +200,7 @@ app.get("/success-payment/:id", (req, res) => {
             SET errandStatus = 'Complete', transDateComplete = ? 
             WHERE transactID = ?`;
 
-  const q2 = `INSERT INTO invoice (total, type, description, checkoutId, paymentId, paid, invoiceErrandID, invoiceemployerID) VALUES ( ?, ?, ?, ?, ?, FROM_UNIXTIME(?), ?, ? )`;
+  const q2 = `INSERT INTO invoice (total, type, description, checkoutId, paymentId, paid, invoiceErrandID, invoiceemployerID, invoiceCatcherID) VALUES ( ?, ?, ?, ?, ?, FROM_UNIXTIME(?), ?, ?, ? )`;
 
   db.query(q1, [currentTime, id], (err, data) => {
     if (err) {
@@ -219,6 +219,7 @@ app.get("/success-payment/:id", (req, res) => {
         paymentData.paid,
         paymentData.errandID,
         paymentData.employerid,
+        paymentData.catcherid,
       ],
       (err, data) => {
         if (err) {
@@ -234,7 +235,7 @@ app.get("/success-payment/:id", (req, res) => {
         // return res.send("Payment successful and details saved.");
         // path: "/paymentsuccess",
         return res.redirect("http://localhost:3000/paymentsuccess");
-        
+
       }
     );
   });
@@ -248,7 +249,7 @@ app.get("/cancel-payment", (req, res) => {
   // return res.json({ message: "Payment has been cancelled." });
   // path: "/paymentcancel",
   return res.redirect("http://localhost:3000/paymentcancel");
-   
+
 });
 
 // Route to process payment
@@ -265,6 +266,7 @@ app.post("/process-payment/:employerID", async (req, res) => {
   // const employerID = req.params.employerID;
   const employerid = req.body.employerID;
   const errandID = req.body.errandID;
+  const catcherid = req.body.catID;
 
   // const total = Math.round(distance) * 15 + baseAmount;
   // Paymongo api key in base64, convert api key to base64
@@ -296,10 +298,12 @@ app.post("/process-payment/:employerID", async (req, res) => {
     type,
     total,
     description,
+    catcherid,
     paymentId: checkout.data.attributes.payment_intent.id,
     checkoutId: checkout.data.id,
     paid: checkout.data.attributes.created_at,
   };
+  console.log(paymentDataStorage);
 
   // Redirect user to PayMongo's checkout page
   return res.send({
