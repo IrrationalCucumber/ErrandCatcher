@@ -98,6 +98,21 @@ const History = () => {
         {transactions.length > 0 ? (
           transactions.map((transaction, index) => {
 
+            // convert to centavo
+            const amountInCents = (transaction.total / 100).toFixed(2);
+
+            console.log(amountInCents)
+
+            // convert to peso php
+            const priceInPHP = new Intl.NumberFormat('en-PH',
+              {
+                style: 'currency',
+                currency: 'PHP'
+              }
+            ).format(amountInCents);
+
+            console.log(priceInPHP)
+
             const paidDate = new Date(transaction.paid).toLocaleString();
             return (
               <div className="transaction-card" key={index}>
@@ -112,7 +127,7 @@ const History = () => {
                     <strong>Date Paid:</strong> {paidDate}
                   </p>
                   <p>
-                    <strong>Total Price:</strong> ${transaction.total}
+                    <strong>Total Price:</strong> {priceInPHP}
                   </p>
                   <p>
                     <strong>Type:</strong> {transaction.type}
