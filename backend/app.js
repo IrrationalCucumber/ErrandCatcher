@@ -329,13 +329,28 @@ app.get("/payment-details/:sessionId", async (req, res) => {
   }
 });
 
-// fetch history transaction
-app.get("/transactions/:employerID", (req, res) => {
+// fetch history transaction employer user
+app.get("/transactionsEmp/:employerID", (req, res) => {
   const { employerID } = req.params;
   const q =
     "SELECT checkoutId, total, type, paymentId, description, DATE_FORMAT(paid, '%Y-%m-%dT%TZ') AS paid FROM invoice WHERE invoiceemployerID = ?";
 
   db.query(q, [employerID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+    return res.json(data);
+  });
+});
+
+// fetch history transaction catcher user
+app.get("/transactionsCat/:catcherID", (req, res) => {
+  const { catcherID } = req.params;
+  const q =
+    "SELECT checkoutId, total, type, paymentId, description, DATE_FORMAT(paid, '%Y-%m-%dT%TZ') AS paid FROM invoice WHERE invoiceCatcherID = ?";
+
+  db.query(q, [catcherID], (err, data) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: "An error occurred" });
