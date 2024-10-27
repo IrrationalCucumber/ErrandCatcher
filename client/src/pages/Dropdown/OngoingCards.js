@@ -183,7 +183,7 @@ function OngoingCards({ commissions, to }) {
     }
   };
 
-  const handlePayment = (pay, type, fname, lname, id, comTitle, erID) => {
+  const handlePayment = (pay, type, fname, lname, id, comTitle, erID, catID) => {
     const paymentUrl = `http://localhost:8800/process-payment/${userID}`;
     // Change the amount
     const amount = pay;
@@ -191,6 +191,7 @@ function OngoingCards({ commissions, to }) {
     const name = fname + " " + lname;
     const errand = id + " " + comTitle;
     const errandID = erID;
+    const cateID = catID;
 
     axios
       .post(paymentUrl, {
@@ -201,6 +202,7 @@ function OngoingCards({ commissions, to }) {
         id: id, // transactionID
         employerID: userID,
         errandID: errandID,
+        catID: cateID
       })
       .then((response) => {
         window.open(response.data.url);
@@ -219,12 +221,12 @@ function OngoingCards({ commissions, to }) {
               <div className="Oncard" key={commission.id}>
                 {(commission.commissionType === "HomeService - Indoor" ||
                   commission.commissionType === "HomeService - Outdoor") && (
-                  <img
-                    src="/images/hr.png"
-                    alt="Commission"
-                    className="Oncard__img"
-                  />
-                )}
+                    <img
+                      src="/images/hr.png"
+                      alt="Commission"
+                      className="Oncard__img"
+                    />
+                  )}
 
                 {commission.commissionType === "Transportation" && (
                   <img
@@ -284,7 +286,7 @@ function OngoingCards({ commissions, to }) {
                         level="title-lg"
                         variant="plain"
                       >
-                        CATCHER:
+                        CATCHER: render{commission.transCatcherID}
                       </Typography>
                       <Typography color="primary" level="h3" variant="soft">
                         {commission.userFirstname} {commission.userLastname}
@@ -410,7 +412,8 @@ function OngoingCards({ commissions, to }) {
                                 commission.userLastname,
                                 commission.transactID,
                                 commission.commissionTitle,
-                                commission.commissionID
+                                commission.commissionID,
+                                commission.transCatcherID
                               );
                             }}
                           >
