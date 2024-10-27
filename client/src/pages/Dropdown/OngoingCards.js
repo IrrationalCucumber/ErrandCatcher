@@ -286,7 +286,7 @@ function OngoingCards({ commissions, to }) {
                         level="title-lg"
                         variant="plain"
                       >
-                        CATCHER: render{commission.transCatcherID}
+                        CATCHER:
                       </Typography>
                       <Typography color="primary" level="h3" variant="soft">
                         {commission.userFirstname} {commission.userLastname}

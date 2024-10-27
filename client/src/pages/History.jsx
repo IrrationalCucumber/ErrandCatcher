@@ -87,7 +87,13 @@ const History = () => {
       {/* <Navbar /> */}
       <NavbarPage />
       <div className="history-container">
-        <h1>Transaction History</h1>
+        <h1 style={{
+          color: "rgb(22, 121, 171",
+          fontWeight: "700",
+          fontSize: "2.30rem",
+        }}>
+          Transaction History
+        </h1>
 
         {/* apply testing data */}
         {/* {sampletran.length > 0 ? (
@@ -100,8 +106,6 @@ const History = () => {
             // convert to centavo
             const amountInCents = (transaction.total / 100).toFixed(2);
 
-            console.log(amountInCents)
-
             // convert to peso php
             const priceInPHP = new Intl.NumberFormat('en-PH',
               {
@@ -110,11 +114,7 @@ const History = () => {
               }
             ).format(amountInCents);
 
-            console.log(priceInPHP)
-
             const paidDate = new Date(transaction.paid).toLocaleString();
-
-            console.log(paidDate);
 
             return (
               <div className="transaction-card" key={index}>
