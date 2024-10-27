@@ -333,7 +333,7 @@ app.get("/payment-details/:sessionId", async (req, res) => {
 app.get("/transactionsEmp/:employerID", (req, res) => {
   const { employerID } = req.params;
   const q =
-    "SELECT checkoutId, total, type, paymentId, description, DATE_FORMAT(paid, '%Y-%m-%dT%TZ') AS paid FROM invoice WHERE invoiceemployerID = ?";
+    "SELECT checkoutId, total, type, paymentId, description, paid FROM invoice WHERE invoiceemployerID = ?";
 
   db.query(q, [employerID], (err, data) => {
     if (err) {
@@ -348,7 +348,7 @@ app.get("/transactionsEmp/:employerID", (req, res) => {
 app.get("/transactionsCat/:catcherID", (req, res) => {
   const { catcherID } = req.params;
   const q =
-    "SELECT checkoutId, total, type, paymentId, description, DATE_FORMAT(paid, '%Y-%m-%dT%TZ') AS paid FROM invoice WHERE invoiceCatcherID = ?";
+    "SELECT checkoutId, total, type, paymentId, description, paid FROM invoice WHERE invoiceCatcherID = ?";
 
   db.query(q, [catcherID], (err, data) => {
     if (err) {

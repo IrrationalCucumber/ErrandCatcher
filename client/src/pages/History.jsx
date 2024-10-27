@@ -9,8 +9,7 @@ const History = () => {
   const { user } = useAuth();
   const userID = user.userID;
   const [transactions, setTransactions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+
 
   // tesing data
   const sampletran = [
@@ -76,7 +75,7 @@ const History = () => {
 
       } catch (err) {
         console.log("Error fetching transactions:", err);
-        setError(err);
+
 
       }
     };
@@ -114,6 +113,9 @@ const History = () => {
             console.log(priceInPHP)
 
             const paidDate = new Date(transaction.paid).toLocaleString();
+
+            console.log(paidDate);
+
             return (
               <div className="transaction-card" key={index}>
                 <div className="transaction-details">
