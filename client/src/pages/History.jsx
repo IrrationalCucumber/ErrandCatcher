@@ -59,19 +59,29 @@ const History = () => {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8800/transactions/${userID}`
-        );
+        // const response = await axios.get(
+        //   `http://localhost:8800/transactions/${userID}`
+        // );
+        // setTransactions(response.data);
+        // setLoading(false);
+
+        // choose if the user is Employer otherwise Catcher
+        const endpoint =
+          user.userType === "Employer"
+            ? `http://localhost:8800/transactionsEmp/${userID}`
+            : `http://localhost:8800/transactionsCat/${userID}`;
+
+        const response = await axios.get(endpoint);
         setTransactions(response.data);
-        setLoading(false);
+
       } catch (err) {
         console.log("Error fetching transactions:", err);
         setError(err);
-        setLoading(false);
+
       }
     };
     fetchTransactions();
-  }, [userID]);
+  }, [userID, user.userType]);
 
   return (
     <>
