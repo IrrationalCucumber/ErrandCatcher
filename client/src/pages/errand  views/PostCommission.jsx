@@ -176,8 +176,8 @@ const PostCommission = () => {
         setAlerMsg("Looks like you havent set the location in the Map");
         setShowAlert(true);
       } else {
-        // await axios.post("http://localhost:8800/commission", updatedCommission);
-        // await axios.post("http://localhost:8800/notify-catcher");
+        await axios.post("http://localhost:8800/commission", updatedCommission);
+        await axios.post("http://localhost:8800/notify-catcher");
 
         // alert("You have Posted an Errand!");
         // navigate(`/dashboard/commissions`);
