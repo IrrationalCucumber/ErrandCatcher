@@ -15,6 +15,8 @@ import { WarningRounded } from "@mui/icons-material";
 import Snackbar from "@mui/joy/Snackbar";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import CancelIcon from "@mui/icons-material/Cancel";
+import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
+import LoadingBackdrop from "../../../components/LoadingSpinner";
 
 const RequestModal = ({ request, handleClose }) => {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
@@ -31,6 +33,7 @@ const RequestModal = ({ request, handleClose }) => {
   const [openSus, setOpenSus] = useState(false);
   const [opensnack, setOpenSnack] = useState(false);
   const [opensnackun, setOpenSnackUn] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleOpenModal = () => {
     setOpen(true);
@@ -72,14 +75,24 @@ const RequestModal = ({ request, handleClose }) => {
       await axios.post("http://localhost:8800/notify", notif);
       //update request to complete
       await axios.put(`http://localhost:8800/done-request/${requestID}`);
-      setOpenSnack(true);
 
-      // Close the modal after 3 seconds
+      setLoading(true);
+      // 2 seconds cd
+      setTimeout(() => {
+        setLoading(false);
+
+        setOpenSnack(true);
+
+      }, 2000);
+
+      // setOpenSnack(true);
+
+      // Close the modal after 5 seconds
       setOpen(false);
       // delay
       setTimeout(() => {
         handleClose();
-      }, 3000);
+      }, 5000);
     } catch (err) {
       console.log(err);
     }
@@ -104,14 +117,23 @@ const RequestModal = ({ request, handleClose }) => {
       //update request to complete
       await axios.put(`http://localhost:8800/done-request/${requestID}`);
       // handleClose();
-      setOpenSnackUn(true);
 
-      // Close the modal after 3 seconds
+      setLoading(true);
+      // 2 seconds cd
+      setTimeout(() => {
+        setLoading(false);
+        setOpenSnackUn(true);
+
+      }, 2000);
+
+      // setOpenSnackUn(true);
+
+      // Close the modal after 5 seconds
       setOpenSus(false);
       // delay
       setTimeout(() => {
         handleClose();
-      }, 3000);
+      }, 5000);
     } catch (err) {
       console.log(err);
     }
@@ -201,6 +223,12 @@ const RequestModal = ({ request, handleClose }) => {
           </div>
         </div>
       </div>
+
+      <LoadingBackdrop
+        open={loading}
+        text="Loading... Please wait on processing..."
+        icons={<HourglassBottomIcon />}
+      />
 
       <ButtonGroup aria-label="spacing button group">
         {/* verified modal */}

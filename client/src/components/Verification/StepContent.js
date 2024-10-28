@@ -16,6 +16,8 @@ import { useAuth } from "../AuthContext";
 import axios from "axios";
 import "./css/style.css";
 import { useNavigate } from "react-router-dom";
+import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
+import LoadingBackdrop from "../LoadingSpinner";
 
 export default function StepContent() {
   return <div>StepContent</div>;
@@ -542,6 +544,7 @@ export function Step3({ details, images, onPrev, onNext }) {
   const userID = user.userID;
   const [open, setOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleOpenModal = () => {
     setOpen(true);
@@ -557,8 +560,18 @@ export function Step3({ details, images, onPrev, onNext }) {
 
         return;
       }
+      setOpen(false);
+      setLoading(true);
 
-      onNext();
+      // 5 seconds cd
+      setTimeout(() => {
+        setLoading(false);
+
+        onNext();
+
+      }, 5000);
+
+      // onNext();
       //wrap file images into formdata
       const formData = new FormData();
 
@@ -602,6 +615,12 @@ export function Step3({ details, images, onPrev, onNext }) {
             alt="Preview 2"
           />
         )}
+
+        <LoadingBackdrop
+          open={loading}
+          text="Please wait... Your documents are uploading to the Admin."
+          icons={<HourglassBottomIcon />}
+        />
 
         {alertOpen && (
           <Grow in={alertOpen} style={{ transformOrigin: "center" }}>

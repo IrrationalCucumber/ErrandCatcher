@@ -12,6 +12,11 @@ import { Alert, IconButton } from "@mui/joy";
 import WarningIcon from "@mui/icons-material/Warning";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { Box, Button } from "@mui/joy";
+import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
+import LoadingBackdrop from "../../components/LoadingSpinner";
+import Snackbar from "@mui/joy/Snackbar";
+import PostAddIcon from '@mui/icons-material/PostAdd';
+
 
 const PostCommission = () => {
   const [commission, setCommission] = useState({
@@ -49,6 +54,8 @@ const PostCommission = () => {
   //alert feedback
   const [alertMesg, setAlerMsg] = useState("");
   const [showAlert, setShowAlert] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [opensnack, setOpenSnack] = useState(false);
 
   //update the info that will be stored
   const handleChange = (e) => {
@@ -132,6 +139,18 @@ const PostCommission = () => {
         !commission.Contactno ||
         !commission.comDescription
       ) {
+        setAlerMsg("Some fields are missing!");
+        setShowAlert(true);
+
+        // setLoading(true);
+        // // 3 seconds cd
+        // setTimeout(() => {
+        //   setLoading(false);
+
+        //   setAlerMsg("Some fields are missing!");
+        //   setShowAlert(true);
+
+        // }, 3000);
         if (
           commission.comType === "Delivery" ||
           commission.comType === "Transportation"
@@ -160,9 +179,26 @@ const PostCommission = () => {
         await axios.post("http://localhost:8800/commission", updatedCommission);
         await axios.post("http://localhost:8800/notify-catcher");
 
-        alert("You have Posted an Errand!");
-        navigate(`/dashboard/commissions`);
-        // setOpen(true);
+        // alert("You have Posted an Errand!");
+        // navigate(`/dashboard/commissions`);
+
+        setLoading(true);
+        // 2 seconds cd
+        setTimeout(() => {
+          setLoading(false);
+
+          setOpenSnack(true);
+          // alert("You have Posted an Errand!");
+          // navigate(`/dashboard/commissions`);
+
+          setTimeout(() => {
+            // setLoading(false);
+            navigate(`/dashboard/commissions`);
+
+          }, 1900);
+
+        }, 2000);
+
       }
     } catch (err) {
       console.log(err);
@@ -190,6 +226,34 @@ const PostCommission = () => {
           {alertMesg}
         </Alert>
       )}
+      <Snackbar
+        variant="solid"
+        color="success"
+        size="lg"
+        open={opensnack}
+        onClose={() => setOpenSnack(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        // autoHideDuration={5000}
+        startDecorator={<PostAddIcon />}
+        endDecorator={
+          <Button
+            onClick={() => navigate(`/dashboard/commissions`)}
+            size="sm"
+            variant="soft"
+            color="success"
+          >
+            Dismiss
+          </Button>
+        }
+      >
+        Successfully You have Posted an Errand!
+      </Snackbar>
+      <LoadingBackdrop
+        open={loading}
+        text="Loading... Please wait while Posting Your Errand"
+        icons={<HourglassBottomIcon />}
+      />
+
       <div className="errand-cont">
         <div className="input-cont">
           <div className="errand-inputs">
