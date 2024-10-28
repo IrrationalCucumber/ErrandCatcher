@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import "./profile.css";
 import StarRating from "../Display/StarRating";
 import { Link } from "react-router-dom";
-import { Button, Input } from "@mui/joy";
+import { Button, Input, Sheet, Typography } from "@mui/joy";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
-import DeleteIcon from '@mui/icons-material/Delete';
-import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import { Capitalize, DisplayDate } from "../Display/DsiplayFunctions";
 
 function UserProfile(props) {
   const [preview, setPreview] = useState(null);
@@ -55,10 +56,7 @@ function UserProfile(props) {
                   transition: "background-color 0.3s ease",
                 }}
               >
-                <DeleteIcon
-                  sx={{ fontSize: 30 }}
-                  color="error"
-                />
+                <DeleteIcon sx={{ fontSize: 30 }} color="error" />
               </button>
             </>
           ) : (
@@ -82,7 +80,8 @@ function UserProfile(props) {
               onChange={handleImage}
               style={{ display: "none" }}
             />
-            <label htmlFor="file"
+            <label
+              htmlFor="file"
               style={{
                 // border: "1px dashed black",
                 border: "none",
@@ -93,8 +92,9 @@ function UserProfile(props) {
                 maxWidth: "18rem",
                 display: "flex",
                 alignContent: "center",
-                justifyContent: "center"
-              }}>
+                justifyContent: "center",
+              }}
+            >
               <AddAPhotoIcon color="primary" />
               Choose Image File
             </label>
@@ -115,7 +115,9 @@ function UserProfile(props) {
             <input
               type="text"
               // className="profile__info__left"
-              className={`profile__info__left ${props.validationErrors.address ? "error" : ""}`}
+              className={`profile__info__left ${
+                props.validationErrors.address ? "error" : ""
+              }`}
               placeholder="Address"
               name="address"
               value={props.address}
@@ -126,7 +128,9 @@ function UserProfile(props) {
             <input
               type="email"
               // className="profile__info__left"
-              className={`profile__info__left ${props.validationErrors.email ? "error" : ""}`}
+              className={`profile__info__left ${
+                props.validationErrors.email ? "error" : ""
+              }`}
               placeholder="Email Address"
               name="email"
               value={props.email}
@@ -137,7 +141,9 @@ function UserProfile(props) {
             <input
               type="number"
               // className="profile__info__left"
-              className={`profile__info__left ${props.validationErrors.contact ? "error" : ""}`}
+              className={`profile__info__left ${
+                props.validationErrors.contact ? "error" : ""
+              }`}
               placeholder="Contact Number"
               name="contact"
               value={props.cnum}
@@ -222,7 +228,9 @@ function UserProfile(props) {
           <label htmlFor="sex">Gender :</label>
           <select
             // className="display-data1"
-            className={`display-data1 ${props.validationErrors.gender ? "error" : ""}`}
+            className={`display-data1 ${
+              props.validationErrors.gender ? "error" : ""
+            }`}
             value={props.sex}
             onChange={props.handleChange}
             name="gender"
@@ -249,7 +257,9 @@ function UserProfile(props) {
           ></input>
           <input
             type="date"
-            className={`display-data1 ${props.validationErrors.bday ? "error" : ""}`}
+            className={`display-data1 ${
+              props.validationErrors.bday ? "error" : ""
+            }`}
             name="bday"
             // className="display-data1"
             value={props.bday}
@@ -276,3 +286,158 @@ function UserProfile(props) {
 }
 
 export default UserProfile;
+
+/**
+ * VIEW USER PROFILE
+ * ADREAN 10/25/2024
+ */
+export function ViewUserProfile(props) {
+  return (
+    <>
+      <div className="profile-page-container">
+        {/* Left Profile Section */}
+        <div className="profile-left">
+          {/* If no preview, show existing profile image or default */}
+          <>
+            {props.profileImg ? (
+              <img
+                src={`http://localhost:8800/images/profile/${props.profileImg}`}
+                alt="ProfPic"
+              />
+            ) : (
+              <img src="/images/employer.png" alt="Profile Picture" />
+            )}
+          </>
+
+          <div className="info">
+            {/* {props.address} */}
+
+            <Typography
+              className="profile__info__left"
+              color="neutral"
+              level="h4"
+              variant="plain"
+              sx={{ p: 1 }}
+            >
+              {props.address}
+            </Typography>
+            {/* {props.email} */}
+            <Typography
+              className="profile__info__left"
+              color="neutral"
+              level="h4"
+              variant="plain"
+              sx={{ p: 1 }}
+            >
+              {props.email}
+            </Typography>
+            {/* {props.cnum} */}
+
+            <Typography
+              color="neutral"
+              level="h4"
+              variant="plain"
+              sx={{ p: 1 }}
+            >
+              {props.cnum}
+            </Typography>
+
+            <br />
+          </div>
+          <br />
+          <textarea
+            className="description"
+            placeholder="Description"
+            name="desc"
+            value={props.desc}
+            disabled
+          ></textarea>
+
+          <div className="rating">
+            Overall Rating:
+            <span>
+              <StarRating rating={props.rate} />
+              <p>
+                <i>{props.rate}</i>
+              </p>
+            </span>
+          </div>
+        </div>
+
+        {/* Right Profile Section */}
+        <div className="profile-right">
+          {props.status === "Verified" ? (
+            <>
+              <div className="verified">{props.status.toLocaleUpperCase()}</div>
+            </>
+          ) : (
+            <div className="unverified">{props.status.toLocaleUpperCase()}</div>
+          )}
+          <Sheet sx={{ pt: 2, pb: 1, pr: 0, pl: 0 }}>
+            <Typography
+              color="neutral"
+              level="title-lg"
+              variant="plain"
+              sx={{ p: 0.5 }}
+            >
+              Username :
+            </Typography>
+            <Typography color="neutral" level="h3" variant="outlined">
+              {props.username}
+            </Typography>
+          </Sheet>
+
+          <Sheet sx={{ pt: 2, pb: 1, pr: 0, pl: 0 }}>
+            <Typography color="neutral" level="title-lg" variant="plain">
+              Firt Name :
+            </Typography>
+            <Typography color="neutral" level="h3" variant="outlined">
+              {Capitalize(props.fname)}
+            </Typography>
+          </Sheet>
+
+          <Sheet sx={{ pt: 2, pb: 1, pr: 0, pl: 0 }}>
+            <Typography color="neutral" level="title-lg" variant="plain">
+              Last Name :
+            </Typography>
+            <Typography color="neutral" level="h3" variant="outlined">
+              {Capitalize(props.lname)}
+            </Typography>
+          </Sheet>
+
+          <Sheet sx={{ pt: 2, pb: 1, pr: 0, pl: 0 }}>
+            <Typography color="neutral" level="title-lg" variant="plain">
+              Gender :
+            </Typography>
+            <Typography color="neutral" level="h3" variant="outlined">
+              {Capitalize(props.sex)}
+            </Typography>
+          </Sheet>
+
+          <Sheet sx={{ pt: 2, pb: 1, pr: 0, pl: 0 }}>
+            <Typography color="neutral" level="title-lg" variant="plain">
+              Birthdate :
+            </Typography>
+            <Typography color="neutral" level="h3" variant="outlined">
+              {DisplayDate(props.bday)}
+            </Typography>
+          </Sheet>
+
+          <Sheet sx={{ pt: 2, pb: 1, pr: 0, pl: 0 }}>
+            <Typography
+              color="neutral"
+              level="title-lg"
+              variant="plain"
+              sx={{ p: 0.5 }}
+            >
+              Age :
+            </Typography>
+            <Typography color="neutral" level="h3" variant="outlined">
+              {props.age}
+            </Typography>
+          </Sheet>
+        </div>
+      </div>
+    </>
+  );
+}
