@@ -9,8 +9,7 @@ const History = () => {
   const { user } = useAuth();
   const userID = user.userID;
   const [transactions, setTransactions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+
 
   // tesing data
   const sampletran = [
@@ -59,26 +58,42 @@ const History = () => {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8800/transactions/${userID}`
-        );
+        // const response = await axios.get(
+        //   `http://localhost:8800/transactions/${userID}`
+        // );
+        // setTransactions(response.data);
+        // setLoading(false);
+
+        // choose if the user is Employer otherwise Catcher
+        const endpoint =
+          user.userType === "Employer"
+            ? `http://localhost:8800/transactionsEmp/${userID}`
+            : `http://localhost:8800/transactionsCat/${userID}`;
+
+        const response = await axios.get(endpoint);
         setTransactions(response.data);
-        setLoading(false);
+
       } catch (err) {
         console.log("Error fetching transactions:", err);
-        setError(err);
-        setLoading(false);
+
+
       }
     };
     fetchTransactions();
-  }, [userID]);
+  }, [userID, user.userType]);
 
   return (
     <>
       {/* <Navbar /> */}
       <NavbarPage />
       <div className="history-container">
-        <h1>Transaction History</h1>
+        <h1 style={{
+          color: "rgb(22, 121, 171",
+          fontWeight: "700",
+          fontSize: "2.30rem",
+        }}>
+          Transaction History
+        </h1>
 
         {/* apply testing data */}
         {/* {sampletran.length > 0 ? (
@@ -88,7 +103,19 @@ const History = () => {
         {transactions.length > 0 ? (
           transactions.map((transaction, index) => {
 
+            // convert to centavo
+            const amountInCents = (transaction.total / 100).toFixed(2);
+
+            // convert to peso php
+            const priceInPHP = new Intl.NumberFormat('en-PH',
+              {
+                style: 'currency',
+                currency: 'PHP'
+              }
+            ).format(amountInCents);
+
             const paidDate = new Date(transaction.paid).toLocaleString();
+
             return (
               <div className="transaction-card" key={index}>
                 <div className="transaction-details">
@@ -102,7 +129,7 @@ const History = () => {
                     <strong>Date Paid:</strong> {paidDate}
                   </p>
                   <p>
-                    <strong>Total Price:</strong> ${transaction.total}
+                    <strong>Total Price:</strong> {priceInPHP}
                   </p>
                   <p>
                     <strong>Type:</strong> {transaction.type}
