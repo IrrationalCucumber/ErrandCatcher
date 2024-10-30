@@ -33,12 +33,63 @@ function Ongoing() {
     };
     fetchAllCommission();
   }, []);
+  /**
+   * FILTER FUNCTION
+   */
+  const [searchTerm, setSearchTerm] = useState({
+    term: "",
+    type: "",
+    status: "",
+  });
+  //filter
+  const filterErrands = commissions.filter((commission) => {
+    const type = commission.commissionType
+      .toLowerCase()
+      .includes(searchTerm.type.toLowerCase());
+    const termMatch = commission.commissionTitle
+      .toLowerCase()
+      .includes(searchTerm.term.toLowerCase());
+    const status = commission.commissionStatus.includes(searchTerm.status);
+
+    return type && termMatch && status;
+  });
+  const handleChange = (e) => {
+    // For other fields, use spread syntax as before
+    setSearchTerm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
   return (
     <div className="concards">
       {/* No user ID */}
       <BannerOngoingSection username={user.username} />
-      <OngoingCards commissions={commissions} to={`/view-errand/${userID}`} />
+      <div className="search-filter">
+        <div className="search">
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchTerm.term}
+            name="term"
+            onChange={handleChange}
+          />
+          <button type="submit">
+            <i className="fa fa-search"></i>
+          </button>
+        </div>
+        <div className="filter">
+          <select
+            onChange={handleChange}
+            name="status"
+            value={searchTerm.status}
+          >
+            <option value="">All Status</option>
+            <option value="Taken">Pending</option>
+            <option value="Completed">Completed</option>
+            <option value="Cancelled">Cancelled</option>
+            <option value="Ongoing">Ongoing</option>
+          </select>
+        </div>
+      </div>
+      <OngoingCards commissions={filterErrands} to={`/view-errand/${userID}`} />
     </div>
   );
 }
