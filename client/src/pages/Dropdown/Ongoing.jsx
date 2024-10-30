@@ -41,7 +41,7 @@ function Ongoing() {
     type: "",
     status: "",
   });
-  //filter
+  //apply filter
   const filterErrands = commissions.filter((commission) => {
     const type = commission.commissionType
       .toLowerCase()
@@ -53,9 +53,15 @@ function Ongoing() {
 
     return type && termMatch && status;
   });
+  //update filter variables based on user inputs
   const handleChange = (e) => {
-    // For other fields, use spread syntax as before
-    setSearchTerm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    if (e.target.name === "status") {
+      setSearchTerm((prev) => ({ ...prev, status: e.target.value }));
+    } else if (e.target.name === "type") {
+      setSearchTerm((prev) => ({ ...prev, type: e.target.value }));
+    } else {
+      setSearchTerm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    }
   };
 
   return (
