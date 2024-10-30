@@ -6,7 +6,11 @@ import { Button, Input, Sheet, Typography } from "@mui/joy";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
-import { Capitalize, DisplayDate } from "../Display/DsiplayFunctions";
+import {
+  Capitalize,
+  DisplayDate,
+  GetUserAge,
+} from "../Display/DsiplayFunctions";
 
 function UserProfile(props) {
   const [preview, setPreview] = useState(null);
@@ -245,15 +249,12 @@ function UserProfile(props) {
           <label htmlFor="age">Age :</label>
           <input
             type="number"
-            className={props.validationErrors.age ? "error" : ""}
+            //className={props.validationErrors.age ? "error" : ""}
             name="age"
-            // className="display-data1"
+            className="display-data1"
             placeholder="Age"
-            value={props.age}
-            onChange={props.handleChange}
-            min={18}
-            max={99}
-            disabled={!props.isEditing}
+            value={GetUserAge(props.bday)}
+            disabled={true}
           ></input>
           <input
             type="date"
@@ -433,7 +434,7 @@ export function ViewUserProfile(props) {
               Age :
             </Typography>
             <Typography color="neutral" level="h3" variant="outlined">
-              {props.age}
+              {GetUserAge(props.bday)}
             </Typography>
           </Sheet>
         </div>
