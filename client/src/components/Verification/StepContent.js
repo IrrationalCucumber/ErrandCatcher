@@ -16,7 +16,7 @@ import { useAuth } from "../AuthContext";
 import axios from "axios";
 import "./css/style.css";
 import { useNavigate } from "react-router-dom";
-import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import LoadingBackdrop from "../LoadingSpinner";
 
 export default function StepContent() {
@@ -33,14 +33,13 @@ export function Step1({ onNext, details, setDetail }) {
     e.preventDefault();
     console.log(details);
     if (
-      details.firstName === "" ||
-      details.lastName === "" ||
+      details.fname === "" ||
+      details.lname === "" ||
       details.email == "" ||
       details.address == "" ||
-      details.sex == "" ||
-      details.age === "" ||
-      details.date === "" ||
-      details.cnum == ""
+      details.gender == "" ||
+      details.bday === "" ||
+      details.contact == ""
     ) {
       console.log("Fields are empty bruh");
       setAlertOpen(true);
@@ -58,14 +57,13 @@ export function Step1({ onNext, details, setDetail }) {
         const d = res.data[0];
 
         setDetail({
-          firstName: d.userFirstname,
-          lastName: d.userLastname,
-          age: d.userAge,
-          date: new Date(d.userBirthday).toISOString().substr(0, 10),
-          sex: d.userGender,
+          fname: d.userFirstname,
+          lname: d.userLastname,
+          bday: new Date(d.userBirthday).toISOString().substr(0, 10),
+          gender: d.userGender,
           address: d.userAddress,
           email: d.userEmail,
-          cnum: d.userContactNum,
+          contact: d.userContactNum,
         });
       } catch (error) {
         console.log(error);
@@ -79,8 +77,8 @@ export function Step1({ onNext, details, setDetail }) {
 
   const handleChange = (e) => {
     // For the 'gender' field, directly set the value without using spread syntax
-    if (e.target.name === "sex") {
-      setDetail((prev) => ({ ...prev, sex: e.target.value }));
+    if (e.target.name === "gender") {
+      setDetail((prev) => ({ ...prev, gender: e.target.value }));
     } else {
       // For other fields, use spread syntax as before
       setDetail((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -95,14 +93,10 @@ export function Step1({ onNext, details, setDetail }) {
     const day = today.getDate();
 
     // Format the date as yyyy-mm-dd
-    return `${year}-${month < 10 ? "0" + month : month}-${day < 10 ? "0" + day : day
-      }`;
+    return `${year}-${month < 10 ? "0" + month : month}-${
+      day < 10 ? "0" + day : day
+    }`;
   };
-
-  // debug lng
-  // const sample =  details.firstName;
-  // let detail = { firstName: "", lastName: ""};
-  // let { firstName, lastName } = detail
 
   return (
     <div className="step">
@@ -115,18 +109,18 @@ export function Step1({ onNext, details, setDetail }) {
             <input
               type="text"
               placeholder="First name"
-              name="firstName"
-              value={details.firstName}
+              name="fname"
+              value={details.fname}
               onChange={handleChange}
-            // required
+              // required
             ></input>
             <input
               type="text"
               placeholder="Last name"
-              value={details.lastName}
-              name="lastName"
+              value={details.lname}
+              name="lname"
               onChange={handleChange}
-            // required
+              // required
             ></input>
           </div>
 
@@ -138,26 +132,16 @@ export function Step1({ onNext, details, setDetail }) {
               name="email"
               placeholder="Enter your Email Address"
               onChange={handleChange}
-            // required
+              // required
             ></input>
           </div>
 
           <div className="input-rows">
-            <label className="label">Age</label>
-            <input
-              type="number"
-              value={details.age}
-              name="age"
-              onChange={handleChange}
-              placeholder=""
-            // required
-            ></input>
-
             <label className="label">Gender</label>
             <select
               className="select"
-              value={details.sex}
-              name="sex"
+              value={details.gender}
+              name="gender"
               onChange={handleChange}
             >
               <option value=""></option>
@@ -170,8 +154,8 @@ export function Step1({ onNext, details, setDetail }) {
             <label className="label">Birthdate</label>
             <input
               type="date"
-              value={details.date}
-              name="date"
+              value={details.bday}
+              name="bday"
               onChange={handleChange}
               max={getMaxDate()}
             ></input>
@@ -185,18 +169,18 @@ export function Step1({ onNext, details, setDetail }) {
               name="address"
               value={details.address}
               onChange={handleChange}
-            // required
+              // required
             ></input>
           </div>
           <div className="input-rows">
             <label className="label">Contact Number</label>
             <input
               type="number"
-              value={details.cnum}
-              name="cnum"
+              value={details.contact}
+              name="contact"
               placeholder="Enter your Contact Number"
               onChange={handleChange}
-            // required
+              // required
             ></input>
           </div>
           <div className="step__button">
@@ -386,10 +370,12 @@ export function Step2({ images, setImages, onNext, onPrev }) {
                   display: "none",
                 }}
               />
-              <label htmlFor="fileInput1" className="step__img__input">
-                <Image />
-                Choose Image File
-              </label>
+              {!images.preview1 ? (
+                <label htmlFor="fileInput1" className="step__img__input">
+                  <Image />
+                  Choose Image File
+                </label>
+              ) : null}
 
               {images.preview1 && (
                 <div className="image-preview">
@@ -420,10 +406,13 @@ export function Step2({ images, setImages, onNext, onPrev }) {
                   display: "none",
                 }}
               />
-              <label htmlFor="fileInput2" className="step__img__input">
-                <Image />
-                Choose Image File
-              </label>
+              {!images.preview2 ? (
+                <label htmlFor="fileInput2" className="step__img__input">
+                  <Image />
+                  Choose Image File
+                </label>
+              ) : null}
+
               {images.preview2 && (
                 <div className="image-preview">
                   <img
@@ -568,7 +557,6 @@ export function Step3({ details, images, onPrev, onNext }) {
         setLoading(false);
 
         onNext();
-
       }, 5000);
 
       // onNext();
@@ -585,8 +573,7 @@ export function Step3({ details, images, onPrev, onNext }) {
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
       //update accound data
-      await axios.put("http://localhost:8800/update/" + userID, details);
-
+      await axios.put("http://localhost:8800/update-info/" + userID, details);
     } catch (error) {
       console.log(error);
     }
@@ -595,12 +582,12 @@ export function Step3({ details, images, onPrev, onNext }) {
     <div className="step">
       <form className="form-container">
         <h2>Step 3</h2>
-        <p>First Name: {details.firstName}</p>
-        <p>Last Name: {details.lastName}</p>
+        <p>First Name: {details.fname}</p>
+        <p>Last Name: {details.lname}</p>
         <p>Age: {details.age}</p>
-        <p>Birthday: {details.date}</p>
+        <p>Birthday: {details.bday}</p>
         <p>Email: {details.email}</p>
-        <p>Contact #: {details.cnum}</p>
+        <p>Contact #: {details.contact}</p>
         {images.preview1 && (
           <img
             src={images.preview1}
@@ -708,6 +695,7 @@ export function Step3({ details, images, onPrev, onNext }) {
 //Success
 export function Step4() {
   const [showSuccess, setShowSuccess] = useState(true);
+  const navigate = useNavigate();
   return (
     <div className="step">
       <form className="form-container">
@@ -756,7 +744,7 @@ export function Step4() {
               borderRadius: "5px",
               fontSize: "13px",
             }}
-            onClick={useNavigate("/profile/me")}
+            onClick={() => navigate("/profile/me")}
           >
             Profile
           </Button>
