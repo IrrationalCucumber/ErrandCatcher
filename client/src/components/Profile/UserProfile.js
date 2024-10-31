@@ -184,14 +184,26 @@ function UserProfile(props) {
               <div className="verified">{props.status.toLocaleUpperCase()}</div>
             </>
           ) : (
-            <Link
-              to={`/profile/verification`}
-              style={{ textDecoration: "none" }}
-            >
-              <div className="unverified">
-                {props.status.toLocaleUpperCase()}
-              </div>
-            </Link>
+            <>
+              {props.requestStatus === "Pending" ? (
+                <>
+                  <div className="pending">
+                    <i>{props.requestStatus.toLocaleUpperCase()}</i>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to={`/profile/verification`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <div className="unverified">
+                      {props.status.toLocaleUpperCase()}
+                    </div>
+                  </Link>
+                </>
+              )}
+            </>
           )}
           <label htmlFor="username">Username :</label>
           <input
