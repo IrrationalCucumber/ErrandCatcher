@@ -51,12 +51,20 @@ const Profile = () => {
         const res = await axios.get(
           `http://localhost:8800/ver-details/${userID}`
         );
+        setDocs({
+          requestStatus: res.data[0].requestStatus,
+          frontID: res.data[0].id_picture_front,
+          backID: res.data[0].id_picture_back,
+          doc1: res.data[0].docu_1,
+          doc2: res.data[0].docu_2,
+        });
       } catch (error) {
         console.log(error);
       }
     };
     fetchDetails();
   }, [userID]);
+
   const [isEditing, setIsEditing] = useState(false);
   const [tempAccount, setTempAccount] = useState(account); // Store temporary edits
 
