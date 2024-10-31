@@ -5,6 +5,7 @@ const Verify = {
     db.query(
       `SELECT v.*, ua.* FROM verification_request v
       JOIN useraccount ua ON v.requestUserID = ua.userID
+      ORDER BY v.requestID DESC
      `,
       callback
     );
@@ -41,6 +42,15 @@ const Verify = {
     db.query(
       `SELECT count(*) as c FROM verification_request
         WHERE requestStatus = 'Pending'`,
+      callback
+    );
+  },
+  //get data of requestUser
+  getRequestByUserID: (userID, callback) => {
+    db.query(
+      `SELECT * from verification_request
+        WHERE requestUserID = ?`,
+      [userID],
       callback
     );
   },
