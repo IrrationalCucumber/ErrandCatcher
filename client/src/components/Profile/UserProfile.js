@@ -215,10 +215,10 @@ function UserProfile(props) {
             </>
           ) : (
             <>
-              {props.requestStatus === "Pending" ? (
+              {props.verStatus === "Pending" ? (
                 <>
                   <div className="pending">
-                    <i>{props.requestStatus.toLocaleUpperCase()}</i>
+                    <i>{props.verStatus.toLocaleUpperCase()}</i>
                   </div>
                 </>
               ) : (
