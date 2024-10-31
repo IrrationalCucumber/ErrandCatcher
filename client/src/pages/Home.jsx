@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar/Navbar";
 import EmployerCard from "../components/Employer Cards/EmployerCards";
-import StickyButton from "../components/Sticky Button/StickyButton";
-import Cards from "../components/Cards/Cards";
 import Menu from "./Menu";
-import axios from "axios";
 import { useAuth } from "../components/AuthContext";
 import {
   BannerEmployerPostErrand,
@@ -17,6 +13,7 @@ import { HomeMap } from "../components/Map/Map";
 import { Sheet } from "@mui/joy";
 import { MyFeedback, MyPostedFeedback } from "../components/Dashbaord/Feedback";
 import TopCatcher from "../components/Carousel/TopCatcher";
+import CardsNew from "../components/Cards/CardsNew";
 
 const Home = () => {
   const { user } = useAuth();
@@ -49,7 +46,8 @@ const Home = () => {
               buttonText="Post Errand"
               destination={`/errand/post-commission`}
             /> */}
-            <Cards />
+            {/* <Cards /> */}
+            <CardsNew />
             <Sheet
               color="primary"
               sx={{
