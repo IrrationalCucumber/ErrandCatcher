@@ -18,6 +18,7 @@ import "./css/style.css";
 import { useNavigate } from "react-router-dom";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import LoadingBackdrop from "../LoadingSpinner";
+import { Capitalize } from "../Display/DsiplayFunctions";
 
 export default function StepContent() {
   return <div>StepContent</div>;
@@ -538,7 +539,13 @@ export function Step3({ details, images, onPrev, onNext }) {
   const handleOpenModal = () => {
     setOpen(true);
   };
-
+  //FOR NOTIFICATION
+  //set variables for notification
+  const [notif, setNotif] = useState({
+    userID: "", //this is the employer/ userID of the commission
+    notificationType: "", //notif description
+    notifDesc: "", //contents of the notif
+  });
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -574,6 +581,13 @@ export function Step3({ details, images, onPrev, onNext }) {
         .catch((err) => console.log(err));
       //update accound data
       await axios.put("http://localhost:8800/update-info/" + userID, details);
+      //add a notification to the admin
+      notif.notifDesc = `${
+        Capitalize(details.fname) + " " + Capitalize(details.lname)
+      } has submitted a Verification request`;
+      notif.userID = 1;
+      notif.notificationType = "Verification Request";
+      await axios.post("http://localhost:8800/notify", notif);
     } catch (error) {
       console.log(error);
     }
