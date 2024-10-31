@@ -151,7 +151,7 @@ function ApplicationQualificationModal(props) {
       application.qualifications = qualificationsString;
 
       console.log(application); // Check the updated commission object
-      //await axios.post("http://localhost:8800/apply", application);
+      await axios.post("http://localhost:8800/apply", application);
 
       //add a notification to the commission's employer
       // notif.notifDesc = "A Catcher has applied to on of your errand";
