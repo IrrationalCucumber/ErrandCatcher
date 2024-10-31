@@ -175,6 +175,36 @@ function UserProfile(props) {
               </span>
             </div>
           )}
+          {
+            //display sumbitted IDs of user
+            props.verFront || props.verBack ? (
+              <>
+                <img
+                  src={`http://localhost:8800/images/docu/${props.verFront}`}
+                  alt="ProfPic"
+                />
+                <img
+                  src={`http://localhost:8800/images/docu/${props.verBack}`}
+                  alt="ProfPic"
+                />
+              </>
+            ) : null
+          }
+          {
+            //display sumbitted docs/additional ids of user
+            props.doc1 || props.doc2 ? (
+              <>
+                <img
+                  src={`http://localhost:8800/images/docu/${props.doc1}`}
+                  alt="ProfPic"
+                />
+                <img
+                  src={`http://localhost:8800/images/docu/${props.doc2}`}
+                  alt="ProfPic"
+                />
+              </>
+            ) : null
+          }
         </div>
 
         {/* Right Profile Section */}
