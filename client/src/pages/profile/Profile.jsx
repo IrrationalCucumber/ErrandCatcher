@@ -368,6 +368,10 @@ const Profile = () => {
         clickCancel={handleCancel}
         //verification details
         verStatus={docs.requestStatus}
+        verFront={docs.frontID}
+        verBack={docs.backID}
+        verDoc1={docs.doc1}
+        verDoc2={docs.doc2}
       />
     </div>
   );
