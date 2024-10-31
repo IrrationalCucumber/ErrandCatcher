@@ -3,14 +3,15 @@ import "./HeroSection.css";
 import "../../App.css";
 import { Button, Sheet, Typography } from "@mui/joy";
 import { useNavigate } from "react-router-dom";
+import { Capitalize } from "../Display/DsiplayFunctions";
 
 export function HeroSection(props) {
   return (
     <div className="hero-container">
       <h1>
-        {props.type} {props.username}
+        Hi, {Capitalize(`${props.type.toLocaleLowerCase()}`)}{" "}
+        {props.username.toUpperCase()}
       </h1>
-      <p>WELCOME BACK!</p>
     </div>
   );
 }
