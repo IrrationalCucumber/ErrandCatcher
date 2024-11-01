@@ -2,9 +2,8 @@
     max-width: 300px;
     border-radius: 0.5rem;
     background-color: #fff;
-    /* box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    border: 1px solid transparent; */
-
+    /* box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); */
+    /* border: 1px solid transparent; */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -27,11 +26,16 @@
 }
 
 .card a {
-    text-decoration: none
+    text-decoration: none;
 }
 
 .contentcard {
     padding: 1.1rem;
+    flex-basis: content;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .iconcard {
@@ -53,12 +57,35 @@
     color: #6B7280;
     /* font-size: 0.875rem; */
     font-size: 1.045rem;
-    /* line-height: 1.25rem; */
+    line-height: 1.25rem;
+    flex-grow: 1;
+}
+
+.desc > h7 {
+    font-weight: 800;
+    font-size: 1.35rem;
+    line-height: 1.90rem;
+    /* color: #111827; */
+    color: #0073aa;
+}
+
+.desc ul {
+    padding-left: 20px;
+    color: #6B7280;
+    margin-top: 8px;
+    list-style-type: disc;
+}
+
+.desc li {
+    margin-bottom: 8px;
+    color: #6B7280;
+    padding-left: 5px;
+    font-size: 1.010rem;
 }
 
 .action {
     display: inline-flex;
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
     color: #ffffff;
     font-size: 0.875rem;
     line-height: 1.25rem;
@@ -69,6 +96,7 @@
     background-color: #0073aa;
     padding: 4px 8px;
     border-radius: 4px;
+    align-self: flex-end;
 }
 
 .action span {
