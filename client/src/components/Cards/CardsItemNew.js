@@ -1,3 +1,8 @@
+/**
+ * WRITTEN BY: META AI FT MONDE
+ * 1/11/24
+ * Component display preview Cards items
+ */
 import React from "react";
 import { Link } from "react-router-dom";
 import OtherHousesIcon from '@mui/icons-material/OtherHouses';
@@ -13,20 +18,42 @@ function CardItemNew(props) {
             <div class="card">
                 <div class="iconcard">
                     <Box class="boxer">
-                        {props.items}
+                        {props.icon === "HomeService - Indoor" ||
+                            props.icon === "HomeService - Outdoor" ?
+                            (
+                                <OtherHousesIcon
+                                    sx={{ color: '#fff', fontSize: 100 }}
+                                />
+                            ) : props.icon === "Transportation" ? (
+                                <LocalShippingIcon
+                                    sx={{ color: '#fff', fontSize: 100 }}
+                                />
+                            ) : props.icon === "Delivery" ? (
+                                <DirectionsCarIcon
+                                    sx={{ color: '#fff', fontSize: 100 }}
+                                />
+                            ) : null}
                     </Box>
                 </div>
                 <div class="contentcard">
-                    <a href="#">
-                        <span class="title">
-                            {props.title}
-                        </span>
-                    </a>
+
+                    <span class="title">
+                        {props.title}
+                    </span>
 
                     <p class="desc">
                         {/* props.desc */}
                         {props.type}
 
+                    </p>
+
+                    <p class="desc">
+                        {/* props.desc */}
+                        <h7>Description: </h7>
+                        <ul>
+                            <li>{props.desc}</li>
+                            <li>₱{props.price}</li>
+                        </ul>
                     </p>
 
                     <p class="desc">
