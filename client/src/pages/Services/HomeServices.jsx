@@ -7,6 +7,7 @@ import HomeWorkIcon from "@mui/icons-material/HomeWork";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SyncAltIcon from "@mui/icons-material/SyncAlt";
 import HomeWork from "@mui/icons-material/HomeWork";
+import CatCardsNew from "../../components/Cards/CatCardsNew";
 
 const HomeServices = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -171,7 +172,8 @@ const HomeServices = () => {
         </div>
       </div>
 
-      <CatCards commissions={filteredCommissions} />
+      {/* <CatCards commissions={filteredCommissions} /> */}
+      <CatCardsNew commissions={filteredCommissions} />
     </>
   );
 };
