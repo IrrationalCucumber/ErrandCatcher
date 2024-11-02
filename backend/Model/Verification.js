@@ -45,6 +45,15 @@ const Verify = {
       callback
     );
   },
+  //update user data during verification
+  putUpdateUserById: (id, userData, callback) => {
+    const { fname, lname, gender, email, contact, bday, address } = userData;
+    db.query(
+      `UPDATE useraccount
+      SET  userLastname = ?, userFirstname = ?, userGender =?, userEmail = ?,
+      userContactNum =?, userBirthday = ?, userAddress = ?
+    WHERE userID = ?`,
+      [lname, fname, gender, email, contact, bday, address, id], callback); },
   //get data of requestUser
   getRequestByUserID: (userID, callback) => {
     db.query(
