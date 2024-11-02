@@ -8,6 +8,7 @@ import Search from "@mui/icons-material/Search";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SyncAltIcon from "@mui/icons-material/SyncAlt";
+import CatCardsNew from "../../components/Cards/CatCardsNew";
 
 const Delivery = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -166,7 +167,8 @@ const Delivery = () => {
         </div>
       </div>
 
-      <CatCards commissions={filteredCommissions} />
+      {/* <CatCards commissions={filteredCommissions} /> */}
+      <CatCardsNew commissions={filteredCommissions} />
     </>
   );
 };
