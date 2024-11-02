@@ -99,6 +99,18 @@ const verifyController = {
       res.json(data);
     });
   },
+  //return verification request doucuments of user
+  getRequestOfUser: (req, res) => {
+    const id = req.params.id;
+    Verify.getRequestByUserID(id, (err, data) => {
+      if (err) {
+        console.log("Error fetching data:", err);
+        res.status(500).send("Error");
+        return;
+      }
+      res.json(data);
+    });
+  },
 };
 
 module.exports = verifyController;

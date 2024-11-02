@@ -175,6 +175,36 @@ function UserProfile(props) {
               </span>
             </div>
           )}
+          {
+            //display sumbitted IDs of user
+            props.verFront || props.verBack ? (
+              <>
+                <img
+                  src={`http://localhost:8800/images/docu/${props.verFront}`}
+                  alt="ProfPic"
+                />
+                <img
+                  src={`http://localhost:8800/images/docu/${props.verBack}`}
+                  alt="ProfPic"
+                />
+              </>
+            ) : null
+          }
+          {
+            //display sumbitted docs/additional ids of user
+            props.doc1 || props.doc2 ? (
+              <>
+                <img
+                  src={`http://localhost:8800/images/docu/${props.doc1}`}
+                  alt="ProfPic"
+                />
+                <img
+                  src={`http://localhost:8800/images/docu/${props.doc2}`}
+                  alt="ProfPic"
+                />
+              </>
+            ) : null
+          }
         </div>
 
         {/* Right Profile Section */}
@@ -184,14 +214,26 @@ function UserProfile(props) {
               <div className="verified">{props.status.toLocaleUpperCase()}</div>
             </>
           ) : (
-            <Link
-              to={`/profile/verification`}
-              style={{ textDecoration: "none" }}
-            >
-              <div className="unverified">
-                {props.status.toLocaleUpperCase()}
-              </div>
-            </Link>
+            <>
+              {props.verStatus === "Pending" ? (
+                <>
+                  <div className="pending">
+                    <i>{props.verStatus.toLocaleUpperCase()}</i>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to={`/profile/verification`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <div className="unverified">
+                      {props.status.toLocaleUpperCase()}
+                    </div>
+                  </Link>
+                </>
+              )}
+            </>
           )}
           <label htmlFor="username">Username :</label>
           <input
@@ -363,6 +405,39 @@ export function ViewUserProfile(props) {
               </p>
             </span>
           </div>
+          {/* 
+            CHANGE TO PROPERLY DISPLAY IDs
+          */}
+          {
+            //display sumbitted IDs of user
+            props.verFront || props.verBack ? (
+              <>
+                <img
+                  src={`http://localhost:8800/images/docu/${props.verFront}`}
+                  alt="ProfPic"
+                />
+                <img
+                  src={`http://localhost:8800/images/docu/${props.verBack}`}
+                  alt="ProfPic"
+                />
+              </>
+            ) : null
+          }
+          {
+            //display sumbitted docs/additional ids of user
+            props.doc1 || props.doc2 ? (
+              <>
+                <img
+                  src={`http://localhost:8800/images/docu/${props.doc1}`}
+                  alt="ProfPic"
+                />
+                <img
+                  src={`http://localhost:8800/images/docu/${props.doc2}`}
+                  alt="ProfPic"
+                />
+              </>
+            ) : null
+          }
         </div>
 
         {/* Right Profile Section */}
