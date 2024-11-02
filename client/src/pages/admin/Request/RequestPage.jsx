@@ -77,14 +77,14 @@ function RequestPage() {
 
   const filterAccounts = requests.filter((request) => {
     const type = request.accountType
-      .toLowerCase()
-      .includes(searchTerm.type.toLowerCase());
+      ?.toLowerCase()
+      .includes(searchTerm.type.toLowerCase() ?? "");
     const termMatch = request.username
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
+      ?.toLowerCase()
+      .includes(searchTerm.term.toLowerCase() ?? "");
     const termMatch2 = request.userEmail
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
+      ?.toLowerCase()
+      .includes(searchTerm.term.toLowerCase() ?? "");
     const status = request.requestStatus.includes(searchTerm.status);
 
     return type && (termMatch || termMatch2) && status;

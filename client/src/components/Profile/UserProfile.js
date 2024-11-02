@@ -362,7 +362,9 @@ export function ViewUserProfile(props) {
               variant="plain"
               sx={{ p: 1 }}
             >
-              {props.address}
+              {props.address ? (`${props.address}`) :
+                <i style={{ color: "red" }}>No Address</i>}
+
             </Typography>
             {/* {props.email} */}
             <Typography
@@ -372,7 +374,8 @@ export function ViewUserProfile(props) {
               variant="plain"
               sx={{ p: 1 }}
             >
-              {props.email}
+              {props.email ? (`${props.email}`) :
+                <i style={{ color: "red" }}>No Email</i>}
             </Typography>
             {/* {props.cnum} */}
 
@@ -382,7 +385,8 @@ export function ViewUserProfile(props) {
               variant="plain"
               sx={{ p: 1 }}
             >
-              {props.cnum}
+              {props.cnum ? (`${props.cnum}`) :
+                <i style={{ color: "red" }}>No Contact Number</i>}
             </Typography>
 
             <br />
@@ -459,7 +463,8 @@ export function ViewUserProfile(props) {
               Username :
             </Typography>
             <Typography color="neutral" level="h3" variant="outlined">
-              {props.username}
+              {props.username ? (`${props.username}`) :
+                <i style={{ color: "red" }}>No Username</i>}
             </Typography>
           </Sheet>
 
@@ -468,7 +473,8 @@ export function ViewUserProfile(props) {
               Firt Name :
             </Typography>
             <Typography color="neutral" level="h3" variant="outlined">
-              {Capitalize(props.fname)}
+              {props.fname ? (`${Capitalize(props.fname)}`) :
+                <i style={{ color: "red" }}>No First name</i>}
             </Typography>
           </Sheet>
 
@@ -477,7 +483,8 @@ export function ViewUserProfile(props) {
               Last Name :
             </Typography>
             <Typography color="neutral" level="h3" variant="outlined">
-              {Capitalize(props.lname)}
+              {props.lname ? (`${Capitalize(props.lname)}`) :
+                <i style={{ color: "red" }}>No last name</i>}
             </Typography>
           </Sheet>
 
@@ -486,7 +493,8 @@ export function ViewUserProfile(props) {
               Gender :
             </Typography>
             <Typography color="neutral" level="h3" variant="outlined">
-              {Capitalize(props.sex)}
+              {props.sex ? (`${Capitalize(props.sex)}`) :
+                <i style={{ color: "red" }}>No Gender</i>}
             </Typography>
           </Sheet>
 
@@ -495,7 +503,8 @@ export function ViewUserProfile(props) {
               Birthdate :
             </Typography>
             <Typography color="neutral" level="h3" variant="outlined">
-              {DisplayDate(props.bday)}
+              {props.bday ? (`${DisplayDate(props.bday)}`) :
+                <i style={{ color: "red" }}>No Birthdate</i>}
             </Typography>
           </Sheet>
 

@@ -2,6 +2,8 @@ import React from "react";
 
 export function Capitalize(text) {
   const capitalizeThis = text;
+  if (!capitalizeThis)
+    return null;
   return capitalizeThis.charAt(0).toUpperCase() + capitalizeThis.slice(1);
 }
 
