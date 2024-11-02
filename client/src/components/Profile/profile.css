@@ -222,6 +222,17 @@ select .display-data1 .error {
     font-size: 20px;
 }
 
+.pending {
+    background-color: none;
+    color: rgb(169, 238, 9);
+    padding: 15px;
+    border: rgb(169, 238, 9) 2px solid;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 20px;
+}
+
 .profile-right .buttons button:last-child {
     margin-left: 25px;
 }

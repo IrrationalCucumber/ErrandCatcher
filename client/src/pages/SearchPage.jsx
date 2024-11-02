@@ -6,6 +6,7 @@ import Navbar from "../components/Navbar/NavBarPage";
 import { useAuth } from "../components/AuthContext";
 import Search from "@mui/icons-material/Search";
 import LocationOn from "@mui/icons-material/LocationOn";
+import CatCardsNew from "../components/Cards/CatCardsNew";
 
 function SearchPage() {
   const [commissions, setCommissions] = useState([]);
@@ -180,7 +181,8 @@ function SearchPage() {
         </div>
       </div>
 
-      <Cards commissions={filteredCommissions} />
+      {/* <Cards commissions={filteredCommissions} /> */}
+      <CatCardsNew commissions={filteredCommissions} />
     </>
   );
 }

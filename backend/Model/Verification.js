@@ -5,6 +5,7 @@ const Verify = {
     db.query(
       `SELECT v.*, ua.* FROM verification_request v
       JOIN useraccount ua ON v.requestUserID = ua.userID
+      ORDER BY v.requestID DESC
      `,
       callback
     );
@@ -52,7 +53,13 @@ const Verify = {
       SET  userLastname = ?, userFirstname = ?, userGender =?, userEmail = ?,
       userContactNum =?, userBirthday = ?, userAddress = ?
     WHERE userID = ?`,
-      [lname, fname, gender, email, contact, bday, address, id],
+      [lname, fname, gender, email, contact, bday, address, id], callback); },
+  //get data of requestUser
+  getRequestByUserID: (userID, callback) => {
+    db.query(
+      `SELECT * from verification_request
+        WHERE requestUserID = ?`,
+      [userID],
       callback
     );
   },

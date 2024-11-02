@@ -83,6 +83,35 @@ function ViewProfile(id) {
     };
     fetchRating();
   }, [userID]);
+
+  //variables to store verification details
+  const [docs, setDocs] = useState({
+    frontID: "",
+    backID: "",
+    doc1: "",
+    doc2: "",
+    requestStatus: "",
+  });
+  //fetch details and store them
+  useEffect(() => {
+    const fetchDetails = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8800/ver-details/${userID}`
+        );
+        setDocs({
+          requestStatus: res.data[0].requestStatus,
+          frontID: res.data[0].id_picture_front,
+          backID: res.data[0].id_picture_back,
+          doc1: res.data[0].docu_1,
+          doc2: res.data[0].docu_2,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchDetails();
+  }, [userID]);
   return (
     <div>
       <ViewUserProfile
@@ -101,6 +130,12 @@ function ViewProfile(id) {
         age={account.age}
         bday={account.bday}
         status={account.status}
+        //verification details
+        verStatus={docs.requestStatus}
+        verFront={docs.frontID}
+        verBack={docs.backID}
+        verDoc1={docs.doc1}
+        verDoc2={docs.doc2}
       />
     </div>
   );
