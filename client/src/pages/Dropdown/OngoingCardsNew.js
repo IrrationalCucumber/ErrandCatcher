@@ -21,8 +21,12 @@ import {
     Typography,
 } from "@mui/joy";
 import "../../components/Cards/cardsNew.css";
+import { useAuth } from "../../components/AuthContext";
 
 function OngoingCardsNew(props) {
+
+    const { user } = useAuth();
+    const userID = user.userID;
 
     return (
         <>
@@ -94,18 +98,23 @@ function OngoingCardsNew(props) {
                         </ul>
                     </p>
 
-                    {/* <Typography
-                        className="ongoing__cards__txt"
-                        color="primary"
-                        level="title-sm"
-                    >
-                        <Link
-                            // to={`/errand/view-errand/${commission.commissionID}`}
-                            className="Oncard__link"
-                        >
-                            View Errand
-                        </Link>
-                    </Typography> */}
+                    <p class="desc">
+                        {user.userType === "Employer" && (
+                            <>
+                                <Typography
+                                    color="neutral"
+                                    level="title-lg"
+                                    variant="plain"
+                                >
+                                    CATCHER:
+                                </Typography>
+                                <Typography color="primary" level="h3" variant="soft">
+                                    {/* {commission.userFirstname} {commission.userLastname} */}
+                                    {props.userFname} {props.userLname}
+                                </Typography>
+                            </>
+                        )}
+                    </p>
 
                     <Link to={props.path}>
                         <a class="action" href="#">
