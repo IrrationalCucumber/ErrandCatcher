@@ -6,6 +6,8 @@ import axios from "axios";
 import { useAuth } from "../../components/AuthContext";
 import "./ongoing.css";
 import { BannerOngoingSection } from "../../components/Banner/HeroSection";
+import OngoingCardsNew from "./OngoingCardsNew";
+import "../../components/Cards/cardsNew.css";
 
 function Ongoing() {
   /**
@@ -168,7 +170,29 @@ function Ongoing() {
           </select>
         </div>
       </div>
-      <OngoingCards commissions={filterErrands} to={`/view-errand/${userID}`} />
+      {/* <OngoingCards commissions={filterErrands} to={`/view-errand/${userID}`} /> */}
+
+      <div className="cards__container">
+        <div className="cards__wrapper">
+          <div className="cards__items">
+            {filterErrands.map((commission) => (
+              <OngoingCardsNew
+                key={commission.commissionID}
+                icon={commission.commissionType}
+                title={commission.commissionTitle}
+                type={commission.commissionType}
+                location={commission.commissionLocation}
+                desc={commission.commissionDesc}
+                pay={commission.commissionPay}
+                status={commission.errandStatus}
+                path={`/errand/view-errand/${commission.commissionID}`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+
     </div>
   );
 }
