@@ -225,7 +225,14 @@ export function Step1({ onNext, details, setDetail }) {
 }
 //STEP 2
 // Upload Docu and ID
-export function Step2({ images, setImages, onNext, onPrev }) {
+export function Step2({
+  images,
+  setImages,
+  haveLicense,
+  setHaveLicense,
+  onNext,
+  onPrev,
+}) {
   const { user } = useAuth();
   const userID = user.userID;
   const [open, setOpen] = useState(false); // modal
@@ -239,23 +246,8 @@ export function Step2({ images, setImages, onNext, onPrev }) {
     setOpen(true);
   };
 
-  // const [image1, setImage1] = useState("");
-  // const [image2, setImage2] = useState("");
-  // const [preview1, setPreview1] = useState(null);
-  // const [preview2, setPreview2] = useState(null);
   const [alertOpen, setAlertOpen] = useState(false);
-
   function handleImage(e) {
-    // const selectedFiles = e.target.files;
-    // if (selectedFiles.length > 2) {
-    //   // If more than two files are selected, alert the user
-    //   alert("You can only upload up to two images.");
-    //   // Clear the file input
-    //   e.target.value = null;
-    //   return;
-    // }
-    // // Set the images state with the selected files
-    // setImages(selectedFiles);
     const file = e.target.files[0];
     if (file) {
       const previewPic = URL.createObjectURL(file);
@@ -271,38 +263,15 @@ export function Step2({ images, setImages, onNext, onPrev }) {
           image2: file,
           preview2: previewPic,
         }));
+      } else if (e.target.name === "doc1") {
+        setImages((prevImages) => ({
+          ...prevImages,
+          doc1: file,
+          preview3: previewPic,
+        }));
       }
     }
   }
-  // console.log(image1);
-  // console.log(image2);
-  // const handleUpload = async (e) => {
-  //   e.preventDefault();
-
-  //   if (!images.image1 || !images.image2) {
-  //     // setOpen(false);
-  //     // alert("Please upload both image before submitting.");
-  //     setAlertOpen(true);
-  //     console.log("please upload your images");
-  //     setOpen(false);
-
-  //     return;
-  //   } else {
-  //     onNext(); // Move to the next step
-  //   }
-  //   const formData = new FormData();
-
-  //   formData.append("image1", images.image1);
-  //   formData.append("image2", images.image2);
-  //   console.log(formData);
-  //   await axios
-  //     .post(`http://localhost:8800/upload/${userID}`, formData)
-  //     .then((res) => console.log(res))
-  //     .catch((err) => console.log(err));
-  //   // setCurrentStep(currentStep + 1);
-  //   setOpen(false);
-  //   // alert("Successful upload file");
-  // };
 
   function handleDelete(image) {
     if (image === "image1") {
@@ -317,6 +286,12 @@ export function Step2({ images, setImages, onNext, onPrev }) {
         image2: null,
         preview2: "",
       }));
+    } else if (image === "doc1") {
+      setImages((prevImages) => ({
+        ...prevImages,
+        doc1: null,
+        preview3: "",
+      }));
     }
   }
 
@@ -326,28 +301,6 @@ export function Step2({ images, setImages, onNext, onPrev }) {
         <h1>Upload Image</h1>
         <div className="form-group1">
           <form className="form-container" onSubmit={handleSubmit}>
-            <div className="input-rows2">
-              <label className="label2" htmlFor="fileInput1">
-                Upload your documents in here
-              </label>
-              <p>Upload your legal documents here</p>
-            </div>
-            <div className="input-rows2">
-              <input
-                type="file"
-                id="fileInput" //define id
-                accept="image/*"
-                style={{
-                  // set into display: none because i use label as input htmlFor attribute
-                  // remove display none for debug display file path name
-                  display: "none",
-                }}
-              />
-              <label htmlFor="fileInput" className="step__img__input">
-                <Image />
-                Choose Image File
-              </label>
-            </div>
             <div className="input-rows2">
               <label
                 className="label2"
@@ -431,6 +384,66 @@ export function Step2({ images, setImages, onNext, onPrev }) {
                 </div>
               )}
             </div>
+            <div className="input-rows2">
+              <label>
+                Have License?
+                <input
+                  type="checkbox"
+                  onClick={(e) => setHaveLicense(e.target.checked)}
+                />
+                YES
+              </label>
+            </div>
+            {/* UPLOAD LICESNE IF USER HAVE IT */}
+            {/* Upload license section if the user has a license */}
+            {haveLicense && (
+              <>
+                <div className="input-rows2">
+                  <label className="label2" htmlFor="fileInput">
+                    Please upload your Driver's License here:
+                  </label>
+                  <p>Select your file below:</p>
+                </div>
+
+                <div className="input-rows2">
+                  <input
+                    type="file"
+                    name="doc1"
+                    id="fileInput"
+                    onChange={handleImage}
+                    accept="image/*"
+                    style={{
+                      display: "none", // Hide the input
+                    }}
+                  />
+
+                  {!images.doc1 ? (
+                    <label htmlFor="fileInput" className="step__img__input">
+                      <Image />
+                      <span>Choose Image File</span>
+                    </label>
+                  ) : null}
+
+                  {/* Preview the uploaded driver’s license */}
+                  {images.doc1 && (
+                    <div className="image-preview">
+                      <img
+                        src={images.preview3}
+                        alt="Driver's License Preview"
+                        className="step2_img_preview"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleDelete("doc1")}
+                        className="step2_img_preview_btn"
+                      >
+                        X
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
             <div className="step2__nav__button">
               <div>
                 <button className="btnn" type="button" onClick={onPrev}>
@@ -529,7 +542,7 @@ export function Step2({ images, setImages, onNext, onPrev }) {
 }
 //STEP 3
 // SUmmary and Submit Request
-export function Step3({ details, images, onPrev, onNext }) {
+export function Step3({ details, images, haveLicense, onPrev, onNext }) {
   const { user } = useAuth();
   const userID = user.userID;
   const [open, setOpen] = useState(false);
@@ -549,7 +562,7 @@ export function Step3({ details, images, onPrev, onNext }) {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (!images.image1 || !images.image2) {
+      if (!images.image1 || !images.image2 || !images.doc1) {
         setAlertOpen(true);
         console.log("please enter images");
         setOpen(false);
@@ -572,6 +585,8 @@ export function Step3({ details, images, onPrev, onNext }) {
 
       formData.append("image1", images.image1);
       formData.append("image2", images.image2);
+      formData.append("doc1", images.doc1);
+
       console.log(formData);
       console.log("info successfully sent to server");
       //upload docs to server
@@ -594,11 +609,11 @@ export function Step3({ details, images, onPrev, onNext }) {
   };
   return (
     <div className="step">
+      <h1>Summary</h1>
       <form className="form-container">
-        <h2>Step 3</h2>
         <p>First Name: {details.fname}</p>
         <p>Last Name: {details.lname}</p>
-        <p>Age: {details.age}</p>
+        <p>Sex: {details.gender}</p>
         <p>Birthday: {details.bday}</p>
         <p>Email: {details.email}</p>
         <p>Contact #: {details.contact}</p>
@@ -612,6 +627,13 @@ export function Step3({ details, images, onPrev, onNext }) {
         {images.preview2 && (
           <img
             src={images.preview2}
+            className="step3__img__preview"
+            alt="Preview 2"
+          />
+        )}
+        {images.preview3 && (
+          <img
+            src={images.preview3}
             className="step3__img__preview"
             alt="Preview 2"
           />

@@ -28,9 +28,13 @@ export default function StepperVer() {
   const [images, setImages] = useState({
     image1: null,
     image2: null,
+    doc1: null,
     preview1: "",
     preview2: "",
+    preview3: "",
   });
+
+  const [haveLicense, setHaveLicense] = useState(false);
   //Hadnle changing steps
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -41,6 +45,8 @@ export default function StepperVer() {
   const handleReset = () => {
     setActiveStep(0);
   };
+  console.log(images);
+
   //based on current step, render step contents
   const renderContent = (step) => {
     switch (step) {
@@ -54,6 +60,8 @@ export default function StepperVer() {
             images={images}
             setImages={setImages}
             details={details}
+            haveLicense={haveLicense}
+            setHaveLicense={setHaveLicense}
             onNext={handleNext}
             onPrev={handleBack}
           />
