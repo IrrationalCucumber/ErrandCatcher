@@ -170,7 +170,7 @@ function Ongoing() {
           </select>
         </div>
       </div>
-      <OngoingCards commissions={filterErrands} to={`/view-errand/${userID}`} />
+      {/* <OngoingCards commissions={filterErrands} to={`/view-errand/${userID}`} /> */}
 
       <div className="cards__container">
         <div className="cards__wrapper">
@@ -189,7 +189,17 @@ function Ongoing() {
                 // Employer side
                 userFname={commission.userFirstname}
                 userLname={commission.userLastname}
-                
+
+                // handle payment
+                // pay={commission.commissionPay}
+                // type={commission.commissionType}
+                // userFname={commission.userFirstname}
+                // userLname={commission.userLastname}
+                transID={commission.transactID}
+                // title={commission.commissionTitle}
+                comID={commission.commissionID}
+                transCatID={commission.transCatcherID}
+
               />
             ))}
           </div>
