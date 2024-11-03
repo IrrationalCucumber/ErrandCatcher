@@ -9,7 +9,7 @@ import { Twitter, Instagram } from "@mui/icons-material";
 function Footer(props) {
   return (
     <footer>
-      <div className={props.footerUserType}>
+      <div className="footer-container">
         <section className="footer-subscription">
           <div className="input-areas"></div>
         </section>
