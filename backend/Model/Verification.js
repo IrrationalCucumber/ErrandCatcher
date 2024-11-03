@@ -19,12 +19,12 @@ const Verify = {
     );
   },
   //add new request
-  postNewRequest: (id, image1, image2, callback) => {
+  postNewRequest: (id, image1, image2, doc1, doc2, callback) => {
     //const [id_picture_front, id_picture_back] = images;
     //console.log(id);
     db.query(
-      `INSERT INTO verification_request (requestUserID, id_picture_front, id_picture_back) VALUES (?, ?, ?)`,
-      [id, image1, image2],
+      `INSERT INTO verification_request (requestUserID, id_picture_front, id_picture_back, docu_1, docu_2) VALUES (?, ?, ?, ?, ?)`,
+      [id, image1, image2, doc1, doc2],
       callback
     );
   },
@@ -53,7 +53,10 @@ const Verify = {
       SET  userLastname = ?, userFirstname = ?, userGender =?, userEmail = ?,
       userContactNum =?, userBirthday = ?, userAddress = ?
     WHERE userID = ?`,
-      [lname, fname, gender, email, contact, bday, address, id], callback); },
+      [lname, fname, gender, email, contact, bday, address, id],
+      callback
+    );
+  },
   //get data of requestUser
   getRequestByUserID: (userID, callback) => {
     db.query(
