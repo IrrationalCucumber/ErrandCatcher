@@ -24,6 +24,7 @@ import {
 } from "@mui/joy";
 import "../../components/Cards/cardsNew.css";
 import { useAuth } from "../../components/AuthContext";
+import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 
 function OngoingCardsNew(props) {
 
@@ -401,6 +402,107 @@ function OngoingCardsNew(props) {
                                 </Modals>
                             </>
                         )}
+
+
+                    {user.userType === "Catcher" && (
+                        <>
+                            <div className="ongoing__cards__buttons">
+                                <button
+                                    className="ongoing__cards__button__complete"
+                                    onClick={() => handleOpenMarkModal()}
+                                >
+                                    Mark as Completed
+                                </button>
+
+                                <button
+                                    // onClick={() => cancel(commission.commissionID)}
+                                    onClick={handleOpenCancelModal}
+                                    className="ongoing__cards__button__cancel"
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+
+                            {/* marked as completed model */}
+                            <Modal open={openMark} onClose={() => setOpenMark(false)}>
+                                <ModalDialog>
+                                    <DialogTitle>
+                                        <WarningRoundedIcon />
+                                        Confirmation
+                                    </DialogTitle>
+                                    <Divider />
+                                    <DialogContent>
+                                        Are you sure you want to Mark as Completed this
+                                        errand?
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button
+                                            variant="solid"
+                                            color="success"
+                                            onClick={() =>
+                                                // markAsCompleted(commission.commissionID)
+                                                handleComplete(
+                                                    // props
+                                                    props.transID,
+                                                    props.empID
+
+                                                )
+                                            }
+                                        >
+                                            Yes
+                                        </Button>
+                                        <Button
+                                            variant="plain"
+                                            color="neutral"
+                                            onClick={() => setOpenMark(false)}
+                                        >
+                                            No
+                                        </Button>
+                                    </DialogActions>
+                                </ModalDialog>
+                            </Modal>
+
+                            {/* cancel modal */}
+                            <Modal
+                                open={openDelete}
+                                onClose={() => setOpenDelete(false)}
+                            >
+                                <ModalDialog>
+                                    <DialogTitle>
+                                        <WarningRoundedIcon />
+                                        Confirmation
+                                    </DialogTitle>
+                                    <Divider />
+                                    <DialogContent>
+                                        Are you sure you want to Cancel this errand?
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button
+                                            variant="solid"
+                                            color="danger"
+                                            onClick={() =>
+                                                // cancel(commission.commissionID)
+                                                handleCancel(
+                                                    // props
+                                                    props.transID,
+                                                    props.empID
+                                                )
+                                            }
+                                        >
+                                            Yes
+                                        </Button>
+                                        <Button
+                                            variant="plain"
+                                            color="neutral"
+                                            onClick={() => setOpenDelete(false)}
+                                        >
+                                            No
+                                        </Button>
+                                    </DialogActions>
+                                </ModalDialog>
+                            </Modal>
+                        </>
+                    )}
 
                     <Link to={props.path}>
                         <a class="action" href="#">
