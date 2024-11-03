@@ -593,7 +593,7 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
       formData.append("image2", images.image2);
       formData.append("doc1", images.doc1);
 
-      console.log(formData);
+      // console.log(formData);
       console.log("info successfully sent to server");
       //upload docs to server
       await axios
@@ -608,7 +608,7 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
       } has submitted a Verification request`;
       notif.userID = 1;
       notif.notificationType = "Verification Request";
-      //await axios.post("http://localhost:8800/notify", notif);
+      await axios.post("http://localhost:8800/notify", notif);
     } catch (error) {
       console.log(error);
     }

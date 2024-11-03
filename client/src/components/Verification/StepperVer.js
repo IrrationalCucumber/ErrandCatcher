@@ -45,7 +45,6 @@ export default function StepperVer() {
   const handleReset = () => {
     setActiveStep(0);
   };
-  console.log(images);
 
   //based on current step, render step contents
   const renderContent = (step) => {
