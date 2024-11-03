@@ -28,6 +28,14 @@ import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 
 function OngoingCardsNew(props) {
 
+    const { status } = props;
+
+    // Determine chip colour props based on status
+    const chipColor =
+        status === "Complete" ? "success" :
+            status === "Ongoing" ? "warning" :
+                status === "Cancel" ? "error" : "default";
+
     const { user } = useAuth();
     const userID = user.userID;
 
@@ -271,7 +279,15 @@ function OngoingCardsNew(props) {
                         <h7>Details: </h7>
                         <ul>
                             <li>
-                                <Chip color="success" size="lg" variant="outlined">
+                                <Chip
+                                    sx={{
+                                        fontSize: '1.1rem',
+                                        height: '30px',
+                                        padding: '0 10px',
+                                    }}
+                                    color={chipColor}
+                                    size="lg"
+                                    variant="solid">
                                     {/* {commission.errandStatus} */}
                                     {props.status}
                                 </Chip>
