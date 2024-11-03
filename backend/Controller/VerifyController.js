@@ -62,7 +62,7 @@ const verifyController = {
         //This accesses the filename of the first uploaded file for the image1 field
         const image1 = req.files["image1"][0].filename;
         const image2 = req.files["image2"][0].filename;
-        const doc1 = req.files["doc1"][0].filename; //for drivers license
+        const doc1 = req.files["doc1"] ? req.files["doc1"][0].filename : null; //for drivers license
         Verify.postNewRequest(userID, image1, image2, doc1, (error) => {
           if (error) {
             console.error("Error posting new request:", error);
