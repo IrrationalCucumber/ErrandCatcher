@@ -140,3 +140,34 @@
     background-color: green;
     color: #ffff;
 }
+
+.search-filter__ongoing {
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
+  justify-content: center; 
+    margin: 2px;
+    padding: 30px 20px;
+  }
+
+  .search__ongoing {
+    display: flex;
+    align-items: center;
+    width: 280px;
+  }
+  
+  .search__ongoing input[type="text"] {
+    padding: 8px;
+    font-size: 16px;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    font-size: 12px;
+  }
+
+  .filter__ongoing{
+    margin-left: 20px;
+    padding: 10px;
+  }
+
+  .filter__ongoing select{
+    padding: 8px;
+  }

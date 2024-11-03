@@ -49,7 +49,7 @@ function Ongoing() {
     const termMatch = commission.commissionTitle
       .toLowerCase()
       .includes(searchTerm.term.toLowerCase());
-    const status = commission.commissionStatus.includes(searchTerm.status);
+    const status = commission.transStatus.includes(searchTerm.status);
 
     return type && termMatch && status;
   });
@@ -68,8 +68,8 @@ function Ongoing() {
     <div className="concards">
       {/* No user ID */}
       <BannerOngoingSection username={user.username} />
-      <div className="search-filter">
-        <div className="search">
+      <div className="search-filter__ongoing">
+        <div className="search__ongoing">
           <input
             type="text"
             placeholder="Search..."
@@ -77,11 +77,8 @@ function Ongoing() {
             name="term"
             onChange={handleChange}
           />
-          <button type="submit">
-            <i className="fa fa-search"></i>
-          </button>
         </div>
-        <div className="filter">
+        <div className="filter__ongoing">
           <select
             onChange={handleChange}
             name="status"
