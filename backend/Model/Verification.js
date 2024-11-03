@@ -19,12 +19,12 @@ const Verify = {
     );
   },
   //add new request
-  postNewRequest: (id, image1, image2, doc1, doc2, callback) => {
+  postNewRequest: (id, image1, image2, doc1, callback) => {
     //const [id_picture_front, id_picture_back] = images;
     //console.log(id);
     db.query(
-      `INSERT INTO verification_request (requestUserID, id_picture_front, id_picture_back, docu_1, docu_2) VALUES (?, ?, ?, ?, ?)`,
-      [id, image1, image2, doc1, doc2],
+      `INSERT INTO verification_request (requestUserID, id_picture_front, id_picture_back, docu_1) VALUES ( ?, ?, ?, ?)`,
+      [id, image1, image2, doc1],
       callback
     );
   },
