@@ -384,66 +384,72 @@ export function Step2({
                 </div>
               )}
             </div>
-            <div className="input-rows2">
-              <label>
-                Have License?
-                <input
-                  type="checkbox"
-                  onClick={(e) => setHaveLicense(e.target.checked)}
-                />
-                YES
-              </label>
-            </div>
-            {/* UPLOAD LICESNE IF USER HAVE IT */}
-            {/* Upload license section if the user has a license */}
-            {haveLicense && (
+            {user.userType === "Catcher" && (
               <>
+                {" "}
                 <div className="input-rows2">
-                  <label className="label2" htmlFor="fileInput">
-                    Please upload your Driver's License here:
+                  <label>
+                    Have License?
+                    <input
+                      type="checkbox"
+                      onClick={(e) => setHaveLicense(e.target.checked)}
+                    />
+                    YES
                   </label>
-                  <p>Select your file below:</p>
                 </div>
-
-                <div className="input-rows2">
-                  <input
-                    type="file"
-                    name="doc1"
-                    id="fileInput"
-                    onChange={handleImage}
-                    accept="image/*"
-                    style={{
-                      display: "none", // Hide the input
-                    }}
-                  />
-
-                  {!images.doc1 ? (
-                    <label htmlFor="fileInput" className="step__img__input">
-                      <Image />
-                      <span>Choose Image File</span>
-                    </label>
-                  ) : null}
-
-                  {/* Preview the uploaded driver’s license */}
-                  {images.doc1 && (
-                    <div className="image-preview">
-                      <img
-                        src={images.preview3}
-                        alt="Driver's License Preview"
-                        className="step2_img_preview"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => handleDelete("doc1")}
-                        className="step2_img_preview_btn"
-                      >
-                        X
-                      </button>
+                {/* UPLOAD LICESNE IF USER HAVE IT */}
+                {/* Upload license section if the user has a license */}
+                {haveLicense && (
+                  <>
+                    <div className="input-rows2">
+                      <label className="label2" htmlFor="fileInput">
+                        Please upload your Driver's License here:
+                      </label>
+                      <p>Select your file below:</p>
                     </div>
-                  )}
-                </div>
+
+                    <div className="input-rows2">
+                      <input
+                        type="file"
+                        name="doc1"
+                        id="fileInput"
+                        onChange={handleImage}
+                        accept="image/*"
+                        style={{
+                          display: "none", // Hide the input
+                        }}
+                      />
+
+                      {!images.doc1 ? (
+                        <label htmlFor="fileInput" className="step__img__input">
+                          <Image />
+                          <span>Choose Image File</span>
+                        </label>
+                      ) : null}
+
+                      {/* Preview the uploaded driver’s license */}
+                      {images.doc1 && (
+                        <div className="image-preview">
+                          <img
+                            src={images.preview3}
+                            alt="Driver's License Preview"
+                            className="step2_img_preview"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => handleDelete("doc1")}
+                            className="step2_img_preview_btn"
+                          >
+                            X
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </>
+                )}
               </>
             )}
+
             <div className="step2__nav__button">
               <div>
                 <button className="btnn" type="button" onClick={onPrev}>
@@ -562,7 +568,7 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (!images.image1 || !images.image2 || !images.doc1) {
+      if (!images.image1 || !images.image2) {
         setAlertOpen(true);
         console.log("please enter images");
         setOpen(false);
@@ -602,7 +608,7 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
       } has submitted a Verification request`;
       notif.userID = 1;
       notif.notificationType = "Verification Request";
-      await axios.post("http://localhost:8800/notify", notif);
+      //await axios.post("http://localhost:8800/notify", notif);
     } catch (error) {
       console.log(error);
     }
