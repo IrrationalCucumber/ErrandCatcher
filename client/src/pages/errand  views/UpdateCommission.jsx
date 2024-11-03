@@ -164,9 +164,6 @@ const UpdateCommission = () => {
                     }));
                   }}
                 />
-                <p className="coords">
-                  X: {commission.comLong} Y: {commission.comLat}
-                </p>
               </div>
             )}
           {commission.comType === "Delivery" && (

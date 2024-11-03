@@ -12,11 +12,10 @@ import { Alert, IconButton } from "@mui/joy";
 import WarningIcon from "@mui/icons-material/Warning";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { Box, Button } from "@mui/joy";
-import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import LoadingBackdrop from "../../components/LoadingSpinner";
 import Snackbar from "@mui/joy/Snackbar";
-import PostAddIcon from '@mui/icons-material/PostAdd';
-
+import PostAddIcon from "@mui/icons-material/PostAdd";
 
 const PostCommission = () => {
   const [commission, setCommission] = useState({
@@ -194,11 +193,8 @@ const PostCommission = () => {
           setTimeout(() => {
             // setLoading(false);
             navigate(`/dashboard/commissions`);
-
           }, 1900);
-
         }, 2000);
-
       }
     } catch (err) {
       console.log(err);
@@ -232,7 +228,7 @@ const PostCommission = () => {
         size="lg"
         open={opensnack}
         onClose={() => setOpenSnack(false)}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         // autoHideDuration={5000}
         startDecorator={<PostAddIcon />}
         endDecorator={
@@ -299,9 +295,6 @@ const PostCommission = () => {
                     }));
                   }}
                 />
-                <p className="coords">
-                  X: {commission.comLong} Y: {commission.comLat}
-                </p>
               </div>
             )}
           {commission.comType === "Delivery" && (

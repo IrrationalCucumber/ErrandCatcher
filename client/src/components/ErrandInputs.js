@@ -555,26 +555,7 @@ function ErrandInputs(props) {
           />
         </div>
       </div>
-      {/* {props.typeValue !== "Delivery" &&
-          props.typeValue !== "Transportation" && (
-            <div className="map--wrap">
-              <div ref={props.mapContainer} className="map-small" />
-              <p className="coords">
-                X: {props.long} Y: {props.lat}
-              </p>
-            </div>
-          )} */}
-      {/* {props.typeValue === "Delivery" && (
-        <>
-          Distance: {distance} m
-          <Map
-            accessToken={accessToken}
-            getDistanceCallback={(distance) => {
-              setDistance(distance);
-            }}
-          />
-        </>
-      )} */}
+
       <style>
         {`
         .suggestions-list {
