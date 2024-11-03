@@ -99,6 +99,42 @@ const verifyController = {
       res.json(data);
     });
   },
+
+  //update user info
+  putUpdateUser: (req, res) => {
+    const userID = req.params.id;
+    const updatedData = req.body;
+    Verify.putUpdateUserById(userID, updatedData, (error, result) => {
+      if (error) {
+        console.error("Error updating user:", error);
+        res
+          .status(500)
+          .json({ error: "An error occurred while updating user" });
+        return;
+      }
+      // Check if any rows were affected by the update operation
+      if (result.affectedRows === 0) {
+        res.status(404).json({ error: "User not found" });
+        return;
+      }
+      // User updated successfully
+      res.status(200).json({ message: "User updated successfully" });
+       });
+  },
+
+  //return verification request doucuments of user
+  getRequestOfUser: (req, res) => {
+    const id = req.params.id;
+    Verify.getRequestByUserID(id, (err, data) => {
+      if (err) {
+        console.log("Error fetching data:", err);
+        res.status(500).send("Error");
+        return;
+      }
+      res.json(data);
+
+    });
+  },
 };
 
 module.exports = verifyController;

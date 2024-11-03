@@ -10,9 +10,9 @@ import UserProfile from "../../components/Profile/UserProfile";
 import { Alert, Button } from "@mui/joy";
 import WarningIcon from "@mui/icons-material/Warning";
 import CloseIcon from "@mui/icons-material/Close";
-import UpdateIcon from '@mui/icons-material/Update';
-import Snackbar from '@mui/joy/Snackbar';
-import CancelIcon from '@mui/icons-material/Cancel';
+import UpdateIcon from "@mui/icons-material/Update";
+import Snackbar from "@mui/joy/Snackbar";
+import CancelIcon from "@mui/icons-material/Cancel";
 const Profile = () => {
   const [verified, setVerified] = useState(false);
   //APS - 03/03/24
@@ -36,6 +36,34 @@ const Profile = () => {
     type: "",
     profileImage: "",
   });
+  //variables to store verification details
+  const [docs, setDocs] = useState({
+    frontID: "",
+    backID: "",
+    doc1: "",
+    doc2: "",
+    requestStatus: "",
+  });
+  //fetch details and store them
+  useEffect(() => {
+    const fetchDetails = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8800/ver-details/${userID}`
+        );
+        setDocs({
+          requestStatus: res.data[0].requestStatus,
+          frontID: res.data[0].id_picture_front,
+          backID: res.data[0].id_picture_back,
+          doc1: res.data[0].docu_1,
+          doc2: res.data[0].docu_2,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchDetails();
+  }, [userID]);
 
   const [isEditing, setIsEditing] = useState(false);
   const [tempAccount, setTempAccount] = useState(account); // Store temporary edits
@@ -123,11 +151,6 @@ const Profile = () => {
     setIsEditing(true);
   };
 
-  // const handleSave = () => {
-  //   setAccount(tempAccount); // Save changes to the actual account
-  //   setIsEditing(false);
-  // };
-
   const handleCancel = () => {
     setTempAccount(account); // Revert changes
     setIsEditing(false);
@@ -185,7 +208,7 @@ const Profile = () => {
   const [alertColor, setAlertColor] = useState("");
   const [iconlert, setIconLert] = useState(null);
 
-  // Snackbar feedback 
+  // Snackbar feedback
   const [opensnack, setOpenSnack] = useState(false);
   const [snacColor, setSnacColor] = useState("");
   const [snacIcon, setSnacIcon] = useState(null);
@@ -225,20 +248,17 @@ const Profile = () => {
         setAlertColor("danger");
         setIconLert(<WarningIcon />);
         setShowAlert(true);
-      }
-      else if (!/\S+@\S+\.\S+/.test(tempAccount.email)) {
+      } else if (!/\S+@\S+\.\S+/.test(tempAccount.email)) {
         setMessage("Invalid email please try again.");
         setAlertColor("danger");
         setIconLert(<WarningIcon />);
         setShowAlert(true);
-      }
-      else if (parseInt(tempAccount.age) < 18) {
+      } else if (parseInt(tempAccount.age) < 18) {
         setSnacIcon(<CancelIcon />);
         setSnacMess("You must be at least 18 years old to proceed.");
         setSnacColor("danger");
         setOpenSnack(true);
-      }
-      else {
+      } else {
         // setMessage("Saved");
         // setAlertColor("success");
         formData.append("image", image);
@@ -305,7 +325,7 @@ const Profile = () => {
         size="lg"
         open={opensnack}
         onClose={() => setOpenSnack(false)}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         autoHideDuration={5000}
         startDecorator={snacIcon}
         endDecorator={
@@ -319,11 +339,11 @@ const Profile = () => {
           </Button>
         }
         sx={{
-          fontSize: '1rem',
-          fontWeight: 'bold',
-          fontFamily: 'Arial, sans-serif',
+          fontSize: "1rem",
+          fontWeight: "bold",
+          fontFamily: "Arial, sans-serif",
           // padding: '19px',
-          borderRadius: '8px',
+          borderRadius: "8px",
         }}
       >
         {snacMess}
@@ -354,187 +374,13 @@ const Profile = () => {
         isEditing={isEditing}
         clickEdit={handleEdit}
         clickCancel={handleCancel}
+        //verification details
+        verStatus={docs.requestStatus}
+        verFront={docs.frontID}
+        verBack={docs.backID}
+        verDoc1={docs.doc1}
+        verDoc2={docs.doc2}
       />
-      {/* <div className="profile">
-        <div className="profile-info">
-          <div className="description-form">
-            <form>
-              <div className="Image-container">
-                <label>Upload Image</label>
-                <div className="image-container">
-                  <img
-                    src={`http://localhost:8800/images/profile/${account.profileImage}`}
-                    alt="PRofile"
-                    width={250}
-                    height={250}
-                    style={{ padding: "20px" }}
-                  />
-                </div>
-                <div className="upload-container">
-                  <input
-                    type="file"
-                    id="file"
-                    onChange={handleImage}
-                    style={{ width: "100px" }}
-                  />
-                  <button onClick={handleUpload}>
-                    <i
-                      className="fa-solid fa-arrow-up-from-bracket"
-                      style={{ color: "#fff", width: "20px" }}
-                    ></i>
-                  </button>
-                </div>
-              </div>
-              //username changed when user sign up
-              <div className="username-container">
-                <label className="username">{account.username}</label>
-                {account.status === "Unverified" && (
-                  <Link to={`/verification/${userID}`}>
-                    <i
-                      className="fa-regular fa-circle-check"
-                      style={{ color: "gray", cursor: "pointer" }}
-                    >
-                      UNVERIFIED
-                    </i>
-                  </Link>
-                )}
-
-                {account.status === "Verified" ? (
-                  <>
-                    <i
-                      className="fa-solid fa-circle-check"
-                      style={{ color: "green" }}
-                    >
-                      {account.status}
-                    </i>
-                  </>
-                ) : (
-                  <Link to={`/profile/verification`}>
-                    <i
-                      className="fa-regular fa-circle-check"
-                      style={{ color: "gray", cursor: "pointer" }}
-                    >
-                      UNVERIFIED
-                    </i>
-                  </Link>
-                )}
-              </div>
-              {account.type === "Catcher" && (
-                <div className="rating-box">
-                  <label className="Rating">Rating</label>
-                  <label className="RateNo">{rating} /5</label>
-                </div>
-              )}
-              <textarea
-                className="description"
-                placeholder="Description"
-                onChange={handleChange}
-                name="desc"
-                value={account.desc}
-              ></textarea>
-            </form>
-          </div>
-          <div className="info-form">
-            <form>
-              <div className="about-section">
-                // About section content 
-                <div className="input-row">
-                  <label className="PP">Name:</label>
-                  <input
-                    type="text"
-                    className="display-data"
-                    placeholder="Name"
-                    name="fname"
-                    value={account.fname}
-                    onChange={handleChange}
-                  ></input>
-
-                  <input
-                    type="text"
-                    className="display-data"
-                    value={account.lname}
-                    placeholder="username"
-                    onChange={handleChange}
-                    name="lname"
-                  ></input>
-                </div>
-                <div className="input-row">
-                  <label className="PP">Age</label>
-                  <input
-                    type="number"
-                    name="age"
-                    className="display-data1"
-                    placeholder="Age"
-                    value={account.age}
-                    onChange={handleChange}
-                    min={1}
-                    max={99}
-                  ></input>
-                </div>
-                <div className="input-row">
-                  <label className="PP">Birth Date</label>
-                  <input
-                    type="date"
-                    className="display-data1"
-                    value={account.bday}
-                    placeholder="Date of birth"
-                  ></input>
-                </div>
-                <div className="input-row">
-                  <label className="PP">Gender</label>
-                  <select
-                    className="display-data1"
-                    value={account.gender}
-                    onChange={handleChange}
-                    name="gender"
-                  >
-                    gender
-                    <option value="">Choose gender....</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                  </select>
-                </div>
-                <div className="input-row">
-                  <label className="PP">Contact Number:</label>
-                  <input
-                    type="number"
-                    className="display-data"
-                    placeholder="Contact Number"
-                    name="contact"
-                    value={account.contact}
-                    onChange={handleChange}
-                  ></input>
-                </div>
-                <div className="input-row">
-                  <label className="PP">Email Address:</label>
-                  <input
-                    type="email"
-                    className="display-data"
-                    placeholder="Email Address"
-                    value={account.email}
-                    name="email"
-                    onChange={handleChange}
-                  ></input>
-                </div>
-                <div className="input-row">
-                  <label className="PP">Address:</label>
-                  <textarea
-                    type="text"
-                    className="display-data"
-                    placeholder="Address"
-                    value={account.address}
-                    name="address"
-                    onChange={handleChange}
-                  ></textarea>
-                </div>
-                <button onClick={handleClick} style={{ borderRadius: "10px" }}>
-                  Save
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 };

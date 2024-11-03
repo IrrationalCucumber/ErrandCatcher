@@ -2,6 +2,8 @@ import React from "react";
 
 export function Capitalize(text) {
   const capitalizeThis = text;
+  if (!capitalizeThis)
+    return null;
   return capitalizeThis.charAt(0).toUpperCase() + capitalizeThis.slice(1);
 }
 
@@ -29,4 +31,27 @@ export function DisplayDate(theDate) {
 
   // Construct the formatted date string
   return `${month} ${date.getDate()}, ${year}`;
+}
+
+/**
+ * Return the age of user based on the Birthdate value
+ * --Adrean 10/30/2024
+ */
+
+export function GetUserAge(bday) {
+  const date = new Date(bday);
+  const today = new Date();
+
+  let age = today.getFullYear() - date.getFullYear();
+  const monthDifference = today.getMonth() - date.getMonth();
+
+  // If the birth date hasn't occurred yet this year, subtract 1 from the age
+  if (
+    monthDifference < 0 ||
+    (monthDifference === 0 && today.getDate() < date.getDate())
+  ) {
+    age--;
+  }
+
+  return age;
 }

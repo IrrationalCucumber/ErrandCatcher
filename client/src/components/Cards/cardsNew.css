@@ -1,0 +1,108 @@
+.card {
+    max-width: 300px;
+    border-radius: 0.5rem;
+    background-color: #fff;
+    /* box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); */
+    /* border: 1px solid transparent; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 0.75rem;
+    background-color: white;
+    width: 300px;
+    /* height: 430px; */
+    min-height: 430px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1),
+        0 2px 4px -2px rgba(0, 0, 0, .1);
+
+}
+
+.boxer {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10rem;
+}
+
+.card a {
+    text-decoration: none;
+}
+
+.contentcard {
+    padding: 1.1rem;
+    flex-basis: content;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.iconcard {
+    object-fit: cover;
+    width: 100%;
+    height: 150px;
+    background-color: #0073aa;
+}
+
+.title {
+    color: #111827;
+    font-size: 1.50rem;
+    line-height: 1.90rem;
+    font-weight: 600;
+}
+
+.desc {
+    margin-top: 0.5rem;
+    color: #6B7280;
+    /* font-size: 0.875rem; */
+    font-size: 1.045rem;
+    line-height: 1.25rem;
+    flex-grow: 1;
+}
+
+.desc > h7 {
+    font-weight: 800;
+    font-size: 1.35rem;
+    line-height: 1.90rem;
+    /* color: #111827; */
+    color: #0073aa;
+}
+
+.desc ul {
+    padding-left: 20px;
+    color: #6B7280;
+    margin-top: 8px;
+    list-style-type: disc;
+}
+
+.desc li {
+    margin-bottom: 8px;
+    color: #6B7280;
+    padding-left: 5px;
+    font-size: 1.010rem;
+}
+
+.action {
+    display: inline-flex;
+    /* margin-top: 1rem; */
+    color: #ffffff;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    align-items: center;
+    gap: 0.25rem;
+    /* background-color: #2563EB; */
+    background-color: #0073aa;
+    padding: 4px 8px;
+    border-radius: 4px;
+    align-self: flex-end;
+}
+
+.action span {
+    transition: .3s ease;
+}
+
+.action:hover span {
+    transform: translateX(4px);
+}

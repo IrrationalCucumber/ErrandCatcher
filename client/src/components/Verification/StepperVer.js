@@ -17,14 +17,13 @@ export default function StepperVer() {
   // variables to store step's user data
   //data will be pass around
   const [details, setDetails] = useState({
-    firstName: "",
-    lastName: "",
-    age: "",
-    date: "",
-    sex: "",
+    fname: "",
+    lname: "",
+    bday: "",
+    gender: "",
     address: "",
     email: "",
-    cnum: "",
+    contact: "",
   });
   const [images, setImages] = useState({
     image1: null,
@@ -60,7 +59,14 @@ export default function StepperVer() {
           />
         );
       case 2:
-        return <Step3 details={details} images={images} onPrev={handleBack} onNext={handleNext} />;
+        return (
+          <Step3
+            details={details}
+            images={images}
+            onPrev={handleBack}
+            onNext={handleNext}
+          />
+        );
       case 3:
         return <Step4 />;
       default:

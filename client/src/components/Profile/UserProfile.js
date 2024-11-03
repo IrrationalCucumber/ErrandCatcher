@@ -6,7 +6,11 @@ import { Button, Input, Sheet, Typography } from "@mui/joy";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
-import { Capitalize, DisplayDate } from "../Display/DsiplayFunctions";
+import {
+  Capitalize,
+  DisplayDate,
+  GetUserAge,
+} from "../Display/DsiplayFunctions";
 
 function UserProfile(props) {
   const [preview, setPreview] = useState(null);
@@ -171,6 +175,36 @@ function UserProfile(props) {
               </span>
             </div>
           )}
+          {
+            //display sumbitted IDs of user
+            props.verFront || props.verBack ? (
+              <>
+                <img
+                  src={`http://localhost:8800/images/docu/${props.verFront}`}
+                  alt="ProfPic"
+                />
+                <img
+                  src={`http://localhost:8800/images/docu/${props.verBack}`}
+                  alt="ProfPic"
+                />
+              </>
+            ) : null
+          }
+          {
+            //display sumbitted docs/additional ids of user
+            props.doc1 || props.doc2 ? (
+              <>
+                <img
+                  src={`http://localhost:8800/images/docu/${props.doc1}`}
+                  alt="ProfPic"
+                />
+                <img
+                  src={`http://localhost:8800/images/docu/${props.doc2}`}
+                  alt="ProfPic"
+                />
+              </>
+            ) : null
+          }
         </div>
 
         {/* Right Profile Section */}
@@ -180,14 +214,26 @@ function UserProfile(props) {
               <div className="verified">{props.status.toLocaleUpperCase()}</div>
             </>
           ) : (
-            <Link
-              to={`/profile/verification`}
-              style={{ textDecoration: "none" }}
-            >
-              <div className="unverified">
-                {props.status.toLocaleUpperCase()}
-              </div>
-            </Link>
+            <>
+              {props.verStatus === "Pending" ? (
+                <>
+                  <div className="pending">
+                    <i>{props.verStatus.toLocaleUpperCase()}</i>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to={`/profile/verification`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <div className="unverified">
+                      {props.status.toLocaleUpperCase()}
+                    </div>
+                  </Link>
+                </>
+              )}
+            </>
           )}
           <label htmlFor="username">Username :</label>
           <input
@@ -245,15 +291,12 @@ function UserProfile(props) {
           <label htmlFor="age">Age :</label>
           <input
             type="number"
-            className={props.validationErrors.age ? "error" : ""}
+            //className={props.validationErrors.age ? "error" : ""}
             name="age"
-            // className="display-data1"
+            className="display-data1"
             placeholder="Age"
-            value={props.age}
-            onChange={props.handleChange}
-            min={18}
-            max={99}
-            disabled={!props.isEditing}
+            value={GetUserAge(props.bday)}
+            disabled={true}
           ></input>
           <input
             type="date"
@@ -319,7 +362,9 @@ export function ViewUserProfile(props) {
               variant="plain"
               sx={{ p: 1 }}
             >
-              {props.address}
+              {props.address ? (`${props.address}`) :
+                <i style={{ color: "red" }}>No Address</i>}
+
             </Typography>
             {/* {props.email} */}
             <Typography
@@ -329,7 +374,8 @@ export function ViewUserProfile(props) {
               variant="plain"
               sx={{ p: 1 }}
             >
-              {props.email}
+              {props.email ? (`${props.email}`) :
+                <i style={{ color: "red" }}>No Email</i>}
             </Typography>
             {/* {props.cnum} */}
 
@@ -339,7 +385,8 @@ export function ViewUserProfile(props) {
               variant="plain"
               sx={{ p: 1 }}
             >
-              {props.cnum}
+              {props.cnum ? (`${props.cnum}`) :
+                <i style={{ color: "red" }}>No Contact Number</i>}
             </Typography>
 
             <br />
@@ -362,6 +409,39 @@ export function ViewUserProfile(props) {
               </p>
             </span>
           </div>
+          {/* 
+            CHANGE TO PROPERLY DISPLAY IDs
+          */}
+          {
+            //display sumbitted IDs of user
+            props.verFront || props.verBack ? (
+              <>
+                <img
+                  src={`http://localhost:8800/images/docu/${props.verFront}`}
+                  alt="ProfPic"
+                />
+                <img
+                  src={`http://localhost:8800/images/docu/${props.verBack}`}
+                  alt="ProfPic"
+                />
+              </>
+            ) : null
+          }
+          {
+            //display sumbitted docs/additional ids of user
+            props.doc1 || props.doc2 ? (
+              <>
+                <img
+                  src={`http://localhost:8800/images/docu/${props.doc1}`}
+                  alt="ProfPic"
+                />
+                <img
+                  src={`http://localhost:8800/images/docu/${props.doc2}`}
+                  alt="ProfPic"
+                />
+              </>
+            ) : null
+          }
         </div>
 
         {/* Right Profile Section */}
@@ -383,7 +463,8 @@ export function ViewUserProfile(props) {
               Username :
             </Typography>
             <Typography color="neutral" level="h3" variant="outlined">
-              {props.username}
+              {props.username ? (`${props.username}`) :
+                <i style={{ color: "red" }}>No Username</i>}
             </Typography>
           </Sheet>
 
@@ -392,7 +473,8 @@ export function ViewUserProfile(props) {
               Firt Name :
             </Typography>
             <Typography color="neutral" level="h3" variant="outlined">
-              {Capitalize(props.fname)}
+              {props.fname ? (`${Capitalize(props.fname)}`) :
+                <i style={{ color: "red" }}>No First name</i>}
             </Typography>
           </Sheet>
 
@@ -401,7 +483,8 @@ export function ViewUserProfile(props) {
               Last Name :
             </Typography>
             <Typography color="neutral" level="h3" variant="outlined">
-              {Capitalize(props.lname)}
+              {props.lname ? (`${Capitalize(props.lname)}`) :
+                <i style={{ color: "red" }}>No last name</i>}
             </Typography>
           </Sheet>
 
@@ -410,7 +493,8 @@ export function ViewUserProfile(props) {
               Gender :
             </Typography>
             <Typography color="neutral" level="h3" variant="outlined">
-              {Capitalize(props.sex)}
+              {props.sex ? (`${Capitalize(props.sex)}`) :
+                <i style={{ color: "red" }}>No Gender</i>}
             </Typography>
           </Sheet>
 
@@ -419,7 +503,8 @@ export function ViewUserProfile(props) {
               Birthdate :
             </Typography>
             <Typography color="neutral" level="h3" variant="outlined">
-              {DisplayDate(props.bday)}
+              {props.bday ? (`${DisplayDate(props.bday)}`) :
+                <i style={{ color: "red" }}>No Birthdate</i>}
             </Typography>
           </Sheet>
 
@@ -433,7 +518,7 @@ export function ViewUserProfile(props) {
               Age :
             </Typography>
             <Typography color="neutral" level="h3" variant="outlined">
-              {props.age}
+              {GetUserAge(props.bday)}
             </Typography>
           </Sheet>
         </div>
