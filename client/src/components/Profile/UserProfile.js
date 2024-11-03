@@ -181,26 +181,22 @@ function UserProfile(props) {
               <>
                 <img
                   src={`http://localhost:8800/images/docu/${props.verFront}`}
-                  alt="ProfPic"
+                  alt="Front"
                 />
                 <img
                   src={`http://localhost:8800/images/docu/${props.verBack}`}
-                  alt="ProfPic"
+                  alt="Back"
                 />
               </>
             ) : null
           }
           {
             //display sumbitted docs/additional ids of user
-            props.doc1 || props.doc2 ? (
+            props.doc1 ? (
               <>
                 <img
                   src={`http://localhost:8800/images/docu/${props.doc1}`}
-                  alt="ProfPic"
-                />
-                <img
-                  src={`http://localhost:8800/images/docu/${props.doc2}`}
-                  alt="ProfPic"
+                  alt="License"
                 />
               </>
             ) : null
@@ -362,9 +358,11 @@ export function ViewUserProfile(props) {
               variant="plain"
               sx={{ p: 1 }}
             >
-              {props.address ? (`${props.address}`) :
-                <i style={{ color: "red" }}>No Address</i>}
-
+              {props.address ? (
+                `${props.address}`
+              ) : (
+                <i style={{ color: "red" }}>No Address</i>
+              )}
             </Typography>
             {/* {props.email} */}
             <Typography
@@ -374,8 +372,11 @@ export function ViewUserProfile(props) {
               variant="plain"
               sx={{ p: 1 }}
             >
-              {props.email ? (`${props.email}`) :
-                <i style={{ color: "red" }}>No Email</i>}
+              {props.email ? (
+                `${props.email}`
+              ) : (
+                <i style={{ color: "red" }}>No Email</i>
+              )}
             </Typography>
             {/* {props.cnum} */}
 
@@ -385,8 +386,11 @@ export function ViewUserProfile(props) {
               variant="plain"
               sx={{ p: 1 }}
             >
-              {props.cnum ? (`${props.cnum}`) :
-                <i style={{ color: "red" }}>No Contact Number</i>}
+              {props.cnum ? (
+                `${props.cnum}`
+              ) : (
+                <i style={{ color: "red" }}>No Contact Number</i>
+              )}
             </Typography>
 
             <br />
@@ -463,8 +467,11 @@ export function ViewUserProfile(props) {
               Username :
             </Typography>
             <Typography color="neutral" level="h3" variant="outlined">
-              {props.username ? (`${props.username}`) :
-                <i style={{ color: "red" }}>No Username</i>}
+              {props.username ? (
+                `${props.username}`
+              ) : (
+                <i style={{ color: "red" }}>No Username</i>
+              )}
             </Typography>
           </Sheet>
 
@@ -473,8 +480,11 @@ export function ViewUserProfile(props) {
               Firt Name :
             </Typography>
             <Typography color="neutral" level="h3" variant="outlined">
-              {props.fname ? (`${Capitalize(props.fname)}`) :
-                <i style={{ color: "red" }}>No First name</i>}
+              {props.fname ? (
+                `${Capitalize(props.fname)}`
+              ) : (
+                <i style={{ color: "red" }}>No First name</i>
+              )}
             </Typography>
           </Sheet>
 
@@ -483,8 +493,11 @@ export function ViewUserProfile(props) {
               Last Name :
             </Typography>
             <Typography color="neutral" level="h3" variant="outlined">
-              {props.lname ? (`${Capitalize(props.lname)}`) :
-                <i style={{ color: "red" }}>No last name</i>}
+              {props.lname ? (
+                `${Capitalize(props.lname)}`
+              ) : (
+                <i style={{ color: "red" }}>No last name</i>
+              )}
             </Typography>
           </Sheet>
 
@@ -493,8 +506,11 @@ export function ViewUserProfile(props) {
               Gender :
             </Typography>
             <Typography color="neutral" level="h3" variant="outlined">
-              {props.sex ? (`${Capitalize(props.sex)}`) :
-                <i style={{ color: "red" }}>No Gender</i>}
+              {props.sex ? (
+                `${Capitalize(props.sex)}`
+              ) : (
+                <i style={{ color: "red" }}>No Gender</i>
+              )}
             </Typography>
           </Sheet>
 
@@ -503,8 +519,11 @@ export function ViewUserProfile(props) {
               Birthdate :
             </Typography>
             <Typography color="neutral" level="h3" variant="outlined">
-              {props.bday ? (`${DisplayDate(props.bday)}`) :
-                <i style={{ color: "red" }}>No Birthdate</i>}
+              {props.bday ? (
+                `${DisplayDate(props.bday)}`
+              ) : (
+                <i style={{ color: "red" }}>No Birthdate</i>
+              )}
             </Typography>
           </Sheet>
 

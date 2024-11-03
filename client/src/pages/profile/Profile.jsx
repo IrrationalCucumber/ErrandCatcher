@@ -378,8 +378,8 @@ const Profile = () => {
         verStatus={docs.requestStatus}
         verFront={docs.frontID}
         verBack={docs.backID}
-        verDoc1={docs.doc1}
-        verDoc2={docs.doc2}
+        doc1={docs.doc1}
+        doc2={docs.doc2}
       />
     </div>
   );
