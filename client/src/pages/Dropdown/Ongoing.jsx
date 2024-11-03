@@ -200,6 +200,11 @@ function Ongoing() {
                 comID={commission.commissionID}
                 transCatID={commission.transCatcherID}
 
+                // Catcher side
+                // marked complete and cancel
+                // transID={commission.transactID}
+                empID={commission.employerID}
+
               />
             ))}
           </div>
