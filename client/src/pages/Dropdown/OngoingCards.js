@@ -183,7 +183,16 @@ function OngoingCards({ commissions, to }) {
     }
   };
 
-  const handlePayment = (pay, type, fname, lname, id, comTitle, erID, catID) => {
+  const handlePayment = (
+    pay,
+    type,
+    fname,
+    lname,
+    id,
+    comTitle,
+    erID,
+    catID
+  ) => {
     const paymentUrl = `http://localhost:8800/process-payment/${userID}`;
     // Change the amount
     const amount = pay;
@@ -202,7 +211,7 @@ function OngoingCards({ commissions, to }) {
         id: id, // transactionID
         employerID: userID,
         errandID: errandID,
-        catID: cateID
+        catID: cateID,
       })
       .then((response) => {
         window.open(response.data.url);
@@ -218,15 +227,28 @@ function OngoingCards({ commissions, to }) {
         <div className="Oncards__wrapper">
           <div className="Oncards__items">
             {commissions.map((commission) => (
-              <div className="Oncard" key={commission.id}>
+              <div
+                className="Oncard"
+                key={commission.id}
+                style={{
+                  borderColor:
+                    commission.tranStatus === "Completed"
+                      ? "green"
+                      : commission.tranStatus === "Pending"
+                      ? "orange"
+                      : commission.tranStatus === "Cancelled"
+                      ? "red"
+                      : "gray", // Default color
+                }}
+              >
                 {(commission.commissionType === "HomeService - Indoor" ||
                   commission.commissionType === "HomeService - Outdoor") && (
-                    <img
-                      src="/images/hr.png"
-                      alt="Commission"
-                      className="Oncard__img"
-                    />
-                  )}
+                  <img
+                    src="/images/hr.png"
+                    alt="Commission"
+                    className="Oncard__img"
+                  />
+                )}
 
                 {commission.commissionType === "Transportation" && (
                   <img
@@ -492,12 +514,12 @@ function OngoingCards({ commissions, to }) {
           .Oncards__container {
             display: flex;
             flex-wrap: wrap;
-            margin: 5rem;
+            margin: 10px 5rem;
           }
 
           .Oncards__wrapper {
             display: relative;
-            margin: 20px 0 25px 0;
+            margin: 15px 0 25px 0;
             width: 100%;
           }
 
