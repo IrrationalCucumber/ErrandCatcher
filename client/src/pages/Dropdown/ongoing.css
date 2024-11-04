@@ -84,7 +84,7 @@
         margin: 0 auto;
     }
 
-    
+
 
 }
 
@@ -168,4 +168,15 @@
 .ongoing__cards__button__complete:hover {
     background-color: green;
     color: #ffff;
+}
+
+.ongoing__cardsNew__buttons {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* padding: 10px 15px; */
+    /* margin: auto; */
+    margin-bottom: 8px;
+    margin-top: 2px;
 }

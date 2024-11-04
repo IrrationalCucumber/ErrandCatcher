@@ -333,7 +333,7 @@ function OngoingCardsNew(props) {
                     {user.userType === "Employer" &&
                         props.status === "Complete" && (
                             <>
-                                <div className="ongoing__cards__buttons">
+                                <div className="ongoing__cardsNew__buttons">
                                     <button
                                         onClick={handleOpenModal} // props 
                                         className="ongoing__cards__button__feedback"
