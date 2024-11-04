@@ -80,7 +80,7 @@ function Ongoing() {
       <BannerOngoingSection username={user.username} />
 
       <div
-        className="searchAdmin"
+        className="searchOngoing"
       // style={{
       //   marginTop: "10px",
       //   marginBottom: "10px",
