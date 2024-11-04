@@ -253,9 +253,6 @@ export function ViewMap({ id }) {
     <>
       <div className="map--wrap">
         <div ref={mapContainer} className="map-small" />
-        <p className="coords">
-          X: {long} Y: {lat}
-        </p>
       </div>
     </>
   );
@@ -406,7 +403,12 @@ export function ViewMapBox({
 
 //post errand
 //For transpo/delivery type errand only
-export function PostMapBox({ accessToken, getDistanceCallback, customDestination, customOrigin }) {
+export function PostMapBox({
+  accessToken,
+  getDistanceCallback,
+  customDestination,
+  customOrigin,
+}) {
   const mapContainer = useRef(null);
   const map = useRef(null);
 
@@ -472,14 +474,17 @@ export function PostMapBox({ accessToken, getDistanceCallback, customDestination
     directions.current.on("route", (e) => {
       const route = e.route[0];
       const originCoordinates = route.legs[0].steps[0].maneuver.location;
-      const destinationCoordinates = route.legs[0].steps[route.legs[0].steps.length - 1].maneuver.location;
+      const destinationCoordinates =
+        route.legs[0].steps[route.legs[0].steps.length - 1].maneuver.location;
 
       // Callback to parent component with the distance and coordinates
-      getDistanceCallback(route.distance, originCoordinates, destinationCoordinates);
+      getDistanceCallback(
+        route.distance,
+        originCoordinates,
+        destinationCoordinates
+      );
     });
-
   }, [accessToken]);
-
 
   // Sync starting location (origin) with custom input
   useEffect(() => {
@@ -494,7 +499,6 @@ export function PostMapBox({ accessToken, getDistanceCallback, customDestination
       // Update Mapbox Directions destination based on custom input
       directions.current.setDestination(customDestination);
     }
-
   }, [customDestination]);
 
   return (

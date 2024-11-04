@@ -56,7 +56,7 @@ function Navbar(props) {
 
   return (
     <>
-      <nav className={props.navbar_ui}>
+      <nav className="navbar__cont">
         <div className="navbar-container justify-center">
           <Link
             // to={`/home/${userID}`}

@@ -179,8 +179,9 @@ const Signup = () => {
     const day = today.getDate();
 
     // Format the date as yyyy-mm-dd
-    return `${year}-${month < 10 ? "0" + month : month}-${day < 10 ? "0" + day : day
-      }`;
+    return `${year}-${month < 10 ? "0" + month : month}-${
+      day < 10 ? "0" + day : day
+    }`;
   };
 
   const handleOptionChange = (e) => {
@@ -296,9 +297,10 @@ const Signup = () => {
                   }}
                 >
                   {selectedOption
-                    ? `Join as ${selectedOption.charAt(0).toUpperCase() +
-                    selectedOption.slice(1)
-                    }`
+                    ? `Join as ${
+                        selectedOption.charAt(0).toUpperCase() +
+                        selectedOption.slice(1)
+                      }`
                     : "Create Account"}
                 </button>
               </div>
@@ -313,137 +315,6 @@ const Signup = () => {
                 <h3>Signup to Errand Catcher</h3>
               </div>
               <form className="mt-4 mb-4">
-                <div
-                  className="SUrow"
-                  style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    margin: "0 -15px",
-                  }}
-                >
-                  <div className="col">
-                    <label className="SUlabel">Username</label>
-                    <input
-                      // className={errorMessage ? "error" : ""}
-                      className={errors.regUsername ? "error" : ""}
-                      type="text"
-                      placeholder="Username"
-                      onChange={handleChange}
-                      name="regUsername"
-                      value={account.regUsername}
-                      autocomplete="off"
-                      required
-                    />
-                    <div className="err">
-                      {" "}
-                      {errors.regUsername && (
-                        <span style={{ color: "#f02849", fontSize: "14px" }}>
-                          {errors.regUsername}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <div className="col">
-                    <label className="SUlabel">Email Address</label>
-                    <input
-                      // className={errorMessage ? "error" : ""}
-                      className={errors.email ? "error" : ""}
-                      type="email"
-                      placeholder="Email Address"
-                      onChange={handleChange}
-                      name="email"
-                      value={account.email}
-                      required
-                    />
-                    {errors.email && (
-                      <span style={{ color: "#f02849", fontSize: "14px" }}>
-                        {errors.email}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div
-                  className="SUrow"
-                  style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    margin: "0 -15px",
-                  }}
-                >
-                  <div className="col">
-                    <label className="SUlabel">Password</label>
-                    <input
-                      // className={errorMessage ? "error" : ""}
-                      className={errors.regPassword ? "error" : ""}
-                      type="password"
-                      placeholder="Password"
-                      // onChange={handleChange}
-                      onChange={(event) => {
-                        setAccount((prev) => ({
-                          ...prev,
-                          [event.target.name]: event.target.value,
-                        }));
-                        setStrength(
-                          evaluatePasswordStrength(event.target.value)
-                        );
-                      }}
-                      name="regPassword"
-                      value={account.regPassword}
-                      autoComplete="off"
-                      required
-                    />
-                    {errors.regPassword && (
-                      <span style={{ color: "#f02849", fontSize: "14px" }}>
-                        {errors.regPassword}
-                      </span>
-                    )}
-                    {account.regPassword && (
-                      <>
-                        <div
-                          className={`password-strength ${strength === "Weak"
-                            ? "strength-weak"
-                            : strength === "Medium"
-                              ? "strength-medium"
-                              : strength === "Strong"
-                                ? "strength-strong"
-                                : ""
-                            }`}
-                        >
-                          Password strength: {strength}
-                        </div>
-
-                        <div className="strength-meter">
-                          <div
-                            className="strength-meter-fill"
-                            style={{
-                              width: getStrengthWidth(strength),
-                              backgroundColor: getStrengthColor(strength),
-                            }}
-                          />
-                        </div>
-                      </>
-                    )}
-                  </div>
-                  <div className="col">
-                    <label className="SUlabel">Confirm Password</label>
-                    <input
-                      // className={errorMessage ? "error" : ""}
-                      className={errors.regPassword2 ? "error" : ""}
-                      type="password"
-                      placeholder="Confirm Password"
-                      onChange={handleChange}
-                      name="regPassword2"
-                      value={account.regPassword2}
-                      autoComplete="off"
-                      required
-                    />
-                    {errors.regPassword2 && (
-                      <span style={{ color: "#f02849", fontSize: "14px" }}>
-                        {errors.regPassword2}
-                      </span>
-                    )}
-                  </div>
-                </div>
                 <div
                   className="SUrow"
                   style={{
@@ -537,8 +408,139 @@ const Signup = () => {
                       </span>
                     )}
                   </div>
+                </div>{" "}
+                <div
+                  className="SUrow"
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    margin: "0 -15px",
+                  }}
+                >
+                  <div className="col">
+                    <label className="SUlabel">Username</label>
+                    <input
+                      // className={errorMessage ? "error" : ""}
+                      className={errors.regUsername ? "error" : ""}
+                      type="text"
+                      placeholder="Username"
+                      onChange={handleChange}
+                      name="regUsername"
+                      value={account.regUsername}
+                      autocomplete="off"
+                      required
+                    />
+                    <div className="err">
+                      {" "}
+                      {errors.regUsername && (
+                        <span style={{ color: "#f02849", fontSize: "14px" }}>
+                          {errors.regUsername}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="col">
+                    <label className="SUlabel">Email Address</label>
+                    <input
+                      // className={errorMessage ? "error" : ""}
+                      className={errors.email ? "error" : ""}
+                      type="email"
+                      placeholder="Email Address"
+                      onChange={handleChange}
+                      name="email"
+                      value={account.email}
+                      required
+                    />
+                    {errors.email && (
+                      <span style={{ color: "#f02849", fontSize: "14px" }}>
+                        {errors.email}
+                      </span>
+                    )}
+                  </div>
                 </div>
+                <div
+                  className="SUrow"
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    margin: "0 -15px",
+                  }}
+                >
+                  <div className="col">
+                    <label className="SUlabel">Password</label>
+                    <input
+                      // className={errorMessage ? "error" : ""}
+                      className={errors.regPassword ? "error" : ""}
+                      type="password"
+                      placeholder="Password"
+                      // onChange={handleChange}
+                      onChange={(event) => {
+                        setAccount((prev) => ({
+                          ...prev,
+                          [event.target.name]: event.target.value,
+                        }));
+                        setStrength(
+                          evaluatePasswordStrength(event.target.value)
+                        );
+                      }}
+                      name="regPassword"
+                      value={account.regPassword}
+                      autoComplete="off"
+                      required
+                    />
+                    {errors.regPassword && (
+                      <span style={{ color: "#f02849", fontSize: "14px" }}>
+                        {errors.regPassword}
+                      </span>
+                    )}
+                    {account.regPassword && (
+                      <>
+                        <div
+                          className={`password-strength ${
+                            strength === "Weak"
+                              ? "strength-weak"
+                              : strength === "Medium"
+                              ? "strength-medium"
+                              : strength === "Strong"
+                              ? "strength-strong"
+                              : ""
+                          }`}
+                        >
+                          Password strength: {strength}
+                        </div>
 
+                        <div className="strength-meter">
+                          <div
+                            className="strength-meter-fill"
+                            style={{
+                              width: getStrengthWidth(strength),
+                              backgroundColor: getStrengthColor(strength),
+                            }}
+                          />
+                        </div>
+                      </>
+                    )}
+                  </div>
+                  <div className="col">
+                    <label className="SUlabel">Confirm Password</label>
+                    <input
+                      // className={errorMessage ? "error" : ""}
+                      className={errors.regPassword2 ? "error" : ""}
+                      type="password"
+                      placeholder="Confirm Password"
+                      onChange={handleChange}
+                      name="regPassword2"
+                      value={account.regPassword2}
+                      autoComplete="off"
+                      required
+                    />
+                    {errors.regPassword2 && (
+                      <span style={{ color: "#f02849", fontSize: "14px" }}>
+                        {errors.regPassword2}
+                      </span>
+                    )}
+                  </div>
+                </div>
                 <div
                   className="SUrow"
                   style={{
