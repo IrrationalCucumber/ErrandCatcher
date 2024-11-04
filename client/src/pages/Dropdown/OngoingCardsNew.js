@@ -308,13 +308,24 @@ function OngoingCardsNew(props) {
                         </ul>
                     </p>
 
-                    <p class="desc">
+                    {/* View Errand */}
+                    <Link to={props.path}>
+                        <a class="action" href="#">
+                            Find out more
+                            <span aria-hidden="true">
+                                →
+                            </span>
+                        </a>
+                    </Link>
+
+                    <p class="desc" style={{marginTop: "12px"}}>
                         {user.userType === "Employer" && (
                             <>
                                 <Typography
                                     color="neutral"
                                     level="title-lg"
                                     variant="plain"
+                                    style={{marginBottom: "4px"}}
                                 >
                                     CATCHER:
                                 </Typography>
@@ -325,10 +336,6 @@ function OngoingCardsNew(props) {
                             </>
                         )}
                     </p>
-                    {/* {commission.errandStatus} */}
-                    {/* {props.status} */}
-
-                    {/* commission.errandStatus === "Complete" && ( */}
 
                     {user.userType === "Employer" &&
                         props.status === "Complete" && (
@@ -520,14 +527,14 @@ function OngoingCardsNew(props) {
                         </>
                     )}
 
-                    <Link to={props.path}>
+                    {/* <Link to={props.path}>
                         <a class="action" href="#">
                             Find out more
                             <span aria-hidden="true">
                                 →
                             </span>
                         </a>
-                    </Link>
+                    </Link> */}
                 </div >
             </div>
         </>

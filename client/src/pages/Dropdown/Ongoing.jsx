@@ -141,12 +141,9 @@ function Ongoing() {
           // }}
           >
             <option value="">Status</option>
-            <option value="Pending">Pending</option>
+            <option value="Taken">Pending</option>
             <option value="Complete">Complete</option>
             <option value="Cancel">Cancel</option>
-            <option value="Expired">Expired</option>
-            <option value="Caught">Caught</option>
-            <option value="Available">Available</option>
             <option value="Ongoing">Ongoing</option>
 
           </select>
