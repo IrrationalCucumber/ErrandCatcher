@@ -5,7 +5,7 @@ const Verify = {
     db.query(
       `SELECT v.*, ua.* FROM verification_request v
       JOIN useraccount ua ON v.requestUserID = ua.userID
-      WEHRE v.requestStatus = 'Pending'
+      WHERE v.requestStatus = 'Pending'
       ORDER BY v.requestID ASC
      `,
       callback
