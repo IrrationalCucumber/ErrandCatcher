@@ -422,9 +422,9 @@ function OngoingCardsNew(props) {
 
                     {user.userType === "Catcher" && (
                         <>
-                            <div className="ongoing__cards__buttons">
+                            <div className="ongoing__cardsNewCat__buttons">
                                 <button
-                                    className="ongoing__cards__button__complete"
+                                    className="ongoing__cardsNewCat__button__complete"
                                     onClick={() => handleOpenMarkModal()}
                                 >
                                     Mark as Completed
@@ -433,7 +433,7 @@ function OngoingCardsNew(props) {
                                 <button
                                     // onClick={() => cancel(commission.commissionID)}
                                     onClick={handleOpenCancelModal}
-                                    className="ongoing__cards__button__cancel"
+                                    className="ongoing__cardsNewCat__button__cancel"
                                 >
                                     Cancel
                                 </button>
