@@ -18,6 +18,7 @@ import DialogActions from "@mui/joy/DialogActions";
 import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
+import OngoingCardsNew from "../Dropdown/OngoingCardsNew";
 
 function CommissionPage() {
   const headers = ["DATE", "EMPLOYER", "ERRAND TITLE", "STATUS"];
@@ -262,7 +263,48 @@ function CommissionPage() {
           />
         </div>
       </div>
+
       <OngoingCards commissions={commissions} to={`/view-errand/${userID}`} />
+      <div className="cards__container">
+        <div className="cards__wrapper">
+          <div className="cards__items">
+            {filterErrands.map((commission) => (
+              <OngoingCardsNew
+                key={commission.commissionID}
+                icon={commission.commissionType}
+                title={commission.commissionTitle}
+                type={commission.commissionType}
+                location={commission.commissionLocation}
+                desc={commission.commissionDesc}
+                pay={commission.commissionPay}
+                status={commission.errandStatus}
+                path={`/errand/view-errand/${commission.commissionID}`}
+                // Employer side
+                userFname={commission.userFirstname}
+                userLname={commission.userLastname}
+
+                // handle payment
+                // pay={commission.commissionPay}
+                // type={commission.commissionType}
+                // userFname={commission.userFirstname}
+                // userLname={commission.userLastname}
+                transID={commission.transactID}
+                // title={commission.commissionTitle}
+                comID={commission.commissionID}
+                transCatID={commission.transCatcherID}
+
+                // Catcher side
+                // marked complete and cancel
+                // transID={commission.transactID}
+                empID={commission.employerID}
+
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+
       {/* Pagination controls */}
       {commissions.length > 0 && (
         <Pagination
