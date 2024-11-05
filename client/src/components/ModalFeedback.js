@@ -8,8 +8,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Fade from '@mui/material/Fade';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 
 const ModalFeedback = (props) => {
@@ -27,6 +27,8 @@ const ModalFeedback = (props) => {
         textAlign: 'center',
     };
 
+    const IconComponent = props.icon || CheckCircleIcon; // Default to CheckCircleIcon
+
     return (
         <>
             <Modal
@@ -40,17 +42,20 @@ const ModalFeedback = (props) => {
                     <Box
                         sx={style}
                     >
-                        <CheckCircleIcon
-                            color="success"
-                            sx={{ fontSize: 50 }}
+                        {/* custom props icon */}
+                        <IconComponent
+                            color={props.color}
+                            sx={{ fontSize: 70 }}
                         />
                         {/* title header */}
                         <Typography
                             id="modal-modal-title"
                             variant="h5"
+                            color={props.colorText}
                             sx={{
-                                color: 'green',
-                                fontWeight: 'bold'
+                                fontWeight: "bold",
+                                fontSize: 24,
+                                mt: 2
                             }}>
                             {props.headerMes}
                         </Typography>
@@ -65,8 +70,8 @@ const ModalFeedback = (props) => {
                         </Typography>
                         <Box
                             sx={{
-                                display: 'flex',
-                                justifyContent: 'center',
+                                display: "flex",
+                                justifyContent: "center",
                                 mt: 3
                             }}>
                             <Button
