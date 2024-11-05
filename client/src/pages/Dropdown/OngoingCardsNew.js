@@ -27,6 +27,8 @@ import "../../components/Cards/cardsNew.css";
 import { useAuth } from "../../components/AuthContext";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 import CloseIcon from "@mui/icons-material/Close";
+import ErrorIcon from '@mui/icons-material/Error';
+import ModalFeedback from "../../components/ModalFeedback";
 
 function OngoingCardsNew(props) {
 
@@ -59,6 +61,15 @@ function OngoingCardsNew(props) {
     const [alertColor, setAlertColor] = useState("");
     const [iconlert, setIconLert] = useState(null);
     const [showAlert, setShowAlert] = useState(false);
+
+    // modal message pop-up
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => {
+        setOpen(true);
+    }
+    const handleClose = () => {
+        setOpen(false);
+    }
 
     const getCurrentDate = () => {
         const currentDate = new Date();
@@ -109,9 +120,12 @@ function OngoingCardsNew(props) {
                 feedback.commissionID = commissionID;
                 //feedback.employerID = commission.
 
+                // feedback modal open
+                handleOpen();
+
                 //feedback.commissionID = fetchLoc().commissionID;
-                const response = await axios.post("http://localhost:8800/rate", feedback);
-                setSuccessMsg(response.data);
+                // const response = await axios.post("http://localhost:8800/rate", feedback);
+                // setSuccessMsg(response.data);
             }
         } catch (err) {
             console.log(err);
@@ -278,6 +292,16 @@ function OngoingCardsNew(props) {
                     {message}
                 </Alert>
             )}
+
+            <ModalFeedback
+                open={open}
+                handleClose={handleClose}
+                headerMes="Success!"
+                contentMes="You have successfully feedbacked a catcher."
+                color="success"
+                colorText="green"
+            // icon={ErrorIcon}
+            />
 
             <div class="card">
                 <div class="iconcard" >
