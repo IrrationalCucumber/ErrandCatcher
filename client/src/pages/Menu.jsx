@@ -12,12 +12,23 @@ import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import LoadingBackdrop from "../components/LoadingSpinner";
 import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
+import ModalFeedback from "../components/ModalFeedback";
+import ErrorIcon from '@mui/icons-material/Error';
 
 const Menu = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
   const navigate = useNavigate();
+
+  // modal message pop-up
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  }
+  const handleClose = () => {
+    setOpen(false);
+  }
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
@@ -26,7 +37,8 @@ const Menu = () => {
   const handleSearch = () => {
     // Trigger loading state
     if (searchQuery === "") {
-      alert("Please input your fields");
+      // alert("Please input your fields");
+      handleOpen();
     }
     else {
       setLoading(true);
@@ -44,6 +56,16 @@ const Menu = () => {
         value={searchQuery}
         onClick={handleSearch}
         onChange={(e) => setSearchQuery(e.target.value)}
+      />
+
+      <ModalFeedback
+        open={open}
+        handleClose={handleClose}
+        headerMes="Error Occurred!"
+        contentMes="Please input your fields, please try again."
+        color="error"
+        colorText="error"
+        icon={ErrorIcon}
       />
 
       <LoadingBackdrop

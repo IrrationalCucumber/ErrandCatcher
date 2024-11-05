@@ -77,7 +77,7 @@ const ModalFeedback = (props) => {
                             }}>
                             <Button
                                 variant="contained"
-                                color="success"
+                                color={props.color}
                                 onClick={props.handleClose}
                                 sx={{
                                     width: "180px",
