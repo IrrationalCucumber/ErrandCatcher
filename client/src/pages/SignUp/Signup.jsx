@@ -5,6 +5,7 @@ import axios from "axios";
 import RadioInputs from "./RadioInputs";
 //import "./Error.css";
 import "./passignup.css";
+import ModalFeedback from "../../components/ModalFeedback";
 
 const Signup = () => {
   const [account, setAccount] = useState({
@@ -217,7 +218,18 @@ const Signup = () => {
     }
   };
 
+  // modal message pop-up
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  }
+  const handleClose = () => {
+    setOpen(false);
+    navigate("/sign-in");
+  }
+
   //save the data into db
+  // do logic here 
   const handleClick = async (e) => {
     e.preventDefault();
     const isValid = validateForm();
@@ -228,8 +240,10 @@ const Signup = () => {
       try {
         account.dateCreated = getCurrentDate();
         await axios.post("http://localhost:8800/sign-up", account); // new enpoint
-        alert("Success");
-        navigate("/sign-in");
+        // alert("Success");
+        // navigate("/sign-in");
+        // modal popup message
+        handleOpen();
       } catch (err) {
         console.log(err);
       }
@@ -238,400 +252,408 @@ const Signup = () => {
   console.log(account);
 
   return (
-    <div
-      className="SUcontainer"
-      style={{
-        maxWidth: "950px",
-        margin: "20px auto",
-        padding: "0 15px",
-        textAlign: "center",
-      }}
-    >
-      <h2
+    <>
+      <ModalFeedback
+        open={open}
+        handleClose={handleClose}
+        headerMes="Success!"
+        contentMes="You have successfully created an account. 🎉"
+        color="success"
+        colorText="green"
+      // icon={ErrorIcon}
+      />
+      <div
+        className="SUcontainer"
         style={{
-          fontFamily: "sans-serif",
-          paddingTop: "20px",
-          color: "#005a80",
+          maxWidth: "950px",
+          margin: "20px auto",
+          padding: "0 15px",
+          textAlign: "center",
         }}
       >
-        Errand Catcher
-      </h2>
-      <form>
-        <div className="SUrow">
-          {!selectedType && (
-            <div className="col text-center">
-              <div
-                className="SUcontainer"
-                style={{
-                  maxWidth: "950px",
-                  margin: "0 auto",
-                  padding: "20px 20px 20px 20px",
-                  textAlign: "center",
-                }}
-              >
-                <h2>Join as an Employer or a Catcher</h2>
-              </div>
-              <RadioInputs
-                options={options}
-                selectedOption={selectedOption}
-                onChange={handleOptionChange}
-              />
-              <div>
-                <button
-                  onClick={handleTypeChange}
-                  disabled={!selectedOption}
-                  style={{
-                    padding: "10px",
-                    width: "200px",
-                    borderRadius: "5px",
-                    border: "ridge",
-                    transition: "background-color 0.3s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = "#005a80"; // Change background color on hover
-                    e.target.style.color = "#fff";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.backgroundColor = ""; // Revert back to initial background color
-                    e.target.style.color = "";
-                  }}
-                >
-                  {selectedOption
-                    ? `Join as ${
-                        selectedOption.charAt(0).toUpperCase() +
-                        selectedOption.slice(1)
-                      }`
-                    : "Create Account"}
-                </button>
-              </div>
-              <div className="m-4" style={{ paddingTop: "20px" }}>
-                Already have an account? <Link to="/sign-in">Sign in</Link>
-              </div>
-            </div>
-          )}
-          {selectedType && (
-            <div className="col" style={{ flex: "1", padding: "0 15px" }}>
-              <div className="text-center mb-4">
-                <h3>Signup to Errand Catcher</h3>
-              </div>
-              <form className="mt-4 mb-4">
+        <h2
+          style={{
+            fontFamily: "sans-serif",
+            paddingTop: "20px",
+            color: "#005a80",
+          }}
+        >
+          Errand Catcher
+        </h2>
+        <form>
+          <div className="SUrow">
+            {!selectedType && (
+              <div className="col text-center">
                 <div
-                  className="SUrow"
+                  className="SUcontainer"
                   style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    margin: "0 -15px",
+                    maxWidth: "950px",
+                    margin: "0 auto",
+                    padding: "20px 20px 20px 20px",
+                    textAlign: "center",
                   }}
                 >
-                  <div className="col">
-                    <label className="SUlabel">First Name</label>
-                    <input
-                      // className={errorMessage ? "error" : ""}
-                      className={errors.firstName ? "error" : ""}
-                      type="text"
-                      placeholder="First Name"
-                      onChange={handleChange}
-                      name="firstName"
-                      value={account.firstName}
-                      required
-                    />
-                    {errors.firstName && (
-                      <span style={{ color: "#f02849", fontSize: "14px" }}>
-                        {errors.firstName}
-                      </span>
-                    )}
-                  </div>
-                  <div className="col">
-                    <label className="SUlabel">Last Name</label>
-                    <input
-                      // className={errorMessage ? "error" : ""}
-                      className={errors.lastName ? "error" : ""}
-                      type="text"
-                      placeholder="Last Name"
-                      onChange={handleChange}
-                      name="lastName"
-                      value={account.lastName}
-                      required
-                    />
-                    {errors.lastName && (
-                      <span style={{ color: "#f02849", fontSize: "14px" }}>
-                        {errors.lastName}
-                      </span>
-                    )}
-                  </div>
+                  <h2>Join as an Employer or a Catcher</h2>
                 </div>
-                <div
-                  className="SUrow"
-                  style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    margin: "0 -15px",
-                  }}
-                >
-                  <div className="col">
-                    <label className="SUlabel">Birthday</label>
-                    <input
-                      // className={errorMessage ? "error" : ""}
-                      className={errors.bday ? "error" : ""}
-                      type="date"
-                      placeholder="Birthday"
-                      required
-                      name="bday"
-                      value={account.bday}
-                      onChange={handleChange}
-                      max={getMaxDate()}
-                    />
-                    {errors.bday && (
-                      <span style={{ color: "#f02849", fontSize: "14px" }}>
-                        {errors.bday}
-                      </span>
-                    )}
-                  </div>
-                  <div className="col">
-                    <label className="SUlabel">Gender</label>
-                    <select
-                      // className={errorMessage ? "error" : ""}
-                      className={errors.gender ? "error" : ""}
-                      required
-                      style={{ width: "100%" }}
-                      value={account.gender}
-                      onChange={handleChange}
-                      name="gender"
-                    >
-                      <option value="">Select Gender</option>
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
-                    </select>
-                    {errors.gender && (
-                      <span style={{ color: "#f02849", fontSize: "14px" }}>
-                        {errors.gender}
-                      </span>
-                    )}
-                  </div>
-                </div>{" "}
-                <div
-                  className="SUrow"
-                  style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    margin: "0 -15px",
-                  }}
-                >
-                  <div className="col">
-                    <label className="SUlabel">Username</label>
-                    <input
-                      // className={errorMessage ? "error" : ""}
-                      className={errors.regUsername ? "error" : ""}
-                      type="text"
-                      placeholder="Username"
-                      onChange={handleChange}
-                      name="regUsername"
-                      value={account.regUsername}
-                      autocomplete="off"
-                      required
-                    />
-                    <div className="err">
-                      {" "}
-                      {errors.regUsername && (
-                        <span style={{ color: "#f02849", fontSize: "14px" }}>
-                          {errors.regUsername}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <div className="col">
-                    <label className="SUlabel">Email Address</label>
-                    <input
-                      // className={errorMessage ? "error" : ""}
-                      className={errors.email ? "error" : ""}
-                      type="email"
-                      placeholder="Email Address"
-                      onChange={handleChange}
-                      name="email"
-                      value={account.email}
-                      required
-                    />
-                    {errors.email && (
-                      <span style={{ color: "#f02849", fontSize: "14px" }}>
-                        {errors.email}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div
-                  className="SUrow"
-                  style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    margin: "0 -15px",
-                  }}
-                >
-                  <div className="col">
-                    <label className="SUlabel">Password</label>
-                    <input
-                      // className={errorMessage ? "error" : ""}
-                      className={errors.regPassword ? "error" : ""}
-                      type="password"
-                      placeholder="Password"
-                      // onChange={handleChange}
-                      onChange={(event) => {
-                        setAccount((prev) => ({
-                          ...prev,
-                          [event.target.name]: event.target.value,
-                        }));
-                        setStrength(
-                          evaluatePasswordStrength(event.target.value)
-                        );
-                      }}
-                      name="regPassword"
-                      value={account.regPassword}
-                      autoComplete="off"
-                      required
-                    />
-                    {errors.regPassword && (
-                      <span style={{ color: "#f02849", fontSize: "14px" }}>
-                        {errors.regPassword}
-                      </span>
-                    )}
-                    {account.regPassword && (
-                      <>
-                        <div
-                          className={`password-strength ${
-                            strength === "Weak"
-                              ? "strength-weak"
-                              : strength === "Medium"
-                              ? "strength-medium"
-                              : strength === "Strong"
-                              ? "strength-strong"
-                              : ""
-                          }`}
-                        >
-                          Password strength: {strength}
-                        </div>
-
-                        <div className="strength-meter">
-                          <div
-                            className="strength-meter-fill"
-                            style={{
-                              width: getStrengthWidth(strength),
-                              backgroundColor: getStrengthColor(strength),
-                            }}
-                          />
-                        </div>
-                      </>
-                    )}
-                  </div>
-                  <div className="col">
-                    <label className="SUlabel">Confirm Password</label>
-                    <input
-                      // className={errorMessage ? "error" : ""}
-                      className={errors.regPassword2 ? "error" : ""}
-                      type="password"
-                      placeholder="Confirm Password"
-                      onChange={handleChange}
-                      name="regPassword2"
-                      value={account.regPassword2}
-                      autoComplete="off"
-                      required
-                    />
-                    {errors.regPassword2 && (
-                      <span style={{ color: "#f02849", fontSize: "14px" }}>
-                        {errors.regPassword2}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div
-                  className="SUrow"
-                  style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    margin: "0 -15px",
-                  }}
-                >
-                  <div
-                    className="col text-center"
-                    style={{ paddingTop: "20px" }}
+                <RadioInputs
+                  options={options}
+                  selectedOption={selectedOption}
+                  onChange={handleOptionChange}
+                />
+                <div>
+                  <button
+                    onClick={handleTypeChange}
+                    disabled={!selectedOption}
+                    style={{
+                      padding: "10px",
+                      width: "200px",
+                      borderRadius: "5px",
+                      border: "ridge",
+                      transition: "background-color 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = "#005a80"; // Change background color on hover
+                      e.target.style.color = "#fff";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = ""; // Revert back to initial background color
+                      e.target.style.color = "";
+                    }}
                   >
-                    <button
-                      onClick={handleClick}
-                      style={{
-                        width: "200px",
-                        height: "40px",
-                        borderRadius: "10px",
-                        backgroundColor: "#005a80",
-                        color: "#fff",
-                        transition: "background-color 0.3s ease",
-                      }}
-                      className="signup-button"
-                    >
-                      Sign Up
-                    </button>
-                  </div>
-                  {/* Error message display */}
-                  {/* {errorMessage && (
-                    <div className="m-4" style={{ color: "red" }}>
-                      {errorMessage}
-                    </div>
-                  )} */}
+                    {selectedOption
+                      ? `Join as ${selectedOption.charAt(0).toUpperCase() +
+                      selectedOption.slice(1)
+                      }`
+                      : "Create Account"}
+                  </button>
                 </div>
                 <div className="m-4" style={{ paddingTop: "20px" }}>
                   Already have an account? <Link to="/sign-in">Sign in</Link>
                 </div>
-                <div
-                  className="m-4-return"
-                  style={{
-                    paddingTop: "20px",
-                    paddingLeft: "20px",
-                    border: "none",
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                  }}
-                >
-                  <span
-                    onClick={handleReset}
-                    style={{ cursor: "pointer", fontSize: "20px" }}
-                  >
-                    <i class="fa-solid fa-arrow-left" />
-                  </span>
+              </div>
+            )}
+            {selectedType && (
+              <div className="col" style={{ flex: "1", padding: "0 15px" }}>
+                <div className="text-center mb-4">
+                  <h3>Signup to Errand Catcher</h3>
                 </div>
-              </form>
-            </div>
-          )}
-        </div>
-      </form>
-      <style>
-        {`
+                <form className="mt-4 mb-4">
+                  <div
+                    className="SUrow"
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      margin: "0 -15px",
+                    }}
+                  >
+                    <div className="col">
+                      <label className="SUlabel">First Name</label>
+                      <input
+                        // className={errorMessage ? "error" : ""}
+                        className={errors.firstName ? "error" : ""}
+                        type="text"
+                        placeholder="First Name"
+                        onChange={handleChange}
+                        name="firstName"
+                        value={account.firstName}
+                        required
+                      />
+                      {errors.firstName && (
+                        <span style={{ color: "#f02849", fontSize: "14px" }}>
+                          {errors.firstName}
+                        </span>
+                      )}
+                    </div>
+                    <div className="col">
+                      <label className="SUlabel">Last Name</label>
+                      <input
+                        // className={errorMessage ? "error" : ""}
+                        className={errors.lastName ? "error" : ""}
+                        type="text"
+                        placeholder="Last Name"
+                        onChange={handleChange}
+                        name="lastName"
+                        value={account.lastName}
+                        required
+                      />
+                      {errors.lastName && (
+                        <span style={{ color: "#f02849", fontSize: "14px" }}>
+                          {errors.lastName}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div
+                    className="SUrow"
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      margin: "0 -15px",
+                    }}
+                  >
+                    <div className="col">
+                      <label className="SUlabel">Birthday</label>
+                      <input
+                        // className={errorMessage ? "error" : ""}
+                        className={errors.bday ? "error" : ""}
+                        type="date"
+                        placeholder="Birthday"
+                        required
+                        name="bday"
+                        value={account.bday}
+                        onChange={handleChange}
+                        max={getMaxDate()}
+                      />
+                      {errors.bday && (
+                        <span style={{ color: "#f02849", fontSize: "14px" }}>
+                          {errors.bday}
+                        </span>
+                      )}
+                    </div>
+                    <div className="col">
+                      <label className="SUlabel">Gender</label>
+                      <select
+                        // className={errorMessage ? "error" : ""}
+                        className={errors.gender ? "error" : ""}
+                        required
+                        style={{ width: "100%" }}
+                        value={account.gender}
+                        onChange={handleChange}
+                        name="gender"
+                      >
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                      </select>
+                      {errors.gender && (
+                        <span style={{ color: "#f02849", fontSize: "14px" }}>
+                          {errors.gender}
+                        </span>
+                      )}
+                    </div>
+                  </div>{" "}
+                  <div
+                    className="SUrow"
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      margin: "0 -15px",
+                    }}
+                  >
+                    <div className="col">
+                      <label className="SUlabel">Username</label>
+                      <input
+                        // className={errorMessage ? "error" : ""}
+                        className={errors.regUsername ? "error" : ""}
+                        type="text"
+                        placeholder="Username"
+                        onChange={handleChange}
+                        name="regUsername"
+                        value={account.regUsername}
+                        autocomplete="off"
+                        required
+                      />
+                      <div className="err">
+                        {" "}
+                        {errors.regUsername && (
+                          <span style={{ color: "#f02849", fontSize: "14px" }}>
+                            {errors.regUsername}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="col">
+                      <label className="SUlabel">Email Address</label>
+                      <input
+                        // className={errorMessage ? "error" : ""}
+                        className={errors.email ? "error" : ""}
+                        type="email"
+                        placeholder="Email Address"
+                        onChange={handleChange}
+                        name="email"
+                        value={account.email}
+                        required
+                      />
+                      {errors.email && (
+                        <span style={{ color: "#f02849", fontSize: "14px" }}>
+                          {errors.email}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div
+                    className="SUrow"
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      margin: "0 -15px",
+                    }}
+                  >
+                    <div className="col">
+                      <label className="SUlabel">Password</label>
+                      <input
+                        // className={errorMessage ? "error" : ""}
+                        className={errors.regPassword ? "error" : ""}
+                        type="password"
+                        placeholder="Password"
+                        // onChange={handleChange}
+                        onChange={(event) => {
+                          setAccount((prev) => ({
+                            ...prev,
+                            [event.target.name]: event.target.value,
+                          }));
+                          setStrength(
+                            evaluatePasswordStrength(event.target.value)
+                          );
+                        }}
+                        name="regPassword"
+                        value={account.regPassword}
+                        autoComplete="off"
+                        required
+                      />
+                      {errors.regPassword && (
+                        <span style={{ color: "#f02849", fontSize: "14px" }}>
+                          {errors.regPassword}
+                        </span>
+                      )}
+                      {account.regPassword && (
+                        <>
+                          <div
+                            className={`password-strength ${strength === "Weak"
+                              ? "strength-weak"
+                              : strength === "Medium"
+                                ? "strength-medium"
+                                : strength === "Strong"
+                                  ? "strength-strong"
+                                  : ""
+                              }`}
+                          >
+                            Password strength: {strength}
+                          </div>
+
+                          <div className="strength-meter">
+                            <div
+                              className="strength-meter-fill"
+                              style={{
+                                width: getStrengthWidth(strength),
+                                backgroundColor: getStrengthColor(strength),
+                              }}
+                            />
+                          </div>
+                        </>
+                      )}
+                    </div>
+                    <div className="col">
+                      <label className="SUlabel">Confirm Password</label>
+                      <input
+                        // className={errorMessage ? "error" : ""}
+                        className={errors.regPassword2 ? "error" : ""}
+                        type="password"
+                        placeholder="Confirm Password"
+                        onChange={handleChange}
+                        name="regPassword2"
+                        value={account.regPassword2}
+                        autoComplete="off"
+                        required
+                      />
+                      {errors.regPassword2 && (
+                        <span style={{ color: "#f02849", fontSize: "14px" }}>
+                          {errors.regPassword2}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div
+                    className="SUrow"
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      margin: "0 -15px",
+                    }}
+                  >
+                    <div
+                      className="col text-center"
+                      style={{ paddingTop: "20px" }}
+                    >
+                      <button
+                        onClick={handleClick}
+                        style={{
+                          width: "200px",
+                          height: "40px",
+                          borderRadius: "10px",
+                          backgroundColor: "#005a80",
+                          color: "#fff",
+                          transition: "background-color 0.3s ease",
+                        }}
+                        className="signup-button"
+                      >
+                        Sign Up
+                      </button>
+                    </div>
+                    {/* Error message display */}
+                    {/* {errorMessage && (
+                    <div className="m-4" style={{ color: "red" }}>
+                      {errorMessage}
+                      </div>
+                      )} */}
+                  </div>
+                  <div className="m-4" style={{ paddingTop: "20px" }}>
+                    Already have an account? <Link to="/sign-in">Sign in</Link>
+                  </div>
+                  <div
+                    className="m-4-return"
+                    style={{
+                      paddingTop: "20px",
+                      paddingLeft: "20px",
+                      border: "none",
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                    }}
+                  >
+                    <span
+                      onClick={handleReset}
+                      style={{ cursor: "pointer", fontSize: "20px" }}
+                    >
+                      <i class="fa-solid fa-arrow-left" />
+                    </span>
+                  </div>
+                </form>
+              </div>
+            )}
+          </div>
+        </form>
+        <style>
+          {`
           .SUcontainer h2 {
             color: #333;
             font-size: 24px;
             margin-bottom: 20px;
             text-align: center;
-          }
-
-          .SUcontainer input[type="text"],
-          .SUcontainer input[type="email"],
-          .SUcontainer input[type="password"],
-          .SUcontainer input[type="date"],
-          .SUcontainer select {
-            width: calc(50% - 5px);
-            padding: 10px;
-            margin-bottom: 6px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            }
+            
+            .SUcontainer input[type="text"],
+            .SUcontainer input[type="email"],
+            .SUcontainer input[type="password"],
+            .SUcontainer input[type="date"],
+            .SUcontainer select {
+              width: calc(50% - 5px);
+              padding: 10px;
+              margin-bottom: 6px;
+              border: 1px solid #ccc;
+              border-radius: 4px;
             box-sizing: border-box;
             text-align: start;
           }
-
+          
           .SUcontainer input.error {
             border: 0.1px solid red;
             font-size: 16px;
-          }
-
-          .SUcontainer select.error {
-            border: 0.1px solid red;
-            font-size: 16px;
+            }
+            
+            .SUcontainer select.error {
+              border: 0.1px solid red;
+              font-size: 16px;
           }
 
           .SUcontainer button[type="submit"] {
@@ -643,58 +665,59 @@ const Signup = () => {
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-          }
-
-          .SUcontainer button[type="submit"]:hover {
-            background-color: #0056b3;
-          }
-
-          .SUcontainer .text-center {
-            text-align: center;
-            padding-top: 20px;
-          }
-
-          .SUcontainer .mb-4 {
-            margin-bottom: 1.5rem;
-          }
-
+            }
+            
+            .SUcontainer button[type="submit"]:hover {
+              background-color: #0056b3;
+              }
+              
+              .SUcontainer .text-center {
+                text-align: center;
+                padding-top: 20px;
+                }
+                
+                .SUcontainer .mb-4 {
+                  margin-bottom: 1.5rem;
+                  }
+                  
           .SUlabel {
             color: black;
             text-align: left;
             display: block;
-          }
-
-          .SUrow {
-            gap: 20px;
-          }
-
-          .col {
-            flex: 1;
-          }
-
-          .m-4-return span {
-            color: #007bff;
-            text-decoration: underline; 
-            margin-right: 5px;
-          }
-
-          .signup-button {
-            width: 200px;
-            height: 30px;
-            border-radius: 10px;
-            background-color: #005a80;
+            }
+            
+            .SUrow {
+              gap: 20px;
+              }
+              
+              .col {
+                flex: 1;
+                }
+                
+                .m-4-return span {
+                  color: #007bff;
+                  text-decoration: underline; 
+                  margin-right: 5px;
+                  }
+                  
+                  .signup-button {
+                    width: 200px;
+                    height: 30px;
+                    border-radius: 10px;
+                    background-color: #005a80;
             color: #fff;
             transition: background-color 0.3s ease;
             cursor: pointer;
             border: none;
-          }
-          
-          .signup-button:hover {
-            background-color: #04354a;
-          }
-        `}
-      </style>
-    </div>
+            }
+            
+            .signup-button:hover {
+              background-color: #04354a;
+              }
+              `}
+        </style>
+      </div>
+    </>
   );
 };
 
