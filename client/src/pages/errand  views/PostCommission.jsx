@@ -16,6 +16,7 @@ import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import LoadingBackdrop from "../../components/LoadingSpinner";
 import Snackbar from "@mui/joy/Snackbar";
 import PostAddIcon from "@mui/icons-material/PostAdd";
+import ModalFeedback from "../../components/ModalFeedback";
 
 const PostCommission = () => {
   const [commission, setCommission] = useState({
@@ -56,6 +57,15 @@ const PostCommission = () => {
   const [loading, setLoading] = useState(false);
   const [opensnack, setOpenSnack] = useState(false);
 
+  // modal message pop-up
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  }
+  const handleClose = () => {
+    setOpen(false);
+    navigate(`/dashboard/commissions`);
+  }
   //update the info that will be stored
   const handleChange = (e) => {
     if (e.target.name === "comType") {
@@ -182,19 +192,26 @@ const PostCommission = () => {
         // navigate(`/dashboard/commissions`);
 
         setLoading(true);
-        // 2 seconds cd
+
         setTimeout(() => {
           setLoading(false);
-
-          setOpenSnack(true);
-          // alert("You have Posted an Errand!");
-          // navigate(`/dashboard/commissions`);
-
-          setTimeout(() => {
-            // setLoading(false);
-            navigate(`/dashboard/commissions`);
-          }, 1900);
+          // modal will pop-up in 2 seconds
+          handleOpen();
         }, 2000);
+
+        // 2 seconds cd
+        // setTimeout(() => {
+        //   setLoading(false);
+
+        //   setOpenSnack(true);
+        //   // alert("You have Posted an Errand!");
+        //   // navigate(`/dashboard/commissions`);
+
+        //   setTimeout(() => {
+        //     // setLoading(false);
+        //     navigate(`/dashboard/commissions`);
+        //   }, 1900);
+        // }, 2000);
       }
     } catch (err) {
       console.log(err);
@@ -248,6 +265,16 @@ const PostCommission = () => {
         open={loading}
         text="Loading... Please wait while Posting Your Errand"
         icons={<HourglassBottomIcon />}
+      />
+
+      <ModalFeedback
+        open={open}
+        handleClose={handleClose}
+        headerMes="Success!"
+        contentMes="You have successfully posted an Errand"
+        color="success"
+        colorText="green"
+      // icon={ErrorIcon}
       />
 
       <div className="errand-cont">
