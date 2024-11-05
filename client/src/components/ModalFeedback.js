@@ -15,16 +15,17 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 const ModalFeedback = (props) => {
 
     const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
         width: 400,
-        bgcolor: 'background.paper',
-        border: '2px solid #000',
+        bgcolor: "background.paper",
+        border: "none",
+        borderRadius: 2,
         boxShadow: 24,
         p: 4,
-        textAlign: 'center',
+        textAlign: "center",
     };
 
     const IconComponent = props.icon || CheckCircleIcon; // Default to CheckCircleIcon
@@ -77,7 +78,14 @@ const ModalFeedback = (props) => {
                             <Button
                                 variant="contained"
                                 color="success"
-                                onClick={props.handleClose}>
+                                onClick={props.handleClose}
+                                sx={{
+                                    width: "180px",
+                                    borderRadius: 8,
+                                    padding: "5px",
+                                    fontSize: "1.0rem",
+                                }}
+                            >
                                 OKAY
                             </Button>
                         </Box>
