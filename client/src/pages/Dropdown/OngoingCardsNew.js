@@ -21,10 +21,12 @@ import {
     ModalDialog,
     Chip,
     Typography,
+    Alert,
 } from "@mui/joy";
 import "../../components/Cards/cardsNew.css";
 import { useAuth } from "../../components/AuthContext";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
+import CloseIcon from "@mui/icons-material/Close";
 
 function OngoingCardsNew(props) {
 
@@ -51,6 +53,12 @@ function OngoingCardsNew(props) {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [inputValue, setInputValue] = useState({ feedbacks: "" });
+
+    //Alert feedback
+    const [message, setMessage] = useState("");
+    const [alertColor, setAlertColor] = useState("");
+    const [iconlert, setIconLert] = useState(null);
+    const [showAlert, setShowAlert] = useState(false);
 
     const getCurrentDate = () => {
         const currentDate = new Date();
@@ -85,17 +93,26 @@ function OngoingCardsNew(props) {
         // Add any other logic you want to perform when the button is clicked
         //e.preventDefault();
         try {
-            //"http://localhost:8800/commission" - local computer
-            //"http://192.168.1.47:8800/commission" - netwrok
-            feedback.feedbackDate = getCurrentDate();
-            feedback.catcherID = catcherID;
-            feedback.feedbackPosterID = user.userID;
-            feedback.commissionID = commissionID;
-            //feedback.employerID = commission.
+            if (feedback.feedbackCount === 0 || feedback.feedbackComment === "") {
+                setMessage("Please input all the feedback fields.");
+                setAlertColor("danger");
+                setIconLert(<WarningRoundedIcon />);
+                setShowAlert(true);
+                return;
 
-            //feedback.commissionID = fetchLoc().commissionID;
-            const response = await axios.post("http://localhost:8800/rate", feedback);
-            setSuccessMsg(response.data);
+            } else {
+                //"http://localhost:8800/commission" - local computer
+                //"http://192.168.1.47:8800/commission" - netwrok
+                feedback.feedbackDate = getCurrentDate();
+                feedback.catcherID = catcherID;
+                feedback.feedbackPosterID = user.userID;
+                feedback.commissionID = commissionID;
+                //feedback.employerID = commission.
+
+                //feedback.commissionID = fetchLoc().commissionID;
+                const response = await axios.post("http://localhost:8800/rate", feedback);
+                setSuccessMsg(response.data);
+            }
         } catch (err) {
             console.log(err);
         }
@@ -232,6 +249,36 @@ function OngoingCardsNew(props) {
 
     return (
         <>
+            {showAlert && (
+                <Alert
+                    sx={{
+                        position: "fixed",
+                        bottom: 16,
+                        right: 16,
+                        zIndex: 9999,
+                        transform: showAlert ? "translateX(0)" : "translateX(100%)",
+                        transition: "transform 0.5s ease-in-out",
+                    }}
+                    color={alertColor}
+                    size="lg"
+                    variant="solid"
+                    // icon={iconlert}
+                    startDecorator={iconlert}
+                    endDecorator={
+                        <Button
+                            size="sm"
+                            variant="solid"
+                            color={alertColor}
+                            onClick={(e) => setShowAlert(false)}
+                        >
+                            <CloseIcon />
+                        </Button>
+                    }
+                >
+                    {message}
+                </Alert>
+            )}
+
             <div class="card">
                 <div class="iconcard" >
                     <Box class="boxer">
@@ -318,14 +365,14 @@ function OngoingCardsNew(props) {
                         </a>
                     </Link>
 
-                    <p class="desc" style={{marginTop: "12px"}}>
+                    <p class="desc" style={{ marginTop: "12px" }}>
                         {user.userType === "Employer" && (
                             <>
                                 <Typography
                                     color="neutral"
                                     level="title-lg"
                                     variant="plain"
-                                    style={{marginBottom: "4px"}}
+                                    style={{ marginBottom: "4px" }}
                                 >
                                     CATCHER:
                                 </Typography>
