@@ -29,6 +29,8 @@ import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 import CloseIcon from "@mui/icons-material/Close";
 import ErrorIcon from '@mui/icons-material/Error';
 import ModalFeedback from "../../components/ModalFeedback";
+import LoadingBackdrop from "../../components/LoadingSpinner";
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 
 function OngoingCardsNew(props) {
 
@@ -61,6 +63,7 @@ function OngoingCardsNew(props) {
     const [alertColor, setAlertColor] = useState("");
     const [iconlert, setIconLert] = useState(null);
     const [showAlert, setShowAlert] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     // modal message pop-up
     const [open, setOpen] = useState(false);
@@ -121,7 +124,13 @@ function OngoingCardsNew(props) {
                 //feedback.employerID = commission.
 
                 // feedback modal open
-                handleOpen();
+                setLoading(true);
+
+                setTimeout(() => {
+                    setLoading(false);
+                    // modal will pop-up in 2 seconds
+                    handleOpen();
+                }, 2000);
 
                 //feedback.commissionID = fetchLoc().commissionID;
                 // const response = await axios.post("http://localhost:8800/rate", feedback);
@@ -301,6 +310,12 @@ function OngoingCardsNew(props) {
                 color="success"
                 colorText="green"
             // icon={ErrorIcon}
+            />
+
+            <LoadingBackdrop
+                open={loading}
+                text="Loading... Please wait while Sending Your Feedback."
+                icons={<HourglassBottomIcon />}
             />
 
             <div class="card">
