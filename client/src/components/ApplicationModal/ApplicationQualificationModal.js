@@ -154,13 +154,13 @@ function ApplicationQualificationModal(props) {
       await axios.post("http://localhost:8800/apply", application);
 
       //add a notification to the commission's employer
-      // notif.notifDesc = "A Catcher has applied to on of your errand";
-      // notif.userID = props.employerID;
-      // notif.notificationType = "Errand Application";
+      notif.notifDesc = "A Catcher has applied to on of your errand";
+      notif.userID = props.employerID;
+      notif.notificationType = "Errand Application";
 
-      // await axios.post("http://localhost:8800/notify", notif);
+      await axios.post("http://localhost:8800/notify", notif);
       alert("You have applied to this Errand!");
-      alert(application.qualifications);
+      //alert(application.qualifications);
       //navigate(`/application/${userID}`);
       //console.log(notif); // check variables state
       props.close();
