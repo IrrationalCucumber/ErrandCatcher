@@ -98,8 +98,8 @@ const Home = () => {
               username={user.username}
             />
             <Menu />
-            <RequestHeroSection />
-            <AdminHeroSection />
+            {/* <RequestHeroSection />
+            <AdminHeroSection /> */}
             <TopCatcher />
           </>
         )}
