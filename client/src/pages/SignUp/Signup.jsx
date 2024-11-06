@@ -6,6 +6,8 @@ import RadioInputs from "./RadioInputs";
 //import "./Error.css";
 import "./passignup.css";
 import ModalFeedback from "../../components/ModalFeedback";
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
+import LoadingBackdrop from "../../components/LoadingSpinner";
 
 const Signup = () => {
   const [account, setAccount] = useState({
@@ -23,6 +25,7 @@ const Signup = () => {
   });
 
   const [strength, setStrength] = useState("");
+  const [loading, setLoading] = useState(false);
 
   //handle state of error message
   // const [employerErrorMessage, setEmployerErrorMessage] = useState("");
@@ -243,7 +246,15 @@ const Signup = () => {
         // alert("Success");
         // navigate("/sign-in");
         // modal popup message
-        handleOpen();
+
+        setLoading(true);
+
+        setTimeout(() => {
+          setLoading(false);
+          // modal will pop-up in 2 seconds
+          handleOpen();
+        }, 2000);
+
       } catch (err) {
         console.log(err);
       }
@@ -262,6 +273,13 @@ const Signup = () => {
         colorText="green"
       // icon={ErrorIcon}
       />
+
+      <LoadingBackdrop
+        open={loading}
+        text="Loading... Please wait while Creating Your Account"
+        icons={<HourglassBottomIcon />}
+      />
+
       <div
         className="SUcontainer"
         style={{
