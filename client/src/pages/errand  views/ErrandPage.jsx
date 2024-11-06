@@ -67,6 +67,8 @@ const ErrandPage = () => {
         }
       };
       fetchApp();
+      const interval = setInterval(fetchApp, 3000);
+      return () => clearInterval(interval);
     }
   }, [isApplied, user.userType, userID, commissionID]);
 
