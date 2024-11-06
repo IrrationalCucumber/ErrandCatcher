@@ -172,9 +172,9 @@ function OngoingCards({ commissions, to }) {
 
       await axios.post("http://localhost:8800/notify", notif);
       //complete the transaction
-      await axios.put(`http://localhost:8800/complete-trans/${transactID}`, {
-        params: { date: getTimeAndDate() },
-      });
+      await axios.put(
+        `http://localhost:8800/catcher/complete/${transactID}/${user.userID}`
+      );
       console.log("status: completed");
 
       setOpenMark(false);
@@ -183,7 +183,16 @@ function OngoingCards({ commissions, to }) {
     }
   };
 
-  const handlePayment = (pay, type, fname, lname, id, comTitle, erID, catID) => {
+  const handlePayment = (
+    pay,
+    type,
+    fname,
+    lname,
+    id,
+    comTitle,
+    erID,
+    catID
+  ) => {
     const paymentUrl = `http://localhost:8800/process-payment/${userID}`;
     // Change the amount
     const amount = pay;
@@ -202,7 +211,7 @@ function OngoingCards({ commissions, to }) {
         id: id, // transactionID
         employerID: userID,
         errandID: errandID,
-        catID: cateID
+        catID: cateID,
       })
       .then((response) => {
         window.open(response.data.url);
@@ -221,12 +230,12 @@ function OngoingCards({ commissions, to }) {
               <div className="Oncard" key={commission.id}>
                 {(commission.commissionType === "HomeService - Indoor" ||
                   commission.commissionType === "HomeService - Outdoor") && (
-                    <img
-                      src="/images/hr.png"
-                      alt="Commission"
-                      className="Oncard__img"
-                    />
-                  )}
+                  <img
+                    src="/images/hr.png"
+                    alt="Commission"
+                    className="Oncard__img"
+                  />
+                )}
 
                 {commission.commissionType === "Transportation" && (
                   <img
@@ -247,9 +256,16 @@ function OngoingCards({ commissions, to }) {
                   <Typography level="h1" color="neutral" variant="plain">
                     {commission.commissionTitle}
                   </Typography>
-                  <Chip color="success" size="md" variant="outlined">
-                    {commission.errandStatus}
-                  </Chip>
+                  {user.userType === "Catcher" ? (
+                    <Chip color="success" size="md" variant="outlined">
+                      {commission.errandStatus}
+                    </Chip>
+                  ) : (
+                    <Chip color="success" size="md" variant="outlined">
+                      {commission.transStatus}
+                    </Chip>
+                  )}
+
                   <Typography className="ongoing__cards__txt" level="body-sm">
                     {commission.commissionType}
                   </Typography>
