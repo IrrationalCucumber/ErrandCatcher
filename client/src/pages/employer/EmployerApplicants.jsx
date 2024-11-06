@@ -308,7 +308,6 @@ const EmployerApplicants = () => {
       />
       <div className="applicants-container">
         <div className="applicants">
-          <h1 style={{ paddingBottom: "10px" }}>APPLICANTS</h1>
           <div className="search">
             <input type="text" placeholder="Search..." />
             <button type="submit" style={{ backgroundColor: "#1679AB" }}>

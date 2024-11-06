@@ -126,7 +126,6 @@ const CommissionList = () => {
       />
       <div className="Commission-page-container">
         <div className="Commission-page">
-          <h1>Commission List</h1>
           <div className="commissions">
             <div className="search-filter">
               <div className="search">
