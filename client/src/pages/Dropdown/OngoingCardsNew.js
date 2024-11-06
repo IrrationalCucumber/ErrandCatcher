@@ -133,8 +133,8 @@ function OngoingCardsNew(props) {
                 }, 2000);
 
                 //feedback.commissionID = fetchLoc().commissionID;
-                // const response = await axios.post("http://localhost:8800/rate", feedback);
-                // setSuccessMsg(response.data);
+                const response = await axios.post("http://localhost:8800/rate", feedback);
+                setSuccessMsg(response.data);
             }
         } catch (err) {
             console.log(err);
