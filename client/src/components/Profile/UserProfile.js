@@ -67,7 +67,7 @@ function UserProfile(props) {
             // If no preview, show existing profile image or default
             <>
               {props.profileImg ? (
-                <img
+                <img className="user_profile_pic"
                   src={`http://localhost:8800/images/profile/${props.profileImg}`}
                   alt="ProfPic"
                 />
@@ -179,14 +179,19 @@ function UserProfile(props) {
             //display sumbitted IDs of user
             props.verFront || props.verBack ? (
               <>
+              <div className="id_1">
                 <img
                   src={`http://localhost:8800/images/docu/${props.verFront}`}
                   alt="Front"
                 />
+                
+              </div>
+              <div className="id_1">
                 <img
                   src={`http://localhost:8800/images/docu/${props.verBack}`}
                   alt="Back"
                 />
+              </div>
               </>
             ) : null
           }
@@ -420,14 +425,18 @@ export function ViewUserProfile(props) {
             //display sumbitted IDs of user
             props.verFront || props.verBack ? (
               <>
+              <div className="id_1">
                 <img
                   src={`http://localhost:8800/images/docu/${props.verFront}`}
                   alt="ProfPic"
                 />
+              </div>
+              <div className="id_2">
                 <img
                   src={`http://localhost:8800/images/docu/${props.verBack}`}
                   alt="ProfPic"
                 />
+              </div>
               </>
             ) : null
           }
@@ -435,14 +444,17 @@ export function ViewUserProfile(props) {
             //display sumbitted docs/additional ids of user
             props.doc1 || props.doc2 ? (
               <>
-                <img
+              <div className="id_1"><img
                   src={`http://localhost:8800/images/docu/${props.doc1}`}
                   alt="ProfPic"
                 />
+              </div>
+              <div className="id_2">
                 <img
                   src={`http://localhost:8800/images/docu/${props.doc2}`}
                   alt="ProfPic"
                 />
+              </div>
               </>
             ) : null
           }
