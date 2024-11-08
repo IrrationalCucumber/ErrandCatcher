@@ -22,7 +22,7 @@ import { Typography } from "@mui/joy";
 
 function ErrandInputs(props) {
   const [startSuggestions, setStartSuggestions] = useState([]);
-  const [startQuery, setStartQuery] = useState(""); // For starting location input (props.location)
+  const [startQuery, setStartQuery] = useState(props.locValue); // (props.location) = name (props.locValue) = value
   const [startCoordinates, setStartCoordinates] = useState(null); // For selected starting location coordinates
 
   const [destSuggestions, setDestSuggestions] = useState([]);
@@ -139,8 +139,34 @@ function ErrandInputs(props) {
   // Reset the `isStartSelected` state when the user types
   const handleStartQueryChange = (e) => {
     // onChange={(e) => setStartQuery(e.target.value)}
-    setStartQuery(e.target.value);
-    setIsStartSelected(false); // Reset the state when the user starts typing again
+    const { value } = e.target;
+    setStartQuery(value); // Update input value
+    setIsStartSelected(false); // Reset selection if user is typing
+
+    // Use handleChange to update the location field in commission state in PostCommission (dynamic input type value console)
+    props.handleChange({
+      target: {
+        name: props.location, // e.g., "comLocation"
+        value: value, // User-typed value
+      },
+    });
+
+    // setIsStartSelected(false); // Reset selection if user is typing
+    // setStartQuery(e.target.value);
+    // setIsStartSelected(false); // Reset the state when the user starts typing again
+  };
+
+  // Clear suggestions when the input loses focus
+  const handleBlur = () => {
+    // if (!isStartSelected) {
+    //   setStartSuggestions([]);
+    // }
+
+    setTimeout(() => {
+      if (!isStartSelected) {
+        setStartSuggestions([]); // Clear suggestions on blur
+      }
+    }, 100); // Delay to allow click events to register
   };
 
   // Handle destination location suggestion click
@@ -381,6 +407,7 @@ function ErrandInputs(props) {
               onChange={handleStartQueryChange}
               value={startQuery} // Sync input value
               name={props.location}
+              onBlur={handleBlur} // Clear suggestion on blur
             />
             {/* search suggestion */}
             {startSuggestions.length > 0 && (
