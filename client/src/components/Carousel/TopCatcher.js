@@ -48,11 +48,29 @@ export default function TopCatcher() {
             <>
               {catcher.profileImage !== null ? (
                 <img
+                  style={{
+                    maxWidth: "500px",
+                    height: "400px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignContent: "center",
+                    textAlign: "center",
+                    margin: "0 auto"
+                  }}
                   src={`http://localhost:8800/images/profile/${catcher.profileImage}`}
                   alt="ProfPic"
                 />
               ) : (
                 <img
+                  style={{
+                    width: "50%",
+                    height: "400px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignContent: "center",
+                    textAlign: "center",
+                    margin: "0 auto"
+                  }}
                   src="/images/catcher.png"
                   className="d-block w-100"
                   alt="..."
@@ -63,10 +81,26 @@ export default function TopCatcher() {
               change placeholder texts
             */}
             <div className="carousel-caption d-none d-md-block">
+              {/* <div style={{ backdropFilter: "blur(5px)", }}> */}
               <StarRating rating={catcher.averageRate} />
               {/* <h5>{catcher.averageRate}</h5> */}
-              <h5>{catcher.username}</h5>
-              {/* <p>Some representative placeholder content for the slide.</p> */}
+              <div style={{
+                // border: "solid",
+                // maxWidth: "200px",
+                // position: "absolute"
+                backdropFilter: "blur(5px)"
+              }}>
+                <h4 style={{
+                  fontSize: "2.50rem",
+                  fontWeight: "800",
+                  letterSpacing: "4px",
+                  lineHeight: "3rem",
+                  color: "#1a96d5",
+                }}>
+                  {catcher.username}
+                </h4>
+                {/* <p>Some representative placeholder content for the slide.</p> */}
+              </div>
             </div>
           </div>
         ))}
