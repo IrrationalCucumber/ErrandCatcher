@@ -199,10 +199,12 @@ function UserProfile(props) {
             //display sumbitted docs/additional ids of user
             props.doc1 ? (
               <>
+              <div className="id_1">
                 <img
                   src={`http://localhost:8800/images/docu/${props.doc1}`}
                   alt="License"
-                />
+                />    
+              </div>
               </>
             ) : null
           }
