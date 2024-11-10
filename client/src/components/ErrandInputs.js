@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useRef } from "react";
 // import "./ErrandInput.css";
 /**
  * 13/04/24
@@ -32,6 +33,9 @@ function ErrandInputs(props) {
   const [isStartSelected, setIsStartSelected] = useState(false); // New state to track if a suggestion was clicked
   const [isDestSelected, setIsDestSelected] = useState(false); // Same for destination
 
+  // Initialize the debounceTimeout ref
+  const debounceTimeout = useRef(null);
+
   // Fetch suggestions for start location from Mapbox API
   const fetchStartSuggestions = async (searchText) => {
     if (!searchText) {
@@ -48,6 +52,7 @@ function ErrandInputs(props) {
             autocomplete: true,
             limit: 5,
             country: "PH", // Restrict oy Philippines
+            maxBounds: [[116.87, 4.59], [126.59, 21.29]], // Restrict map view to the bounding box
           },
         }
       );
@@ -143,13 +148,22 @@ function ErrandInputs(props) {
     setStartQuery(value); // Update input value
     setIsStartSelected(false); // Reset selection if user is typing
 
-    // Use handleChange to update the location field in commission state in PostCommission (dynamic input type value console)
-    props.handleChange({
-      target: {
-        name: props.location, // e.g., "comLocation"
-        value: value, // User-typed value
-      },
-    });
+
+    // Clear previous timeout if the user is still typing
+    if (debounceTimeout.current) {
+      clearTimeout(debounceTimeout.current);
+    }
+
+    // Set a new timeout to delay the props.handleChange call
+    debounceTimeout.current = setTimeout(() => {
+      // Only call handleChange after the user stops typing for the specified delay
+      props.handleChange({
+        target: {
+          name: props.location, // e.g., "comLocation"
+          value: value, // User-typed value
+        },
+      });
+    }, 5000); // Delay in milliseconds (5000ms = 5 second)
 
     // setIsStartSelected(false); // Reset selection if user is typing
     // setStartQuery(e.target.value);
@@ -366,7 +380,7 @@ function ErrandInputs(props) {
         <div className="col1">
           <Typography level="title-lg" variant="plain">
             {props.typeValue === "Delivery" ||
-            props.typeValue === "Transportation" ? (
+              props.typeValue === "Transportation" ? (
               <>From</>
             ) : (
               <>Where</>
@@ -375,7 +389,26 @@ function ErrandInputs(props) {
         </div>
         {(props.typeValue === "HomeService - Indoor" ||
           props.typeValue === "HomeService - Outdoor") && (
-          <>
+            <>
+              <div className="col2">
+                <Input
+                  color="neutral"
+                  disabled={props.readOnly}
+                  size="lg"
+                  variant={props.variant}
+                  startDecorator={<LocationOn />}
+                  type="text"
+                  placeholder="Enter location of errand..."
+                  onChange={props.handleChange}
+                  value={props.locValue} // Sync input value
+                  name={props.location}
+                />
+              </div>
+            </>
+          )}
+        {(props.typeValue === "Transportation" ||
+          props.typeValue === "Delivery" ||
+          props.typeValue === "") && (
             <div className="col2">
               <Input
                 color="neutral"
@@ -384,93 +417,74 @@ function ErrandInputs(props) {
                 variant={props.variant}
                 startDecorator={<LocationOn />}
                 type="text"
-                placeholder="Enter location of errand..."
-                onChange={props.handleChange}
-                value={props.locValue} // Sync input value
+                placeholder="Enter place for pickup..."
+                onChange={handleStartQueryChange} // add delay dynamic mapbox
+                value={startQuery} // Sync input value
                 name={props.location}
+                onBlur={handleBlur} // Clear suggestion on blur
               />
+              {/* search suggestion */}
+              {startSuggestions.length > 0 && (
+                <ul className="suggestions-list">
+                  {startSuggestions.map((suggestion, index) => (
+                    <li
+                      key={index}
+                      onClick={() => handleStartSuggestionClick(suggestion)}
+                      className="suggestion-item"
+                    >
+                      {suggestion.place_name}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
-          </>
-        )}
-        {(props.typeValue === "Transportation" ||
-          props.typeValue === "Delivery" ||
-          props.typeValue === "") && (
-          <div className="col2">
-            <Input
-              color="neutral"
-              disabled={props.readOnly}
-              size="lg"
-              variant={props.variant}
-              startDecorator={<LocationOn />}
-              type="text"
-              placeholder="Enter place for pickup..."
-              onChange={handleStartQueryChange}
-              value={startQuery} // Sync input value
-              name={props.location}
-              onBlur={handleBlur} // Clear suggestion on blur
-            />
-            {/* search suggestion */}
-            {startSuggestions.length > 0 && (
-              <ul className="suggestions-list">
-                {startSuggestions.map((suggestion, index) => (
-                  <li
-                    key={index}
-                    onClick={() => handleStartSuggestionClick(suggestion)}
-                    className="suggestion-item"
-                  >
-                    {suggestion.place_name}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        )}
+          )}
       </div>
       {/* Display when Transport Type is selected */}
       {(props.typeValue === "Transportation" ||
         props.typeValue === "Delivery") && (
-        <div className="input-group">
-          <div className="col1">
-            <Typography level="title-lg" variant="plain">
-              To
-            </Typography>
+          <div className="input-group">
+            <div className="col1">
+              <Typography level="title-lg" variant="plain">
+                To
+              </Typography>
+            </div>
+            <div className="col2">
+              <Input
+                color="neutral"
+                disabled={props.readOnly}
+                size="lg"
+                variant={props.variant}
+                startDecorator={<WhereToVoteIcon />}
+                type="text"
+                placeholder="Enter destination of errand..."
+                name={props.to}
+                onChange={handleDestQueryChange}
+                value={destQuery} // Sync input value
+              />
+              {/* search suggestion */}
+              {destSuggestions.length > 0 && (
+                <ul className="suggestions-list">
+                  {destSuggestions.map((suggestion, index) => (
+                    <li
+                      key={index}
+                      onClick={() => handleDestSuggestionClick(suggestion)}
+                      className="suggestion-item"
+                    >
+                      {suggestion.place_name}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </div>
-          <div className="col2">
-            <Input
-              color="neutral"
-              disabled={props.readOnly}
-              size="lg"
-              variant={props.variant}
-              startDecorator={<WhereToVoteIcon />}
-              type="text"
-              placeholder="Enter destination of errand..."
-              name={props.to}
-              onChange={handleDestQueryChange}
-              value={destQuery} // Sync input value
-            />
-            {/* search suggestion */}
-            {destSuggestions.length > 0 && (
-              <ul className="suggestions-list">
-                {destSuggestions.map((suggestion, index) => (
-                  <li
-                    key={index}
-                    onClick={() => handleDestSuggestionClick(suggestion)}
-                    className="suggestion-item"
-                  >
-                    {suggestion.place_name}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </div>
-      )}
+        )}
       {/* Amount */}
       <div className="input-group">
         <div className="col1">
           {props.typeValue !== "HomeService - Indoor" &&
-          props.typeValue !== "HomeService - Outdoor" &&
-          props.typeValue !== "" ? (
+            props.typeValue !== "HomeService - Outdoor" &&
+            props.typeValue !== "" ? (
             <Typography level="title-lg" variant="plain">
               Payment
             </Typography>
