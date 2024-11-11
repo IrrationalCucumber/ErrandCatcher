@@ -39,8 +39,8 @@ export function Step1({ onNext, details, setDetail }) {
       details.email == "" ||
       details.gender == "" ||
       details.bday === "" ||
-      details.address == "" || null ||
-      details.contact == "" || null
+      details.address == null ||
+      details.contact == null
     ) {
       setAlertOpen(true);
     } else if (parseInt(details.age) < 18) {
