@@ -194,6 +194,14 @@ export function Step1({ onNext, details, setDetail }) {
                 variant="filled"
                 severity="error"
                 className="step__alert"
+                sx={{
+                  position: "fixed",
+                  right: "16px",
+                  top: "90px",
+                  fontSize: "15px",
+                  // fontWeight: "bold",
+                  color: "white",
+                }}
                 onClose={() => setAlertOpen(false)}
               >
                 Please fill in all the required fields.
