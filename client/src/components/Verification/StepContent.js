@@ -37,12 +37,11 @@ export function Step1({ onNext, details, setDetail }) {
       details.fname === "" ||
       details.lname === "" ||
       details.email == "" ||
-      details.address == "" ||
       details.gender == "" ||
       details.bday === "" ||
-      details.contact == ""
+      details.address == "" || null ||
+      details.contact == "" || null
     ) {
-      console.log("Fields are empty bruh");
       setAlertOpen(true);
     } else if (parseInt(details.age) < 18) {
       setAgeLimit(true);
@@ -94,9 +93,8 @@ export function Step1({ onNext, details, setDetail }) {
     const day = today.getDate();
 
     // Format the date as yyyy-mm-dd
-    return `${year}-${month < 10 ? "0" + month : month}-${
-      day < 10 ? "0" + day : day
-    }`;
+    return `${year}-${month < 10 ? "0" + month : month}-${day < 10 ? "0" + day : day
+      }`;
   };
 
   return (
@@ -113,7 +111,7 @@ export function Step1({ onNext, details, setDetail }) {
               name="fname"
               value={details.fname}
               onChange={handleChange}
-              // required
+            // required
             ></input>
             <input
               type="text"
@@ -121,7 +119,7 @@ export function Step1({ onNext, details, setDetail }) {
               value={details.lname}
               name="lname"
               onChange={handleChange}
-              // required
+            // required
             ></input>
           </div>
 
@@ -133,7 +131,7 @@ export function Step1({ onNext, details, setDetail }) {
               name="email"
               placeholder="Enter your Email Address"
               onChange={handleChange}
-              // required
+            // required
             ></input>
           </div>
 
@@ -170,7 +168,7 @@ export function Step1({ onNext, details, setDetail }) {
               name="address"
               value={details.address}
               onChange={handleChange}
-              // required
+            // required
             ></input>
           </div>
           <div className="input-rows">
@@ -181,7 +179,7 @@ export function Step1({ onNext, details, setDetail }) {
               name="contact"
               placeholder="Enter your Contact Number"
               onChange={handleChange}
-              // required
+            // required
             ></input>
           </div>
           <div className="step__button">
@@ -603,9 +601,8 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
       //update accound data
       await axios.put("http://localhost:8800/update-info/" + userID, details);
       //add a notification to the admin
-      notif.notifDesc = `${
-        Capitalize(details.fname) + " " + Capitalize(details.lname)
-      } has submitted a Verification request`;
+      notif.notifDesc = `${Capitalize(details.fname) + " " + Capitalize(details.lname)
+        } has submitted a Verification request`;
       notif.userID = 1;
       notif.notificationType = "Verification Request";
       await axios.post("http://localhost:8800/notify", notif);
