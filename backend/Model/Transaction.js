@@ -13,18 +13,7 @@ const Trans = {
       callback
     );
   },
-  //for catcher
-  //get all transaction done
-  // getTransCount: (id, status, callback) => {
-  //   db.query(
-  //     ` SELECT
-  //     (SELECT  count(*) FROM errandtransaction WHERE errandStatus = 'Complete' AND transCatcherID = ?) AS done,
-  //     (SELECT  count(*) FROM errandtransaction WHERE errandStatus = 'Expired' AND transCatcherID = ?) AS expired,
-  //     (SELECT  count(*) FROM errandtransaction WHERE errandStatus = 'Cancelled' AND transCatcherID = ?) AS cancel`,
-  //     [id, id, id],
-  //     callback
-  //   );
-  // },
+
   //for catcher
   //get all transaction
   getTransById: (id, callback) => {
@@ -33,7 +22,7 @@ const Trans = {
       FROM errandtransaction t
       JOIN commission c ON t.transErrandID = c.commissionID
       JOIN useraccount ua ON c.employerID = ua.userID
-       WHERE t.transCatcherID = ?`,
+       WHERE t.transCatcherID = ? ORDER BY transactID DESC`,
       [id],
       callback
     );
@@ -46,7 +35,8 @@ const Trans = {
         FROM errandtransaction t
         JOIN commission c ON t.transErrandID = c.commissionID
         JOIN useraccount ua ON c.employerID = ua.userID
-         WHERE t.transCatcherID = ? AND t.errandStatus = ?`,
+         WHERE t.transCatcherID = ? AND t.errandStatus = ?
+         ORDER BY t.transactID ASC`,
       [id, status],
       callback
     );
@@ -103,8 +93,8 @@ const Trans = {
   //for acatcher
   putUpdateErrandTrans: (id, status, userID, callback) => {
     db.query(
-      `UPDATE errandTransaction SET errandStatus = ? WHERE transactID = ? AND transCatcherID = ?`,
-      [status, id, userID],
+      `UPDATE errandTransaction SET errandStatus = ?, transStatus = ? WHERE transactID = ? AND transCatcherID = ?`,
+      [status, transStatus, id, userID],
       callback
     );
   },

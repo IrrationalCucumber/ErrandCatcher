@@ -201,8 +201,9 @@ const transConstroller = {
   putCompleteErrand: (req, res) => {
     const id = req.params.id; //transID
     const status = "Complete";
+    const transStatus = "For Payment";
     const userID = req.params.userID;
-    Trans.putUpdateErrandTrans(id, status, userID, (err) => {
+    Trans.putUpdateErrandTrans(id, status, transStatus, userID, (err) => {
       if (err) {
         console.error("Error updating Errand Status:", err);
         res
@@ -216,8 +217,9 @@ const transConstroller = {
   putCancelErrand: (req, res) => {
     const id = req.params.id; //transID
     const status = "Cancelled";
+    const transStatus = "Cancelled";
     const userID = req.params.userID; // catcher
-    Trans.putUpdateErrandTrans(id, status, userID, (err) => {
+    Trans.putUpdateErrandTrans(id, status, transStatus, userID, (err) => {
       if (err) {
         console.error("Error updating Errand Status:", err);
         res

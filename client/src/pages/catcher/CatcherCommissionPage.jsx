@@ -59,6 +59,26 @@ function CommissionPage() {
       }
     };
     fetchAllCommission();
+    const interval = setInterval(fetchAllCommission, 5000);
+    return () => clearInterval(interval);
+  }, []);
+  //for payment errand
+  const [forPayment, setForPayment] = useState([]);
+  useEffect(() => {
+    const fetchPending = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8800/catcher/ongoing/${userID}`
+        );
+
+        setForPayment(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchPending();
+    const interval = setInterval(fetchPending, 5000);
+    return () => clearInterval(interval);
   }, []);
   const handleChange = (e) => {
     // For the 'gender' field, directly set the value without using spread syntax
@@ -89,7 +109,7 @@ function CommissionPage() {
     if (searchTerm.date) {
       deadline = commission.commissionDeadline >= searchTerm.date;
     }
-    const status = commission.commissionStatus.includes(searchTerm.status);
+    const status = commission.transStatus.includes(searchTerm.status);
 
     return type && (termMatch || termMatch2) && status && deadline;
   });
@@ -188,7 +208,7 @@ function CommissionPage() {
               name="status"
             >
               <option value="">Status</option>
-              <option value="Ongoing">Ongoing</option>
+              <option value="For Payment">For Payment</option>
               <option value="Completed">Completed</option>
               <option value="Cancelled">Cancelled</option>
             </select>
@@ -264,11 +284,11 @@ function CommissionPage() {
         </div>
       </div>
 
-      <OngoingCards commissions={commissions} to={`/view-errand/${userID}`} />
+      {/* <OngoingCards commissions={commissions} to={`/view-errand/${userID}`} /> */}
       <div className="cards__container">
         <div className="cards__wrapper">
           <div className="cards__items">
-            {filterErrands.map((commission) => (
+            {forPayment.map((commission) => (
               <OngoingCardsNew
                 key={commission.commissionID}
                 icon={commission.commissionType}
@@ -282,7 +302,6 @@ function CommissionPage() {
                 // Employer side
                 userFname={commission.userFirstname}
                 userLname={commission.userLastname}
-
                 // handle payment
                 // pay={commission.commissionPay}
                 // type={commission.commissionType}
@@ -292,18 +311,15 @@ function CommissionPage() {
                 // title={commission.commissionTitle}
                 comID={commission.commissionID}
                 transCatID={commission.transCatcherID}
-
                 // Catcher side
                 // marked complete and cancel
                 // transID={commission.transactID}
                 empID={commission.employerID}
-
               />
             ))}
           </div>
         </div>
       </div>
-
 
       {/* Pagination controls */}
       {commissions.length > 0 && (
