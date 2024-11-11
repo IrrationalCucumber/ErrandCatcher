@@ -298,7 +298,7 @@ export function Step2({
   return (
     <div>
       <div className="step">
-        <h1>Upload Image</h1>
+        <h1>Valid Documents</h1>
         <div className="form-group1">
           <form className="form-container" onSubmit={handleSubmit}>
             <div className="input-rows2">
@@ -508,13 +508,13 @@ export function Step2({
                     </DialogTitle>
                     <Divider />
                     <DialogContent>
-                      Are you sure you want to submit this upload file?
+                      Are you sure you want to submit this valid documents?
                       {/* Display the current ID from state */}
                     </DialogContent>
                     <DialogActions>
                       <Button
-                        variant="plain"
-                        color="neutral"
+                        variant="solid"
+                        color="primary"
                         onClick={onNext} // Upload the file if Yes
                       >
                         Yes
@@ -708,12 +708,12 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
               </DialogTitle>
               <Divider />
               <DialogContent>
-                Are you sure you want to submit all your documents?
+                Are you sure you want to submit your personal information?
               </DialogContent>
               <DialogActions>
                 <Button
-                  variant="plain"
-                  color="neutral"
+                  variant="solid"
+                  color="primary"
                   // Upload the file if Yes
                   onClick={onSubmit}
                 >
