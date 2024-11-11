@@ -17,14 +17,18 @@
     margin-right: 30px;
 }
 
-.profile-left img {
-    border-radius: 50%;
-    width: 150px;
+.user_profile_pic {
+    width: 200px;
     height: 150px;
+    margin: 5px;
 }
 
 .profile-left {
     text-align: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    display: flex;
 }
 
 .profile-left .info {
@@ -54,6 +58,17 @@
     flex-direction: column;
 }
 
+.id_1 img{
+    width: 300px;
+    height: 150px;
+    margin: 5px;
+    max-width: 90%;
+}
+.id_2{
+    width: 200px;
+    height: 150px;
+}
+
 .profile-right h2 {
     font-size: 28px;
     margin-bottom: 25px;
@@ -80,10 +95,6 @@
 .profile-left input[type="text"],
 .profile-left input[type="number"],
 .profile-left input[type="email"] {
-    width: 100%;
-    display: flex;
-    padding: 10px;
-    margin-bottom: 10px;
     border: none;
     font-size: 16px;
     outline: none;
