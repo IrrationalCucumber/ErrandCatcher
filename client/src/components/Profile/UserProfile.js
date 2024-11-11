@@ -305,6 +305,10 @@ function UserProfile(props) {
             onChange={props.handleChange}
             placeholder="Date of birth"
             disabled={!props.isEditing}
+            // Set max year to 18 years ago
+            max={new Date(new Date().setFullYear(new Date().getFullYear() - 18))
+              .toISOString()
+              .split("T")[0]}
           ></input>
 
           <div className="buttons">
