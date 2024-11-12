@@ -256,6 +256,11 @@ function ErrandInputs(props) {
             onChange={props.handleChange}
             name={props.title}
             value={props.titleValue}
+            slotProps={{
+              input: {
+                maxLength: 20,
+              },
+            }}
           />
         </div>
       </div>
