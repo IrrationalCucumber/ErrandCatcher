@@ -244,6 +244,11 @@ const EmployerApplicants = () => {
       await axios.put(
         `http://localhost:8800/accept-apply/${applicationErrandID}/${applicationID}`
       );
+
+      alert("You have accepted a Cather!");
+      window.location.reload();
+      setOpenAccept(false);
+
       //transaction
       trans.comID = applicationErrandID;
       trans.catcherID = catcherID;
@@ -265,7 +270,7 @@ const EmployerApplicants = () => {
         `http://localhost:8800/errand-taken/${applicationErrandID}`
       );
       //replace modular
-      alert("You have accepted a Cather!");
+      alert("You have accepted a Cather!!");
       window.location.reload();
       setOpenAccept(false);
       // create set upload modal heree...................................................................
