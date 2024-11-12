@@ -234,6 +234,8 @@ function OngoingCardsNew(props) {
             });
             console.log("status: completed");
 
+            alert("Successfully marked errand completed");
+            window.location.reload();
             setOpenMark(false);
         } catch (err) {
             console.log(err);
