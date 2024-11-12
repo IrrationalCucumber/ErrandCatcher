@@ -10,7 +10,12 @@ import {
   Container,
 } from "@mui/material";
 
-const steps = ["Step 1", "Step 2", "Step 3", "Done"];
+const steps = [
+  "Input Basic Information",
+  "Upload Valid Documents",
+  "Review Summary",
+  "Done"
+];
 
 export default function StepperVer() {
   const [activeStep, setActiveStep] = useState(0);
@@ -90,12 +95,23 @@ export default function StepperVer() {
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
+            marginTop: "16px",
           }}
         >
           <Stepper activeStep={activeStep}>
             {steps.map((label, index) => (
               <Step key={index}>
-                <StepLabel>{label}</StepLabel>
+                <StepLabel
+                  sx={{
+                    "& .MuiStepLabel-label": {
+                      fontSize: "1rem",
+                      fontWeight: 500,
+                      lineHeight: "2rem"
+                    },
+                  }}
+                >
+                  {label}
+                </StepLabel>
               </Step>
             ))}
           </Stepper>
