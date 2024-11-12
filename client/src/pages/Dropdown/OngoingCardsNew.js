@@ -229,12 +229,17 @@ function OngoingCardsNew(props) {
 
             await axios.post("http://localhost:8800/notify", notif);
             //complete the transaction
-            await axios.put(`http://localhost:8800/complete-trans/${transactID}`, {
-                params: { date: getTimeAndDate() },
-            });
-            console.log("status: completed");
+            // await axios.put(`http://localhost:8800/complete-trans/${transactID}`, {
+            //     params: { date: getTimeAndDate() },
+            // });
+            
+            // catcher the one who marked as complete....
+            await axios.put(
+                `http://localhost:8800/catcher/complete/${transactID}/${userID}`
+            );
+            console.log("status: completed", userID, transactID);
 
-            alert("Successfully marked errand completed");
+            alert("Successfully marked errand as completed");
             window.location.reload();
             setOpenMark(false);
         } catch (err) {
