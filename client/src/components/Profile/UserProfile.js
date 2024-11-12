@@ -41,6 +41,7 @@ function UserProfile(props) {
             <>
               {/* Display Preview Image */}
               <img
+                className="user_profile_pic"
                 src={preview}
                 alt="Preview Image"
                 // width={250}
@@ -85,6 +86,7 @@ function UserProfile(props) {
               style={{ display: "none" }}
             />
             <label
+              // className="prolabel"
               htmlFor="file"
               style={{
                 // border: "1px dashed black",
@@ -238,7 +240,7 @@ function UserProfile(props) {
               )}
             </>
           )}
-          <label htmlFor="username">Username :</label>
+          <label className="prolabel" htmlFor="username">Username :</label>
           <input
             type="text"
             className={props.validationErrors.username ? "error" : ""}
@@ -250,7 +252,7 @@ function UserProfile(props) {
             disabled={!props.isEditing}
           ></input>
 
-          <label htmlFor="first-name">First name :</label>
+          <label className="prolabel" htmlFor="first-name">First name :</label>
           <input
             type="text"
             className={props.validationErrors.fname ? "error" : ""}
@@ -262,7 +264,7 @@ function UserProfile(props) {
             disabled={!props.isEditing}
           ></input>
 
-          <label htmlFor="last-name">Last name :</label>
+          <label className="prolabel" htmlFor="last-name">Last name :</label>
           <input
             type="text"
             className={props.validationErrors.lname ? "error" : ""}
@@ -274,7 +276,7 @@ function UserProfile(props) {
             disabled={!props.isEditing}
           ></input>
 
-          <label htmlFor="sex">Gender :</label>
+          <label className="prolabel" htmlFor="sex">Gender :</label>
           <select
             // className="display-data1"
             className={`display-data1 ${
@@ -291,7 +293,7 @@ function UserProfile(props) {
             <option value="Female">Female</option>
           </select>
 
-          <label htmlFor="age">Age :</label>
+          <label className="prolabel" htmlFor="age">Age :</label>
           <input
             type="number"
             //className={props.validationErrors.age ? "error" : ""}
