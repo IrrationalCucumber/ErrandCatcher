@@ -74,6 +74,14 @@ function OngoingCardsNew(props) {
         setOpen(false);
     }
 
+    const [opencom, setOpencom] = useState(false);
+    const handleOpencom = () => {
+        setOpencom(true);
+    }
+    const handleClosecom = () => {
+        setOpencom(false);
+    }
+
     const getCurrentDate = () => {
         const currentDate = new Date();
         const year = currentDate.getFullYear();
@@ -239,9 +247,15 @@ function OngoingCardsNew(props) {
             );
             console.log("status: completed", userID, transactID);
 
-            alert("Successfully marked errand as completed");
-            window.location.reload();
+            // alert("Successfully marked errand as completed");
+            // window.location.reload();
+            handleOpencom();
             setOpenMark(false);
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 5000);
+
         } catch (err) {
             console.log(err);
         }
@@ -323,6 +337,16 @@ function OngoingCardsNew(props) {
                 open={loading}
                 text="Loading... Please wait while Sending Your Feedback."
                 icons={<HourglassBottomIcon />}
+            />
+
+            <ModalFeedback
+                open={opencom}
+                handleClose={handleClosecom}
+                headerMes="Success!"
+                contentMes="You have successfully marked as completed"
+                color="success"
+                colorText="green"
+            // icon={ErrorIcon}
             />
 
             <div class="card">
