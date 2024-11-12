@@ -25,6 +25,7 @@ import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 import { DisplayDate } from "../../components/DisplayDate";
 import { BannerEmployerPages } from "../../components/Banner/HeroSection";
 import ViewProfile from "../profile/ViewProfile";
+import ModalFeedback from "../../components/ModalFeedback";
 
 const EmployerApplicants = () => {
   const navigate = useNavigate();
@@ -45,6 +46,15 @@ const EmployerApplicants = () => {
   const [selectedApplicant, setSelectedApplicant] = useState("");
   const [openAccept, setOpenAccept] = useState(false);
   const [openDecline, setOpenDecline] = useState(false);
+
+  // modal message pop-up
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  }
+  const handleClose = () => {
+    setOpen(false);
+  }
 
   const handleOpenAcceptModal = () => {
     setOpenAccept(true);
@@ -192,7 +202,7 @@ const EmployerApplicants = () => {
     <button
       style={style2.button}
       onClick={() => handleViewProfile(applicant.catcherID)}
-      // onClick={() => navigate(`/profile/user/${applicant.catcherID})`)}
+    // onClick={() => navigate(`/profile/user/${applicant.catcherID})`)}
     >
       View Profile
     </button>,
@@ -245,9 +255,16 @@ const EmployerApplicants = () => {
         `http://localhost:8800/accept-apply/${applicationErrandID}/${applicationID}`
       );
 
-      alert("You have accepted a Cather!");
-      window.location.reload();
+      handleOpen();
       setOpenAccept(false);
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 5000);
+
+      // alert("You have accepted a Cather!");
+      // window.location.reload();
+      // setOpenAccept(false);
 
       //transaction
       trans.comID = applicationErrandID;
@@ -270,10 +287,10 @@ const EmployerApplicants = () => {
         `http://localhost:8800/errand-taken/${applicationErrandID}`
       );
       //replace modular
-      alert("You have accepted a Cather!!");
-      window.location.reload();
-      setOpenAccept(false);
-      // create set upload modal heree...................................................................
+      // alert("You have accepted a Cather!!");
+      // window.location.reload();
+      // setOpenAccept(false);
+      
       //navigate(`/my-application/${userID}`);
     } catch (err) {
       console.log(err);
@@ -308,6 +325,16 @@ const EmployerApplicants = () => {
   //console.log(applicants);
   return (
     <>
+      <ModalFeedback
+        open={open}
+        handleClose={handleClose}
+        headerMes="Success!"
+        contentMes="You have accepted a Cather!"
+        color="success"
+        colorText="green"
+      // icon={ErrorIcon}
+      />
+
       <BannerEmployerPages
         bannerMessage={`Here are your Applicants, ${user.username}`}
       />
