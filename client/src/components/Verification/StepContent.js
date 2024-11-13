@@ -113,7 +113,7 @@ export function Step1({ onNext, details, setDetail }) {
               name="fname"
               value={details.fname}
               onChange={handleChange}
-              // required
+            // required
             ></input>
             <input
               type="text"
@@ -121,7 +121,7 @@ export function Step1({ onNext, details, setDetail }) {
               value={details.lname}
               name="lname"
               onChange={handleChange}
-              // required
+            // required
             ></input>
           </div>
 
@@ -133,7 +133,7 @@ export function Step1({ onNext, details, setDetail }) {
               name="email"
               placeholder="Enter your Email Address"
               onChange={handleChange}
-              // required
+            // required
             ></input>
           </div>
 
@@ -170,7 +170,7 @@ export function Step1({ onNext, details, setDetail }) {
               name="address"
               value={details.address}
               onChange={handleChange}
-              // required
+            // required
             ></input>
           </div>
           <div className="input-rows">
@@ -181,7 +181,7 @@ export function Step1({ onNext, details, setDetail }) {
               name="contact"
               placeholder="Enter your Contact Number"
               onChange={handleChange}
-              // required
+            // required
             ></input>
           </div>
           <div className="step__button">
@@ -603,9 +603,8 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
       //update accound data
       await axios.put("http://localhost:8800/update-info/" + userID, details);
       //add a notification to the admin
-      notif.notifDesc = `${
-        Capitalize(details.fname) + " " + Capitalize(details.lname)
-      } has submitted a Verification request`;
+      notif.notifDesc = `${Capitalize(details.fname) + " " + Capitalize(details.lname)
+        } has submitted a Verification request`;
       notif.userID = 1;
       notif.notificationType = "Verification Request";
       await axios.post("http://localhost:8800/notify", notif);
@@ -615,35 +614,42 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
   };
   return (
     <div className="step">
-      <h1>Summary</h1>
-      <form className="form-container">
-        <p>First Name: {details.fname}</p>
-        <p>Last Name: {details.lname}</p>
-        <p>Sex: {details.gender}</p>
-        <p>Birthday: {details.bday}</p>
-        <p>Email: {details.email}</p>
-        <p>Contact #: {details.contact}</p>
-        {images.preview1 && (
-          <img
-            src={images.preview1}
-            className="step3__img__preview"
-            alt="Preview 1"
-          />
-        )}
-        {images.preview2 && (
-          <img
-            src={images.preview2}
-            className="step3__img__preview"
-            alt="Preview 2"
-          />
-        )}
-        {images.preview3 && (
-          <img
-            src={images.preview3}
-            className="step3__img__preview"
-            alt="Preview 2"
-          />
-        )}
+      <h1 className="step__title">Summary</h1>
+
+      <div className="form-container">
+        <div className="form-details">
+          <p><strong>First Name:</strong> {details.fname}</p>
+          <p><strong>Last Name:</strong> {details.lname}</p>
+          <p><strong>Sex:</strong> {details.gender}</p>
+          <p><strong>Birthday:</strong> {details.bday}</p>
+          <p><strong>Email:</strong> {details.email}</p>
+          <p><strong>Contact #:</strong> {details.contact}</p>
+        </div>
+
+        <div className="image-previews">
+          {images.preview1 && (
+            <img
+              src={images.preview1}
+              className="step__img__preview"
+              alt="Preview 1"
+            />
+          )}
+          {images.preview2 && (
+            <img
+              src={images.preview2}
+              className="step__img__preview"
+              alt="Preview 2"
+            />
+          )}
+          {images.preview3 && (
+            <img
+              src={images.preview3}
+              className="step__img__preview"
+              alt="Preview 3"
+            />
+          )}
+        </div>
+
 
         <LoadingBackdrop
           open={loading}
@@ -730,8 +736,9 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
             </ModalDialog>
           </Modal>
         </div>
-      </form>
-    </div>
+      </div>
+
+    </div >
   );
 }
 //Success
