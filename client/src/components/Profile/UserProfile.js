@@ -121,9 +121,8 @@ function UserProfile(props) {
             <input
               type="text"
               // className="profile__info__left"
-              className={`profile__info__left ${
-                props.validationErrors.address ? "error" : ""
-              }`}
+              className={`profile__info__left ${props.validationErrors.address ? "error" : ""
+                }`}
               placeholder="Address"
               name="address"
               value={props.address}
@@ -134,9 +133,8 @@ function UserProfile(props) {
             <input
               type="email"
               // className="profile__info__left"
-              className={`profile__info__left ${
-                props.validationErrors.email ? "error" : ""
-              }`}
+              className={`profile__info__left ${props.validationErrors.email ? "error" : ""
+                }`}
               placeholder="Email Address"
               name="email"
               value={props.email}
@@ -147,9 +145,8 @@ function UserProfile(props) {
             <input
               type="number"
               // className="profile__info__left"
-              className={`profile__info__left ${
-                props.validationErrors.contact ? "error" : ""
-              }`}
+              className={`profile__info__left ${props.validationErrors.contact ? "error" : ""
+                }`}
               placeholder="Contact Number"
               name="contact"
               value={props.cnum}
@@ -181,19 +178,19 @@ function UserProfile(props) {
             //display sumbitted IDs of user
             props.verFront || props.verBack ? (
               <>
-              <div className="id_1">
-                <img
-                  src={`http://localhost:8800/images/docu/${props.verFront}`}
-                  alt="Front"
-                />
-                
-              </div>
-              <div className="id_1">
-                <img
-                  src={`http://localhost:8800/images/docu/${props.verBack}`}
-                  alt="Back"
-                />
-              </div>
+                <div className="id_1">
+                  <img
+                    src={`http://localhost:8800/images/docu/${props.verFront}`}
+                    alt="Front"
+                  />
+
+                </div>
+                <div className="id_1">
+                  <img
+                    src={`http://localhost:8800/images/docu/${props.verBack}`}
+                    alt="Back"
+                  />
+                </div>
               </>
             ) : null
           }
@@ -201,12 +198,12 @@ function UserProfile(props) {
             //display sumbitted docs/additional ids of user
             props.doc1 ? (
               <>
-              <div className="id_1">
-                <img
-                  src={`http://localhost:8800/images/docu/${props.doc1}`}
-                  alt="License"
-                />    
-              </div>
+                <div className="id_1">
+                  <img
+                    src={`http://localhost:8800/images/docu/${props.doc1}`}
+                    alt="License"
+                  />
+                </div>
               </>
             ) : null
           }
@@ -279,9 +276,8 @@ function UserProfile(props) {
           <label className="prolabel" htmlFor="sex">Gender :</label>
           <select
             // className="display-data1"
-            className={`display-data1 ${
-              props.validationErrors.gender ? "error" : ""
-            }`}
+            className={`display-data1 ${props.validationErrors.gender ? "error" : ""
+              }`}
             value={props.sex}
             onChange={props.handleChange}
             name="gender"
@@ -305,9 +301,8 @@ function UserProfile(props) {
           ></input>
           <input
             type="date"
-            className={`display-data1 ${
-              props.validationErrors.bday ? "error" : ""
-            }`}
+            className={`display-data1 ${props.validationErrors.bday ? "error" : ""
+              }`}
             name="bday"
             // className="display-data1"
             value={props.bday}
@@ -429,38 +424,35 @@ export function ViewUserProfile(props) {
             //display sumbitted IDs of user
             props.verFront || props.verBack ? (
               <>
-              <div className="id_1">
-                <img
-                  src={`http://localhost:8800/images/docu/${props.verFront}`}
-                  alt="ProfPic"
-                />
-              </div>
-              <div className="id_2">
-                <img
-                  src={`http://localhost:8800/images/docu/${props.verBack}`}
-                  alt="ProfPic"
-                />
-              </div>
+                <div className="id_1">
+                  <img
+                    src={`http://localhost:8800/images/docu/${props.verFront}`}
+                    alt="Front"
+                  />
+                </div>
+                <div className="id_2">
+                  <img
+                    src={`http://localhost:8800/images/docu/${props.verBack}`}
+                    alt="Back"
+                  />
+                </div>
               </>
             ) : null
           }
           {
             //display sumbitted docs/additional ids of user
-            props.doc1 || props.doc2 ? (
+            // driver license additional info fetch
+            props.verDoc1 ? (
               <>
-              <div className="id_1"><img
-                  src={`http://localhost:8800/images/docu/${props.doc1}`}
-                  alt="ProfPic"
-                />
-              </div>
-              <div className="id_2">
-                <img
-                  src={`http://localhost:8800/images/docu/${props.doc2}`}
-                  alt="ProfPic"
-                />
-              </div>
+                <div className="id_1">
+                  <img
+                    src={`http://localhost:8800/images/docu/${props.verDoc1}`}
+                    alt="License"
+                  />
+                </div>
               </>
             ) : null
+            
           }
         </div>
 
