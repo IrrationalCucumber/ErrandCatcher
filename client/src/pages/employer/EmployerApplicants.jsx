@@ -54,6 +54,8 @@ const EmployerApplicants = () => {
   }
   const handleClose = () => {
     setOpen(false);
+    setOpenAccept(false);
+    window.location.reload();
   }
 
   const handleOpenAcceptModal = () => {
@@ -256,11 +258,11 @@ const EmployerApplicants = () => {
       );
 
       handleOpen();
-      setOpenAccept(false);
+      // setOpenAccept(false);
 
-      setTimeout(() => {
-        window.location.reload();
-      }, 5000);
+      // setTimeout(() => {
+      //   window.location.reload();
+      // }, 5000);
 
       // alert("You have accepted a Cather!");
       // window.location.reload();
