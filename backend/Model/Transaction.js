@@ -91,7 +91,7 @@ const Trans = {
   },
   //update errand status of transaction table
   //for acatcher
-  putUpdateErrandTrans: (id, status, userID, callback) => {
+  putUpdateErrandTrans: (id, status, transStatus, userID, callback) => {
     db.query(
       `UPDATE errandTransaction SET errandStatus = ?, transStatus = ? WHERE transactID = ? AND transCatcherID = ?`,
       [status, transStatus, id, userID],

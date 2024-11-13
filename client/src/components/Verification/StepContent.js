@@ -620,35 +620,42 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
   };
   return (
     <div className="step">
-      <h1>Summary</h1>
-      <form className="form-container">
-        <p>First Name: {details.fname}</p>
-        <p>Last Name: {details.lname}</p>
-        <p>Sex: {details.gender}</p>
-        <p>Birthday: {details.bday}</p>
-        <p>Email: {details.email}</p>
-        <p>Contact #: {details.contact}</p>
-        {images.preview1 && (
-          <img
-            src={images.preview1}
-            className="step3__img__preview"
-            alt="Preview 1"
-          />
-        )}
-        {images.preview2 && (
-          <img
-            src={images.preview2}
-            className="step3__img__preview"
-            alt="Preview 2"
-          />
-        )}
-        {images.preview3 && (
-          <img
-            src={images.preview3}
-            className="step3__img__preview"
-            alt="Preview 2"
-          />
-        )}
+      <h1 className="step__title">Summary</h1>
+
+      <div className="form-container">
+        <div className="form-details">
+          <p><strong>First Name:</strong> {details.fname}</p>
+          <p><strong>Last Name:</strong> {details.lname}</p>
+          <p><strong>Sex:</strong> {details.gender}</p>
+          <p><strong>Birthday:</strong> {details.bday}</p>
+          <p><strong>Email:</strong> {details.email}</p>
+          <p><strong>Contact #:</strong> {details.contact}</p>
+        </div>
+
+        <div className="image-previews">
+          {images.preview1 && (
+            <img
+              src={images.preview1}
+              className="step__img__preview"
+              alt="Preview 1"
+            />
+          )}
+          {images.preview2 && (
+            <img
+              src={images.preview2}
+              className="step__img__preview"
+              alt="Preview 2"
+            />
+          )}
+          {images.preview3 && (
+            <img
+              src={images.preview3}
+              className="step__img__preview"
+              alt="Preview 3"
+            />
+          )}
+        </div>
+
 
         <LoadingBackdrop
           open={loading}
@@ -735,8 +742,9 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
             </ModalDialog>
           </Modal>
         </div>
-      </form>
-    </div>
+      </div>
+
+    </div >
   );
 }
 //Success

@@ -40,7 +40,7 @@ function OngoingCardsNew(props) {
     const chipColor =
         status === "Complete" ? "success" :
             status === "Ongoing" ? "warning" :
-                status === "Cancel" ? "error" : "default";
+                status === "Cancelled" ? "danger" : "default";
 
     const { user } = useAuth();
     const userID = user.userID;
@@ -72,6 +72,14 @@ function OngoingCardsNew(props) {
     }
     const handleClose = () => {
         setOpen(false);
+    }
+
+    const [opencom, setOpencom] = useState(false);
+    const handleOpencom = () => {
+        setOpencom(true);
+    }
+    const handleClosecom = () => {
+        setOpencom(false);
     }
 
     const getCurrentDate = () => {
@@ -206,11 +214,18 @@ function OngoingCardsNew(props) {
 
             await axios.post("http://localhost:8800/notify", notif);
             //cancel the transaction
-            await axios.put(`http://localhost:8800/cancel-trans/${transactID}`, {
-                params: { date: getTimeAndDate() },
-            });
+            // await axios.put(`http://localhost:8800/cancel-trans/${transactID}`, {
+            //     params: { date: getTimeAndDate() },
+            // });
+            await axios.put(
+                `http://localhost:8800/catcher/cancel/${transactID}/${userID}`
+            );
 
+            console.log("new endpoint is run")
+            alert("You have cancelled an errand.");
+            window.location.reload();
             setOpenDelete(false);
+
         } catch (err) {
             console.log(err);
         }
@@ -229,12 +244,25 @@ function OngoingCardsNew(props) {
 
             await axios.post("http://localhost:8800/notify", notif);
             //complete the transaction
-            await axios.put(`http://localhost:8800/complete-trans/${transactID}`, {
-                params: { date: getTimeAndDate() },
-            });
-            console.log("status: completed");
+            // await axios.put(`http://localhost:8800/complete-trans/${transactID}`, {
+            //     params: { date: getTimeAndDate() },
+            // });
 
+            // catcher the one who marked as complete....
+            await axios.put(
+                `http://localhost:8800/catcher/complete/${transactID}/${userID}`
+            );
+            console.log("status: completed", userID, transactID);
+
+            // alert("Successfully marked errand as completed");
+            // window.location.reload();
+            handleOpencom();
             setOpenMark(false);
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 5000);
+
         } catch (err) {
             console.log(err);
         }
@@ -316,6 +344,16 @@ function OngoingCardsNew(props) {
                 open={loading}
                 text="Loading... Please wait while Sending Your Feedback."
                 icons={<HourglassBottomIcon />}
+            />
+
+            <ModalFeedback
+                open={opencom}
+                handleClose={handleClosecom}
+                headerMes="Success!"
+                contentMes="You have successfully marked as completed"
+                color="success"
+                colorText="green"
+            // icon={ErrorIcon}
             />
 
             <div class="card">
