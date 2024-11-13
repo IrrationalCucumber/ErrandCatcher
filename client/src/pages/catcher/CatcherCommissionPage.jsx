@@ -162,6 +162,10 @@ function CommissionPage() {
       /**
        * ADD METHOD TO CHANGE ALSO THE STATUS OF ERRAND TO CANCELLED
        */
+      alert("You have cancelled an errand.");
+      window.location.reload();
+      setOpenCancel(false);
+      
     } catch (err) {
       console.log(err);
     }
