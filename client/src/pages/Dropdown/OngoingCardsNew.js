@@ -40,7 +40,7 @@ function OngoingCardsNew(props) {
     const chipColor =
         status === "Complete" ? "success" :
             status === "Ongoing" ? "warning" :
-                status === "Cancel" ? "error" : "default";
+                status === "Cancelled" ? "danger" : "default";
 
     const { user } = useAuth();
     const userID = user.userID;
@@ -247,7 +247,7 @@ function OngoingCardsNew(props) {
             // await axios.put(`http://localhost:8800/complete-trans/${transactID}`, {
             //     params: { date: getTimeAndDate() },
             // });
-            
+
             // catcher the one who marked as complete....
             await axios.put(
                 `http://localhost:8800/catcher/complete/${transactID}/${userID}`
