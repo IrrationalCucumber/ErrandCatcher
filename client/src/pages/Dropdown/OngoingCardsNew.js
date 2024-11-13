@@ -214,11 +214,18 @@ function OngoingCardsNew(props) {
 
             await axios.post("http://localhost:8800/notify", notif);
             //cancel the transaction
-            await axios.put(`http://localhost:8800/cancel-trans/${transactID}`, {
-                params: { date: getTimeAndDate() },
-            });
+            // await axios.put(`http://localhost:8800/cancel-trans/${transactID}`, {
+            //     params: { date: getTimeAndDate() },
+            // });
+            await axios.put(
+                `http://localhost:8800/catcher/cancel/${transactID}/${userID}`
+            );
 
+            console.log("new endpoint is run")
+            alert("You have cancelled an errand.");
+            window.location.reload();
             setOpenDelete(false);
+
         } catch (err) {
             console.log(err);
         }
