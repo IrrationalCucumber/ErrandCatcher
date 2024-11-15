@@ -21,6 +21,8 @@ import DialogActions from "@mui/joy/DialogActions";
 import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
+import { ModalClose } from "@mui/joy";
+import ViewProfile from "../profile/ViewProfile";
 
 function Application() {
   const { user } = useAuth();
@@ -100,6 +102,15 @@ function Application() {
     return (termMatch || termMatch2 || termMatch3) && status;
   });
 
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [selectedApplicant, setSelectedApplicant] = useState("");
+  //veiw employer profile
+  const handleViewProfile = (id) => {
+    setSelectedApplicant(id);
+    console.log(id);
+    setShowProfileModal(true);
+  };
+
   // Pagination
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -115,7 +126,13 @@ function Application() {
   ];
   const applicationData = currentItems.map((applicant) => [
     DisplayDate(applicant.applicationDate),
-    `${applicant.userFirstname} ${applicant.userLastname}`,
+    // `${applicant.userFirstname} ${applicant.userLastname}`,
+    <Button
+      variant="outlined"
+      onClick={() => handleViewProfile(applicant.employerID)}
+    >
+      {applicant.userFirstname} {applicant.userLastname}
+    </Button>,
     applicant.commissionTitle,
     applicant.applicationStatus,
     applicant.applicationStatus === "Pending" ? (
@@ -162,13 +179,13 @@ function Application() {
       </>
     ) : (
       <>
-        <button
-          className="delete action-btn"
-          // onClick={() => handleDelete(applicant.applicationID)}
+        <Button
+          color="danger"
+          variant="outlined"
           onClick={() => handleOpenDeleteModal()}
         >
           DELETE
-        </button>
+        </Button>
 
         <Modal open={openDelete} onClose={() => setOpenDelete(false)}>
           <ModalDialog>
@@ -291,6 +308,12 @@ function Application() {
           <Table headers={headers} data={applicationData} />
         </div>
       </div>
+      <Modal open={showProfileModal} onClose={() => setShowProfileModal(false)}>
+        <ModalDialog layout="fullscreen" sx={{ overflowY: "auto" }}>
+          <ModalClose />
+          <ViewProfile id={selectedApplicant} />
+        </ModalDialog>
+      </Modal>
       {/* Pagination controls */}
       {apply.length > 0 && (
         <Pagination
