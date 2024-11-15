@@ -77,8 +77,8 @@ function CommissionPage() {
       }
     };
     fetchPending();
-    const interval = setInterval(fetchPending, 5000);
-    return () => clearInterval(interval);
+    // const interval = setInterval(fetchPending, 11000);
+    // return () => clearInterval(interval);
   }, []);
   const handleChange = (e) => {
     // For the 'gender' field, directly set the value without using spread syntax

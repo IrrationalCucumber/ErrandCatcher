@@ -80,6 +80,8 @@ function OngoingCardsNew(props) {
     }
     const handleClosecom = () => {
         setOpencom(false);
+        // setOpenMark(false);
+        window.location.reload();
     }
 
     const getCurrentDate = () => {
@@ -259,9 +261,9 @@ function OngoingCardsNew(props) {
             handleOpencom();
             setOpenMark(false);
 
-            setTimeout(() => {
-                window.location.reload();
-            }, 5000);
+            // setTimeout(() => {
+            //     window.location.reload();
+            // }, 5000);
 
         } catch (err) {
             console.log(err);
