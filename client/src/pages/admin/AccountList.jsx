@@ -258,6 +258,11 @@ const AccountList = () => {
         <CancelIcon style={{ color: "red" }} />
         <span> Suspended</span>
       </>
+    ) : account.accountStatus === "Deactivated" ? (
+      <>
+        <CancelIcon style={{ color: "red" }} />
+        <span> Deactivated</span>
+      </>
     ) : null, // handle any other status if necessary..
     <Dropdown>
       <MenuButton>ACTIONS</MenuButton>
