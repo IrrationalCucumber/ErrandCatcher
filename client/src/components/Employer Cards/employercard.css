@@ -71,8 +71,10 @@
 }
 
 .errands {
-  background: rgb(238, 174, 202);
-  background: linear-gradient(153deg, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+  background: rgb(234, 236, 40);
+  background: linear-gradient(0deg, rgba(234, 236, 40, 1) 0%, rgba(226, 187, 75, 0.8596230728619573) 60%);
+  /* background: rgb(238, 174, 202);
+  background: linear-gradient(153deg, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%); */
   /* border-radius: 8px; */
   /* background-color: #ffa07ae0;  */
   /* Light salmon */
