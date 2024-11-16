@@ -31,12 +31,10 @@ function Dashboard() {
             <>
               <Navbar
                 navbar_ui={"navbar__catcher"}
-                page2="ERRANDS"
-                commissionList={`/dashboard/catcher-errands`}
-                page3="APPLICATIONS"
-                applicants={`/dashboard/my-application`}
-                map={`/dashboard/c-map`}
+                page3="ERRANDS"
+                applicants={`/dashboard/catcher-errands`}
                 page4="MAP"
+                map={`/dashboard/e-map`}
               />
             </>
           )}
