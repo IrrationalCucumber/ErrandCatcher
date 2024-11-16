@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
+import React  from 'react';
+import { useNavigate } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import Button from '@mui/material/Button';
 
 const PaymentSuccess = () => {
+    const navigate = useNavigate();
+
+    const homebutton = () => {
+        navigate("/dashboard/home");
+    }
+
 
     return (
         <div style={{
@@ -44,12 +50,12 @@ const PaymentSuccess = () => {
 
                 <h3 style={{
                     lineHeight: "24px",
-                    margin: "0px 0px 20px"
+                    margin: "16px 0px 20px"
                 }}
                 >
                     Click here to go back
 
-                    <div style={{
+                    {/* <div style={{
                         border: "solid",
                         borderRadius: "50px",
                         padding: "12px",
@@ -58,8 +64,26 @@ const PaymentSuccess = () => {
                         color: "white",
                     }}>
                         <Link to={"/dashboard/home"}><HomeIcon /> HOME</Link>
-                    </div>
+                    </div> */}
                 </h3>
+
+                <Button
+                    onClick={homebutton}
+                    variant="contained"
+                    sx={{
+                        width: "180px",
+                        borderRadius: 8,
+                        padding: "9px 15px",
+                        fontSize: "1.05rem",
+                        // fontSize: "14px",
+                        background: "#0073aa",
+                        // marginTop: "20px",
+                        lineHeight: "20px",
+                    }}
+                >
+                    <HomeIcon /> HOME
+                </Button>
+
 
             </div>
 
