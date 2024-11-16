@@ -329,13 +329,14 @@ app.get("/payment-details/:sessionId", async (req, res) => {
   }
 });
 
-// fetch history transaction employer user
-app.get("/transactionsEmp/:employerID", (req, res) => {
-  const { employerID } = req.params;
-  const q =
-    "SELECT checkoutId, total, type, paymentId, description, paid FROM invoice WHERE invoiceemployerID = ?";
 
-  db.query(q, [employerID], (err, data) => {
+// fetch history transaction employer user
+app.get("/transactionsEmp/:empID", (req, res) => {
+  const empID  = req.params.empID;
+  const q =
+    "SELECT i.*, u.* FROM invoice i JOIN useraccount u ON i.invoiceCatcherID = u.userID WHERE i.invoiceemployerID = ?";
+
+  db.query(q, [empID], (err, data) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: "An error occurred" });
@@ -345,12 +346,12 @@ app.get("/transactionsEmp/:employerID", (req, res) => {
 });
 
 // fetch history transaction catcher user
-app.get("/transactionsCat/:catcherID", (req, res) => {
-  const { catcherID } = req.params;
+app.get("/transactionsCat/:id", (req, res) => {
+  const id = req.params.id;
   const q =
-    "SELECT checkoutId, total, type, paymentId, description, paid FROM invoice WHERE invoiceCatcherID = ?";
+    "SELECT i.*, u.* FROM invoice i JOIN useraccount u ON i.invoiceemployerID = u.userID WHERE i.invoiceCatcherID = ?";
 
-  db.query(q, [catcherID], (err, data) => {
+  db.query(q, [id], (err, data) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: "An error occurred" });

@@ -99,7 +99,7 @@ export function Step1({ onNext, details, setDetail }) {
 
   return (
     <div className="step">
-      <h1>Basic Information</h1>
+      <h1 className="step__title">Basic Information</h1>
       {/*step 1 for input logic part is lacking where user input auto fill up */}
       <form onSubmit={handleSubmit} className="form-container">
         <div className="form-group">
@@ -304,7 +304,7 @@ export function Step2({
   return (
     <div>
       <div className="step">
-        <h1>Valid Documents</h1>
+        <h1 className="step__title">Valid Documents</h1>
         <div className="form-group1">
           <form className="form-container" onSubmit={handleSubmit}>
             <div className="input-rows2">

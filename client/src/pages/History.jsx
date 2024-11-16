@@ -122,6 +122,9 @@ const History = () => {
                   <p>
                     <strong>Transaction ID:</strong> {transaction.checkoutId}
                   </p>
+                  <p><strong>{transaction.accountType}: </strong>
+                    {transaction.userFirstname} {transaction.Lastname}
+                  </p>
                   <p>
                     <strong>Payment Intent ID:</strong> {transaction.paymentId}
                   </p>
