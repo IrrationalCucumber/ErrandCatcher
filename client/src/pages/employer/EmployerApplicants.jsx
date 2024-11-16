@@ -51,12 +51,12 @@ const EmployerApplicants = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(true);
-  }
+  };
   const handleClose = () => {
     setOpen(false);
     setOpenAccept(false);
     window.location.reload();
-  }
+  };
 
   const handleOpenAcceptModal = () => {
     setOpenAccept(true);
@@ -204,7 +204,6 @@ const EmployerApplicants = () => {
     <button
       style={style2.button}
       onClick={() => handleViewProfile(applicant.catcherID)}
-    // onClick={() => navigate(`/profile/user/${applicant.catcherID})`)}
     >
       View Profile
     </button>,
@@ -258,15 +257,6 @@ const EmployerApplicants = () => {
       );
 
       handleOpen();
-      // setOpenAccept(false);
-
-      // setTimeout(() => {
-      //   window.location.reload();
-      // }, 5000);
-
-      // alert("You have accepted a Cather!");
-      // window.location.reload();
-      // setOpenAccept(false);
 
       //transaction
       trans.comID = applicationErrandID;
@@ -288,12 +278,6 @@ const EmployerApplicants = () => {
       await axios.put(
         `http://localhost:8800/errand-taken/${applicationErrandID}`
       );
-      //replace modular
-      // alert("You have accepted a Cather!!");
-      // window.location.reload();
-      // setOpenAccept(false);
-      
-      //navigate(`/my-application/${userID}`);
     } catch (err) {
       console.log(err);
     }
@@ -334,7 +318,7 @@ const EmployerApplicants = () => {
         contentMes="You have accepted a Cather!"
         color="success"
         colorText="green"
-      // icon={ErrorIcon}
+        // icon={ErrorIcon}
       />
 
       <BannerEmployerPages
