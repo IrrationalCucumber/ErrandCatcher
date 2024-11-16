@@ -235,7 +235,7 @@ const AccountList = () => {
         <AssignmentIndIcon style={{ color: "purple" }} />
         <span> Catcher</span>
       </>
-    ) : account.accountType === "Admin" ? (
+    ) : account.accountType === "admin" ? (
       <>
         <ManageAccountsIcon style={{ color: "red" }} />
         <span> Admin</span>
