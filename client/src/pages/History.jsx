@@ -181,7 +181,7 @@ const History = () => {
                         color: "#378ce7",
                         marginRight: "4px",
                       }} />
-                      Type:
+                      Errand Type:
                     </strong>
                     {transaction.type}
                   </p>
