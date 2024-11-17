@@ -183,15 +183,24 @@ const HomeServices = () => {
         <>
           <div
             style={{
-              height: "70vh",
+              height: "50vh",
               display: "flex",
+              flexDirection: "column",
               justifyContent: "center",
               alignContent: "center",
-              // border: "solid",
-              marginTop: "120px",
             }}
           >
-            <h2>No errand found Home Service as of now..</h2>
+            <h1 style={{ fontWeight: "600" }}>
+              Opps!
+            </h1>
+            <h2 style={{ textAlign: "center" }} >
+              No errand found
+              <span style={{
+                fontStyle: "italic",
+                fontWeight: "600",
+                // color: "#378ce7",
+              }}> "Home Service"</span> as of now..
+            </h2>
           </div>
         </>
       )}
