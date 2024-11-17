@@ -173,7 +173,29 @@ const HomeServices = () => {
       </div>
 
       {/* <CatCards commissions={filteredCommissions} /> */}
-      <CatCardsNew commissions={filteredCommissions} />
+      {/* <CatCardsNew commissions={filteredCommissions} /> */}
+
+      {filteredCommissions && filteredCommissions.length > 0 ? (
+        <>
+          <CatCardsNew commissions={filteredCommissions} />
+        </>
+      ) : (
+        <>
+          <div
+            style={{
+              height: "70vh",
+              display: "flex",
+              justifyContent: "center",
+              alignContent: "center",
+              // border: "solid",
+              marginTop: "120px",
+            }}
+          >
+            <h2>No errand found Home Service as of now..</h2>
+          </div>
+        </>
+      )}
+
     </>
   );
 };
