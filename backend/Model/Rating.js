@@ -3,14 +3,19 @@ const Rating = {
   //get all feedbacks
   getAllFeedback: (callback) => {
     db.query(
-      `SELECT * FROM feedbackcommission ORDER BY feedbackDate DESC`,
+      `SELECT f.*, u.username, u.userFirstname, u.userLastname
+       FROM feedbackcommission f
+        JOIN useraccount u ON f.feedbackCatcherID = u.userID`,
       callback
     );
   },
   //get feedback based on catcher id
   getFeedbackById: (id, callback) => {
     db.query(
-      `SELECT * FROM feedbackcommission WHERE feedbackCatcherID = (?) ORDER BY feedbackDate DESC`,
+      `SELECT f.*, u.username, u.userLastname, u.userFirstname
+       FROM feedbackcommission f 
+       JOIN useraccount u on f.feedbackPosterID = u.userID
+       WHERE feedbackCatcherID = (?) ORDER BY feedbackDate DESC`,
       [id],
       callback
     );
@@ -31,6 +36,22 @@ const Rating = {
       callback
     );
   },
+  //display top rated catchers
+  // limited to top 10
+  // from high to low
+  getTopRated: (callback) => {
+    db.query(
+      `SELECT avg(f.feedbackRate) as 'averageRate', u.username, u.accountType, u.profileImage
+       FROM useraccount u
+       JOIN feedbackcommission f ON u.userID = f.feedbackCatcherID
+       WHERE u.accountType = 'Catcher'
+       GROUP BY u.userID
+       ORDER BY averageRate DESC 
+       LIMIT 10`,
+      callback
+    );
+  },
+
   //add new feeedback by employer
   postNewFeedback: (feedData, callback) => {
     const {
@@ -50,7 +71,7 @@ const Rating = {
       feedbackPosterID,
     ];
     db.query(
-      "INSERT INTO feedbackcommission (`feedbackCommissionID`, `feedbackCatcherID` , `feedbackComment`, `feedbackCount`, `feedbackDate`, `feedbackPosterID`) VALUES (?)",
+      "INSERT INTO feedbackcommission (`feedbackErrandID`, `feedbackCatcherID` , `feedbackComment`, `feedbackRate`, `feedbackDate`, `feedbackPosterID`) VALUES (?)",
       [values],
       callback
     );

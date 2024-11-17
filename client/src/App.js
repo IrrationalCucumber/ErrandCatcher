@@ -4,6 +4,7 @@ import {
   Routes,
   createBrowserRouter,
 } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./pages/Home";
 import Verification from "./pages/profile/Verification";
 import Notification from "./pages/Notification";

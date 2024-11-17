@@ -8,6 +8,15 @@ import ErrandInputs from "../../components/ErrandInputs";
 import { MapLibre, PostMapBox } from "../../components/Map/Map";
 //image --ash
 import { useAuth } from "../../components/AuthContext";
+import { Alert, IconButton } from "@mui/joy";
+import WarningIcon from "@mui/icons-material/Warning";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import { Box, Button } from "@mui/joy";
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
+import LoadingBackdrop from "../../components/LoadingSpinner";
+import Snackbar from "@mui/joy/Snackbar";
+import PostAddIcon from "@mui/icons-material/PostAdd";
+import ModalFeedback from "../../components/ModalFeedback";
 
 const PostCommission = () => {
   const [commission, setCommission] = useState({
@@ -39,11 +48,24 @@ const PostCommission = () => {
   //const [currentLocationMarker, setCurrentLocationMarker] = useState(null);
   const [distance, setDistance] = useState(0);
   const accessToken =
-    "pk.eyJ1Ijoiam9pbmVyIiwiYSI6ImNsdmNjbnF4NjBoajQycWxoaHV5b2M1NzIifQ.Z7Pi_LfWyuc7a_z01zKMFg";
-
+    "pk.eyJ1IjoibWlyYWthNDQiLCJhIjoiY20xcWVhejZ0MGVzdjJscTF5ZWVwaXBzdSJ9.aLYnU19L7neFq2Y7J_UXhQ";
   // Add a state to track the marker's longitude and latitude
   // const [markerLngLat, setMarkerLngLat] = useState([123.8854, 10.3157]); // Default values
+  //alert feedback
+  const [alertMesg, setAlerMsg] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [opensnack, setOpenSnack] = useState(false);
 
+  // modal message pop-up
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  }
+  const handleClose = () => {
+    setOpen(false);
+    navigate(`/dashboard/commissions`);
+  }
   //update the info that will be stored
   const handleChange = (e) => {
     if (e.target.name === "comType") {
@@ -55,6 +77,24 @@ const PostCommission = () => {
     }
   };
 
+  //set minimum pay for delvery and transpo
+  const [minimum, setMinimum] = useState();
+  const handleStartLocationSelect = (coordinates) => {
+    setCommission((prev) => ({
+      ...prev,
+      comLat: coordinates[1], // Set latitude for starting location
+      comLong: coordinates[0], // Set longitude for starting location
+    }));
+  };
+
+  const handleLocationSelect = (coordinates) => {
+    setCommission((prev) => ({
+      ...prev,
+      comDestLat: coordinates[1], // Set latitude for destination
+      comDestLong: coordinates[0], // Set longitude for destination
+    }));
+  };
+
   useEffect(() => {
     if (
       commission.comType === "Delivery" ||
@@ -64,7 +104,7 @@ const PostCommission = () => {
       const baseAmount = 100;
       const total = Math.round(km) * 15 + baseAmount;
       // Correctly update commission state without losing other fields
-
+      setMinimum(total);
       setCommission((prev) => ({
         ...prev,
         comPay: total,
@@ -108,6 +148,18 @@ const PostCommission = () => {
         !commission.Contactno ||
         !commission.comDescription
       ) {
+        setAlerMsg("Some fields are missing!");
+        setShowAlert(true);
+
+        // setLoading(true);
+        // // 3 seconds cd
+        // setTimeout(() => {
+        //   setLoading(false);
+
+        //   setAlerMsg("Some fields are missing!");
+        //   setShowAlert(true);
+
+        // }, 3000);
         if (
           commission.comType === "Delivery" ||
           commission.comType === "Transportation"
@@ -123,17 +175,43 @@ const PostCommission = () => {
             !commission.Contactno ||
             !commission.comDescription
           )
-            alert("Empty fields");
+            setAlerMsg("Some fields are missing!");
+          setShowAlert(true);
         }
+      } else if (commission.comPay < minimum) {
+        setAlerMsg("The salary is lower than the suggested payment!");
+        setShowAlert(true);
       } else if (commission.comLat === "" && commission.comLong === "") {
-        alert("Looks like you havent set the location in the Map");
+        setAlerMsg("Looks like you havent set the location in the Map");
+        setShowAlert(true);
       } else {
         await axios.post("http://localhost:8800/commission", updatedCommission);
         await axios.post("http://localhost:8800/notify-catcher");
 
-        alert("You have Posted an Errand!");
-        navigate(`/dashboard/commissions`);
-        // setOpen(true);
+        // alert("You have Posted an Errand!");
+        // navigate(`/dashboard/commissions`);
+
+        setLoading(true);
+
+        setTimeout(() => {
+          setLoading(false);
+          // modal will pop-up in 2 seconds
+          handleOpen();
+        }, 2000);
+
+        // 2 seconds cd
+        // setTimeout(() => {
+        //   setLoading(false);
+
+        //   setOpenSnack(true);
+        //   // alert("You have Posted an Errand!");
+        //   // navigate(`/dashboard/commissions`);
+
+        //   setTimeout(() => {
+        //     // setLoading(false);
+        //     navigate(`/dashboard/commissions`);
+        //   }, 1900);
+        // }, 2000);
       }
     } catch (err) {
       console.log(err);
@@ -142,6 +220,63 @@ const PostCommission = () => {
 
   return (
     <>
+      {showAlert && (
+        <Alert
+          color="danger"
+          size="md"
+          variant="solid"
+          startDecorator={<WarningIcon />}
+          endDecorator={
+            <IconButton
+              variant="soft"
+              color="danger"
+              onClick={() => setShowAlert(false)}
+            >
+              <CloseRoundedIcon />
+            </IconButton>
+          }
+        >
+          {alertMesg}
+        </Alert>
+      )}
+      <Snackbar
+        variant="solid"
+        color="success"
+        size="lg"
+        open={opensnack}
+        onClose={() => setOpenSnack(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        // autoHideDuration={5000}
+        startDecorator={<PostAddIcon />}
+        endDecorator={
+          <Button
+            onClick={() => navigate(`/dashboard/commissions`)}
+            size="sm"
+            variant="soft"
+            color="success"
+          >
+            Dismiss
+          </Button>
+        }
+      >
+        Successfully You have Posted an Errand!
+      </Snackbar>
+      <LoadingBackdrop
+        open={loading}
+        text="Loading... Please wait while Posting Your Errand"
+        icons={<HourglassBottomIcon />}
+      />
+
+      <ModalFeedback
+        open={open}
+        handleClose={handleClose}
+        headerMes="Success!"
+        contentMes="You have successfully posted an Errand"
+        color="success"
+        colorText="green"
+      // icon={ErrorIcon}
+      />
+
       <div className="errand-cont">
         <div className="input-cont">
           <div className="errand-inputs">
@@ -153,6 +288,10 @@ const PostCommission = () => {
               deadline="comDeadline"
               location="comLocation"
               to="comTo"
+              toValue={commission.comTo}
+              accessToken={accessToken}
+              onStartLocationSelect={handleStartLocationSelect}
+              onLocationSelect={handleLocationSelect}
               type="comType"
               typeValue={commission.comType}
               desc="comDescription"
@@ -166,6 +305,8 @@ const PostCommission = () => {
               lat={commission.comLat}
               destlong={commission.comDestLong}
               destlat={commission.comDestLat}
+              distance={distance}
+              minimum={minimum}
             />
           </div>
           {commission.comType !== "Delivery" &&
@@ -181,9 +322,6 @@ const PostCommission = () => {
                     }));
                   }}
                 />
-                <p className="coords">
-                  X: {commission.comLong} Y: {commission.comLat}
-                </p>
               </div>
             )}
           {commission.comType === "Delivery" && (
@@ -204,6 +342,9 @@ const PostCommission = () => {
                     comDestLat: destinationCoordinates[1],
                   }));
                 }}
+                // Sync input with Mapbox
+                customOrigin={commission.comLocation}
+                customDestination={commission.comTo}
               />
             </>
           )}
@@ -218,9 +359,21 @@ const PostCommission = () => {
             </>
           )}
         </div>
-        <button onClick={handleClick} className="btn btn-yellow" style={{}}>
+        {/* <button onClick={handleClick} className="btn btn-yellow" style={{}}>
           POST
-        </button>
+        </button> */}
+        <div className="butonn">
+          <Box sx={{ display: "flex", marginLeft: 2 }}>
+            <Button
+              sx={{ width: "200px", borderRadius: "20px" }}
+              size="lg"
+              color="primary"
+              onClick={handleClick}
+            >
+              POST
+            </Button>
+          </Box>
+        </div>
       </div>
     </>
   );

@@ -36,7 +36,7 @@ const User = {
   putUpdateUserById: (id, userData, callback) => {
     const {
       username,
-      password,
+      // password,
       fname,
       lname,
       gender,
@@ -51,12 +51,12 @@ const User = {
     //, profileImage = ?
     db.query(
       `UPDATE useraccount
-      SET username = ?, password = ?, userLastname = ?, userFirstname = ?, userGender =?, userEmail = ?,
+      SET username = ?, userLastname = ?, userFirstname = ?, userGender =?, userEmail = ?,
       userContactNum =?, userAge =?, userBirthday = ?, userAddress = ?, userDesc = ?
     WHERE userID = ?`,
       [
         username,
-        password,
+        // password,
         lname,
         fname,
         gender,
@@ -101,13 +101,13 @@ const User = {
     const {
       regUsername,
       regPassword,
-      fname,
-      lname,
-      //gender,
+      lastName,
+      firstName,
+      gender,
       email,
-      cnum,
+      contact,
       //age,
-      //bday,
+      bday,
       //address,
       type,
       dateCreated,
@@ -115,19 +115,19 @@ const User = {
     values = [
       regUsername,
       regPassword,
-      lname,
-      fname,
-      //gender,
+      lastName,
+      firstName,
+      gender,
       email,
-      cnum,
+      contact,
       //age,
-      // bday,
+      bday,
       //address,
       type,
       dateCreated,
     ];
     db.query(
-      "INSERT INTO useraccount (`username`, `password`, `userLastname`, `userFirstname`, `userEmail`,`userContactNum`, `accountType`, `dateCreated` ) VALUES (?)",
+      "INSERT INTO useraccount (`username`, `password`, `userLastname`, `userFirstname`,`userGender`, `userEmail`,`userContactNum`, `userBirthday`, `accountType`, `dateCreated` ) VALUES (?)",
       [values],
       callback
     );

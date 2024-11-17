@@ -1,0 +1,107 @@
+.search__bar__container {
+  height: 50vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: radial-gradient(rgb(0, 191, 255), skyblue);
+}
+
+.search__bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 25px 5%;
+  width: 50%;
+}
+
+.search__bar input {
+  padding: 7px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  margin-right: 3px;
+}
+
+.search__bar button {
+  padding: 7px 15px;
+  font-size: 16px;
+  background-color: #ce9251;
+  color: #fff;
+  /* box-shadow: 0 0 0 .2rem rgba(0, 0, 0, .1); */
+  border: none;
+  border-radius: 5px;
+  /* margin-right: 65%; */
+  cursor: pointer;
+}
+
+.search__bar button:hover {
+  background-color: #ccc;
+}
+
+.search__bar__container>h1 {
+  font-weight: 700;
+  line-height: 1.15;
+  color: #f3f3f4;
+  /* letter-spacing: -0.022em; */
+}
+
+.group {
+  display: flex;
+  line-height: 28px;
+  align-items: center;
+  position: relative;
+  width: 80%;
+  max-width: 700px;
+  /* width: 50%; */
+}
+
+.inputsss {
+  width: 100%;
+  height: 40px;
+  line-height: 28px;
+  padding: 0 1rem;
+  padding-left: 2.5rem;
+  border: 2px solid transparent;
+  /* border-radius: 8px; */
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+  outline: none;
+  background-color: #f3f3f4;
+  color: #0d0c22;
+  transition: .3s ease;
+}
+
+.inputsss::placeholder {
+  color: #9e9ea7;
+}
+
+.inputsss:focus,
+.inputsss:hover {
+  outline: none;
+  border-color: rgba(29, 36, 247, 0.991);
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgba(176, 176, 240, 0.1);
+}
+
+.icon {
+  position: absolute;
+  left: 1rem;
+  fill: #9e9ea7;
+  width: 1.25rem;
+  height: 1.2rem;
+}
+
+.group .buttonss {
+  /* flex-basis: 25%; */
+  padding: 0 1rem;
+  background: linear-gradient(135deg, #BFF0FA 0%, #4998FF 100%);
+  font-weight: 900;
+  letter-spacing: 0.3rem;
+  text-transform: uppercase;
+  color: white;
+  border: none;
+  border-radius: 0 1rem 1rem 0;
+  transition: all 0.2s ease-in-out;
+  height: 40px;
+}

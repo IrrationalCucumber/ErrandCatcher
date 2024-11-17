@@ -1,13 +1,11 @@
-import React from "react";
-import Cards from "../components/Cards/Cards";
-//import Menu from './Menu'
+import React, { useState } from "react";
 
-function testpage() {
+function Testpage() {
   return (
-    <div>
-      <Cards />
-    </div>
-  );
+    <>
+      <div>Hello World testing</div>
+    </>
+  )
 }
 
-export default testpage;
+export default Testpage;

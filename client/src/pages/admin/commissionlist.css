@@ -79,7 +79,10 @@ h1 {
 }
 
 .commissions th {
-  background-color: #ce9251; /* Adjust background color as needed */
+  /* background-color: #ce9251;  */
+  /* Adjust background color as needed */
+  background-color: #1679AB;
+  color: #fff;
 }
 
 .commissions tr:last-child td {
@@ -141,4 +144,72 @@ h1 {
 
 .add-commission-button:hover {
   background-color: #0056b3; /* Adjust hover color as needed */
+}
+
+.searchAdmin {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  width: 50%;
+}
+
+.inputSearchAdmin{
+  padding: 8px;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 10px 0px 10px 0px;
+}
+
+.filter__admin__accountList{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  width: 60%;
+  gap: 8px;
+  margin-left: 12px;
+}
+
+.CLstatus{
+  padding: 8px;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  
+  /* margin: 10px 20px;
+  width: 150px; */
+}
+
+.CLtype{
+  padding: 8px;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+
+  /* margin: 10px;
+  width: 150px; */
+}
+
+
+/* Responsive */
+@media screen and (max-width: 888px) {
+  .filter__admin__accountList{
+    width: 800px;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    margin-left: 12px;
+  }
+
+  .CLstatus{
+    width: 500px;
+    
+  }
+
+  .searchAdmin{
+    /* border: solid; */
+    width: 100%;
+  }
+
 }

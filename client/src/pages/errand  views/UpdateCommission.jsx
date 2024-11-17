@@ -16,7 +16,7 @@ const UpdateCommission = () => {
     comTo: "",
     comType: "",
     comDescription: "",
-    comPay: "",
+    comPay: 0,
     comStatus: "",
     ContactNo: "",
     comLong: "",
@@ -28,7 +28,7 @@ const UpdateCommission = () => {
 
   const [distance, setDistance] = useState(0);
   const accessToken =
-    "pk.eyJ1Ijoiam9pbmVyIiwiYSI6ImNsdmNjbnF4NjBoajQycWxoaHV5b2M1NzIifQ.Z7Pi_LfWyuc7a_z01zKMFg";
+    "pk.eyJ1IjoibWlyYWthNDQiLCJhIjoiY20xcWVhejZ0MGVzdjJscTF5ZWVwaXBzdSJ9.aLYnU19L7neFq2Y7J_UXhQ";
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -94,6 +94,29 @@ const UpdateCommission = () => {
     fetchCommission();
   }, [commissionID]);
 
+  const [minimum, setMinimum] = useState(0);
+  useEffect(() => {
+    if (
+      commission.comType === "Delivery" ||
+      commission.comType === "Transportation"
+    ) {
+      const km = distance / 1000; //meter to km
+      const baseAmount = 100;
+      const total = Math.round(km) * 15 + baseAmount;
+      // Correctly update commission state without losing other fields
+      setMinimum(total);
+      setCommission((prev) => ({
+        ...prev,
+        comPay: total,
+      }));
+    } else {
+      setCommission((prev) => ({
+        ...prev,
+        comPay: "",
+      }));
+    }
+  }, [commission.comType, distance]);
+
   const handleClick = async (e) => {
     e.preventDefault();
     try {
@@ -109,6 +132,9 @@ const UpdateCommission = () => {
         );
         alert("UPdate successful");
         navigate(`dashboard/commissions/${userID}`);
+      } else if (commission.comPay < minimum) {
+        alert("The salary is lower than the suggested payment!");
+        //setShowAlert(true);
       } else {
         alert("Please Update the Dates in your errands");
       }
@@ -149,6 +175,7 @@ const UpdateCommission = () => {
               number="Contactno"
               numValue={commission.ContactNo}
               distance={distance}
+              minimum={minimum}
             />
           </div>
           {commission.comType !== "Delivery" &&
@@ -164,9 +191,6 @@ const UpdateCommission = () => {
                     }));
                   }}
                 />
-                <p className="coords">
-                  X: {commission.comLong} Y: {commission.comLat}
-                </p>
               </div>
             )}
           {commission.comType === "Delivery" && (

@@ -20,6 +20,7 @@ import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 //import Settings from "@mui/icons-material/Settings";
 import { useAuth } from "../../components/AuthContext.js";
 import { DisplayDate } from "../../components/DisplayDate.js";
+import { BannerEmployerPages } from "../../components/Banner/HeroSection.js";
 
 const CommissionList = () => {
   const [commissions, setCommissions] = useState([]);
@@ -120,9 +121,11 @@ const CommissionList = () => {
   //need front end
   return (
     <div>
+      <BannerEmployerPages
+        bannerMessage={`These is/are what you have posted so far, ${user.username}`}
+      />
       <div className="Commission-page-container">
         <div className="Commission-page">
-          <h1>Commission List</h1>
           <div className="commissions">
             <div className="search-filter">
               <div className="search">
@@ -153,79 +156,82 @@ const CommissionList = () => {
               </div>
             </div>
 
-            <Table
-              headers={[
-                "ID",
-                "ERRAND TITLE",
-                "TYPE",
-                "START DATE",
-                "DUE DATE",
-                "STATUS",
-                "ACTION",
-              ]}
-              // update the data here
-              data={currentItems.map((commissionItem) => [
-                commissionItem.commissionID,
-                commissionItem.commissionTitle,
-                commissionItem.commissionType,
-                DisplayDate(commissionItem.DatePosted),
-                DisplayDate(commissionItem.commissionDeadline),
-                commissionItem.commissionStatus,
-                <React.Fragment>
-                  <ButtonGroup aria-label="spacing button group">
-                    <Button
-                      variant="outlined"
-                      color="danger"
-                      endDecorator={<DeleteForever />}
-                      onClick={() =>
-                        handleOpenModal(commissionItem.commissionID)
-                      }
-                    ></Button>
-                    <Modal open={open} onClose={() => setOpen(false)}>
-                      <ModalDialog variant="outlined" role="alertdialog">
-                        <DialogTitle>
-                          <WarningRoundedIcon />
-                          Confirmation
-                        </DialogTitle>
-                        <Divider />
-                        <DialogContent>
-                          Are you sure you want to discard Errand {currentId} ?
-                          {/* Display the current ID from state */}
-                        </DialogContent>
-                        <DialogActions>
-                          <Button
-                            variant="solid"
-                            color="danger"
-                            onClick={confirmDelete}
-                          >
-                            Delete
-                          </Button>
-                          <Button
-                            variant="plain"
-                            color="neutral"
-                            onClick={() => setOpen(false)}
-                          >
-                            Cancel
-                          </Button>
-                        </DialogActions>
-                      </ModalDialog>
-                    </Modal>
-                    {/* <Button
+            <div className="table-container">
+              <Table
+                headers={[
+                  "ID",
+                  "ERRAND TITLE",
+                  "TYPE",
+                  "START DATE",
+                  "DUE DATE",
+                  "STATUS",
+                  "ACTION",
+                ]}
+                // update the data here
+                data={currentItems.map((commissionItem) => [
+                  commissionItem.commissionID,
+                  commissionItem.commissionTitle,
+                  commissionItem.commissionType,
+                  DisplayDate(commissionItem.DatePosted),
+                  DisplayDate(commissionItem.commissionDeadline),
+                  commissionItem.commissionStatus,
+
+                  <React.Fragment>
+                    <ButtonGroup aria-label="spacing button group">
+                      <Button
+                        variant="outlined"
+                        color="danger"
+                        endDecorator={<DeleteForever />}
+                        onClick={() =>
+                          handleOpenModal(commissionItem.commissionID)
+                        }
+                      ></Button>
+                      <Modal open={open} onClose={() => setOpen(false)}>
+                        <ModalDialog variant="outlined" role="alertdialog">
+                          <DialogTitle>
+                            <WarningRoundedIcon />
+                            Confirmation
+                          </DialogTitle>
+                          <Divider />
+                          <DialogContent>
+                            Are you sure you want to discard Errand {currentId}{" "}
+                            ?{/* Display the current ID from state */}
+                          </DialogContent>
+                          <DialogActions>
+                            <Button
+                              variant="solid"
+                              color="danger"
+                              onClick={confirmDelete}
+                            >
+                              Delete
+                            </Button>
+                            <Button
+                              variant="plain"
+                              color="neutral"
+                              onClick={() => setOpen(false)}
+                            >
+                              Cancel
+                            </Button>
+                          </DialogActions>
+                        </ModalDialog>
+                      </Modal>
+                      {/* <Button
                     onClick={() => handleDelete(commissionItem.commissionID)}
-                  >
+                    >
                     DELETE
-                  </Button> */}
-                    <Button>
-                      <Link
-                        to={`/errand/update-commission/${commissionItem.commissionID}`}
-                      >
-                        View
-                      </Link>
-                    </Button>
-                  </ButtonGroup>
-                </React.Fragment>,
-              ])}
-            />
+                    </Button> */}
+                      <Button>
+                        <Link
+                          to={`/errand/update-commission/${commissionItem.commissionID}`}
+                        >
+                          View
+                        </Link>
+                      </Button>
+                    </ButtonGroup>
+                  </React.Fragment>,
+                ])}
+              />
+            </div>
           </div>
         </div>
         {/* Pagination controls */}

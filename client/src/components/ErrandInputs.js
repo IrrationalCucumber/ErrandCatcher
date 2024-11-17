@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 // import "./ErrandInput.css";
 /**
  * 13/04/24
@@ -16,17 +17,165 @@ import AddIcCallIcon from "@mui/icons-material/AddIcCall";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
+import WhereToVoteIcon from "@mui/icons-material/WhereToVote";
+import { Typography } from "@mui/joy";
 
 function ErrandInputs(props) {
+  const [startSuggestions, setStartSuggestions] = useState([]);
+  const [startQuery, setStartQuery] = useState(""); // For starting location input (props.location)
+  const [startCoordinates, setStartCoordinates] = useState(null); // For selected starting location coordinates
+
+  const [destSuggestions, setDestSuggestions] = useState([]);
+  const [destQuery, setDestQuery] = useState(props.toValue); // For destination input
+  const [destCoordinates, setDestCoordinates] = useState(null); // For selected destination coordinates
+
+  const [isStartSelected, setIsStartSelected] = useState(false); // New state to track if a suggestion was clicked
+  const [isDestSelected, setIsDestSelected] = useState(false); // Same for destination
+
+  // Fetch suggestions for start location from Mapbox API
+  const fetchStartSuggestions = async (searchText) => {
+    if (!searchText) {
+      setStartSuggestions([]);
+      return;
+    }
+
+    try {
+      const response = await axios.get(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${searchText}.json`,
+        {
+          params: {
+            access_token: props.accessToken, // Add your Mapbox access token
+            autocomplete: true,
+            limit: 5,
+            country: "PH", // Restrict oy Philippines
+          },
+        }
+      );
+      const features = response.data.features || [];
+      setStartSuggestions(
+        features.map((feature) => ({
+          place_name: feature.place_name,
+          coordinates: feature.geometry.coordinates,
+        }))
+      );
+    } catch (error) {
+      console.error("Error fetching start suggestions:", error);
+    }
+  };
+
+  // Fetch suggestions for destination location from Mapbox API
+  const fetchDestSuggestions = async (searchText) => {
+    if (!searchText) {
+      setDestSuggestions([]);
+      return;
+    }
+
+    try {
+      const response = await axios.get(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${searchText}.json`,
+        {
+          params: {
+            access_token: props.accessToken, // Add your Mapbox access token
+            autocomplete: true,
+            limit: 5,
+            country: "PH",
+          },
+        }
+      );
+      const features = response.data.features || [];
+      setDestSuggestions(
+        features.map((feature) => ({
+          place_name: feature.place_name,
+          coordinates: feature.geometry.coordinates,
+        }))
+      );
+    } catch (error) {
+      console.error("Error fetching destination suggestions:", error);
+    }
+  };
+
+  // Debounce for start suggestions
+  useEffect(() => {
+    if (isStartSelected) return; // If a suggestion was clicked, skip fetching
+
+    const timeoutId = setTimeout(() => {
+      fetchStartSuggestions(startQuery);
+    }, 300); // Debounce time (300ms)
+
+    return () => clearTimeout(timeoutId);
+  }, [startQuery]);
+
+  // Debounce for destination suggestions
+  useEffect(() => {
+    if (isDestSelected) return; // If a suggestion was clicked, skip fetching
+
+    const timeoutId = setTimeout(() => {
+      fetchDestSuggestions(destQuery);
+    }, 300); // Debounce time (300ms)
+
+    return () => clearTimeout(timeoutId);
+  }, [destQuery]);
+
+  // Handle start location suggestion click
+  const handleStartSuggestionClick = (suggestion) => {
+    setStartQuery(suggestion.place_name);
+    setStartCoordinates(suggestion.coordinates);
+    setStartSuggestions([]); // Clear suggestions
+    setIsStartSelected(true); // Mark that a suggestion was clicked
+
+    // Sync with parent component
+    props.handleChange({
+      target: {
+        name: props.location,
+        value: suggestion.place_name,
+      },
+    });
+
+    if (props.onStartLocationSelect) {
+      props.onStartLocationSelect(suggestion.coordinates);
+    }
+  };
+
+  // Reset the `isStartSelected` state when the user types
+  const handleStartQueryChange = (e) => {
+    // onChange={(e) => setStartQuery(e.target.value)}
+    setStartQuery(e.target.value);
+    setIsStartSelected(false); // Reset the state when the user starts typing again
+  };
+
+  // Handle destination location suggestion click
+  const handleDestSuggestionClick = (suggestion) => {
+    setDestQuery(suggestion.place_name);
+    setDestCoordinates(suggestion.coordinates);
+    setDestSuggestions([]); // clear suggestions
+    setIsDestSelected(true); // Mark that a suggestion was clicked
+
+    // Sync with parent component
+    props.handleChange({
+      target: {
+        name: props.to,
+        value: suggestion.place_name,
+      },
+    });
+
+    if (props.onLocationSelect) {
+      props.onLocationSelect(suggestion.coordinates);
+    }
+  };
+
+  const handleDestQueryChange = (e) => {
+    // onChange={(e) => setStartQuery(e.target.value)}
+    setDestQuery(e.target.value);
+    setIsDestSelected(false); // Reset the state when the user starts typing again
+  };
+
   return (
     <>
-      <div className="input-group">
-        {props.status === "Available" && (
-          <>
+      {/* <div className="input-group"> */}
+      {props.status === "Available" && (
+        <>
+          <div className="input-group">
             <div className="col1">
-              <label style={{ color: "black" }}>{props.statusHeader}</label>
-            </div>
-            <div className="col2">
               <Chip
                 size="lg"
                 variant="solid"
@@ -36,14 +185,13 @@ function ErrandInputs(props) {
                 {props.status}
               </Chip>
             </div>
-          </>
-        )}
-        {props.status === "Expired" && (
-          <>
+          </div>
+        </>
+      )}
+      {props.status === "Expired" && (
+        <>
+          <div className="input-group">
             <div className="col1">
-              <label style={{ color: "black" }}>{props.statusHeader}</label>
-            </div>
-            <div className="col2">
               <Chip
                 size="lg"
                 variant="solid"
@@ -53,14 +201,13 @@ function ErrandInputs(props) {
                 {props.status}
               </Chip>
             </div>
-          </>
-        )}
-        {props.status === "Unavailable" && (
-          <>
+          </div>
+        </>
+      )}
+      {props.status === "Unavailable" && (
+        <>
+          <div className="input-group">
             <div className="col1">
-              <label style={{ color: "black" }}>{props.statusHeader}</label>
-            </div>
-            <div className="col2">
               <Chip
                 size="lg"
                 variant="solid"
@@ -70,26 +217,33 @@ function ErrandInputs(props) {
                 {props.status}
               </Chip>
             </div>
-          </>
-        )}
-      </div>
-      {/* ERRAND POSTER */}
-      {props.employer !== "" && props.fname !== "" && (
-        <>
-          <div className="input-group">
-            <div className="col1">
-              <label style={{ color: "black" }}>{props.employer}</label>
-            </div>
-            <div className="col2">
-              {props.fname} {props.lname}
-            </div>
           </div>
         </>
       )}
+      {/* </div> */}
+      {/* ERRAND POSTER */}
+      {props.employer ? (
+        <>
+          <div className="input-group">
+            <div className="col1">
+              <Typography level="title-lg" variant="plain">
+                {props.employer}
+              </Typography>
+            </div>
+            <div className="col2">
+              <Typography color="primary" level="title-lg" variant="plain">
+                {props.fname} {props.lname}
+              </Typography>
+            </div>
+          </div>
+        </>
+      ) : null}
       {/* commission title */}
       <div className="input-group">
         <div className="col1">
-          <label style={{ color: "black" }}>Title</label>
+          <Typography level="title-lg" variant="plain">
+            Title
+          </Typography>
         </div>
         <div className="col2">
           <Input
@@ -98,17 +252,24 @@ function ErrandInputs(props) {
             size="lg"
             variant={props.variant}
             type="text"
-            placeholder="Errand Title"
+            placeholder="Enter the title here..."
             onChange={props.handleChange}
             name={props.title}
             value={props.titleValue}
+            slotProps={{
+              input: {
+                maxLength: 20,
+              },
+            }}
           />
         </div>
       </div>
       {/*start date*/}
       <div className="input-group">
         <div className="col1">
-          <label style={{ color: "black" }}>Start </label>
+          <Typography level="title-lg" variant="plain">
+            Start
+          </Typography>
         </div>
         <div className="col2">
           <Input
@@ -117,17 +278,24 @@ function ErrandInputs(props) {
             size="lg"
             variant={props.variant}
             type="date"
-            placeholder="Start Date"
+            placeholder="Enter when to begin..."
             onChange={props.handleChange}
             name={props.start}
             value={props.startValue}
+            slotProps={{
+              input: {
+                min: new Date().toISOString().split("T")[0],
+              },
+            }}
           />
         </div>
       </div>
       {/* deadline */}
       <div className="input-group">
         <div className="col1">
-          <label style={{ color: "black" }}>End</label>
+          <Typography level="title-lg" variant="plain">
+            End
+          </Typography>
         </div>
         <div className="col2">
           <Input
@@ -136,19 +304,24 @@ function ErrandInputs(props) {
             size="lg"
             variant={props.variant}
             type="date"
-            placeholder="Deadline"
+            placeholder="Enter date of deadline"
             onChange={props.handleChange}
             name={props.deadline}
             value={props.dlValue}
+            slotProps={{
+              input: {
+                min: new Date().toISOString().split("T")[0],
+              },
+            }}
           />
         </div>
       </div>
       {/* commission type */}
       <div className="input-group">
         <div className="col1">
-          <label style={{ color: "black" }} htmlFor="">
+          <Typography level="title-lg" variant="plain">
             Errand Type
-          </label>
+          </Typography>
         </div>
         <div className="col2">
           <select
@@ -157,7 +330,7 @@ function ErrandInputs(props) {
             value={props.typeValue}
             disabled={props.readOnly}
           >
-            <option value="">Choose type....</option>
+            <option value="">Choose type of Errand....</option>
             <option value="HomeService - Indoor">Home Service - Indoor</option>
             <option value="HomeService - Outdoor">
               Home Service - Outdoor
@@ -170,28 +343,75 @@ function ErrandInputs(props) {
       {/* location */}
       <div className="input-group">
         <div className="col1">
-          <label style={{ color: "black" }}>Where</label>
+          <Typography level="title-lg" variant="plain">
+            {props.typeValue === "Delivery" ||
+            props.typeValue === "Transportation" ? (
+              <>From</>
+            ) : (
+              <>Where</>
+            )}
+          </Typography>
         </div>
-        <div className="col2">
-          <Input
-            color="neutral"
-            disabled={props.readOnly}
-            size="lg"
-            variant={props.variant}
-            startDecorator={<LocationOn />}
-            type="text"
-            placeholder="Location"
-            onChange={props.handleChange}
-            name={props.location}
-            value={props.locValue}
-          />
-        </div>
+        {(props.typeValue === "HomeService - Indoor" ||
+          props.typeValue === "HomeService - Outdoor") && (
+          <>
+            <div className="col2">
+              <Input
+                color="neutral"
+                disabled={props.readOnly}
+                size="lg"
+                variant={props.variant}
+                startDecorator={<LocationOn />}
+                type="text"
+                placeholder="Enter location of errand..."
+                onChange={props.handleChange}
+                value={props.locValue} // Sync input value
+                name={props.location}
+              />
+            </div>
+          </>
+        )}
+        {(props.typeValue === "Transportation" ||
+          props.typeValue === "Delivery" ||
+          props.typeValue === "") && (
+          <div className="col2">
+            <Input
+              color="neutral"
+              disabled={props.readOnly}
+              size="lg"
+              variant={props.variant}
+              startDecorator={<LocationOn />}
+              type="text"
+              placeholder="Enter place for pickup..."
+              onChange={handleStartQueryChange}
+              value={startQuery} // Sync input value
+              name={props.location}
+            />
+            {/* search suggestion */}
+            {startSuggestions.length > 0 && (
+              <ul className="suggestions-list">
+                {startSuggestions.map((suggestion, index) => (
+                  <li
+                    key={index}
+                    onClick={() => handleStartSuggestionClick(suggestion)}
+                    className="suggestion-item"
+                  >
+                    {suggestion.place_name}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
       </div>
       {/* Display when Transport Type is selected */}
-      {props.typeValue === "Transport" && (
+      {(props.typeValue === "Transportation" ||
+        props.typeValue === "Delivery") && (
         <div className="input-group">
           <div className="col1">
-            <label style={{ color: "black" }}>Destination</label>
+            <Typography level="title-lg" variant="plain">
+              To
+            </Typography>
           </div>
           <div className="col2">
             <Input
@@ -199,37 +419,27 @@ function ErrandInputs(props) {
               disabled={props.readOnly}
               size="lg"
               variant={props.variant}
+              startDecorator={<WhereToVoteIcon />}
               type="text"
-              placeholder="Destination"
-              onChange={props.handleChange}
+              placeholder="Enter destination of errand..."
               name={props.to}
-              value={props.toValue}
+              onChange={handleDestQueryChange}
+              value={destQuery} // Sync input value
             />
-          </div>
-        </div>
-      )}
-      {/* Display when Delivery Type is selected */}
-      {props.typeValue === "Delivery" && (
-        <div className="input-group">
-          <div className="col1">
-            <label style={{ color: "black" }}>Destination</label>
-          </div>
-          <div className="col2">
-            <Input
-              color="neutral"
-              disabled={props.readOnly}
-              size="lg"
-              variant={props.variant}
-              type="text"
-              placeholder="Destination"
-              onChange={props.handleChange}
-              name={props.to}
-              value={props.toValue}
-              style={{
-                fontFamily:
-                  "Lucida Sans, Lucida Sans Regular, Lucida Grande, Lucida Sans Unicode, Geneva, Verdana, sans-serif",
-              }}
-            />
+            {/* search suggestion */}
+            {destSuggestions.length > 0 && (
+              <ul className="suggestions-list">
+                {destSuggestions.map((suggestion, index) => (
+                  <li
+                    key={index}
+                    onClick={() => handleDestSuggestionClick(suggestion)}
+                    className="suggestion-item"
+                  >
+                    {suggestion.place_name}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
       )}
@@ -237,22 +447,60 @@ function ErrandInputs(props) {
       <div className="input-group">
         <div className="col1">
           {props.typeValue !== "HomeService - Indoor" &&
-            props.typeValue !== "HomeService - Outdoor" &&
-            props.typeValue !== "" && (
-              <label style={{ color: "black" }}>Fee: </label>
-            )}
-          {props.typeValue === "HomeService" && props.typeValue === "" && (
-            <label style={{ color: "black" }}>Fee: </label>
+          props.typeValue !== "HomeService - Outdoor" &&
+          props.typeValue !== "" ? (
+            <Typography level="title-lg" variant="plain">
+              Payment
+            </Typography>
+          ) : (
+            (props.typeValue === "HomeService - Indoor" ||
+              props.typeValue === "HomeService - Outdoor" ||
+              props.typeValue === "") && (
+              <Typography level="title-lg" variant="plain">
+                Payment
+              </Typography>
+            )
           )}
+          <div className="col2">
+            <Input
+              color="neutral"
+              disabled={props.readOnly}
+              size="lg"
+              variant={props.variant}
+              type="number"
+              startDecorator="₱"
+              placeholder="0.00"
+              onChange={props.handleChange}
+              name={props.pay}
+              value={props.payValue}
+            />
+            {props.typeValue !== "HomeService - Indoor" &&
+              props.typeValue !== "HomeService - Outdoor" &&
+              props.typeValue !== "" && (
+                <>
+                  <Typography color="neutral" level="body-md" variant="plain">
+                    15/km + ₱100
+                  </Typography>
+                  <Typography color="neutral" level="body-sm" variant="plain">
+                    <i>Suggested Pay: {props.minimum}</i>
+                  </Typography>
+                  {props.distance ? (
+                    <Typography color="neutral" level="body-md" variant="plain">
+                      {props.distance} km
+                    </Typography>
+                  ) : null}
+                </>
+              )}
+          </div>
         </div>
         {/* PAYMENT METOD */}
-        <div className="input-group">
-          <div className="cols1">
-            <label style={{ color: "black" }} htmlFor="">
+        {/* <div className="input-group">
+          <div className="col1">
+            <Typography level="title-lg" variant="plain">
               Payment Method
-            </label>
+            </Typography>
           </div>
-          <div className="cols2">
+          <div className="col2">
             <select
               name={props.method}
               onChange={props.handleChange}
@@ -266,35 +514,15 @@ function ErrandInputs(props) {
               <option value="credit card">Credit Card</option>
             </select>
           </div>
-        </div>
-        <div className="col2">
-          <Input
-            color="neutral"
-            disabled={props.readOnly}
-            size="lg"
-            variant={props.variant}
-            type="number"
-            startDecorator="₱"
-            placeholder="0.00"
-            onChange={props.handleChange}
-            name={props.pay}
-            value={props.payValue}
-          />
-          {props.typeValue !== "HomeService - Indoor" &&
-            props.typeValue !== "HomeService - Outdoor" &&
-            props.typeValue !== "" && (
-              <>
-                <p>₱15/km + ₱100</p>
-                <p>{props.distance} km</p>
-              </>
-            )}
-        </div>
+        </div> */}
       </div>
 
       {/* contact number */}
       <div className="input-group">
         <div className="col1">
-          <label style={{ color: "black" }}>Contact Number</label>
+          <Typography level="title-lg" variant="plain">
+            Contact Number
+          </Typography>
         </div>
         <div className="col2">
           <Input
@@ -304,7 +532,7 @@ function ErrandInputs(props) {
             variant={props.variant}
             startDecorator={<AddIcCallIcon />}
             type="tel"
-            placeholder="Phone/Telephone number"
+            placeholder="Enter contact number..."
             onChange={props.handleChange}
             name={props.number}
             value={props.numValue}
@@ -313,7 +541,9 @@ function ErrandInputs(props) {
       </div>
       <div className="input-group">
         <div className="col1">
-          <label style={{ color: "black" }}>Description</label>
+          <Typography level="title-lg" variant="plain">
+            Description
+          </Typography>
         </div>
         <div className="col2">
           <Textarea
@@ -323,33 +553,41 @@ function ErrandInputs(props) {
             variant={props.variant}
             minRows={5}
             maxRows={5}
-            placeholder="Write here..."
+            placeholder="Write instruction/details for the errand...."
             onChange={props.handleChange}
             name={props.desc}
             value={props.descValue}
           />
         </div>
       </div>
-      {/* {props.typeValue !== "Delivery" &&
-          props.typeValue !== "Transportation" && (
-            <div className="map--wrap">
-              <div ref={props.mapContainer} className="map-small" />
-              <p className="coords">
-                X: {props.long} Y: {props.lat}
-              </p>
-            </div>
-          )} */}
-      {/* {props.typeValue === "Delivery" && (
-        <>
-          Distance: {distance} m
-          <Map
-            accessToken={accessToken}
-            getDistanceCallback={(distance) => {
-              setDistance(distance);
-            }}
-          />
-        </>
-      )} */}
+
+      <style>
+        {`
+        .suggestions-list {
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          max-height: 200px;
+          overflow-y: auto;
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          position: absolute;
+          background-color: white;
+          z-index: 1000;
+          width: 100%;
+          font-size: 13px;
+        }     
+          
+        .suggestion-item {
+          padding: 10px;
+          cursor: pointer;
+        }
+        
+        .suggestion-item:hover {
+          background-color: #f0f0f0;
+        }
+      `}
+      </style>
     </>
   );
 }

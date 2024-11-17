@@ -17,6 +17,13 @@ import ModalClose from "@mui/joy/ModalClose";
 import ModalDialog from "@mui/joy/ModalDialog";
 import DialogTitle from "@mui/joy/DialogTitle";
 import DialogContent from "@mui/joy/DialogContent";
+import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
+import ErrorIcon from "@mui/icons-material/Error";
+import CancelIcon from "@mui/icons-material/Cancel";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import HailIcon from "@mui/icons-material/Hail";
+import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
+import ViewProfile from "../profile/ViewProfile";
 
 const AccountList = () => {
   const [accounts, setAccounts] = useState([]);
@@ -28,12 +35,13 @@ const AccountList = () => {
   // const { user } = useAuth();
   // const userID = user.userID;
   const navigate = useNavigate();
-  const [layout, setLayout] = useState(undefined);
+  const [showProfileModal, setShowProfileModal] = useState(false);
   const [currentId, setCurrentId] = useState(null);
   const handleOpenModal = (id) => {
-    setLayout("fullscreen");
+    setShowProfileModal(true);
     setCurrentId(id); // Set the ID in state
   };
+
   //pagination --Ash
   const [currentPage, setCurrentPage] = useState(1);
   //Pagination --Ash
@@ -117,32 +125,7 @@ const AccountList = () => {
     };
     fetchRating();
   }, [currentId]);
-  //user trans
-  // const [count, setCount] = useState({
-  //   done: "",
-  //   expired: "",
-  //   cancel: "",
-  // });
-  // useEffect(() => {
-  //   const fetchTransCount = async () => {
-  //     try {
-  //       const res = await axios.get(
-  //         `http://localhost:8800/trans-count/${currentId}`
-  //       );
-  //       //console.log(res.data[0].expired);
-  //       if (!!res.data) {
-  //         setCount({
-  //           done: res.data[0].done,
-  //           expired: res.data[0].expired,
-  //           cancel: res.data[0].cancel,
-  //         });
-  //       }
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //   fetchTransCount();
-  // }, [currentId]);
+
   //FOR NOTIFICATION
   //set variables for notification
   const [notif, setNotif] = useState({
@@ -181,14 +164,14 @@ const AccountList = () => {
   //filter
   const filterAccounts = accounts.filter((account) => {
     const type = account.accountType
-      .toLowerCase()
-      .includes(searchTerm.type.toLowerCase());
+      ?.toLowerCase()
+      .includes(searchTerm.type.toLowerCase() ?? "");
     const termMatch = account.username
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
+      ?.toLowerCase()
+      .includes(searchTerm.term.toLowerCase() ?? "");
     const termMatch2 = account.userEmail
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
+      ?.toLowerCase()
+      .includes(searchTerm.term.toLowerCase() ?? "");
     const status = account.accountStatus.includes(searchTerm.status);
 
     return type && (termMatch || termMatch2) && status;
@@ -218,9 +201,46 @@ const AccountList = () => {
     account.username,
     `${account.userFirstname} ${account.userLastname}`,
     account.userEmail,
-    account.accountType,
+    // account.accountType,
+    account.accountType === "Employer" ? (
+      <>
+        <HailIcon style={{ color: "green" }} />
+        <span> Employer</span>
+      </>
+    ) : account.accountType === "Catcher" ? (
+      <>
+        <AssignmentIndIcon style={{ color: "purple" }} />
+        <span> Catcher</span>
+      </>
+    ) : account.accountType === "admin" ? (
+      <>
+        <ManageAccountsIcon style={{ color: "red" }} />
+        <span> Admin</span>
+      </>
+    ) : null, // handle any other status if necessary..
     DisplayDate(account.dateCreated),
-    account.accountStatus,
+    // account.accountStatus,
+    account.accountStatus === "Verified" ? (
+      <>
+        <VerifiedUserIcon style={{ color: "green" }} />
+        <span> Verified</span>
+      </>
+    ) : account.accountStatus === "Unverified" ? (
+      <>
+        <ErrorIcon style={{ color: "orange" }} />
+        <span> Unverified</span>
+      </>
+    ) : account.accountStatus === "Suspended" ? (
+      <>
+        <CancelIcon style={{ color: "red" }} />
+        <span> Suspended</span>
+      </>
+    ) : account.accountStatus === "Deactivated" ? (
+      <>
+        <CancelIcon style={{ color: "red" }} />
+        <span> Deactivated</span>
+      </>
+    ) : null, // handle any other status if necessary..
     <Dropdown>
       <MenuButton>ACTIONS</MenuButton>
       <Menu>
@@ -255,7 +275,6 @@ const AccountList = () => {
       const status = "Suspended";
       await axios.put(`http://localhost:8800/change-status/${id}/${status}`);
       //console.log("Request verified:", request);
-      //setIsButtonClicked(true);
       //add a notification to the request user
       notif.notifDesc = "Your account has been suspended";
       notif.userID = id;
@@ -316,6 +335,7 @@ const AccountList = () => {
           marginBottom: "10px",
           display: "flex",
           alignItems: "center",
+          width: "60%",
         }}
       >
         <input
@@ -331,6 +351,7 @@ const AccountList = () => {
             borderRadius: "4px",
             marginRight: "10px",
             marginBottom: "10px",
+            maxWidth: "450px",
           }}
         />
         <select
@@ -383,77 +404,10 @@ const AccountList = () => {
           paginate={paginate}
         />
       </div>
-      <Modal
-        open={!!layout}
-        onClose={() => setLayout(undefined)}
-        className="accList_modal"
-      >
-        <ModalDialog layout={layout} className="custom-dialog">
+      <Modal open={showProfileModal} onClose={() => setShowProfileModal(false)}>
+        <ModalDialog layout="fullscreen" sx={{ overflowY: "auto" }}>
           <ModalClose />
-          <DialogTitle>{account.username.toUpperCase()} PROFILE</DialogTitle>
-          <DialogContent
-            style={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              padding: "20px",
-            }}
-          >
-            <>
-              <div>
-                {/* <img
-                  src={
-                    `http://localhost:8800/images/profile/` +
-                    account.profileImage
-                  }
-                  alt="Profile"
-                  width={150}
-                  length={150}
-                /> */}
-                <h4>USER: {currentId}</h4>
-                <h5>
-                  <b>USERNAME: </b>
-                  {account.username}
-                  <br />
-                  <b>FULL NAME: </b>
-                  {account.fname} {account.lname}
-                  <br />
-                  <b>EMAIL: </b>
-                  {account.email}
-                  <br />
-                  <b>GENDER: </b>
-                  {account.gender} <br />
-                  <b>CONTACT #: </b>
-                  {account.contact} <br />
-                  <b>AGE: </b>
-                  {account.age} <br />
-                  <b>BIRTHDAY: </b>
-                  {account.bday} <br />
-                  <b>ADDRESS: </b>
-                  {account.address} <br />
-                  <b>DESCRIPTION: </b>
-                  {account.desc} <br />
-                  <b>DATE CREATED: </b>
-                  {account.dateC} <br />
-                  <b>STATUS: </b>
-                  {account.status} <br />
-                  <b>RATING: </b>
-                  {rating} <br />
-                  {/* <b>ERRAND DONE: </b> {count.done} <br />
-                  <b>ERRAND EXPIRED: </b> {count.expired} <br />
-                  <b>ERRAND CANCELLED: </b> {count.cancel} <br /> */}
-                </h5>
-              </div>
-              <img
-                src={
-                  `http://localhost:8800/images/profile/` + account.profileImage
-                }
-                alt="Profile"
-                width={150}
-                length={150}
-                style={{ marginRight: "20px" }}
-              />
-            </>
-          </DialogContent>
+          <ViewProfile id={currentId} />
         </ModalDialog>
       </Modal>
       <Link to="/profile/add" style={{ textDecoration: "none" }}>
@@ -464,7 +418,8 @@ const AccountList = () => {
             fontSize: "12px",
             cursor: "pointer",
             border: "none",
-            backgroundColor: "#CE9251",
+            // backgroundColor: "#CE9251",
+            backgroundColor: "#1679AB",
             color: "white",
             borderRadius: "4px",
             display: "inline-block",

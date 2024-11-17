@@ -6,9 +6,8 @@
 //03-28-24 added view profile but modal doesnt have data
 
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import NavBar from "../../components/Navbar/Navbar";
 import Table from "../../components/Table";
 import "./applicant.css";
 import Pagination from "../../components/Pagination";
@@ -20,9 +19,13 @@ import DialogTitle from "@mui/joy/DialogTitle";
 import DialogContent from "@mui/joy/DialogContent";
 import DialogActions from "@mui/joy/DialogActions";
 import Modal from "@mui/joy/Modal";
+import { ModalClose } from "@mui/joy";
 import ModalDialog from "@mui/joy/ModalDialog";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 import { DisplayDate } from "../../components/DisplayDate";
+import { BannerEmployerPages } from "../../components/Banner/HeroSection";
+import ViewProfile from "../profile/ViewProfile";
+import ModalFeedback from "../../components/ModalFeedback";
 
 const EmployerApplicants = () => {
   const navigate = useNavigate();
@@ -40,10 +43,20 @@ const EmployerApplicants = () => {
   const [itemsPerPage] = useState(10);
   //ash
   const [showProfileModal, setShowProfileModal] = useState(false);
-  const [selectedApplicant, setSelectedApplicant] = useState(null);
-  const [rating, setRating] = useState("");
+  const [selectedApplicant, setSelectedApplicant] = useState("");
   const [openAccept, setOpenAccept] = useState(false);
   const [openDecline, setOpenDecline] = useState(false);
+
+  // modal message pop-up
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+    setOpenAccept(false);
+    window.location.reload();
+  };
 
   const handleOpenAcceptModal = () => {
     setOpenAccept(true);
@@ -52,32 +65,11 @@ const EmployerApplicants = () => {
   const handleOpenDeclineModal = () => {
     setOpenDecline(true);
   };
-
-  const handleViewProfile = (applicant) => {
-    setSelectedApplicant(applicant);
-    //display rating of acathcer
-    const fetchRating = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:8800/user-rating/${applicant.catcherID}`
-        );
-        // if rating is null
-        if (res.data[0].c == null) {
-          setRating(0);
-        } else {
-          setRating(res.data[0].c);
-        }
-        // console.log(res.data[0].c);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchRating();
+  //modal to view profile page of appicant
+  const handleViewProfile = (id) => {
+    setSelectedApplicant(id);
+    console.log(id);
     setShowProfileModal(true);
-  };
-
-  const handleCloseProfileModal = () => {
-    setShowProfileModal(false);
   };
 
   //useEffect to handle error
@@ -103,11 +95,19 @@ const EmployerApplicants = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = applicants.slice(indexOfFirstItem, indexOfLastItem);
 
-  const headers = ["DATE", "CATCHER", "ERRAND TITLE", "ACTION", ""];
+  const headers = [
+    "DATE",
+    "CATCHER",
+    "QUALIFICATION",
+    "ERRAND TITLE",
+    "ACTION",
+    "",
+  ];
   const applicantData = applicants.map((applicant) => [
     //applicant.applicationID,
     DisplayDate(applicant.applicationDate),
     `${applicant.userFirstname} ${applicant.userLastname}`,
+    applicant.applicationQualification,
     applicant.commissionTitle,
     applicant.applicationStatus === "Pending" ? (
       <>
@@ -203,7 +203,7 @@ const EmployerApplicants = () => {
     ),
     <button
       style={style2.button}
-      onClick={() => handleViewProfile(applicant, applicant.username)}
+      onClick={() => handleViewProfile(applicant.catcherID)}
     >
       View Profile
     </button>,
@@ -255,6 +255,9 @@ const EmployerApplicants = () => {
       await axios.put(
         `http://localhost:8800/accept-apply/${applicationErrandID}/${applicationID}`
       );
+
+      handleOpen();
+
       //transaction
       trans.comID = applicationErrandID;
       trans.catcherID = catcherID;
@@ -275,12 +278,6 @@ const EmployerApplicants = () => {
       await axios.put(
         `http://localhost:8800/errand-taken/${applicationErrandID}`
       );
-      //replace modular
-      alert("You have accepted a Cather!");
-      window.location.reload();
-      setOpenAccept(false);
-      // create set upload modal heree...................................................................
-      //navigate(`/my-application/${userID}`);
     } catch (err) {
       console.log(err);
     }
@@ -313,76 +310,64 @@ const EmployerApplicants = () => {
   };
   //console.log(applicants);
   return (
-    <div className="applicants-container">
-      <div className="applicants">
-        <h1 style={{ paddingBottom: "10px" }}>APPLICANTS</h1>
-        <div className="search">
-          <input type="text" placeholder="Search..." />
-          <button type="submit" style={{ backgroundColor: "#1679AB" }}>
-            <i className="fa fa-search" place></i>
-          </button>
-          {/*<select name="type" id="">
-            <option value=""></option>
-            <option value="employer">Employer</option>
-            <option value="catcher">Catcher</option>
-            <option value="admin">Admin</option>
-          </select>
-          <select name="status" id="">
-            <option value=""></option>
-            <option value="verified">Verified</option>
-            <option value="unverified">Unverified</option>
-            <option value="Suspended">Suspended</option>
-          </select>*/}
+    <>
+      <ModalFeedback
+        open={open}
+        handleClose={handleClose}
+        headerMes="Success!"
+        contentMes="You have accepted a Cather!"
+        color="success"
+        colorText="green"
+        // icon={ErrorIcon}
+      />
+
+      <BannerEmployerPages
+        bannerMessage={`Here are your Applicants, ${user.username}`}
+      />
+      <div className="applicants-container">
+        <div className="applicants">
+          <div className="search">
+            <input type="text" placeholder="Search..." />
+            <button type="submit" style={{ backgroundColor: "#1679AB" }}>
+              <i className="fa fa-search" place></i>
+            </button>
+          </div>
+          <div className="applicants-table">
+            <Table headers={headers} data={applicantData} />
+          </div>
+
+          {/* added  by ash 
+            Modal for Profile of Applicant
+          */}
+          <Modal
+            open={showProfileModal}
+            onClose={() => setShowProfileModal(false)}
+          >
+            <ModalDialog layout="fullscreen" sx={{ overflowY: "auto" }}>
+              <ModalClose />
+              <ViewProfile id={selectedApplicant} />
+            </ModalDialog>
+          </Modal>
+
+          {/* Pagination controls */}
+          {applicants.length > 0 && (
+            <Pagination
+              itemsPerPage={itemsPerPage}
+              totalItems={applicants.length}
+              paginate={paginate}
+            />
+          )}
         </div>
-        <Table headers={headers} data={applicantData} />
-
-        {/* added  by ash */}
-
-        {showProfileModal && (
-          <ProfileModal
-            username={selectedApplicant.username}
-            fname={selectedApplicant.userFirstname}
-            lname={selectedApplicant.userLastname}
-            email={selectedApplicant.userEmail}
-            num={selectedApplicant.userContactNum}
-            age={selectedApplicant.userAge}
-            applicant={selectedApplicant}
-            rating={rating}
-            handleAccept={() =>
-              handleAccept(
-                selectedApplicant.applicationID,
-                selectedApplicant.applicationErrandID,
-                selectedApplicant.catcherID
-              )
-            }
-            handleDecline={() =>
-              handleDecline(
-                selectedApplicant.applicationID,
-                selectedApplicant.applicationErrandID,
-                selectedApplicant.catcherID
-              )
-            }
-            closeModal={handleCloseProfileModal}
-          />
-        )}
-        {/* Pagination controls */}
-        {applicants.length > 0 && (
-          <Pagination
-            itemsPerPage={itemsPerPage}
-            totalItems={applicants.length}
-            paginate={paginate}
-          />
-        )}
+        {/* <Footer/> */}
       </div>
-      {/* <Footer/> */}
-    </div>
+    </>
   );
 };
 
 const styles = {
   button: {
     padding: "10px 20px",
-    fontSize: "16px",
+    fontSize: "12px",
     backgroundColor: "#42a942",
     color: "#fff",
     border: "none",
@@ -396,7 +381,7 @@ const styles = {
 const style1 = {
   button: {
     padding: "10px 20px",
-    fontSize: "16px",
+    fontSize: "12px",
     backgroundColor: "#d9534f",
     color: "#fff",
     border: "none",
@@ -410,7 +395,7 @@ const style1 = {
 const style2 = {
   button: {
     padding: "10px 20px",
-    fontSize: "16px",
+    fontSize: "12px",
     backgroundColor: "#378CE7",
     color: "#fff",
     border: "none",

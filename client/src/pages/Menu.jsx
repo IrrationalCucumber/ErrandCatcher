@@ -5,21 +5,77 @@ import Cards from "../components/Cards/Cards";
 //import Footer from "../components/Footer";
 import "./Menu.css";
 //import CardItem from '../components/CardItem';
+import { useAuth } from "../components/AuthContext";
+import SearchBar from "../components/Search Bar/SearchBar";
+import OtherHousesIcon from '@mui/icons-material/OtherHouses';
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import LoadingBackdrop from "../components/LoadingSpinner";
+import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
+import ModalFeedback from "../components/ModalFeedback";
+import ErrorIcon from '@mui/icons-material/Error';
 
 const Menu = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const location = useLocation();
-  const userID = location.pathname.split("/")[2];
+  const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
   const navigate = useNavigate();
+
+  // modal message pop-up
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  }
+  const handleClose = () => {
+    setOpen(false);
+  }
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
   };
 
+  const handleSearch = () => {
+    // Trigger loading state
+    if (searchQuery === "") {
+      // alert("Please input your fields");
+      handleOpen();
+    }
+    else {
+      setLoading(true);
+      // 3 seconds cd
+      setTimeout(() => {
+        setLoading(false); // Remove the loading spinner
+        navigate(`/search/${searchQuery}`);
+      }, 3000);
+    }
+  };
+
   return (
     <>
-      <div className="search-bar">
-        <input
+      <SearchBar
+        value={searchQuery}
+        onClick={handleSearch}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
+
+      <ModalFeedback
+        open={open}
+        handleClose={handleClose}
+        headerMes="Error Occurred!"
+        contentMes="Please input your fields, please try again."
+        color="error"
+        colorText="error"
+        icon={ErrorIcon}
+      />
+
+      <LoadingBackdrop
+        open={loading}
+        text={`Searching for Errand: "${searchQuery}" please wait a seconds...`}
+        icons={<HourglassBottomIcon />}
+      />
+
+      {/* <div className="search-bar">
+        {/* <input
           type="text"
           placeholder="Search..."
           value={searchQuery}
@@ -32,53 +88,67 @@ const Menu = () => {
           style={{ backgroundColor: "#1679AB" }}
         >
           Search
-        </button>
-      </div>
+        </button> 
+      </div> */}
       <section className="Menu" id="Menu">
-        <div className="box-container">
-          <div className="box">
-            <Link to={`/service/HomeService/${"HomeService"}`}>
-              <button style={{ backgroundColor: "white" }}>
-                <img src="/images/img6.png" alt="" />
-                <div className="content">
-                  <p style={{ paddingTop: "20px" }}>Home Service</p>
+        {/* bootstrap class applied */}
+        <div className="box-container d-flex justify-content-center align-items-center">
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <div className="box">
+                  <Link to={`/service/HomeService/${"HomeService"}`}>
+                    <button style={{}}>
+                      {/* <img src="/images/img6.png" alt="" /> */}
+                      <OtherHousesIcon sx={{ color: '#0073aa', fontSize: 100 }} />
+                      <div className="content">
+                        <p style={{ paddingTop: "20px" }}>Home Service</p>
+                      </div>
+                    </button>
+                  </Link>
                 </div>
-              </button>
-            </Link>
-          </div>
-          <div className="box">
-            <Link to={`/service/Transpo/${"Transport"}`}>
-              <button style={{ backgroundColor: "white" }}>
-                <img src="/images/img4.png" alt="" />
-                <div className="content">
-                  <p style={{ paddingTop: "20px" }}>Transportation</p>
+              </div>
+              <div class="col">
+                <div className="box">
+                  <Link to={`/service/Transpo/${"Transport"}`}>
+                    <button style={{}}>
+                      {/* <img src="/images/img4.png" alt="" /> */}
+                      <DirectionsCarIcon sx={{ color: '#0073aa', fontSize: 100 }} />
+                      <div className="content">
+                        <p style={{ paddingTop: "20px" }}>Transportation</p>
+                      </div>
+                    </button>
+                  </Link>
                 </div>
-              </button>
-            </Link>
-          </div>
-          <div className="box">
-            <Link to={`/service/Delivery/${"Delivery"}`}>
-              <button style={{ backgroundColor: "white" }}>
-                <img src="/images/img5.png" alt="" />
-                <div className="content">
-                  <p style={{ paddingTop: "20px" }}>Delivery</p>
+              </div>
+              <div class="col">
+                <div className="box">
+                  <Link to={`/service/Delivery/${"Delivery"}`}>
+                    <button style={{}}>
+                      {/* <img src="/images/img5.png" alt="" /> */}
+                      <LocalShippingIcon sx={{ color: '#0073aa', fontSize: 100 }} />
+                      <div className="content">
+                        <p style={{ paddingTop: "20px" }}>Delivery</p>
+                      </div>
+                    </button>
+                  </Link>
                 </div>
-              </button>
-            </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* <section className="Menu1" id="Menu1">
                 <div className="box-container">
-                    <div className="box">
-                        <img src="/images/img1.png" alt="" />
-                        <div className="content">
-                            <p>Transportation</p>
-                            <h3>
-                                <i className="fas fa-map-marker-alt"></i> Cebu City{' '}
-                            </h3>
-                            </div>
+                <div className="box">
+                <img src="/images/img1.png" alt="" />
+                <div className="content">
+                <p>Transportation</p>
+                <h3>
+                <i className="fas fa-map-marker-alt"></i> Cebu City{' '}
+                </h3>
+                                </div>
                        </div>
                     <div className="box">
                         <img src="/images/img2.png" alt="" />
@@ -113,7 +183,13 @@ const Menu = () => {
 
                 </div>
             </section> */}
-      <Cards />
+      {
+        user.userType.toLocaleUpperCase() === "catcher" && (
+          <>
+            <Cards />
+          </>
+        )
+      }
     </>
   );
 };

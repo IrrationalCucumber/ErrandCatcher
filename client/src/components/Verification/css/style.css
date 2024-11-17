@@ -1,0 +1,181 @@
+/*
+STEP 1
+*/
+.step h1 {
+    text-align: center;
+}
+
+.step__button {
+    display: flex;
+    justify-content: center;
+}
+
+.step__grow {
+    transform-origin: center;
+}
+
+.step__alert,
+.step__age__alert {
+    position: fixed;
+    right: 16px;
+    top: 90px;
+    font-size: 15px;
+    color: white;
+}
+
+.step__alert {
+    font-weight: bold;
+}
+
+/* STEP 2 */
+
+.label2 {
+    margin-top: 5px;
+}
+
+.input-rows2 p {
+    margin: 0 0 5px 10px;
+    font-size: 10px;
+}
+
+.input-rows-2 input,
+.step__img__input,
+.step2__nav__button,
+.done__nav__btn {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.input-rows-2 input {
+    border: 1px dashed;
+    flex-direction: column;
+    align-content: center;
+    position: relative;
+}
+
+.step__img__input {
+    border: 1px dashed;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    background-color: #f0f0f0;
+}
+
+/* image preview */
+.step2_img_preview,
+.step3__img__preview {
+    max-width: 300px;
+    margin: 15px 0;
+    position: relative;
+}
+
+.step2_img_preview_btn {
+    position: absolute;
+    border-radius: 50%;
+    padding: 5px 10px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    cursor: pointer;
+    top: -1px;
+    right: -15px;
+    font-weight: 900;
+}
+
+/* Step nav button */
+.step2__nav__button {
+    margin: 10px;
+}
+
+.step2__alert__error {
+    position: fixed;
+    right: 16px;
+    top: 90px;
+    font: 15px bold;
+    color: white;
+}
+
+/* STEP 4 */
+.step4__box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    margin: 110px;
+}
+
+.step4__text {
+    margin-bottom: 5px;
+    font: 15px;
+    margin-top: 16vh;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+
+/* .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+  } */
+
+.step__title {
+    font-size: 24px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-container {
+    width: 100%;
+}
+
+.form-details {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+    /* text-align: start; */
+    text-align: center
+}
+
+.form-details p {
+    font-size: 16px;
+    color: #555;
+    padding: 10px;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.image-previews {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.step__img__preview {
+    width: 350px;
+    max-width: 90%;
+    min-height: auto;
+    
+    /* height: 120px; */
+    border-radius: 5px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

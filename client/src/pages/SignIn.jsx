@@ -5,6 +5,8 @@ import "./Error.css"; // Import your custom CSS for stylin
 import "./signin.css";
 import { useAuth } from "../components/AuthContext";
 import Alert from "@mui/joy/Alert";
+import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
+import LoadingBackdrop from "../components/LoadingSpinner";
 
 const SignIn = () => {
   const [username, setUsername] = useState(""); //username
@@ -13,6 +15,7 @@ const SignIn = () => {
   const [errorMessage, setErrorMessage] = useState(""); //error message
   const [rememberMe, setRememberMe] = useState(false); //remember me function
   const { updateUser } = useAuth(); // Get the login function from useAut
+  const [loading, setLoading] = useState(false);
 
   //remeber me function
   const handleRememberMeChange = (e) => {
@@ -41,8 +44,16 @@ const SignIn = () => {
           userType: user.accountType,
           status: user.accountStatus,
         };
-        updateUser(userData);
-        navigate(`/dashboard/home/`);
+        setLoading(true);
+        // 2 seconds cd
+        setTimeout(() => {
+          setLoading(false);
+          updateUser(userData);
+          navigate(`/dashboard/home/`);
+        }, 2000);
+
+        // updateUser(userData);
+        // navigate(`/dashboard/home/`);
         //login();
       }
       //handle me function
@@ -52,8 +63,15 @@ const SignIn = () => {
         localStorage.removeItem("rememberMe");
       }
     } catch (err) {
+      setLoading(true);
+      // 3 seconds cd
+      setTimeout(() => {
+        setLoading(false); // Remove the loading spinner
+        setErrorMessage("Invalid Password or Username please try again");
+      }, 3000);
+
       console.error("Error during sign-in:", err);
-      setErrorMessage("Invalid Password/Username");
+      // setErrorMessage("Invalid Password/Username");
     }
   };
   //handle rember me if check
@@ -107,7 +125,7 @@ const SignIn = () => {
         <label
           className="rem"
           htmlFor="remember Me"
-          // style={{ paddingLeft: "140px", fontSize: "12px" }}
+        // style={{ paddingLeft: "140px", fontSize: "12px" }}
         >
           Remember&nbsp;Me
           <input
@@ -123,14 +141,14 @@ const SignIn = () => {
             <button
               type="button"
               onClick={handleClick}
-              // style={{
-              //   backgroundColor: "#1679AB",
-              //   fontSize: "16px",
-              //   width: "200px",
-              //   height: "40px",
-              //   borderRadius: "20px",
-              //   color: "#ffff",
-              // }}
+            // style={{
+            //   backgroundColor: "#1679AB",
+            //   fontSize: "16px",
+            //   width: "200px",
+            //   height: "40px",
+            //   borderRadius: "20px",
+            //   color: "#ffff",
+            // }}
             >
               Sign In
             </button>
@@ -145,6 +163,11 @@ const SignIn = () => {
       <div className="contman cont-tawo">
         <img src="http://localhost:3000/images/tawo.png" alt="" />
       </div>
+      <LoadingBackdrop
+        open={loading}
+        text="Loading... Please wait while Searching Your Account"
+        icons={<HourglassBottomIcon />}
+      />
     </div>
   );
 };

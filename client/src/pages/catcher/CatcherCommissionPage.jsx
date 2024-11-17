@@ -10,6 +10,15 @@ import { useLocation } from "react-router-dom";
 import { useAuth } from "../../components/AuthContext";
 import OngoingCards from "../Dropdown/OngoingCards";
 import { DisplayDate } from "../../components/DisplayDate";
+import Button from "@mui/joy/Button";
+import Divider from "@mui/joy/Divider";
+import DialogTitle from "@mui/joy/DialogTitle";
+import DialogContent from "@mui/joy/DialogContent";
+import DialogActions from "@mui/joy/DialogActions";
+import Modal from "@mui/joy/Modal";
+import ModalDialog from "@mui/joy/ModalDialog";
+import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
+import OngoingCardsNew from "../Dropdown/OngoingCardsNew";
 
 function CommissionPage() {
   const headers = ["DATE", "EMPLOYER", "ERRAND TITLE", "STATUS"];
@@ -24,6 +33,13 @@ function CommissionPage() {
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
+  // modal
+  const [openCancel, setOpenCancel] = useState(false);
+
+  const handleOpenCancelModal = () => {
+    setOpenCancel(true);
+    console.log("canceled");
+  };
 
   //getuserID
   const { user } = useAuth();
@@ -33,7 +49,7 @@ function CommissionPage() {
     const fetchAllCommission = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/catcher/ongoing/${userID}`
+          `http://localhost:8800/accepted-errand/${userID}`
         );
         //"http://localhost:8800/commission" - local computer
         //"http://192.168.1.47:8800/commission" - netwrok
@@ -43,6 +59,26 @@ function CommissionPage() {
       }
     };
     fetchAllCommission();
+    const interval = setInterval(fetchAllCommission, 5000);
+    return () => clearInterval(interval);
+  }, []);
+  //for payment errand
+  const [forPayment, setForPayment] = useState([]);
+  useEffect(() => {
+    const fetchPending = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8800/catcher/ongoing/${userID}`
+        );
+
+        setForPayment(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchPending();
+    // const interval = setInterval(fetchPending, 11000);
+    // return () => clearInterval(interval);
   }, []);
   const handleChange = (e) => {
     // For the 'gender' field, directly set the value without using spread syntax
@@ -59,19 +95,21 @@ function CommissionPage() {
   //filter
   const filterErrands = commissions.filter((commission) => {
     const type = commission.commissionType
-      .toLowerCase()
-      .includes(searchTerm.type.toLowerCase());
-    const termMatch = commission.commissionTitle
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
-    const termMatch2 = commission.userFirstname
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
+      ?.toLowerCase()
+      .includes(searchTerm.type.toLowerCase() ?? "");
+    const termMatch =
+      commission.commissionTitle
+        ?.toLowerCase()
+        .includes(searchTerm.term.toLowerCase()) ?? "";
+    const termMatch2 =
+      commission.userFirstname
+        ?.toLowerCase()
+        .includes(searchTerm.term.toLowerCase()) ?? "";
     let deadline = true;
     if (searchTerm.date) {
       deadline = commission.commissionDeadline >= searchTerm.date;
     }
-    const status = commission.commissionStatus.includes(searchTerm.status);
+    const status = commission.transStatus.includes(searchTerm.status);
 
     return type && (termMatch || termMatch2) && status && deadline;
   });
@@ -109,7 +147,7 @@ function CommissionPage() {
   //CANCEL TRANSACTION
   const handleCancel = async (transactID, employerID) => {
     try {
-      //alert(employerID);
+      // alert(transactID);
 
       // add a notification to the commission's employer
       notif.notifDesc = "A Catcher has cancelled in doing an errand";
@@ -118,14 +156,34 @@ function CommissionPage() {
       notif.notifDate = getTimeAndDate();
       await axios.post("http://localhost:8800/notify", notif);
       //cancel the transaction
-      await axios.put(`http://localhost:8800/cancel-trans/${transactID}`, {
-        params: { date: getTimeAndDate() },
-      });
+      await axios.put(
+        `http://localhost:8800/catcher/cancel/${transactID}/${userID}`
+      );
       /**
        * ADD METHOD TO CHANGE ALSO THE STATUS OF ERRAND TO CANCELLED
        */
+      alert("You have cancelled an errand.");
+      window.location.reload();
+      setOpenCancel(false);
+      
     } catch (err) {
       console.log(err);
+    }
+  };
+  //ERRAND IS DONE
+  const handleComplete = async (transID, empID) => {
+    try {
+      notif.notifDesc = "A Catcher has completed your errand";
+      notif.userID = empID;
+      notif.notificationType = "Errand Completed";
+      notif.notifDate = getTimeAndDate();
+      await axios.post("http://localhost:8800/notify", notif);
+      //cancel the transaction
+      await axios.put(
+        `http://localhost:8800/catcher/complete/${transID}/${userID}`
+      );
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -135,8 +193,10 @@ function CommissionPage() {
         <div className="Commission-page">
           {" "}
           {/* Apply Commission-page class here */}
-          <h1>Commission</h1>
-          <div className="search">
+          <h1>
+            Errands you have <i>Catched</i>
+          </h1>
+          <div className="searcherrand">
             <input
               type="text"
               placeholder="Search Errand title..."
@@ -152,7 +212,7 @@ function CommissionPage() {
               name="status"
             >
               <option value="">Status</option>
-              <option value="Ongoing">Ongoing</option>
+              <option value="For Payment">For Payment</option>
               <option value="Completed">Completed</option>
               <option value="Cancelled">Cancelled</option>
             </select>
@@ -174,19 +234,97 @@ function CommissionPage() {
               DisplayDate(commission.commissionDeadline),
               commission.errandStatus,
               commission.errandStatus === "Ongoing" ? (
-                <button
-                  onClick={() =>
-                    handleCancel(commission.transactID, commission.employerID)
-                  }
-                >
-                  CANCEL
-                </button>
+                <>
+                  <button
+                    className="cancel-btn"
+                    // onClick={() =>
+                    //   handleCancel(commission.transactID, commission.employerID)
+                    // }
+                    onClick={handleOpenCancelModal}
+                  >
+                    CANCEL
+                  </button>
+
+                  {/*cancel modal */}
+                  <Modal open={openCancel} onClose={() => setOpenCancel(false)}>
+                    <ModalDialog>
+                      <DialogTitle>
+                        <WarningRoundedIcon />
+                        Confirmation
+                      </DialogTitle>
+                      <Divider />
+                      <DialogContent>
+                        Are you sure you want to Cancel this errand?
+                      </DialogContent>
+                      <DialogActions>
+                        <Button
+                          variant="solid"
+                          color="danger"
+                          onClick={
+                            () =>
+                              handleCancel(
+                                commission.transactID,
+                                commission.employerID
+                              )
+                            // console.log("cancel commission")
+                          }
+                        >
+                          Yes
+                        </Button>
+                        <Button
+                          variant="plain"
+                          color="neutral"
+                          onClick={() => setOpenCancel(false)}
+                        >
+                          No
+                        </Button>
+                      </DialogActions>
+                    </ModalDialog>
+                  </Modal>
+                </>
               ) : null,
             ])}
           />
         </div>
       </div>
-      <OngoingCards commissions={commissions} to={`/view-errand/${userID}`} />
+
+      {/* <OngoingCards commissions={commissions} to={`/view-errand/${userID}`} /> */}
+      <div className="cards__container">
+        <div className="cards__wrapper">
+          <div className="cards__items">
+            {forPayment.map((commission) => (
+              <OngoingCardsNew
+                key={commission.commissionID}
+                icon={commission.commissionType}
+                title={commission.commissionTitle}
+                type={commission.commissionType}
+                location={commission.commissionLocation}
+                desc={commission.commissionDesc}
+                pay={commission.commissionPay}
+                status={commission.errandStatus}
+                path={`/errand/view-errand/${commission.commissionID}`}
+                // Employer side
+                userFname={commission.userFirstname}
+                userLname={commission.userLastname}
+                // handle payment
+                // pay={commission.commissionPay}
+                // type={commission.commissionType}
+                // userFname={commission.userFirstname}
+                // userLname={commission.userLastname}
+                transID={commission.transactID}
+                // title={commission.commissionTitle}
+                comID={commission.commissionID}
+                transCatID={commission.transCatcherID}
+                // Catcher side
+                // marked complete and cancel
+                // transID={commission.transactID}
+                empID={commission.employerID}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* Pagination controls */}
       {commissions.length > 0 && (
         <Pagination

@@ -1,4 +1,4 @@
-.profile{
+.profile {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,18 +28,19 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
-.description{
+.description {
   width: 100%;
   height: 100px;
   margin-bottom: 20px;
 }
 
 /* Container for user information form */
+/* transaction affected */
 .info-form {
   background-color: white;
   padding: 30px;
   margin: 10px;
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   justify-content: center;
   border-radius: 5px;
@@ -58,7 +59,7 @@
 
 .profile input,
 .profile select,
-.profile textarea:not(.description){
+.profile textarea:not(.description) {
   width: calc(100% - 22px);
   height: 40px;
   border: 1px solid #ccc;
@@ -67,17 +68,17 @@
   margin-bottom: 10px;
 }
 
-.profile button{
+.profile button {
   width: 200px;
   height: 50px;
   border-radius: 5px;
   padding: 10px 0 5px 0;
-  background-color:  #1679AB;
+  background-color: #1679ab;
   color: #fff;
   border: none;
   /* margin-top: 10px; */
   /* margin-right: 10px; */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .upload-container {
@@ -85,15 +86,13 @@
   align-items: center; /* Align items vertically */
 }
 
-.upload-container button{
+.upload-container button {
   width: 35px;
   height: 45px;
-
 }
 .upload-container input[type="file"] {
   margin-right: 10px; /* Add margin between the file input and the button */
 }
-
 
 .profile button:active {
   transform: translateY(1px);
@@ -101,24 +100,24 @@
 }
 
 .profile button:hover {
-  background-color: #67C6E3;
+  background-color: #67c6e3;
   border-color: #8e651b;
 }
 
-
-.profile button:last-child{
+.profile button:last-child {
   margin-right: 0;
 }
 
-.profile-info label.display-data{
-  color: #3D342F;
+.profile-info label.display-data {
+  color: #3d342f;
 }
 
 .username,
 .Rating,
 .toggle {
-  color: #3D342F;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: #3d342f;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   font-size: 12px;
 }
 
@@ -151,18 +150,19 @@
   margin-bottom: 5px;
 }
 
-.PP{
+.PP {
   display: inline-block;
   width: 5px;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   font-size: 12px;
   color: black;
 }
 
-
 .display-data,
-.display-data1{
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+.display-data1 {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   font-size: 12px;
   width: 100%;
   height: 40px;
@@ -173,11 +173,23 @@
   resize: none;
 }
 
-.display-data1 {
-  height: 30px; /* Adjust the height as needed */
+/* profile page new test*/
+/* .display-data1 {
+  height: 4rem; 
+  width: 100%;
+  font-size: 18px;
+  padding: 12px;
 }
 
-.file{
+.display-data1 .error {
+  height: 4rem;
+  width: 100%;
+  font-size: 18px;
+  padding: 12px;
+  border: 2px solid #dc3545;
+} */
+
+.file {
   display: none;
 }
 
@@ -211,11 +223,10 @@
   align-items: center;
 }
 
-
 .rating-box {
   width: 150px;
-  height: 25px; 
-  background-color: transparent; 
+  height: 25px;
+  background-color: transparent;
   border-style: ridge;
   display: flex;
   align-items: center;
@@ -226,19 +237,19 @@
   padding-left: 5px;
 }
 
-.rating-box label{
+.rating-box label {
   font-size: small;
 }
 
 .username-container {
   display: flex;
-  align-items: center; 
-  justify-content: center; 
+  align-items: center;
+  justify-content: center;
   margin-bottom: 10px;
   color: black;
 }
 
-.display-data1 option{
+.display-data1 option {
   color: #888;
 }
 
@@ -251,6 +262,18 @@
   align-items: center;
 }
 
+.image-container img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 200px;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 /* Media queries for responsive font sizes */
 @media only screen and (max-width: 768px) {
@@ -286,16 +309,21 @@
     width: 50%;
     height: 100%;
     padding: 20px; */
-    max-width: 100%; 
+    /* max-width: 100%;
     max-height: 100%;
     padding: 20px;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); */
+    /* position: relative; */
+    display: block;
+    max-width: 100%;
+    justify-items: center;
+    align-items: center;
   }
-
 
   .Image-container {
     position: relative; /* Ensure the container is a positioned parent */
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center; /* Center vertically */
     width: 100%;
@@ -321,6 +349,7 @@
 
 .about-label,
 .history-label {
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   font-size: 18px; /* Adjust the font size for the About label */
 }

@@ -1,0 +1,90 @@
+/* 
+    SORONO - 13/09/24
+*/
+/* 
+    NAVBAR DESING FOR EMPLOYER
+*/
+.navbar__cont {
+  background: #378ce7;
+    /* height: 80px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
+
+  @media screen and (min-width: 995px) and (max-width: 1138px) {
+    .navbar__cont {
+      display: flex;
+      justify-content: start;
+    }
+}
+
+@media screen and (max-width: 994px) {
+    .navbar__cont {
+      display: flex;
+      justify-content: start;
+    }
+}
+
+/* 
+    NAVBAR DESING FOR CATCHER
+*/
+.navbar__catcher {
+    background: #9999ff;
+    /* height: 80px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
+
+  @media screen and (min-width: 995px) and (max-width: 1138px) {
+    .navbar__catcher {
+      display: flex;
+      justify-content: start;
+    }
+}
+
+@media screen and (max-width: 994px) {
+    .navbar__catcher {
+      display: flex;
+      justify-content: start;
+    }
+}
+
+/* 
+    ADMIN
+*/
+
+.navbar {
+  background: #378ce7;;
+ /* height: 80px; */
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ font-size: 1.2rem;
+ position: sticky;
+ top: 0;
+ z-index: 999;
+}
+
+@media screen and (min-width: 995px) and (max-width: 1138px) {
+  .navbar {
+    display: flex;
+    justify-content: start;
+  }
+}
+
+@media screen and (max-width: 994px) {
+  .navbar {
+    display: flex;
+    justify-content: start;
+  }
+}

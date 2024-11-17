@@ -7,6 +7,18 @@ import Table from "../../components/Table.js";
 import Select from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
 import { DisplayDate } from "../../components/DisplayDate.js";
+import OtherHousesIcon from '@mui/icons-material/OtherHouses';
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import CameraOutdoorIcon from '@mui/icons-material/CameraOutdoor';
+
+import PendingIcon from '@mui/icons-material/Pending';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
+import TimerOffIcon from '@mui/icons-material/TimerOff';
+import HandshakeIcon from '@mui/icons-material/Handshake';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+
 
 const CommissionList = () => {
   const [commissions, setCommissions] = useState([]);
@@ -68,17 +80,17 @@ const CommissionList = () => {
   //filter
   const filterErrands = commissions.filter((commission) => {
     const type = commission.commissionType
-      .toLowerCase()
-      .includes(searchTerm.type.toLowerCase());
+      ?.toLowerCase()
+      .includes(searchTerm.type.toLowerCase() ?? "");
     const termMatch = commission.commissionTitle
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
+      ?.toLowerCase()
+      .includes(searchTerm.term.toLowerCase() ?? "");
     const termMatch2 = commission.userFirstname
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
+      ?.toLowerCase()
+      .includes(searchTerm.term.toLowerCase() ?? "");
     const termMatch3 = commission.userLastname
-      .toLowerCase()
-      .includes(searchTerm.term.toLowerCase());
+      ?.toLowerCase()
+      .includes(searchTerm.term.toLowerCase() ?? "");
     const status = commission.commissionStatus.includes(searchTerm.status);
 
     return type && (termMatch || termMatch2 || termMatch3) && status;
@@ -94,17 +106,6 @@ const CommissionList = () => {
   //need front end
   return (
     <div>
-      {/* <NavBar
-       page1="REQUESTS"
-        one={`/request/${userID}`}
-        // {`admin-home/${userID}`}
-        page2="ACCOUNTS"
-        commissionList={`/accounts/${userID}`}
-        page3="ERRANDS"
-        applicants={`/commission-list/${userID}`}
-        page4="MAP"
-        map={`/map/${userID}`}
-      /> */}
       <div className="commissions">
         <h1
           style={{
@@ -117,28 +118,29 @@ const CommissionList = () => {
           Errand List
         </h1>
         <div
-          className="search"
-          style={{
-            marginTop: "10px",
-            marginBottom: "10px",
-            display: "flex",
-            alignItems: "center",
-          }}
+          className="searchAdmin"
+          // style={{
+          //   marginTop: "10px",
+          //   marginBottom: "10px",
+          //   display: "flex",
+          //   alignItems: "center",
+          //   width: "50%",
+          // }}
         >
           <input
+            className="inputSearchAdmin"
             type="text"
             name="term"
             placeholder="Search..."
             value={searchTerm.term}
             onChange={handleChange}
-            style={{
-              padding: "8px",
-              fontSize: "12px",
-              border: "1px solid #ccc",
-              borderRadius: "4px",
-              marginRight: "0",
-              marginBottom: "10px",
-            }}
+            // style={{
+            //   padding: "8px",
+            //   fontSize: "12px",
+            //   border: "1px solid #ccc",
+            //   borderRadius: "4px",
+            //   margin: "10px 0px 10px 0px",
+            // }}
           />
           {/* <button
             type="submit"
@@ -159,15 +161,21 @@ const CommissionList = () => {
           </button> */}
 
           <div
-            className="filter"
-            style={{ display: "flex", alignItems: "center" }}
+            className="filter__admin__accountList"
+            style={{ display: "flex", alignItems: "center", width: "60%" }}
           >
             <select
               className="CLstatus"
+              name="status"
               onChange={handleChange}
               value={searchTerm.status}
-              name="status"
-              defaultValue={""}
+              // style={{
+              //   padding: "8px",
+              //   fontSize: "12px",
+              //   border: "1px solid #ccc",
+              //   borderRadius: "4px",
+              //   margin: "10px 20px",
+              // }}
             >
               <option value="">Status</option>
               <option value="Pending">Pending</option>
@@ -175,21 +183,20 @@ const CommissionList = () => {
               <option value="Cancelled">Cancelled</option>
               <option value="Expired">Expired</option>
               <option value="Caught">Caught</option>
+              <option value="Available">Available</option>
             </select>
             <select
               className="CLtype"
               onChange={handleChange}
               value={searchTerm.type}
               name="type"
-              style={{
-                padding: "8px",
-                fontSize: "12px",
-                border: "1px solid #ccc",
-                borderRadius: "4px",
-                marginRight: "10px",
-                marginBottom: "10px",
-                width: "150px",
-              }}
+              // style={{
+              //   padding: "8px 10px 8px 10px",
+              //   fontSize: "12px",
+              //   border: "1px solid #ccc",
+              //   borderRadius: "4px",
+              //   margin: "10px",
+              // }}
             >
               <option value="">Type</option>
               <option value="Home">Home</option>
@@ -206,8 +213,8 @@ const CommissionList = () => {
             "Employer",
             "Type",
             "Payment",
-            "Posted",
-            "Completed",
+            "Date Posted",
+            "Date Completed",
             "Status",
             "Action",
           ]}
@@ -215,13 +222,65 @@ const CommissionList = () => {
             Commission.commissionID,
             Commission.commissionTitle,
             `${Commission.userFirstname} ${Commission.userLastname}`,
-            Commission.commissionType,
-            Commission.commissionPay,
+            // Commission.commissionType,
+            Commission.commissionType === "HomeService - Indoor" ? (
+              <>
+                <OtherHousesIcon style={{ color: "purple" }} />
+                <span> Home Service Indoor</span>
+              </>
+            ) : Commission.commissionType === "HomeService - Outdoor" ? (
+              <>
+                <CameraOutdoorIcon style={{ color: "brown" }} />
+                <span> Home Service Outdoor</span>
+              </>
+            ) : Commission.commissionType === "Delivery" ? (
+              <>
+                <DirectionsCarIcon style={{ color: "darkblue" }} />
+                <span> Delivery</span>
+              </>
+            ) : Commission.commissionType === "Transportation" ? (
+              <>
+                <LocalShippingIcon style={{ color: "orange" }} />
+                <span> Transportation</span>
+              </>
+            ) : null,
+            "Php " + Commission.commissionPay,
             DisplayDate(Commission.DatePosted),
             Commission.DateCompleted === ""
               ? DisplayDate(Commission.DateCompleted)
               : "",
-            Commission.commissionStatus,
+            // Commission.commissionStatus,
+            Commission.commissionStatus === "Pending" ? (
+              <>
+                <PendingIcon style={{ color: "purple" }} />
+                <span> Pending</span>
+              </>
+            ) : Commission.commissionStatus === "Completed" ? (
+              <>
+                <CheckCircleIcon style={{ color: "green" }} />
+                <span> Completed</span>
+              </>
+            ) : Commission.commissionStatus === "Canceled" ? (
+              <>
+                <CancelIcon style={{ color: "orange" }} />
+                <span> Canceled</span>
+              </>
+            ) : Commission.commissionStatus === "Expired" ? (
+              <>
+                <TimerOffIcon style={{ color: "orange" }} />
+                <span> Expired</span>
+              </>
+            ) : Commission.commissionStatus === "Caught" ? (
+              <>
+                <HandshakeIcon style={{ color: "green" }} />
+                <span> Caught</span>
+              </>
+            ) : Commission.commissionStatus === "Available" ? (
+              <>
+                <EventAvailableIcon style={{ color: "darkgreen" }} />
+                <span> Available</span>
+              </>
+            ) : null,
             <>
               {/* <button onClick={() => handleDelete(Commission.commissionID)}>
               <i class="fa-solid fa-trash"></i>

@@ -6,7 +6,7 @@ import NavBar from "../../components/Navbar/Navbar";
 import { useLocation } from "react-router-dom";
 import Menu from "../Menu";
 import StickyButton from "../../components/Sticky Button/StickyButton";
-import EmployerCard from "../../Employer Cards/EmployerCards";
+import EmployerCard from "../../components/Employer Cards/EmployerCards";
 import Cards from "../../components/Cards/Cards";
 import Footer from "../../components/Footer";
 

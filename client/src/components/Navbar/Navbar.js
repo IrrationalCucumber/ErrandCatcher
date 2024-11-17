@@ -8,6 +8,7 @@ import NotificationIcon from "./notif-icon";
 import NavDropdown from "./NavDropdown";
 import axios from "axios";
 import { Button } from "./NavButton";
+import Notification from "../NotificationNavbar/Notification";
 
 function Navbar(props) {
   const { user } = useAuth();
@@ -49,11 +50,13 @@ function Navbar(props) {
       }
     };
     fetchNotif();
+    const intervalNotif = setInterval(fetchNotif, 1000);
+    return () => clearInterval(intervalNotif);
   }, [userID]);
 
   return (
     <>
-      <nav className="navbar">
+      <nav className="navbar__cont">
         <div className="navbar-container justify-center">
           <Link
             // to={`/home/${userID}`}
@@ -94,7 +97,7 @@ function Navbar(props) {
                 to={props.one}
                 className="nav-links"
                 onClick={closeMobileMenu}
-                style={{ fontSize: "16px" }}
+                style={{ fontSize: "15px" }}
               >
                 {props.page1}
               </Link>
@@ -104,7 +107,7 @@ function Navbar(props) {
                 to={props.commissionList}
                 className="nav-links"
                 onClick={closeMobileMenu}
-                style={{ fontSize: "16px" }}
+                style={{ fontSize: "15px" }}
               >
                 {props.page2}
               </Link>
@@ -114,7 +117,7 @@ function Navbar(props) {
                 to={props.applicants}
                 className="nav-links"
                 onClick={closeMobileMenu}
-                style={{ fontSize: "16px" }}
+                style={{ fontSize: "15px" }}
               >
                 {props.page3}
               </Link>
@@ -124,7 +127,7 @@ function Navbar(props) {
                 to={props.map}
                 className="nav-links"
                 onClick={closeMobileMenu}
-                style={{ fontSize: "16px" }}
+                style={{ fontSize: "15px" }}
               >
                 {props.page4}
               </Link>
@@ -135,13 +138,16 @@ function Navbar(props) {
                 style={{ marginTop: "1.7rem" }}
               >
                 {button ? (
-                  <NotificationIcon
-                    to={`/notifications`}
-                    hasNotification={true}
-                    onClick={() => console.log("Notification clicked!")}
-                    style={{ color: "white" }}
-                    notificationCount={parseInt(notifCount)}
-                  />
+                  <>
+                    <Notification count={notifCount} />
+                    {/* <NotificationIcon
+                      to={`/notifications`}
+                      hasNotification={true}
+                      onClick={() => console.log("Notification clicked!")}
+                      style={{ color: "white" }}
+                      notificationCount={parseInt(notifCount)}
+                    /> */}
+                  </>
                 ) : (
                   <div>
                     <Link
@@ -167,7 +173,7 @@ function Navbar(props) {
                     to={`/profile/me`}
                     className="nav-links"
                     onClick={closeMobileMenu}
-                    style={{ fontSize: "16px" }}
+                    style={{ fontSize: "12px" }}
                   >
                     PROFILE
                   </Link>

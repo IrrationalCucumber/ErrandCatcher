@@ -1,0 +1,84 @@
+headingTranspo {
+  /* padding-top: 20px;
+      padding-left: 20px; */
+  text-align: center;
+  color: white;
+  margin-right: 12px;
+}
+
+.search-barborder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 25px;
+  background-color: #378ce7;
+}
+
+.search-barborder .inputSearch {
+  border-radius: 25px;
+  /* padding: 12px; */
+  width: 400px;
+}
+
+.search-barborder input[type="text"] {
+  margin-right: 12px;
+}
+
+.search-barborder .inputNum {
+  width: 90px;
+  margin: 3px;
+}
+
+.paymentRange input[type="number"] {
+  width: 45%;
+  margin-right: 10px;
+}
+
+.Paylabel label {
+  font-weight: 700;
+  color: white;
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* input.inputNum {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    } */
+
+.inputNum {
+  max-width: 188px;
+}
+
+select > .selected {
+  width: 250px;
+}
+
+.box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-self: center;
+  gap: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .search-barborder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    background-color: #378ce7;
+  }
+
+  .box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center;
+  }
+}

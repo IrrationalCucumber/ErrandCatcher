@@ -47,9 +47,22 @@
 .Paylabel label {
   font-weight: 700;
   color: white;
-  /* margin-bottom: 5px; */
-  /* border: 1px solid black; */
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
 }
+
+/* input.inputNum {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+} */
+
+.inputNum {
+  max-width: 188px;
+}
+
 select > .selected {
   width: 250px;
 }
@@ -59,4 +72,5 @@ select > .selected {
   flex-direction: row;
   align-items: center;
   justify-self: center;
+  gap: 20px;
 }

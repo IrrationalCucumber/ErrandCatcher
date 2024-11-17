@@ -1,6 +1,9 @@
 .cards {
   /* padding: 4rem; */
   background-color: #fff;
+  position: relative;
+  padding: 20px 10px;
+  margin: 10px;
 }
 
 /* h1 {
@@ -13,25 +16,23 @@
   flex-wrap: wrap;
   /* justify-content: center; */
   margin-left: 5rem;
-  min-height: 70vh; /* if empty cards fix bottom footer
 }
 
 .cards__wrapper {
   display: relative;
   margin: 50px 0 45px 0;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(300px, 1fr)
-  ); /* Adjust the minmax value as needed */
+  grid-template-columns: repeat(auto-fit,
+      minmax(300px, 1fr));
+  /* Adjust the minmax value as needed */
   grid-gap: 1rem;
 }
 
 .cards__items {
   display: flex;
-  grid-template-columns: repeat(4, 1fr);
+  /* grid-template-columns: repeat(4, 1fr); */
   flex-wrap: wrap;
-  gap: 20px;
-  justify-content: space-between;
+  gap: 32px;
+  justify-content: flex-start;
   list-style: none;
   /*  margin: 0 -15px;
   gap: 35px;*/
@@ -43,12 +44,17 @@
   align-items: center;
 
   justify-content: flex-end;
-  width: 400px; /* Adjust the width as needed */
-  height: 500px; /* Adjust the height as needed */
-  margin: 20px; /* Adjust the margin between cards as needed */
+  width: 400px;
+  /* Adjust the width as needed */
+  height: 500px;
+  /* Adjust the height as needed */
+  margin: 20px;
+  /* Adjust the margin between cards as needed */
   border-radius: 10px;
-  box-shadow: none; /* Add shadow for a card effect */
-  transition: transform 0.3s ease; /* Add transition for hover effect */
+  box-shadow: none;
+  /* Add shadow for a card effect */
+  transition: transform 0.3s ease;
+  /* Add transition for hover effect */
 }
 
 .cards__item__link {
@@ -80,7 +86,8 @@
 
 .cards__item__pic-wrap {
   display: grid;
-  place-items: center; /* Center the image both horizontally and vertically */
+  place-items: center;
+  /* Center the image both horizontally and vertically */
   position: relative;
 
   width: 320px;

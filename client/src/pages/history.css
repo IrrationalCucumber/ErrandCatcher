@@ -1,0 +1,44 @@
+.history-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  font-family: "Arial", sans-serif;
+}
+
+h1 {
+  text-align: center;
+  /* color: #333; */
+  margin-bottom: 20px;
+}
+
+.transaction-card {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-top: 8px solid rgb(22, 121, 171);
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.transaction-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.transaction-details p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.transaction-details strong {
+  color: #333;
+}
+
+p {
+  font-size: 16px;
+}
