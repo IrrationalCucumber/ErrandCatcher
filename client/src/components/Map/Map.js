@@ -29,7 +29,7 @@ export function LandingMap() {
   const map = useRef(null);
   const [lng] = useState(123.8854);
   const [lat] = useState(10.3157);
-  const [zoom] = useState(10);
+  const [zoom] = useState(14);
   const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
   const [errands, setErrands] = useState([]);
 
@@ -66,7 +66,7 @@ export function LandingMap() {
     if (!map.current) {
       map.current = new maplibregl.Map({
         container: mapContainer.current,
-        style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${API_KEY}`,
+        style: `https://api.maptiler.com/maps/basic/style.json?key=${API_KEY}`,
         center: [lng, lat],
         zoom: zoom,
       });
@@ -114,7 +114,7 @@ export function HomeMap(props) {
   const map = useRef(null);
   const [lng] = useState(123.8854);
   const [lat] = useState(10.3157);
-  const [zoom] = useState(10);
+  const [zoom] = useState(15);
   const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
   const [errands, setErrands] = useState([]);
 
@@ -153,7 +153,7 @@ export function HomeMap(props) {
     if (!map.current) {
       map.current = new maplibregl.Map({
         container: mapContainer.current,
-        style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${API_KEY}`,
+        style: `https://api.maptiler.com/maps/basic/style.json?key=${API_KEY}`,
         center: [lng, lat],
         zoom: zoom,
       });
@@ -216,14 +216,14 @@ export function ViewMap({ id }) {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
-  const [zoom] = useState(10);
+  const [zoom] = useState(15);
 
   useEffect(() => {
     if (map.current) return;
 
     map.current = new maplibregl.Map({
       container: mapContainer.current,
-      style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${API_KEY}`,
+      style: `https://api.maptiler.com/maps/basic/style.json?key=${API_KEY}`,
       center: [123.8854, 10.3157],
       zoom: zoom,
     });
@@ -340,7 +340,7 @@ export function UpdateMapLibre({ getCoords, id }) {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
-  const [zoom] = useState(10);
+  const [zoom] = useState(15);
 
   useEffect(() => {
     // Only initialize the map when coords are available
@@ -348,7 +348,7 @@ export function UpdateMapLibre({ getCoords, id }) {
 
     map.current = new maplibregl.Map({
       container: mapContainer.current,
-      style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${API_KEY}`,
+      style: `https://api.maptiler.com/maps/basic/style.json?key=${API_KEY}`,
       center: [coords.lng, coords.lat], // Use fetched coordinates
       zoom: zoom,
     });
