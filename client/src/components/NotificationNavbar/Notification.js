@@ -54,7 +54,14 @@ function Notification(props) {
     <div>
       <Dropdown>
         <MenuButton variant="primary" size="sm">
-          <Badge color="danger" badgeContent={props.count}>
+          <Badge color="danger" badgeContent={props.count}
+            sx={{
+              "& .MuiBadge-badge": {
+                border: "none",
+                boxShadow: "none",
+              },
+            }}
+          >
             <NotificationsIcon sx={{ color: "white" }} />
           </Badge>
         </MenuButton>
