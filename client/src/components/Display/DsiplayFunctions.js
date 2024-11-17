@@ -1,9 +1,9 @@
 import React from "react";
+import "./LoadingMap.css";
 
 export function Capitalize(text) {
   const capitalizeThis = text;
-  if (!capitalizeThis)
-    return null;
+  if (!capitalizeThis) return null;
   return capitalizeThis.charAt(0).toUpperCase() + capitalizeThis.slice(1);
 }
 
@@ -54,4 +54,15 @@ export function GetUserAge(bday) {
   }
 
   return age;
+}
+
+//Loading Map
+
+export function LoadingMap() {
+  return (
+    <div className="loading-map-container">
+      <div className="spinner"></div>
+      <p>Loading map...</p>
+    </div>
+  );
 }
