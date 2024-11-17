@@ -31,12 +31,21 @@ h1 {
 }
 
 .transaction-details p {
-  margin: 5px 0;
+  margin: 5px 8px;
   color: #555;
+  /* color: #908E9B; */
+  /* color: #565360; */
+  /* border-bottom: 0.1px solid #908E9B; */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
 }
 
 .transaction-details strong {
   color: #333;
+  margin-right: 4px;
 }
 
 p {
