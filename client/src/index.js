@@ -62,6 +62,7 @@ import AdminPage from "./pages/admin/AdminPage";
 import History from "./pages/History";
 import PaymentCancel from "./pages/PaymentCancel";
 import PaymentSuccess from "./pages/PaymentSuccess";
+import { ProtectedRoute } from "./components/ProtectedROute";
 
 const router = createBrowserRouter([
   {
@@ -97,7 +98,7 @@ const router = createBrowserRouter([
       },
       //EMPLOYER
       {
-        path: "commissions/",
+        path: "errands/",
         element: <EmployerCommissions />,
       },
       {
@@ -132,20 +133,36 @@ const router = createBrowserRouter([
     element: <Errands />,
     children: [
       {
-        path: "view-errand/:comID",
-        element: <ErrandPage />,
+        path: "view/:comID",
+        element: (
+          <ProtectedRoute allowedUserTypes={["Catcher", "Employer", "admin"]}>
+            <ErrandPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "view-commission/:comID",
-        element: <ViewCommission />,
+        element: (
+          <ProtectedRoute allowedUserTypes={["Employer", "admin"]}>
+            <ViewCommission />
+          </ProtectedRoute>
+        ),
       },
       {
-        path: "update-commission/:comID",
-        element: <UpdateCommission />,
+        path: "update/:comID",
+        element: (
+          <ProtectedRoute allowedUserTypes={["Employer", "admin"]}>
+            <UpdateCommission />
+          </ProtectedRoute>
+        ),
       },
       {
-        path: "post-commission",
-        element: <PostCommission />,
+        path: "post-errand",
+        element: (
+          <ProtectedRoute allowedUserTypes={["Employer", "admin"]}>
+            <PostCommission />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
@@ -212,16 +229,16 @@ const router = createBrowserRouter([
   },
   { path: "/history", element: <History /> },
 
-  // PROCESS PAYMENTS 
+  // PROCESS PAYMENTS
   {
     path: "/paymentcancel",
-    element: <PaymentCancel />
+    element: <PaymentCancel />,
   },
   {
     path: "/paymentsuccess",
-    element: <PaymentSuccess />
+    element: <PaymentSuccess />,
   },
-  
+
   { path: "/test", element: <MapComponent /> },
   //MISCILLANOUS PAGES
   {
