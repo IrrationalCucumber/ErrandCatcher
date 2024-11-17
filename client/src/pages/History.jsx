@@ -2,8 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../components/AuthContext";
 import axios from "axios";
 import "../pages/history.css";
-// import Navbar from "../components/Navbar/Navbar";
 import NavbarPage from "../components/Navbar/NavBarPage";
+import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
+import PaymentsOutlinedIcon from '@mui/icons-material/PaymentsOutlined';
+import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
+import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
+import PaymentOutlinedIcon from '@mui/icons-material/PaymentOutlined';
+import AssignmentIndOutlinedIcon from '@mui/icons-material/AssignmentIndOutlined';
+import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 
 const History = () => {
   const { user } = useAuth();
@@ -120,25 +126,74 @@ const History = () => {
               <div className="transaction-card" key={index}>
                 <div className="transaction-details">
                   <p>
-                    <strong>Transaction ID:</strong> {transaction.checkoutId}
+                    <strong> <ReceiptOutlinedIcon
+                      sx={{
+                        color: "#378ce7",
+                        marginRight: "4px",
+                      }} />
+                      Transaction ID:
+                    </strong>
+                    {transaction.checkoutId}
                   </p>
-                  <p><strong>{transaction.accountType}: </strong>
+                  <p>
+                    <strong> <AssignmentIndOutlinedIcon
+                      sx={{
+                        color: "#378ce7",
+                        marginRight: "4px",
+                      }} />
+                      {transaction.accountType}:
+                    </strong>
                     {transaction.userFirstname} {transaction.Lastname}
                   </p>
                   <p>
-                    <strong>Payment Intent ID:</strong> {transaction.paymentId}
+                    <strong> <PaymentOutlinedIcon
+                      sx={{
+                        color: "#378ce7",
+                        marginRight: "4px",
+                      }} />
+                      Payment Intent ID:
+                    </strong>
+                    {transaction.paymentId}
                   </p>
                   <p>
-                    <strong>Date Paid:</strong> {paidDate}
+                    <strong> <CalendarMonthOutlinedIcon
+                      sx={{
+                        color: "#378ce7",
+                        marginRight: "4px",
+                      }} />
+                      Date Paid:
+                    </strong>
+                    {paidDate}
                   </p>
                   <p>
-                    <strong>Total Price:</strong> {priceInPHP}
+                    <strong> <PaymentsOutlinedIcon
+                      sx={{
+                        color: "#378ce7",
+                        marginRight: "4px",
+                      }} />
+                      Total Price:
+                    </strong>
+                    {priceInPHP}
                   </p>
                   <p>
-                    <strong>Type:</strong> {transaction.type}
+                    <strong> <WorkOutlineOutlinedIcon
+                      sx={{
+                        color: "#378ce7",
+                        marginRight: "4px",
+                      }} />
+                      Type:
+                    </strong>
+                    {transaction.type}
                   </p>
                   <p>
-                    <strong>Description:</strong> {transaction.description}
+                    <strong> <DescriptionOutlinedIcon
+                      sx={{
+                        color: "#378ce7",
+                        marginRight: "4px",
+                      }} />
+                      Description:
+                    </strong>
+                    {transaction.description}
                   </p>
                 </div>
               </div>
