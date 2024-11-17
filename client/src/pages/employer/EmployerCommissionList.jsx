@@ -222,7 +222,7 @@ const CommissionList = () => {
                     </Button> */}
                       <Button>
                         <Link
-                          to={`/errand/update-commission/${commissionItem.commissionID}`}
+                          to={`/errand/update/${commissionItem.commissionID}`}
                         >
                           View
                         </Link>
@@ -245,7 +245,7 @@ const CommissionList = () => {
       </div>
       <button
         className="add-errand"
-        onClick={(e) => navigate(`/errand/post-commission`)}
+        onClick={(e) => navigate(`/errand/post-errand`)}
       >
         <i className="fa-solid fa-plus"></i> Add Errand
       </button>

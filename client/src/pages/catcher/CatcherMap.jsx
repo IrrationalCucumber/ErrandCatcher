@@ -70,7 +70,7 @@ function CatcherMap() {
         .setLngLat([errand.commissionLong, errand.commissionLat])
         .setPopup(
           new maplibregl.Popup().setHTML(
-            `<h3>${errand.commissionTitle}</h3><p>${errand.commissionDesc}</p><a href="/errand/view-errand/${errand.commissionID}">View</a>`
+            `<h3>${errand.commissionTitle}</h3><p>${errand.commissionDesc}</p><a href="/errand/view/${errand.commissionID}">View</a>`
           )
         )
         .addTo(map.current);

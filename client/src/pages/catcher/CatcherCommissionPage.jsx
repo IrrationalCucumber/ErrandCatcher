@@ -165,7 +165,6 @@ function CommissionPage() {
       alert("You have cancelled an errand.");
       window.location.reload();
       setOpenCancel(false);
-      
     } catch (err) {
       console.log(err);
     }
@@ -302,7 +301,7 @@ function CommissionPage() {
                 desc={commission.commissionDesc}
                 pay={commission.commissionPay}
                 status={commission.errandStatus}
-                path={`/errand/view-errand/${commission.commissionID}`}
+                path={`/errand/view/${commission.commissionID}`}
                 // Employer side
                 userFname={commission.userFirstname}
                 userLname={commission.userLastname}

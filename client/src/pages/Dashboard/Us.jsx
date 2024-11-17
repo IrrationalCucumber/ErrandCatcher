@@ -21,7 +21,7 @@ function Us() {
                 page1="ONGOING"
                 one={`/dashboard/ongoing`}
                 page2="COMMISSIONS"
-                commissionList={`/dashboard/commissions`}
+                commissionList={`/dashboard/errands`}
                 page3="APPLICANTS"
                 applicants={`/dashboard/applicants`}
                 page4="MAP"

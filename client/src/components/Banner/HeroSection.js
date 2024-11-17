@@ -55,7 +55,7 @@ export function BannerEmployerPostErrand() {
           Hey there, want to add an Errand?
         </Typography>
         <Button
-          onClick={() => navigate(`/errand/post-commission`)}
+          onClick={() => navigate(`/errand/post-errand`)}
           color="primary"
           size="lg"
           variant="outlined"

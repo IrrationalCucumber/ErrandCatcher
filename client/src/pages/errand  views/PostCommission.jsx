@@ -61,11 +61,11 @@ const PostCommission = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(true);
-  }
+  };
   const handleClose = () => {
     setOpen(false);
-    navigate(`/dashboard/commissions`);
-  }
+    navigate(`/dashboard/errands`);
+  };
   //update the info that will be stored
   const handleChange = (e) => {
     if (e.target.name === "comType") {
@@ -250,7 +250,7 @@ const PostCommission = () => {
         startDecorator={<PostAddIcon />}
         endDecorator={
           <Button
-            onClick={() => navigate(`/dashboard/commissions`)}
+            onClick={() => navigate(`/dashboard/errands`)}
             size="sm"
             variant="soft"
             color="success"
@@ -274,7 +274,7 @@ const PostCommission = () => {
         contentMes="You have successfully posted an Errand"
         color="success"
         colorText="green"
-      // icon={ErrorIcon}
+        // icon={ErrorIcon}
       />
 
       <div className="errand-cont">
