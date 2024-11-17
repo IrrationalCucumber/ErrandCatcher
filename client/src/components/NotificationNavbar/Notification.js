@@ -53,9 +53,9 @@ function Notification(props) {
   return (
     <div>
       <Dropdown>
-        <MenuButton variant="plain" size="sm">
-          <Badge badgeContent={props.count}>
-            <NotificationsIcon />
+        <MenuButton variant="primary" size="sm">
+          <Badge color="danger" badgeContent={props.count}>
+            <NotificationsIcon sx={{ color: "white" }} />
           </Badge>
         </MenuButton>
         <Menu
