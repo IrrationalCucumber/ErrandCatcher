@@ -7,6 +7,10 @@ import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import { Dropdown, Menu, MenuButton, MenuItem } from "@mui/joy";
 import Person2Icon from "@mui/icons-material/Person2";
+import HistoryIcon from '@mui/icons-material/History';
+import LogoutIcon from '@mui/icons-material/Logout';
+import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 
 function NavDropdown(props) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -50,18 +54,26 @@ function NavDropdown(props) {
       >
         {props.name}
       </MenuButton>
-      <Menu color="primary" size="lg">
+      <Menu color="primary" size="md"
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignContent: "center",
+          // padding: "12x 16px",
+          paddingTop: "8px",
+          gap: "22px",
+        }}>
         <MenuItem>
           <Link
             to={profileLink}
             style={{
-              display: "block",
-              padding: "12px 16px",
+              // display: "block",
+              // padding: "12px 16px",
               textDecoration: "none",
-              color: "black",
+              color: "#565360",
             }}
           >
-            My Profile
+            <AccountCircleOutlinedIcon /> My Profile
           </Link>
         </MenuItem>
         {user.userType === "Catcher" ? (
@@ -69,13 +81,13 @@ function NavDropdown(props) {
             <Link
               to={"/dashboard/my-application"}
               style={{
-                display: "block",
-                padding: "12px 16px",
+                // display: "block",
+                // padding: "12px 16px",
                 textDecoration: "none",
-                color: "black",
+                color: "#565360",
               }}
             >
-              Applications
+              <AssignmentOutlinedIcon /> Applications
             </Link>
           </MenuItem>
         ) : null}
@@ -83,13 +95,13 @@ function NavDropdown(props) {
           <Link
             to={historyLink}
             style={{
-              display: "block",
-              padding: "12px 16px",
+              // display: "block",
+              // padding: "12px 16px",
               textDecoration: "none",
-              color: "black",
+              color: "#565360",
             }}
           >
-            History
+            <HistoryIcon /> History
           </Link>
         </MenuItem>
         <MenuItem>
@@ -97,13 +109,13 @@ function NavDropdown(props) {
             onClick={handleLogout}
             to={signOutLink}
             style={{
-              display: "block",
-              padding: "12px 16px",
+              // display: "block",
+              // padding: "12px 16px",
               textDecoration: "none",
-              color: "black",
+              color: "#565360",
             }}
           >
-            Sign Out
+            <LogoutIcon /> Sign Out
           </Link>
         </MenuItem>
       </Menu>
