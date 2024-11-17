@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import ErrandInputs from "../../components/ErrandInputs";
 import "./Commission.css"; // Import your CSS file
 import { useAuth } from "../../components/AuthContext";
-import { MapLibre, ViewMapBox } from "../../components/Map/Map";
+import { UpdateMapLibre, ViewMapBox } from "../../components/Map/Map";
 
 const UpdateCommission = () => {
   const [commission, setCommission] = useState({
@@ -131,14 +131,14 @@ const UpdateCommission = () => {
           commission
         );
         alert("UPdate successful");
-        window.location.reload();
+        //window.location.reload();
       }
     } catch (err) {
       console.log(err);
     }
   };
 
-  console.log(commission);
+  //console.log(commission);
 
   return (
     <div>
@@ -177,7 +177,7 @@ const UpdateCommission = () => {
             commission.comType !== "Transportation" && (
               <div className="map--wrap">
                 {/* <div ref={mapContainer} className="map-small" /> */}
-                <MapLibre
+                <UpdateMapLibre
                   getCoords={(lat, long) => {
                     setCommission((prev) => ({
                       ...prev,
@@ -185,6 +185,7 @@ const UpdateCommission = () => {
                       comLong: long,
                     }));
                   }}
+                  id={commissionID}
                 />
               </div>
             )}

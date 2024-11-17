@@ -7,6 +7,7 @@ import axios from "axios";
 import mapboxgl from "mapbox-gl";
 import MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
 import "./css/MapBox.css";
+import { LoadingMap } from "../Display/DsiplayFunctions";
 
 //for map pages
 export default function Map(props) {
@@ -258,9 +259,9 @@ export function ViewMap({ id }) {
   );
 }
 
-//view
+//post
 //for errand page
-//delivery/transpo type obly
+//HouseService type obly
 export function MapLibre({ getCoords }) {
   //event handler when user add marker
   //variables for map
@@ -305,6 +306,80 @@ export function MapLibre({ getCoords }) {
       });
     }
   }, [API_KEY, zoom, getCoords]);
+  return (
+    <div>
+      <div ref={mapContainer} className="map-small" />
+    </div>
+  );
+}
+
+//update
+//HouseService
+export function UpdateMapLibre({ getCoords, id }) {
+  const [coords, setCoords] = useState(null); // Start as null to delay map initialization
+
+  // Fetch location data from the backend
+  useEffect(() => {
+    const fetchLoc = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/errand/${id}`);
+        if (res.data[0]) {
+          setCoords({
+            lat: res.data[0].commissionLat,
+            lng: res.data[0].commissionLong,
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching coordinates:", error);
+      }
+    };
+    fetchLoc();
+  }, [id]);
+
+  // Map initialization
+  const mapContainer = useRef(null);
+  const map = useRef(null);
+  const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
+  const [zoom] = useState(10);
+
+  useEffect(() => {
+    // Only initialize the map when coords are available
+    if (!coords || map.current) return;
+
+    map.current = new maplibregl.Map({
+      container: mapContainer.current,
+      style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${API_KEY}`,
+      center: [coords.lng, coords.lat], // Use fetched coordinates
+      zoom: zoom,
+    });
+
+    map.current.addControl(new maplibregl.NavigationControl(), "top-right");
+
+    // Add a draggable marker
+    const marker = new maplibregl.Marker({
+      color: "#00FF00",
+      draggable: true,
+    })
+      .setLngLat([coords.lng, coords.lat]) // Use fetched coordinates
+      .setPopup(
+        new maplibregl.Popup().setHTML("<h3>Drag to update location</h3>")
+      )
+      .addTo(map.current);
+
+    // Event listener for marker dragend
+    marker.on("dragend", () => {
+      const newLngLat = marker.getLngLat();
+      getCoords(newLngLat.lat, newLngLat.lng); // Return updated coordinates to parent
+    });
+
+    // Return initial coordinates to parent
+    getCoords(coords.lat, coords.lng);
+  }, [API_KEY, coords, getCoords, zoom]);
+
+  // Render a loading state until coords are fetched
+  if (!coords) {
+    return <LoadingMap />;
+  }
   return (
     <div>
       <div ref={mapContainer} className="map-small" />
