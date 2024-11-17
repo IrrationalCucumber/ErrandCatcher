@@ -24,8 +24,8 @@ const PostCommission = () => {
     comTitle: "",
     comStart: "",
     comDeadline: "",
-    comLocation: "",
-    comTo: "",
+    comLocation: "", // starting point
+    comTo: "", // endpoint
     comType: "",
     comDescription: "",
     comPay: 0,
@@ -61,11 +61,11 @@ const PostCommission = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(true);
-  }
+  };
   const handleClose = () => {
     setOpen(false);
     navigate(`/dashboard/commissions`);
-  }
+  };
   //update the info that will be stored
   const handleChange = (e) => {
     if (e.target.name === "comType") {
@@ -274,7 +274,7 @@ const PostCommission = () => {
         contentMes="You have successfully posted an Errand"
         color="success"
         colorText="green"
-      // icon={ErrorIcon}
+        // icon={ErrorIcon}
       />
 
       <div className="errand-cont">
@@ -287,6 +287,7 @@ const PostCommission = () => {
               start="comStart"
               deadline="comDeadline"
               location="comLocation"
+              locValue={commission.comLocation}
               to="comTo"
               toValue={commission.comTo}
               accessToken={accessToken}
