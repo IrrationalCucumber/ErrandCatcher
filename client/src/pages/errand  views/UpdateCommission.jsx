@@ -16,9 +16,9 @@ const UpdateCommission = () => {
     comTo: "",
     comType: "",
     comDescription: "",
-    comPay: 0,
+    comPay: "",
     comStatus: "",
-    ContactNo: "",
+    Contactno: "",
     comLong: "",
     comLat: "",
     destLng: "",
@@ -77,9 +77,9 @@ const UpdateCommission = () => {
           comLocation: retrievedCommission.commissionLocation,
           comType: retrievedCommission.commissionType,
           comDescription: retrievedCommission.commissionDesc,
-          comPay: retrievedCommission.commissionPay,
+          comPay: `${retrievedCommission.commissionPay}.00`,
           comStatus: retrievedCommission.commissionStatus,
-          ContactNo: retrievedCommission.ContactNumber,
+          Contactno: retrievedCommission.ContactNumber,
           comLong: retrievedCommission.commissionLong,
           comLat: retrievedCommission.commissionLat,
           destLat: retrievedCommission.commissionDestLat,
@@ -109,11 +109,6 @@ const UpdateCommission = () => {
         ...prev,
         comPay: total,
       }));
-    } else {
-      setCommission((prev) => ({
-        ...prev,
-        comPay: "",
-      }));
     }
   }, [commission.comType, distance]);
 
@@ -121,9 +116,14 @@ const UpdateCommission = () => {
     e.preventDefault();
     try {
       if (
-        commission.commissionDeadline > Date.now() ||
-        commission.comStart > Date.now()
+        commission.commissionDeadline < Date.now() ||
+        commission.comStart < Date.now()
       ) {
+        alert("Please Update the Dates in your errands");
+      } else if (commission.comPay < minimum) {
+        alert("The salary is lower than the suggested payment!");
+        //setShowAlert(true);
+      } else {
         //account.dateCreated = getCurrentDate();
         commission.comStatus = "Available";
         await axios.put(
@@ -131,12 +131,7 @@ const UpdateCommission = () => {
           commission
         );
         alert("UPdate successful");
-        navigate(`dashboard/commissions/${userID}`);
-      } else if (commission.comPay < minimum) {
-        alert("The salary is lower than the suggested payment!");
-        //setShowAlert(true);
-      } else {
-        alert("Please Update the Dates in your errands");
+        window.location.reload();
       }
     } catch (err) {
       console.log(err);
@@ -173,7 +168,7 @@ const UpdateCommission = () => {
               method="method"
               methodValue={commission.method}
               number="Contactno"
-              numValue={commission.ContactNo}
+              numValue={commission.Contactno}
               distance={distance}
               minimum={minimum}
             />
