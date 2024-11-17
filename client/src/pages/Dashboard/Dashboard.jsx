@@ -25,6 +25,7 @@ function Dashboard() {
                 page4="MAP"
                 map={`/dashboard/e-map`}
               />
+              <Outlet />
             </>
           )}
           {user.userType === "Catcher" && (
@@ -36,6 +37,7 @@ function Dashboard() {
                 page4="MAP"
                 map={`/dashboard/e-map`}
               />
+              <Outlet />
             </>
           )}
           {user.userType.toLocaleUpperCase() === "ADMIN" && (
@@ -52,10 +54,11 @@ function Dashboard() {
                 page4="MAP"
                 map={`/dashboard/admin/map`}
               />
+              <Outlet />
             </>
           )}
-          <Outlet />
-          <Footer footerUserType={`footer-container__${type}`} />
+
+          <Footer />
         </>
       ) : (
         <p>Not signed in</p>

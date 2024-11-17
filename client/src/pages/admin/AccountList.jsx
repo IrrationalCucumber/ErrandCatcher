@@ -23,6 +23,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import HailIcon from "@mui/icons-material/Hail";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
+import ViewProfile from "../profile/ViewProfile";
 
 const AccountList = () => {
   const [accounts, setAccounts] = useState([]);
@@ -34,12 +35,13 @@ const AccountList = () => {
   // const { user } = useAuth();
   // const userID = user.userID;
   const navigate = useNavigate();
-  const [layout, setLayout] = useState(undefined);
+  const [showProfileModal, setShowProfileModal] = useState(false);
   const [currentId, setCurrentId] = useState(null);
   const handleOpenModal = (id) => {
-    setLayout("fullscreen");
+    setShowProfileModal(true);
     setCurrentId(id); // Set the ID in state
   };
+
   //pagination --Ash
   const [currentPage, setCurrentPage] = useState(1);
   //Pagination --Ash
@@ -123,32 +125,7 @@ const AccountList = () => {
     };
     fetchRating();
   }, [currentId]);
-  //user trans
-  // const [count, setCount] = useState({
-  //   done: "",
-  //   expired: "",
-  //   cancel: "",
-  // });
-  // useEffect(() => {
-  //   const fetchTransCount = async () => {
-  //     try {
-  //       const res = await axios.get(
-  //         `http://localhost:8800/trans-count/${currentId}`
-  //       );
-  //       //console.log(res.data[0].expired);
-  //       if (!!res.data) {
-  //         setCount({
-  //           done: res.data[0].done,
-  //           expired: res.data[0].expired,
-  //           cancel: res.data[0].cancel,
-  //         });
-  //       }
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //   fetchTransCount();
-  // }, [currentId]);
+
   //FOR NOTIFICATION
   //set variables for notification
   const [notif, setNotif] = useState({
@@ -293,7 +270,6 @@ const AccountList = () => {
       const status = "Suspended";
       await axios.put(`http://localhost:8800/change-status/${id}/${status}`);
       //console.log("Request verified:", request);
-      //setIsButtonClicked(true);
       //add a notification to the request user
       notif.notifDesc = "Your account has been suspended";
       notif.userID = id;
@@ -423,77 +399,10 @@ const AccountList = () => {
           paginate={paginate}
         />
       </div>
-      <Modal
-        open={!!layout}
-        onClose={() => setLayout(undefined)}
-        className="accList_modal"
-      >
-        <ModalDialog layout={layout} className="custom-dialog">
+      <Modal open={showProfileModal} onClose={() => setShowProfileModal(false)}>
+        <ModalDialog layout="fullscreen" sx={{ overflowY: "auto" }}>
           <ModalClose />
-          <DialogTitle>{account.username.toUpperCase()} PROFILE</DialogTitle>
-          <DialogContent
-            style={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              padding: "20px",
-            }}
-          >
-            <>
-              <div>
-                {/* <img
-                  src={
-                    `http://localhost:8800/images/profile/` +
-                    account.profileImage
-                  }
-                  alt="Profile"
-                  width={150}
-                  length={150}
-                /> */}
-                <h4>USER: {currentId}</h4>
-                <h5>
-                  <b>USERNAME: </b>
-                  {account.username}
-                  <br />
-                  <b>FULL NAME: </b>
-                  {account.fname} {account.lname}
-                  <br />
-                  <b>EMAIL: </b>
-                  {account.email}
-                  <br />
-                  <b>GENDER: </b>
-                  {account.gender} <br />
-                  <b>CONTACT #: </b>
-                  {account.contact} <br />
-                  <b>AGE: </b>
-                  {account.age} <br />
-                  <b>BIRTHDAY: </b>
-                  {account.bday} <br />
-                  <b>ADDRESS: </b>
-                  {account.address} <br />
-                  <b>DESCRIPTION: </b>
-                  {account.desc} <br />
-                  <b>DATE CREATED: </b>
-                  {account.dateC} <br />
-                  <b>STATUS: </b>
-                  {account.status} <br />
-                  <b>RATING: </b>
-                  {rating} <br />
-                  {/* <b>ERRAND DONE: </b> {count.done} <br />
-                  <b>ERRAND EXPIRED: </b> {count.expired} <br />
-                  <b>ERRAND CANCELLED: </b> {count.cancel} <br /> */}
-                </h5>
-              </div>
-              <img
-                src={
-                  `http://localhost:8800/images/profile/` + account.profileImage
-                }
-                alt="Profile"
-                width={150}
-                length={150}
-                style={{ marginRight: "20px" }}
-              />
-            </>
-          </DialogContent>
+          <ViewProfile id={currentId} />
         </ModalDialog>
       </Modal>
       <Link to="/profile/add" style={{ textDecoration: "none" }}>
