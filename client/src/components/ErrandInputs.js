@@ -530,7 +530,9 @@ function ErrandInputs(props) {
             disabled={props.readOnly}
             size="lg"
             variant={props.variant}
-            startDecorator={<AddIcCallIcon />}
+            startDecorator={
+              <Typography startDecorator={<AddIcCallIcon />}>+63</Typography>
+            }
             type="tel"
             placeholder="Enter contact number..."
             onChange={props.handleChange}
