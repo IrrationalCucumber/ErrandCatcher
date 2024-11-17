@@ -212,7 +212,7 @@ const AccountList = () => {
         <AssignmentIndIcon style={{ color: "purple" }} />
         <span> Catcher</span>
       </>
-    ) : account.accountType === "Admin" ? (
+    ) : account.accountType === "admin" ? (
       <>
         <ManageAccountsIcon style={{ color: "red" }} />
         <span> Admin</span>
@@ -234,6 +234,11 @@ const AccountList = () => {
       <>
         <CancelIcon style={{ color: "red" }} />
         <span> Suspended</span>
+      </>
+    ) : account.accountStatus === "Deactivated" ? (
+      <>
+        <CancelIcon style={{ color: "red" }} />
+        <span> Deactivated</span>
       </>
     ) : null, // handle any other status if necessary..
     <Dropdown>

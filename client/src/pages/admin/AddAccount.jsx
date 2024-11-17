@@ -4,28 +4,18 @@ import { useNavigate, Link } from "react-router-dom";
 
 const AddAccount = () => {
   const [account, setAccount] = useState({
-    username: "",
-    password: "",
-    lname: "",
-    fname: "",
+    regUsername: "",
+    regPassword: "",
+    lastName: "",
+    firstName: "",
     gender: "",
     email: "",
     contact: "",
-    age: "",
     bday: "",
     address: "",
-    // desc:"",
     type: "",
     dateCreated: "",
-    // profileImage:"",
   });
-  // const formatDate = (dateString) => {
-  //     // Input date format: MM/DD/YYYY
-  //     const [month, day, year] = dateString.split('/');
-  //     // Output date format: YYYY-MM-DD
-  //     return `${year}-${month}-${day}`;
-  //   };
-  //get current date
 
   const getCurrentDate = () => {
     const currentDate = new Date();
@@ -56,8 +46,8 @@ const AddAccount = () => {
     e.preventDefault();
     try {
       account.dateCreated = getCurrentDate();
-      await axios.post("http://localhost:8800/user", account);
-      navigate("/accounts");
+      await axios.post("http://localhost:8800/sign-up", account);
+      navigate("/dashboard/admin/accounts");
     } catch (err) {
       console.log(err);
     }
@@ -73,7 +63,7 @@ const AddAccount = () => {
             type="text"
             placeholder="username"
             onChange={handleChange}
-            name="username"
+            name="regUsername"
             style={styles.input}
             required
           />
@@ -81,7 +71,7 @@ const AddAccount = () => {
             type="text"
             placeholder="password"
             onChange={handleChange}
-            name="password"
+            name="regPassword"
             style={styles.input}
             required
           />
@@ -89,7 +79,7 @@ const AddAccount = () => {
             type="text"
             placeholder="first name"
             onChange={handleChange}
-            name="fname"
+            name="firtName"
             style={styles.input}
             required
           />
@@ -97,7 +87,7 @@ const AddAccount = () => {
             type="text"
             placeholder="last name"
             onChange={handleChange}
-            name="lname"
+            name="lastName"
             style={styles.input}
             required
           />
@@ -123,14 +113,7 @@ const AddAccount = () => {
             style={styles.input}
             required
           />
-          <input
-            type="number"
-            placeholder="Age"
-            onChange={handleChange}
-            name="age"
-            style={styles.input}
-            required
-          />
+
           <input
             type="email"
             placeholder="Email address"
@@ -139,14 +122,16 @@ const AddAccount = () => {
             style={styles.input}
             required
           />
+
           <input
-            type="text"
-            placeholder="Address"
+            type="date"
+            placeholder="Birthdate"
             onChange={handleChange}
-            name="address"
+            name="bday"
             style={styles.input}
             required
           />
+
           <select
             name="type"
             onChange={handleChange}
@@ -157,6 +142,7 @@ const AddAccount = () => {
             <option value="">Choose Type</option>
             <option value="Employer">Employer</option>
             <option value="Catcher">Catcher</option>
+            <option value="admin">Admin</option>
           </select>
 
           <button type="submit" style={styles.button}>
