@@ -7,18 +7,17 @@ import Table from "../../components/Table.js";
 import Select from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
 import { DisplayDate } from "../../components/DisplayDate.js";
-import OtherHousesIcon from '@mui/icons-material/OtherHouses';
+import OtherHousesIcon from "@mui/icons-material/OtherHouses";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import CameraOutdoorIcon from '@mui/icons-material/CameraOutdoor';
+import CameraOutdoorIcon from "@mui/icons-material/CameraOutdoor";
 
-import PendingIcon from '@mui/icons-material/Pending';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CancelIcon from '@mui/icons-material/Cancel';
-import TimerOffIcon from '@mui/icons-material/TimerOff';
-import HandshakeIcon from '@mui/icons-material/Handshake';
-import EventAvailableIcon from '@mui/icons-material/EventAvailable';
-
+import PendingIcon from "@mui/icons-material/Pending";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
+import TimerOffIcon from "@mui/icons-material/TimerOff";
+import HandshakeIcon from "@mui/icons-material/Handshake";
+import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 
 const CommissionList = () => {
   const [commissions, setCommissions] = useState([]);
@@ -286,7 +285,7 @@ const CommissionList = () => {
               <i class="fa-solid fa-trash"></i>
               </button> */}
               <button className="update">
-                <Link to={`/errand/view-errand/${Commission.commissionID}`}>
+                <Link to={`/errand/view/${Commission.commissionID}`}>
                   <i class="fa-solid fa-eye"></i>
                 </Link>
               </button>

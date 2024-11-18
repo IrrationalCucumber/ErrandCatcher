@@ -19,7 +19,7 @@ function Dashboard() {
                 page1="ONGOING ERRANDS"
                 one={`/dashboard/ongoing`}
                 page2="MY ERRANDS"
-                commissionList={`/dashboard/commissions`}
+                commissionList={`/dashboard/errands`}
                 page3="APPLICANTS"
                 applicants={`/dashboard/applicants`}
                 page4="MAP"

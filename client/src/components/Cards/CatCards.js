@@ -45,7 +45,7 @@ function CatCards({ commissions }) {
                 pay={commission.commissionPay}
                 label={commission.commissionType}
                 location={commission.commissionLocation}
-                path={`/errand/view-errand/${commission.commissionID}`}
+                path={`/errand/view/${commission.commissionID}`}
                 //`/view-errand/${userID}/${commission.commissionID}`
               />
             ))}
