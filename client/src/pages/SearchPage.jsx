@@ -7,6 +7,7 @@ import { useAuth } from "../components/AuthContext";
 import Search from "@mui/icons-material/Search";
 import LocationOn from "@mui/icons-material/LocationOn";
 import CatCardsNew from "../components/Cards/CatCardsNew";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 function SearchPage() {
   const [commissions, setCommissions] = useState([]);
@@ -134,7 +135,7 @@ function SearchPage() {
               </select>
             </div>
             <div className="col">
-              <LocationOn
+              <LocationOnIcon
                 sx={{
                   position: "absolute",
                   color: "grey",
@@ -142,6 +143,7 @@ function SearchPage() {
                 }}
               />
               <select
+                style={{ paddingLeft: "32px" }}
                 name="location"
                 id="location"
                 className="selected"
@@ -183,7 +185,7 @@ function SearchPage() {
 
       {/* <Cards commissions={filteredCommissions} /> */}
       {/* <CatCardsNew commissions={filteredCommissions} /> */}
-      
+
       {filteredCommissions && filteredCommissions.length > 0 ? (
         <>
           <CatCardsNew commissions={filteredCommissions} />
