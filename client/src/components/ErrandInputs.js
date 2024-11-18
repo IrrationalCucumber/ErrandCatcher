@@ -33,141 +33,141 @@ function ErrandInputs(props) {
   const [isDestSelected, setIsDestSelected] = useState(false); // Same for destination
 
   // Fetch suggestions for start location from Mapbox API
-  const fetchStartSuggestions = async (searchText) => {
-    if (!searchText) {
-      setStartSuggestions([]);
-      return;
-    }
+  // const fetchStartSuggestions = async (searchText) => {
+  //   if (!searchText) {
+  //     setStartSuggestions([]);
+  //     return;
+  //   }
 
-    try {
-      const response = await axios.get(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${searchText}.json`,
-        {
-          params: {
-            access_token: props.accessToken, // Add your Mapbox access token
-            autocomplete: true,
-            limit: 5,
-            country: "PH", // Restrict oy Philippines
-          },
-        }
-      );
-      const features = response.data.features || [];
-      setStartSuggestions(
-        features.map((feature) => ({
-          place_name: feature.place_name,
-          coordinates: feature.geometry.coordinates,
-        }))
-      );
-    } catch (error) {
-      console.error("Error fetching start suggestions:", error);
-    }
-  };
+  //   try {
+  //     const response = await axios.get(
+  //       `https://api.mapbox.com/geocoding/v5/mapbox.places/${searchText}.json`,
+  //       {
+  //         params: {
+  //           access_token: props.accessToken, // Add your Mapbox access token
+  //           autocomplete: true,
+  //           limit: 5,
+  //           country: "PH", // Restrict oy Philippines
+  //         },
+  //       }
+  //     );
+  //     const features = response.data.features || [];
+  //     setStartSuggestions(
+  //       features.map((feature) => ({
+  //         place_name: feature.place_name,
+  //         coordinates: feature.geometry.coordinates,
+  //       }))
+  //     );
+  //   } catch (error) {
+  //     console.error("Error fetching start suggestions:", error);
+  //   }
+  // };
 
   // Fetch suggestions for destination location from Mapbox API
-  const fetchDestSuggestions = async (searchText) => {
-    if (!searchText) {
-      setDestSuggestions([]);
-      return;
-    }
+  // const fetchDestSuggestions = async (searchText) => {
+  //   if (!searchText) {
+  //     setDestSuggestions([]);
+  //     return;
+  //   }
 
-    try {
-      const response = await axios.get(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${searchText}.json`,
-        {
-          params: {
-            access_token: props.accessToken, // Add your Mapbox access token
-            autocomplete: true,
-            limit: 5,
-            country: "PH",
-          },
-        }
-      );
-      const features = response.data.features || [];
-      setDestSuggestions(
-        features.map((feature) => ({
-          place_name: feature.place_name,
-          coordinates: feature.geometry.coordinates,
-        }))
-      );
-    } catch (error) {
-      console.error("Error fetching destination suggestions:", error);
-    }
-  };
+  //   try {
+  //     const response = await axios.get(
+  //       `https://api.mapbox.com/geocoding/v5/mapbox.places/${searchText}.json`,
+  //       {
+  //         params: {
+  //           access_token: props.accessToken, // Add your Mapbox access token
+  //           autocomplete: true,
+  //           limit: 5,
+  //           country: "PH",
+  //         },
+  //       }
+  //     );
+  //     const features = response.data.features || [];
+  //     setDestSuggestions(
+  //       features.map((feature) => ({
+  //         place_name: feature.place_name,
+  //         coordinates: feature.geometry.coordinates,
+  //       }))
+  //     );
+  //   } catch (error) {
+  //     console.error("Error fetching destination suggestions:", error);
+  //   }
+  // };
 
   // Debounce for start suggestions
-  useEffect(() => {
-    if (isStartSelected) return; // If a suggestion was clicked, skip fetching
+  // useEffect(() => {
+  //   if (isStartSelected) return; // If a suggestion was clicked, skip fetching
 
-    const timeoutId = setTimeout(() => {
-      fetchStartSuggestions(startQuery);
-    }, 300); // Debounce time (300ms)
+  //   const timeoutId = setTimeout(() => {
+  //     fetchStartSuggestions(startQuery);
+  //   }, 300); // Debounce time (300ms)
 
-    return () => clearTimeout(timeoutId);
-  }, [startQuery]);
+  //   return () => clearTimeout(timeoutId);
+  // }, [startQuery]);
 
   // Debounce for destination suggestions
-  useEffect(() => {
-    if (isDestSelected) return; // If a suggestion was clicked, skip fetching
+  // useEffect(() => {
+  //   if (isDestSelected) return; // If a suggestion was clicked, skip fetching
 
-    const timeoutId = setTimeout(() => {
-      fetchDestSuggestions(destQuery);
-    }, 300); // Debounce time (300ms)
+  //   const timeoutId = setTimeout(() => {
+  //     fetchDestSuggestions(destQuery);
+  //   }, 300); // Debounce time (300ms)
 
-    return () => clearTimeout(timeoutId);
-  }, [destQuery]);
+  //   return () => clearTimeout(timeoutId);
+  // }, [destQuery]);
 
   // Handle start location suggestion click
-  const handleStartSuggestionClick = (suggestion) => {
-    setStartQuery(suggestion.place_name);
-    setStartCoordinates(suggestion.coordinates);
-    setStartSuggestions([]); // Clear suggestions
-    setIsStartSelected(true); // Mark that a suggestion was clicked
+  // const handleStartSuggestionClick = (suggestion) => {
+  //   setStartQuery(suggestion.place_name);
+  //   setStartCoordinates(suggestion.coordinates);
+  //   setStartSuggestions([]); // Clear suggestions
+  //   setIsStartSelected(true); // Mark that a suggestion was clicked
 
-    // Sync with parent component
-    props.handleChange({
-      target: {
-        name: props.location,
-        value: suggestion.place_name,
-      },
-    });
+  //   // Sync with parent component
+  //   props.handleChange({
+  //     target: {
+  //       name: props.location,
+  //       value: suggestion.place_name,
+  //     },
+  //   });
 
-    if (props.onStartLocationSelect) {
-      props.onStartLocationSelect(suggestion.coordinates);
-    }
-  };
+  //   if (props.onStartLocationSelect) {
+  //     props.onStartLocationSelect(suggestion.coordinates);
+  //   }
+  // };
 
   // Reset the `isStartSelected` state when the user types
-  const handleStartQueryChange = (e) => {
-    // onChange={(e) => setStartQuery(e.target.value)}
-    setStartQuery(e.target.value);
-    setIsStartSelected(false); // Reset the state when the user starts typing again
-  };
+  // const handleStartQueryChange = (e) => {
+  //   // onChange={(e) => setStartQuery(e.target.value)}
+  //   setStartQuery(e.target.value);
+  //   setIsStartSelected(false); // Reset the state when the user starts typing again
+  // };
 
   // Handle destination location suggestion click
-  const handleDestSuggestionClick = (suggestion) => {
-    setDestQuery(suggestion.place_name);
-    setDestCoordinates(suggestion.coordinates);
-    setDestSuggestions([]); // clear suggestions
-    setIsDestSelected(true); // Mark that a suggestion was clicked
+  // const handleDestSuggestionClick = (suggestion) => {
+  //   setDestQuery(suggestion.place_name);
+  //   setDestCoordinates(suggestion.coordinates);
+  //   setDestSuggestions([]); // clear suggestions
+  //   setIsDestSelected(true); // Mark that a suggestion was clicked
 
-    // Sync with parent component
-    props.handleChange({
-      target: {
-        name: props.to,
-        value: suggestion.place_name,
-      },
-    });
+  //   // Sync with parent component
+  //   props.handleChange({
+  //     target: {
+  //       name: props.to,
+  //       value: suggestion.place_name,
+  //     },
+  //   });
 
-    if (props.onLocationSelect) {
-      props.onLocationSelect(suggestion.coordinates);
-    }
-  };
+  //   if (props.onLocationSelect) {
+  //     props.onLocationSelect(suggestion.coordinates);
+  //   }
+  // };
 
-  const handleDestQueryChange = (e) => {
-    // onChange={(e) => setStartQuery(e.target.value)}
-    setDestQuery(e.target.value);
-    setIsDestSelected(false); // Reset the state when the user starts typing again
-  };
+  // const handleDestQueryChange = (e) => {
+  //   // onChange={(e) => setStartQuery(e.target.value)}
+  //   setDestQuery(e.target.value);
+  //   setIsDestSelected(false); // Reset the state when the user starts typing again
+  // };
 
   return (
     <>
@@ -353,7 +353,8 @@ function ErrandInputs(props) {
           </Typography>
         </div>
         {(props.typeValue === "HomeService - Indoor" ||
-          props.typeValue === "HomeService - Outdoor") && (
+          props.typeValue === "HomeService - Outdoor" ||
+          props.typeValue === "") && (
           <>
             <div className="col2">
               <Input
@@ -372,8 +373,7 @@ function ErrandInputs(props) {
           </>
         )}
         {(props.typeValue === "Transportation" ||
-          props.typeValue === "Delivery" ||
-          props.typeValue === "") && (
+          props.typeValue === "Delivery") && (
           <div className="col2">
             <Input
               color="neutral"
@@ -383,12 +383,15 @@ function ErrandInputs(props) {
               startDecorator={<LocationOn />}
               type="text"
               placeholder="Enter place for pickup..."
-              onChange={handleStartQueryChange}
-              value={startQuery} // Sync input value
+              onChange={props.handleChange}
+              value={props.locValue} // Sync input value
               name={props.location}
+              // onChange={handleStartQueryChange}
+              // value={startQuery} // Sync input value
+              // name={props.location}
             />
             {/* search suggestion */}
-            {startSuggestions.length > 0 && (
+            {/* {startSuggestions.length > 0 && (
               <ul className="suggestions-list">
                 {startSuggestions.map((suggestion, index) => (
                   <li
@@ -400,7 +403,7 @@ function ErrandInputs(props) {
                   </li>
                 ))}
               </ul>
-            )}
+            )} */}
           </div>
         )}
       </div>
@@ -423,11 +426,13 @@ function ErrandInputs(props) {
               type="text"
               placeholder="Enter destination of errand..."
               name={props.to}
-              onChange={handleDestQueryChange}
-              value={destQuery} // Sync input value
+              onChange={props.handleChange}
+              value={props.toValue} // Sync input value
+              // onChange={handleDestQueryChange}
+              // value={destQuery} // Sync input value
             />
             {/* search suggestion */}
-            {destSuggestions.length > 0 && (
+            {/* {destSuggestions.length > 0 && (
               <ul className="suggestions-list">
                 {destSuggestions.map((suggestion, index) => (
                   <li
@@ -439,7 +444,7 @@ function ErrandInputs(props) {
                   </li>
                 ))}
               </ul>
-            )}
+            )} */}
           </div>
         </div>
       )}
@@ -478,19 +483,22 @@ function ErrandInputs(props) {
               props.typeValue !== "HomeService - Outdoor" &&
               props.typeValue !== "" && (
                 <>
-                  <Typography color="neutral" level="body-md" variant="plain">
+                  <Typography color="neutral" level="body-sm" variant="plain">
                     15/km + ₱100
                   </Typography>
                   <Typography color="neutral" level="body-sm" variant="plain">
                     <i>Suggested Pay: {props.minimum}</i>
                   </Typography>
                   {props.distance ? (
-                    <Typography color="neutral" level="body-md" variant="plain">
+                    <Typography color="neutral" level="body-sm" variant="plain">
                       {props.distance} km
                     </Typography>
-                  ) : null}
+                  ) : null}{" "}
                 </>
               )}
+            <Typography color="neutral" level="body-sm" variant="plain">
+              5% Plaftform fee
+            </Typography>
           </div>
         </div>
         {/* PAYMENT METOD */}

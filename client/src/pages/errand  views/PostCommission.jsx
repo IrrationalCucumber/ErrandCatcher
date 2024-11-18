@@ -61,11 +61,11 @@ const PostCommission = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(true);
-  }
+  };
   const handleClose = () => {
     setOpen(false);
     navigate(`/dashboard/commissions`);
-  }
+  };
   //update the info that will be stored
   const handleChange = (e) => {
     if (e.target.name === "comType") {
@@ -274,7 +274,7 @@ const PostCommission = () => {
         contentMes="You have successfully posted an Errand"
         color="success"
         colorText="green"
-      // icon={ErrorIcon}
+        // icon={ErrorIcon}
       />
 
       <div className="errand-cont">
@@ -324,7 +324,8 @@ const PostCommission = () => {
                 />
               </div>
             )}
-          {commission.comType === "Delivery" && (
+          {(commission.comType === "Delivery" ||
+            commission.comType === "Transportation") && (
             <>
               <PostMapBox
                 accessToken={accessToken}
@@ -343,12 +344,12 @@ const PostCommission = () => {
                   }));
                 }}
                 // Sync input with Mapbox
-                customOrigin={commission.comLocation}
-                customDestination={commission.comTo}
+                // customOrigin={commission.comLocation}
+                // customDestination={commission.comTo}
               />
             </>
           )}
-          {commission.comType === "Transportation" && (
+          {/* {commission.comType === "Transportation" && (
             <>
               <PostMapBox
                 accessToken={accessToken}
@@ -357,7 +358,7 @@ const PostCommission = () => {
                 }}
               />
             </>
-          )}
+          )} */}
         </div>
         {/* <button onClick={handleClick} className="btn btn-yellow" style={{}}>
           POST
