@@ -85,6 +85,7 @@ const UpdateCommission = () => {
           destLat: retrievedCommission.commissionDestLat,
           destLng: retrievedCommission.commissionDestLong,
           method: retrievedCommission.commissionPaymentMethod,
+          comTo: retrievedCommission.commissionTo,
         });
       } catch (err) {
         console.log(err);
