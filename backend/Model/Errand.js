@@ -109,12 +109,11 @@ const Errand = {
       comDestLat,
       comMethod,
     } = errandData;
-    const values = [];
     db.query(
       `UPDATE commission SET commissionTitle = ?, commissionStartDate = ?, 
       commissionDeadline = ?, commissionLocation = ?, commissionTo = ?,commissionType = ?,
        commissionDesc = ?, commissionPay = ?, commissionStatus = ?, ContactNumber = ?, commissionLong = ?, commissionLat
-        = ?,commissionLong = ?, commissionLat =?, commissionPaymentMethod = ? WHERE commissionID = ?`,
+        = ?,commissionDestLong = ?, commissionDestLat =?, commissionPaymentMethod = ? WHERE commissionID = ?`,
       [
         comTitle,
         comStart,

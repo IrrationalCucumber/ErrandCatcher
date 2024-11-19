@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import ErrandInputs from "../../components/ErrandInputs";
 import "./Commission.css"; // Import your CSS file
 import { useAuth } from "../../components/AuthContext";
-import { MapLibre, ViewMapBox } from "../../components/Map/Map";
+import { UpdateMapLibre, ViewMapBox } from "../../components/Map/Map";
 
 const UpdateCommission = () => {
   const [commission, setCommission] = useState({
@@ -16,9 +16,9 @@ const UpdateCommission = () => {
     comTo: "",
     comType: "",
     comDescription: "",
-    comPay: 0,
+    comPay: "",
     comStatus: "",
-    ContactNo: "",
+    Contactno: "",
     comLong: "",
     comLat: "",
     destLng: "",
@@ -77,14 +77,15 @@ const UpdateCommission = () => {
           comLocation: retrievedCommission.commissionLocation,
           comType: retrievedCommission.commissionType,
           comDescription: retrievedCommission.commissionDesc,
-          comPay: retrievedCommission.commissionPay,
+          comPay: `${retrievedCommission.commissionPay}.00`,
           comStatus: retrievedCommission.commissionStatus,
-          ContactNo: retrievedCommission.ContactNumber,
+          Contactno: retrievedCommission.ContactNumber,
           comLong: retrievedCommission.commissionLong,
           comLat: retrievedCommission.commissionLat,
           destLat: retrievedCommission.commissionDestLat,
           destLng: retrievedCommission.commissionDestLong,
           method: retrievedCommission.commissionPaymentMethod,
+          comTo: retrievedCommission.commissionTo,
         });
       } catch (err) {
         console.log(err);
@@ -109,11 +110,6 @@ const UpdateCommission = () => {
         ...prev,
         comPay: total,
       }));
-    } else {
-      setCommission((prev) => ({
-        ...prev,
-        comPay: "",
-      }));
     }
   }, [commission.comType, distance]);
 
@@ -121,9 +117,14 @@ const UpdateCommission = () => {
     e.preventDefault();
     try {
       if (
-        commission.commissionDeadline > Date.now() ||
-        commission.comStart > Date.now()
+        commission.commissionDeadline < Date.now() ||
+        commission.comStart < Date.now()
       ) {
+        alert("Please Update the Dates in your errands");
+      } else if (commission.comPay < minimum) {
+        alert("The salary is lower than the suggested payment!");
+        //setShowAlert(true);
+      } else {
         //account.dateCreated = getCurrentDate();
         commission.comStatus = "Available";
         await axios.put(
@@ -131,19 +132,14 @@ const UpdateCommission = () => {
           commission
         );
         alert("UPdate successful");
-        navigate(`dashboard/commissions/${userID}`);
-      } else if (commission.comPay < minimum) {
-        alert("The salary is lower than the suggested payment!");
-        //setShowAlert(true);
-      } else {
-        alert("Please Update the Dates in your errands");
+        //window.location.reload();
       }
     } catch (err) {
       console.log(err);
     }
   };
 
-  console.log(commission);
+  //console.log(commission);
 
   return (
     <div>
@@ -173,7 +169,7 @@ const UpdateCommission = () => {
               method="method"
               methodValue={commission.method}
               number="Contactno"
-              numValue={commission.ContactNo}
+              numValue={commission.Contactno}
               distance={distance}
               minimum={minimum}
             />
@@ -182,7 +178,7 @@ const UpdateCommission = () => {
             commission.comType !== "Transportation" && (
               <div className="map--wrap">
                 {/* <div ref={mapContainer} className="map-small" /> */}
-                <MapLibre
+                <UpdateMapLibre
                   getCoords={(lat, long) => {
                     setCommission((prev) => ({
                       ...prev,
@@ -190,6 +186,7 @@ const UpdateCommission = () => {
                       comLong: long,
                     }));
                   }}
+                  id={commissionID}
                 />
               </div>
             )}
