@@ -124,7 +124,7 @@ const ErrandPage = () => {
     e.preventDefault();
     try {
       //alert("You have updated your Errand");
-      navigate(`/errand/update-commission/${commissionID}`);
+      navigate(`/errand/update/${commissionID}`);
     } catch (err) {
       console.log(err);
     }

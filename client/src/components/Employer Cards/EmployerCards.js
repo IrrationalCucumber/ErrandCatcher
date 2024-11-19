@@ -60,7 +60,7 @@ const EmployerCard = ({ employer }) => {
                 {/* <div class="col"> */}
 
                 <Link
-                  to={`/dashboard/commissions`}
+                  to={`/dashboard/errands`}
                   className="count-section posts"
                   style={{ color: "black" }}
                 >
@@ -100,7 +100,7 @@ const EmployerCard = ({ employer }) => {
               </div>
               <div class="col d-flex justify-content-center">
                 <Link
-                  to={`/dashboard/commissions/${userID}`}
+                  to={`/dashboard/errands/${userID}`}
                   className="count-section errands"
                   style={{ color: "black" }}
                 >

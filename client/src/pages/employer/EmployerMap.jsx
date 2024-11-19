@@ -77,7 +77,7 @@ function CommissionMap() {
           <h3>${errand.commissionTitle}</h3>
           <h5>${new Date(errand.DatePosted).toLocaleDateString()}</h5>
           <p>${errand.commissionDesc}</p>
-          <a href="/errand/view-errand/${errand.commissionID}">View</a>`
+          <a href="/errand/view/${errand.commissionID}">View</a>`
           )
         )
         .addTo(map.current);

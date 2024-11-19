@@ -288,7 +288,7 @@ function OngoingCards({ commissions, to }) {
                     level="title-sm"
                   >
                     <Link
-                      to={`/errand/view-errand/${commission.commissionID}`}
+                      to={`/errand/view/${commission.commissionID}`}
                       className="Oncard__link"
                     >
                       View Errand

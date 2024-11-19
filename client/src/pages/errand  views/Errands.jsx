@@ -8,9 +8,10 @@ function Errands() {
   const { user } = useAuth();
   return (
     <>
+      {/* {user.userType} */}
       <Navbar />
       <Outlet />
-      <Footer footerUserType={`footer-container__admin`} />
+      <Footer />
     </>
   );
 }

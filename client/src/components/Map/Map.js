@@ -86,7 +86,7 @@ export function LandingMap() {
         .setLngLat([errand.commissionLong, errand.commissionLat])
         .setPopup(
           new maplibregl.Popup().setHTML(
-            `<h3>${errand.commissionTitle}</h3><p>${errand.commissionDesc}</p><a href="/errand/view-errand/${errand.commissionID}">View</a>`
+            `<h3>${errand.commissionTitle}</h3><p>${errand.commissionDesc}</p><a href="/errand/view/${errand.commissionID}">View</a>`
           )
         )
         .addTo(map.current);
@@ -173,7 +173,7 @@ export function HomeMap(props) {
         .setLngLat([errand.commissionLong, errand.commissionLat])
         .setPopup(
           new maplibregl.Popup().setHTML(
-            `<h3>${errand.commissionTitle}</h3><p>${errand.commissionDesc}</p><a href="/errand/view-errand/${errand.commissionID}">View</a>`
+            `<h3>${errand.commissionTitle}</h3><p>${errand.commissionDesc}</p><a href="/errand/view/${errand.commissionID}">View</a>`
           )
         )
         .addTo(map.current);

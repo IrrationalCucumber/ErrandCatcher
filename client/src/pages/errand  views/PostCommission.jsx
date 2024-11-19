@@ -64,7 +64,7 @@ const PostCommission = () => {
   };
   const handleClose = () => {
     setOpen(false);
-    navigate(`/dashboard/commissions`);
+    navigate(`/dashboard/errands`);
   };
   //update the info that will be stored
   const handleChange = (e) => {
@@ -250,7 +250,7 @@ const PostCommission = () => {
         startDecorator={<PostAddIcon />}
         endDecorator={
           <Button
-            onClick={() => navigate(`/dashboard/commissions`)}
+            onClick={() => navigate(`/dashboard/errands`)}
             size="sm"
             variant="soft"
             color="success"

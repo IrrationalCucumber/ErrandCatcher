@@ -14,50 +14,50 @@ import "./cardsNew.css";
 import CardItemNew from "./CardsItemNew";
 
 function CatCardsNew({ commissions }) {
-    const [commissionslist, setCommissionslist] = useState([]);
-    const location = useLocation();
-    //pathname to array from
-    //get the id
-    const userID = location.pathname.split("/")[2];
-    const type = location.pathname.split("/")[3];
-    //rretrieve data
-    useEffect(() => {
-        const fetchAllCommission = async () => {
-            try {
-                const res = await axios.get(`http://localhost:8800/type/${type}`);
-                //"http://localhost:8800/commission" - local computer
-                //"http://192.168.1.47:8800/commission" - netwrok
-                setCommissionslist(res.data);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-        fetchAllCommission();
-    }, [type]);
-    return (
-        <div className="cards">
-            {/* <h1>Check out this epic Destination!</h1> */}
-            <div className="cards__container">
-                <div className="cards__wrapper">
-                    <div className="cards__items">
-                        {commissions.map((commission) => (
-                            <CardItemNew
-                                key={commission.commissionID}
-                                icon={commission.commissionType}
-                                title={commission.commissionTitle}
-                                type={commission.commissionType}
-                                location={commission.commissionLocation}
-                                desc={commission.commissionDesc}
-                                price={commission.commissionPay}
-                                path={`/errand/view-errand/${commission.commissionID}`}
-                            //`/view-errand/${userID}/${commission.commissionID}`
-                            />
-                        ))}
-                    </div>
-                </div>
-            </div>
+  const [commissionslist, setCommissionslist] = useState([]);
+  const location = useLocation();
+  //pathname to array from
+  //get the id
+  const userID = location.pathname.split("/")[2];
+  const type = location.pathname.split("/")[3];
+  //rretrieve data
+  useEffect(() => {
+    const fetchAllCommission = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/type/${type}`);
+        //"http://localhost:8800/commission" - local computer
+        //"http://192.168.1.47:8800/commission" - netwrok
+        setCommissionslist(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAllCommission();
+  }, [type]);
+  return (
+    <div className="cards">
+      {/* <h1>Check out this epic Destination!</h1> */}
+      <div className="cards__container">
+        <div className="cards__wrapper">
+          <div className="cards__items">
+            {commissions.map((commission) => (
+              <CardItemNew
+                key={commission.commissionID}
+                icon={commission.commissionType}
+                title={commission.commissionTitle}
+                type={commission.commissionType}
+                location={commission.commissionLocation}
+                desc={commission.commissionDesc}
+                price={commission.commissionPay}
+                path={`/errand/view/${commission.commissionID}`}
+                //`/view-errand/${userID}/${commission.commissionID}`
+              />
+            ))}
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
 
 export default CatCardsNew;
