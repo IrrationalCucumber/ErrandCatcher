@@ -7,6 +7,7 @@ import { useAuth } from "../components/AuthContext";
 import Search from "@mui/icons-material/Search";
 import LocationOn from "@mui/icons-material/LocationOn";
 import CatCardsNew from "../components/Cards/CatCardsNew";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 function SearchPage() {
   const [commissions, setCommissions] = useState([]);
@@ -134,7 +135,7 @@ function SearchPage() {
               </select>
             </div>
             <div className="col">
-              <LocationOn
+              <LocationOnIcon
                 sx={{
                   position: "absolute",
                   color: "grey",
@@ -142,6 +143,7 @@ function SearchPage() {
                 }}
               />
               <select
+                style={{ paddingLeft: "32px" }}
                 name="location"
                 id="location"
                 className="selected"
@@ -182,7 +184,37 @@ function SearchPage() {
       </div>
 
       {/* <Cards commissions={filteredCommissions} /> */}
-      <CatCardsNew commissions={filteredCommissions} />
+      {/* <CatCardsNew commissions={filteredCommissions} /> */}
+
+      {filteredCommissions && filteredCommissions.length > 0 ? (
+        <>
+          <CatCardsNew commissions={filteredCommissions} />
+        </>
+      ) : (
+        <>
+          <div
+            style={{
+              height: "50vh",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignContent: "center",
+            }}
+          >
+            <h1 style={{ fontWeight: "600" }}>
+              Opps!
+            </h1>
+            <h2 style={{ textAlign: "center" }} >
+              No errand found named
+              <span style={{
+                fontStyle: "italic",
+                fontWeight: "600",
+                // color: "#378ce7",
+              }}> "{term}"</span> as of now..
+            </h2>
+          </div>
+        </>
+      )}
     </>
   );
 }
