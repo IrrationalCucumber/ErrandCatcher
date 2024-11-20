@@ -41,6 +41,20 @@
   height: 100%;
 }
 
+.map__filter__type {
+  /* border: 0.1px solid #636b74; */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  background-color: #f0f4f8;
+  border: none;
+  font-size: 1.20rem;
+  font-weight: 600;
+  /* font-style: italic; */
+  cursor: pointer;
+  color: #0b6bcb;
+  letter-spacing: -0.025em;
+  line-height: 45.0002px;
+}
+
 .map-landing {
   position: absolute;
   width: 100%;
