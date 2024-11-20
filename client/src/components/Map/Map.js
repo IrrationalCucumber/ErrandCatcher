@@ -14,7 +14,7 @@ export default function Map(props) {
   return (
     <>
       <div className="map-wrap">
-        <div div className="map__filter">
+        <div className="map__filter">
           <Filter onFilterChange={props.change} />
         </div>
 
@@ -100,7 +100,7 @@ export function LandingMap() {
   return (
     <>
       <div className="map-wrap">
-        <div>
+        <div className="map__filter__display">
           <Filter onFilterChange={handleChange} />
         </div>
         <div ref={mapContainer} className="map-landing" />
@@ -187,7 +187,7 @@ export function HomeMap(props) {
   return (
     <>
       <div className="map-wrap">
-        <div>
+        <div className="map__filter__display">
           <Filter onFilterChange={handleChange} />
         </div>
         <div ref={mapContainer} className="map-landing" />
