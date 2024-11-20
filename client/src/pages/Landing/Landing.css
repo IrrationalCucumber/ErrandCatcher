@@ -161,8 +161,10 @@
  MAP
  */
 .landing__map {
-  margin: 50px;
-  border: 2px solid;
+  margin: 80px;
+  /* border: 2px solid; */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
 }
 
 .Services {
