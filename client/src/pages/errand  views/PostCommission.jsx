@@ -158,13 +158,14 @@ const PostCommission = () => {
       } else if (
         (commission.comType === "Delivery" ||
           commission.comType === "Transportation") &&
-        (!commission.comDestLat || !commission.comDestLong)
+        (!commission.comDestLat ||
+          !commission.comDestLong ||
+          !commission.comDeadline ||
+          !commission.comTo)
       ) {
-        if (!commission.comDeadline || !commission.comTo) {
-          setAlerMsg("Some fields are missing!");
-          setShowAlert(true);
-          handleScrollToTop();
-        }
+        setAlerMsg("Some fields are missing!");
+        setShowAlert(true);
+        handleScrollToTop();
       } else {
         await axios.post("http://localhost:8800/commission", updatedCommission);
         await axios.post("http://localhost:8800/notify-catcher");
