@@ -26,6 +26,9 @@ import { DisplayDate } from "../../components/DisplayDate";
 import { BannerEmployerPages } from "../../components/Banner/HeroSection";
 import ViewProfile from "../profile/ViewProfile";
 import ModalFeedback from "../../components/ModalFeedback";
+import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import { Box, Typography } from "@mui/material";
 
 const EmployerApplicants = () => {
   const navigate = useNavigate();
@@ -105,10 +108,25 @@ const EmployerApplicants = () => {
   ];
   const applicantData = applicants.map((applicant) => [
     //applicant.applicationID,
-    DisplayDate(applicant.applicationDate),
+    // DisplayDate(applicant.applicationDate),
+    <Box display="flex" alignItems="center" gap={1}>
+      < CalendarMonthOutlinedIcon
+        sx={{ color: "#555" }}
+      />
+      {DisplayDate(applicant.applicationDate)}
+    </Box>,
     `${applicant.userFirstname} ${applicant.userLastname}`,
     applicant.applicationQualification,
-    applicant.commissionTitle,
+    // applicant.commissionTitle,
+    <Box display="flex" alignItems="center" gap={1}>
+      <BadgeOutlinedIcon sx={{ color: "#555" }} />
+      <Typography sx={{
+        color: "#565360",
+        fontSize: "12",
+      }}>
+        {applicant.commissionTitle}
+      </Typography>
+    </Box>,
     applicant.applicationStatus === "Pending" ? (
       <>
         <button
@@ -318,7 +336,7 @@ const EmployerApplicants = () => {
         contentMes="You have accepted a Cather!"
         color="success"
         colorText="green"
-        // icon={ErrorIcon}
+      // icon={ErrorIcon}
       />
 
       <BannerEmployerPages
