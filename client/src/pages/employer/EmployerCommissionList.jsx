@@ -22,6 +22,18 @@ import { useAuth } from "../../components/AuthContext.js";
 import { DisplayDate } from "../../components/DisplayDate.js";
 import { BannerEmployerPages } from "../../components/Banner/HeroSection.js";
 
+import OtherHousesIcon from "@mui/icons-material/OtherHouses";
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import CameraOutdoorIcon from "@mui/icons-material/CameraOutdoor";
+
+import PendingIcon from "@mui/icons-material/Pending";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
+import TimerOffIcon from "@mui/icons-material/TimerOff";
+import HandshakeIcon from "@mui/icons-material/Handshake";
+import EventAvailableIcon from "@mui/icons-material/EventAvailable";
+
 const CommissionList = () => {
   const [commissions, setCommissions] = useState([]);
   //filter
@@ -168,11 +180,62 @@ const CommissionList = () => {
                 data={currentItems.map((commissionItem) => [
                   commissionItem.commissionID,
                   commissionItem.commissionTitle,
-                  commissionItem.commissionType,
+                  // commissionItem.commissionType,
+                  commissionItem.commissionType === "HomeService - Indoor" ? (
+                    <>
+                      <OtherHousesIcon style={{ color: "purple" }} />
+                      <span> Home Service Indoor</span>
+                    </>
+                  ) : commissionItem.commissionType === "HomeService - Outdoor" ? (
+                    <>
+                      <CameraOutdoorIcon style={{ color: "brown" }} />
+                      <span> Home Service Outdoor</span>
+                    </>
+                  ) : commissionItem.commissionType === "Delivery" ? (
+                    <>
+                      <DirectionsCarIcon style={{ color: "darkblue" }} />
+                      <span> Delivery</span>
+                    </>
+                  ) : commissionItem.commissionType === "Transportation" ? (
+                    <>
+                      <LocalShippingIcon style={{ color: "orange" }} />
+                      <span> Transportation</span>
+                    </>
+                  ) : null,
                   DisplayDate(commissionItem.DatePosted),
                   DisplayDate(commissionItem.commissionDeadline),
-                  commissionItem.commissionStatus,
-
+                  // commissionItem.commissionStatus,
+                  commissionItem.commissionStatus === "Pending" ? (
+                    <>
+                      <PendingIcon style={{ color: "purple" }} />
+                      <span> Pending</span>
+                    </>
+                  ) : commissionItem.commissionStatus === "Completed" ? (
+                    <>
+                      <CheckCircleIcon style={{ color: "green" }} />
+                      <span> Completed</span>
+                    </>
+                  ) : commissionItem.commissionStatus === "Canceled" ? (
+                    <>
+                      <CancelIcon style={{ color: "orange" }} />
+                      <span> Canceled</span>
+                    </>
+                  ) : commissionItem.commissionStatus === "Expired" ? (
+                    <>
+                      <TimerOffIcon style={{ color: "orange" }} />
+                      <span> Expired</span>
+                    </>
+                  ) : commissionItem.commissionStatus === "Caught" ? (
+                    <>
+                      <HandshakeIcon style={{ color: "green" }} />
+                      <span> Caught</span>
+                    </>
+                  ) : commissionItem.commissionStatus === "Available" ? (
+                    <>
+                      <EventAvailableIcon style={{ color: "darkgreen" }} />
+                      <span> Available</span>
+                    </>
+                  ) : null,
                   <React.Fragment>
                     <ButtonGroup aria-label="spacing button group">
                       <Button
