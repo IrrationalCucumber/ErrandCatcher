@@ -14,7 +14,7 @@
 
   input{
     width: 250px;
-    padding: 10px;
+    /* !--Removed padding: 10px; -- */
     border: 1px solid gray;
   }
 
