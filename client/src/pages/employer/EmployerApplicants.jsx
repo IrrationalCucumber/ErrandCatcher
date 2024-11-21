@@ -271,9 +271,14 @@ const EmployerApplicants = () => {
       notif.notifDate = getTimeAndDate();
       await axios.post("http://localhost:8800/notify", notif);
       //DENY other applicants
-      await axios.put(
+      const denyResponse = await axios.put(
         `http://localhost:8800/deny-other-apply/${applicationErrandID}/${catcherID}`
       );
+      if (denyResponse.data.message === "No other applications to deny") {
+        console.log("No other applications were found to deny.");
+      } else {
+        console.log("Other applications denied successfully.");
+      }
       //set the errand status to caught
       await axios.put(
         `http://localhost:8800/errand-taken/${applicationErrandID}`
