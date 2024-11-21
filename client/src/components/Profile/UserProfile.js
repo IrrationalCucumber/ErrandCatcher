@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./profile.css";
 import StarRating from "../Display/StarRating";
+import ViewFeedback from "./ViewFeedback";
+import Docu from "./Docu";
 import { Link } from "react-router-dom";
 import { Button, Input, Sheet, Typography } from "@mui/joy";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
@@ -16,6 +18,10 @@ function UserProfile(props) {
   const [preview, setPreview] = useState(null);
   const [image, setImage] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
+
+  const [buttonPopup1, setButtonPopup1] = useState(false);
+  const [buttonPopup2, setButtonPopup2] = useState(false);
+
 
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -167,6 +173,7 @@ function UserProfile(props) {
             name="desc"
             value={props.desc}
           ></textarea>
+
           {props.type === "Catcher" && (
             <div className="rating">
               Overall Rating:
@@ -178,6 +185,16 @@ function UserProfile(props) {
               </span>
             </div>
           )}
+          <div className="buttons">
+            {(props.type === "Catcher" && 
+              <button onClick={() => setButtonPopup1(true)} >Reviews</button>
+            )}
+            <button onClick={() => setButtonPopup2(true)} >Documents</button>
+          </div>
+          <ViewFeedback trigger={buttonPopup1} setTrigger={setButtonPopup1}>
+            <h1>Feedback</h1>
+          </ViewFeedback>
+          <Docu trigger={buttonPopup2} setTrigger={setButtonPopup2}>
           {
             //display sumbitted IDs of user
             props.verFront || props.verBack ? (
@@ -210,6 +227,8 @@ function UserProfile(props) {
               </>
             ) : null
           }
+          </Docu>
+          
         </div>
 
         {/* Right Profile Section */}
