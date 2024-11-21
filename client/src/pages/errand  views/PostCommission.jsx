@@ -156,15 +156,11 @@ const PostCommission = () => {
         setShowAlert(true);
         handleScrollToTop();
       } else if (
-        commission.comType === "Delivery" ||
-        commission.comType === "Transportation"
+        (commission.comType === "Delivery" ||
+          commission.comType === "Transportation") &&
+        (!commission.comDestLat || !commission.comDestLong)
       ) {
-        handleScrollToTop();
-        if (!commission.comDestLat && !commission.comDestLong) {
-          setAlerMsg("Looks like you havent set the location in the Map");
-          setShowAlert(true);
-          handleScrollToTop();
-        } else if (!commission.comDeadline || !commission.comTo) {
+        if (!commission.comDeadline || !commission.comTo) {
           setAlerMsg("Some fields are missing!");
           setShowAlert(true);
           handleScrollToTop();
