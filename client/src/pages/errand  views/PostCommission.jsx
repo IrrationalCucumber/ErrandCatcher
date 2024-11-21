@@ -146,6 +146,7 @@ const PostCommission = () => {
         !commission.comType ||
         !commission.comPay ||
         !commission.Contactno ||
+        !commission.comDeadline ||
         !commission.comDescription
       ) {
         setAlerMsg("Some fields are missing!");
@@ -158,10 +159,7 @@ const PostCommission = () => {
       } else if (
         (commission.comType === "Delivery" ||
           commission.comType === "Transportation") &&
-        (!commission.comDestLat ||
-          !commission.comDestLong ||
-          !commission.comDeadline ||
-          !commission.comTo)
+        (!commission.comDestLat || !commission.comDestLong || !commission.comTo)
       ) {
         setAlerMsg("Some fields are missing!");
         setShowAlert(true);
