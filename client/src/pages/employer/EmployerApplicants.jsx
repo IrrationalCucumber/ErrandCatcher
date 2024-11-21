@@ -110,7 +110,7 @@ const EmployerApplicants = () => {
     //applicant.applicationID,
     // DisplayDate(applicant.applicationDate),
     <Box display="flex" alignItems="center" gap={1}>
-      < CalendarMonthOutlinedIcon
+      <CalendarMonthOutlinedIcon
         sx={{ color: "#555" }}
       />
       {DisplayDate(applicant.applicationDate)}

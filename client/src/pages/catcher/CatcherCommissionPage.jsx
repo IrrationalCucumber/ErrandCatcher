@@ -21,7 +21,7 @@ import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 import OngoingCardsNew from "../Dropdown/OngoingCardsNew";
 
 import DateRangeOutlinedIcon from "@mui/icons-material/DateRangeOutlined";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import AssignmentTurnedInOutlinedIcon from "@mui/icons-material/AssignmentTurnedInOutlined";
 import CancelIcon from "@mui/icons-material/Cancel";
 import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
 import { Box } from "@mui/material";
@@ -246,7 +246,7 @@ function CommissionPage() {
               // commission.errandStatus,
               commission.errandStatus === "Completed" ? (
                 <>
-                  <CheckCircleIcon style={{ color: "green" }} />
+                  <AssignmentTurnedInOutlinedIcon style={{ color: "green" }} />
                   <span> Completed</span>
                 </>
               ) : commission.errandStatus === "Canceled" ? (
