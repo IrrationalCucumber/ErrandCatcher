@@ -183,7 +183,16 @@ function ApplicationQualificationModal(props) {
               Qualification Check
             </Typography>
 
-            <Box>
+            <Box
+              sx={{
+                width: {
+                  xs: "90%", // For small screens (phones)
+                  sm: "70%", // For medium screens (tablets)
+                  md: "40%", // For larger screens (desktops)
+                },
+                margin: "0 auto", 
+              }}
+            >
               {(props.type === "Transportation" ||
                 props.type === "Delivery") && (
                 <>
