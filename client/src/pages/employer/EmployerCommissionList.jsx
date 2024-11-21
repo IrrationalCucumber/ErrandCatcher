@@ -136,9 +136,6 @@ const CommissionList = () => {
                   name="term"
                   onChange={handleChange}
                 />
-                <button type="submit">
-                  <i className="fa fa-search"></i>
-                </button>
               </div>
               <div className="filter">
                 <select
@@ -247,7 +244,7 @@ const CommissionList = () => {
         className="add-errand"
         onClick={(e) => navigate(`/errand/post-errand`)}
       >
-        <i className="fa-solid fa-plus"></i> Add Errand
+        Add Errand
       </button>
     </div>
   );

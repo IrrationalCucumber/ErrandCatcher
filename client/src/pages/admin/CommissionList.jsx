@@ -18,6 +18,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import TimerOffIcon from "@mui/icons-material/TimerOff";
 import HandshakeIcon from "@mui/icons-material/Handshake";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
+import { PanoramaFishEye, RemoveRedEyeSharp } from "@mui/icons-material";
 
 const CommissionList = () => {
   const [commissions, setCommissions] = useState([]);
@@ -141,23 +142,6 @@ const CommissionList = () => {
             //   margin: "10px 0px 10px 0px",
             // }}
           />
-          {/* <button
-            type="submit"
-            //onClick={fetchSearchResults}
-            style={{
-              padding: "8px",
-              fontSize: "12px",
-              cursor: "pointer",
-              border: "none",
-              backgroundColor: "#CE9251",
-              color: "white",
-              borderRadius: "4px",
-              marginBottom: "10px",
-              marginRight: "10px",
-            }}
-          >
-            <i className="fa fa-search"></i>
-          </button> */}
 
           <div
             className="filter__admin__accountList"
@@ -282,11 +266,11 @@ const CommissionList = () => {
             ) : null,
             <>
               {/* <button onClick={() => handleDelete(Commission.commissionID)}>
-              <i class="fa-solid fa-trash"></i>
+             
               </button> */}
               <button className="update">
                 <Link to={`/errand/view/${Commission.commissionID}`}>
-                  <i class="fa-solid fa-eye"></i>
+                  <RemoveRedEyeSharp />
                 </Link>
               </button>
             </>,

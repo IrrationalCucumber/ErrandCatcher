@@ -14,7 +14,7 @@ function NotificationItem(props) {
             <p className="notification-date">{props.date}</p>
             <div className="notification-button">
               <button onClick={props.markAsRead} className="read-button">
-                <i className="fa-solid fa-check"></i>
+                READ
               </button>
             </div>
           </div>
@@ -26,12 +26,6 @@ function NotificationItem(props) {
           <div className="notification-item-info">
             <p className="notification-desc">{props.desc}</p>
             <p className="notification-date">{props.date}</p>
-
-            {/* <div className="notification-button">
-              <button onClick={props.markAsRead} className="button">
-                <i className="fa-solid fa-check"></i>
-              </button>
-            </div> */}
           </div>
         </div>
       )}

@@ -20,7 +20,7 @@ function Filter({ onFilterChange }) {
         onChange={handleChange}
         value={filter}
       >
-        <option value="">TYPE</option>
+        <option value="">Errand Type</option>
         <option value="HomeService">Home Service</option>
         <option value="Delivery">Delivery</option>
         <option value="Transportation">Transportations</option>

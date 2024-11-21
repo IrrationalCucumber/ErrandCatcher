@@ -31,7 +31,7 @@
 .description {
   width: 100%;
   height: 100px;
-  margin-bottom: 20px;
+  margin: 20px 0;
 }
 
 /* Container for user information form */

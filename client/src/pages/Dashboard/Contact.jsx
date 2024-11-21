@@ -1,5 +1,6 @@
 import React from "react";
 import "./css/style.css";
+import { Mail, Map, Phone, Send } from "@mui/icons-material";
 
 function Contact() {
   return (
@@ -13,16 +14,14 @@ function Contact() {
         <p class="w3-center w3-large">Lets get in touch. Send us a message:</p>
         <div style={{ marginTop: "48px" }}>
           <p>
-            <i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i>
+            <Map />
             Cebu, Philippines
           </p>
           <p>
-            <i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i> Phone:
-            +00 151515
+            <Phone /> Phone: +00 151515
           </p>
           <p>
-            <i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"> </i>{" "}
-            Email: mail@mail.com
+            <Mail /> Email: mail@mail.com
           </p>
           <br />
           <form action="/action_page.php" target="_blank">
@@ -64,7 +63,7 @@ function Contact() {
             </p>
             <p>
               <button class="w3-button w3-black" type="submit">
-                <i class="fa fa-paper-plane"></i> SEND MESSAGE
+                <Send /> SEND MESSAGE
               </button>
             </p>
           </form>

@@ -88,7 +88,7 @@
 
 .profile-right label {
     display: block;
-    margin: 10px 0;
+    margin: 5px 0;
     font-size: 18px;
 }
 
@@ -98,7 +98,7 @@
 .profile-right input[type="date"] {
     width: 100%;
     padding: 12px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 18px;
@@ -178,7 +178,7 @@ select .display-data1 .error {
     font-size: 18px;
     width: 100%;
     padding: 12px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 18px;
@@ -255,7 +255,7 @@ select .display-data1 .error {
     padding: 15px;
     border-radius: 12px;
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     font-size: 20px;
 }
 
@@ -266,7 +266,7 @@ select .display-data1 .error {
     border: rgb(33, 233, 33) 2px solid;
     border-radius: 12px;
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     font-size: 20px;
 }
 
@@ -277,12 +277,12 @@ select .display-data1 .error {
     border: rgb(169, 238, 9) 2px solid;
     border-radius: 12px;
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     font-size: 20px;
 }
 
 .profile-right .buttons button:last-child {
-    margin-left: 25px;
+    margin-left: 30px;
 }
 
 .rating {
@@ -291,7 +291,7 @@ select .display-data1 .error {
 
 .upload-container {
     display: flex;
-    padding: 10px;
+    padding: 5px;
     align-items: center;
     /* Align items vertically */
     justify-content: center;

@@ -168,7 +168,38 @@ const Delivery = () => {
       </div>
 
       {/* <CatCards commissions={filteredCommissions} /> */}
-      <CatCardsNew commissions={filteredCommissions} />
+      {/* <CatCardsNew commissions={filteredCommissions} /> */}
+
+      {filteredCommissions && filteredCommissions.length > 0 ? (
+        <>
+          <CatCardsNew commissions={filteredCommissions} />
+        </>
+      ) : (
+        <>
+          <div
+            style={{
+              height: "50vh",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignContent: "center",
+            }}
+          >
+            <h1 style={{ fontWeight: "600" }}>
+              Opps!
+            </h1>
+            <h2 style={{ textAlign: "center" }} >
+              No errand found
+              <span style={{
+                fontStyle: "italic",
+                fontWeight: "600",
+                // color: "#378ce7",
+              }}> "Delivery"</span> as of now..
+            </h2>
+
+          </div>
+        </>
+      )}
     </>
   );
 };

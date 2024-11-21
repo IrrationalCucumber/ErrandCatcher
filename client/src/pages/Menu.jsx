@@ -7,13 +7,13 @@ import "./Menu.css";
 //import CardItem from '../components/CardItem';
 import { useAuth } from "../components/AuthContext";
 import SearchBar from "../components/Search Bar/SearchBar";
-import OtherHousesIcon from '@mui/icons-material/OtherHouses';
+import OtherHousesIcon from "@mui/icons-material/OtherHouses";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import LoadingBackdrop from "../components/LoadingSpinner";
-import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import ModalFeedback from "../components/ModalFeedback";
-import ErrorIcon from '@mui/icons-material/Error';
+import ErrorIcon from "@mui/icons-material/Error";
 
 const Menu = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -25,10 +25,10 @@ const Menu = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(true);
-  }
+  };
   const handleClose = () => {
     setOpen(false);
-  }
+  };
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
@@ -39,8 +39,7 @@ const Menu = () => {
     if (searchQuery === "") {
       // alert("Please input your fields");
       handleOpen();
-    }
-    else {
+    } else {
       setLoading(true);
       // 3 seconds cd
       setTimeout(() => {
@@ -100,7 +99,9 @@ const Menu = () => {
                   <Link to={`/service/HomeService/${"HomeService"}`}>
                     <button style={{}}>
                       {/* <img src="/images/img6.png" alt="" /> */}
-                      <OtherHousesIcon sx={{ color: '#0073aa', fontSize: 100 }} />
+                      <OtherHousesIcon
+                        sx={{ color: "#0073aa", fontSize: 100 }}
+                      />
                       <div className="content">
                         <p style={{ paddingTop: "20px" }}>Home Service</p>
                       </div>
@@ -113,7 +114,9 @@ const Menu = () => {
                   <Link to={`/service/Transpo/${"Transport"}`}>
                     <button style={{}}>
                       {/* <img src="/images/img4.png" alt="" /> */}
-                      <DirectionsCarIcon sx={{ color: '#0073aa', fontSize: 100 }} />
+                      <DirectionsCarIcon
+                        sx={{ color: "#0073aa", fontSize: 100 }}
+                      />
                       <div className="content">
                         <p style={{ paddingTop: "20px" }}>Transportation</p>
                       </div>
@@ -126,7 +129,9 @@ const Menu = () => {
                   <Link to={`/service/Delivery/${"Delivery"}`}>
                     <button style={{}}>
                       {/* <img src="/images/img5.png" alt="" /> */}
-                      <LocalShippingIcon sx={{ color: '#0073aa', fontSize: 100 }} />
+                      <LocalShippingIcon
+                        sx={{ color: "#0073aa", fontSize: 100 }}
+                      />
                       <div className="content">
                         <p style={{ paddingTop: "20px" }}>Delivery</p>
                       </div>
@@ -139,57 +144,11 @@ const Menu = () => {
         </div>
       </section>
 
-      {/* <section className="Menu1" id="Menu1">
-                <div className="box-container">
-                <div className="box">
-                <img src="/images/img1.png" alt="" />
-                <div className="content">
-                <p>Transportation</p>
-                <h3>
-                <i className="fas fa-map-marker-alt"></i> Cebu City{' '}
-                </h3>
-                                </div>
-                       </div>
-                    <div className="box">
-                        <img src="/images/img2.png" alt="" />
-                        <div className="content">
-                            <p>Delivery</p>
-                            <h3>
-                                <i className="fas fa-map-marker-alt"></i> Lapu-Lapu City{' '}
-                            </h3>
-                        </div>
-                    </div>
-                
-                    <div className="box">
-                        <img src="/images/img3.png" alt="" />
-                        <div className="content">
-                            <p>Home Service</p>
-                            <h3>
-                                <i className="fas fa-map-marker-alt"></i> Mandaue City{' '}
-                            </h3>
-                        </div>
-                        
-                    </div>
-                    <div className="box">
-                        <img src="/images/img1.png" alt="" />
-                        <div className="content">
-                            <p>Transportation</p>
-                            <h3>
-                                <i className="fas fa-map-marker-alt"></i>  Consolacion{' '}
-                            </h3>
-                        </div>
-                        
-                    </div>
-
-                </div>
-            </section> */}
-      {
-        user.userType.toLocaleUpperCase() === "catcher" && (
-          <>
-            <Cards />
-          </>
-        )
-      }
+      {user.userType.toLocaleUpperCase() === "catcher" && (
+        <>
+          <Cards />
+        </>
+      )}
     </>
   );
 };

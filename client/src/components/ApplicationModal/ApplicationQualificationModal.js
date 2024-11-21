@@ -182,7 +182,6 @@ function ApplicationQualificationModal(props) {
             <Typography level="h4" textAlign="center" marginBottom={2}>
               Qualification Check
             </Typography>
-
             <Box
               sx={{
                 width: {
@@ -255,33 +254,33 @@ function ApplicationQualificationModal(props) {
                     </FormControl>
                   )}
                 </>
-              )}
-              {/* General (Indoor/Outdoor) Qualification */}
-              {(props.type === "HomeService - Indoor" ||
-                props.type === "HomeService - Outdoor") && (
-                <>
-                  {/* General Experience */}
-                  <FormControl>
-                    <FormLabel>
-                      <Typography
-                        color="neutral"
-                        level="title-md"
-                        variant="plain"
-                      >
-                        Years of Experience
-                      </Typography>
-                    </FormLabel>
-                    <Input
-                      type="number"
-                      min="0"
-                      value={generalExperience}
-                      onChange={(e) => setGeneralExperience(e.target.value)}
-                      placeholder="Enter number of years"
-                    />
-                  </FormControl>
+              ) : (
+                (props.type === "HomeService - Indoor" ||
+                  props.type === "HomeService - Outdoor") && (
+                  <>
+                    {/* General (Indoor/Outdoor) Qualification */}
+                    {/* General Experience */}
+                    <FormControl>
+                      <FormLabel>
+                        <Typography
+                          color="neutral"
+                          level="title-md"
+                          variant="plain"
+                        >
+                          Years of Experience
+                        </Typography>
+                      </FormLabel>
+                      <Input
+                        type="number"
+                        min="0"
+                        value={generalExperience}
+                        onChange={(e) => setGeneralExperience(e.target.value)}
+                        placeholder="Enter number of years"
+                      />
+                    </FormControl>
 
-                  {/* Skills */}
-                  {/* <FormControl>
+                    {/* Skills */}
+                    {/* <FormControl>
                     <FormLabel>
                       Skills (e.g., Carpentry, Cleaning, etc.)
                     </FormLabel>
@@ -292,119 +291,120 @@ function ApplicationQualificationModal(props) {
                       placeholder="Enter skills"
                     />
                   </FormControl> */}
-                  <FormControl>
-                    <FormLabel>
-                      <Typography
-                        color="neutral"
-                        level="title-md"
-                        variant="plain"
-                      >
-                        Select or Add Skills
-                      </Typography>
-                    </FormLabel>
-
-                    {/* Predefined skills list */}
-                    <FormLabel>
-                      <Typography
-                        color="primary"
-                        level="body-md"
-                        variant="plain"
-                      >
-                        Select your Skill/s
-                      </Typography>
-                    </FormLabel>
-
-                    <div>
-                      {availableSkills.map((skill) => (
-                        <Chip
-                          key={skill}
-                          onClick={() => handleAddSkill(skill)}
-                          color="success"
-                          variant="solid"
-                          size="lg"
-                          startDecorator={<AddIcon />}
-                        >
-                          {skill}
-                        </Chip>
-                      ))}
-                    </div>
-
-                    {/* Custom skill input */}
-
-                    <FormLabel>
-                      <Typography
-                        color="primary"
-                        level="body-md"
-                        variant="plain"
-                      >
-                        Or add new skill
-                      </Typography>
-                    </FormLabel>
-
-                    <Input
-                      type="text"
-                      value={inputSkill}
-                      onChange={(e) => setInputSkill(e.target.value)}
-                      placeholder="Enter a skill"
-                    />
-                    <Box margin={1} textAlign="e">
-                      <Button
-                        onClick={handleAddCustomSkill}
-                        size="md"
-                        variant="outlined"
-                      >
-                        Add Skill
-                      </Button>
-                    </Box>
-
-                    {/* Display selected skills */}
-                    <div>
+                    <FormControl>
                       <FormLabel>
                         <Typography
                           color="neutral"
-                          level="title-lg"
+                          level="title-md"
                           variant="plain"
                         >
-                          Your selected skills:
+                          Select or Add Skills
                         </Typography>
                       </FormLabel>
 
-                      {selectedSkills.length > 0 ? (
-                        selectedSkills.map((skill) => (
+                      {/* Predefined skills list */}
+                      <FormLabel>
+                        <Typography
+                          color="primary"
+                          level="body-md"
+                          variant="plain"
+                        >
+                          Select your Skill/s
+                        </Typography>
+                      </FormLabel>
+
+                      <div>
+                        {availableSkills.map((skill) => (
                           <Chip
                             key={skill}
-                            color="primary"
+                            onClick={() => handleAddSkill(skill)}
+                            color="success"
                             variant="solid"
                             size="lg"
-                            endDecorator={
-                              <ChipDelete
-                                onDelete={() => handleRemoveSkill(skill)}
-                              />
-                            }
+                            startDecorator={<AddIcon />}
                           >
                             {skill}
                           </Chip>
-                        ))
-                      ) : (
+                        ))}
+                      </div>
+
+                      {/* Custom skill input */}
+
+                      <FormLabel>
+                        <Typography
+                          color="primary"
+                          level="body-md"
+                          variant="plain"
+                        >
+                          Or add new skill
+                        </Typography>
+                      </FormLabel>
+
+                      <Input
+                        type="text"
+                        value={inputSkill}
+                        onChange={(e) => setInputSkill(e.target.value)}
+                        placeholder="Enter a skill"
+                      />
+                      <Box margin={1} textAlign="e">
+                        <Button
+                          onClick={handleAddCustomSkill}
+                          size="md"
+                          variant="outlined"
+                        >
+                          Add Skill
+                        </Button>
+                      </Box>
+
+                      {/* Display selected skills */}
+                      <div>
                         <FormLabel>
                           <Typography
-                            color="warning"
-                            level="body-md"
-                            variant="outlined"
+                            color="neutral"
+                            level="title-lg"
+                            variant="plain"
                           >
-                            No skills selected.
+                            Your selected skills:
                           </Typography>
                         </FormLabel>
-                      )}
-                    </div>
 
-                    {/* Comma-separated string of selected skills */}
-                    {/* <div>
+                        {selectedSkills.length > 0 ? (
+                          selectedSkills.map((skill) => (
+                            <Chip
+                              key={skill}
+                              color="primary"
+                              variant="solid"
+                              size="lg"
+                              endDecorator={
+                                <ChipDelete
+                                  onDelete={() => handleRemoveSkill(skill)}
+                                />
+                              }
+                            >
+                              {skill}
+                            </Chip>
+                          ))
+                        ) : (
+                          <FormLabel>
+                            <Typography
+                              color="warning"
+                              level="body-md"
+                              variant="outlined"
+                            >
+                              No skills selected.
+                            </Typography>
+                          </FormLabel>
+                        )}
+                      </div>
+
+                      {/* Comma-separated string of selected skills */}
+                      {/* <div>
                       <h4>Skills as Comma-Separated String:</h4>
                       <p>{selectedSkills.join(",")}</p>
                     </div> */}
-                  </FormControl>
-                </>
+                    </FormControl>
+                  </>
+                )
               )}
 
               {/* Error Message */}

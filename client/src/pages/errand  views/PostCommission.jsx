@@ -324,7 +324,8 @@ const PostCommission = () => {
                 />
               </div>
             )}
-          {commission.comType === "Delivery" && (
+          {(commission.comType === "Delivery" ||
+            commission.comType === "Transportation") && (
             <>
               <PostMapBox
                 accessToken={accessToken}
@@ -343,12 +344,12 @@ const PostCommission = () => {
                   }));
                 }}
                 // Sync input with Mapbox
-                customOrigin={commission.comLocation}
-                customDestination={commission.comTo}
+                // customOrigin={commission.comLocation}
+                // customDestination={commission.comTo}
               />
             </>
           )}
-          {commission.comType === "Transportation" && (
+          {/* {commission.comType === "Transportation" && (
             <>
               <PostMapBox
                 accessToken={accessToken}
@@ -357,7 +358,7 @@ const PostCommission = () => {
                 }}
               />
             </>
-          )}
+          )} */}
         </div>
         {/* <button onClick={handleClick} className="btn btn-yellow" style={{}}>
           POST

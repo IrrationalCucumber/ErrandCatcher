@@ -11,11 +11,11 @@ import {
   Divider,
   Box,
 } from "@mui/joy";
-import { WarningRounded } from "@mui/icons-material";
+import { Close, WarningRounded } from "@mui/icons-material";
 import Snackbar from "@mui/joy/Snackbar";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import CancelIcon from "@mui/icons-material/Cancel";
-import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import LoadingBackdrop from "../../../components/LoadingSpinner";
 
 const RequestModal = ({ request, handleClose }) => {
@@ -82,7 +82,6 @@ const RequestModal = ({ request, handleClose }) => {
         setLoading(false);
 
         setOpenSnack(true);
-
       }, 2000);
 
       // setOpenSnack(true);
@@ -123,7 +122,6 @@ const RequestModal = ({ request, handleClose }) => {
       setTimeout(() => {
         setLoading(false);
         setOpenSnackUn(true);
-
       }, 2000);
 
       // setOpenSnackUn(true);
@@ -167,7 +165,7 @@ const RequestModal = ({ request, handleClose }) => {
     <div className="modal" style={modalStyle}>
       <div className="modal-content" style={modalContentStyle}>
         <span className="close" onClick={handleClose} style={closeStyle}>
-          <i className="far fa-circle-xmark"></i>
+          <Close />
         </span>
         <h2 style={headingStyle}>Verification Request Details</h2>
         <p>
