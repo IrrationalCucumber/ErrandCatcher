@@ -14,7 +14,7 @@ export default function Map(props) {
   return (
     <>
       <div className="map-wrap">
-        <div div className="map__filter">
+        <div className="map__filter">
           <Filter onFilterChange={props.change} />
         </div>
 
@@ -27,9 +27,10 @@ export default function Map(props) {
 export function LandingMap() {
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [lng] = useState(123.8854);
-  const [lat] = useState(10.3157);
-  const [zoom] = useState(14);
+  const [lng] = useState(123.9260);
+  const [lat] = useState(10.2892);
+  const [zoom] = useState(11.60);
+  // center: [123.8854, 10.3157],
   const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
   const [errands, setErrands] = useState([]);
 
@@ -100,7 +101,7 @@ export function LandingMap() {
   return (
     <>
       <div className="map-wrap">
-        <div>
+        <div className="map__filter__display">
           <Filter onFilterChange={handleChange} />
         </div>
         <div ref={mapContainer} className="map-landing" />
@@ -112,9 +113,9 @@ export function LandingMap() {
 export function HomeMap(props) {
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [lng] = useState(123.8854);
-  const [lat] = useState(10.3157);
-  const [zoom] = useState(15);
+  const [lng] = useState(123.9260);
+  const [lat] = useState(10.2892);
+  const [zoom] = useState(11.60);
   const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
   const [errands, setErrands] = useState([]);
 
@@ -187,7 +188,7 @@ export function HomeMap(props) {
   return (
     <>
       <div className="map-wrap">
-        <div>
+        <div className="map__filter__display">
           <Filter onFilterChange={handleChange} />
         </div>
         <div ref={mapContainer} className="map-landing" />
