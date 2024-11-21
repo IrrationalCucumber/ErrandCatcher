@@ -104,12 +104,11 @@
 
 .filter {
   margin-left: 20px;
-  /* margin-bottom: 30px; */
+  margin-bottom: 30px;
   width: 120px;
 }
 
 .filter select {
-  /* border: solid; */
   min-height: 36px;
 }
 
