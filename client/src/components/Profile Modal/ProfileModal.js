@@ -1,5 +1,6 @@
 import React from "react";
 import "./profileModal.css"; // You can define custom styles for your profile modal if needed
+import { Close } from "@mui/icons-material";
 
 const ProfileModal = ({
   applicant,
@@ -18,11 +19,7 @@ const ProfileModal = ({
     <div className="profile-modal-container">
       <div className="profile-modal">
         <div className="profile-modal-header">
-          <i
-            className="fa fa-times-circle-o close-icon"
-            aria-hidden="true"
-            onClick={closeModal}
-          ></i>
+          <Close onClick={closeModal} />
         </div>
         <div className="profile-modal-content">
           <h2>{username}</h2>

@@ -9,6 +9,7 @@ import NavDropdown from "./NavDropdown";
 import axios from "axios";
 import { Button } from "./NavButton";
 import Notification from "../NotificationNavbar/Notification";
+import { Close, MenuBook, More } from "@mui/icons-material";
 
 function Navbar(props) {
   const { user } = useAuth();
@@ -89,7 +90,7 @@ function Navbar(props) {
             </Link>
           </Link>
           <div className="menu-icon" onClick={handleClick}>
-            <i className={click ? "fas fa-times" : "fas fa-bars"}></i>
+            {click ? <Close /> : <More />}
           </div>
           <ul className={click ? "nav-menu active" : "nav-menu"}>
             <li className="nav-item">
@@ -178,9 +179,7 @@ function Navbar(props) {
                     PROFILE
                   </Link>
                   <div className="sign-out-container">
-                    <button className="sign-out-button">
-                      <i className="fa-solid fa-arrow-right-from-bracket"></i>
-                    </button>
+                    <button className="sign-out-button">SIgn Out</button>
                   </div>
                 </div>
               )}
@@ -253,7 +252,7 @@ export function NoUserNabar() {
             </Link>
           </Link>
           <div className="menu-icon" onClick={handleClick}>
-            <i className={click ? "fas fa-times" : "fas fa-bars"}></i>
+            {click ? <Close /> : <More />}
           </div>
           <ul className={click ? "nav-menu active" : "nav-menu"}>
             <li className="nav-item"></li>

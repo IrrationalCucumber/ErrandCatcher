@@ -19,7 +19,7 @@ const NotificationIcon = ({
       }}
     >
       {/* <FontAwesomeIcon icon={faBell} color={'white'} size="1x" /> */}
-      <i className="fa-regular fa-bell" style={{color:"white"}}></i>
+      <NotificationIcon />
       {notificationCount > 0 && (
         <div
           style={{

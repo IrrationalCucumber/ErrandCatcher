@@ -1,3 +1,4 @@
+import { LocationOn } from "@mui/icons-material";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -25,10 +26,7 @@ function CardItem(props) {
               className="cards__item__location"
               style={{ color: "black", fontSize: "12", paddingBottom: "10px" }}
             >
-              <i
-                className="fas fa-map-marker-alt"
-                style={{ marginRight: "5px" }}
-              ></i>
+              <LocationOn />
               {props.location}
             </p>
           </div>
