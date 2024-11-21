@@ -328,9 +328,6 @@ const EmployerApplicants = () => {
         <div className="applicants">
           <div className="search">
             <input type="text" placeholder="Search..." />
-            <button type="submit" style={{ backgroundColor: "#1679AB" }}>
-              <i className="fa fa-search" place></i>
-            </button>
           </div>
           <div className="applicants-table">
             <Table headers={headers} data={applicantData} />

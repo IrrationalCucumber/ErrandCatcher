@@ -8,6 +8,7 @@ import "./passignup.css";
 import ModalFeedback from "../../components/ModalFeedback";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import LoadingBackdrop from "../../components/LoadingSpinner";
+import { ArrowBack } from "@mui/icons-material";
 
 const Signup = () => {
   const [account, setAccount] = useState({
@@ -225,14 +226,14 @@ const Signup = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(true);
-  }
+  };
   const handleClose = () => {
     setOpen(false);
     navigate("/sign-in");
-  }
+  };
 
   //save the data into db
-  // do logic here 
+  // do logic here
   const handleClick = async (e) => {
     e.preventDefault();
     const isValid = validateForm();
@@ -254,7 +255,6 @@ const Signup = () => {
           // modal will pop-up in 2 seconds
           handleOpen();
         }, 2000);
-
       } catch (err) {
         console.log(err);
       }
@@ -271,7 +271,7 @@ const Signup = () => {
         contentMes="You have successfully created an account. 🎉"
         color="success"
         colorText="green"
-      // icon={ErrorIcon}
+        // icon={ErrorIcon}
       />
 
       <LoadingBackdrop
@@ -339,9 +339,10 @@ const Signup = () => {
                     }}
                   >
                     {selectedOption
-                      ? `Join as ${selectedOption.charAt(0).toUpperCase() +
-                      selectedOption.slice(1)
-                      }`
+                      ? `Join as ${
+                          selectedOption.charAt(0).toUpperCase() +
+                          selectedOption.slice(1)
+                        }`
                       : "Create Account"}
                   </button>
                 </div>
@@ -537,14 +538,15 @@ const Signup = () => {
                       {account.regPassword && (
                         <>
                           <div
-                            className={`password-strength ${strength === "Weak"
-                              ? "strength-weak"
-                              : strength === "Medium"
+                            className={`password-strength ${
+                              strength === "Weak"
+                                ? "strength-weak"
+                                : strength === "Medium"
                                 ? "strength-medium"
                                 : strength === "Strong"
-                                  ? "strength-strong"
-                                  : ""
-                              }`}
+                                ? "strength-strong"
+                                : ""
+                            }`}
                           >
                             Password strength: {strength}
                           </div>
@@ -633,7 +635,7 @@ const Signup = () => {
                       onClick={handleReset}
                       style={{ cursor: "pointer", fontSize: "20px" }}
                     >
-                      <i class="fa-solid fa-arrow-left" />
+                      <ArrowBack />
                     </span>
                   </div>
                 </form>

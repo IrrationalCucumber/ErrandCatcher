@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "./NavButton";
 import "./Navbar.css";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Close, More } from "@mui/icons-material";
 
 function Navbar() {
   //change the state of the menu
@@ -72,7 +73,7 @@ function Navbar() {
             </Link>
           </Link>
           <div className="menu-icon" onClick={handleClick}>
-            <i className={click ? "fas fa-times" : "fas fa-bars"}></i>
+            {click ? <Close /> : <More />}
           </div>
           <ul className={click ? "nav-menu active" : "nav-menu"}>
             <li className="nav-item"></li>

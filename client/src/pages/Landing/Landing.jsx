@@ -7,6 +7,7 @@ import "./Landing.css";
 import { LandingMap } from "../../components/Map/Map";
 import { LandingServiceDetails } from "../../components/Dashbaord/Landing";
 import TopCatcher from "../../components/Carousel/TopCatcher";
+import { House, LocationOn, RemoveRedEyeRounded } from "@mui/icons-material";
 
 const Landing = () => {
   return (
@@ -34,12 +35,12 @@ const Landing = () => {
           <div className="btnn_con">
             <div className="ld_btn">
               <Link to="/sign-up">
-                <i className="fa-solid fa-house"></i> GET STARTED
+                <House /> GET STARTED
               </Link>
             </div>
             <div className="btns">
               <Link to="/sign-in">
-                <i className="fa fa-eye"></i> SIGN BACK IN
+                <RemoveRedEyeRounded /> SIGN BACK IN
               </Link>
             </div>
           </div>
@@ -62,10 +63,7 @@ const Landing = () => {
               <p style={{ textAlign: "center" }}>Transportation</p>
               <h3>
                 {" "}
-                <i
-                  className="fas fa-map-marker-alt"
-                  style={{ textAlign: "center" }}
-                ></i>{" "}
+                <LocationOn />
                 Mandaue City{" "}
               </h3>
               <div className="btn">
@@ -85,10 +83,7 @@ const Landing = () => {
               <p style={{ textAlign: "center" }}>Delivery</p>
               <h3>
                 {" "}
-                <i
-                  className="fas fa-map-marker-alt"
-                  style={{ textAlign: "center" }}
-                ></i>{" "}
+                <LocationOn />
                 Lapu-Lapu City{" "}
               </h3>
 
@@ -109,7 +104,7 @@ const Landing = () => {
               <p style={{ textAlign: "center" }}>Home Service</p>
               <h3>
                 {" "}
-                <i className="fas fa-map-marker-alt" style={{}}></i> Cebu City{" "}
+                <LocationOn /> Cebu City{" "}
               </h3>
               <div className="btn">
                 <a
@@ -128,7 +123,8 @@ const Landing = () => {
               <p style={{ textAlign: "center" }}>Transportation</p>
               <h3>
                 {" "}
-                <i className="fas fa-map-marker-alt" style={{}}></i> Cebu City{" "}
+                <LocationOn />
+                Cebu City{" "}
               </h3>
 
               <div className="btn">
@@ -148,10 +144,7 @@ const Landing = () => {
               <p style={{ textAlign: "center" }}>Delivery</p>
               <h3>
                 {" "}
-                <i
-                  className="fas fa-map-marker-alt"
-                  style={{}}
-                ></i> Cordova{" "}
+                <LocationOn /> Cordova{" "}
               </h3>
 
               <div className="btn">
@@ -171,7 +164,7 @@ const Landing = () => {
               <p style={{ textAlign: "center" }}>Home Service</p>
               <h3>
                 {" "}
-                <i className="fas fa-map-marker-alt" style={{}}></i> Cebu City{" "}
+                <LocationOn /> Cebu City{" "}
               </h3>
               <div className="btn">
                 <a
@@ -190,7 +183,7 @@ const Landing = () => {
               <p style={{ textAlign: "center" }}>Transportation</p>
               <h3>
                 {" "}
-                <i className="fas fa-map-marker-alt" style={{}}></i> Cebu City{" "}
+                <LocationOn /> Cebu City{" "}
               </h3>
 
               <div className="btn">

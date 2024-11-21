@@ -119,7 +119,7 @@ function Ongoing() {
               marginRight: "10px",
             }}
           >
-            <i className="fa fa-search"></i>
+            
           </button> */}
 
         <div

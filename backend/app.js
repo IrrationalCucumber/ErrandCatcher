@@ -235,7 +235,6 @@ app.get("/success-payment/:id", (req, res) => {
         // return res.send("Payment successful and details saved.");
         // path: "/paymentsuccess",
         return res.redirect("http://localhost:3000/paymentsuccess");
-
       }
     );
   });
@@ -249,7 +248,6 @@ app.get("/cancel-payment", (req, res) => {
   // return res.json({ message: "Payment has been cancelled." });
   // path: "/paymentcancel",
   return res.redirect("http://localhost:3000/paymentcancel");
-
 });
 
 // Route to process payment
@@ -329,12 +327,14 @@ app.get("/payment-details/:sessionId", async (req, res) => {
   }
 });
 
-
 // fetch history transaction employer user
 app.get("/transactionsEmp/:empID", (req, res) => {
-  const empID  = req.params.empID;
-  const q =
-    "SELECT i.*, u.* FROM invoice i JOIN useraccount u ON i.invoiceCatcherID = u.userID WHERE i.invoiceemployerID = ?";
+  const empID = req.params.empID;
+  const q = `SELECT i.*, u.*, f.feedbackRate , f.feedbackComment
+              FROM invoice i 
+              JOIN useraccount u ON i.invoiceCatcherID = u.userID 
+              JOIN feedbackcommission f ON i.invoiceemployerID = f.feedbackPosterID
+              WHERE i.invoiceemployerID = ?`;
 
   db.query(q, [empID], (err, data) => {
     if (err) {
@@ -348,8 +348,11 @@ app.get("/transactionsEmp/:empID", (req, res) => {
 // fetch history transaction catcher user
 app.get("/transactionsCat/:id", (req, res) => {
   const id = req.params.id;
-  const q =
-    "SELECT i.*, u.* FROM invoice i JOIN useraccount u ON i.invoiceemployerID = u.userID WHERE i.invoiceCatcherID = ?";
+  const q = `SELECT i.*, u.*, f.feedbackRate , f.feedbackComment
+    FROM invoice i 
+    JOIN useraccount u ON i.invoiceemployerID = u.userID 
+    JOIN feedbackcommission f ON i.invoiceemployerID = f.feedbackPosterID
+    WHERE i.invoiceCatcherID = ?`;
 
   db.query(q, [id], (err, data) => {
     if (err) {
