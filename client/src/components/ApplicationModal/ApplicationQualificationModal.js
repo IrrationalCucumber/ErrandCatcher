@@ -182,9 +182,18 @@ function ApplicationQualificationModal(props) {
             <Typography level="h4" textAlign="center" marginBottom={2}>
               Qualification Check
             </Typography>
-
-            <Box>
-              {props.type === "Transportation" || props.type === "Delivery" ? (
+            <Box
+              sx={{
+                width: {
+                  xs: "90%", // For small screens (phones)
+                  sm: "70%", // For medium screens (tablets)
+                  md: "40%", // For larger screens (desktops)
+                },
+                margin: "0 auto", 
+              }}
+            >
+              {(props.type === "Transportation" ||
+                props.type === "Delivery") && (
                 <>
                   {/* License Check */}
                   <FormControl>
