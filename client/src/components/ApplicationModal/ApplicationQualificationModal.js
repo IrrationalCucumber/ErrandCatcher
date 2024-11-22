@@ -189,11 +189,10 @@ function ApplicationQualificationModal(props) {
                   sm: "70%", // For medium screens (tablets)
                   md: "40%", // For larger screens (desktops)
                 },
-                margin: "0 auto", 
+                margin: "0 auto",
               }}
             >
-              {(props.type === "Transportation" ||
-                props.type === "Delivery") && (
+              {props.type === "Transportation" || props.type === "Delivery" ? (
                 <>
                   {/* License Check */}
                   <FormControl>
