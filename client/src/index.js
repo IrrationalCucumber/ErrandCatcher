@@ -76,7 +76,11 @@ const router = createBrowserRouter([
       { path: "home", element: <Home /> },
       {
         path: "admin/",
-        element: <AdminPage />,
+        element: (
+          <ProtectedRoute allowedUserTypes={["admin"]}>
+            <AdminPage />
+          </ProtectedRoute>
+        ),
         children: [
           {
             path: "accounts",
@@ -99,32 +103,60 @@ const router = createBrowserRouter([
       //EMPLOYER
       {
         path: "errands/",
-        element: <EmployerCommissions />,
+        element: (
+          <ProtectedRoute allowedUserTypes={["Employer"]}>
+            <EmployerCommissions />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "applicants/",
-        element: <EmployerApplicants />,
+        element: (
+          <ProtectedRoute allowedUserTypes={["Employer"]}>
+            <EmployerApplicants />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "e-map/",
-        element: <EmployerMap />,
+        element: (
+          <ProtectedRoute allowedUserTypes={["Employer"]}>
+            <EmployerMap />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "ongoing/",
-        element: <Ongoing />,
+        element: (
+          <ProtectedRoute allowedUserTypes={["Employer"]}>
+            <Ongoing />
+          </ProtectedRoute>
+        ),
       },
       //CATCHER
       {
         path: "catcher-errands/",
-        element: <CatcherCommission />,
+        element: (
+          <ProtectedRoute allowedUserTypes={["Catcher"]}>
+            <CatcherCommission />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "my-application/",
-        element: <Application />,
+        element: (
+          <ProtectedRoute allowedUserTypes={["Catcher"]}>
+            <Application />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "c-map/",
-        element: <CatcherMap />,
+        element: (
+          <ProtectedRoute allowedUserTypes={["Catcher"]}>
+            <CatcherMap />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
@@ -213,7 +245,11 @@ const router = createBrowserRouter([
       },
       {
         path: "add",
-        element: <AddAccount />,
+        element: (
+          <ProtectedRoute allowedUserTypes={["admin"]}>
+            <AddAccount />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

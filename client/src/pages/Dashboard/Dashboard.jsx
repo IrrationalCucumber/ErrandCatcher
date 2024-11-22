@@ -35,7 +35,7 @@ function Dashboard() {
                 page3="ERRANDS"
                 applicants={`/dashboard/catcher-errands`}
                 page4="MAP"
-                map={`/dashboard/e-map`}
+                map={`/dashboard/c-map`}
               />
               <Outlet />
             </>
