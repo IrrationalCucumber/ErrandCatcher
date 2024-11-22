@@ -16,6 +16,7 @@ import {
   Chip,
   ChipDelete,
 } from "@mui/joy";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import AddIcon from "@mui/icons-material/Add";
 import axios from "axios";
 
@@ -117,9 +118,8 @@ function ApplicationQualificationModal(props) {
       setError("");
 
       // Create a combined string for qualifications (transportation job)
-      qualificationsString = `License: ${
-        hasLicense ? "Yes" : "No"
-      }, Type: ${licenseType}, Experience: ${drivingExperience} years, Vehicle: ${vehicleType}`;
+      qualificationsString = `License: ${hasLicense ? "Yes" : "No"
+        }, Type: ${licenseType}, Experience: ${drivingExperience} years, Vehicle: ${vehicleType}`;
     } else if (
       props.type === "HomeService - Indoor" ||
       props.type === "HomeService - Outdoor"
@@ -189,20 +189,29 @@ function ApplicationQualificationModal(props) {
                   sm: "70%", // For medium screens (tablets)
                   md: "40%", // For larger screens (desktops)
                 },
-                margin: "0 auto", 
+                margin: "0 auto",
               }}
             >
               {(props.type === "Transportation" ||
-                props.type === "Delivery") && (
+                props.type === "Delivery") ? (
                 <>
                   {/* License Check */}
                   <FormControl>
                     <FormLabel>Do you have a driver's license?</FormLabel>
-                    <Checkbox
+
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={hasLicense}
+                          onChange={(e) => setHasLicense(e.target.checked)}
+                          sx={{ marginRight: "10px" }}
+                        />
+                      }
                       label="Yes, I have a driver's license"
-                      checked={hasLicense}
-                      onChange={(e) => setHasLicense(e.target.checked)}
-                    />
+                      sx={{ marginLeft: "8px", marginBottom: "8px" }}
+                    >
+                    </FormControlLabel>
+
                   </FormControl>
 
                   {/* License Type */}
