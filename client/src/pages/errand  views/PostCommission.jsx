@@ -34,8 +34,8 @@ const PostCommission = () => {
     Contactno: "",
     comLong: "",
     comLat: "",
-    comDestLong: 0,
-    comDestLat: 0,
+    comDestLong: "",
+    comDestLat: "",
     method: "",
   });
 
@@ -146,44 +146,24 @@ const PostCommission = () => {
         !commission.comType ||
         !commission.comPay ||
         !commission.Contactno ||
+        !commission.comDeadline ||
         !commission.comDescription
       ) {
         setAlerMsg("Some fields are missing!");
         setShowAlert(true);
-
-        // setLoading(true);
-        // // 3 seconds cd
-        // setTimeout(() => {
-        //   setLoading(false);
-
-        //   setAlerMsg("Some fields are missing!");
-        //   setShowAlert(true);
-
-        // }, 3000);
-        if (
-          commission.comType === "Delivery" ||
-          commission.comType === "Transportation"
-        ) {
-          if (
-            !commission.comTitle ||
-            !commission.comStart ||
-            !commission.comDeadline ||
-            !commission.comType ||
-            !commission.comPay ||
-            !commission.comLocation ||
-            !commission.comTo ||
-            !commission.Contactno ||
-            !commission.comDescription
-          )
-            setAlerMsg("Some fields are missing!");
-          setShowAlert(true);
-        }
+        handleScrollToTop();
       } else if (commission.comPay < minimum) {
         setAlerMsg("The salary is lower than the suggested payment!");
         setShowAlert(true);
-      } else if (commission.comLat === "" && commission.comLong === "") {
-        setAlerMsg("Looks like you havent set the location in the Map");
+        handleScrollToTop();
+      } else if (
+        (commission.comType === "Delivery" ||
+          commission.comType === "Transportation") &&
+        (!commission.comDestLat || !commission.comDestLong || !commission.comTo)
+      ) {
+        setAlerMsg("Some fields are missing!");
         setShowAlert(true);
+        handleScrollToTop();
       } else {
         await axios.post("http://localhost:8800/commission", updatedCommission);
         await axios.post("http://localhost:8800/notify-catcher");
@@ -216,6 +196,12 @@ const PostCommission = () => {
     } catch (err) {
       console.log(err);
     }
+  };
+  const handleScrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // Makes the scrolling smooth
+    });
   };
 
   return (

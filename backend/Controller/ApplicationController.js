@@ -127,10 +127,11 @@ const applyController = {
           .json({ error: "An error occurred while updating application" });
         return;
       }
-      // Check if any rows were affected by the update operation
+      // If no rows are affected, send a response indicating no action was necessary
       if (result.affectedRows === 0) {
-        res.status(404).json({ error: "Application not found" });
-        return;
+        return res
+          .status(200)
+          .json({ message: "No other applications to deny" });
       }
       res.status(200).json({ message: "Application updated successfully" });
     });

@@ -21,8 +21,8 @@ const UpdateCommission = () => {
     Contactno: "",
     comLong: "",
     comLat: "",
-    destLng: "",
-    destLat: "",
+    comDestLong: "",
+    comDestLat: "",
     method: "",
   });
 
@@ -82,8 +82,8 @@ const UpdateCommission = () => {
           Contactno: retrievedCommission.ContactNumber,
           comLong: retrievedCommission.commissionLong,
           comLat: retrievedCommission.commissionLat,
-          destLat: retrievedCommission.commissionDestLat,
-          destLng: retrievedCommission.commissionDestLong,
+          comDestLat: retrievedCommission.commissionDestLat,
+          comDestLong: retrievedCommission.commissionDestLong,
           method: retrievedCommission.commissionPaymentMethod,
           comTo: retrievedCommission.commissionTo,
         });
@@ -132,6 +132,8 @@ const UpdateCommission = () => {
           commission
         );
         alert("UPdate successful");
+        //console.log(commission);
+
         //window.location.reload();
       }
     } catch (err) {
@@ -200,8 +202,8 @@ const UpdateCommission = () => {
                   lng: commission.comLong,
                 }}
                 initialDestination={{
-                  lat: commission.destLat,
-                  lng: commission.destLng,
+                  lat: commission.comDestLat,
+                  lng: commission.comDestLong,
                 }}
                 getDistanceCallback={(
                   distance,
@@ -213,8 +215,8 @@ const UpdateCommission = () => {
                     ...prev,
                     comLat: originCoordinates[1],
                     comLong: originCoordinates[0],
-                    destLng: destinationCoordinates[0],
-                    destLat: destinationCoordinates[1],
+                    comDestLong: destinationCoordinates[0],
+                    comDestLat: destinationCoordinates[1],
                   }));
                 }}
               />
@@ -230,8 +232,8 @@ const UpdateCommission = () => {
                   lng: commission.comLong,
                 }}
                 initialDestination={{
-                  lat: commission.destLat,
-                  lng: commission.destLng,
+                  lat: commission.comDestLat,
+                  lng: commission.comDestLong,
                 }}
                 getDistanceCallback={(
                   distance,
@@ -243,8 +245,8 @@ const UpdateCommission = () => {
                     ...prev,
                     comLat: originCoordinates[1],
                     comLong: originCoordinates[0],
-                    destLng: destinationCoordinates[0],
-                    destLat: destinationCoordinates[1],
+                    comDestLong: destinationCoordinates[0],
+                    comDestLat: destinationCoordinates[1],
                   }));
                 }}
               />
