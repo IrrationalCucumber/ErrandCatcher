@@ -24,6 +24,13 @@ import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 import { ModalClose } from "@mui/joy";
 import ViewProfile from "../profile/ViewProfile";
 
+import { Box } from "@mui/material";
+import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import CancelIcon from "@mui/icons-material/Cancel";
+import PendingOutlinedIcon from "@mui/icons-material/PendingOutlined";
+import DoDisturbAltOutlinedIcon from "@mui/icons-material/DoDisturbAltOutlined";
+
 function Application() {
   const { user } = useAuth();
   const userID = user.userID;
@@ -125,7 +132,13 @@ function Application() {
     "ACTION",
   ];
   const applicationData = currentItems.map((applicant) => [
-    DisplayDate(applicant.applicationDate),
+    // DisplayDate(applicant.applicationDate),
+    <Box display="flex" alignItems="center" gap={1}>
+      <EditCalendarOutlinedIcon
+        sx={{ color: "#555" }}
+      />
+      {DisplayDate(applicant.applicationDate)}
+    </Box>,
     // `${applicant.userFirstname} ${applicant.userLastname}`,
     <Button
       variant="outlined"
@@ -134,7 +147,28 @@ function Application() {
       {applicant.userFirstname} {applicant.userLastname}
     </Button>,
     applicant.commissionTitle,
-    applicant.applicationStatus,
+    // applicant.applicationStatus,
+    applicant.applicationStatus === "Accepted" ? (
+      <>
+        <CheckCircleOutlineOutlinedIcon style={{ color: "green" }} />
+        <span> Accepted</span>
+      </>
+    ) : applicant.applicationStatus === "Cancelled" ? (
+      <>
+        <CancelIcon style={{ color: "darkred" }} />
+        <span> Canceled</span>
+      </>
+    ) : applicant.applicationStatus === "Pending" ? (
+      <>
+        <PendingOutlinedIcon style={{ color: "darkorange" }} />
+        <span> Pending</span>
+      </>
+    ) : applicant.applicationStatus === "Denied" ? (
+      <>
+        <DoDisturbAltOutlinedIcon style={{ color: "red" }} />
+        <span> Pending</span>
+      </>
+    ) : null,
     applicant.applicationStatus === "Pending" ? (
       <>
         <button

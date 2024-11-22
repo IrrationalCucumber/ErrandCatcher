@@ -25,8 +25,10 @@
 }
 
 .Commission-page-divider {
-  border-top: 1px solid #ccc; /* Top border */
-  margin: 20px 0; /* Margin top and bottom */
+  border-top: 1px solid #ccc;
+  /* Top border */
+  margin: 20px 0;
+  /* Margin top and bottom */
 }
 
 .Commission-page-divider .table-wrapper {
@@ -53,7 +55,8 @@
 }
 
 .Commission-page td .td-content .text {
-  flex: 1; /* Allow text to take available space */
+  flex: 1;
+  /* Allow text to take available space */
 }
 
 .Commission-page th {
@@ -89,7 +92,8 @@
 .search-filter {
   display: flex;
   align-items: center;
-  margin-bottom: 10px; /* Adjust margin as needed */
+  margin-bottom: 10px;
+  /* Adjust margin as needed */
 }
 
 .search,
@@ -104,12 +108,17 @@
   width: 120px;
 }
 
+.filter select {
+  min-height: 36px;
+}
+
 .search {
   width: 280px;
 }
 
 .filter select {
-  width: 150px; /* Adjust width as needed */
+  width: 150px;
+  /* Adjust width as needed */
 }
 
 /* Responsive */

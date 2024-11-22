@@ -20,6 +20,12 @@ import ModalDialog from "@mui/joy/ModalDialog";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 import OngoingCardsNew from "../Dropdown/OngoingCardsNew";
 
+import DateRangeOutlinedIcon from "@mui/icons-material/DateRangeOutlined";
+import AssignmentTurnedInOutlinedIcon from "@mui/icons-material/AssignmentTurnedInOutlined";
+import CancelIcon from "@mui/icons-material/Cancel";
+import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
+import { Box } from "@mui/material";
+
 function CommissionPage() {
   const headers = ["DATE", "EMPLOYER", "ERRAND TITLE", "STATUS"];
   const [commissions, setCommissions] = useState([]);
@@ -230,8 +236,30 @@ function CommissionPage() {
               `${commission.userFirstname} ${commission.userLastname}`,
               commission.commissionTitle,
               commission.commissionStart,
-              DisplayDate(commission.commissionDeadline),
-              commission.errandStatus,
+              // DisplayDate(commission.commissionDeadline),
+              <Box display="flex" alignItems="center" gap={1}>
+                < DateRangeOutlinedIcon
+                  sx={{ color: "#555" }}
+                />
+                {DisplayDate(commission.commissionDeadline)}
+              </Box>,
+              // commission.errandStatus,
+              commission.errandStatus === "Completed" ? (
+                <>
+                  <AssignmentTurnedInOutlinedIcon style={{ color: "green" }} />
+                  <span> Completed</span>
+                </>
+              ) : commission.errandStatus === "Canceled" ? (
+                <>
+                  <CancelIcon style={{ color: "orange" }} />
+                  <span> Canceled</span>
+                </>
+              ) : commission.errandStatus === "For Payment" ? (
+                <>
+                  <PaymentsOutlinedIcon style={{ color: "brown" }} />
+                  <span> For Payment</span>
+                </>
+              ) : null,
               commission.errandStatus === "Ongoing" ? (
                 <>
                   <button
