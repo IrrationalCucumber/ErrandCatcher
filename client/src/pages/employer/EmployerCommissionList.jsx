@@ -161,6 +161,7 @@ const CommissionList = () => {
                   <option value="Cancelled">Cancelled</option>
                   <option value="Available">Available</option>
                   <option value="Expired">Expired</option>
+                  <option value="Caught">Caught</option>
                 </select>
               </div>
             </div>
