@@ -48,6 +48,10 @@ export function Step1({ onNext, details, setDetail }) {
     "Hardworking",
     "Leadership",
     "Time Management",
+    "Carpentry",
+    "Plumbing",
+    "Gadening",
+    "Programming",
   ];
 
   // Function to add a skill to the selectedSkills array
