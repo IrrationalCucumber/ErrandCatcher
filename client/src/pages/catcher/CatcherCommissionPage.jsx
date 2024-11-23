@@ -218,6 +218,7 @@ function CommissionPage() {
               name="status"
             >
               <option value="">Status</option>
+              <option value="Ongoing">Ongoing</option>
               <option value="For Payment">For Payment</option>
               <option value="Completed">Completed</option>
               <option value="Cancelled">Cancelled</option>
