@@ -646,11 +646,12 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
       <div className="form-container">
         <div className="form-details">
           <p>
-            <strong>First Name:</strong> <p>{details.skills}</p>
+            <strong>Skills:</strong> <p>{details.skills}</p>
           </p>
         </div>
 
         <div className="image-previews">
+          <strong>Identification</strong>
           {images.preview1 && (
             <img
               src={images.preview1}
@@ -666,11 +667,14 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
             />
           )}
           {images.preview3 && (
-            <img
-              src={images.preview3}
-              className="step__img__preview"
-              alt="Preview 3"
-            />
+            <>
+              <strong>Driver's License</strong>
+              <img
+                src={images.preview3}
+                className="step__img__preview"
+                alt="Preview 3"
+              />
+            </>
           )}
         </div>
 
