@@ -24,6 +24,7 @@ import DateRangeOutlinedIcon from "@mui/icons-material/DateRangeOutlined";
 import AssignmentTurnedInOutlinedIcon from "@mui/icons-material/AssignmentTurnedInOutlined";
 import CancelIcon from "@mui/icons-material/Cancel";
 import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
+import RotateRightOutlinedIcon from "@mui/icons-material/RotateRightOutlined";
 import { Box } from "@mui/material";
 
 function CommissionPage() {
@@ -235,7 +236,8 @@ function CommissionPage() {
             data={currentItems.map((commission, rowIndex) => [
               `${commission.userFirstname} ${commission.userLastname}`,
               commission.commissionTitle,
-              commission.commissionStart,
+              // commission.commissionStart,
+              DisplayDate(commission.commissionStartDate),
               // DisplayDate(commission.commissionDeadline),
               <Box display="flex" alignItems="center" gap={1}>
                 < DateRangeOutlinedIcon
@@ -258,6 +260,11 @@ function CommissionPage() {
                 <>
                   <PaymentsOutlinedIcon style={{ color: "brown" }} />
                   <span> For Payment</span>
+                </>
+              ) : commission.errandStatus === "Ongoing" ? (
+                <>
+                  <RotateRightOutlinedIcon style={{ color: "brown" }} />
+                  <span> Ongoing</span>
                 </>
               ) : null,
               commission.errandStatus === "Ongoing" ? (
