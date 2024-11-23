@@ -247,28 +247,28 @@ function CommissionPage() {
                 {DisplayDate(commission.commissionDeadline)}
               </Box>,
               // commission.errandStatus,
-              commission.errandStatus === "Completed" ? (
+              commission.transStatus === "Completed" ? (
                 <>
                   <AssignmentTurnedInOutlinedIcon style={{ color: "green" }} />
                   <span> Completed</span>
                 </>
-              ) : commission.errandStatus === "Canceled" ? (
+              ) : commission.transStatus === "Cancelled" ? (
                 <>
                   <CancelOutlinedIcon style={{ color: "orange" }} />
                   <span> Canceled</span>
                 </>
-              ) : commission.errandStatus === "For Payment" ? (
+              ) : commission.transStatus === "For Payment" ? (
                 <>
                   <PaymentsOutlinedIcon style={{ color: "brown" }} />
                   <span> For Payment</span>
                 </>
-              ) : commission.errandStatus === "Ongoing" ? (
+              ) : commission.transStatus === "Ongoing" ? (
                 <>
-                  <RotateRightOutlinedIcon style={{ color: "brown" }} />
+                  <RotateRightOutlinedIcon style={{ color: "#378ce7" }} />
                   <span> Ongoing</span>
                 </>
               ) : null,
-              commission.errandStatus === "Ongoing" ? (
+              commission.transStatus === "Ongoing" ? (
                 <>
                   <button
                     className="cancel-btn"
