@@ -111,14 +111,14 @@ export function Step1({ onNext, details, setDetail }) {
             <FormControl>
               <FormLabel>
                 <Typography color="neutral" level="title-md" variant="plain">
-                  Select or Add Skills
+                  Please Select or Add your skill
                 </Typography>
               </FormLabel>
 
               {/* Predefined skills list */}
               <FormLabel>
                 <Typography color="primary" level="body-md" variant="plain">
-                  Select your Skill/s
+                  Select your Skill/s here:
                 </Typography>
               </FormLabel>
 
@@ -141,7 +141,7 @@ export function Step1({ onNext, details, setDetail }) {
 
               <FormLabel>
                 <Typography color="primary" level="body-md" variant="plain">
-                  Or add new skill
+                  Or your specific skills here:
                 </Typography>
               </FormLabel>
 
@@ -165,7 +165,7 @@ export function Step1({ onNext, details, setDetail }) {
               <div>
                 <FormLabel>
                   <Typography color="neutral" level="title-lg" variant="plain">
-                    Your selected skills:
+                    Skills you have selected:
                   </Typography>
                 </FormLabel>
 
