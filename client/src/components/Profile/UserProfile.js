@@ -45,7 +45,7 @@ function UserProfile(props) {
     setPreview(null);
   };
   //skills of user
-  const skillsArray = props.skills.split(","); // Split skills string into an array
+  const skillsArray = props.skills ? props.skills.split(",") : [];
 
   return (
     <>
@@ -171,24 +171,32 @@ function UserProfile(props) {
             />
             <br />{" "}
             <div>
-              <h3>Skills:</h3>
-              <Stack
-                direction="row"
-                //spacing={1}
-                flexWrap="wrap"
-                sx={{ gap: 1 }} // Ensures spacing between items
-              >
-                {skillsArray.map((skill, index) => (
-                  <Chip
-                    key={index}
-                    variant="soft" // Gives a subtle background color
-                    color="primary" // Choose the color theme (primary, secondary, etc.)
-                    size="md" // Medium size for better visibility
-                  >
-                    {skill.trim()} {/* Trims any unnecessary whitespace */}
-                  </Chip>
-                ))}
-              </Stack>
+              <Typography level="h4" sx={{ marginBottom: 1 }}>
+                Skills:
+              </Typography>
+              {skillsArray.length > 0 ? ( // Check if there are any skills to display
+                <Stack
+                  direction="row"
+                  flexWrap="wrap"
+                  sx={{ gap: 1 }} // Ensures spacing between items
+                >
+                  {skillsArray.map((skill, index) => (
+                    <Chip
+                      key={index}
+                      variant="soft" // Gives a subtle background color
+                      color="primary" // Choose the color theme (primary, secondary, etc.)
+                      size="md" // Medium size for better visibility
+                    >
+                      {skill.trim()} {/* Trims any unnecessary whitespace */}
+                    </Chip>
+                  ))}
+                </Stack>
+              ) : (
+                // Display a placeholder message if no skills are provided
+                <Typography level="body2" color="neutral">
+                  No skills provided.
+                </Typography>
+              )}
             </div>
           </div>
           <br />
@@ -403,7 +411,7 @@ export default UserProfile;
 export function ViewUserProfile(props) {
   //skills
   //split it into array
-  const skillsArray = props.skills.split(",");
+  const skillsArray = props.skills ? props.skills.split(",") : [];
   return (
     <>
       <div className="profile-page-container">
@@ -469,24 +477,33 @@ export function ViewUserProfile(props) {
 
             <br />
             <div>
-              <h3>Skills:</h3>
-              <Stack
-                direction="row"
-                //spacing={1}
-                flexWrap="wrap"
-                sx={{ gap: 1 }} // Ensures spacing between items
-              >
-                {skillsArray.map((skill, index) => (
-                  <Chip
-                    key={index}
-                    variant="soft" // Gives a subtle background color
-                    color="primary" // Choose the color theme (primary, secondary, etc.)
-                    size="md" // Medium size for better visibility
-                  >
-                    {skill.trim()} {/* Trims any unnecessary whitespace */}
-                  </Chip>
-                ))}
-              </Stack>
+              <Typography level="h4" sx={{ marginBottom: 1 }}>
+                Skills:
+              </Typography>
+              {skillsArray.length > 0 ? ( // Check if there are any skills to display
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  flexWrap="wrap"
+                  sx={{ gap: 1 }} // Ensures spacing between items
+                >
+                  {skillsArray.map((skill, index) => (
+                    <Chip
+                      key={index}
+                      variant="soft" // Gives a subtle background color
+                      color="primary" // Choose the color theme (primary, secondary, etc.)
+                      size="md" // Medium size for better visibility
+                    >
+                      {skill.trim()} {/* Trims any unnecessary whitespace */}
+                    </Chip>
+                  ))}
+                </Stack>
+              ) : (
+                // Display a placeholder message if no skills are provided
+                <Typography level="body2" color="neutral">
+                  No skills provided.
+                </Typography>
+              )}
             </div>
           </div>
           <br />
