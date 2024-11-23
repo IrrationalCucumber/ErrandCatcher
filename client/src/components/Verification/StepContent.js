@@ -623,10 +623,10 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
       // console.log(formData);
       console.log("info successfully sent to server");
       //upload docs to server
-      // await axios
-      //   .post(`http://localhost:8800/upload/${userID}`, formData)
-      //   .then((res) => console.log(res))
-      //   .catch((err) => console.log(err));
+      await axios
+        .post(`http://localhost:8800/upload/${userID}`, formData)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
       //update accound data
       await axios.put("http://localhost:8800/update-info/" + userID, details);
       //add a notification to the admin
@@ -634,7 +634,7 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
         has submitted a Verification request`;
       notif.userID = 1;
       notif.notificationType = "Verification Request";
-      //await axios.post("http://localhost:8800/notify", notif);
+      await axios.post("http://localhost:8800/notify", notif);
     } catch (error) {
       console.log(error);
     }
