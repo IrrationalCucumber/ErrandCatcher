@@ -110,20 +110,22 @@ const EmployerApplicants = () => {
     //applicant.applicationID,
     // DisplayDate(applicant.applicationDate),
     <Box display="flex" alignItems="center" gap={1}>
-      <CalendarMonthOutlinedIcon
-        sx={{ color: "#555" }}
-      />
+      <CalendarMonthOutlinedIcon sx={{ color: "#555" }} />
       {DisplayDate(applicant.applicationDate)}
     </Box>,
     `${applicant.userFirstname} ${applicant.userLastname}`,
-    applicant.applicationQualification,
+    applicant.userQualification
+      ? applicant.userQualification
+      : "No Skills provided",
     // applicant.commissionTitle,
     <Box display="flex" alignItems="center" gap={1}>
       <BadgeOutlinedIcon sx={{ color: "#555" }} />
-      <Typography sx={{
-        color: "#565360",
-        fontSize: "12",
-      }}>
+      <Typography
+        sx={{
+          color: "#565360",
+          fontSize: "12",
+        }}
+      >
         {applicant.commissionTitle}
       </Typography>
     </Box>,
@@ -341,7 +343,7 @@ const EmployerApplicants = () => {
         contentMes="You have accepted a Cather!"
         color="success"
         colorText="green"
-      // icon={ErrorIcon}
+        // icon={ErrorIcon}
       />
 
       <BannerEmployerPages
