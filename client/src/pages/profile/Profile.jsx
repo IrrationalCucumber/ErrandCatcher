@@ -34,6 +34,7 @@ const Profile = () => {
     desc: "",
     status: "",
     type: "",
+    skills: "",
     profileImage: "",
   });
   //variables to store verification details
@@ -81,6 +82,8 @@ const Profile = () => {
     address: false,
     contact: false,
     profileImage: false,
+    skills: false,
+    desc: false,
     // Add other fields...
   });
 
@@ -113,6 +116,7 @@ const Profile = () => {
           status: retrievedAccount.accountStatus,
           type: retrievedAccount.accountType,
           profileImage: retrievedAccount.profileImage,
+          skills: retrievedAccount.userQualification,
         };
 
         setAccount(updatedAccount);
@@ -279,6 +283,10 @@ const Profile = () => {
         await axios.put("http://localhost:8800/update/" + userID, tempAccount);
         // setShowAlert(true);
       }
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth", // Makes the scrolling smooth
+      });
       // console.log(account);
       //window.location.reload();
     } catch (err) {
@@ -380,6 +388,7 @@ const Profile = () => {
         verBack={docs.backID}
         doc1={docs.doc1}
         doc2={docs.doc2}
+        skills={tempAccount.skills}
       />
     </div>
   );
