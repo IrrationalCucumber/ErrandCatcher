@@ -7,7 +7,7 @@ import "./css/navbar.css";
 
 function Dashboard() {
   const { user } = useAuth();
-  const type = user.userType.toLocaleLowerCase();
+  // const type = user.userType.toLocaleLowerCase();
   return (
     <>
       {user ? (
