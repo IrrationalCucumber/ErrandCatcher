@@ -39,8 +39,9 @@ function OngoingCardsNew(props) {
     // Determine chip colour props based on status
     const chipColor =
         status === "Complete" ? "success" :
-            status === "Ongoing" ? "warning" :
-                status === "Cancelled" ? "danger" : "default";
+            status === "Paid" ? "primary" :
+                status === "Ongoing" ? "warning" :
+                    status === "Cancelled" ? "danger" : "default";
 
     const { user } = useAuth();
     const userID = user.userID;
