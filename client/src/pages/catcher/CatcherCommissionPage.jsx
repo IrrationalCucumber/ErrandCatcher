@@ -22,7 +22,7 @@ import OngoingCardsNew from "../Dropdown/OngoingCardsNew";
 
 import DateRangeOutlinedIcon from "@mui/icons-material/DateRangeOutlined";
 import AssignmentTurnedInOutlinedIcon from "@mui/icons-material/AssignmentTurnedInOutlined";
-import CancelIcon from "@mui/icons-material/Cancel";
+import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
 import RotateRightOutlinedIcon from "@mui/icons-material/RotateRightOutlined";
 import { Box } from "@mui/material";
@@ -254,7 +254,7 @@ function CommissionPage() {
                 </>
               ) : commission.errandStatus === "Canceled" ? (
                 <>
-                  <CancelIcon style={{ color: "orange" }} />
+                  <CancelOutlinedIcon style={{ color: "orange" }} />
                   <span> Canceled</span>
                 </>
               ) : commission.errandStatus === "For Payment" ? (
