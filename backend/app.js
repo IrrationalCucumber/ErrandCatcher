@@ -333,8 +333,10 @@ app.get("/transactionsEmp/:empID", (req, res) => {
   const q = `SELECT i.*, u.*, f.feedbackRate , f.feedbackComment
               FROM invoice i 
               JOIN useraccount u ON i.invoiceCatcherID = u.userID 
-              JOIN feedbackcommission f ON i.invoiceemployerID = f.feedbackPosterID
+              JOIN feedbackcommission f ON i.invoiceErrandID = f.feedbackErrandID
               WHERE i.invoiceemployerID = ?`;
+
+  // const q = "SELECT i.*, u.* FROM invoice i JOIN useraccount u ON i.invoiceCatcherID = u.userID WHERE i.invoiceemployerID = ?";
 
   db.query(q, [empID], (err, data) => {
     if (err) {
@@ -351,8 +353,10 @@ app.get("/transactionsCat/:id", (req, res) => {
   const q = `SELECT i.*, u.*, f.feedbackRate , f.feedbackComment
     FROM invoice i 
     JOIN useraccount u ON i.invoiceemployerID = u.userID 
-    JOIN feedbackcommission f ON i.invoiceemployerID = f.feedbackPosterID
+    JOIN feedbackcommission f ON i.invoiceErrandID = f.feedbackErrandID
     WHERE i.invoiceCatcherID = ?`;
+
+  // const q = "SELECT i.*, u.* FROM invoice i JOIN useraccount u ON i.invoiceemployerID = u.userID WHERE i.invoiceCatcherID = ?";
 
   db.query(q, [id], (err, data) => {
     if (err) {
