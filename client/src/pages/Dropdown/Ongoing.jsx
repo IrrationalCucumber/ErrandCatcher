@@ -181,7 +181,8 @@ function Ongoing() {
           // }}
           >
             <option value="">Type</option>
-            <option value="Home">Home</option>
+            <option value="HomeService - Indoor">HomeService Indoor</option>
+            <option value="HomeService - Outdoor">HomeService Outdoor</option>
             <option value="Transportation">Transportation</option>
             <option value="Delivery">Delivery</option>
           </select>
