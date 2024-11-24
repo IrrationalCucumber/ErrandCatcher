@@ -166,7 +166,7 @@ function OngoingCardsNew(props) {
                 // updatedPaymentStatus[commissionID] = true; // Mark the payment button enabled for this commission
                 // localStorage.setItem("paymentStatus", JSON.stringify(updatedPaymentStatus));
 
-                // Update button name to "Feedbacked"
+                // Update button name to "Feedbacked" and disable it
                 const updatedFeedbackStatus = { ...clickedFeedback, [commissionID]: true };
                 setClickedFeedback(updatedFeedbackStatus);
                 localStorage.setItem("clickedFeedback", JSON.stringify(updatedFeedbackStatus));
@@ -177,8 +177,8 @@ function OngoingCardsNew(props) {
                 localStorage.setItem("paymentStatus", JSON.stringify(updatedPaymentStatus));
 
                 //feedback.commissionID = fetchLoc().commissionID;
-                // const response = await axios.post("http://localhost:8800/rate", feedback);
-                // setSuccessMsg(response.data);
+                const response = await axios.post("http://localhost:8800/rate", feedback);
+                setSuccessMsg(response.data);
             }
         } catch (err) {
             console.log(err);
@@ -505,6 +505,7 @@ function OngoingCardsNew(props) {
                                     <button
                                         onClick={handleOpenModal} // props 
                                         className="ongoing__cards__button__feedback"
+                                        disabled={clickedFeedback[props.comID]} // Disable button if it's "Feedbacked"
                                     >
                                         {clickedFeedback[props.comID] ? "Feedbacked" : "Feedback"}
                                     </button>
