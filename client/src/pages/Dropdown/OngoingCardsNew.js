@@ -39,7 +39,7 @@ function OngoingCardsNew(props) {
     // Determine chip colour props based on status
     const chipColor =
         status === "Complete" ? "success" :
-            status === "Paid" ? "primary" :
+            status === "Complete Paid" ? "primary" :
                 status === "Ongoing" ? "warning" :
                     status === "Cancelled" ? "danger" : "default";
 
@@ -58,6 +58,17 @@ function OngoingCardsNew(props) {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [inputValue, setInputValue] = useState({ feedbacks: "" });
+
+    const [isPaymentDisabled, setPaymentDisabled] = useState(true);
+
+    // // Load state from local storage on component mount
+    useEffect(() => {
+        const storedPaymentStatus = JSON.parse(localStorage.getItem("paymentStatus")) || {};
+        if (storedPaymentStatus[props.comID]) {
+            setPaymentDisabled(false); // Enable payment button if stored as enabled
+        }
+    }, [props.comID]);
+
 
     //Alert feedback
     const [message, setMessage] = useState("");
@@ -143,9 +154,17 @@ function OngoingCardsNew(props) {
                     handleOpen();
                 }, 2000);
 
+                // Enable the payment button
+                setPaymentDisabled(false);
+
+                // Save the state in localStorage
+                const updatedPaymentStatus = JSON.parse(localStorage.getItem("paymentStatus")) || {};
+                updatedPaymentStatus[commissionID] = true; // Mark the payment button enabled for this commission
+                localStorage.setItem("paymentStatus", JSON.stringify(updatedPaymentStatus));
+
                 //feedback.commissionID = fetchLoc().commissionID;
-                const response = await axios.post("http://localhost:8800/rate", feedback);
-                setSuccessMsg(response.data);
+                // const response = await axios.post("http://localhost:8800/rate", feedback);
+                // setSuccessMsg(response.data);
             }
         } catch (err) {
             console.log(err);
@@ -272,32 +291,33 @@ function OngoingCardsNew(props) {
     };
 
     const handlePayment = (pay, type, fname, lname, id, comTitle, erID, catID) => {
-        const paymentUrl = `http://localhost:8800/process-payment/${userID}`;
-        // Change the amount
-        const amount = pay;
-        const errType = type;
-        const name = fname + " " + lname;
-        const errand = id + " " + comTitle;
-        const errandID = erID;
-        const cateID = catID;
+        console.log("clicked payment")
+        // const paymentUrl = `http://localhost:8800/process-payment/${userID}`;
+        // // Change the amount
+        // const amount = pay;
+        // const errType = type;
+        // const name = fname + " " + lname;
+        // const errand = id + " " + comTitle;
+        // const errandID = erID;
+        // const cateID = catID;
 
-        axios
-            .post(paymentUrl, {
-                pay: amount,
-                type: errType,
-                name: name,
-                errand: errand,
-                id: id, // transactionID
-                employerID: userID,
-                errandID: errandID,
-                catID: cateID
-            })
-            .then((response) => {
-                window.open(response.data.url);
-            })
-            .catch((error) => {
-                console.error("There was an error processing the payment!", error);
-            });
+        // axios
+        //     .post(paymentUrl, {
+        //         pay: amount,
+        //         type: errType,
+        //         name: name,
+        //         errand: errand,
+        //         id: id, // transactionID
+        //         employerID: userID,
+        //         errandID: errandID,
+        //         catID: cateID
+        //     })
+        //     .then((response) => {
+        //         window.open(response.data.url);
+        //     })
+        //     .catch((error) => {
+        //         console.error("There was an error processing the payment!", error);
+        //     });
     };
 
 
@@ -476,6 +496,7 @@ function OngoingCardsNew(props) {
                                     </button>
                                     <button
                                         className="ongoing__cards__button"
+                                        disabled={isPaymentDisabled}
                                         onClick={() => {
                                             // props
                                             handlePayment(
