@@ -60,10 +60,14 @@ function OngoingCardsNew(props) {
     const [inputValue, setInputValue] = useState({ feedbacks: "" });
 
     const [isPaymentDisabled, setPaymentDisabled] = useState(true);
+    const [clickedFeedback, setClickedFeedback] = useState({}); // feedback or feedbacked render
 
     // // Load state from local storage on component mount
     useEffect(() => {
+        const storedFeedbackStatus = JSON.parse(localStorage.getItem("clickedFeedback")) || {};
         const storedPaymentStatus = JSON.parse(localStorage.getItem("paymentStatus")) || {};
+
+        setClickedFeedback(storedFeedbackStatus);
         if (storedPaymentStatus[props.comID]) {
             setPaymentDisabled(false); // Enable payment button if stored as enabled
         }
@@ -157,9 +161,19 @@ function OngoingCardsNew(props) {
                 // Enable the payment button
                 setPaymentDisabled(false);
 
-                // Save the state in localStorage
-                const updatedPaymentStatus = JSON.parse(localStorage.getItem("paymentStatus")) || {};
-                updatedPaymentStatus[commissionID] = true; // Mark the payment button enabled for this commission
+                // // Save the state in localStorage
+                // const updatedPaymentStatus = JSON.parse(localStorage.getItem("paymentStatus")) || {};
+                // updatedPaymentStatus[commissionID] = true; // Mark the payment button enabled for this commission
+                // localStorage.setItem("paymentStatus", JSON.stringify(updatedPaymentStatus));
+
+                // Update button name to "Feedbacked"
+                const updatedFeedbackStatus = { ...clickedFeedback, [commissionID]: true };
+                setClickedFeedback(updatedFeedbackStatus);
+                localStorage.setItem("clickedFeedback", JSON.stringify(updatedFeedbackStatus));
+
+                // Enable the payment button
+                const updatedPaymentStatus = { ...isPaymentDisabled, [commissionID]: true };
+                setPaymentDisabled(false);
                 localStorage.setItem("paymentStatus", JSON.stringify(updatedPaymentStatus));
 
                 //feedback.commissionID = fetchLoc().commissionID;
@@ -492,7 +506,7 @@ function OngoingCardsNew(props) {
                                         onClick={handleOpenModal} // props 
                                         className="ongoing__cards__button__feedback"
                                     >
-                                        Feedback
+                                        {clickedFeedback[props.comID] ? "Feedbacked" : "Feedback"}
                                     </button>
                                     <button
                                         className="ongoing__cards__button"
