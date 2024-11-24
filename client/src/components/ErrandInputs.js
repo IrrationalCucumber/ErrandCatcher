@@ -310,7 +310,7 @@ function ErrandInputs(props) {
             value={props.dlValue}
             slotProps={{
               input: {
-                min: new Date().toISOString().split("T")[0],
+                min: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split("T")[0],
               },
             }}
           />
