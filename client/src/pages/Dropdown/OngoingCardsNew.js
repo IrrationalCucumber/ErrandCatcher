@@ -305,33 +305,32 @@ function OngoingCardsNew(props) {
     };
 
     const handlePayment = (pay, type, fname, lname, id, comTitle, erID, catID) => {
-        console.log("clicked payment")
-        // const paymentUrl = `http://localhost:8800/process-payment/${userID}`;
-        // // Change the amount
-        // const amount = pay;
-        // const errType = type;
-        // const name = fname + " " + lname;
-        // const errand = id + " " + comTitle;
-        // const errandID = erID;
-        // const cateID = catID;
+        const paymentUrl = `http://localhost:8800/process-payment/${userID}`;
+        // Change the amount
+        const amount = pay;
+        const errType = type;
+        const name = fname + " " + lname;
+        const errand = id + " " + comTitle;
+        const errandID = erID;
+        const cateID = catID;
 
-        // axios
-        //     .post(paymentUrl, {
-        //         pay: amount,
-        //         type: errType,
-        //         name: name,
-        //         errand: errand,
-        //         id: id, // transactionID
-        //         employerID: userID,
-        //         errandID: errandID,
-        //         catID: cateID
-        //     })
-        //     .then((response) => {
-        //         window.open(response.data.url);
-        //     })
-        //     .catch((error) => {
-        //         console.error("There was an error processing the payment!", error);
-        //     });
+        axios
+            .post(paymentUrl, {
+                pay: amount,
+                type: errType,
+                name: name,
+                errand: errand,
+                id: id, // transactionID
+                employerID: userID,
+                errandID: errandID,
+                catID: cateID
+            })
+            .then((response) => {
+                window.open(response.data.url);
+            })
+            .catch((error) => {
+                console.error("There was an error processing the payment!", error);
+            });
     };
 
 
