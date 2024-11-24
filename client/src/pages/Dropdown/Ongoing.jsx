@@ -144,7 +144,7 @@ function Ongoing() {
             <option value="Complete">Complete</option>
             <option value="Cancel">Cancel</option>
             <option value="Ongoing">Ongoing</option>
-            <option value="Paid">Paid</option>
+            <option value="Complete Paid">Complete Paid</option>
           </select>
           <select
             className="CLtype"
