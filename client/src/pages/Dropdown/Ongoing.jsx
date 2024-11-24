@@ -55,22 +55,43 @@ function Ongoing() {
   };
 
   //filter
-  const filterErrands = commissions.filter((commission) => {
-    const type = commission.commissionType
-      ?.toLowerCase()
-      .includes(searchTerm.type.toLowerCase() ?? "");
-    const termMatch = commission.commissionTitle
-      ?.toLowerCase()
-      .includes(searchTerm.term.toLowerCase() ?? "");
-    const termMatch2 = commission.userFirstname
-      ?.toLowerCase()
-      .includes(searchTerm.term.toLowerCase() ?? "");
-    const termMatch3 = commission.userLastname
-      ?.toLowerCase()
-      .includes(searchTerm.term.toLowerCase() ?? "");
-    const status = commission.errandStatus.includes(searchTerm.status);
+  // const filterErrands = commissions.filter((commission) => {
+  //   const type = commission.commissionType
+  //     ?.toLowerCase()
+  //     .includes(searchTerm.type.toLowerCase() ?? "");
+  //   const termMatch = commission.commissionTitle
+  //     ?.toLowerCase()
+  //     .includes(searchTerm.term.toLowerCase() ?? "");
+  //   const termMatch2 = commission.userFirstname
+  //     ?.toLowerCase()
+  //     .includes(searchTerm.term.toLowerCase() ?? "");
+  //   const termMatch3 = commission.userLastname
+  //     ?.toLowerCase()
+  //     .includes(searchTerm.term.toLowerCase() ?? "");
 
-    return type && (termMatch || termMatch2 || termMatch3) && status;
+  //   // const status = commission.errandStatus.includes(searchTerm.status);
+  //   const status = commission.errandStatus === searchTerm.status; // Compare directly instead of using includes
+
+  //   return type && (termMatch || termMatch2 || termMatch3) && status;
+  // });
+
+  // filter fix 
+  const filterErrands = commissions.filter((commission) => {
+    const type = searchTerm.type
+      ? commission.commissionType?.toLowerCase() === searchTerm.type.toLowerCase()
+      : true;
+
+    const termMatch =
+      searchTerm.term &&
+      [commission.commissionTitle, commission.userFirstname, commission.userLastname]
+        .map((field) => field?.toLowerCase() ?? "")
+        .some((field) => field.includes(searchTerm.term.toLowerCase()));
+
+    const status = searchTerm.status
+      ? commission.errandStatus === searchTerm.status
+      : true;
+
+    return type && (!searchTerm.term || termMatch) && status;
   });
 
   return (
@@ -142,7 +163,7 @@ function Ongoing() {
             <option value="">Status</option>
             <option value="Taken">Pending</option>
             <option value="Complete">Complete</option>
-            <option value="Cancel">Cancel</option>
+            <option value="Cancelled">Cancel</option>
             <option value="Ongoing">Ongoing</option>
             <option value="Complete Paid">Complete Paid</option>
           </select>
