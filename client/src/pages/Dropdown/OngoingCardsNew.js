@@ -39,8 +39,9 @@ function OngoingCardsNew(props) {
     // Determine chip colour props based on status
     const chipColor =
         status === "Complete" ? "success" :
-            status === "Ongoing" ? "warning" :
-                status === "Cancelled" ? "danger" : "default";
+            status === "Complete Paid" ? "primary" :
+                status === "Ongoing" ? "warning" :
+                    status === "Cancelled" ? "danger" : "default";
 
     const { user } = useAuth();
     const userID = user.userID;
@@ -57,6 +58,21 @@ function OngoingCardsNew(props) {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [inputValue, setInputValue] = useState({ feedbacks: "" });
+
+    const [isPaymentDisabled, setPaymentDisabled] = useState(true);
+    const [clickedFeedback, setClickedFeedback] = useState({}); // feedback or feedbacked render
+
+    // // Load state from local storage on component mount
+    useEffect(() => {
+        const storedFeedbackStatus = JSON.parse(localStorage.getItem("clickedFeedback")) || {};
+        const storedPaymentStatus = JSON.parse(localStorage.getItem("paymentStatus")) || {};
+
+        setClickedFeedback(storedFeedbackStatus);
+        if (storedPaymentStatus[props.comID]) {
+            setPaymentDisabled(false); // Enable payment button if stored as enabled
+        }
+    }, [props.comID]);
+
 
     //Alert feedback
     const [message, setMessage] = useState("");
@@ -141,6 +157,24 @@ function OngoingCardsNew(props) {
                     // modal will pop-up in 2 seconds
                     handleOpen();
                 }, 2000);
+
+                // Enable the payment button
+                setPaymentDisabled(false);
+
+                // // Save the state in localStorage
+                // const updatedPaymentStatus = JSON.parse(localStorage.getItem("paymentStatus")) || {};
+                // updatedPaymentStatus[commissionID] = true; // Mark the payment button enabled for this commission
+                // localStorage.setItem("paymentStatus", JSON.stringify(updatedPaymentStatus));
+
+                // Update button name to "Feedbacked" and disable it
+                const updatedFeedbackStatus = { ...clickedFeedback, [commissionID]: true };
+                setClickedFeedback(updatedFeedbackStatus);
+                localStorage.setItem("clickedFeedback", JSON.stringify(updatedFeedbackStatus));
+
+                // Enable the payment button
+                const updatedPaymentStatus = { ...isPaymentDisabled, [commissionID]: true };
+                setPaymentDisabled(false);
+                localStorage.setItem("paymentStatus", JSON.stringify(updatedPaymentStatus));
 
                 //feedback.commissionID = fetchLoc().commissionID;
                 const response = await axios.post("http://localhost:8800/rate", feedback);
@@ -470,11 +504,13 @@ function OngoingCardsNew(props) {
                                     <button
                                         onClick={handleOpenModal} // props 
                                         className="ongoing__cards__button__feedback"
+                                        disabled={clickedFeedback[props.comID]} // Disable button if it's "Feedbacked"
                                     >
-                                        Feedback
+                                        {clickedFeedback[props.comID] ? "Feedbacked" : "Feedback"}
                                     </button>
                                     <button
                                         className="ongoing__cards__button"
+                                        disabled={isPaymentDisabled}
                                         onClick={() => {
                                             // props
                                             handlePayment(

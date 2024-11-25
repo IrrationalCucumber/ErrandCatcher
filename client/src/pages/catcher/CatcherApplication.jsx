@@ -27,7 +27,7 @@ import ViewProfile from "../profile/ViewProfile";
 import { Box } from "@mui/material";
 import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
-import CancelIcon from "@mui/icons-material/Cancel";
+import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import PendingOutlinedIcon from "@mui/icons-material/PendingOutlined";
 import DoDisturbAltOutlinedIcon from "@mui/icons-material/DoDisturbAltOutlined";
 
@@ -155,7 +155,7 @@ function Application() {
       </>
     ) : applicant.applicationStatus === "Cancelled" ? (
       <>
-        <CancelIcon style={{ color: "darkred" }} />
+        <CancelOutlinedIcon style={{ color: "darkred" }} />
         <span> Canceled</span>
       </>
     ) : applicant.applicationStatus === "Pending" ? (

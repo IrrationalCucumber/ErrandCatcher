@@ -22,8 +22,9 @@ import OngoingCardsNew from "../Dropdown/OngoingCardsNew";
 
 import DateRangeOutlinedIcon from "@mui/icons-material/DateRangeOutlined";
 import AssignmentTurnedInOutlinedIcon from "@mui/icons-material/AssignmentTurnedInOutlined";
-import CancelIcon from "@mui/icons-material/Cancel";
+import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
+import RotateRightOutlinedIcon from "@mui/icons-material/RotateRightOutlined";
 import { Box } from "@mui/material";
 
 function CommissionPage() {
@@ -217,6 +218,7 @@ function CommissionPage() {
               name="status"
             >
               <option value="">Status</option>
+              <option value="Ongoing">Ongoing</option>
               <option value="For Payment">For Payment</option>
               <option value="Completed">Completed</option>
               <option value="Cancelled">Cancelled</option>
@@ -235,7 +237,8 @@ function CommissionPage() {
             data={currentItems.map((commission, rowIndex) => [
               `${commission.userFirstname} ${commission.userLastname}`,
               commission.commissionTitle,
-              commission.commissionStart,
+              // commission.commissionStart,
+              DisplayDate(commission.commissionStartDate),
               // DisplayDate(commission.commissionDeadline),
               <Box display="flex" alignItems="center" gap={1}>
                 < DateRangeOutlinedIcon
@@ -244,23 +247,28 @@ function CommissionPage() {
                 {DisplayDate(commission.commissionDeadline)}
               </Box>,
               // commission.errandStatus,
-              commission.errandStatus === "Completed" ? (
+              commission.transStatus === "Completed" ? (
                 <>
                   <AssignmentTurnedInOutlinedIcon style={{ color: "green" }} />
                   <span> Completed</span>
                 </>
-              ) : commission.errandStatus === "Canceled" ? (
+              ) : commission.transStatus === "Cancelled" ? (
                 <>
-                  <CancelIcon style={{ color: "orange" }} />
+                  <CancelOutlinedIcon style={{ color: "orange" }} />
                   <span> Canceled</span>
                 </>
-              ) : commission.errandStatus === "For Payment" ? (
+              ) : commission.transStatus === "For Payment" ? (
                 <>
                   <PaymentsOutlinedIcon style={{ color: "brown" }} />
                   <span> For Payment</span>
                 </>
+              ) : commission.transStatus === "Ongoing" ? (
+                <>
+                  <RotateRightOutlinedIcon style={{ color: "#378ce7" }} />
+                  <span> Ongoing</span>
+                </>
               ) : null,
-              commission.errandStatus === "Ongoing" ? (
+              commission.transStatus === "Ongoing" ? (
                 <>
                   <button
                     className="cancel-btn"
