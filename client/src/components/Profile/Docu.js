@@ -12,6 +12,7 @@ function Docu(props) {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        zIndex: "50",
     };
 
     const popupInnerStyle = {
