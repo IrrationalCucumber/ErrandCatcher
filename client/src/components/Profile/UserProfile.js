@@ -567,42 +567,7 @@ export function ViewUserProfile(props) {
               ) : null
             }
           </Docu>
-          {/* 
-            CHANGE TO PROPERLY DISPLAY IDs
-          */}
-          {
-            //display sumbitted IDs of user
-            props.verFront || props.verBack ? (
-              <>
-                <div className="id_1">
-                  <img
-                    src={`http://localhost:8800/images/docu/${props.verFront}`}
-                    alt="Front"
-                  />
-                </div>
-                <div className="id_2">
-                  <img
-                    src={`http://localhost:8800/images/docu/${props.verBack}`}
-                    alt="Back"
-                  />
-                </div>
-              </>
-            ) : null
-          }
-          {
-            //display sumbitted docs/additional ids of user
-            // driver license additional info fetch
-            props.verDoc1 ? (
-              <>
-                <div className="id_1">
-                  <img
-                    src={`http://localhost:8800/images/docu/${props.verDoc1}`}
-                    alt="License"
-                  />
-                </div>
-              </>
-            ) : null
-          }
+
         </div>
 
         {/* Right Profile Section */}
