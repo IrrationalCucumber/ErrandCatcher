@@ -130,6 +130,56 @@ const ErrandPage = () => {
     }
   };
 
+  //apply for errand
+  // Application state
+  const [application, setApplication] = useState({
+    catcherID: "",
+    comID: "",
+    applicationDate: "",
+  });
+
+  //set variables for notification
+  const [notif, setNotif] = useState({
+    userID: "", //this is the employer/ userID of the commission
+    notificationType: "", //notif description
+    notifDesc: "", //contents of the notif
+  });
+  //get current date
+  const getCurrentDate = () => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed, so add 1
+    const day = String(currentDate.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+  //button clicked apply
+  const handleApply = async (e) => {
+    try {
+      //console.log(userID); // Check if userID is correct
+
+      //assign values to the variables in application
+      application.applicationDate = getCurrentDate();
+      application.comID = commissionID;
+      application.catcherID = user.userID;
+
+      console.log(application); // Check the updated commission object
+      await axios.post("http://localhost:8800/apply", application);
+
+      //add a notification to the commission's employer
+      notif.notifDesc = "A Catcher has applied to on of your errand";
+      notif.userID = commission.employerID;
+      notif.notificationType = "Errand Application";
+
+      await axios.post("http://localhost:8800/notify", notif);
+      alert("You have applied to this Errand!");
+      //alert(application.qualifications);
+      //navigate(`/application/${userID}`);
+      //console.log(notif); // check variables state
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   console.log(commission);
   return (
     <>
@@ -217,7 +267,7 @@ const ErrandPage = () => {
               isApplied
                 ? null
                 : (e) => {
-                    setOpen(true);
+                    handleApply(true);
                   }
             }
             style={{

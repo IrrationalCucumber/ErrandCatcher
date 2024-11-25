@@ -4,7 +4,15 @@ import StarRating from "../Display/StarRating";
 import ViewFeedback from "./ViewFeedback";
 import Docu from "./Docu";
 import { Link } from "react-router-dom";
-import { Button, Input, Sheet, Typography } from "@mui/joy";
+import {
+  Button,
+  Chip,
+  FormLabel,
+  Input,
+  Sheet,
+  Stack,
+  Typography,
+} from "@mui/joy";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
@@ -22,7 +30,6 @@ function UserProfile(props) {
   const [buttonPopup1, setButtonPopup1] = useState(false);
   const [buttonPopup2, setButtonPopup2] = useState(false);
 
-
   const handleImage = (e) => {
     const file = e.target.files[0];
     setImage(file);
@@ -37,6 +44,8 @@ function UserProfile(props) {
     setImage(null);
     setPreview(null);
   };
+  //skills of user
+  const skillsArray = props.skills ? props.skills.split(",") : [];
 
   return (
     <>
@@ -84,7 +93,6 @@ function UserProfile(props) {
               )}
             </>
           )}
-
           <div className="upload-container">
             <input
               type="file"
@@ -121,10 +129,8 @@ function UserProfile(props) {
               <FileUploadIcon />
             </Button>
           </div>
-
           <div className="info">
             {/* {props.address} */}
-
             <input
               type="text"
               // className="profile__info__left"
@@ -163,7 +169,35 @@ function UserProfile(props) {
               onChange={props.handleChange}
               disabled={!props.isEditing}
             />
-            <br />
+            <br />{" "}
+            <div>
+              <Typography level="h4" sx={{ marginBottom: 1 }}>
+                Skills:
+              </Typography>
+              {skillsArray.length > 0 ? ( // Check if there are any skills to display
+                <Stack
+                  direction="row"
+                  flexWrap="wrap"
+                  sx={{ gap: 1 }} // Ensures spacing between items
+                >
+                  {skillsArray.map((skill, index) => (
+                    <Chip
+                      key={index}
+                      variant="soft" // Gives a subtle background color
+                      color="primary" // Choose the color theme (primary, secondary, etc.)
+                      size="md" // Medium size for better visibility
+                    >
+                      {skill.trim()} {/* Trims any unnecessary whitespace */}
+                    </Chip>
+                  ))}
+                </Stack>
+              ) : (
+                // Display a placeholder message if no skills are provided
+                <Typography level="body2" color="neutral">
+                  No skills provided.
+                </Typography>
+              )}
+            </div>
           </div>
           <br />
           <textarea
@@ -171,9 +205,10 @@ function UserProfile(props) {
             placeholder="Description"
             // onChange={handleChange}
             name="desc"
+            onChange={props.handleChange}
             value={props.desc}
+            disabled={!props.isEditing}
           ></textarea>
-
           {props.type === "Catcher" && (
             <div className="rating">
               Overall Rating:
@@ -186,49 +221,48 @@ function UserProfile(props) {
             </div>
           )}
           <div className="buttons">
-            {(props.type === "Catcher" && 
-              <button onClick={() => setButtonPopup1(true)} >Reviews</button>
+            {props.type === "Catcher" && (
+              <button onClick={() => setButtonPopup1(true)}>Reviews</button>
             )}
-            <button onClick={() => setButtonPopup2(true)} >Documents</button>
+            <button onClick={() => setButtonPopup2(true)}>Documents</button>
           </div>
           <ViewFeedback trigger={buttonPopup1} setTrigger={setButtonPopup1}>
             <h1>Feedback</h1>
           </ViewFeedback>
           <Docu trigger={buttonPopup2} setTrigger={setButtonPopup2}>
-          {
-            //display sumbitted IDs of user
-            props.verFront || props.verBack ? (
-              <>
-                <div className="id_1">
-                  <img
-                    src={`http://localhost:8800/images/docu/${props.verFront}`}
-                    alt="Front"
-                  />
-                </div>
-                <div className="id_1">
-                  <img
-                    src={`http://localhost:8800/images/docu/${props.verBack}`}
-                    alt="Back"
-                  />
-                </div>
-              </>
-            ) : null
-          }
-          {
-            //display sumbitted docs/additional ids of user
-            props.doc1 ? (
-              <>
-                <div className="id_1">
-                  <img
-                    src={`http://localhost:8800/images/docu/${props.doc1}`}
-                    alt="License"
-                  />
-                </div>
-              </>
-            ) : null
-          }
+            {
+              //display sumbitted IDs of user
+              props.verFront || props.verBack ? (
+                <>
+                  <div className="id_1">
+                    <img
+                      src={`http://localhost:8800/images/docu/${props.verFront}`}
+                      alt="Front"
+                    />
+                  </div>
+                  <div className="id_1">
+                    <img
+                      src={`http://localhost:8800/images/docu/${props.verBack}`}
+                      alt="Back"
+                    />
+                  </div>
+                </>
+              ) : null
+            }
+            {
+              //display sumbitted docs/additional ids of user
+              props.doc1 ? (
+                <>
+                  <div className="id_1">
+                    <img
+                      src={`http://localhost:8800/images/docu/${props.doc1}`}
+                      alt="License"
+                    />
+                  </div>
+                </>
+              ) : null
+            }
           </Docu>
-          
         </div>
 
         {/* Right Profile Section */}
@@ -375,6 +409,9 @@ export default UserProfile;
  * ADREAN 10/25/2024
  */
 export function ViewUserProfile(props) {
+  //skills
+  //split it into array
+  const skillsArray = props.skills ? props.skills.split(",") : [];
   return (
     <>
       <div className="profile-page-container">
@@ -439,6 +476,35 @@ export function ViewUserProfile(props) {
             </Typography>
 
             <br />
+            <div>
+              <Typography level="h4" sx={{ marginBottom: 1 }}>
+                Skills:
+              </Typography>
+              {skillsArray.length > 0 ? ( // Check if there are any skills to display
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  flexWrap="wrap"
+                  sx={{ gap: 1 }} // Ensures spacing between items
+                >
+                  {skillsArray.map((skill, index) => (
+                    <Chip
+                      key={index}
+                      variant="soft" // Gives a subtle background color
+                      color="primary" // Choose the color theme (primary, secondary, etc.)
+                      size="md" // Medium size for better visibility
+                    >
+                      {skill.trim()} {/* Trims any unnecessary whitespace */}
+                    </Chip>
+                  ))}
+                </Stack>
+              ) : (
+                // Display a placeholder message if no skills are provided
+                <Typography level="body2" color="neutral">
+                  No skills provided.
+                </Typography>
+              )}
+            </div>
           </div>
           <br />
           <textarea

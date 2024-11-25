@@ -30,6 +30,7 @@ function ViewProfile(id) {
     desc: "",
     profileImage: "",
     status: "",
+    skills: "",
   });
 
   //pre-fill the fields
@@ -58,6 +59,7 @@ function ViewProfile(id) {
           desc: retrievedAccount.userDesc,
           profileImage: retrievedAccount.profileImage,
           status: retrievedAccount.accountStatus,
+          skills: retrievedAccount.userQualification,
         });
       } catch (err) {
         console.log(err);
@@ -136,6 +138,7 @@ function ViewProfile(id) {
         verBack={docs.backID}
         verDoc1={docs.doc1}
         verDoc2={docs.doc2}
+        skills={account.skills}
       />
     </div>
   );

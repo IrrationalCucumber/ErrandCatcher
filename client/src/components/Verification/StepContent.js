@@ -9,9 +9,15 @@ import {
   ModalDialog,
   DialogTitle,
   Divider,
+  Typography,
   Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Chip,
+  ChipDelete,
 } from "@mui/joy";
-import { Image, WarningRounded, Verified } from "@mui/icons-material";
+import { Image, WarningRounded, Verified, Add } from "@mui/icons-material";
 import { useAuth } from "../AuthContext";
 import axios from "axios";
 import "./css/style.css";
@@ -28,74 +34,69 @@ export default function StepContent() {
 export function Step1({ onNext, details, setDetail }) {
   const { user } = useAuth();
   const userID = user.userID;
-  //detaill to be passed to step 2
+  const [error, setError] = useState("");
+  //SKill tags
+  // State to hold the selected skills
+  const [selectedSkills, setSelectedSkills] = useState([]);
+  const [inputSkill, setInputSkill] = useState("");
+
+  // Predefined list of skills (you can fetch this from the backend)
+  const availableSkills = [
+    "Communication",
+    "Teamwork",
+    "Problem Solving",
+    "Hardworking",
+    "Leadership",
+    "Time Management",
+    "Carpentry",
+    "Plumbing",
+    "Gadening",
+    "Programming",
+  ];
+
+  // Function to add a skill to the selectedSkills array
+  const handleAddSkill = (skill) => {
+    if (!selectedSkills.includes(skill)) {
+      setSelectedSkills([...selectedSkills, skill]);
+    }
+  };
+
+  // Function to add a custom skill from input
+  const handleAddCustomSkill = () => {
+    if (inputSkill && !selectedSkills.includes(inputSkill)) {
+      setSelectedSkills([...selectedSkills, inputSkill]);
+      setInputSkill(""); // Clear the input
+    }
+  };
+
+  // Function to remove a skill from the selectedSkills array
+  const handleRemoveSkill = (skillToRemove) => {
+    setSelectedSkills(
+      selectedSkills.filter((skill) => skill !== skillToRemove)
+    );
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(details);
-    if (
-      details.fname === "" ||
-      details.lname === "" ||
-      details.email == "" ||
-      details.gender == "" ||
-      details.bday === "" ||
-      details.address == null ||
-      details.contact == null
-    ) {
+    if (details === null) {
       setAlertOpen(true);
-    } else if (parseInt(details.age) < 18) {
-      setAgeLimit(true);
     } else {
+      if (!selectedSkills) {
+        setError("Please list your skills.");
+        return;
+      }
+      // Clear errors if all checks pass
+      setError("");
+      // Create a combined string for qualifications (general job)
+      const qualificationsString = `${selectedSkills}`;
+      details.skills = qualificationsString;
       onNext(); // Move to the next step
     }
   };
 
-  useEffect(() => {
-    const fetchDetails = async () => {
-      try {
-        const res = await axios.get(`http://localhost:8800/user/${userID}`);
-        const d = res.data[0];
-
-        setDetail({
-          fname: d.userFirstname,
-          lname: d.userLastname,
-          bday: new Date(d.userBirthday).toISOString().substr(0, 10),
-          gender: d.userGender,
-          address: d.userAddress,
-          email: d.userEmail,
-          contact: d.userContactNum,
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchDetails();
-  }, [userID]);
-
   const [alertOpen, setAlertOpen] = useState(false);
   const [ageLimit, setAgeLimit] = useState(false);
-
-  const handleChange = (e) => {
-    // For the 'gender' field, directly set the value without using spread syntax
-    if (e.target.name === "gender") {
-      setDetail((prev) => ({ ...prev, gender: e.target.value }));
-    } else {
-      // For other fields, use spread syntax as before
-      setDetail((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-    }
-  };
-
-  // Get the current date and calculate the date (18 years ago)
-  const getMaxDate = () => {
-    const today = new Date();
-    const year = today.getFullYear() - 18; // adjust year restricted
-    const month = today.getMonth() + 1;
-    const day = today.getDate();
-
-    // Format the date as yyyy-mm-dd
-    return `${year}-${month < 10 ? "0" + month : month}-${day < 10 ? "0" + day : day
-      }`;
-  };
 
   return (
     <div className="step">
@@ -103,85 +104,105 @@ export function Step1({ onNext, details, setDetail }) {
       {/*step 1 for input logic part is lacking where user input auto fill up */}
       <form onSubmit={handleSubmit} className="form-container">
         <div className="form-group">
-          <div className="input-rows">
-            <label className="label">Full Name</label>
-            <input
-              type="text"
-              placeholder="First name"
-              name="fname"
-              value={details.fname}
-              onChange={handleChange}
-            // required
-            ></input>
-            <input
-              type="text"
-              placeholder="Last name"
-              value={details.lname}
-              name="lname"
-              onChange={handleChange}
-            // required
-            ></input>
-          </div>
+          <>
+            {/* General (Indoor/Outdoor) Qualification */}
+            {/* General Experience */}
 
-          <div className="input-rows">
-            <label className="label">Email Address</label>
-            <input
-              type="text"
-              value={details.email}
-              name="email"
-              placeholder="Enter your Email Address"
-              onChange={handleChange}
-            // required
-            ></input>
-          </div>
+            <FormControl>
+              <FormLabel>
+                <Typography color="neutral" level="title-md" variant="plain">
+                  Please Select or Add your skill
+                </Typography>
+              </FormLabel>
 
-          <div className="input-rows">
-            <label className="label">Gender</label>
-            <select
-              className="select"
-              value={details.gender}
-              name="gender"
-              onChange={handleChange}
-            >
-              <option value=""></option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
-          </div>
+              {/* Predefined skills list */}
+              <FormLabel>
+                <Typography color="primary" level="body-md" variant="plain">
+                  Select your Skill/s here:
+                </Typography>
+              </FormLabel>
 
-          <div className="input-rows">
-            <label className="label">Birthdate</label>
-            <input
-              type="date"
-              value={details.bday}
-              name="bday"
-              onChange={handleChange}
-              max={getMaxDate()}
-            ></input>
-          </div>
+              <div>
+                {availableSkills.map((skill) => (
+                  <Chip
+                    key={skill}
+                    onClick={() => handleAddSkill(skill)}
+                    color="success"
+                    variant="solid"
+                    size="lg"
+                    startDecorator={<Add />}
+                  >
+                    {skill}
+                  </Chip>
+                ))}
+              </div>
 
-          <div className="input-rows">
-            <label className="label">Home Address</label>
-            <input
-              type="text"
-              placeholder="Enter your address"
-              name="address"
-              value={details.address}
-              onChange={handleChange}
-            // required
-            ></input>
-          </div>
-          <div className="input-rows">
-            <label className="label">Contact Number</label>
-            <input
-              type="number"
-              value={details.contact}
-              name="contact"
-              placeholder="Enter your Contact Number"
-              onChange={handleChange}
-            // required
-            ></input>
-          </div>
+              {/* Custom skill input */}
+
+              <FormLabel>
+                <Typography color="primary" level="body-md" variant="plain">
+                  Or your specific skills here:
+                </Typography>
+              </FormLabel>
+
+              <Input
+                type="text"
+                value={inputSkill}
+                onChange={(e) => setInputSkill(e.target.value)}
+                placeholder="Enter a skill"
+              />
+              <Box margin={1} textAlign="e">
+                <Button
+                  onClick={handleAddCustomSkill}
+                  size="md"
+                  variant="outlined"
+                >
+                  Add Skill
+                </Button>
+              </Box>
+
+              {/* Display selected skills */}
+              <div>
+                <FormLabel>
+                  <Typography color="neutral" level="title-lg" variant="plain">
+                    Skills you have selected:
+                  </Typography>
+                </FormLabel>
+
+                {selectedSkills.length > 0 ? (
+                  selectedSkills.map((skill) => (
+                    <Chip
+                      key={skill}
+                      color="primary"
+                      variant="solid"
+                      size="lg"
+                      endDecorator={
+                        <ChipDelete onDelete={() => handleRemoveSkill(skill)} />
+                      }
+                    >
+                      {skill}
+                    </Chip>
+                  ))
+                ) : (
+                  <FormLabel>
+                    <Typography
+                      color="warning"
+                      level="body-md"
+                      variant="outlined"
+                    >
+                      No skills selected.
+                    </Typography>
+                  </FormLabel>
+                )}
+              </div>
+
+              {/* Comma-separated string of selected skills */}
+              {/* <div>
+                      <h4>Skills as Comma-Separated String:</h4>
+                      <p>{selectedSkills.join(",")}</p>
+                    </div> */}
+            </FormControl>
+          </>
           <div className="step__button">
             <button className="btnn" type="submit">
               Next
@@ -609,8 +630,8 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
       //update accound data
       await axios.put("http://localhost:8800/update-info/" + userID, details);
       //add a notification to the admin
-      notif.notifDesc = `${Capitalize(details.fname) + " " + Capitalize(details.lname)
-        } has submitted a Verification request`;
+      notif.notifDesc = `${user.userID}
+        has submitted a Verification request`;
       notif.userID = 1;
       notif.notificationType = "Verification Request";
       await axios.post("http://localhost:8800/notify", notif);
@@ -624,15 +645,13 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
 
       <div className="form-container">
         <div className="form-details">
-          <p><strong>First Name:</strong> {details.fname}</p>
-          <p><strong>Last Name:</strong> {details.lname}</p>
-          <p><strong>Sex:</strong> {details.gender}</p>
-          <p><strong>Birthday:</strong> {details.bday}</p>
-          <p><strong>Email:</strong> {details.email}</p>
-          <p><strong>Contact #:</strong> {details.contact}</p>
+          <p>
+            <strong>Skills:</strong> <p>{details.skills}</p>
+          </p>
         </div>
 
         <div className="image-previews">
+          <strong>Identification</strong>
           {images.preview1 && (
             <img
               src={images.preview1}
@@ -648,14 +667,16 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
             />
           )}
           {images.preview3 && (
-            <img
-              src={images.preview3}
-              className="step__img__preview"
-              alt="Preview 3"
-            />
+            <>
+              <strong>Driver's License</strong>
+              <img
+                src={images.preview3}
+                className="step__img__preview"
+                alt="Preview 3"
+              />
+            </>
           )}
         </div>
-
 
         <LoadingBackdrop
           open={loading}
@@ -743,8 +764,7 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
           </Modal>
         </div>
       </div>
-
-    </div >
+    </div>
   );
 }
 //Success

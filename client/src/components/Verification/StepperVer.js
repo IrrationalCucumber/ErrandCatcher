@@ -14,22 +14,14 @@ const steps = [
   "Input Basic Information",
   "Upload Valid Documents",
   "Review Summary",
-  "Done"
+  "Done",
 ];
 
 export default function StepperVer() {
   const [activeStep, setActiveStep] = useState(0);
   // variables to store step's user data
   //data will be pass around
-  const [details, setDetails] = useState({
-    fname: "",
-    lname: "",
-    bday: "",
-    gender: "",
-    address: "",
-    email: "",
-    contact: "",
-  });
+  const [details, setDetails] = useState({ skills: "" });
   const [images, setImages] = useState({
     image1: null,
     image2: null,
@@ -106,7 +98,7 @@ export default function StepperVer() {
                     "& .MuiStepLabel-label": {
                       fontSize: "1rem",
                       fontWeight: 500,
-                      lineHeight: "2rem"
+                      lineHeight: "2rem",
                     },
                   }}
                 >
