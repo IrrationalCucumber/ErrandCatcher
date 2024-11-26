@@ -31,6 +31,7 @@ function ViewProfile(id) {
     profileImage: "",
     status: "",
     skills: "",
+    type: "",
   });
 
   //pre-fill the fields

@@ -525,7 +525,11 @@ export function ViewUserProfile(props) {
           </div>
 
           <div className="buttons">
-            <button onClick={() => setButtonPopup1(true)}>Reviews</button>
+            {/* {props.type === "Catcher" && (
+              // -- need new endpoint for view applicants feedback display
+              <button onClick={() => setButtonPopup1(true)}>Reviews</button>
+            )} */}
+            {/* <button onClick={() => setButtonPopup1(true)}>Reviews</button> */}
             <button onClick={() => setButtonPopup2(true)}>Documents</button>
           </div>
 
