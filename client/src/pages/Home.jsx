@@ -84,6 +84,13 @@ const Home = () => {
                 width: "90%",
                 height: "500px",
                 overflowY: "auto",
+                display: "flex",
+                flexDirection: "column",
+                // justifyContent: "center",
+                // alignContent: "center",
+                margin: "auto",
+                marginTop: "52px",
+                marginBottom: "52px",
               }}
             >
               <MyFeedback />
