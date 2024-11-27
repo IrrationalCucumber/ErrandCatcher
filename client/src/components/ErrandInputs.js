@@ -310,7 +310,9 @@ function ErrandInputs(props) {
             value={props.dlValue}
             slotProps={{
               input: {
-                min: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split("T")[0],
+                min: new Date(new Date().setDate(new Date().getDate() + 1))
+                  .toISOString()
+                  .split("T")[0],
               },
             }}
           />
@@ -486,9 +488,6 @@ function ErrandInputs(props) {
                   <Typography color="neutral" level="body-sm" variant="plain">
                     15/km + ₱100
                   </Typography>
-                  <Typography color="neutral" level="body-sm" variant="plain">
-                    <i>Suggested Pay: {props.minimum}</i>
-                  </Typography>
                   {props.distance ? (
                     <Typography color="neutral" level="body-sm" variant="plain">
                       {props.distance} km
@@ -496,8 +495,13 @@ function ErrandInputs(props) {
                   ) : null}{" "}
                 </>
               )}
+            {!!props.minimum ? (
+              <Typography color="neutral" level="body-sm" variant="plain">
+                <i>Suggested Pay: {props.minimum}</i>
+              </Typography>
+            ) : null}
             <Typography color="neutral" level="body-sm" variant="plain">
-              5% Plaftform fee
+              5% Deduction as Plaftform fee
             </Typography>
           </div>
         </div>
