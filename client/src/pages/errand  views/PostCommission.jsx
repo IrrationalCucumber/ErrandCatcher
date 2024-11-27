@@ -78,7 +78,7 @@ const PostCommission = () => {
   };
 
   //set minimum pay for delvery and transpo
-  const [minimum, setMinimum] = useState();
+  const [minimum, setMinimum] = useState(500);
   const handleStartLocationSelect = (coordinates) => {
     setCommission((prev) => ({
       ...prev,
@@ -104,7 +104,7 @@ const PostCommission = () => {
       const baseAmount = 100;
       const total = Math.round(km) * 15 + baseAmount;
       // Correctly update commission state without losing other fields
-      setMinimum(total);
+      setMinimum(minimum + total);
       setCommission((prev) => ({
         ...prev,
         comPay: total,
