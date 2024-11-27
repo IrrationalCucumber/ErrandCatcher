@@ -127,14 +127,14 @@ const userController = {
   putUpdateUser: (req, res) => {
     const userID = req.params.id;
     const updatedData = req.body;
-    //encrypt new password
-    // bcrypt.hash(updatedData.password, saltRounds, (err, hash) => {
-      // if (err) {
-      //   console.error("Error hashign passowrd", err);
-      //   res.status(500).json({ error: "Error processing password" });
-      //   return;
-      // } //replact text password to hashed password
-      // updatedData.password = hash;
+    // encrypt new password
+    bcrypt.hash(updatedData.password, saltRounds, (err, hash) => {
+      if (err) {
+        console.error("Error hashign passowrd", err);
+        res.status(500).json({ error: "Error processing password" });
+        return;
+      } //replact text password to hashed password
+      updatedData.password = hash;
       User.putUpdateUserById(userID, updatedData, (error, result) => {
         if (error) {
           console.error("Error updating user:", error);
@@ -151,7 +151,8 @@ const userController = {
         // User updated successfully
         res.status(200).json({ message: "User updated successfully" });
       });
-    // });
+
+    });
   },
   //Update user status
   putChangeStatusByUserID: (req, res) => {
