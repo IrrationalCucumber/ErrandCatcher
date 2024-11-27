@@ -14,9 +14,10 @@ function ViewFeedback(props) {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-};
+    zIndex: "50",
+  };
 
-const popupInnerStyle = {
+  const popupInnerStyle = {
     position: 'relative',
     padding: '32px',
     width: '100%',
@@ -24,9 +25,9 @@ const popupInnerStyle = {
     height: '70vh',
     overflowY: 'auto',
     backgroundColor: '#FFF',
-};
+  };
 
-const closeButtonStyle = {
+  const closeButtonStyle = {
     position: 'absolute',
     top: '16px',
     right: '16px',
@@ -34,17 +35,17 @@ const closeButtonStyle = {
     border: 'none',
     cursor: 'pointer',
     background: 'none'
-};
+  };
   return (props.trigger) ? (
     <div style={popupStyle}>
       <div style={popupInnerStyle}>
         <button style={closeButtonStyle} onClick={() => props.setTrigger(false)}
-          >
-            <CloseIcon sx={{ fontSize: 20 }}></CloseIcon>
+        >
+          <CloseIcon sx={{ fontSize: 20 }}></CloseIcon>
         </button>
-        { props.children }
+        {props.children}
         {/*Display feedbacks received from catcher */}
-        <MyFeedback/>
+        <MyFeedback />
       </div>
     </div>
   ) : null;
