@@ -3,6 +3,7 @@ import "./profile.css";
 import StarRating from "../Display/StarRating";
 import ViewFeedback from "./ViewFeedback";
 import Docu from "./Docu";
+import Resetpassword from "./Resetpassword";
 import { Link } from "react-router-dom";
 import {
   Button,
@@ -29,6 +30,7 @@ function UserProfile(props) {
 
   const [buttonPopup1, setButtonPopup1] = useState(false);
   const [buttonPopup2, setButtonPopup2] = useState(false);
+  const [buttonPopup3, setButtonPopup3] = useState(false);
 
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -235,6 +237,8 @@ function UserProfile(props) {
               <button onClick={() => setButtonPopup1(true)}>Reviews</button>
             )}
             <button onClick={() => setButtonPopup2(true)}>Documents</button>
+
+            <button onClick={() => setButtonPopup3(true)}>Change Password?</button>
           </div>
           <ViewFeedback trigger={buttonPopup1} setTrigger={setButtonPopup1}>
             <h1>Feedback</h1>
@@ -273,6 +277,8 @@ function UserProfile(props) {
               ) : null
             }
           </Docu>
+          <Resetpassword trigger={buttonPopup3} setTrigger={setButtonPopup3}>
+          </Resetpassword>
         </div>
 
         {/* Right Profile Section */}
