@@ -229,6 +229,34 @@ select .display-data1 .error {
     background-color: #bbb;
 }
 
+
+.profile-right .buttonchange {
+    display: flex;
+    justify-content: start;
+    margin-top: 16px;
+}
+
+.profile-right .buttonchange button {
+    background-color: #ccc;
+    /* padding: 15px 30px; */
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    /* margin-right: 15px; */
+    cursor: pointer;
+    font-size: 14px;
+    width: 100%;
+    background-color: #e4dfdf88;
+    border: 1px solid #ccc;
+}
+
+.profile-right .buttonchange button:hover {
+    /* background-color: #bbb; */
+    /* background-color: #1679ab; */
+    background-color: #378ce7;
+    color: #fff;
+}
+
 .profile-right .buttons {
     display: flex;
     justify-content: center;
