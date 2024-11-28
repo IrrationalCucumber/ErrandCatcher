@@ -54,6 +54,7 @@ function Resetpassword(props) {
     const [iconlert, setIconLert] = useState(null);
     const [showAlert, setShowAlert] = useState(false);
 
+    const [strength, setStrength] = useState("");
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -105,6 +106,63 @@ function Resetpassword(props) {
             console.log(err);
         }
     }
+
+
+    function evaluatePasswordStrength(password) {
+        let score = 0;
+
+        if (!password) return "";
+
+        // Check password length
+        if (password.length > 8) score += 1;
+        // Contains lowercase
+        if (/[a-z]/.test(password)) score += 1;
+        // Contains uppercase
+        if (/[A-Z]/.test(password)) score += 1;
+        // Contains numbers
+        if (/\d/.test(password)) score += 1;
+        // Contains special characters
+        if (/[^A-Za-z0-9]/.test(password)) score += 1;
+
+        switch (score) {
+            case 0:
+            case 1:
+            case 2:
+                return "Weak";
+            case 3:
+                return "Medium";
+            case 4:
+            case 5:
+                return "Strong";
+        }
+    }
+
+    const getStrengthColor = (strength) => {
+        switch (strength) {
+            case "Weak":
+                return "red";
+            case "Medium":
+                return "orange";
+            case "Strong":
+                return "green";
+            default:
+                return "transparent";
+        }
+    };
+
+    const getStrengthWidth = (strength) => {
+        switch (strength) {
+            case "Weak":
+                return "30%";
+            case "Medium":
+                return "66%";
+            case "Strong":
+                return "100%";
+            default:
+                return "0";
+        }
+    };
+
 
 
     return (props.trigger) ? (
@@ -162,10 +220,46 @@ function Resetpassword(props) {
                                 id="password"
                                 name="password"
                                 value={account.password}
-                                onChange={handleChange}
+                                // onChange={handleChange}
+                                onChange={(event) => {
+                                    setAccount((prev) => ({
+                                        ...prev,
+                                        [event.target.name]: event.target.value,
+                                    }));
+                                    setStrength(
+                                        evaluatePasswordStrength(event.target.value)
+                                    );
+                                }}
                                 placeholder="Enter your new password"
                                 required
                             />
+                            {account.password && (
+                                <>
+                                    <div
+                                        className={`password-strength ${strength === "Weak"
+                                            ? "strength-weak"
+                                            : strength === "Medium"
+                                                ? "strength-medium"
+                                                : strength === "Strong"
+                                                    ? "strength-strong"
+                                                    : ""
+                                            }`}
+                                    >
+                                        Password strength: {strength}
+                                    </div>
+
+                                    <div className="strength-meter">
+                                        <div
+                                            className="strength-meter-fill"
+                                            style={{
+                                                width: getStrengthWidth(strength),
+                                                backgroundColor: getStrengthColor(strength),
+                                            }}
+                                        />
+                                    </div>
+                                </>
+                            )}
+
                             <br></br>
 
                             <label for="conPassword">Confirm New Password</label>
