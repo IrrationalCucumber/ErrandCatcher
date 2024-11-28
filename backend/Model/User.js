@@ -72,6 +72,21 @@ const User = {
       callback
     );
   },
+  // change and reset password user
+  putResetPasswordById: (id, userData, callback) => {
+    const { password } = userData;
+
+    db.query(
+      `UPDATE useraccount
+      SET password = ?
+    WHERE userID = ?`,
+      [
+        password,
+        id,
+      ],
+      callback
+    );
+  },
   //update pic of user
   putUpdatePic: (id, profile, callback) => {
     db.query(
