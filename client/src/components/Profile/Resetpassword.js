@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from "react";
+import axios from "axios";
 import CloseIcon from '@mui/icons-material/Close';
+import { useAuth } from "../AuthContext";
 
 function Resetpassword(props) {
     const popupStyle = {
@@ -36,6 +38,40 @@ function Resetpassword(props) {
         background: 'none'
     };
 
+    const { user } = useAuth();
+    const userID = user.userID;
+
+    const [account, setAccount] = useState({
+        password: "",
+        conPassword: "",
+    });
+
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setAccount((prevAccount) => ({
+            ...prevAccount,
+            [name]: value,
+        }));
+    };
+    console.log(account)
+
+
+
+
+    const changePassword = async (event) => {
+        event.preventDefault();
+        try {
+            // endpoint route
+            await axios.put("http://localhost:8800/resetpassword/" + userID, account);
+            // await axios.put("http://localhost:8800/update/" + userID, account);
+            console.log("send hopefully to newendpoint", account)
+
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
 
     return (props.trigger) ? (
         <div style={popupStyle}>
@@ -46,33 +82,37 @@ function Resetpassword(props) {
                 {props.children}
 
 
-                <div class="form-container">
-                    <div class="titlehead">
+                <div className="form-container">
+                    <h3 className="titlehead">
                         Change your Password
-                    </div>
+                    </h3>
 
-                    <form class="form">
-                        <div class="form-group">
+                    <form className="form"
+                        onSubmit={changePassword}
+                    >
+                        <div className="form-group">
                             <label for="email">New Password</label>
                             <input
                                 type="password"
                                 id="password"
-                                name="newpassword"
+                                name="password"
+                                value={account.password}
+                                onChange={handleChange}
                                 placeholder="Enter your new password"
                                 required
                             />
                             <br></br>
 
-                            <label for="email">Confirm New Password</label>
+                            {/* <label for="email">Confirm New Password</label>
                             <input
                                 type="password"
-                                id="password"
+                                id="conpassword"
                                 name="confirmpassword"
                                 placeholder="Try again, type your new password"
-                                required
-                            />
+                            // required
+                            /> */}
                         </div>
-                        <button class="form-submit-btn"
+                        <button className="form-submit-btn"
                             type="submit"
                         >
                             Change my Password
