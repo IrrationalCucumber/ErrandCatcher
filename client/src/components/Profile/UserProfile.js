@@ -157,7 +157,7 @@ function UserProfile(props) {
               disabled={!props.isEditing}
             />
             {/* password */}
-            <input
+            {/* <input
               type="password"
               // className="profile__info__left"
               className={`profile__info__left ${props.validationErrors.email ? "error" : ""
@@ -167,7 +167,7 @@ function UserProfile(props) {
               value={props.password}
               onChange={props.handleChange}
               disabled={!props.isEditing}
-            />
+            /> */}
             {/* {props.cnum} */}
             <input
               type="number"

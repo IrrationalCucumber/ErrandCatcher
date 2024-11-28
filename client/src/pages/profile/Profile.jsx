@@ -22,7 +22,7 @@ const Profile = () => {
   //variable for account details
   const [account, setAccount] = useState({
     username: "",
-    password: "", // comment ky mo error endpoint update..
+    // password: "", // comment ky mo error endpoint update..
     lname: "",
     fname: "",
     gender: "",
@@ -93,7 +93,6 @@ const Profile = () => {
   useEffect(() => {
     const fetchAccount = async () => {
       try {
-        // fetch user
         const res = await axios.get(`http://localhost:8800/user/${userID}`);
         const retrievedAccount = res.data[0];
         //format date
@@ -104,7 +103,7 @@ const Profile = () => {
         // Update the state with retrieved account data
         const updatedAccount = {
           username: retrievedAccount.username,
-          password: retrievedAccount.password,
+          // password: retrievedAccount.password,
           lname: retrievedAccount.userLastname,
           fname: retrievedAccount.userFirstname,
           gender: retrievedAccount.userGender,
@@ -366,7 +365,6 @@ const Profile = () => {
         rate={rating}
         type={tempAccount.type}
         desc={tempAccount.desc}
-        password={tempAccount.password}
         handleChange={handleChange}
         handleImage={handleImage}
         handleUpload={handleUpload}
