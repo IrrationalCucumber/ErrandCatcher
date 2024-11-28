@@ -238,7 +238,7 @@ function UserProfile(props) {
             )}
             <button onClick={() => setButtonPopup2(true)}>Documents</button>
 
-            <button onClick={() => setButtonPopup3(true)}>Change Password?</button>
+            {/* <button onClick={() => setButtonPopup3(true)}>Change Password?</button> */}
           </div>
           <ViewFeedback trigger={buttonPopup1} setTrigger={setButtonPopup1}>
             <h1>Feedback</h1>
@@ -398,6 +398,12 @@ function UserProfile(props) {
                 .split("T")[0]
             }
           ></input>
+
+          <div className="buttonchange">
+            <button onClick={() => setButtonPopup3(true)}>
+              Change Password?
+            </button>
+          </div>
 
           <div className="buttons">
             {props.isEditing ? (
