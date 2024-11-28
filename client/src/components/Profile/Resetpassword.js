@@ -100,7 +100,8 @@ function Resetpassword(props) {
             await axios.put("http://localhost:8800/resetpassword/" + userID, account);
             // await axios.put("http://localhost:8800/update/" + userID, account);
             console.log("send hopefully to newendpoint", account)
-            alert("Your new password is successful changed!");
+            alert("Your new password is successfully changed!");
+            window.location.reload();
 
         } catch (err) {
             console.log(err);
