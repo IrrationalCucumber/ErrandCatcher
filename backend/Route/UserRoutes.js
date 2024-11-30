@@ -13,6 +13,7 @@ router.get("/username/:id", userController.getUsername);
 router.get("/get-type/:id", userController.getType);
 router.put("/update/:id", userController.putUpdateUser);
 router.post("/update-pic/:id", userController.uploadProfileImage);
+router.put("/resetpassword/:id", userController.putResetPassword);
 // for admin
 //change userStatus
 router.put(

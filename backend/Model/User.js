@@ -36,7 +36,7 @@ const User = {
   putUpdateUserById: (id, userData, callback) => {
     const {
       username,
-      // password,
+      password,
       fname,
       lname,
       gender,
@@ -51,12 +51,12 @@ const User = {
     //, profileImage = ?
     db.query(
       `UPDATE useraccount
-      SET username = ?, userLastname = ?, userFirstname = ?, userGender =?, userEmail = ?,
+      SET username = ?, password = ?, userLastname = ?, userFirstname = ?, userGender =?, userEmail = ?,
       userContactNum =?, userAge =?, userBirthday = ?, userAddress = ?, userDesc = ?
     WHERE userID = ?`,
       [
         username,
-        // password,
+        password,
         lname,
         fname,
         gender,
@@ -67,6 +67,21 @@ const User = {
         address,
         desc,
         //profileImage,
+        id,
+      ],
+      callback
+    );
+  },
+  // change and reset password user
+  putResetPasswordById: (id, userData, callback) => {
+    const { password } = userData;
+
+    db.query(
+      `UPDATE useraccount
+      SET password = ?
+    WHERE userID = ?`,
+      [
+        password,
         id,
       ],
       callback
