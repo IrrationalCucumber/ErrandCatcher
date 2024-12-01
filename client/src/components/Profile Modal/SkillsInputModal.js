@@ -28,14 +28,29 @@ function SkillsInputModal(props) {
     skills: "",
   });
   // Predefined list of skills (you can fetch this from the backend)
-  const availableSkills = [
-    "Communication",
-    "Teamwork",
-    "Problem Solving",
-    "Hardworking",
-    "Leadership",
-    "Time Management",
-  ];
+  let availableSkills = [];
+  if (user.userType === "Employer") {
+    availableSkills = [
+      "Human Resources",
+      "Housewife/Househusband",
+      "Student",
+      "Government Agency",
+      "Self-Employed",
+    ];
+  } else {
+    availableSkills = [
+      "Communication",
+      "Teamwork",
+      "Problem Solving",
+      "Hardworking",
+      "Leadership",
+      "Time Management",
+      "Carpentry",
+      "Plumbing",
+      "Gadening",
+      "Programming",
+    ];
+  }
   // Function to add a skill to the selectedSkills array
   const handleAddSkill = (skill) => {
     if (!selectedSkills.includes(skill)) {
@@ -95,14 +110,18 @@ function SkillsInputModal(props) {
                       level="title-lg"
                       variant="plain"
                     >
-                      Select/Add your skill
+                      {user.userType === "Catcher"
+                        ? "Select or Add skill"
+                        : "Select or Add tags"}
                     </Typography>
                   </FormLabel>
 
                   {/* Predefined skills list */}
                   <FormLabel>
                     <Typography color="primary" level="body-md" variant="plain">
-                      Select your Skill/s here:
+                      {user.userType === "Catcher"
+                        ? "Select your skill here:"
+                        : "Select your tags here"}
                     </Typography>
                   </FormLabel>
 
@@ -125,7 +144,9 @@ function SkillsInputModal(props) {
 
                   <FormLabel>
                     <Typography color="primary" level="body-md" variant="plain">
-                      Or your specific skills here:
+                      {user.userType === "Catcher"
+                        ? "Or Add specific skills:"
+                        : "Or Add specific tags:"}
                     </Typography>
                   </FormLabel>
 
@@ -133,7 +154,11 @@ function SkillsInputModal(props) {
                     type="text"
                     value={inputSkill}
                     onChange={(e) => setInputSkill(e.target.value)}
-                    placeholder="Enter a skill"
+                    placeholder={
+                      user.userType === "Catcher"
+                        ? "Enter a skill..."
+                        : "Enter a tag... "
+                    }
                   />
                   <Box margin={1} textAlign="e">
                     <Button
@@ -141,7 +166,7 @@ function SkillsInputModal(props) {
                       size="md"
                       variant="outlined"
                     >
-                      Add Skill
+                      Add
                     </Button>
                   </Box>
 
@@ -153,7 +178,9 @@ function SkillsInputModal(props) {
                         level="title-lg"
                         variant="plain"
                       >
-                        Skills you have selected:
+                        {user.userType === "Catcher"
+                          ? "Skills selected:"
+                          : "Tags selected: "}
                       </Typography>
                     </FormLabel>
 
@@ -180,7 +207,7 @@ function SkillsInputModal(props) {
                           level="body-md"
                           variant="outlined"
                         >
-                          No skills selected.
+                          None selected.
                         </Typography>
                       </FormLabel>
                     )}
@@ -195,7 +222,7 @@ function SkillsInputModal(props) {
               </>
               <div className="step__button">
                 <button className="btnn" type="submit">
-                  Next
+                  SAVE
                 </button>
               </div>
             </form>
