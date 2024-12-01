@@ -123,18 +123,43 @@ const userController = {
       res.json(type[0].accountType);
     });
   },
-  //update user info
+  // Update user info
   putUpdateUser: (req, res) => {
     const userID = req.params.id;
     const updatedData = req.body;
-    // encrypt new password
-    bcrypt.hash(updatedData.password, saltRounds, (err, hash) => {
-      if (err) {
-        console.error("Error hashign passowrd", err);
-        res.status(500).json({ error: "Error processing password" });
-        return;
-      } //replact text password to hashed password
-      updatedData.password = hash;
+
+    // Check if the password is provided in the updatedData
+    if (updatedData.password) {
+      // Encrypt the new password
+      bcrypt.hash(updatedData.password, saltRounds, (err, hash) => {
+        if (err) {
+          console.error("Error hashing password", err);
+          res.status(500).json({ error: "Error processing password" });
+          return;
+        }
+        // Replace text password with hashed password
+        updatedData.password = hash;
+
+        // Proceed with the update
+        User.putUpdateUserById(userID, updatedData, (error, result) => {
+          if (error) {
+            console.error("Error updating user:", error);
+            res
+              .status(500)
+              .json({ error: "An error occurred while updating user" });
+            return;
+          }
+          // Check if any rows were affected by the update operation
+          if (result.affectedRows === 0) {
+            res.status(404).json({ error: "User not found" });
+            return;
+          }
+          // User updated successfully
+          res.status(200).json({ message: "User updated successfully" });
+        });
+      });
+    } else {
+      // If password is not provided, update other user data only
       User.putUpdateUserById(userID, updatedData, (error, result) => {
         if (error) {
           console.error("Error updating user:", error);
@@ -149,11 +174,13 @@ const userController = {
           return;
         }
         // User updated successfully
-        res.status(200).json({ message: "User updated successfully" });
+        res
+          .status(200)
+          .json({ message: "User updated successfully (excluding password)" });
       });
-
-    });
+    }
   },
+
   // reset and change password user
   putResetPassword: (req, res) => {
     const userID = req.params.id;
@@ -182,7 +209,6 @@ const userController = {
         // User updated successfully
         res.status(200).json({ message: "User updated successfully" });
       });
-
     });
   },
   //Update user status
