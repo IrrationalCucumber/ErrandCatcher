@@ -13,14 +13,20 @@ import {
   ModalOverflow,
   Typography,
 } from "@mui/joy";
+import axios from "axios";
 import React, { useState } from "react";
+import { useAuth } from "../AuthContext";
 
 function SkillsInputModal(props) {
+  const { user } = useAuth();
   //SKill tags
   // State to hold the selected skills
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [inputSkill, setInputSkill] = useState("");
   const [error, setError] = useState("");
+  const [details, setDetails] = useState({
+    skills: "",
+  });
   // Predefined list of skills (you can fetch this from the backend)
   const availableSkills = [
     "Communication",
@@ -49,7 +55,7 @@ function SkillsInputModal(props) {
       selectedSkills.filter((skill) => skill !== skillToRemove)
     );
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!selectedSkills) {
@@ -60,7 +66,15 @@ function SkillsInputModal(props) {
     setError("");
     // Create a combined string for qualifications (general job)
     const qualificationsString = `${selectedSkills}`;
-    //details.skills = qualificationsString;
+    details.skills = qualificationsString;
+    //update accound data
+    // alert(qualificationsString);
+    // alert(details.skills);
+    await axios.put(
+      "http://localhost:8800/update-info/" + user.userID,
+      details
+    );
+    props.close();
   };
 
   return (
