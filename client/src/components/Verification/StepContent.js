@@ -41,18 +41,29 @@ export function Step1({ onNext, details, setDetail }) {
   const [inputSkill, setInputSkill] = useState("");
 
   // Predefined list of skills (you can fetch this from the backend)
-  const availableSkills = [
-    "Communication",
-    "Teamwork",
-    "Problem Solving",
-    "Hardworking",
-    "Leadership",
-    "Time Management",
-    "Carpentry",
-    "Plumbing",
-    "Gadening",
-    "Programming",
-  ];
+  let availableSkills = [];
+  if (user.userType === "Employer") {
+    availableSkills = [
+      "Human Resources",
+      "Housewife/Househusband",
+      "Student",
+      "Government Agency",
+      "Self-Employed",
+    ];
+  } else {
+    availableSkills = [
+      "Communication",
+      "Teamwork",
+      "Problem Solving",
+      "Hardworking",
+      "Leadership",
+      "Time Management",
+      "Carpentry",
+      "Plumbing",
+      "Gadening",
+      "Programming",
+    ];
+  }
 
   // Function to add a skill to the selectedSkills array
   const handleAddSkill = (skill) => {
@@ -110,15 +121,19 @@ export function Step1({ onNext, details, setDetail }) {
 
             <FormControl>
               <FormLabel>
-                <Typography color="neutral" level="title-md" variant="plain">
-                  Please Select or Add your skill
+                <Typography color="neutral" level="title-lg" variant="plain">
+                  {user.userType === "Catcher"
+                    ? "Please Select or Add your skill"
+                    : "Please Select or Add your tags"}
                 </Typography>
               </FormLabel>
 
               {/* Predefined skills list */}
               <FormLabel>
                 <Typography color="primary" level="body-md" variant="plain">
-                  Select your Skill/s here:
+                  {user.userType === "Catcher"
+                    ? "Select skills here:"
+                    : "Select tags here:"}
                 </Typography>
               </FormLabel>
 
@@ -141,7 +156,9 @@ export function Step1({ onNext, details, setDetail }) {
 
               <FormLabel>
                 <Typography color="primary" level="body-md" variant="plain">
-                  Or your specific skills here:
+                  {user.userType === "Catcher"
+                    ? "Or Add specific skills:"
+                    : "Or Add specific tags:"}
                 </Typography>
               </FormLabel>
 
@@ -157,7 +174,7 @@ export function Step1({ onNext, details, setDetail }) {
                   size="md"
                   variant="outlined"
                 >
-                  Add Skill
+                  Add
                 </Button>
               </Box>
 
@@ -165,7 +182,9 @@ export function Step1({ onNext, details, setDetail }) {
               <div>
                 <FormLabel>
                   <Typography color="neutral" level="title-lg" variant="plain">
-                    Skills you have selected:
+                    {user.userType === "Catcher"
+                      ? "Skills selected:"
+                      : "Tags selected: "}
                   </Typography>
                 </FormLabel>
 
@@ -190,7 +209,7 @@ export function Step1({ onNext, details, setDetail }) {
                       level="body-md"
                       variant="outlined"
                     >
-                      No skills selected.
+                      None selected.
                     </Typography>
                   </FormLabel>
                 )}
