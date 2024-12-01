@@ -224,58 +224,55 @@ function UserProfile(props) {
                 },
               }}
             />
-            <br />{" "}
-            {user.userType === "Catcher" ? (
-              <>
-                <Typography level="h4" sx={{ marginBottom: 1 }}>
-                  Skills:
-                </Typography>
-                {skillsArray.length > 0 ? ( // Check if there are any skills to display
-                  <>
-                    <Stack
-                      direction="row"
-                      flexWrap="wrap"
-                      sx={{ gap: 1 }} // Ensures spacing between items
-                    >
-                      {skillsArray.map((skill, index) => (
-                        <Chip
-                          key={index}
-                          variant="soft" // Gives a subtle background color
-                          color="primary" // Choose the color theme (primary, secondary, etc.)
-                          size="md" // Medium size for better visibility
-                        >
-                          {skill.trim()}{" "}
-                          {/* Trims any unnecessary whitespace */}
-                        </Chip>
-                      ))}
-                    </Stack>
-                    <Button
-                      size="sm"
-                      variant="outlined"
-                      sx={{ margin: 1 }}
-                      onClick={() => setOpen(true)}
-                    >
-                      UPDATE
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <Typography level="body2" color="neutral">
-                      No skills provided.
-                    </Typography>
-                    <Button
-                      size="sm"
-                      variant="outlined"
-                      sx={{ margin: 1 }}
-                      onClick={() => setOpen(true)}
-                    >
-                      ADD
-                    </Button>
-                  </>
-                )}
-                <SkillsInputModal open={open} close={() => setOpen(false)} />
-              </>
-            ) : null}
+
+            <>
+              <Typography level="h4" sx={{ marginBottom: 1 }}>
+                Skills:
+              </Typography>
+              {skillsArray.length > 0 ? ( // Check if there are any skills to display
+                <>
+                  <Stack
+                    direction="row"
+                    flexWrap="wrap"
+                    sx={{ gap: 1 }} // Ensures spacing between items
+                  >
+                    {skillsArray.map((skill, index) => (
+                      <Chip
+                        key={index}
+                        variant="soft" // Gives a subtle background color
+                        color="primary" // Choose the color theme (primary, secondary, etc.)
+                        size="md" // Medium size for better visibility
+                      >
+                        {skill.trim()} {/* Trims any unnecessary whitespace */}
+                      </Chip>
+                    ))}
+                  </Stack>
+                  <Button
+                    size="sm"
+                    variant="outlined"
+                    sx={{ margin: 1 }}
+                    onClick={() => setOpen(true)}
+                  >
+                    UPDATE
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Typography level="body2" color="neutral">
+                    No skills provided.
+                  </Typography>
+                  <Button
+                    size="sm"
+                    variant="outlined"
+                    sx={{ margin: 1 }}
+                    onClick={() => setOpen(true)}
+                  >
+                    ADD
+                  </Button>
+                </>
+              )}
+              <SkillsInputModal open={open} close={() => setOpen(false)} />
+            </>
           </div>
           <textarea
             className="description"
@@ -576,7 +573,7 @@ export function ViewUserProfile(props) {
 
             <br />
             {props.type === "Catcher" ? (
-              <div>
+              <>
                 <Typography level="h4" sx={{ marginBottom: 1 }}>
                   Skills:
                 </Typography>
@@ -604,8 +601,35 @@ export function ViewUserProfile(props) {
                     No skills provided.
                   </Typography>
                 )}
-              </div>
-            ) : null}
+              </>
+            ) : (
+              <>
+                {skillsArray.length > 0 ? ( // Check if there are any skills to display
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    flexWrap="wrap"
+                    sx={{ gap: 1 }} // Ensures spacing between items
+                  >
+                    {skillsArray.map((skill, index) => (
+                      <Chip
+                        key={index}
+                        variant="soft" // Gives a subtle background color
+                        color="primary" // Choose the color theme (primary, secondary, etc.)
+                        size="md" // Medium size for better visibility
+                      >
+                        {skill.trim()} {/* Trims any unnecessary whitespace */}
+                      </Chip>
+                    ))}
+                  </Stack>
+                ) : (
+                  // Display a placeholder message if no skills are provided
+                  <Typography level="body2" color="neutral">
+                    No Tags provided.
+                  </Typography>
+                )}
+              </>
+            )}
           </div>
           <br />
           <textarea
