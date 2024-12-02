@@ -114,6 +114,7 @@ const PostCommission = () => {
         ...prev,
         comPay: "",
       }));
+      setMinimum(500);
     }
   }, [commission.comType, distance]);
 
