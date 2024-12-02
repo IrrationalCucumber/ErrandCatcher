@@ -72,16 +72,20 @@ function SkillsInputModal(props) {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!selectedSkills) {
+    // Create a combined string for qualifications (general job)
+    const qualificationsString = `${selectedSkills}`;
+    details.skills = qualificationsString;
+    if (selectedSkills === "") {
+      setError("Please list your skills.");
+      return;
+    }
+    if (!qualificationsString) {
       setError("Please list your skills.");
       return;
     }
     // Clear errors if all checks pass
     setError("");
-    // Create a combined string for qualifications (general job)
-    const qualificationsString = `${selectedSkills}`;
-    details.skills = qualificationsString;
+
     //update accound data
     // alert(qualificationsString);
     // alert(details.skills);
