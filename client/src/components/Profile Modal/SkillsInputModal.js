@@ -90,6 +90,7 @@ function SkillsInputModal(props) {
       details
     );
     props.close();
+    window.location.reload();
   };
 
   return (
