@@ -116,7 +116,7 @@ const PostCommission = () => {
       }));
       setMinimum(500);
     }
-  }, [commission.comType, distance]);
+  }, [commission.comType, distance, minimum]);
 
   //pull the local time of the pc
   const getCurrentDate = () => {

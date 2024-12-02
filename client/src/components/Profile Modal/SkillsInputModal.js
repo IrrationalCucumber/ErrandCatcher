@@ -213,12 +213,11 @@ function SkillsInputModal(props) {
                       </FormLabel>
                     )}
                   </div>
-
-                  {/* Comma-separated string of selected skills */}
-                  {/* <div>
-                      <h4>Skills as Comma-Separated String:</h4>
-                      <p>{selectedSkills.join(",")}</p>
-                    </div> */}
+                  {error && (
+                    <Typography color="danger" textAlign="center" marginTop={2}>
+                      {error}
+                    </Typography>
+                  )}
                 </FormControl>
               </>
               <div className="step__button">
