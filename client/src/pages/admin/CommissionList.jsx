@@ -97,7 +97,7 @@ const CommissionList = () => {
   });
 
   //Logic of Pagination
-  const indexOfLastItem = currentPage + itemsPerPage;
+  const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filterErrands.slice(indexOfFirstItem, indexOfLastItem);
 
@@ -119,13 +119,13 @@ const CommissionList = () => {
         </h1>
         <div
           className="searchAdmin"
-          // style={{
-          //   marginTop: "10px",
-          //   marginBottom: "10px",
-          //   display: "flex",
-          //   alignItems: "center",
-          //   width: "50%",
-          // }}
+        // style={{
+        //   marginTop: "10px",
+        //   marginBottom: "10px",
+        //   display: "flex",
+        //   alignItems: "center",
+        //   width: "50%",
+        // }}
         >
           <input
             className="inputSearchAdmin"
@@ -134,13 +134,13 @@ const CommissionList = () => {
             placeholder="Search..."
             value={searchTerm.term}
             onChange={handleChange}
-            // style={{
-            //   padding: "8px",
-            //   fontSize: "12px",
-            //   border: "1px solid #ccc",
-            //   borderRadius: "4px",
-            //   margin: "10px 0px 10px 0px",
-            // }}
+          // style={{
+          //   padding: "8px",
+          //   fontSize: "12px",
+          //   border: "1px solid #ccc",
+          //   borderRadius: "4px",
+          //   margin: "10px 0px 10px 0px",
+          // }}
           />
 
           <div
@@ -152,13 +152,13 @@ const CommissionList = () => {
               name="status"
               onChange={handleChange}
               value={searchTerm.status}
-              // style={{
-              //   padding: "8px",
-              //   fontSize: "12px",
-              //   border: "1px solid #ccc",
-              //   borderRadius: "4px",
-              //   margin: "10px 20px",
-              // }}
+            // style={{
+            //   padding: "8px",
+            //   fontSize: "12px",
+            //   border: "1px solid #ccc",
+            //   borderRadius: "4px",
+            //   margin: "10px 20px",
+            // }}
             >
               <option value="">Status</option>
               <option value="Pending">Pending</option>
@@ -173,13 +173,13 @@ const CommissionList = () => {
               onChange={handleChange}
               value={searchTerm.type}
               name="type"
-              // style={{
-              //   padding: "8px 10px 8px 10px",
-              //   fontSize: "12px",
-              //   border: "1px solid #ccc",
-              //   borderRadius: "4px",
-              //   margin: "10px",
-              // }}
+            // style={{
+            //   padding: "8px 10px 8px 10px",
+            //   fontSize: "12px",
+            //   border: "1px solid #ccc",
+            //   borderRadius: "4px",
+            //   margin: "10px",
+            // }}
             >
               <option value="">Type</option>
               <option value="Home">Home</option>
