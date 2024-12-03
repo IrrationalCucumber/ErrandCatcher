@@ -144,7 +144,7 @@ function UserProfile(props) {
               className={`profile__info__lefts ${
                 props.validationErrors.address ? "error" : ""
               }`}
-              variant="plain"
+              variant="neutral"
               placeholder="Address"
               name="address"
               value={props.address}
@@ -152,6 +152,7 @@ function UserProfile(props) {
               disabled={!props.isEditing}
               startDecorator={<Home />}
               sx={{
+                borderRadius: 0,
                 "&::before": {
                   transform: "scaleX(0)",
                   left: 0,
@@ -178,9 +179,10 @@ function UserProfile(props) {
               value={props.email}
               onChange={props.handleChange}
               disabled={!props.isEditing}
-              variant="plain"
+              variant="neutral"
               startDecorator={<Email />}
               sx={{
+                borderRadius: 0,
                 "&::before": {
                   transform: "scaleX(0)",
                   left: 0,
@@ -207,9 +209,10 @@ function UserProfile(props) {
               value={props.cnum}
               onChange={props.handleChange}
               disabled={!props.isEditing}
-              variant="plain"
+              variant="neutral"
               startDecorator={<Call />}
               sx={{
+                borderRadius: 0,
                 "&::before": {
                   transform: "scaleX(0)",
                   left: 0,
@@ -240,7 +243,7 @@ function UserProfile(props) {
                       <Chip
                         key={index}
                         variant="soft" // Gives a subtle background color
-                        color="primary" // Choose the color theme (primary, secondary, etc.)
+                        color="success" // Choose the color theme (primary, secondary, etc.)
                         size="md" // Medium size for better visibility
                       >
                         {skill.trim()} {/* Trims any unnecessary whitespace */}
@@ -249,7 +252,7 @@ function UserProfile(props) {
                   </Stack>
                   <Button
                     size="sm"
-                    variant="outlined"
+                    variant="soft"
                     sx={{ margin: 1 }}
                     onClick={() => setOpen(true)}
                   >
@@ -263,7 +266,7 @@ function UserProfile(props) {
                   </Typography>
                   <Button
                     size="sm"
-                    variant="outlined"
+                    variant="soft"
                     sx={{ margin: 1 }}
                     onClick={() => setOpen(true)}
                   >
