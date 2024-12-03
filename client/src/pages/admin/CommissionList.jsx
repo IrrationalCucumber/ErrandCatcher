@@ -19,6 +19,7 @@ import TimerOffIcon from "@mui/icons-material/TimerOff";
 import HandshakeIcon from "@mui/icons-material/Handshake";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import { PanoramaFishEye, RemoveRedEyeSharp } from "@mui/icons-material";
+import EventBusyOutlinedIcon from '@mui/icons-material/EventBusyOutlined';
 
 const CommissionList = () => {
   const [commissions, setCommissions] = useState([]);
@@ -229,9 +230,12 @@ const CommissionList = () => {
             ) : null,
             "Php " + Commission.commissionPay,
             DisplayDate(Commission.DatePosted),
-            Commission.DateCompleted === ""
-              ? DisplayDate(Commission.DateCompleted)
-              : "",
+            // Commission.DateCompleted === ""
+            //   ? DisplayDate(Commission.DateCompleted)
+            //   : "",
+            Commission.transDateComplete === null
+              ? <EventBusyOutlinedIcon style={{ color: "#c99f5a", marginLeft: "48px" }} />
+              : DisplayDate(Commission.transDateComplete),
             // Commission.commissionStatus,
             Commission.commissionStatus === "Pending" ? (
               <>
