@@ -17,6 +17,12 @@ const ImageModal = ({ request, handleClose }) => {
             alt={`Image `}
             style={imageStyle}
           />
+          {/* driver license */}
+          <img
+            src={`http://localhost:8800/images/docu/${request.docu_1}`}
+            alt={`Image `}
+            style={imageStyle}
+          />
         </>
       </DialogContent>
     </>
