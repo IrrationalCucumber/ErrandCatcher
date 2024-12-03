@@ -12,6 +12,7 @@ import axios from "axios";
 // import "./Cards.css";
 import "./cardsNew.css";
 import CardItemNew from "./CardsItemNew";
+import { AmountDecimal } from "../Display/DsiplayFunctions";
 
 function CatCardsNew({ commissions }) {
   const [commissionslist, setCommissionslist] = useState([]);
@@ -48,7 +49,7 @@ function CatCardsNew({ commissions }) {
                 type={commission.commissionType}
                 location={commission.commissionLocation}
                 desc={commission.commissionDesc}
-                price={commission.commissionPay}
+                price={AmountDecimal(commission.commissionPay)}
                 path={`/errand/view/${commission.commissionID}`}
                 //`/view-errand/${userID}/${commission.commissionID}`
               />
