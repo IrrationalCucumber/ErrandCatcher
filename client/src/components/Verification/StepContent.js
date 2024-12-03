@@ -142,7 +142,9 @@ export function Step1({ onNext, details, setDetail }) {
                   <Chip
                     key={skill}
                     onClick={() => handleAddSkill(skill)}
-                    color="success"
+                    color={
+                      selectedSkills.includes(skill) ? "success" : "neutral"
+                    }
                     variant="solid"
                     size="lg"
                     startDecorator={<Add />}
