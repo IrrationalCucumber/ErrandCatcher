@@ -265,13 +265,21 @@ function ErrandInputs(props) {
         </div>
       </div>
       {/*start date*/}
-      <div className="input-group">
-        <div className="col1">
+      <div className="input-group" style={{ flexDirection: "row" }}>
+        <div
+          className="col"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            paddingRight: "4px",
+            position: "relative",
+            width: "50%",
+          }}
+        >
           <Typography level="title-lg" variant="plain">
             Start
           </Typography>
-        </div>
-        <div className="col2">
+
           <Input
             color="neutral"
             disabled={props.readOnly}
@@ -289,15 +297,20 @@ function ErrandInputs(props) {
             }}
           />
         </div>
-      </div>
-      {/* deadline */}
-      <div className="input-group">
-        <div className="col1">
+        {/* deadline */}
+        <div
+          className="col"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            paddingLeft: "4px",
+            width: "50%",
+          }}
+        >
           <Typography level="title-lg" variant="plain">
             End
           </Typography>
-        </div>
-        <div className="col2">
+
           <Input
             color="neutral"
             disabled={props.readOnly}
@@ -451,8 +464,16 @@ function ErrandInputs(props) {
         </div>
       )}
       {/* Amount */}
-      <div className="input-group">
-        <div className="col1">
+      <div className="input-group" style={{ flexDirection: "row" }}>
+        <div
+          className="col"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            paddingLeft: "4px",
+            width: "50%",
+          }}
+        >
           {props.typeValue !== "HomeService - Indoor" &&
           props.typeValue !== "HomeService - Outdoor" &&
           props.typeValue !== "" ? (
@@ -468,43 +489,21 @@ function ErrandInputs(props) {
               </Typography>
             )
           )}
-          <div className="col2">
-            <Input
-              color="neutral"
-              disabled={props.readOnly}
-              size="lg"
-              variant={props.variant}
-              type="number"
-              startDecorator="₱"
-              placeholder="0.00"
-              onChange={props.handleChange}
-              name={props.pay}
-              value={props.payValue}
-            />
-            {props.typeValue !== "HomeService - Indoor" &&
-              props.typeValue !== "HomeService - Outdoor" &&
-              props.typeValue !== "" && (
-                <>
-                  <Typography color="neutral" level="body-sm" variant="plain">
-                    15/km + ₱100
-                  </Typography>
-                  {props.distance ? (
-                    <Typography color="neutral" level="body-sm" variant="plain">
-                      {props.distance} km
-                    </Typography>
-                  ) : null}{" "}
-                </>
-              )}
-            {!!props.minimum ? (
-              <Typography color="neutral" level="body-sm" variant="plain">
-                <i>Suggested Pay: {props.minimum}</i>
-              </Typography>
-            ) : null}
-            <Typography color="neutral" level="body-sm" variant="plain">
-              5% Deduction as Plaftform fee
-            </Typography>
-          </div>
+
+          <Input
+            color="neutral"
+            disabled={props.readOnly}
+            size="lg"
+            variant={props.variant}
+            type="number"
+            startDecorator="₱"
+            placeholder="0.00"
+            onChange={props.handleChange}
+            name={props.pay}
+            value={props.payValue}
+          />
         </div>
+
         {/* PAYMENT METOD */}
         {/* <div className="input-group">
           <div className="col1">
@@ -527,16 +526,20 @@ function ErrandInputs(props) {
             </select>
           </div>
         </div> */}
-      </div>
-
-      {/* contact number */}
-      <div className="input-group">
-        <div className="col1">
+        {/* contact number */}
+        <div
+          className="col"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            paddingLeft: "4px",
+            width: "50%",
+          }}
+        >
           <Typography level="title-lg" variant="plain">
             Contact Number
           </Typography>
-        </div>
-        <div className="col2">
+
           <Input
             color="neutral"
             disabled={props.readOnly}
@@ -553,6 +556,29 @@ function ErrandInputs(props) {
           />
         </div>
       </div>
+      <div className="input-group" style={{ paddingLeft: "5px" }}>
+        <div className="col1">
+          {props.typeValue !== "HomeService - Indoor" &&
+            props.typeValue !== "HomeService - Outdoor" &&
+            props.typeValue !== "" && (
+              <>
+                <Typography color="neutral" level="body-sm" variant="plain">
+                  ₱15 X {props.distance} km + ₱100
+                </Typography>
+              </>
+            )}
+
+          {!!props.minimum ? (
+            <Typography color="neutral" level="body-sm" variant="plain">
+              <i>Suggested Pay: {props.minimum}</i>
+            </Typography>
+          ) : null}
+          <Typography color="neutral" level="body-sm" variant="plain">
+            5% Deduction as Plaftform fee
+          </Typography>
+        </div>
+      </div>
+
       <div className="input-group">
         <div className="col1">
           <Typography level="title-lg" variant="plain">
