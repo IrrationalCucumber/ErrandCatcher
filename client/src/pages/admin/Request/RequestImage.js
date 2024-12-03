@@ -7,22 +7,28 @@ const ImageModal = ({ request, handleClose }) => {
       <DialogTitle>{request.id}</DialogTitle>
       <DialogContent>
         <>
-          <img
-            src={`http://localhost:8800/images/docu/${request.id_picture_front}`}
-            alt={`Image `}
-            style={imageStyle}
-          />
-          <img
-            src={`http://localhost:8800/images/docu/${request.id_picture_back}`}
-            alt={`Image `}
-            style={imageStyle}
-          />
-          {/* driver license */}
-          <img
-            src={`http://localhost:8800/images/docu/${request.docu_1}`}
-            alt={`Image `}
-            style={imageStyle}
-          />
+          <div style={imageContainerStyle}>
+            <h2 style={header}>Documents:</h2>
+            <img
+              src={`http://localhost:8800/images/docu/${request.id_picture_front}`}
+              alt={`Image `}
+              style={imageStyle}
+            />
+            <br></br>
+            <img
+              src={`http://localhost:8800/images/docu/${request.id_picture_back}`}
+              alt={`Image `}
+              style={imageStyle}
+            />
+            <br></br>
+            <h2 style={header}>Driver License:</h2>
+            {/* driver license */}
+            <img
+              src={`http://localhost:8800/images/docu/${request.docu_1}`}
+              alt={`Image `}
+              style={imageStyle}
+            />
+          </div>
         </>
       </DialogContent>
     </>
@@ -48,6 +54,14 @@ const ImageModal = ({ request, handleClose }) => {
     // </div>
   );
 };
+
+const header = {
+  fontWeight: "700",
+  fontSize: "1.80rem",
+  color: "#333",
+  marginBottom: "10px",
+  marginLeft: "16px",
+}
 
 const modalStyle = {
   display: "block",
@@ -87,10 +101,22 @@ const scrollContainerStyle = {
   padding: "10px",
 };
 
+const imageContainerStyle = {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  gap: "10px",
+  alignItems: "center",
+  // flexWrap: "wrap",
+};
+
 const imageStyle = {
   padding: "20px",
   margin: "10px",
-  maxWidth: "100%",
+  maxWidth: "95%",
+  borderRadius: "5px",
+  border: "1px solid #ccc",
+  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
 };
 
 export default ImageModal;
