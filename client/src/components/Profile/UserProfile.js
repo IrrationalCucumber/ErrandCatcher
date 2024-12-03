@@ -22,11 +22,16 @@ import {
   DisplayDate,
   GetUserAge,
 } from "../Display/DsiplayFunctions";
+import { useAuth } from "../AuthContext";
+import SkillsInputModal from "../Profile Modal/SkillsInputModal";
+import { Call, Email, Home, Mail } from "@mui/icons-material";
 
 function UserProfile(props) {
+  const { user } = useAuth();
   const [preview, setPreview] = useState(null);
   const [image, setImage] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const [buttonPopup1, setButtonPopup1] = useState(false);
   const [buttonPopup2, setButtonPopup2] = useState(false);
@@ -133,84 +138,142 @@ function UserProfile(props) {
           </div>
           <div className="info">
             {/* {props.address} */}
-            <input
+            <Input
               type="text"
               // className="profile__info__left"
-              className={`profile__info__left ${props.validationErrors.address ? "error" : ""
-                }`}
+              className={`profile__info__lefts ${
+                props.validationErrors.address ? "error" : ""
+              }`}
+              variant="plain"
               placeholder="Address"
               name="address"
               value={props.address}
               onChange={props.handleChange}
               disabled={!props.isEditing}
+              startDecorator={<Home />}
+              sx={{
+                "&::before": {
+                  transform: "scaleX(0)",
+                  left: 0,
+                  right: 0,
+                  bottom: "-2px",
+                  top: "unset",
+                  transition: "transform .15s cubic-bezier(0.1,0.9,0.2,1)",
+                  borderRadius: 0,
+                },
+                "&:focus-within::before": {
+                  transform: "scaleX(1)",
+                },
+              }}
             />
             {/* {props.email} */}
-            <input
+            <Input
               type="email"
               // className="profile__info__left"
-              className={`profile__info__left ${props.validationErrors.email ? "error" : ""
-                }`}
+              className={`profile__info__left ${
+                props.validationErrors.email ? "error" : ""
+              }`}
               placeholder="Email Address"
               name="email"
               value={props.email}
               onChange={props.handleChange}
               disabled={!props.isEditing}
+              variant="plain"
+              startDecorator={<Email />}
+              sx={{
+                "&::before": {
+                  transform: "scaleX(0)",
+                  left: 0,
+                  right: 0,
+                  bottom: "-2px",
+                  top: "unset",
+                  transition: "transform .15s cubic-bezier(0.1,0.9,0.2,1)",
+                  borderRadius: 0,
+                },
+                "&:focus-within::before": {
+                  transform: "scaleX(1)",
+                },
+              }}
             />
-            {/* password */}
-            {/* <input
-              type="password"
-              // className="profile__info__left"
-              className={`profile__info__left ${props.validationErrors.email ? "error" : ""
-                }`}
-              placeholder="Password"
-              name="password"
-              value={props.password}
-              onChange={props.handleChange}
-              disabled={!props.isEditing}
-            /> */}
             {/* {props.cnum} */}
-            <input
+            <Input
               type="number"
               // className="profile__info__left"
-              className={`profile__info__left ${props.validationErrors.contact ? "error" : ""
-                }`}
+              className={`profile__info__left ${
+                props.validationErrors.contact ? "error" : ""
+              }`}
               placeholder="Contact Number"
               name="contact"
               value={props.cnum}
               onChange={props.handleChange}
               disabled={!props.isEditing}
+              variant="plain"
+              startDecorator={<Call />}
+              sx={{
+                "&::before": {
+                  transform: "scaleX(0)",
+                  left: 0,
+                  right: 0,
+                  bottom: "-2px",
+                  top: "unset",
+                  transition: "transform .15s cubic-bezier(0.1,0.9,0.2,1)",
+                  borderRadius: 0,
+                },
+                "&:focus-within::before": {
+                  transform: "scaleX(1)",
+                },
+              }}
             />
-            <br />{" "}
-            <div>
+
+            <>
               <Typography level="h4" sx={{ marginBottom: 1 }}>
                 Skills:
               </Typography>
               {skillsArray.length > 0 ? ( // Check if there are any skills to display
-                <Stack
-                  direction="row"
-                  flexWrap="wrap"
-                  sx={{ gap: 1 }} // Ensures spacing between items
-                >
-                  {skillsArray.map((skill, index) => (
-                    <Chip
-                      key={index}
-                      variant="soft" // Gives a subtle background color
-                      color="primary" // Choose the color theme (primary, secondary, etc.)
-                      size="md" // Medium size for better visibility
-                    >
-                      {skill.trim()} {/* Trims any unnecessary whitespace */}
-                    </Chip>
-                  ))}
-                </Stack>
+                <>
+                  <Stack
+                    direction="row"
+                    flexWrap="wrap"
+                    sx={{ gap: 1 }} // Ensures spacing between items
+                  >
+                    {skillsArray.map((skill, index) => (
+                      <Chip
+                        key={index}
+                        variant="soft" // Gives a subtle background color
+                        color="primary" // Choose the color theme (primary, secondary, etc.)
+                        size="md" // Medium size for better visibility
+                      >
+                        {skill.trim()} {/* Trims any unnecessary whitespace */}
+                      </Chip>
+                    ))}
+                  </Stack>
+                  <Button
+                    size="sm"
+                    variant="outlined"
+                    sx={{ margin: 1 }}
+                    onClick={() => setOpen(true)}
+                  >
+                    UPDATE
+                  </Button>
+                </>
               ) : (
-                // Display a placeholder message if no skills are provided
-                <Typography level="body2" color="neutral">
-                  No skills provided.
-                </Typography>
+                <>
+                  <Typography level="body2" color="neutral">
+                    No skills provided.
+                  </Typography>
+                  <Button
+                    size="sm"
+                    variant="outlined"
+                    sx={{ margin: 1 }}
+                    onClick={() => setOpen(true)}
+                  >
+                    ADD
+                  </Button>
+                </>
               )}
-            </div>
+              <SkillsInputModal open={open} close={() => setOpen(false)} />
+            </>
           </div>
-          <br />
           <textarea
             className="description"
             placeholder="Description"
@@ -277,8 +340,10 @@ function UserProfile(props) {
               ) : null
             }
           </Docu>
-          <Resetpassword trigger={buttonPopup3} setTrigger={setButtonPopup3}>
-          </Resetpassword>
+          <Resetpassword
+            trigger={buttonPopup3}
+            setTrigger={setButtonPopup3}
+          ></Resetpassword>
         </div>
 
         {/* Right Profile Section */}
@@ -356,8 +421,9 @@ function UserProfile(props) {
           </label>
           <select
             // className="display-data1"
-            className={`display-data1 ${props.validationErrors.gender ? "error" : ""
-              }`}
+            className={`display-data1 ${
+              props.validationErrors.gender ? "error" : ""
+            }`}
             value={props.sex}
             onChange={props.handleChange}
             name="gender"
@@ -381,10 +447,14 @@ function UserProfile(props) {
             value={GetUserAge(props.bday)}
             disabled={true}
           ></input>
+          <label className="prolabel" htmlFor="age">
+            Birthdate :
+          </label>
           <input
             type="date"
-            className={`display-data1 ${props.validationErrors.bday ? "error" : ""
-              }`}
+            className={`display-data1 ${
+              props.validationErrors.bday ? "error" : ""
+            }`}
             name="bday"
             // className="display-data1"
             value={props.bday}
@@ -462,6 +532,7 @@ export function ViewUserProfile(props) {
               level="h4"
               variant="plain"
               sx={{ p: 1 }}
+              startDecorator={<Home />}
             >
               {props.address ? (
                 `${props.address}`
@@ -476,6 +547,7 @@ export function ViewUserProfile(props) {
               level="h4"
               variant="plain"
               sx={{ p: 1 }}
+              startDecorator={<Mail />}
             >
               {props.email ? (
                 `${props.email}`
@@ -490,6 +562,7 @@ export function ViewUserProfile(props) {
               level="h4"
               variant="plain"
               sx={{ p: 1 }}
+              startDecorator={<Call />}
             >
               {props.cnum ? (
                 `${props.cnum}`
@@ -499,35 +572,64 @@ export function ViewUserProfile(props) {
             </Typography>
 
             <br />
-            <div>
-              <Typography level="h4" sx={{ marginBottom: 1 }}>
-                Skills:
-              </Typography>
-              {skillsArray.length > 0 ? ( // Check if there are any skills to display
-                <Stack
-                  direction="row"
-                  spacing={1}
-                  flexWrap="wrap"
-                  sx={{ gap: 1 }} // Ensures spacing between items
-                >
-                  {skillsArray.map((skill, index) => (
-                    <Chip
-                      key={index}
-                      variant="soft" // Gives a subtle background color
-                      color="primary" // Choose the color theme (primary, secondary, etc.)
-                      size="md" // Medium size for better visibility
-                    >
-                      {skill.trim()} {/* Trims any unnecessary whitespace */}
-                    </Chip>
-                  ))}
-                </Stack>
-              ) : (
-                // Display a placeholder message if no skills are provided
-                <Typography level="body2" color="neutral">
-                  No skills provided.
+            {props.type === "Catcher" ? (
+              <>
+                <Typography level="h4" sx={{ marginBottom: 1 }}>
+                  Skills:
                 </Typography>
-              )}
-            </div>
+                {skillsArray.length > 0 ? ( // Check if there are any skills to display
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    flexWrap="wrap"
+                    sx={{ gap: 1 }} // Ensures spacing between items
+                  >
+                    {skillsArray.map((skill, index) => (
+                      <Chip
+                        key={index}
+                        variant="soft" // Gives a subtle background color
+                        color="primary" // Choose the color theme (primary, secondary, etc.)
+                        size="md" // Medium size for better visibility
+                      >
+                        {skill.trim()} {/* Trims any unnecessary whitespace */}
+                      </Chip>
+                    ))}
+                  </Stack>
+                ) : (
+                  // Display a placeholder message if no skills are provided
+                  <Typography level="body2" color="neutral">
+                    No skills provided.
+                  </Typography>
+                )}
+              </>
+            ) : (
+              <>
+                {skillsArray.length > 0 ? ( // Check if there are any skills to display
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    flexWrap="wrap"
+                    sx={{ gap: 1 }} // Ensures spacing between items
+                  >
+                    {skillsArray.map((skill, index) => (
+                      <Chip
+                        key={index}
+                        variant="soft" // Gives a subtle background color
+                        color="primary" // Choose the color theme (primary, secondary, etc.)
+                        size="md" // Medium size for better visibility
+                      >
+                        {skill.trim()} {/* Trims any unnecessary whitespace */}
+                      </Chip>
+                    ))}
+                  </Stack>
+                ) : (
+                  // Display a placeholder message if no skills are provided
+                  <Typography level="body2" color="neutral">
+                    No Tags provided.
+                  </Typography>
+                )}
+              </>
+            )}
           </div>
           <br />
           <textarea
@@ -595,7 +697,6 @@ export function ViewUserProfile(props) {
               ) : null
             }
           </Docu>
-
         </div>
 
         {/* Right Profile Section */}

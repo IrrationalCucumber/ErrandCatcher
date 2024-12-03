@@ -51,12 +51,12 @@ const User = {
     //, profileImage = ?
     db.query(
       `UPDATE useraccount
-      SET username = ?, password = ?, userLastname = ?, userFirstname = ?, userGender =?, userEmail = ?,
+      SET username = ?, userLastname = ?, userFirstname = ?, userGender =?, userEmail = ?,
       userContactNum =?, userAge =?, userBirthday = ?, userAddress = ?, userDesc = ?
     WHERE userID = ?`,
       [
         username,
-        password,
+        // password,
         lname,
         fname,
         gender,
