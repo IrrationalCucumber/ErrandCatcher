@@ -396,7 +396,7 @@ function OngoingCardsNew(props) {
         open={open}
         handleClose={handleClose}
         headerMes="Success!"
-        contentMes="You have successfully feedbacked a catcher."
+        contentMes="You have successfully Rated a catcher."
         color="success"
         colorText="green"
         // icon={ErrorIcon}
@@ -520,7 +520,7 @@ function OngoingCardsNew(props) {
                   className="ongoing__cards__button__feedback"
                   disabled={clickedFeedback[props.comID]} // Disable button if it's "Feedbacked"
                 >
-                  {clickedFeedback[props.comID] ? "Feedbacked" : "Feedback"}
+                  {clickedFeedback[props.comID] ? "Rated" : "Feedback"}
                 </button>
                 <button
                   className="ongoing__cards__button"
