@@ -311,7 +311,11 @@ function UserProfile(props) {
 
             {/* <button onClick={() => setButtonPopup3(true)}>Change Password?</button> */}
           </div>
-          <ViewFeedback trigger={buttonPopup1} setTrigger={setButtonPopup1}>
+          <ViewFeedback
+            userID={user.userID}
+            trigger={buttonPopup1}
+            setTrigger={setButtonPopup1}
+          >
             <h1>Feedback</h1>
           </ViewFeedback>
           <Docu trigger={buttonPopup2} setTrigger={setButtonPopup2}>
@@ -530,7 +534,6 @@ export function ViewUserProfile(props) {
               <img src="/images/employer.png" alt="Profile Picture" />
             )}
           </>
-
           <div className="info">
             {/* {props.address} */}
 
@@ -647,7 +650,6 @@ export function ViewUserProfile(props) {
             value={props.desc}
             disabled
           ></textarea>
-
           <div className="rating">
             Overall Rating:
             <span>
@@ -657,17 +659,19 @@ export function ViewUserProfile(props) {
               </p>
             </span>
           </div>
-
           <div className="buttons">
             {/* {props.type === "Catcher" && (
               // -- need new endpoint for view applicants feedback display
               <button onClick={() => setButtonPopup1(true)}>Reviews</button>
             )} */}
-            {/* <button onClick={() => setButtonPopup1(true)}>Reviews</button> */}
+            <button onClick={() => setButtonPopup1(true)}>Reviews</button>
             <button onClick={() => setButtonPopup2(true)}>Documents</button>
           </div>
-
-          <ViewFeedback trigger={buttonPopup1} setTrigger={setButtonPopup1}>
+          <ViewFeedback
+            userID={props.id}
+            trigger={buttonPopup1}
+            setTrigger={setButtonPopup1}
+          >
             <h1>Feedback</h1>
           </ViewFeedback>
           <Docu trigger={buttonPopup2} setTrigger={setButtonPopup2}>

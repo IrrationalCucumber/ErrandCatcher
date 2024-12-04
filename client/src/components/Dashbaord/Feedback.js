@@ -19,7 +19,7 @@ export default Feedback;
 /**
  * Component to Display feedback of Catcher
  */
-export function MyFeedback() {
+export function MyFeedback({ id }) {
   const [myFeedback, setMyFeedback] = useState([]);
   const { user } = useAuth();
   //get all the feedback of user
@@ -27,9 +27,7 @@ export function MyFeedback() {
     //fetch data in backend
     const fetchFeedback = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:8800/my-feedbacks/${user.userID}`
-        );
+        const res = await axios.get(`http://localhost:8800/my-feedbacks/${id}`);
         setMyFeedback(res.data);
       } catch (error) {
         console.log(error);
