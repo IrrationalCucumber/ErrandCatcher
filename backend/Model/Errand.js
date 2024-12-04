@@ -4,8 +4,10 @@ const Errand = {
   //get all errands
   getAllErrands: (callback) => {
     db.query(
-      "SELECT c.*, ua.username, ua.userFirstname, ua.userLastname FROM commission c" +
-        " JOIN useraccount ua ON c.employerID = ua.userID",
+      `SELECT c.*, ua.username, ua.userFirstname, ua.userLastname 
+      FROM commission c
+      JOIN useraccount ua ON c.employerID = ua.userID 
+      ORDER BY c.DatePosted DESC`,
       callback
     );
   },
@@ -42,7 +44,11 @@ const Errand = {
   },
   //get specific errand by userid
   getErrandByUserID: (id, callback) => {
-    db.query(`SELECT * FROM commission WHERE employerID = ?`, [id], callback);
+    db.query(
+      `SELECT * FROM commission WHERE employerID = ? ORDER BY DatePosted DESC`,
+      [id],
+      callback
+    );
   },
   //post new errand
   postErrand: (errandData, callback) => {

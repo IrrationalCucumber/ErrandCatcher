@@ -14,6 +14,7 @@ import { Sheet } from "@mui/joy";
 import { MyFeedback, MyPostedFeedback } from "../components/Dashbaord/Feedback";
 import TopCatcher from "../components/Carousel/TopCatcher";
 import CardsNew from "../components/Cards/CardsNew";
+import CardsRecentErrands from "../components/Cards/CardsRecentErrands";
 
 const Home = () => {
   const { user } = useAuth();
@@ -48,16 +49,6 @@ const Home = () => {
             /> */}
             {/* <Cards /> */}
             <CardsNew />
-            <Sheet
-              color="primary"
-              sx={{
-                width: "90%",
-                height: "500px",
-                overflowY: "auto",
-              }}
-            >
-              <MyPostedFeedback />
-            </Sheet>
           </>
         )}
         {user.userType === "Catcher" && (
@@ -76,26 +67,8 @@ const Home = () => {
               type={user.userType.toLocaleUpperCase()}
               username={user.username}
             />
-
             <Menu />
-            <Sheet
-              color="primary"
-              sx={{
-                width: "90%",
-                height: "500px",
-                overflowY: "auto",
-                display: "flex",
-                flexDirection: "column",
-                // justifyContent: "center",
-                // alignContent: "center",
-                margin: "auto",
-                marginTop: "52px",
-                marginBottom: "52px",
-              }}
-            >
-              <MyFeedback />
-            </Sheet>
-            <TopCatcher />
+            <CardsRecentErrands />
           </>
         )}
         {user.userType.toLocaleUpperCase() === "ADMIN" && (

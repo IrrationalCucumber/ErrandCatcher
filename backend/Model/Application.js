@@ -6,7 +6,7 @@ const Apply = {
   // show only pending
   getApplicants: (id, callback) => {
     db.query(
-      `SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname 
+      `SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname, ua.userQualification
         FROM Application a 
         JOIN commission c ON a.applicationErrandID = c.commissionID
         JOIN useraccount ua ON a.catcherID = ua.userID 
