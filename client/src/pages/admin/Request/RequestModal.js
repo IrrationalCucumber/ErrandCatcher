@@ -17,6 +17,7 @@ import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import CancelIcon from "@mui/icons-material/Cancel";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import LoadingBackdrop from "../../../components/LoadingSpinner";
+import { GetUserAge } from "../../../components/Display/DsiplayFunctions";
 
 const RequestModal = ({ request, handleClose }) => {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
@@ -176,7 +177,7 @@ const RequestModal = ({ request, handleClose }) => {
           <strong>Gender:</strong> {request.userGender}
         </p>
         <p>
-          <strong>Age:</strong> {request.userAge}
+          <strong>Age:</strong> {GetUserAge(request.userBirthday)}
         </p>
         <p>
           <strong>Birthdate:</strong> {formattedDate(request.userBirthday)}

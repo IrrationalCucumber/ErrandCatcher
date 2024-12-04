@@ -4,9 +4,10 @@ const Errand = {
   //get all errands
   getAllErrands: (callback) => {
     db.query(
-      `SELECT c.*, ua.username, ua.userFirstname, ua.userLastname 
+      `SELECT c.*, ua.username, ua.userFirstname, ua.userLastname, t.* 
       FROM commission c
-      JOIN useraccount ua ON c.employerID = ua.userID 
+      JOIN useraccount ua ON c.employerID = ua.userID
+      JOIN errandtransaction t ON c.commissionID = t.transErrandID
       ORDER BY c.DatePosted DESC`,
       callback
     );
