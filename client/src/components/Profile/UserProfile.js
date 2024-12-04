@@ -18,6 +18,7 @@ import FileUploadIcon from "@mui/icons-material/FileUpload";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import {
+  AmountDecimal,
   Capitalize,
   DisplayDate,
   GetUserAge,
@@ -292,7 +293,7 @@ function UserProfile(props) {
               <span>
                 <StarRating rating={props.rate} />
                 <p>
-                  <i>{props.rate}</i>
+                  <i>{AmountDecimal(props.rate)}</i>
                 </p>
               </span>
             </div>
@@ -648,7 +649,7 @@ export function ViewUserProfile(props) {
             <span>
               <StarRating rating={props.rate} />
               <p>
-                <i>{props.rate}</i>
+                <i>{AmountDecimal(props.rate)}</i>
               </p>
             </span>
           </div>
