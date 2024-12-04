@@ -441,49 +441,41 @@ function OngoingCardsNew(props) {
             </Typography>
           </span>
 
-          <p class="desc">
-            {/* props.desc */}
-            {/* {props.type} */}
-            <Typography className="ongoing__cards__txt" level="body-sm">
-              {/* {commission.commissionType} */}
-              {props.type}
-            </Typography>
-          </p>
+          {/* props.desc */}
+          {/* {props.type} */}
+          <Typography className="ongoing__cards__txt" level="body-sm">
+            {/* {commission.commissionType} */}
+            {props.type}
+          </Typography>
 
-          <p class="desc">
-            {/* props.desc */}
-            <h7>Details: </h7>
-            <ul>
-              <li>
-                <Chip
-                  sx={{
-                    fontSize: "1.1rem",
-                    height: "30px",
-                    padding: "0 10px",
-                  }}
-                  color={chipColor}
-                  size="lg"
-                  variant="solid"
-                >
-                  {/* {commission.errandStatus} */}
-                  {props.status}
-                </Chip>
-              </li>
-              <li>
-                <Typography className="ongoing__cards__txt" level="title-sm">
-                  Payment:
-                  <Typography
-                    color="success"
-                    level="title-sm"
-                    variant="outlined"
-                  >
-                    {/* Php {commission.commissionPay} */}₱
-                    {AmountDecimal(props.pay)}
-                  </Typography>
+          {/* props.desc */}
+          <h7 className="cards__header__seven">Details: </h7>
+          <ul>
+            <li>
+              <Chip
+                sx={{
+                  fontSize: "1.1rem",
+                  height: "30px",
+                  padding: "0 10px",
+                }}
+                color={chipColor}
+                size="sm"
+                variant="solid"
+              >
+                {/* {commission.errandStatus} */}
+                {props.status}
+              </Chip>
+            </li>
+            <li>
+              <Typography className="ongoing__cards__txt" level="title-sm">
+                Payment:
+                <Typography color="success" level="title-sm" variant="outlined">
+                  {/* Php {commission.commissionPay} */}₱
+                  {AmountDecimal(props.pay)}
                 </Typography>
-              </li>
-            </ul>
-          </p>
+              </Typography>
+            </li>
+          </ul>
 
           {/* View Errand */}
           <Link to={props.path}>
@@ -496,17 +488,14 @@ function OngoingCardsNew(props) {
           <p class="desc" style={{ marginTop: "12px" }}>
             {user.userType === "Employer" && (
               <>
-                <Typography
-                  color="neutral"
-                  level="title-lg"
-                  variant="plain"
-                  style={{ marginBottom: "4px" }}
-                >
-                  CATCHER:
-                </Typography>
-                <Typography color="primary" level="h3" variant="soft">
+                <Typography style={{ marginBottom: "4px" }}>
+                  <Typography color="neutral" level="title-sm" variant="plain">
+                    CATCHER:
+                  </Typography>
+                  <Typography color="primary" level="title-md" variant="plain">
+                    {props.userFname} {props.userLname}
+                  </Typography>
                   {/* {commission.userFirstname} {commission.userLastname} */}
-                  {props.userFname} {props.userLname}
                 </Typography>
               </>
             )}
