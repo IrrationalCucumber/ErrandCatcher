@@ -14,7 +14,7 @@ import {
   Typography,
 } from "@mui/joy";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../AuthContext";
 
 function SkillsInputModal(props) {
@@ -27,6 +27,12 @@ function SkillsInputModal(props) {
   const [details, setDetails] = useState({
     skills: "",
   });
+  useEffect(() => {
+    if (props.skills !== null) {
+      setSelectedSkills(props.skills);
+    }
+  }, [props.skills]);
+
   // Predefined list of skills (you can fetch this from the backend)
   let availableSkills = [];
   if (user.userType === "Employer") {
@@ -135,7 +141,9 @@ function SkillsInputModal(props) {
                       <Chip
                         key={skill}
                         onClick={() => handleAddSkill(skill)}
-                        color="success"
+                        color={
+                          selectedSkills.includes(skill) ? "success" : "neutral"
+                        }
                         variant="solid"
                         size="lg"
                         startDecorator={<Add />}

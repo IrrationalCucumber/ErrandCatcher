@@ -275,7 +275,11 @@ function UserProfile(props) {
                   </Button>
                 </>
               )}
-              <SkillsInputModal open={open} close={() => setOpen(false)} />
+              <SkillsInputModal
+                skills={skillsArray}
+                open={open}
+                close={() => setOpen(false)}
+              />
             </>
           </div>
           <textarea
