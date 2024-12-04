@@ -19,6 +19,7 @@ import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
 import WhereToVoteIcon from "@mui/icons-material/WhereToVote";
 import { Typography } from "@mui/joy";
+import { AmountDecimal } from "./Display/DsiplayFunctions";
 
 function ErrandInputs(props) {
   const [startSuggestions, setStartSuggestions] = useState([]);
@@ -563,7 +564,7 @@ function ErrandInputs(props) {
             props.typeValue !== "" && (
               <>
                 <Typography color="neutral" level="body-sm" variant="plain">
-                  ₱15 X {props.distance} km + ₱100
+                  ₱15 X {AmountDecimal(props.distance)} km + ₱100
                 </Typography>
               </>
             )}
