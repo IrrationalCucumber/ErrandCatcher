@@ -13,7 +13,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import UpdateIcon from "@mui/icons-material/Update";
 import Snackbar from "@mui/joy/Snackbar";
 import CancelIcon from "@mui/icons-material/Cancel";
-import NewUserProfile from "../../components/Profile/NewUserProfile";
+import NewUserProfile, { NewUserProfileui } from "../../components/Profile/NewUserProfile";
 const Profile = () => {
   const [verified, setVerified] = useState(false);
   //APS - 03/03/24
@@ -358,7 +358,7 @@ const Profile = () => {
         {snacMess}
       </Snackbar>
 
-      <UserProfile
+      {/* <UserProfile
         profileImg={tempAccount.profileImage}
         address={tempAccount.address}
         cnum={tempAccount.contact}
@@ -390,9 +390,9 @@ const Profile = () => {
         doc1={docs.doc1}
         doc2={docs.doc2}
         skills={tempAccount.skills}
-      />
+      /> */}
 
-      <NewUserProfile
+      <NewUserProfileui
         profileImg={tempAccount.profileImage}
         address={tempAccount.address}
         cnum={tempAccount.contact}
