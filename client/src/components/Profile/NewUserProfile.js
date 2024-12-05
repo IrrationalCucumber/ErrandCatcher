@@ -626,6 +626,67 @@ export function NewUserProfileui(props) {
                                     </div>
                                 </div>
                             </div> */}
+
+                            <div class="col-12">
+                                <div class="card widget-card border-light shadow-sm">
+                                    <div class="card-header text-bg-primary">Skills</div>
+                                    <div class="card-body">
+                                        <Box sx={{ flex: "1 1 auto", display: "flex", flexDirection: "column", gap: 1 }}>
+                                            <Typography level="h4" sx={{ marginBottom: 1 }}>
+                                                Skills Qualification:
+                                            </Typography>
+                                            {skillsArray.length > 0 ? ( // Check if there are any skills to display
+                                                <>
+                                                    <Stack
+                                                        direction="row"
+                                                        flexWrap="wrap"
+                                                        sx={{ gap: 1 }} // Ensures spacing between items
+                                                    >
+                                                        {skillsArray.map((skill, index) => (
+                                                            <Chip
+                                                                key={index}
+                                                                variant="solid" // Gives a subtle background color
+                                                                color="primary" // Choose the color theme (primary, secondary, etc.)
+                                                                size="md" // Medium size for better visibility
+                                                            >
+                                                                {skill.trim()} {/* Trims any unnecessary whitespace */}
+                                                            </Chip>
+                                                        ))}
+                                                    </Stack>
+                                                    <Button
+                                                        size="lg"
+                                                        variant="soft"
+                                                        sx={{ margin: 1, width: "100%", borderRadius: "8px" }}
+                                                        onClick={() => setOpen(true)}
+                                                    >
+                                                        UPDATE
+                                                    </Button>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Typography level="body2" color="neutral">
+                                                        No skills provided.
+                                                    </Typography>
+                                                    <Button
+                                                        size="sm"
+                                                        variant="soft"
+                                                        sx={{ margin: 1 }}
+                                                        onClick={() => setOpen(true)}
+                                                    >
+                                                        ADD
+                                                    </Button>
+                                                </>
+                                            )}
+                                            <SkillsInputModal
+                                                skills={skillsArray}
+                                                open={open}
+                                                close={() => setOpen(false)}
+                                            />
+                                        </Box>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
