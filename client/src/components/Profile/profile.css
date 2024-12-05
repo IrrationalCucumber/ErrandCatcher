@@ -29,8 +29,12 @@
     align-items: center;
     flex-direction: column;
     display: flex;
-    background-color: #85baf1;
+    /* background-color: #85baf1; */
+    background-color: #f8f9fa;
+    /* box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.084), 0px 2px 3px rgba(0, 0, 0, 0.168); */
+    box-shadow: #00000013 0px 2px 4px 0px;
     padding: 40px 30px 40px 40px;
+    /* margin: 32px; */
 }
 
 .profile-left .info {
