@@ -18,6 +18,7 @@ import FileUploadIcon from "@mui/icons-material/FileUpload";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import {
+  AmountDecimal,
   Capitalize,
   DisplayDate,
   GetUserAge,
@@ -144,7 +145,7 @@ function UserProfile(props) {
               className={`profile__info__lefts ${
                 props.validationErrors.address ? "error" : ""
               }`}
-              variant="plain"
+              variant="neutral"
               placeholder="Address"
               name="address"
               value={props.address}
@@ -152,6 +153,7 @@ function UserProfile(props) {
               disabled={!props.isEditing}
               startDecorator={<Home />}
               sx={{
+                borderRadius: 0,
                 "&::before": {
                   transform: "scaleX(0)",
                   left: 0,
@@ -178,9 +180,10 @@ function UserProfile(props) {
               value={props.email}
               onChange={props.handleChange}
               disabled={!props.isEditing}
-              variant="plain"
+              variant="neutral"
               startDecorator={<Email />}
               sx={{
+                borderRadius: 0,
                 "&::before": {
                   transform: "scaleX(0)",
                   left: 0,
@@ -207,9 +210,10 @@ function UserProfile(props) {
               value={props.cnum}
               onChange={props.handleChange}
               disabled={!props.isEditing}
-              variant="plain"
+              variant="neutral"
               startDecorator={<Call />}
               sx={{
+                borderRadius: 0,
                 "&::before": {
                   transform: "scaleX(0)",
                   left: 0,
@@ -240,7 +244,7 @@ function UserProfile(props) {
                       <Chip
                         key={index}
                         variant="soft" // Gives a subtle background color
-                        color="primary" // Choose the color theme (primary, secondary, etc.)
+                        color="success" // Choose the color theme (primary, secondary, etc.)
                         size="md" // Medium size for better visibility
                       >
                         {skill.trim()} {/* Trims any unnecessary whitespace */}
@@ -249,7 +253,7 @@ function UserProfile(props) {
                   </Stack>
                   <Button
                     size="sm"
-                    variant="outlined"
+                    variant="soft"
                     sx={{ margin: 1 }}
                     onClick={() => setOpen(true)}
                   >
@@ -263,7 +267,7 @@ function UserProfile(props) {
                   </Typography>
                   <Button
                     size="sm"
-                    variant="outlined"
+                    variant="soft"
                     sx={{ margin: 1 }}
                     onClick={() => setOpen(true)}
                   >
@@ -271,7 +275,11 @@ function UserProfile(props) {
                   </Button>
                 </>
               )}
-              <SkillsInputModal open={open} close={() => setOpen(false)} />
+              <SkillsInputModal
+                skills={skillsArray}
+                open={open}
+                close={() => setOpen(false)}
+              />
             </>
           </div>
           <textarea
@@ -289,7 +297,7 @@ function UserProfile(props) {
               <span>
                 <StarRating rating={props.rate} />
                 <p>
-                  <i>{props.rate}</i>
+                  <i>{AmountDecimal(props.rate)}</i>
                 </p>
               </span>
             </div>
@@ -303,7 +311,11 @@ function UserProfile(props) {
 
             {/* <button onClick={() => setButtonPopup3(true)}>Change Password?</button> */}
           </div>
-          <ViewFeedback trigger={buttonPopup1} setTrigger={setButtonPopup1}>
+          <ViewFeedback
+            userID={user.userID}
+            trigger={buttonPopup1}
+            setTrigger={setButtonPopup1}
+          >
             <h1>Feedback</h1>
           </ViewFeedback>
           <Docu trigger={buttonPopup2} setTrigger={setButtonPopup2}>
@@ -522,7 +534,6 @@ export function ViewUserProfile(props) {
               <img src="/images/employer.png" alt="Profile Picture" />
             )}
           </>
-
           <div className="info">
             {/* {props.address} */}
 
@@ -639,27 +650,28 @@ export function ViewUserProfile(props) {
             value={props.desc}
             disabled
           ></textarea>
-
           <div className="rating">
             Overall Rating:
             <span>
               <StarRating rating={props.rate} />
               <p>
-                <i>{props.rate}</i>
+                <i>{AmountDecimal(props.rate)}</i>
               </p>
             </span>
           </div>
-
           <div className="buttons">
             {/* {props.type === "Catcher" && (
               // -- need new endpoint for view applicants feedback display
               <button onClick={() => setButtonPopup1(true)}>Reviews</button>
             )} */}
-            {/* <button onClick={() => setButtonPopup1(true)}>Reviews</button> */}
+            <button onClick={() => setButtonPopup1(true)}>Reviews</button>
             <button onClick={() => setButtonPopup2(true)}>Documents</button>
           </div>
-
-          <ViewFeedback trigger={buttonPopup1} setTrigger={setButtonPopup1}>
+          <ViewFeedback
+            userID={props.id}
+            trigger={buttonPopup1}
+            setTrigger={setButtonPopup1}
+          >
             <h1>Feedback</h1>
           </ViewFeedback>
           <Docu trigger={buttonPopup2} setTrigger={setButtonPopup2}>

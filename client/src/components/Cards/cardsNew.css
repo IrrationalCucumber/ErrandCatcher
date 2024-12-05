@@ -1,4 +1,4 @@
-.card {
+.cardnew {
     max-width: 300px;
     border-radius: 0.5rem;
     background-color: #fff;
@@ -25,7 +25,7 @@
     height: 10rem;
 }
 
-.card a {
+.cardnew a {
     text-decoration: none;
 }
 
@@ -61,7 +61,7 @@
     flex-grow: 1;
 }
 
-.desc > h7 {
+.cards__header__seven {
     font-weight: 800;
     font-size: 1.35rem;
     line-height: 1.90rem;

@@ -32,6 +32,7 @@ function ViewProfile(id) {
     status: "",
     skills: "",
     type: "",
+    id: "",
   });
 
   //pre-fill the fields
@@ -61,6 +62,7 @@ function ViewProfile(id) {
           profileImage: retrievedAccount.profileImage,
           status: retrievedAccount.accountStatus,
           skills: retrievedAccount.userQualification,
+          id: retrievedAccount.userID,
         });
       } catch (err) {
         console.log(err);
@@ -118,6 +120,7 @@ function ViewProfile(id) {
   return (
     <div>
       <ViewUserProfile
+        id={account.id}
         profileImg={account.profileImage}
         address={account.address}
         cnum={account.contact}

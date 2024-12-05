@@ -19,7 +19,7 @@ import DialogTitle from "@mui/joy/DialogTitle";
 import DialogContent from "@mui/joy/DialogContent";
 import DialogActions from "@mui/joy/DialogActions";
 import Modal from "@mui/joy/Modal";
-import { ModalClose } from "@mui/joy";
+import { ButtonGroup, ModalClose } from "@mui/joy";
 import ModalDialog from "@mui/joy/ModalDialog";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 import { DisplayDate } from "../../components/DisplayDate";
@@ -98,14 +98,7 @@ const EmployerApplicants = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = applicants.slice(indexOfFirstItem, indexOfLastItem);
 
-  const headers = [
-    "DATE",
-    "CATCHER",
-    "QUALIFICATION",
-    "ERRAND TITLE",
-    "ACTION",
-    "",
-  ];
+  const headers = ["DATE", "CATCHER", "SKILLS", "ERRAND TITLE", "ACTION", ""];
   const applicantData = applicants.map((applicant) => [
     //applicant.applicationID,
     // DisplayDate(applicant.applicationDate),
@@ -131,13 +124,20 @@ const EmployerApplicants = () => {
     </Box>,
     applicant.applicationStatus === "Pending" ? (
       <>
-        <button
-          style={styles.button}
-          className="accept action-btn"
-          onClick={() => handleOpenAcceptModal()}
+        <ButtonGroup
+          color="neutral"
+          orientation="horizontal"
+          variant="outlined"
+          spacing="0"
         >
-          Accept
-        </button>
+          <Button color="success" onClick={() => handleOpenAcceptModal()}>
+            Accept
+          </Button>
+          <Button color="danger" onClick={() => handleOpenDeclineModal()}>
+            Decline
+          </Button>
+        </ButtonGroup>
+
         {/* button accept modal */}
         <Modal open={openAccept} onClose={() => setOpenAccept(false)}>
           <ModalDialog>
@@ -173,13 +173,6 @@ const EmployerApplicants = () => {
             </DialogActions>
           </ModalDialog>
         </Modal>
-        <button
-          style={style1.button}
-          className="decline action-btn"
-          onClick={() => handleOpenDeclineModal()}
-        >
-          Decline
-        </button>
 
         <Modal open={openDecline} onClose={() => setOpenDecline(false)}>
           <ModalDialog variant="outlined" role="alertdialog">

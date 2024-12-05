@@ -104,7 +104,7 @@ const PostCommission = () => {
       const baseAmount = 100;
       const total = Math.round(km) * 15 + baseAmount;
       // Correctly update commission state without losing other fields
-      setMinimum(minimum + total);
+      setMinimum(total);
       setCommission((prev) => ({
         ...prev,
         comPay: total,
@@ -116,7 +116,7 @@ const PostCommission = () => {
       }));
       setMinimum(500);
     }
-  }, [commission.comType, distance, minimum]);
+  }, [commission.comType, distance]);
 
   //pull the local time of the pc
   const getCurrentDate = () => {

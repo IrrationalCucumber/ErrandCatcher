@@ -66,3 +66,10 @@ export function LoadingMap() {
     </div>
   );
 }
+export function AmountDecimal(amount) {
+  // Check if the amount is valid
+  if (!amount || isNaN(amount)) return "0.00"; // Default to 0.00 if the input is invalid or empty
+
+  const num = parseFloat(amount); // Convert the input to a float
+  return num.toFixed(2); // Format it to 2 decimal places
+}
