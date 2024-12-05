@@ -242,6 +242,7 @@ function NewUserProfile(props) {
 
                         <>
 
+
                             {/* <div class="card widget-card border-light shadow-sm"> */}
                             {/* <div class="col-12" > */}
                             <div class="card widget-card border-light shadow-sm" style={{ marginTop: "28px" }}>
@@ -261,8 +262,8 @@ function NewUserProfile(props) {
                                                     {skillsArray.map((skill, index) => (
                                                         <Chip
                                                             key={index}
-                                                            variant="soft" // Gives a subtle background color
-                                                            color="success" // Choose the color theme (primary, secondary, etc.)
+                                                            variant="solid" // Gives a subtle background color
+                                                            color="primary" // Choose the color theme (primary, secondary, etc.)
                                                             size="md" // Medium size for better visibility
                                                         >
                                                             {skill.trim()} {/* Trims any unnecessary whitespace */}
@@ -270,9 +271,9 @@ function NewUserProfile(props) {
                                                     ))}
                                                 </Stack>
                                                 <Button
-                                                    size="md"
+                                                    size="lg"
                                                     variant="soft"
-                                                    sx={{ margin: 1, width: "100%" }}
+                                                    sx={{ margin: 1, width: "100%", borderRadius: "8px" }}
                                                     onClick={() => setOpen(true)}
                                                 >
                                                     UPDATE
