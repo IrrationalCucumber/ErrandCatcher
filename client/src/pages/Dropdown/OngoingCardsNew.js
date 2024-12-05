@@ -418,7 +418,7 @@ function OngoingCardsNew(props) {
         // icon={ErrorIcon}
       />
 
-      <div class="card">
+      <div class="cardnew">
         <div class="iconcard">
           <Box class="boxer">
             {/* commissionType props */}
