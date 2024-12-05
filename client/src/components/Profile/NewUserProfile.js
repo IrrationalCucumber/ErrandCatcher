@@ -223,26 +223,11 @@ export function NewUserProfileui(props) {
                   </div>
                 </div>
               </div>
-
-              {/* <div class="col-12">
-                                <div class="card widget-card border-light shadow-sm">
-                                    <div class="card-header text-bg-primary">Skills</div>
-                                    <div class="card-body">
-                                        <span class="badge text-bg-primary">HTML</span>
-                                        <span class="badge text-bg-primary">SCSS</span>
-                                        <span class="badge text-bg-primary">Javascript</span>
-                                        <span class="badge text-bg-primary">React</span>
-                                        <span class="badge text-bg-primary">Vue</span>
-                                        <span class="badge text-bg-primary">Angular</span>
-                                        <span class="badge text-bg-primary">UI</span>
-                                        <span class="badge text-bg-primary">UX</span>
-                                    </div>
-                                </div>
-                            </div> */}
-
               <div class="col-12">
                 <div class="card widget-card border-light shadow-sm">
-                  <div class="card-header text-bg-primary">Skills</div>
+                  <div class="card-header text-bg-primary">
+                    {props.type === "Catcher" ? "Skills" : "Tags"}
+                  </div>
                   <div class="card-body">
                     <Box
                       sx={{
@@ -252,9 +237,6 @@ export function NewUserProfileui(props) {
                         gap: 1,
                       }}
                     >
-                      <Typography level="h4" sx={{ marginBottom: 1 }}>
-                        Skills Qualification:
-                      </Typography>
                       {skillsArray.length > 0 ? ( // Check if there are any skills to display
                         <>
                           <Stack
@@ -292,14 +274,6 @@ export function NewUserProfileui(props) {
                           <Typography level="body2" color="neutral">
                             No skills provided.
                           </Typography>
-                          <Button
-                            size="sm"
-                            variant="soft"
-                            sx={{ margin: 1 }}
-                            onClick={() => setOpen(true)}
-                          >
-                            ADD
-                          </Button>
                         </>
                       )}
                       <SkillsInputModal
@@ -872,7 +846,9 @@ export function NewViewUserProfile(props) {
 
               <div class="col-12">
                 <div class="card widget-card border-light shadow-sm">
-                  <div class="card-header text-bg-primary">Skills</div>
+                  <div class="card-header text-bg-primary">
+                    {props.type === "Employer" ? "Tags" : "Skills"}
+                  </div>
                   <div class="card-body">
                     <Box
                       sx={{
@@ -882,9 +858,6 @@ export function NewViewUserProfile(props) {
                         gap: 1,
                       }}
                     >
-                      <Typography level="h4" sx={{ marginBottom: 1 }}>
-                        Skills Qualification:
-                      </Typography>
                       {skillsArray.length > 0 ? ( // Check if there are any skills to display
                         <>
                           <Stack
@@ -904,32 +877,12 @@ export function NewViewUserProfile(props) {
                               </Chip>
                             ))}
                           </Stack>
-                          <Button
-                            size="lg"
-                            variant="soft"
-                            sx={{
-                              margin: 1,
-                              width: "100%",
-                              borderRadius: "8px",
-                            }}
-                            onClick={() => setOpen(true)}
-                          >
-                            UPDATE
-                          </Button>
                         </>
                       ) : (
                         <>
                           <Typography level="body2" color="neutral">
                             No skills provided.
                           </Typography>
-                          <Button
-                            size="sm"
-                            variant="soft"
-                            sx={{ margin: 1 }}
-                            onClick={() => setOpen(true)}
-                          >
-                            ADD
-                          </Button>
                         </>
                       )}
                       <SkillsInputModal
