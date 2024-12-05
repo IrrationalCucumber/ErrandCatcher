@@ -132,7 +132,12 @@ export function NewUserProfileui(props) {
               {/* about me section */}
               <div class="col-12">
                 <div class="card widget-card border-light shadow-sm">
-                  <div class="card-header text-bg-primary">About Me</div>
+                  <div
+                    class="card-header text-bg-primary"
+                    style={{ background: "#378ce7" }}
+                  >
+                    About Me
+                  </div>
                   <div class="card-body">
                     {props.status === "Verified" ? (
                       <>{props.status.toLocaleUpperCase()}</>
@@ -433,36 +438,68 @@ export function NewUserProfileui(props) {
                     aria-labelledby="profile-tab"
                     tabindex="0"
                   >
-                    <form action="#!" class="row gy-3 gy-xxl-4">
+                    <form onSubmit={props.click} class="row gy-3 gy-xxl-4">
                       <div class="col-12">
                         <div class="row gy-2">
                           <label class="col-12 form-label m-0">
                             Profile Image
                           </label>
+
                           <div class="col-12">
-                            <img
-                              src="./assets/img/profile-img-1.jpg"
-                              class="img-fluid"
-                              alt="Luna John"
-                            />
+                            {props.profileImg ? (
+                              <img
+                                className="user_profile_pic"
+                                src={`http://localhost:8800/images/profile/${props.profileImg}`}
+                                alt="ProfPic"
+                              />
+                            ) : (
+                              <img
+                                src="/images/employer.png"
+                                alt="Profile Picture"
+                              />
+                            )}
                           </div>
+
                           <div class="col-12">
-                            <a
-                              href="#!"
-                              class="d-inline-block bg-primary link-light lh-1 p-2 rounded"
-                            >
-                              <i class="bi bi-upload"></i>
-                            </a>
-                            <a
-                              href="#!"
-                              class="d-inline-block bg-danger link-light lh-1 p-2 rounded"
-                            >
-                              <i class="bi bi-trash"></i>
-                            </a>
+                            <div className="upload-container">
+                              <input
+                                type="file"
+                                id="file"
+                                onChange={handleImage}
+                                style={{ display: "none" }}
+                              />
+                              <label
+                                // className="prolabel"
+                                htmlFor="file"
+                                style={{
+                                  // border: "1px dashed black",
+                                  border: "none",
+                                  flexDirection: "row",
+                                  gap: "4px",
+                                  alignItems: "center",
+                                  backgroundColor: "#f0f0f0",
+                                  maxWidth: "18rem",
+                                  display: "flex",
+                                  alignContent: "center",
+                                  justifyContent: "center",
+                                }}
+                              >
+                                <AddAPhotoIcon color="primary" />
+                                Choose Image File
+                              </label>
+
+                              <Button
+                                loading={false}
+                                onClick={props.handleUpload}
+                                size="md"
+                                variant="solid"
+                              >
+                                <FileUploadIcon />
+                              </Button>
+                            </div>
                           </div>
                         </div>
                       </div>
-
                       <div class="col-12 col-md-6">
                         <label for="inputFirstName" class="form-label">
                           First Name
@@ -470,8 +507,8 @@ export function NewUserProfileui(props) {
                         <input
                           type="text"
                           class="form-control"
-                          id="inputFirstName"
-                          value="raymund"
+                          name="fname"
+                          value={props.fname}
                         />
                       </div>
                       <div class="col-12 col-md-6">
@@ -481,52 +518,9 @@ export function NewUserProfileui(props) {
                         <input
                           type="text"
                           class="form-control"
-                          id="inputLastName"
-                          value="Leo"
-                        />
-                      </div>
-                      <div class="col-12 col-md-6">
-                        <label for="inputEducation" class="form-label">
-                          Education
-                        </label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="inputEducation"
-                          value="M.S Computer Science"
-                        />
-                      </div>
-                      <div class="col-12 col-md-6">
-                        <label for="inputSkills" class="form-label">
-                          Skills
-                        </label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="inputSkills"
-                          value="HTML, SCSS, Javascript, React, Vue, Angular, UI, UX"
-                        />
-                      </div>
-                      <div class="col-12 col-md-6">
-                        <label for="inputJob" class="form-label">
-                          Job
-                        </label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="inputJob"
-                          value="Project Manager"
-                        />
-                      </div>
-                      <div class="col-12 col-md-6">
-                        <label for="inputCompany" class="form-label">
-                          Company
-                        </label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="inputCompany"
-                          value="GitHub Inc"
+                          name="lname"
+                          onChange={props.handleChange}
+                          value={props.lname}
                         />
                       </div>
                       <div class="col-12 col-md-6">
@@ -536,10 +530,12 @@ export function NewUserProfileui(props) {
                         <input
                           type="tel"
                           class="form-control"
-                          id="inputPhone"
-                          value="+12486798745"
+                          name="cnum"
+                          onChange={props.handleChange}
+                          value={props.cnum}
                         />
                       </div>
+
                       <div class="col-12 col-md-6">
                         <label for="inputEmail" class="form-label">
                           Email
@@ -547,9 +543,36 @@ export function NewUserProfileui(props) {
                         <input
                           type="email"
                           class="form-control"
-                          id="inputEmail"
-                          value="leo@example.com"
+                          onChange={props.handleChange}
+                          name="email"
+                          value={props.email}
                         />
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <label for="inputEmail" class="form-label">
+                          Birthdate
+                        </label>
+                        <input
+                          type="date"
+                          class="form-control"
+                          onChange={props.handleChange}
+                          name="bday"
+                          value={props.bday}
+                        />
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <label for="inputEmail" class="form-label">
+                          Age
+                        </label>
+                        <input
+                          type="number"
+                          name="age"
+                          class="form-control"
+                          placeholder="Age"
+                          onChange={props.handleChange}
+                          value={GetUserAge(props.bday)}
+                          disabled={true}
+                        ></input>
                       </div>
                       <div class="col-12 col-md-6">
                         <label for="inputAddress" class="form-label">
@@ -558,33 +581,39 @@ export function NewUserProfileui(props) {
                         <input
                           type="text"
                           class="form-control"
-                          id="inputAddress"
-                          value="Mountain View, California"
+                          onChange={props.handleChange}
+                          name="address"
+                          value={props.address}
                         />
                       </div>
                       <div class="col-12 col-md-6">
                         <label for="inputCountry" class="form-label">
-                          Country
+                          Gender
                         </label>
-                        <select class="form-select" id="inputCountry">
-                          <option value="Afghanistan">Afghanistan</option>
-                          <option value="Åland Islands">Åland Islands</option>
-                          <option value="Albania">Albania</option>
-                          <option value="Kenya">Kenya</option>
+                        <select
+                          // className="display-data1"
+                          className="form-select"
+                          value={props.sex}
+                          onChange={props.handleChange}
+                          name="gender"
+                        >
+                          {/* gender */}
+                          <option value="">Choose gender....</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
                         </select>
                       </div>
-
                       <div class="col-12">
                         <label for="inputAbout" class="form-label">
                           About
                         </label>
-                        <textarea class="form-control" id="inputAbout">
-                          Ethan Leo is a seasoned and results-driven Project
-                          Manager who brings experience and expertise to project
-                          management. With a proven track record of successfully
-                          delivering complex projects on time and within budget,
-                          Ethan Leo is the go-to professional for organizations
-                          seeking efficient and effective project leadership.
+                        <textarea
+                          class="form-control"
+                          name="desc"
+                          onChange={props.handleChange}
+                          value={props.desc}
+                        >
+                          {props.desc}
                         </textarea>
                       </div>
                       <div class="col-12">
