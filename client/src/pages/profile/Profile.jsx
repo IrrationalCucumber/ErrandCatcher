@@ -13,6 +13,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import UpdateIcon from "@mui/icons-material/Update";
 import Snackbar from "@mui/joy/Snackbar";
 import CancelIcon from "@mui/icons-material/Cancel";
+import NewUserProfile from "../../components/Profile/NewUserProfile";
 const Profile = () => {
   const [verified, setVerified] = useState(false);
   //APS - 03/03/24
@@ -390,6 +391,41 @@ const Profile = () => {
         doc2={docs.doc2}
         skills={tempAccount.skills}
       />
+
+      <NewUserProfile
+        profileImg={tempAccount.profileImage}
+        address={tempAccount.address}
+        cnum={tempAccount.contact}
+        email={tempAccount.email}
+        rate={rating}
+        type={tempAccount.type}
+        desc={tempAccount.desc}
+        handleChange={handleChange}
+        handleImage={handleImage}
+        handleUpload={handleUpload}
+        validationErrors={validationErrors}
+        //right hemisphere
+        username={tempAccount.username}
+        fname={tempAccount.fname}
+        lname={tempAccount.lname}
+        sex={tempAccount.gender}
+        age={tempAccount.age}
+        bday={tempAccount.bday}
+        status={tempAccount.status}
+        userID={userID}
+        click={handleClick}
+        isEditing={isEditing}
+        clickEdit={handleEdit}
+        clickCancel={handleCancel}
+        //verification details
+        verStatus={docs.requestStatus}
+        verFront={docs.frontID}
+        verBack={docs.backID}
+        doc1={docs.doc1}
+        doc2={docs.doc2}
+        skills={tempAccount.skills}
+      />
+
     </div>
   );
 };
