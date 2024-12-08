@@ -146,8 +146,8 @@ function RadioInputs({ options, selectedOption, onChange }) {
     onChange({ target: { value: optionValue } });
     // Apply the 'animate' class to the clicked radio-wrapper
     const wrapper = document.getElementById(`wrapper-${optionValue}`);
-    wrapper.classList.add('animate');
-    setTimeout(() => wrapper.classList.remove('animate'), 100);
+    wrapper.classList.add("animate");
+    setTimeout(() => wrapper.classList.remove("animate"), 100);
   };
 
   return (
@@ -157,7 +157,9 @@ function RadioInputs({ options, selectedOption, onChange }) {
           <div className="grid-item" key={index}>
             <div
               id={`wrapper-${option.value}`}
-              className={`radio-wrapper ${selectedOption === option.value ? "selected" : ""}`}
+              className={`radio-wrapper ${
+                selectedOption === option.value ? "selected" : ""
+              }`}
               onClick={() => handleWrapperClick(option.value)}
             >
               <div className="radio-header">
@@ -226,7 +228,8 @@ function RadioInputs({ options, selectedOption, onChange }) {
           }
 
           .radio-header input[type="radio"] {
-            display: none;
+            display: relative;
+            background: none
           }
 
           .radio-label {
