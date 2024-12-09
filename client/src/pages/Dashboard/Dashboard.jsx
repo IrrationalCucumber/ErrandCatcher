@@ -20,7 +20,7 @@ function Dashboard() {
                 navbar_ui={"navbar__employer"}
                 page1="ONGOING ERRANDS"
                 one={`/dashboard/ongoing`}
-                page2="MY ERRANDS"
+                page2="ERRAND LIST"
                 commissionList={`/dashboard/errands`}
                 page3={
                   <>
