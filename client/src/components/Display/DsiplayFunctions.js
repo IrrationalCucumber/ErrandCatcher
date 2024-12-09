@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./LoadingMap.css";
+import axios from "axios";
+import { Badge } from "@mui/joy";
 
 export function Capitalize(text) {
   const capitalizeThis = text;
@@ -72,4 +74,26 @@ export function AmountDecimal(amount) {
 
   const num = parseFloat(amount); // Convert the input to a float
   return num.toFixed(2); // Format it to 2 decimal places
+}
+
+export function ApplicantsCount(id) {
+  const [num, setNum] = useState();
+  useEffect(() => {
+    // Simulate fetching counts from backend API, be removed
+
+    const fetchCount = async () => {
+      try {
+        const res2 = await axios.get(
+          `http://localhost:8800/post-and-applicant-count/${id}`
+        );
+        setNum(res2.data[0].applicantCount);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchCount();
+    const interval = setInterval(fetchCount, 10000); // 10 seconds refresh
+    return () => clearInterval(interval);
+  }, [id, num]);
+  return num;
 }
