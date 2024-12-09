@@ -340,7 +340,7 @@ const EmployerApplicants = () => {
       />
 
       <BannerEmployerPages
-        bannerMessage={`Here are your Applicants, ${user.username}`}
+        bannerMessage={`Here are your Applicants, ${user.username.toUpperCase()}`}
       />
       <div className="applicants-container">
         <div className="applicants">
