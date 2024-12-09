@@ -200,7 +200,7 @@ function CommissionPage() {
           {" "}
           {/* Apply Commission-page class here */}
           <h1>
-            Errands you have <i>Catched</i>
+            Errands you have <i>Caught</i>
           </h1>
           <div className="searcherrand">
             <input
@@ -241,9 +241,7 @@ function CommissionPage() {
               DisplayDate(commission.commissionStartDate),
               // DisplayDate(commission.commissionDeadline),
               <Box display="flex" alignItems="center" gap={1}>
-                < DateRangeOutlinedIcon
-                  sx={{ color: "#555" }}
-                />
+                <DateRangeOutlinedIcon sx={{ color: "#555" }} />
                 {DisplayDate(commission.commissionDeadline)}
               </Box>,
               // commission.errandStatus,
