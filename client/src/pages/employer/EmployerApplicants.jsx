@@ -333,7 +333,7 @@ const EmployerApplicants = () => {
         open={open}
         handleClose={handleClose}
         headerMes="Success!"
-        contentMes="You have accepted a Cather!"
+        contentMes="You have accepted a Catcher!"
         color="success"
         colorText="green"
         // icon={ErrorIcon}
