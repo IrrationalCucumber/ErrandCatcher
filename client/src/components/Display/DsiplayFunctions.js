@@ -68,12 +68,27 @@ export function LoadingMap() {
     </div>
   );
 }
-export function AmountDecimal(amount) {
+export function AmountDecimal(amount, separator = ",") {
   // Check if the amount is valid
   if (!amount || isNaN(amount)) return "0.00"; // Default to 0.00 if the input is invalid or empty
 
   const num = parseFloat(amount); // Convert the input to a float
-  return num.toFixed(2); // Format it to 2 decimal places
+
+  // Use Intl.NumberFormat to format the number with commas/spaces for thousands and fixed decimals
+  const formatter = new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: 2, // Ensure 2 decimal places
+    maximumFractionDigits: 2, // Limit to 2 decimal places
+    useGrouping: true, // Enables grouping (e.g., thousands separator)
+  });
+
+  let formatted = formatter.format(num);
+
+  // Replace commas with spaces if 'separator' is a space
+  if (separator === " ") {
+    formatted = formatted.replace(/,/g, " ");
+  }
+
+  return formatted; // Return the formatted string
 }
 
 export function ApplicantsCount(id) {
