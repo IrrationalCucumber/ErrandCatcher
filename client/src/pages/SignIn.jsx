@@ -5,7 +5,7 @@ import "./Error.css"; // Import your custom CSS for stylin
 import "./signin.css";
 import { useAuth } from "../components/AuthContext";
 import Alert from "@mui/joy/Alert";
-import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import LoadingBackdrop from "../components/LoadingSpinner";
 
 const SignIn = () => {
@@ -85,7 +85,13 @@ const SignIn = () => {
 
   return (
     <div className="si">
-      <div className="cont contman">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault(); // Prevent the default form submission
+          handleClick(); // Call your custom submit logic
+        }}
+        className="cont contman"
+      >
         <div className="si-txt">
           <h1>
             <span className="welcome">Welcome</span> to{" "}
@@ -124,7 +130,7 @@ const SignIn = () => {
         <label
           className="rem"
           htmlFor="remember Me"
-        // style={{ paddingLeft: "140px", fontSize: "12px" }}
+          // style={{ paddingLeft: "140px", fontSize: "12px" }}
         >
           Remember&nbsp;Me
           <input
@@ -138,16 +144,9 @@ const SignIn = () => {
         <div className="button1">
           <div className="button2">
             <button
-              type="button"
-              onClick={handleClick}
-            // style={{
-            //   backgroundColor: "#1679AB",
-            //   fontSize: "16px",
-            //   width: "200px",
-            //   height: "40px",
-            //   borderRadius: "20px",
-            //   color: "#ffff",
-            // }}
+              id="buttonSignin"
+              type="submit"
+              //onClick={handleClick}
             >
               Sign In
             </button>
@@ -158,7 +157,7 @@ const SignIn = () => {
             Don't have an Account? <Link to="/sign-up"> Sign-up!</Link>
           </i>
         </p>
-      </div>
+      </form>
       <div className="contman cont-tawo">
         <img src="http://localhost:3000/images/tawo.png" alt="" />
       </div>

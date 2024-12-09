@@ -43,12 +43,6 @@ const Home = () => {
             <div className="landing__map">
               <HomeMap id={user.userID} />
             </div>
-            {/* <StickyButton
-              buttonText="Post Errand"
-              destination={`/errand/post-commission`}
-            /> */}
-            {/* <Cards /> */}
-            <CardsNew />
           </>
         )}
         {user.userType === "Catcher" && (
@@ -68,7 +62,6 @@ const Home = () => {
               username={user.username}
             />
             <Menu />
-            <CardsRecentErrands />
           </>
         )}
         {user.userType.toLocaleUpperCase() === "ADMIN" && (

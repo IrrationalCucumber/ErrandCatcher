@@ -68,12 +68,20 @@ const PostCommission = () => {
   };
   //update the info that will be stored
   const handleChange = (e) => {
-    if (e.target.name === "comType") {
-      setCommission((prev) => ({ ...prev, comType: e.target.value }));
-    } else if (e.target.name === "method") {
-      setCommission((prev) => ({ ...prev, method: e.target.value }));
-    } else {
-      setCommission((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+
+    // Handle specific fields that need to be parsed as numbers
+    if (["comPay", "comDestLong", "comDestLat"].includes(name)) {
+      // Parse as a float for these fields
+      setCommission((prev) => ({ ...prev, [name]: parseFloat(value) || 0 }));
+    }
+    // Handle dropdowns like "comType" and "method"
+    else if (name === "comType" || name === "method") {
+      setCommission((prev) => ({ ...prev, [name]: value }));
+    }
+    // Handle other fields as strings
+    else {
+      setCommission((prev) => ({ ...prev, [name]: value }));
     }
   };
 
@@ -179,20 +187,6 @@ const PostCommission = () => {
           // modal will pop-up in 2 seconds
           handleOpen();
         }, 2000);
-
-        // 2 seconds cd
-        // setTimeout(() => {
-        //   setLoading(false);
-
-        //   setOpenSnack(true);
-        //   // alert("You have Posted an Errand!");
-        //   // navigate(`/dashboard/commissions`);
-
-        //   setTimeout(() => {
-        //     // setLoading(false);
-        //     navigate(`/dashboard/commissions`);
-        //   }, 1900);
-        // }, 2000);
       }
     } catch (err) {
       console.log(err);

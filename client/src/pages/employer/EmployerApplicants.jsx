@@ -333,14 +333,14 @@ const EmployerApplicants = () => {
         open={open}
         handleClose={handleClose}
         headerMes="Success!"
-        contentMes="You have accepted a Cather!"
+        contentMes="You have accepted a Catcher!"
         color="success"
         colorText="green"
         // icon={ErrorIcon}
       />
 
       <BannerEmployerPages
-        bannerMessage={`Here are your Applicants, ${user.username}`}
+        bannerMessage={`Here are your Applicants, ${user.username.toUpperCase()}`}
       />
       <div className="applicants-container">
         <div className="applicants">

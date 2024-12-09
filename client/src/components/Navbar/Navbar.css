@@ -52,7 +52,7 @@
 .nav-menu {
   display: flex;
   grid-template-columns: repeat(4, auto);
-  grid-gap: 10px;
+  grid-gap: 5px;
   list-style: none;
   text-align: center;
   width: 60vw;
@@ -73,12 +73,18 @@
   text-decoration: none;
   padding: 0.5rem 0rem;
   height: 100%;
-  margin-right: 20px;
+  font-size: 15px;
+  padding: 0 5px
 }
 
 .nav-links:hover {
   border-bottom: 4px solid #fff;
   transition: all 0.2s ease-out;
+}
+
+.nav-links:focus{
+  background-color: #fff;
+  color: #378ce7;
 }
 
 

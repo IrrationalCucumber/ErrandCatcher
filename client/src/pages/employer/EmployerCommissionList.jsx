@@ -134,7 +134,7 @@ const CommissionList = () => {
   return (
     <div>
       <BannerEmployerPages
-        bannerMessage={`These is/are what you have posted so far, ${user.username}`}
+        bannerMessage={`These is/are what you have posted so far, ${user.username.toUpperCase()}`}
       />
       <div className="Commission-page-container">
         <div className="Commission-page">
@@ -187,7 +187,8 @@ const CommissionList = () => {
                       <OtherHousesIcon style={{ color: "purple" }} />
                       <span> Home Service Indoor</span>
                     </>
-                  ) : commissionItem.commissionType === "HomeService - Outdoor" ? (
+                  ) : commissionItem.commissionType ===
+                    "HomeService - Outdoor" ? (
                     <>
                       <CameraOutdoorIcon style={{ color: "brown" }} />
                       <span> Home Service Outdoor</span>
