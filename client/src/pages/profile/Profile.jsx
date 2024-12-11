@@ -425,9 +425,11 @@ const Profile = () => {
         verStatus={docs.requestStatus}
         verFront={docs.frontID}
         verBack={docs.backID}
-        doc1={docs.doc1}
+        // driver license
+        verDoc1={docs.doc1}
         doc2={docs.doc2}
         skills={tempAccount.skills}
+        
       />
 
     </div>
