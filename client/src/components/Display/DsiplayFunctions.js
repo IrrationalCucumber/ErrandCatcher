@@ -90,7 +90,7 @@ export function AmountDecimal(amount, separator = ",") {
 
   return formatted; // Return the formatted string
 }
-
+//Applicant count for employer
 export function ApplicantsCount(id) {
   const [num, setNum] = useState();
   useEffect(() => {
@@ -110,5 +110,27 @@ export function ApplicantsCount(id) {
     const interval = setInterval(fetchCount, 10000); // 10 seconds refresh
     return () => clearInterval(interval);
   }, [id, num]);
+  return num;
+}
+
+//Application count forCather
+export function ApplicationCount(id) {
+  const userID = id.id;
+  const [num, setNum] = useState();
+  useEffect(() => {
+    const fetchCount = async () => {
+      try {
+        const res2 = await axios.get(
+          `http://localhost:8800/application-count/${userID}`
+        );
+        setNum(res2.data[0].c);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchCount();
+    const interval = setInterval(fetchCount, 10000); // 10 seconds refresh
+    return () => clearInterval(interval);
+  }, [userID, num]);
   return num;
 }
