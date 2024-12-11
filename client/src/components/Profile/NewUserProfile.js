@@ -211,43 +211,14 @@ export function NewUserProfileui(props) {
                     <h5 class="text-center mb-1">
                       {props.fname} {props.lname}
                     </h5>
-                    <div className="upload-container">
-                      <input
-                        type="file"
-                        id="file"
-                        onChange={handleImage}
-                        style={{ display: "none" }}
-                      />
-                      <label
-                        // className="prolabel"
-                        htmlFor="file"
-                        style={{
-                          // border: "1px dashed black",
-                          border: "none",
-                          flexDirection: "row",
-                          gap: "4px",
-                          alignItems: "center",
-                          backgroundColor: "#f0f0f0",
-                          maxWidth: "18rem",
-                          display: "flex",
-                          alignContent: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <AddAPhotoIcon color="primary" />
-                        Choose Image File
-                      </label>
 
-                      <Button
-                        loading={false}
-                        onClick={props.handleUpload}
-                        size="md"
-                        variant="solid"
-                      >
-                        <FileUploadIcon />
-                      </Button>
-                    </div>
-                    {/* <p class="text-center text-secondary mb-4">Project Manager</p> */}
+                    {props.type === "Employer" ?
+                      <p class="text-center text-secondary mb-4">
+                        Employer
+                      </p> : <p class="text-center text-secondary mb-4">
+                        Catcher
+                      </p>
+                    }
                   </div>
                 </div>
               </div>
@@ -259,7 +230,7 @@ export function NewUserProfileui(props) {
                     class="card-header text-bg-primary"
                     style={{ background: "#378ce7" }}
                   >
-                    About Me
+                    Account Status
                   </div>
                   <div class="card-body d-flex justify-content-center align-items-center">
                     {props.status === "Verified" ? (
@@ -320,67 +291,7 @@ export function NewUserProfileui(props) {
                   </div>
                 </div>
               </div>
-              {/* about me section */}
-              <div class="col-12">
-                <div class="card widget-card border-light shadow-sm">
-                  <div class="card-header text-bg-primary"></div>
-                  <div class="card-body">
-                    <div className="buttons">
-                      {props.type === "Catcher" && (
-                        <button onClick={() => setButtonPopup1(true)}>
-                          Reviews
-                        </button>
-                      )}
-                      <button onClick={() => setButtonPopup2(true)}>
-                        Documents
-                      </button>
 
-                      {/* <button onClick={() => setButtonPopup3(true)}>Change Password?</button> */}
-                    </div>
-                    <ViewFeedback
-                      userID={user.userID}
-                      trigger={buttonPopup1}
-                      setTrigger={setButtonPopup1}
-                    >
-                      <h1>Feedback</h1>
-                    </ViewFeedback>
-                    <Docu trigger={buttonPopup2} setTrigger={setButtonPopup2}>
-                      {
-                        //display sumbitted IDs of user
-                        props.verFront || props.verBack ? (
-                          <>
-                            <div className="id_1">
-                              <img
-                                src={`http://localhost:8800/images/docu/${props.verFront}`}
-                                alt="Front"
-                              />
-                            </div>
-                            <div className="id_1">
-                              <img
-                                src={`http://localhost:8800/images/docu/${props.verBack}`}
-                                alt="Back"
-                              />
-                            </div>
-                          </>
-                        ) : null
-                      }
-                      {
-                        //display sumbitted docs/additional ids of user
-                        props.doc1 ? (
-                          <>
-                            <div className="id_1">
-                              <img
-                                src={`http://localhost:8800/images/docu/${props.doc1}`}
-                                alt="License"
-                              />
-                            </div>
-                          </>
-                        ) : null
-                      }
-                    </Docu>
-                  </div>
-                </div>
-              </div>
               <div class="col-12">
                 <div class="card widget-card border-light shadow-sm">
                   <div class="card-header text-bg-primary">
