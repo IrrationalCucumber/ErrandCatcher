@@ -16,4 +16,6 @@ router.put("/cancel-apply/:id/:applyID", applicationController.putCancelApply); 
 router.put("/deny-other-apply/:comID/:id", applicationController.putDenyOther); // deny other application when accepting a catcher
 router.delete("/delete-apply/:id", applicationController.deleteApply); // catcher will delete application
 router.get("/applicant-count/:id", applicationController.getApplicantCount); // return employer's applicant numbers
+router.get("/application-count/:id", applicationController.getApplicationCount);
+
 module.exports = router;
