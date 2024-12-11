@@ -37,6 +37,7 @@ import { Call, Email, Home, Mail } from "@mui/icons-material";
 import axios from "axios";
 import CloseIcon from "@mui/icons-material/Close";
 import WarningIcon from "@mui/icons-material/Warning";
+import { MyFeedback } from "../Dashbaord/Feedback";
 
 export function NewUserProfileui(props) {
   const { user } = useAuth();
@@ -459,6 +460,37 @@ export function NewUserProfileui(props) {
                       Password
                     </button>
                   </li>
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="documets-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#documents-tab-pane"
+                      type="button"
+                      role="tab"
+                      aria-controls="documents-tab-pane"
+                      aria-selected="false"
+                    >
+                      Documents
+                    </button>
+                  </li>
+
+                  {user.userType === "Catcher" ? (
+                    <li class="nav-item" role="presentation">
+                      <button
+                        class="nav-link"
+                        id="reviews-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#reviews-tab-pane"
+                        type="button"
+                        role="tab"
+                        aria-controls="reviews-tab-pane"
+                        aria-selected="false"
+                      >
+                        Reviews
+                      </button>
+                    </li>
+                  ) : null}
                 </ul>
                 {/* ------------------------ Overview tab ---------------------------- */}
                 <div class="tab-content pt-4" id="profileTabContent">
@@ -880,6 +912,66 @@ export function NewUserProfileui(props) {
                         </div>
                       </div>
                     </form>
+                  </div>
+
+                  {/* -------------------------- Documents tab ------------------------------ */}
+                  <div
+                    class="tab-pane fade"
+                    id="documents-tab-pane"
+                    role="tabpanel"
+                    aria-labelledby="documents-tab"
+                    tabindex="0"
+                  >
+                    <h5 class="mb-3">Documents: </h5>
+
+                    {
+                      //display sumbitted IDs of user
+                      props.verFront || props.verBack ? (
+                        <>
+                          <div className="id_1">
+                            <img
+                              src={`http://localhost:8800/images/docu/${props.verFront}`}
+                              alt="Front"
+                            />
+                          </div>
+                          <div className="id_1">
+                            <img
+                              src={`http://localhost:8800/images/docu/${props.verBack}`}
+                              alt="Back"
+                            />
+                          </div>
+                        </>
+                      ) : null
+                    }
+                    {
+                      //display sumbitted docs/additional ids of user
+                      // driver license additional info fetch
+                      props.verDoc1 ? (
+                        <>
+                          <div className="id_1">
+                            <img
+                              src={`http://localhost:8800/images/docu/${props.verDoc1}`}
+                              alt="License"
+                            />
+                          </div>
+                        </>
+                      ) : null
+                    }
+
+                  </div>
+
+                  {/* -------------------------- Feedback tab ------------------------------ */}
+                  <div
+                    class="tab-pane fade"
+                    id="reviews-tab-pane"
+                    role="tabpanel"
+                    aria-labelledby="documents-tab"
+                    tabindex="0"
+                  >
+                    <h5 class="mb-3">Feedback: </h5>
+                    <MyFeedback id={props.userID} />
+
+
                   </div>
                 </div>
               </div>
