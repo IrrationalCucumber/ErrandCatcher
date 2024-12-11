@@ -69,6 +69,19 @@ const Notif = {
       callback
     );
   },
+  //post notif to all admin if new request
+  postNotifToAdmin: (type, desc, callback) => {
+    db.query(
+      `
+      INSERT INTO notification (notifUserID, notifDesc, notificationType, notifDate)
+      SELECT userID, ?, ?, NOW() 
+      FROM useraccount 
+      WHERE accountType = 'admin';
+      `,
+      [desc, type],
+      callback
+    );
+  },
 };
 
 module.exports = Notif;

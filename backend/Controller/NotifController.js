@@ -116,6 +116,22 @@ const notifController = {
       res.json(notifs);
     });
   },
+  //post notif to all admin
+  postNotifToAdmin: (req, res) => {
+    const type = "Verification Request";
+    const desc = "A user has submitted a Verification request";
+    Notif.postNotifToAdmin(type, desc, (error) => {
+      if (error) {
+        console.error("Error adding noitf:", error);
+        res
+          .status(500)
+          .json({ error: "An error occurred while adding new notif" });
+        return;
+      }
+      // User added successfully
+      res.status(200).json({ message: "Notif added successfully" });
+    });
+  },
 };
 
 module.exports = notifController;
