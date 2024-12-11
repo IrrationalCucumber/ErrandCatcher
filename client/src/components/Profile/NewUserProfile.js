@@ -261,23 +261,58 @@ export function NewUserProfileui(props) {
                   >
                     About Me
                   </div>
-                  <div class="card-body">
+                  <div class="card-body d-flex justify-content-center align-items-center">
                     {props.status === "Verified" ? (
-                      <>{props.status.toLocaleUpperCase()}</>
+                      <>
+                        <Chip
+                          sx={{
+                            fontSize: "1.1rem",
+                            height: "30px",
+                            padding: "0 10px",
+                          }}
+                          size="sm"
+                          variant="solid"
+                          color="success"
+                        >
+                          {props.status.toLocaleUpperCase()}
+                        </Chip>
+                      </>
                     ) : (
                       <>
                         {props.verStatus === "Pending" ? (
                           <>
-                            <i>{props.verStatus.toLocaleUpperCase()}</i>
+                            <Chip
+                              sx={{
+                                fontSize: "1.1rem",
+                                height: "30px",
+                                padding: "0 10px",
+                              }}
+                              size="sm"
+                              variant="solid"
+                              color="warning"
+                            >
+                              <i>{props.verStatus.toLocaleUpperCase()}</i>
+                            </Chip>
                           </>
                         ) : (
                           <>
-                            <Link
-                              to={`/profile/verification`}
-                              style={{ textDecoration: "none" }}
+                            <Chip
+                              sx={{
+                                fontSize: "1.1rem",
+                                height: "30px",
+                                padding: "0 10px",
+                              }}
+                              size="sm"
+                              variant="solid"
+                              color="danger"
                             >
-                              {props.status.toLocaleUpperCase()}
-                            </Link>
+                              <Link
+                                to={`/profile/verification`}
+                                style={{ textDecoration: "none" }}
+                              >
+                                {props.status.toLocaleUpperCase()}
+                              </Link>
+                            </Chip>
                           </>
                         )}
                       </>
