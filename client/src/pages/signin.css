@@ -74,7 +74,6 @@ body .App .si {
   padding: 8px 12px;
   line-height: 24px;
   /* box-shadow: #0000 0px 0px 0px 0px; */
-
 }
 
 .cont input[type="text"]:focus,
@@ -115,9 +114,9 @@ body .App .si {
   color: #ffff;
 }
 
-button:hover {
+/* button:hover {
   background-color: #1a96d5;
-}
+} */
 
 .cont .cont2 {
   max-width: 250px;

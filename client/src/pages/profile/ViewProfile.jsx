@@ -9,6 +9,7 @@ import "./profile.css";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { ViewUserProfile } from "../../components/Profile/UserProfile";
+import { NewViewUserProfile } from "../../components/Profile/NewUserProfile";
 
 function ViewProfile(id) {
   //get userID from url
@@ -119,7 +120,7 @@ function ViewProfile(id) {
   }, [userID]);
   return (
     <div>
-      <ViewUserProfile
+      <NewViewUserProfile
         id={account.id}
         profileImg={account.profileImage}
         address={account.address}
