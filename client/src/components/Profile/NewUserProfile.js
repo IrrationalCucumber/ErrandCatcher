@@ -20,6 +20,7 @@ import {
   Sheet,
   Stack,
   Typography,
+  Alert
 } from "@mui/joy";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -33,9 +34,13 @@ import {
 import { useAuth } from "../AuthContext";
 import SkillsInputModal from "../Profile Modal/SkillsInputModal";
 import { Call, Email, Home, Mail } from "@mui/icons-material";
+import axios from "axios";
+import CloseIcon from "@mui/icons-material/Close";
+import WarningIcon from "@mui/icons-material/Warning";
 
 export function NewUserProfileui(props) {
   const { user } = useAuth();
+  const userID = user.userID;
   const [preview, setPreview] = useState(null);
   const [image, setImage] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -61,6 +66,124 @@ export function NewUserProfileui(props) {
   };
   //skills of user
   const skillsArray = props.skills ? props.skills.split(",") : [];
+
+  const [account, setAccount] = useState({
+    password: "",
+    conPassword: "",
+  });
+
+  //Alert feedback
+  const [message, setMessage] = useState("");
+  const [alertColor, setAlertColor] = useState("");
+  const [iconlert, setIconLert] = useState(null);
+  const [showAlert, setShowAlert] = useState(false);
+
+  const [strength, setStrength] = useState("");
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setAccount((prevAccount) => ({
+      ...prevAccount,
+      [name]: value,
+    }));
+  };
+
+  const changePassword = async (event) => {
+    event.preventDefault();
+
+    if (account.password !== account.conPassword) {
+      setMessage("Password is not match please try again");
+      setAlertColor("danger");
+      setIconLert(<WarningIcon />);
+      setShowAlert(true);
+      return;
+    } else if (account.password.length < 8) {
+      setMessage("Password must be at least 8 characters long");
+      setAlertColor("danger");
+      setIconLert(<WarningIcon />);
+      setShowAlert(true);
+      return;
+    } else if (
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/.test(
+        account.password
+      )
+    ) {
+      setMessage("Password must contain at least one uppercase letter, one lowercase letter, and one number");
+      setAlertColor("danger");
+      setIconLert(<WarningIcon />);
+      setShowAlert(true);
+      return;
+    }
+
+    try {
+      // endpoint route
+      await axios.put("http://localhost:8800/resetpassword/" + userID, account);
+      // await axios.put("http://localhost:8800/update/" + userID, account);
+      console.log("send hopefully to newendpoint", account)
+      alert("Your new password is successfully changed!");
+      window.location.reload();
+
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  function evaluatePasswordStrength(password) {
+    let score = 0;
+
+    if (!password) return "";
+
+    // Check password length
+    if (password.length > 8) score += 1;
+    // Contains lowercase
+    if (/[a-z]/.test(password)) score += 1;
+    // Contains uppercase
+    if (/[A-Z]/.test(password)) score += 1;
+    // Contains numbers
+    if (/\d/.test(password)) score += 1;
+    // Contains special characters
+    if (/[^A-Za-z0-9]/.test(password)) score += 1;
+
+    switch (score) {
+      case 0:
+      case 1:
+      case 2:
+        return "Weak";
+      case 3:
+        return "Medium";
+      case 4:
+      case 5:
+        return "Strong";
+    }
+  }
+
+  const getStrengthColor = (strength) => {
+    switch (strength) {
+      case "Weak":
+        return "red";
+      case "Medium":
+        return "orange";
+      case "Strong":
+        return "green";
+      default:
+        return "transparent";
+    }
+  };
+
+  const getStrengthWidth = (strength) => {
+    switch (strength) {
+      case "Weak":
+        return "30%";
+      case "Medium":
+        return "66%";
+      case "Strong":
+        return "100%";
+      default:
+        return "0";
+    }
+  };
+  console.log(account)
+
 
   return (
     <>
@@ -598,6 +721,39 @@ export function NewUserProfileui(props) {
                     </form>
                   </div>
 
+                  {/* -------------------------- Password tab ------------------------------ */}
+
+                  {/* alert handling */}
+                  {showAlert && (
+                    <Alert
+                      sx={{
+                        position: "fixed",
+                        bottom: 16,
+                        right: 16,
+                        zIndex: 9999,
+                        transform: showAlert ? "translateX(0)" : "translateX(100%)",
+                        transition: "transform 0.5s ease-in-out",
+                      }}
+                      color={alertColor}
+                      size="lg"
+                      variant="solid"
+                      // icon={iconlert}
+                      startDecorator={iconlert}
+                      endDecorator={
+                        <Button
+                          size="sm"
+                          variant="solid"
+                          color={alertColor}
+                          onClick={(e) => setShowAlert(false)}
+                        >
+                          <CloseIcon />
+                        </Button>
+                      }
+                    >
+                      {message}
+                    </Alert>
+                  )}
+
                   <div
                     class="tab-pane fade"
                     id="password-tab-pane"
@@ -605,7 +761,9 @@ export function NewUserProfileui(props) {
                     aria-labelledby="password-tab"
                     tabindex="0"
                   >
-                    <form action="#!">
+                    <form
+                      onSubmit={changePassword}
+                    >
                       <div class="row gy-3 gy-xxl-4">
                         <div class="col-12">
                           <label for="currentPassword" class="form-label">
@@ -625,7 +783,48 @@ export function NewUserProfileui(props) {
                             type="password"
                             class="form-control"
                             id="newPassword"
+                            name="password"
+                            value={account.password}
+                            // onChange={handleChange}
+                            required
+                            onChange={(event) => {
+                              setAccount((prev) => ({
+                                ...prev,
+                                [event.target.name]: event.target.value,
+                              }));
+                              setStrength(
+                                evaluatePasswordStrength(event.target.value)
+                              );
+                            }}
                           />
+
+                          {account.password && (
+                            <>
+                              <div
+                                className={`password-strength ${strength === "Weak"
+                                  ? "strength-weak"
+                                  : strength === "Medium"
+                                    ? "strength-medium"
+                                    : strength === "Strong"
+                                      ? "strength-strong"
+                                      : ""
+                                  }`}
+                              >
+                                Password strength: {strength}
+                              </div>
+
+                              <div className="strength-meter">
+                                <div
+                                  className="strength-meter-fill"
+                                  style={{
+                                    width: getStrengthWidth(strength),
+                                    backgroundColor: getStrengthColor(strength),
+                                  }}
+                                />
+                              </div>
+                            </>
+                          )}
+
                         </div>
                         <div class="col-12">
                           <label for="confirmPassword" class="form-label">
@@ -635,10 +834,17 @@ export function NewUserProfileui(props) {
                             type="password"
                             class="form-control"
                             id="confirmPassword"
+                            name="conPassword"
+                            value={account.conPassword}
+                            onChange={handleChange}
+                            required
                           />
                         </div>
                         <div class="col-12">
-                          <button type="submit" class="btn btn-primary">
+                          <button type="submit"
+                            class="btn btn-primary"
+                          // className="form-submit-btn"
+                          >
                             Change Password
                           </button>
                         </div>
