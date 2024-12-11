@@ -505,7 +505,7 @@ export function NewUserProfileui(props) {
                         <div class="p-2">Contact</div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                        <div class="p-2">{props.cnum} {props.contact}</div>
+                        <div class="p-2">{props.contact}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
                         <div class="p-2">Gender</div>

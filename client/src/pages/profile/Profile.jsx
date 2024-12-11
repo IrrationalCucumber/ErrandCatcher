@@ -204,7 +204,7 @@ const Profile = () => {
 
       console.log("image is uploaded")
       window.location.reload();
-      
+
       await axios
         .post(`http://localhost:8800/update-pic/${userID}`, formData)
         .then((res) => console.log(res))
@@ -399,7 +399,7 @@ const Profile = () => {
       <NewUserProfileui
         profileImg={tempAccount.profileImage}
         address={tempAccount.address}
-        cnum={tempAccount.contact}
+        contact={tempAccount.contact}
         email={tempAccount.email}
         rate={rating}
         type={tempAccount.type}
