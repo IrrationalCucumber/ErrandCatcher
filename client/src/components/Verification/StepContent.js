@@ -644,7 +644,7 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
       //update accound data
       await axios.put("http://localhost:8800/update-info/" + userID, details); //update skills in db
       //add notif of request
-      await axios.post("http://localhost:8800/notify-admin", notif); // notify all admin
+      await axios.post("http://localhost:8800/notify-admin"); // notify all admin
     } catch (error) {
       console.log(error);
     }
