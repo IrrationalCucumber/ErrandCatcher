@@ -201,6 +201,10 @@ const Profile = () => {
       setShowAlert(true);
       const formData = new FormData();
       formData.append("image", image);
+
+      console.log("image is uploaded")
+      window.location.reload();
+      
       await axios
         .post(`http://localhost:8800/update-pic/${userID}`, formData)
         .then((res) => console.log(res))
