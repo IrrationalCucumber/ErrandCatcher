@@ -528,7 +528,7 @@ export function NewUserProfileui(props) {
                     </div>
                   </div>
 
-                  {/* ---------------------------- Profitle tab ------------------------ */}
+                  {/* ---------------------------- Profile tab ------------------------ */}
                   <div
                     class="tab-pane fade"
                     id="profile-tab-pane"
@@ -544,21 +544,49 @@ export function NewUserProfileui(props) {
                           </label>
 
                           <div class="col-12">
-                            {props.profileImg ? (
-                              <img
-                                className="user_profile_pic"
-                                src={`http://localhost:8800/images/profile/${props.profileImg}`}
-                                alt="ProfPic"
-                              />
+                            {preview ? (
+                              <>
+                                {/* Display Preview Image */}
+                                <img
+                                  className="user_profile_pic"
+                                  src={preview}
+                                  alt="Preview Image"
+                                  // width={250}
+                                  // height={250}
+                                  style={{
+                                    padding: "20px",
+                                    border: "1px solid skyblue",
+                                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
+                                  }}
+                                />
+                                <button
+                                  onClick={handleDeleteImage}
+                                  style={{
+                                    border: "none",
+                                    backgroundColor: isHovered ? "#ffcccc" : "transparent",
+                                    cursor: "pointer",
+                                    transition: "background-color 0.3s ease",
+                                  }}
+                                >
+                                  <DeleteIcon sx={{ fontSize: 30 }} color="error" />
+                                </button>
+                              </>
                             ) : (
-                              <img
-                                src="/images/employer.png"
-                                alt="Profile Picture"
-                              />
-                            )}
-                          </div>
 
-                          <div class="col-12">
+                              // If no preview, show existing profile image or default
+                              <>
+                                {props.profileImg ? (
+                                  <img
+                                    className="user_profile_pic"
+                                    src={`http://localhost:8800/images/profile/${props.profileImg}`}
+                                    alt="ProfPic"
+                                  />
+                                ) : (
+                                  <img src="/images/employer.png" alt="Profile Picture" />
+                                )}
+                              </>
+                            )}
+
                             <div className="upload-container">
                               <input
                                 type="file"
