@@ -33,8 +33,8 @@ export function MyFeedback({ id }) {
         console.log(error);
       }
     };
-    //refresh feedback every 5 seconds
-    const refresh = setInterval(fetchFeedback, 5000);
+    //refresh feedback every 1 seconds
+    const refresh = setInterval(fetchFeedback, 1000);
     return () => clearInterval(refresh);
   }, []);
   return (
