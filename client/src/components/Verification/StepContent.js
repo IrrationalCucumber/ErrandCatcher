@@ -606,13 +606,6 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
   const handleOpenModal = () => {
     setOpen(true);
   };
-  //FOR NOTIFICATION
-  //set variables for notification
-  const [notif, setNotif] = useState({
-    userID: "", //this is the employer/ userID of the commission
-    notificationType: "", //notif description
-    notifDesc: "", //contents of the notif
-  });
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -649,13 +642,9 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
       //update accound data
-      await axios.put("http://localhost:8800/update-info/" + userID, details);
-      //add a notification to the admin
-      notif.notifDesc = `${user.userID}
-        has submitted a Verification request`;
-      notif.userID = 1;
-      notif.notificationType = "Verification Request";
-      await axios.post("http://localhost:8800/notify", notif);
+      await axios.put("http://localhost:8800/update-info/" + userID, details); //update skills in db
+      //add notif of request
+      await axios.post("http://localhost:8800/notify-admin", notif); // notify all admin
     } catch (error) {
       console.log(error);
     }
