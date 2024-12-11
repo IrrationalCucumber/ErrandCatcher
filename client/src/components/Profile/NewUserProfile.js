@@ -182,7 +182,6 @@ export function NewUserProfileui(props) {
         return "0";
     }
   };
-  console.log(account)
 
 
   return (
@@ -765,7 +764,7 @@ export function NewUserProfileui(props) {
                       onSubmit={changePassword}
                     >
                       <div class="row gy-3 gy-xxl-4">
-                        <div class="col-12">
+                        {/* <div class="col-12">
                           <label for="currentPassword" class="form-label">
                             Current Password
                           </label>
@@ -774,7 +773,7 @@ export function NewUserProfileui(props) {
                             class="form-control"
                             id="currentPassword"
                           />
-                        </div>
+                        </div> */}
                         <div class="col-12">
                           <label for="newPassword" class="form-label">
                             New Password
