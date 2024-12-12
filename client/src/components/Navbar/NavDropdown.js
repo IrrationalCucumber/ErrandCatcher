@@ -5,12 +5,20 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../AuthContext";
-import { Dropdown, Menu, MenuButton, MenuItem } from "@mui/joy";
+import {
+  Chip,
+  Dropdown,
+  Menu,
+  MenuButton,
+  MenuItem,
+  Typography,
+} from "@mui/joy";
 import Person2Icon from "@mui/icons-material/Person2";
-import HistoryIcon from '@mui/icons-material/History';
-import LogoutIcon from '@mui/icons-material/Logout';
-import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import HistoryIcon from "@mui/icons-material/History";
+import LogoutIcon from "@mui/icons-material/Logout";
+import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import { ApplicationCount } from "../Display/DsiplayFunctions";
 
 function NavDropdown(props) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -54,7 +62,9 @@ function NavDropdown(props) {
       >
         {props.name}
       </MenuButton>
-      <Menu color="primary" size="md"
+      <Menu
+        color="primary"
+        size="md"
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -62,7 +72,8 @@ function NavDropdown(props) {
           // padding: "12x 16px",
           paddingTop: "8px",
           gap: "22px",
-        }}>
+        }}
+      >
         <MenuItem>
           <Link
             to={profileLink}
@@ -87,7 +98,12 @@ function NavDropdown(props) {
                 color: "#565360",
               }}
             >
-              <AssignmentOutlinedIcon /> Applications
+              <Typography>
+                <AssignmentOutlinedIcon /> Applications{" "}
+                <Chip color="danger" size="md" variant="soft">
+                  <ApplicationCount id={user.userID} />
+                </Chip>
+              </Typography>
             </Link>
           </MenuItem>
         ) : null}

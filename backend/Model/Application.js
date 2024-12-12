@@ -89,7 +89,18 @@ const Apply = {
       `select count(*) as 'c'
       from commission e 
       JOIN application a ON a.applicationErrandID = e.commissionID 
-      where employerID = ?`,
+      where employerID = ? AND a.applicationStatus = 'Pending'`,
+      [id],
+      callback
+    );
+  },
+  //get application count
+  getApplicationCount: (id, callback) => {
+    db.query(
+      `select count(*) as 'c'
+      from commission e 
+      JOIN application a ON a.applicationErrandID = e.commissionID 
+      where a.catcherID = ? AND a.applicationStatus ='Pending'`,
       [id],
       callback
     );

@@ -4,6 +4,8 @@ import { Outlet } from "react-router-dom";
 import Footer from "../../components/Footer";
 import { useAuth } from "../../components/AuthContext";
 import "./css/navbar.css";
+import { Badge } from "@mui/joy";
+import { ApplicantsCount } from "../../components/Display/DsiplayFunctions";
 
 function Dashboard() {
   const { user } = useAuth();
@@ -18,9 +20,21 @@ function Dashboard() {
                 navbar_ui={"navbar__employer"}
                 page1="ONGOING ERRANDS"
                 one={`/dashboard/ongoing`}
-                page2="MY ERRANDS"
+                page2="ERRAND LIST"
                 commissionList={`/dashboard/errands`}
-                page3="APPLICANTS"
+                page3={
+                  <>
+                    <Badge
+                      badgeContent={ApplicantsCount(user.userID)}
+                      color="danger"
+                      size="sm"
+                      variant="soft"
+                      sx={{ p: 0.5 }}
+                    >
+                      APPLICANT
+                    </Badge>
+                  </>
+                }
                 applicants={`/dashboard/applicants`}
                 page4="MAP"
                 map={`/dashboard/e-map`}

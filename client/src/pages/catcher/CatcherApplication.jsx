@@ -30,6 +30,7 @@ import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutli
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import PendingOutlinedIcon from "@mui/icons-material/PendingOutlined";
 import DoDisturbAltOutlinedIcon from "@mui/icons-material/DoDisturbAltOutlined";
+import { Capitalize } from "../../components/Display/DsiplayFunctions";
 
 function Application() {
   const { user } = useAuth();
@@ -134,9 +135,7 @@ function Application() {
   const applicationData = currentItems.map((applicant) => [
     // DisplayDate(applicant.applicationDate),
     <Box display="flex" alignItems="center" gap={1}>
-      <EditCalendarOutlinedIcon
-        sx={{ color: "#555" }}
-      />
+      <EditCalendarOutlinedIcon sx={{ color: "#555" }} />
       {DisplayDate(applicant.applicationDate)}
     </Box>,
     // `${applicant.userFirstname} ${applicant.userLastname}`,
@@ -144,7 +143,8 @@ function Application() {
       variant="outlined"
       onClick={() => handleViewProfile(applicant.employerID)}
     >
-      {applicant.userFirstname} {applicant.userLastname}
+      {Capitalize(`${applicant.userFirstname}`) +
+        Capitalize(`${applicant.userLastname}`)}
     </Button>,
     applicant.commissionTitle,
     // applicant.applicationStatus,
