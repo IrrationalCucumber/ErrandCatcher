@@ -329,7 +329,7 @@ select .display-data1 .error {
     padding: 2px;
     align-items: center;
     /* Align items vertically */
-    justify-content: center;
+    justify-content: start;
 }
 
 .upload-container button {

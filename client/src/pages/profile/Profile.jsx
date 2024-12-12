@@ -13,6 +13,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import UpdateIcon from "@mui/icons-material/Update";
 import Snackbar from "@mui/joy/Snackbar";
 import CancelIcon from "@mui/icons-material/Cancel";
+import NewUserProfile, { NewUserProfileui } from "../../components/Profile/NewUserProfile";
 const Profile = () => {
   const [verified, setVerified] = useState(false);
   //APS - 03/03/24
@@ -200,6 +201,10 @@ const Profile = () => {
       setShowAlert(true);
       const formData = new FormData();
       formData.append("image", image);
+
+      console.log("image is uploaded")
+      window.location.reload();
+
       await axios
         .post(`http://localhost:8800/update-pic/${userID}`, formData)
         .then((res) => console.log(res))
@@ -357,7 +362,7 @@ const Profile = () => {
         {snacMess}
       </Snackbar>
 
-      <UserProfile
+      {/* <UserProfile
         profileImg={tempAccount.profileImage}
         address={tempAccount.address}
         cnum={tempAccount.contact}
@@ -389,7 +394,44 @@ const Profile = () => {
         doc1={docs.doc1}
         doc2={docs.doc2}
         skills={tempAccount.skills}
+      /> */}
+
+      <NewUserProfileui
+        profileImg={tempAccount.profileImage}
+        address={tempAccount.address}
+        contact={tempAccount.contact}
+        email={tempAccount.email}
+        rate={rating}
+        type={tempAccount.type}
+        desc={tempAccount.desc}
+        handleChange={handleChange}
+        handleImage={handleImage}
+        handleUpload={handleUpload}
+        validationErrors={validationErrors}
+        //right hemisphere
+        username={tempAccount.username}
+        fname={tempAccount.fname}
+        lname={tempAccount.lname}
+        sex={tempAccount.gender}
+        age={tempAccount.age}
+        bday={tempAccount.bday}
+        status={tempAccount.status}
+        userID={userID}
+        click={handleClick}
+        isEditing={isEditing}
+        clickEdit={handleEdit}
+        clickCancel={handleCancel}
+        //verification details
+        verStatus={docs.requestStatus}
+        verFront={docs.frontID}
+        verBack={docs.backID}
+        // driver license
+        verDoc1={docs.doc1}
+        doc2={docs.doc2}
+        skills={tempAccount.skills}
+        
       />
+
     </div>
   );
 };
