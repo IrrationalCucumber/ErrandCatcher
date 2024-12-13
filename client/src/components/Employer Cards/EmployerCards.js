@@ -46,83 +46,126 @@ const EmployerCard = ({ employer }) => {
   }, [counts, userID]);
 
   return (
-    <div className="employer-card">
-      <h2></h2>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        // bootstrap classes used
+    <>
+      <div style={{ marginTop: "32px" }}>
         <div class="container">
-          <div className="count-details">
-            <div className="row d-flex ">
-              {/* <div class="row"> */}
-              <div class="col  d-flex justify-content-center">
-                {/* <div class="col"> */}
+          <div class="row d-flex justify-content-center align-items-center gap-4">
+            <div class="col-md-4 col-xl-3">
+              <div class="card bg-c-blue order-card">
+                <div class="card-block">
 
-                <Link
-                  to={`/dashboard/errands`}
-                  className="count-section posts"
-                  style={{ color: "black" }}
-                >
-                  <h3 style={{ position: "relative" }}>
-                    <PostAddIcon
-                      sx={{
-                        color: "black",
-                        position: "absolute",
-                        right: "150px",
-                        fontSize: 28,
-                      }}
-                    />
-                    Posts
-                  </h3>
-                  <p>{counts.numPosts}</p>
-                </Link>
+                  <h6 class="m-b-20"> <PostAddIcon sx={{ color: "white", fontSize: 24, }} /> Post</h6>
+                  <h2 class="text-right"><i class="fa fa-cart-plus f-left"></i><span>486</span></h2>
+                  <p class="m-b-0">See what you have post</p>
+                </div>
               </div>
-              <div class="col d-flex justify-content-center">
-                <Link
-                  to={`/dashboard/applicants`}
-                  className="count-section applicants1"
-                  style={{ color: "black" }}
-                >
-                  <h3 style={{ position: "relative" }}>
-                    <GroupIcon
-                      sx={{
-                        color: "black",
-                        position: "absolute",
-                        right: "182px",
-                        fontSize: 28,
-                      }}
-                    />
-                    Applicants
-                  </h3>
-                  <p>{counts.numApplicants}</p>
-                </Link>
+            </div>
+
+            <div class="col-md-4 col-xl-3">
+              <div class="card bg-c-green order-card">
+                <div class="card-block">
+                  <h6 class="m-b-20"> <GroupIcon sx={{ color: "white", fontSize: 24, }} /> Applicants</h6>
+                  <h2 class="text-right"><i class="fa fa-rocket f-left"></i><span>486</span></h2>
+                  <p class="m-b-0">View your applicants here</p>
+                </div>
               </div>
-              <div class="col d-flex justify-content-center">
-                <Link
-                  to={`/dashboard/errands/${userID}`}
-                  className="count-section errands"
-                  style={{ color: "black" }}
-                >
-                  <h3 style={{ position: "relative" }}>
-                    <PendingActionsIcon
-                      sx={{
-                        color: "black",
-                        position: "absolute",
-                        right: "168px",
-                        fontSize: 28,
-                      }}
-                    />
-                    Pending
-                  </h3>
-                  <p>{counts.numErrands}</p>
-                </Link>
+            </div>
+
+            <div class="col-md-4 col-xl-3">
+              <div class="card bg-c-yellow order-card">
+                <div class="card-block">
+                  <h6 class="m-b-20"> <GroupIcon sx={{ color: "white", fontSize: 24, }} /> Pending</h6>
+                  <h2 class="text-right"><i class="fa fa-refresh f-left"></i><span>486</span></h2>
+                  <p class="m-b-0">Opps errand delay</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      )}
-    </div>
+      </div>
+    </>
   );
 };
 export default EmployerCard;
+
+
+
+
+// old version employer cards
+// {/* <div className="employer-card">
+//   <h2></h2>
+//   {loading ? (
+//     <p>Loading...</p>
+//   ) : (
+//     // bootstrap classes used
+//     <div class="container">
+//       <div className="count-details">
+//         <div className="row d-flex ">
+//           {/* <div class="row"> */}
+//           <div class="col  d-flex justify-content-center">
+//             {/* <div class="col"> */}
+
+//             <Link
+//               to={`/dashboard/errands`}
+//               className="count-section posts"
+//               style={{ color: "black" }}
+//             >
+//               <h3 style={{ position: "relative" }}>
+//                 <PostAddIcon
+//                   sx={{
+//                     color: "black",
+//                     position: "absolute",
+//                     right: "150px",
+//                     fontSize: 28,
+//                   }}
+//                 />
+//                 Posts
+//               </h3>
+//               <p>{counts.numPosts}</p>
+//             </Link>
+//           </div>
+//           <div class="col d-flex justify-content-center">
+//             <Link
+//               to={`/dashboard/applicants`}
+//               className="count-section applicants1"
+//               style={{ color: "black" }}
+//             >
+//               <h3 style={{ position: "relative" }}>
+//                 <GroupIcon
+//                   sx={{
+//                     color: "black",
+//                     position: "absolute",
+//                     right: "182px",
+//                     fontSize: 28,
+//                   }}
+//                 />
+//                 Applicants
+//               </h3>
+//               <p>{counts.numApplicants}</p>
+//             </Link>
+//           </div>
+//           <div class="col d-flex justify-content-center">
+//             <Link
+//               to={`/dashboard/errands/${userID}`}
+//               className="count-section errands"
+//               style={{ color: "black" }}
+//             >
+//               <h3 style={{ position: "relative" }}>
+//                 <PendingActionsIcon
+//                   sx={{
+//                     color: "black",
+//                     position: "absolute",
+//                     right: "168px",
+//                     fontSize: 28,
+//                   }}
+//                 />
+//                 Pending
+//               </h3>
+//               <p>{counts.numErrands}</p>
+//             </Link>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   )}
+// </div> */}
