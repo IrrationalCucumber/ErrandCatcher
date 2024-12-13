@@ -47,16 +47,25 @@ const EmployerCard = ({ employer }) => {
 
   return (
     <>
-      <div style={{ marginTop: "32px" }}>
+      <div style={{ marginTop: "32px", marginBottom: "16px" }}>
         <div class="container">
           <div class="row d-flex justify-content-center align-items-center gap-4">
             <div class="col-md-4 col-xl-3">
               <div class="card bg-c-blue order-card">
                 <div class="card-block">
-
-                  <h6 class="m-b-20"> <PostAddIcon sx={{ color: "white", fontSize: 24, }} /> Post</h6>
-                  <h2 class="text-right"><i class="fa fa-cart-plus f-left"></i><span>486</span></h2>
-                  <p class="m-b-0">See what you have post</p>
+                  <Link
+                    style={{ textDecoration: "none" }}
+                    to={`/dashboard/errands`}
+                  >
+                    <h6 class="m-b-20"> <PostAddIcon sx={{ color: "white", fontSize: 24, }} /> Post</h6>
+                    <h2 class="text-right">
+                      <i class="fa fa-cart-plus f-left"></i>
+                      <span>
+                        {counts.numPosts}
+                      </span>
+                    </h2>
+                    <p class="m-b-0">See what you have post</p>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -64,9 +73,19 @@ const EmployerCard = ({ employer }) => {
             <div class="col-md-4 col-xl-3">
               <div class="card bg-c-green order-card">
                 <div class="card-block">
-                  <h6 class="m-b-20"> <GroupIcon sx={{ color: "white", fontSize: 24, }} /> Applicants</h6>
-                  <h2 class="text-right"><i class="fa fa-rocket f-left"></i><span>486</span></h2>
-                  <p class="m-b-0">View your applicants here</p>
+                  <Link
+                    style={{ textDecoration: "none" }}
+                    to={`/dashboard/applicants`}
+                  >
+                    <h6 class="m-b-20"> <GroupIcon sx={{ color: "white", fontSize: 24, }} /> Applicants</h6>
+                    <h2 class="text-right">
+                      <i class="fa fa-rocket f-left"></i>
+                      <span>
+                        {counts.numApplicants}
+                      </span>
+                    </h2>
+                    <p class="m-b-0">View your applicants here</p>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -74,9 +93,19 @@ const EmployerCard = ({ employer }) => {
             <div class="col-md-4 col-xl-3">
               <div class="card bg-c-yellow order-card">
                 <div class="card-block">
-                  <h6 class="m-b-20"> <GroupIcon sx={{ color: "white", fontSize: 24, }} /> Pending</h6>
-                  <h2 class="text-right"><i class="fa fa-refresh f-left"></i><span>486</span></h2>
-                  <p class="m-b-0">Opps errand delay</p>
+                  <Link
+                    style={{ textDecoration: "none" }}
+                    to={`/dashboard/applicants`}
+                  >
+                    <h6 class="m-b-20"> <PendingActionsIcon sx={{ color: "white", fontSize: 24, }} /> Pending</h6>
+                    <h2 class="text-right">
+                      <i class="fa fa-refresh f-left"></i>
+                      <span>
+                        {counts.numErrands}
+                      </span>
+                    </h2>
+                    <p class="m-b-0">Opps errand delay</p>
+                  </Link>
                 </div>
               </div>
             </div>
