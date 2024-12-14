@@ -90,89 +90,6 @@ export function NewUserProfileui(props) {
     }));
   };
 
-
-  // const changePassword = async (event) => {
-  //   event.preventDefault();
-
-  //   try {
-  //     const response = await axios.put(
-  //       `http://localhost:8800/resetpassword/${userID}`,
-  //       {
-  //         // username: account.username, // Ensure this is set in your state
-  //         // email: account.email, // Ensure this is set in your state
-  //         currentpass: account.currentpass,
-  //         password: account.password,
-  //       }
-  //     );
-
-  //     alert(response.data.message); // Success message
-  //     window.location.reload();
-  //   } catch (err) {
-  //     if (err.response && err.response.data.error) {
-  //       alert(err.response.data.error); // Display error from backend
-  //     } else {
-  //       console.error("Error:", err);
-  //     }
-  //   }
-  // };
-
-
-
-
-
-  // // 1st
-  // const changePassword = async (event) => {
-  //   event.preventDefault();
-
-  //   // Validate inputs as you already have in your code
-  //   try {
-  //     const response = await axios.put(`http://localhost:8800/resetpassword/${userID}`, {
-  //       currentpass: account.currentpass,
-  //       password: account.password,
-  //     });
-
-  //     alert(response.data.message); // Display success message
-  //     window.location.reload();
-  //   } catch (err) {
-
-  //     if (err.response && err.response.data.error) {
-  //       // alert(err.response.data.error); // Display error from backend
-  //       setMessage("Password is not match please try again");
-  //       setAlertColor("danger");
-  //       setIconLert(<WarningIcon />);
-  //       setShowAlert(true);
-  //       return;
-  //     } else if (account.password !== account.conPassword) {
-  //       setMessage("Password is not match please try again");
-  //       setAlertColor("danger");
-  //       setIconLert(<WarningIcon />);
-  //       setShowAlert(true);
-  //       return;
-  //     } else if (account.password.length < 8) {
-  //       setMessage("Password must be at least 8 characters long");
-  //       setAlertColor("danger");
-  //       setIconLert(<WarningIcon />);
-  //       setShowAlert(true);
-  //       return;
-  //     } else if (
-  //       !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/.test(
-  //         account.password
-  //       )
-  //     ) {
-  //       setMessage("Password must contain at least one uppercase letter, one lowercase letter, and one number");
-  //       setAlertColor("danger");
-  //       setIconLert(<WarningIcon />);
-  //       setShowAlert(true);
-  //       return;
-  //     } else {
-  //       console.error("Error:", err);
-  //     }
-  //   }
-  // };
-
-
-
-
   // finale
   const changePassword = async (event) => {
     event.preventDefault();
@@ -245,51 +162,6 @@ export function NewUserProfileui(props) {
       setShowAlert(true);
     }
   };
-
-
-
-  // const changePassword = async (event) => {
-  //   event.preventDefault();
-
-  //   if (account.password !== account.conPassword) {
-  //     setMessage("Password is not match please try again");
-  //     setAlertColor("danger");
-  //     setIconLert(<WarningIcon />);
-  //     setShowAlert(true);
-  //     return;
-  //   } else if (account.password.length < 8) {
-  //     setMessage("Password must be at least 8 characters long");
-  //     setAlertColor("danger");
-  //     setIconLert(<WarningIcon />);
-  //     setShowAlert(true);
-  //     return;
-  //   } else if (
-  //     !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/.test(
-  //       account.password
-  //     )
-  //   ) {
-  //     setMessage("Password must contain at least one uppercase letter, one lowercase letter, and one number");
-  //     setAlertColor("danger");
-  //     setIconLert(<WarningIcon />);
-  //     setShowAlert(true);
-  //     return;
-  //   }
-
-  //   try {
-  //     // endpoint route
-  //     await axios.put("http://localhost:8800/resetpassword/" + userID, account);
-  //     // await axios.put("http://localhost:8800/update/" + userID, account);
-  //     console.log("send hopefully to newendpoint", account)
-  //     alert("Your new password is successfully changed!");
-  //     window.location.reload();
-
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
-
-
-
 
   function evaluatePasswordStrength(password) {
     let score = 0;
@@ -947,7 +819,7 @@ export function NewUserProfileui(props) {
                             name="currentpass"
                             value={account.currentpass}
                             onChange={handleChange}
-                            required
+                          // required
                           />
                         </div>
                         <div class="col-12">
