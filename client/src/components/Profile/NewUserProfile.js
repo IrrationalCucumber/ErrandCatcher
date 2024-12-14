@@ -94,41 +94,6 @@ export function NewUserProfileui(props) {
   const changePassword = async (event) => {
     event.preventDefault();
 
-    // Input validations
-    if (!account.currentpass) {
-      setMessage("Please input your current password");
-      setAlertColor("danger");
-      setIconLert(<WarningIcon />);
-      setShowAlert(true);
-      return;
-    }
-
-    if (account.password !== account.conPassword) {
-      setMessage("Passwords do not match. Please try again.");
-      setAlertColor("danger");
-      setIconLert(<WarningIcon />);
-      setShowAlert(true);
-      return;
-    }
-
-    if (account.password.length < 8) {
-      setMessage("Password must be at least 8 characters long.");
-      setAlertColor("danger");
-      setIconLert(<WarningIcon />);
-      setShowAlert(true);
-      return;
-    }
-
-    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(account.password)) {
-      setMessage(
-        "Password must contain at least one uppercase letter, one lowercase letter, and one number."
-      );
-      setAlertColor("danger");
-      setIconLert(<WarningIcon />);
-      setShowAlert(true);
-      return;
-    }
-
     try {
       // Make API request to update password
       const response = await axios.put(
@@ -819,7 +784,7 @@ export function NewUserProfileui(props) {
                             name="currentpass"
                             value={account.currentpass}
                             onChange={handleChange}
-                          // required
+                            required
                           />
                         </div>
                         <div class="col-12">
