@@ -481,6 +481,12 @@ export function NewUserProfileui(props) {
                         <div class="p-2">{props.email}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                        <div class="p-2">Username</div>
+                      </div>
+                      <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                        <div class="p-2">{props.username}</div>
+                      </div>
+                      <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
                         <div class="p-2">Contact</div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
@@ -652,6 +658,18 @@ export function NewUserProfileui(props) {
                           onChange={props.handleChange}
                           name="email"
                           value={props.email}
+                        />
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <label for="inputEmail" class="form-label">
+                          Username
+                        </label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          onChange={props.handleChange}
+                          name="username"
+                          value={props.username}
                         />
                       </div>
                       <div class="col-12 col-md-6">
