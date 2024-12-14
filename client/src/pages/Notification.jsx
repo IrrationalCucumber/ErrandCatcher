@@ -14,26 +14,43 @@ function Notification() {
   const userID = user.userID;
 
   // Display all notifications
+  const fetchNotif = async () => {
+    try {
+      const res = await axios.get(`http://localhost:8800/my-notif/${userID}`);
+      setNotifs(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
-    const fetchNotif = async () => {
-      try {
-        const res = await axios.get(`http://localhost:8800/my-notif/${userID}`);
-        setNotifs(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
     fetchNotif();
   }, []);
 
   // When user clicks 'mark as read', update db notif isRead to Yes
-  // const markAsRead = async (notificationID) => {
-  //   try {
-  //     await axios.post(`http://localhost:8800/read-notif/${notificationID}/${userID}`);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const markAsRead = async (notificationID) => {
+    try {
+      await axios.put(
+        `http://localhost:8800/read-notif/${notificationID}/${userID}`
+      );
+      const intervalNotif = setInterval(fetchNotif, 1000);
+      return () => clearInterval(intervalNotif);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // Function to mark all notifications as read
+  const handleMarkAllAsRead = async () => {
+    try {
+      await axios.put(`http://localhost:8800/read-all/${user.userID}`);
+      // Update the notification list in the UI
+      setNotifs((prevNotifs) =>
+        prevNotifs.map((notif) => ({ ...notif, isRead: true }))
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -69,7 +86,7 @@ function Notification() {
                   desc={notif.notifDesc}
                   date={DisplayDate(notif.notifDate)} // Format the date
                   isRead={notif.isRead}
-                  // markAsRead={()=>markAsRead(notif.notificationID)}
+                  markAsRead={() => markAsRead(notif.notificationID)}
                   // style={{ border: "5px solid green" }}
                 />
               </div>
