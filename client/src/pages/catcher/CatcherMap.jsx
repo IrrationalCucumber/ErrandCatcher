@@ -19,9 +19,7 @@ function CatcherMap() {
   useEffect(() => {
     const fetchErrands = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:8800/catcher/ongoing/" + user.userID
-        );
+        const response = await axios.get("http://localhost:8800/available/");
         setErrands(response.data);
       } catch (error) {
         console.error(error);
