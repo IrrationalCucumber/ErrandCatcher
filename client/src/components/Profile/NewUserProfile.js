@@ -40,6 +40,21 @@ import WarningIcon from "@mui/icons-material/Warning";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { MyFeedback } from "../Dashbaord/Feedback";
 
+
+import PersonIcon from "@mui/icons-material/Person";
+import Person2Icon from "@mui/icons-material/Person2";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import PlusOneIcon from "@mui/icons-material/PlusOne";
+import HomeIcon from "@mui/icons-material/Home";
+import EmailIcon from "@mui/icons-material/Email";
+import PhoneIcon from "@mui/icons-material/Phone";
+import WcIcon from "@mui/icons-material/Wc";
+import CakeIcon from "@mui/icons-material/Cake";
+import VerifiedIcon from "@mui/icons-material/Verified";
+import PendingIcon from "@mui/icons-material/Pending";
+import ErrorIcon from '@mui/icons-material/Error';
+
+
 export function NewUserProfileui(props) {
   const { user } = useAuth();
   const userID = user.userID;
@@ -240,13 +255,13 @@ export function NewUserProfileui(props) {
                           sx={{
                             fontSize: "1.1rem",
                             height: "30px",
-                            padding: "0 10px",
+                            padding: "20px 15px",
                           }}
                           size="sm"
                           variant="solid"
                           color="success"
                         >
-                          {props.status.toLocaleUpperCase()}
+                          <VerifiedIcon /> {props.status.toLocaleUpperCase()}
                         </Chip>
                       </>
                     ) : (
@@ -257,13 +272,13 @@ export function NewUserProfileui(props) {
                               sx={{
                                 fontSize: "1.1rem",
                                 height: "30px",
-                                padding: "0 10px",
+                                padding: "20px 15px",
                               }}
                               size="sm"
                               variant="solid"
                               color="warning"
                             >
-                              <i>{props.verStatus.toLocaleUpperCase()}</i>
+                              <PendingIcon /> <i>{props.verStatus.toLocaleUpperCase()}</i>
                             </Chip>
                           </>
                         ) : (
@@ -272,7 +287,7 @@ export function NewUserProfileui(props) {
                               sx={{
                                 fontSize: "1.1rem",
                                 height: "30px",
-                                padding: "0 10px",
+                                padding: "20px 15px",
                               }}
                               size="sm"
                               variant="solid"
@@ -282,7 +297,7 @@ export function NewUserProfileui(props) {
                                 to={`/profile/verification`}
                                 style={{ textDecoration: "none" }}
                               >
-                                {props.status.toLocaleUpperCase()}
+                                <ErrorIcon /> {props.status.toLocaleUpperCase()}
                               </Link>
                             </Chip>
                           </>
@@ -456,56 +471,56 @@ export function NewUserProfileui(props) {
                     <h5 class="mb-3">Profile</h5>
                     <div class="row g-0">
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2">First Name</div>
+                        <div class="p-2"><PersonIcon /> First Name</div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.fname}</div>
                       </div>
 
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2">Last Name</div>
+                        <div class="p-2"><Person2Icon /> Last Name</div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.lname}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2">Address</div>
+                        <div class="p-2"><HomeIcon /> Address</div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.address}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2">Email</div>
+                        <div class="p-2"><EmailIcon /> Email</div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.email}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2">Username</div>
+                        <div class="p-2"><AccountBoxIcon /> Username</div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.username}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2">Contact</div>
+                        <div class="p-2"><PhoneIcon /> Contact</div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.contact}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2">Gender</div>
+                        <div class="p-2"><WcIcon /> Gender</div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.sex}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2">Age</div>
+                        <div class="p-2"><PlusOneIcon /> Age</div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{GetUserAge(props.bday)}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2">Birthdate</div>
+                        <div class="p-2"><CakeIcon /> Birthdate</div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.bday}</div>
@@ -947,7 +962,7 @@ export function NewUserProfileui(props) {
             </div>
           </div>
         </div>
-      </div>
+      </div >
     </>
   );
 }
