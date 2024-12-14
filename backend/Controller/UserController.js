@@ -180,34 +180,55 @@ const userController = {
       });
     }
   },
-
-  // reset and change password user
+  // Change password
   putResetPassword: (req, res) => {
     const userID = req.params.id;
-    const updatedData = req.body;
-    // encrypt new password
-    bcrypt.hash(updatedData.password, saltRounds, (err, hash) => {
+    const { currentpass, password } = req.body;
+
+    // Retrieve the current hashed password from the database
+    User.getPasswordById(userID, async (err, result) => {
       if (err) {
-        console.error("Error hashign passowrd", err);
-        res.status(500).json({ error: "Error processing password" });
-        return;
-      } //replact text password to hashed password
-      updatedData.password = hash;
-      User.putResetPasswordById(userID, updatedData, (error, result) => {
-        if (error) {
-          console.error("Error updating user:", error);
-          res
-            .status(500)
-            .json({ error: "An error occurred while updating user" });
-          return;
+        console.error("Error fetching current password:", err);
+        return res.status(500).json({ error: "Error fetching current password" });
+      }
+
+      if (result.length === 0) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      const storedHashedPassword = result[0].password;
+
+      // Compare the current password input with the stored hash
+      const isMatch = await bcrypt.compare(currentpass, storedHashedPassword);
+
+      // thrown error not match
+      if (!isMatch) {
+        return res.status(400).json({ error: "Current password is incorrect" });
+      }
+
+      // Hash the new password
+      bcrypt.hash(password, saltRounds, (hashErr, hashedPassword) => {
+        if (hashErr) {
+          console.error("Error hashing password:", hashErr);
+          return res.status(500).json({ error: "Error processing password" });
         }
-        // Check if any rows were affected by the update operation
-        if (result.affectedRows === 0) {
-          res.status(404).json({ error: "User not found" });
-          return;
-        }
-        // User updated successfully
-        res.status(200).json({ message: "User updated successfully" });
+
+        // Update the password in the database
+        const updatedData = { password: hashedPassword };
+        User.putResetPasswordById(userID, updatedData, (updateErr, updateResult) => {
+          if (updateErr) {
+            console.error("Error updating password:", updateErr);
+            return res
+              .status(500)
+              .json({ error: "An error occurred while updating the password" });
+          }
+
+          if (updateResult.affectedRows === 0) {
+            return res.status(404).json({ error: "User not found" });
+          }
+
+          return res.status(200).json({ message: "Password updated successfully" });
+        });
       });
     });
   },
