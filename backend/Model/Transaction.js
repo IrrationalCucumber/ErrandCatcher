@@ -98,6 +98,10 @@ const Trans = {
       callback
     );
   },
+  //show all invoice
+  getAllInvoice: (cb) => {
+    db.query(`SELECT * FROM invoice`, cb);
+  },
 };
 
 module.exports = Trans;
