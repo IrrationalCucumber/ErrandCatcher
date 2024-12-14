@@ -3,6 +3,7 @@
 const User = require("../Model/User");
 //enryption
 const bcrypt = require("bcrypt");
+const { error } = require("console");
 const saltRounds = 10;
 //profile upload
 const multer = require("multer");
@@ -181,6 +182,7 @@ const userController = {
     }
   },
   // Change password
+
   putResetPassword: (req, res) => {
     const userID = req.params.id;
     const { currentpass, password } = req.body;
@@ -201,9 +203,23 @@ const userController = {
       // Compare the current password input with the stored hash
       const isMatch = await bcrypt.compare(currentpass, storedHashedPassword);
 
-      // thrown error not match
+      // Error validation input
       if (!isMatch) {
-        return res.status(400).json({ error: "Current password is incorrect" });
+        return res.status(400).json({
+          error: "Current password is incorrect"
+        });
+      }
+
+      if (password.length < 8) {
+        return res.status(400).json({
+          error: "Password must be at least 8 characters long."
+        });
+      }
+
+      if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(password)) {
+        return res.status(400).json({
+          error: "Password must contain at least one uppercase letter, one lowercase letter, and one number."
+        });
       }
 
       // Hash the new password
@@ -218,9 +234,7 @@ const userController = {
         User.putResetPasswordById(userID, updatedData, (updateErr, updateResult) => {
           if (updateErr) {
             console.error("Error updating password:", updateErr);
-            return res
-              .status(500)
-              .json({ error: "An error occurred while updating the password" });
+            return res.status(500).json({ error: "An error occurred while updating the password" });
           }
 
           if (updateResult.affectedRows === 0) {
