@@ -37,6 +37,7 @@ import { Call, Email, Home, Mail } from "@mui/icons-material";
 import axios from "axios";
 import CloseIcon from "@mui/icons-material/Close";
 import WarningIcon from "@mui/icons-material/Warning";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { MyFeedback } from "../Dashbaord/Feedback";
 
 export function NewUserProfileui(props) {
@@ -107,7 +108,7 @@ export function NewUserProfileui(props) {
       // Show success message
       setMessage(response.data.message);
       setAlertColor("success");
-      setIconLert(<WarningIcon />);
+      setIconLert(<CheckCircleOutlineIcon />);
       setShowAlert(true);
 
       // Reload page after successful password change
