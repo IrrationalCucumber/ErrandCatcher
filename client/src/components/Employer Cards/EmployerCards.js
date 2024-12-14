@@ -57,7 +57,8 @@ const EmployerCard = ({ employer }) => {
                     style={{ textDecoration: "none" }}
                     to={`/dashboard/errands`}
                   >
-                    <h6 class="m-b-20"> <PostAddIcon sx={{ color: "white", fontSize: 24, }} /> Post</h6>
+                    {/* style={{ letterSpacing: "1px" }} */}
+                    <h3 class="m-b-20 fw-semibold" > <PostAddIcon sx={{ color: "white", fontSize: 24, }} /> Post</h3>
                     <h2 class="text-right">
                       <i class="fa fa-cart-plus f-left"></i>
                       <span>
@@ -77,7 +78,7 @@ const EmployerCard = ({ employer }) => {
                     style={{ textDecoration: "none" }}
                     to={`/dashboard/applicants`}
                   >
-                    <h6 class="m-b-20"> <GroupIcon sx={{ color: "white", fontSize: 24, }} /> Applicants</h6>
+                    <h3 class="m-b-20 fw-semibold" > <GroupIcon sx={{ color: "white", fontSize: 24, }} /> Applicants</h3>
                     <h2 class="text-right">
                       <i class="fa fa-rocket f-left"></i>
                       <span>
@@ -97,7 +98,7 @@ const EmployerCard = ({ employer }) => {
                     style={{ textDecoration: "none" }}
                     to={`/dashboard/applicants`}
                   >
-                    <h6 class="m-b-20"> <PendingActionsIcon sx={{ color: "white", fontSize: 24, }} /> Pending</h6>
+                    <h3 class="m-b-20 fw-semibold"> <PendingActionsIcon sx={{ color: "white", fontSize: 24, }} /> Pending</h3>
                     <h2 class="text-right">
                       <i class="fa fa-refresh f-left"></i>
                       <span>
