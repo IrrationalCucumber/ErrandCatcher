@@ -306,6 +306,16 @@ export function NewUserProfileui(props) {
                       </>
                     )}
                   </div>
+                  {/* --------------------- Rating --------------------- */}
+                  <div className="rating">
+                    Overall Rating:
+                    <span>
+                      <StarRating rating={props.rate} />
+                      <p>
+                        <i>{AmountDecimal(props.rate)}</i>
+                      </p>
+                    </span>
+                  </div>
                 </div>
               </div>
 
@@ -1404,6 +1414,7 @@ export function NewViewUserProfile(props) {
                     tabindex="0"
                   >
                     <h5 class="mb-3">Feedback: </h5>
+                    <h3>display view </h3>
                     <MyFeedback id={props.userID} />
 
 
