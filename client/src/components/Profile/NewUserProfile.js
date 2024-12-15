@@ -117,6 +117,7 @@ export function NewUserProfileui(props) {
         {
           currentpass: account.currentpass,
           password: account.password,
+          conPassword: account.conPassword,
         }
       );
 
@@ -884,6 +885,7 @@ export function NewUserProfileui(props) {
                             value={account.conPassword}
                             onChange={handleChange}
                             required
+                            
                           />
                         </div>
                         <div class="col-12">
