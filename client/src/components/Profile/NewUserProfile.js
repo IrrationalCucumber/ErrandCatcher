@@ -885,7 +885,7 @@ export function NewUserProfileui(props) {
                             value={account.conPassword}
                             onChange={handleChange}
                             required
-                            
+
                           />
                         </div>
                         <div class="col-12">
@@ -1011,7 +1011,7 @@ export function NewViewUserProfile(props) {
               <div class="col-12">
                 <div class="card widget-card border-light shadow-sm">
                   <div class="card-header text-bg-primary">
-                    Welcome, {props.fname} {props.lname}
+                    Profile Catcher
                   </div>
                   <div class="card-body">
                     <div class="text-center mb-3">
@@ -1028,43 +1028,14 @@ export function NewViewUserProfile(props) {
                     <h5 class="text-center mb-1">
                       {props.fname} {props.lname}
                     </h5>
-                    <div className="upload-container">
-                      <input
-                        type="file"
-                        id="file"
-                        onChange={handleImage}
-                        style={{ display: "none" }}
-                      />
-                      <label
-                        // className="prolabel"
-                        htmlFor="file"
-                        style={{
-                          // border: "1px dashed black",
-                          border: "none",
-                          flexDirection: "row",
-                          gap: "4px",
-                          alignItems: "center",
-                          backgroundColor: "#f0f0f0",
-                          maxWidth: "18rem",
-                          display: "flex",
-                          alignContent: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <AddAPhotoIcon color="primary" />
-                        Choose Image File
-                      </label>
 
-                      <Button
-                        loading={false}
-                        onClick={props.handleUpload}
-                        size="md"
-                        variant="solid"
-                      >
-                        <FileUploadIcon />
-                      </Button>
-                    </div>
-                    {/* <p class="text-center text-secondary mb-4">Project Manager</p> */}
+                    {/* {props.type === "Employer" ?
+                      <p class="text-center text-secondary mb-4">
+                        Employer
+                      </p> : <p class="text-center text-secondary mb-4">
+                        Catcher
+                      </p>
+                    } */}
                   </div>
                 </div>
               </div>
@@ -1072,24 +1043,64 @@ export function NewViewUserProfile(props) {
               {/* about me section */}
               <div class="col-12">
                 <div class="card widget-card border-light shadow-sm">
-                  <div class="card-header text-bg-primary">About Me</div>
-                  <div class="card-body">
+                  <div
+                    class="card-header text-bg-primary"
+                    style={{ background: "#378ce7" }}
+                  >
+                    Account Status
+                  </div>
+                  <div class="card-body d-flex justify-content-center align-items-center">
                     {props.status === "Verified" ? (
-                      <>{props.status.toLocaleUpperCase()}</>
+                      <>
+                        <Chip
+                          sx={{
+                            fontSize: "1.1rem",
+                            height: "30px",
+                            padding: "20px 15px",
+                          }}
+                          size="sm"
+                          variant="solid"
+                          color="success"
+                        >
+                          <VerifiedIcon /> {props.status.toLocaleUpperCase()}
+                        </Chip>
+                      </>
                     ) : (
                       <>
                         {props.verStatus === "Pending" ? (
                           <>
-                            <i>{props.verStatus.toLocaleUpperCase()}</i>
+                            <Chip
+                              sx={{
+                                fontSize: "1.1rem",
+                                height: "30px",
+                                padding: "20px 15px",
+                              }}
+                              size="sm"
+                              variant="solid"
+                              color="warning"
+                            >
+                              <PendingIcon /> <i>{props.verStatus.toLocaleUpperCase()}</i>
+                            </Chip>
                           </>
                         ) : (
                           <>
-                            <Link
-                              to={`/profile/verification`}
-                              style={{ textDecoration: "none" }}
+                            <Chip
+                              sx={{
+                                fontSize: "1.1rem",
+                                height: "30px",
+                                padding: "20px 15px",
+                              }}
+                              size="sm"
+                              variant="solid"
+                              color="danger"
                             >
-                              {props.status.toLocaleUpperCase()}
-                            </Link>
+                              <Link
+                                to={`/profile/verification`}
+                                style={{ textDecoration: "none" }}
+                              >
+                                <ErrorIcon /> {props.status.toLocaleUpperCase()}
+                              </Link>
+                            </Chip>
                           </>
                         )}
                       </>
@@ -1098,7 +1109,7 @@ export function NewViewUserProfile(props) {
                 </div>
               </div>
 
-              <div class="col-12">
+              {/* <div class="col-12">
                 <div class="card widget-card border-light shadow-sm">
                   <div class="card-header text-bg-primary"></div>
                   <div class="card-body">
@@ -1111,7 +1122,7 @@ export function NewViewUserProfile(props) {
                         Documents
                       </button>
 
-                      {/* <button onClick={() => setButtonPopup3(true)}>Change Password?</button> */}
+                    
                     </div>
                     <ViewFeedback
                       userID={user.userID}
@@ -1122,7 +1133,7 @@ export function NewViewUserProfile(props) {
                     </ViewFeedback>
                     <Docu trigger={buttonPopup2} setTrigger={setButtonPopup2}>
                       {
-                        //display sumbitted IDs of user
+                     
                         props.verFront || props.verBack ? (
                           <>
                             <div className="id_1">
@@ -1141,7 +1152,7 @@ export function NewViewUserProfile(props) {
                         ) : null
                       }
                       {
-                        //display sumbitted docs/additional ids of user
+                       
                         props.doc1 ? (
                           <>
                             <div className="id_1">
@@ -1156,7 +1167,7 @@ export function NewViewUserProfile(props) {
                     </Docu>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               <div class="col-12">
                 <div class="card widget-card border-light shadow-sm">
@@ -1211,10 +1222,59 @@ export function NewViewUserProfile(props) {
             </div>
           </div>
 
-          {/* section............ */}
+          {/* Sections............ */}
           <div class="col-12 col-lg-8 col-xl-9">
             <div class="card widget-card border-light shadow-sm">
               <div class="card-body p-4">
+                {/* ---------------------- Tabs ------------------------ */}
+                <ul class="nav nav-tabs" id="profileTab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link active"
+                      id="overview-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#overview-tab-pane"
+                      type="button"
+                      role="tab"
+                      aria-controls="overview-tab-pane"
+                      aria-selected="true"
+                    >
+                      Overview
+                    </button>
+                  </li>
+
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="documets-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#documents-tab-pane"
+                      type="button"
+                      role="tab"
+                      aria-controls="documents-tab-pane"
+                      aria-selected="false"
+                    >
+                      Documents
+                    </button>
+                  </li>
+
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="reviews-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#reviews-tab-pane"
+                      type="button"
+                      role="tab"
+                      aria-controls="reviews-tab-pane"
+                      aria-selected="false"
+                    >
+                      Reviews
+                    </button>
+                  </li>
+
+                </ul>
+                {/* ------------------------ Overview tab ---------------------------- */}
                 <div class="tab-content pt-4" id="profileTabContent">
                   <div
                     class="tab-pane fade show active"
@@ -1231,62 +1291,130 @@ export function NewViewUserProfile(props) {
                     <h5 class="mb-3">Profile</h5>
                     <div class="row g-0">
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2">First Name</div>
+                        <div class="p-2"><PersonIcon /> First Name</div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.fname}</div>
                       </div>
 
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2">Last Name</div>
+                        <div class="p-2"><Person2Icon /> Last Name</div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.lname}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2">Address</div>
+                        <div class="p-2"><HomeIcon /> Address</div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.address}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2">Email</div>
+                        <div class="p-2"><EmailIcon /> Email</div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.email}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2">Contact</div>
+                        <div class="p-2"><AccountBoxIcon /> Username</div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                        <div class="p-2">{props.cnum}</div>
+                        <div class="p-2">{props.username}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2">Gender</div>
+                        <div class="p-2"><PhoneIcon /> Contact</div>
+                      </div>
+                      <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                        <div class="p-2">{props.contact}</div>
+                      </div>
+                      <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                        <div class="p-2"><WcIcon /> Gender</div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.sex}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2">Age</div>
+                        <div class="p-2"><PlusOneIcon /> Age</div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{GetUserAge(props.bday)}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2">Birthdate</div>
+                        <div class="p-2"><CakeIcon /> Birthdate</div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.bday}</div>
                       </div>
                     </div>
                   </div>
+
+
+                  {/* -------------------------- Documents tab ------------------------------ */}
+                  <div
+                    class="tab-pane fade"
+                    id="documents-tab-pane"
+                    role="tabpanel"
+                    aria-labelledby="documents-tab"
+                    tabindex="0"
+                  >
+                    <h5 class="mb-3">Documents: </h5>
+
+                    {
+                      //display sumbitted IDs of user
+                      props.verFront || props.verBack ? (
+                        <>
+                          <div className="id_1">
+                            <img
+                              src={`http://localhost:8800/images/docu/${props.verFront}`}
+                              alt="Front"
+                            />
+                          </div>
+                          <div className="id_1">
+                            <img
+                              src={`http://localhost:8800/images/docu/${props.verBack}`}
+                              alt="Back"
+                            />
+                          </div>
+                        </>
+                      ) : null
+                    }
+                    {
+                      //display sumbitted docs/additional ids of user
+                      // driver license additional info fetch
+                      props.verDoc1 ? (
+                        <>
+                          <div className="id_1">
+                            <img
+                              src={`http://localhost:8800/images/docu/${props.verDoc1}`}
+                              alt="License"
+                            />
+                          </div>
+                        </>
+                      ) : null
+                    }
+
+                  </div>
+
+                  {/* -------------------------- Feedback tab ------------------------------ */}
+                  <div
+                    class="tab-pane fade"
+                    id="reviews-tab-pane"
+                    role="tabpanel"
+                    aria-labelledby="documents-tab"
+                    tabindex="0"
+                  >
+                    <h5 class="mb-3">Feedback: </h5>
+                    <MyFeedback id={props.userID} />
+
+
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </div >
+
     </>
   );
 }
