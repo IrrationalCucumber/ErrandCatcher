@@ -236,6 +236,20 @@ export function NewUserProfileui(props) {
                         Catcher
                       </p>
                     }
+
+                    {/* --------------------- Rating --------------------- */}
+                    <div class="text-center text-secondary mb-4">
+                      <div className="rating">
+                        Overall Rating:
+                        <span>
+                          <StarRating rating={props.rate} />
+                          <p>
+                            <i>{AmountDecimal(props.rate)}</i>
+                          </p>
+                        </span>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               </div>
@@ -306,16 +320,7 @@ export function NewUserProfileui(props) {
                       </>
                     )}
                   </div>
-                  {/* --------------------- Rating --------------------- */}
-                  <div className="rating">
-                    Overall Rating:
-                    <span>
-                      <StarRating rating={props.rate} />
-                      <p>
-                        <i>{AmountDecimal(props.rate)}</i>
-                      </p>
-                    </span>
-                  </div>
+
                 </div>
               </div>
 
@@ -1039,13 +1044,23 @@ export function NewViewUserProfile(props) {
                       {props.fname} {props.lname}
                     </h5>
 
-                    {/* {props.type === "Employer" ?
-                      <p class="text-center text-secondary mb-4">
-                        Employer
-                      </p> : <p class="text-center text-secondary mb-4">
-                        Catcher
-                      </p>
-                    } */}
+                    <p class="text-center text-secondary mb-4">
+                      Catcher
+                    </p>
+
+                    {/* --------------------- Rating --------------------- */}
+                    <div class="text-center text-secondary mb-4">
+                      <div className="rating">
+                        Overall Rating:
+                        <span>
+                          <StarRating rating={props.rate} />
+                          <p>
+                            <i>{AmountDecimal(props.rate)}</i>
+                          </p>
+                        </span>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               </div>
