@@ -96,16 +96,17 @@ const EmployerCard = ({ employer }) => {
                 <div class="card-block">
                   <Link
                     style={{ textDecoration: "none" }}
-                    to={`/dashboard/errands/${userID}`}
+                    // to={`/dashboard/errands/${userID}`}
+                    to={`/dashboard/ongoing`}
                   >
-                    <h3 class="m-b-20 fw-semibold"> <PendingActionsIcon sx={{ color: "white", fontSize: 24, }} /> Pending</h3>
+                    <h3 class="m-b-20 fw-semibold"> <PendingActionsIcon sx={{ color: "white", fontSize: 24, }} /> Ongoing</h3>
                     <h2 class="text-right">
                       <i class="fa fa-refresh f-left"></i>
                       <span>
                         {counts.numErrands}
                       </span>
                     </h2>
-                    <p class="m-b-0">Opps errand delay</p>
+                    <p class="m-b-0">See who's still ongoing</p>
                   </Link>
                 </div>
               </div>
