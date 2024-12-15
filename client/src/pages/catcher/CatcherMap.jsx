@@ -51,10 +51,11 @@ function CatcherMap() {
     }
   }, []);
 
-  // Function to calculate distance between two coordinates (Haversine formula)
+  // Function to calculate distance between two coordinates
+  // (Haversine formula)
   const haversineDistance = (lat1, lng1, lat2, lng2) => {
     const R = 6371; // Radius of the Earth in km
-    const toRad = (deg) => (deg * Math.PI) / 180;
+    const toRad = (deg) => (deg * Math.PI) / 180; //to radious
 
     const dLat = toRad(lat2 - lat1);
     const dLng = toRad(lng2 - lng1);
@@ -116,7 +117,7 @@ function CatcherMap() {
 
     let markers = []; // Array to store markers
 
-    // Clear existing markers
+    // Clear markers
     map.current?.markers?.forEach((marker) => marker.remove());
 
     // Add markers for filtered errands
@@ -125,7 +126,7 @@ function CatcherMap() {
         .setLngLat([errand.commissionLong, errand.commissionLat])
         .setPopup(
           new maplibregl.Popup().setHTML(
-            `<h3>${errand.commissionTitle}</h3><p>${errand.commissionDesc}</p><a href="/errand/view/${errand.commissionID}">View</a>`
+            `<div class="map-popup"><h3>${errand.commissionTitle}</h3><p>${errand.commissionDesc}</p><a href="/errand/view/${errand.commissionID}">View</a></div>`
           )
         )
         .addTo(map.current);
