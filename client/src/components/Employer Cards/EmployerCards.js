@@ -100,7 +100,7 @@ const EmployerCard = ({ employer }) => {
               </div>
               <div class="col d-flex justify-content-center">
                 <Link
-                  to={`/dashboard/errands/${userID}`}
+                  to={`/dashboard/ongoing`}
                   className="count-section errands"
                   style={{ color: "black" }}
                 >
@@ -113,7 +113,7 @@ const EmployerCard = ({ employer }) => {
                         fontSize: 28,
                       }}
                     />
-                    Pending
+                    Ongoing
                   </h3>
                   <p>{counts.numErrands}</p>
                 </Link>
