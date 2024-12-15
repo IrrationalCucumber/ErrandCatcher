@@ -33,6 +33,43 @@ function ErrandInputs(props) {
   const [isStartSelected, setIsStartSelected] = useState(false); // New state to track if a suggestion was clicked
   const [isDestSelected, setIsDestSelected] = useState(false); // Same for destination
 
+  // Add a new state for tracking end date validation error
+  const [endDateError, setEndDateError] = useState("");
+
+  // Function to validate end date
+  const validateEndDate = (startDate, endDate) => {
+    if (startDate && endDate) {
+      if (new Date(endDate) <= new Date(startDate)) {
+        setEndDateError("End date must be after the start date");
+        return false;
+      } else {
+        setEndDateError("");
+        return true;
+      }
+    }
+    return true;
+  };
+
+  // Modify the handleChange prop to include end date validation
+  const modifiedHandleChange = (e) => {
+    const { name, value } = e.target;
+    
+    // If it's the start or end date, validate
+    if (name === props.start || name === props.deadline) {
+      // When start date changes, validate against existing end date
+      if (name === props.start) {
+        validateEndDate(value, props.dlValue);
+      } 
+      // When end date changes, validate against existing start date
+      else if (name === props.deadline) {
+        validateEndDate(props.startValue, value);
+      }
+    }
+
+    // Call the original handleChange
+    props.handleChange(e);
+  };
+
   // Fetch suggestions for start location from Mapbox API
   // const fetchStartSuggestions = async (searchText) => {
   //   if (!searchText) {
@@ -288,7 +325,7 @@ function ErrandInputs(props) {
             variant={props.variant}
             type="date"
             placeholder="Enter when to begin..."
-            onChange={props.handleChange}
+            onChange={modifiedHandleChange}
             name={props.start}
             value={props.startValue}
             slotProps={{
@@ -319,14 +356,12 @@ function ErrandInputs(props) {
             variant={props.variant}
             type="date"
             placeholder="Enter date of deadline"
-            onChange={props.handleChange}
+            onChange={modifiedHandleChange}
             name={props.deadline}
             value={props.dlValue}
             slotProps={{
               input: {
-                min: new Date(new Date().setDate(new Date().getDate() + 1))
-                  .toISOString()
-                  .split("T")[0],
+                min: new Date().toISOString().split("T")[0],
               },
             }}
           />
