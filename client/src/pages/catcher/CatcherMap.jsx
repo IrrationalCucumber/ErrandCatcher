@@ -15,6 +15,7 @@ function CatcherMap() {
   const [errands, setErrands] = useState([]);
   const [userLocation, setUserLocation] = useState({ lat: 0, lng: 0 });
   const [proximity, setProximity] = useState(10); // Proximity in kilometers
+  const [filter, setFilter] = useState(""); // State for type filter
 
   // Fetch errands from the API
   useEffect(() => {
@@ -67,7 +68,7 @@ function CatcherMap() {
     return R * c; // Distance in km
   };
 
-  // Filter errands based on proximity
+  // Filter errands based on proximity and type
   const filterErrand = errands
     .filter((errand) => {
       const distance = haversineDistance(
@@ -76,7 +77,11 @@ function CatcherMap() {
         errand.commissionLat,
         errand.commissionLong
       );
-      return distance <= proximity; // Filter errands within the proximity
+      const matchesProximity = distance <= proximity; // Filter by proximity
+      const matchesType = filter
+        ? errand.commissionType.includes(filter)
+        : true; // Filter by type
+      return matchesProximity && matchesType; // Combine both filters
     })
     .sort((a, b) => {
       // Sort errands by proximity
@@ -134,14 +139,13 @@ function CatcherMap() {
 
   return (
     <>
-      {/* Proximity Selector */}
-
       {/* Map Container */}
       <Map
         mapContainer={mapContainer}
         className="map-container"
         prox={proximity}
         setProximity={(e) => setProximity(Number(e.target.value))}
+        change={(value) => setFilter(value)} // Pass filter change handler
       />
     </>
   );
