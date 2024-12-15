@@ -182,16 +182,17 @@ const userController = {
     }
   },
   // Change password
-
   putResetPassword: (req, res) => {
     const userID = req.params.id;
-    const { currentpass, password } = req.body;
+    const { currentpass, password, conPassword } = req.body;
 
     // Retrieve the current hashed password from the database
     User.getPasswordById(userID, async (err, result) => {
       if (err) {
         console.error("Error fetching current password:", err);
-        return res.status(500).json({ error: "Error fetching current password" });
+        return res.status(500).json({
+          error: "Error fetching current password"
+        });
       }
 
       if (result.length === 0) {
@@ -203,10 +204,17 @@ const userController = {
       // Compare the current password input with the stored hash
       const isMatch = await bcrypt.compare(currentpass, storedHashedPassword);
 
-      // Error validation input
+      // Validate current password
       if (!isMatch) {
         return res.status(400).json({
           error: "Current password is incorrect"
+        });
+      }
+
+      // Validate new password and confirm password
+      if (password !== conPassword) {
+        return res.status(400).json({
+          error: "New password and confirm password do not match"
         });
       }
 
@@ -234,7 +242,9 @@ const userController = {
         User.putResetPasswordById(userID, updatedData, (updateErr, updateResult) => {
           if (updateErr) {
             console.error("Error updating password:", updateErr);
-            return res.status(500).json({ error: "An error occurred while updating the password" });
+            return res
+              .status(500)
+              .json({ error: "An error occurred while updating the password" });
           }
 
           if (updateResult.affectedRows === 0) {
