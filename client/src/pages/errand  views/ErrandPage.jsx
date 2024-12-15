@@ -10,6 +10,16 @@ import "./Commission.css"; // Import your CSS file
 import { useAuth } from "../../components/AuthContext";
 import { ViewMap, ViewMapBox } from "../../components/Map/Map";
 import ApplicationQualificationModal from "../../components/ApplicationModal/ApplicationQualificationModal";
+import {
+  Alert,
+  Button,
+  IconButton,
+  Modal,
+  ModalClose,
+  ModalDialog,
+  Typography,
+} from "@mui/joy";
+import { CheckCircle, CloseRounded } from "@mui/icons-material";
 
 const ErrandPage = () => {
   const [commission, setCommission] = useState({
@@ -44,6 +54,10 @@ const ErrandPage = () => {
   const accessToken =
     "pk.eyJ1IjoibWlyYWthNDQiLCJhIjoiY20xcWVhejZ0MGVzdjJscTF5ZWVwaXBzdSJ9.aLYnU19L7neFq2Y7J_UXhQ";
   const [distance, setDistance] = useState();
+  //alert message
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMesg, setAlerMsg] = useState("");
+  const [alrtColor, setAlrtColor] = useState("");
 
   //APS - 19/03/24
   //CHeck if Catcher already applied
@@ -171,7 +185,10 @@ const ErrandPage = () => {
       notif.notificationType = "Errand Application";
 
       await axios.post("http://localhost:8800/notify", notif);
-      alert("You have applied to this Errand!");
+      setAlerMsg("You have applied to this Errand!");
+      setShowAlert(true);
+      setAlrtColor("success");
+      handleScrollToTop();
       //alert(application.qualifications);
       //navigate(`/application/${userID}`);
       //console.log(notif); // check variables state
@@ -179,10 +196,36 @@ const ErrandPage = () => {
       console.log(err);
     }
   };
-
-  console.log(commission);
+  //scroll on top to see alert
+  const handleScrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // Makes the scrolling smooth
+    });
+  };
+  // console.log(commission);
   return (
     <>
+      {showAlert && (
+        <Alert
+          color={alrtColor}
+          size="md"
+          variant="solid"
+          startDecorator={<CheckCircle />}
+          sx={{ borderRadius: "none" }}
+          endDecorator={
+            <IconButton
+              variant="soft"
+              color={alrtColor}
+              onClick={() => setShowAlert(false)}
+            >
+              <CloseRounded />
+            </IconButton>
+          }
+        >
+          {alertMesg}
+        </Alert>
+      )}
       <div className="errand-cont">
         <div className="input-cont">
           <div className="errand-inputs">
@@ -261,33 +304,31 @@ const ErrandPage = () => {
           </button>
         )}
         {user.userType === "Catcher" && user.status === "Verified" && (
-          <button
-            className="formButton"
-            onClick={
-              isApplied
-                ? null
-                : (e) => {
-                    handleApply(true);
-                  }
-            }
-            style={{
-              backgroundColor: isApplied ? "none" : "",
-            }}
-          >
-            {isApplied ? "Applied" : "APPLY"}
-          </button>
+          <div className="formButton">
+            <Button
+              className="formButton"
+              disabled={isApplied ? true : false}
+              size="lg"
+              variant="solid"
+              onClick={
+                isApplied
+                  ? null
+                  : (e) => {
+                      handleApply(true);
+                    }
+              }
+              style={{
+                backgroundColor: isApplied ? "none" : "",
+              }}
+            >
+              {isApplied ? "Applied" : "APPLY"}
+            </Button>
+          </div>
         )}
+
         {/* <button className="formButton" onClick={handleClick}>
           UPDATE
         </button> */}
-        <ApplicationQualificationModal
-          employerID={commission.employerID}
-          userID={user.userID}
-          commissionID={commissionID}
-          open={open}
-          close={() => setOpen(false)}
-          type={commission.comType}
-        />
       </div>
     </>
   );

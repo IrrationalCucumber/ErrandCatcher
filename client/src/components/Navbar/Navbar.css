@@ -83,8 +83,7 @@
 }
 
 .nav-links:focus{
-  background-color: #fff;
-  color: #378ce7;
+  border-bottom: 4px solid #fff;
 }
 
 
