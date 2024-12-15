@@ -120,6 +120,32 @@ function ViewProfile(id) {
   }, [userID]);
   return (
     <div>
+      {/* <ViewUserProfile
+        id={account.id}
+        profileImg={account.profileImage}
+        address={account.address}
+        cnum={account.contact}
+        email={account.email}
+        rate={rating}
+        type={account.type}
+        desc={account.desc}
+        //right hemisphere
+        username={account.username}
+        fname={account.fname}
+        lname={account.lname}
+        sex={account.gender}
+        age={account.age}
+        bday={account.bday}
+        status={account.status}
+        //verification details
+        verStatus={docs.requestStatus}
+        verFront={docs.frontID}
+        verBack={docs.backID}
+        verDoc1={docs.doc1}
+        verDoc2={docs.doc2}
+        skills={account.skills}
+      /> */}
+
       <NewViewUserProfile
         id={account.id}
         profileImg={account.profileImage}

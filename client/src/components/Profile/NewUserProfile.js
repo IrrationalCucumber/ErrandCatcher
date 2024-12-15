@@ -1132,7 +1132,7 @@ export function NewViewUserProfile(props) {
                         Documents
                       </button>
 
-                    
+
                     </div>
                     <ViewFeedback
                       userID={user.userID}
@@ -1143,7 +1143,7 @@ export function NewViewUserProfile(props) {
                     </ViewFeedback>
                     <Docu trigger={buttonPopup2} setTrigger={setButtonPopup2}>
                       {
-                     
+
                         props.verFront || props.verBack ? (
                           <>
                             <div className="id_1">
@@ -1162,7 +1162,7 @@ export function NewViewUserProfile(props) {
                         ) : null
                       }
                       {
-                       
+
                         props.doc1 ? (
                           <>
                             <div className="id_1">
@@ -1414,10 +1414,9 @@ export function NewViewUserProfile(props) {
                     tabindex="0"
                   >
                     <h5 class="mb-3">Feedback: </h5>
-                    <h3>display view </h3>
+                    <h5 class="mb-3">Previous Employers feedbacks & rating</h5>
                     <MyFeedback id={props.userID} />
-
-
+                    <MyFeedback id={props.id} />
                   </div>
                 </div>
               </div>
