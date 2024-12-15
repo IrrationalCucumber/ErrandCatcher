@@ -238,17 +238,20 @@ export function NewUserProfileui(props) {
                     }
 
                     {/* --------------------- Rating --------------------- */}
-                    <div class="text-center text-secondary mb-4">
-                      <div className="rating">
-                        Overall Rating:
-                        <span>
-                          <StarRating rating={props.rate} />
-                          <p>
-                            <i>{AmountDecimal(props.rate)}</i>
-                          </p>
-                        </span>
+                    {props.type === "Catcher" ?
+                      <div class="text-center text-secondary mb-4">
+                        <div className="rating">
+                          Overall Rating:
+                          <span>
+                            <StarRating rating={props.rate} />
+                            <p>
+                              <i>{AmountDecimal(props.rate)}</i>
+                            </p>
+                          </span>
+                        </div>
                       </div>
-                    </div>
+                      : null
+                    }
 
                   </div>
                 </div>
