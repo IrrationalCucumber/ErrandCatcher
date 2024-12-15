@@ -26,6 +26,8 @@ import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
 import RotateRightOutlinedIcon from "@mui/icons-material/RotateRightOutlined";
 import { Box } from "@mui/material";
+import { Alert, IconButton } from "@mui/joy";
+import { CloseRounded } from "@mui/icons-material";
 
 function CommissionPage() {
   const headers = ["DATE", "EMPLOYER", "ERRAND TITLE", "STATUS"];
@@ -51,6 +53,10 @@ function CommissionPage() {
   //getuserID
   const { user } = useAuth();
   const userID = user.userID;
+  //alert message
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMesg, setAlerMsg] = useState("");
+  const [alrtColor, setAlrtColor] = useState("");
 
   useEffect(() => {
     const fetchAllCommission = async () => {
@@ -71,21 +77,20 @@ function CommissionPage() {
   }, []);
   //for payment errand
   const [forPayment, setForPayment] = useState([]);
-  useEffect(() => {
-    const fetchPending = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:8800/catcher/ongoing/${userID}`
-        );
+  const fetchPending = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8800/catcher/ongoing/${userID}`
+      );
 
-        setForPayment(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+      setForPayment(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
     fetchPending();
-    // const interval = setInterval(fetchPending, 11000);
-    // return () => clearInterval(interval);
   }, []);
   const handleChange = (e) => {
     // For the 'gender' field, directly set the value without using spread syntax
@@ -169,8 +174,12 @@ function CommissionPage() {
       /**
        * ADD METHOD TO CHANGE ALSO THE STATUS OF ERRAND TO CANCELLED
        */
-      alert("You have cancelled an errand.");
-      window.location.reload();
+      setAlerMsg("You have cancelled an errand.");
+      setShowAlert(true);
+      setAlrtColor("warning");
+      const interval = setInterval(fetchPending, 11000);
+      return () => clearInterval(interval);
+      // window.location.reload();
       setOpenCancel(false);
     } catch (err) {
       console.log(err);
@@ -195,6 +204,26 @@ function CommissionPage() {
 
   return (
     <div>
+      {showAlert && (
+        <Alert
+          color={alrtColor}
+          size="md"
+          variant="solid"
+          startDecorator={<WarningRoundedIcon />}
+          sx={{ borderRadius: "none" }}
+          endDecorator={
+            <IconButton
+              variant="soft"
+              color={alrtColor}
+              onClick={() => setShowAlert(false)}
+            >
+              <CloseRounded />
+            </IconButton>
+          }
+        >
+          {alertMesg}
+        </Alert>
+      )}
       <div className="Commission-page-container">
         <div className="Commission-page">
           {" "}
@@ -293,14 +322,13 @@ function CommissionPage() {
                         <Button
                           variant="solid"
                           color="danger"
-                          onClick={
-                            () =>
-                              handleCancel(
-                                commission.transactID,
-                                commission.employerID
-                              )
-                            // console.log("cancel commission")
-                          }
+                          onClick={() => {
+                            handleCancel(
+                              commission.transactID,
+                              commission.employerID
+                            );
+                            setOpenCancel(false);
+                          }}
                         >
                           Yes
                         </Button>
