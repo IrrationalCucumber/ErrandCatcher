@@ -1,0 +1,23 @@
+.map-popup{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    padding: 5px 10px 10px 5px;
+}
+
+.maplibregl-popup-content{
+    width: 15rem;
+}
+
+.maplibregl-popup-close-button{
+    font-size: 2rem;
+    padding: 2px;
+    background-color: red;
+    color: #ffff;
+    border-radius: 10px;
+}
+
+.map-popup h4{
+    color: green
+}

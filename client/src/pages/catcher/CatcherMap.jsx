@@ -3,6 +3,7 @@ import Map from "../../components/Map/Map.js";
 import { useAuth } from "../../components/AuthContext";
 import maplibregl from "maplibre-gl";
 import axios from "axios";
+import "./style.css";
 
 function CatcherMap() {
   const { user } = useAuth();
@@ -30,8 +31,8 @@ function CatcherMap() {
     fetchErrands();
 
     // Refresh map every 5 seconds
-    const interval = setInterval(fetchErrands, 5000);
-    return () => clearInterval(interval);
+    // const interval = setInterval(fetchErrands, 5000);
+    // return () => clearInterval(interval);
   }, []);
 
   // Get user's current location
@@ -126,7 +127,11 @@ function CatcherMap() {
         .setLngLat([errand.commissionLong, errand.commissionLat])
         .setPopup(
           new maplibregl.Popup().setHTML(
-            `<div class="map-popup"><h3>${errand.commissionTitle}</h3><p>${errand.commissionDesc}</p><a href="/errand/view/${errand.commissionID}">View</a></div>`
+            `<div class="map-popup">
+            <h2 class="map-popup__h2">${errand.commissionTitle}</h2>
+            <h4>Php ${errand.commissionPay}</h4>
+            <p>${errand.commissionDesc}</p>
+            <a href="/errand/view/${errand.commissionID}">View</a></div>`
           )
         )
         .addTo(map.current);
