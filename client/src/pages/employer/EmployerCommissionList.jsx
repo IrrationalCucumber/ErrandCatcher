@@ -135,7 +135,7 @@ const CommissionList = () => {
   return (
     <div>
       <BannerEmployerPages
-        bannerMessage={`These is/are what you have posted so far, ${user.username.toUpperCase()}`}
+        bannerMessage={`These are what you have posted so far, ${user.username.toUpperCase()}`}
       />
       <div className="Commission-page-container">
         <div className="Commission-page">
