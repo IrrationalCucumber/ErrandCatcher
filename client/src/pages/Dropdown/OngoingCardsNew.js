@@ -41,12 +41,12 @@ function OngoingCardsNew(props) {
     status === "Complete"
       ? "success"
       : status === "Complete Paid"
-      ? "primary"
-      : status === "Ongoing"
-      ? "warning"
-      : status === "Cancelled"
-      ? "danger"
-      : "default";
+        ? "primary"
+        : status === "Ongoing"
+          ? "warning"
+          : status === "Cancelled"
+            ? "danger"
+            : "default";
 
   const { user } = useAuth();
   const userID = user.userID;
@@ -399,7 +399,7 @@ function OngoingCardsNew(props) {
         contentMes="You have successfully Rated a catcher."
         color="success"
         colorText="green"
-        // icon={ErrorIcon}
+      // icon={ErrorIcon}
       />
 
       <LoadingBackdrop
@@ -415,7 +415,7 @@ function OngoingCardsNew(props) {
         contentMes="You have successfully marked as completed"
         color="success"
         colorText="green"
-        // icon={ErrorIcon}
+      // icon={ErrorIcon}
       />
 
       <div class="cardnew">
@@ -423,7 +423,7 @@ function OngoingCardsNew(props) {
           <Box class="boxer">
             {/* commissionType props */}
             {props.icon === "HomeService - Indoor" ||
-            props.icon === "HomeService - Outdoor" ? (
+              props.icon === "HomeService - Outdoor" ? (
               <OtherHousesIcon sx={{ color: "#fff", fontSize: 100 }} />
             ) : props.icon === "Transportation" ? (
               <LocalShippingIcon sx={{ color: "#fff", fontSize: 100 }} />
@@ -449,36 +449,39 @@ function OngoingCardsNew(props) {
           </Typography>
 
           {/* props.desc */}
-          <h7 className="cards__header__seven">Details: </h7>
-          <ul>
-            <li>
-              <Chip
-                sx={{
-                  fontSize: "1.1rem",
-                  height: "30px",
-                  padding: "0 10px",
-                }}
-                color={chipColor}
-                size="sm"
-                variant="solid"
-              >
-                {/* {commission.errandStatus} */}
-                {props.status}
-              </Chip>
-            </li>
-            <li>
-              <Typography className="ongoing__cards__txt" level="title-sm">
-                Payment:
-                <Typography color="success" level="title-sm" variant="outlined">
-                  {/* Php {commission.commissionPay} */}₱
-                  {AmountDecimal(props.pay)}
-                </Typography>
+          <h7 className="cards__header__seven">Details:
+            <Chip
+              sx={{
+                fontSize: "1.1rem",
+                height: "30px",
+                padding: "0 10px",
+                marginLeft: "6px",
+              }}
+              color={chipColor}
+              size="sm"
+              variant="solid"
+            >
+              {/* {commission.errandStatus} */}
+              {props.status}
+            </Chip>
+          </h7>
+          {/* <ul> */}
+
+          <li>
+            <Typography className="ongoing__cards__txtpayment" level="title-lg">
+              Payment:
+              <Typography color="success" level="title-lg" variant="outlined">
+                {/* Php {commission.commissionPay} */}₱
+                {AmountDecimal(props.pay)}
               </Typography>
-            </li>
-          </ul>
+            </Typography>
+          </li>
+          {/* </ul> */}
 
           {/* View Errand */}
-          <Link to={props.path}>
+          <Link
+            style={{ marginTop: "4px", }}
+            to={props.path}>
             <a class="action" href="#">
               Find out more
               <span aria-hidden="true">→</span>
