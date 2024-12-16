@@ -27,9 +27,9 @@ export default function Map(props) {
 export function LandingMap() {
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [lng] = useState(123.9260);
+  const [lng] = useState(123.926);
   const [lat] = useState(10.2892);
-  const [zoom] = useState(11.60);
+  const [zoom] = useState(11.6);
   // center: [123.8854, 10.3157],
   const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
   const [errands, setErrands] = useState([]);
@@ -113,9 +113,9 @@ export function LandingMap() {
 export function HomeMap(props) {
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [lng] = useState(123.9260);
+  const [lng] = useState(123.926);
   const [lat] = useState(10.2892);
-  const [zoom] = useState(11.60);
+  const [zoom] = useState(11.6);
   const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
   const [errands, setErrands] = useState([]);
 
@@ -217,7 +217,7 @@ export function ViewMap({ id }) {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
-  const [zoom] = useState(15);
+  const [zoom] = useState(10);
 
   useEffect(() => {
     if (map.current) return;

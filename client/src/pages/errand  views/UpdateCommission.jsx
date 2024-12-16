@@ -6,6 +6,8 @@ import ErrandInputs from "../../components/ErrandInputs";
 import "./Commission.css"; // Import your CSS file
 import { useAuth } from "../../components/AuthContext";
 import { UpdateMapLibre, ViewMapBox } from "../../components/Map/Map";
+import { Alert, IconButton } from "@mui/joy";
+import { CloseRounded, Warning } from "@mui/icons-material";
 
 const UpdateCommission = () => {
   const [commission, setCommission] = useState({
@@ -36,7 +38,9 @@ const UpdateCommission = () => {
   //get the id
   const commissionID = location.pathname.split("/")[3];
   const { user } = useAuth();
-  const userID = user.userID;
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMesg, setAlerMsg] = useState("");
+  const [alrtColor, setAlrtColor] = useState("");
   // Add a state to track the marker's longitude and latitude
   // const [markerLngLat, setMarkerLngLat] = useState([123.8854, 10.3157]); // Default values
   // const [currentLocationMarker, setCurrentLocationMarker] = useState(null);
@@ -120,10 +124,15 @@ const UpdateCommission = () => {
         commission.commissionDeadline < Date.now() ||
         commission.comStart < Date.now()
       ) {
-        alert("Please Update the Dates in your errands");
+        setAlerMsg("Please Update the Dates in your errands");
+        setShowAlert(true);
+        setAlrtColor("danger");
+        handleScrollToTop();
       } else if (commission.comPay < minimum) {
-        alert("The salary is lower than the suggested payment!");
-        //setShowAlert(true);
+        setAlerMsg("The salary is lower than the suggested payment!");
+        setShowAlert(true);
+        setAlrtColor("danger");
+        handleScrollToTop();
       } else {
         //account.dateCreated = getCurrentDate();
         commission.comStatus = "Available";
@@ -131,20 +140,47 @@ const UpdateCommission = () => {
           `http://localhost:8800/update-errand/${commissionID}`,
           commission
         );
-        alert("UPdate successful");
-        //console.log(commission);
-
-        //window.location.reload();
+        setAlerMsg("Errand have been successfully updated");
+        setAlrtColor("success");
+        setShowAlert(true);
+        handleScrollToTop();
       }
     } catch (err) {
       console.log(err);
     }
+  };
+  //scroll on top to see alert
+  const handleScrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // Makes the scrolling smooth
+    });
   };
 
   //console.log(commission);
 
   return (
     <div>
+      {showAlert && (
+        <Alert
+          color={alrtColor}
+          size="md"
+          variant="solid"
+          startDecorator={<Warning />}
+          sx={{ borderRadius: "none" }}
+          endDecorator={
+            <IconButton
+              variant="soft"
+              color={alrtColor}
+              onClick={() => setShowAlert(false)}
+            >
+              <CloseRounded />
+            </IconButton>
+          }
+        >
+          {alertMesg}
+        </Alert>
+      )}
       <div className="errand-cont">
         <div className="input-cont">
           <div className="errand-inputs">

@@ -19,5 +19,6 @@ router.put("/cancel-trans/:id", transConstroller.putCancelTrans); // for emp
 router.put("/complete-trans/:id", transConstroller.putCompleteTrans); // fro emp
 router.put("/catcher/cancel/:id/:userID", transConstroller.putCancelErrand); //for catcher
 router.put("/catcher/complete/:id/:userID", transConstroller.putCompleteErrand); // for catch
+router.get("/all-invoice", transConstroller.getALlInvoice);
 
 module.exports = router;
