@@ -1047,9 +1047,6 @@ export function NewViewUserProfile(props) {
                       {props.fname} {props.lname}
                     </h5>
 
-                    <p class="text-center text-secondary mb-4">
-                      Catcher
-                    </p>
 
                     {/* --------------------- Rating --------------------- */}
                     {props.type === "Catcher" ?
