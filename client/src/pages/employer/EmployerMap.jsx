@@ -70,6 +70,17 @@ function CommissionMap() {
 
     // Add markers for filtered errands
     filterErrand.forEach((errand) => {
+      // Create a new popup for hover
+      const hoverPopup = new maplibregl.Popup({
+        closeButton: false,
+        closeOnClick: false,
+        offset: 15, // Optional: Position offset
+      }).setHTML(`<div class="map-popup">
+              <h2 class="map-popup__h2">${errand.commissionTitle}</h2>
+              <h4>Php ${errand.commissionPay}</h4>
+              <p>${errand.commissionDesc}</p>
+              <a href="/errand/view/${errand.commissionID}">View</a></div>`); // Simple hover content
+      //pop up
       const marker = new maplibregl.Marker({ color: "#FF0000" }) // Red marker for commissions
         .setLngLat([errand.commissionLong, errand.commissionLat])
         .setPopup(
@@ -84,6 +95,16 @@ function CommissionMap() {
           )
         )
         .addTo(map.current);
+      // Add hover event for the marker
+      marker.getElement().addEventListener("mouseenter", () => {
+        hoverPopup
+          .setLngLat([errand.commissionLong, errand.commissionLat])
+          .addTo(map.current);
+      });
+
+      marker.getElement().addEventListener("mouseleave", () => {
+        hoverPopup.remove(); // Remove popup on mouse leave
+      });
       markers.push(marker); // Add marker to markers array
     });
     // Store markers in the map object for future reference
