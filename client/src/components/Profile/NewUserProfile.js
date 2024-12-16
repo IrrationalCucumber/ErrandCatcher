@@ -1029,7 +1029,7 @@ export function NewViewUserProfile(props) {
               <div class="col-12">
                 <div class="card widget-card border-light shadow-sm">
                   <div class="card-header text-bg-primary">
-                    Profile Catcher
+                    Profile {props.type}
                   </div>
                   <div class="card-body">
                     <div class="text-center mb-3">
@@ -1047,6 +1047,13 @@ export function NewViewUserProfile(props) {
                       {props.fname} {props.lname}
                     </h5>
 
+                    {props.type === "Employer" ?
+                      <p class="text-center text-secondary mb-4">
+                        Employer
+                      </p> : <p class="text-center text-secondary mb-4">
+                        Catcher
+                      </p>
+                    }
 
                     {/* --------------------- Rating --------------------- */}
                     {props.type === "Catcher" ?
@@ -1303,6 +1310,20 @@ export function NewViewUserProfile(props) {
                     </li>
                     : null
                   }
+                  {/* <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="reviews-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#reviews-tab-pane"
+                      type="button"
+                      role="tab"
+                      aria-controls="reviews-tab-pane"
+                      aria-selected="false"
+                    >
+                      Reviews
+                    </button>
+                  </li> */}
 
                 </ul>
                 {/* ------------------------ Overview tab ---------------------------- */}
@@ -1442,6 +1463,20 @@ export function NewViewUserProfile(props) {
                     </div>
                     : null
                   }
+
+                  {/* <div
+                    class="tab-pane fade"
+                    id="reviews-tab-pane"
+                    role="tabpanel"
+                    aria-labelledby="documents-tab"
+                    tabindex="0"
+                  >
+                    <h5 class="mb-3">Feedback: </h5>
+                    <h5 class="mb-3">Previous Employers feedbacks & rating</h5>
+                    <MyFeedback id={props.userID} />
+                    <MyFeedback id={props.id} />
+                  </div> */}
+
                 </div>
               </div>
             </div>
