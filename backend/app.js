@@ -334,7 +334,8 @@ app.get("/transactionsEmp/:empID", (req, res) => {
               FROM invoice i 
               JOIN useraccount u ON i.invoiceCatcherID = u.userID 
               JOIN feedbackcommission f ON i.invoiceErrandID = f.feedbackErrandID
-              WHERE i.invoiceemployerID = ?`;
+              WHERE i.invoiceemployerID = ?
+              ORDER BY i.paid DESC `;
 
   // const q = "SELECT i.*, u.* FROM invoice i JOIN useraccount u ON i.invoiceCatcherID = u.userID WHERE i.invoiceemployerID = ?";
 
@@ -354,7 +355,8 @@ app.get("/transactionsCat/:id", (req, res) => {
     FROM invoice i 
     JOIN useraccount u ON i.invoiceemployerID = u.userID 
     JOIN feedbackcommission f ON i.invoiceErrandID = f.feedbackErrandID
-    WHERE i.invoiceCatcherID = ?`;
+    WHERE i.invoiceCatcherID = ?
+    ORDER BY i.paid DESC`;
 
   // const q = "SELECT i.*, u.* FROM invoice i JOIN useraccount u ON i.invoiceemployerID = u.userID WHERE i.invoiceCatcherID = ?";
 
