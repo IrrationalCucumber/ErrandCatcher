@@ -59,7 +59,7 @@ const EmployerCard = ({ employer }) => {
                     to={`/dashboard/errands`}
                   >
                     <h3 class="m-b-20 fw-semibold">
-                      <PostAddIcon sx={{ color: "white", fontSize: 24 }} /> Post
+                      <PostAddIcon sx={{ color: "white", fontSize: 24 }} /> Posted
                     </h3>
                     <h2 class="text-center">
                       <i class="fa fa-cart-plus f-left"></i>

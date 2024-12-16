@@ -103,7 +103,12 @@
 }
 
 .ongoing__cards__txt {
-    padding: 2px 5px;
+    padding: 5px 5px;
+}
+
+.ongoing__cards__txtpayment {
+    padding: 14px 5px;
+    font-size: 20px;
 }
 
 .ongoing__cards__button,
