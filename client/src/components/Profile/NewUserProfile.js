@@ -1289,20 +1289,23 @@ export function NewViewUserProfile(props) {
                     </button>
                   </li>
 
-                  <li class="nav-item" role="presentation">
-                    <button
-                      class="nav-link"
-                      id="reviews-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#reviews-tab-pane"
-                      type="button"
-                      role="tab"
-                      aria-controls="reviews-tab-pane"
-                      aria-selected="false"
-                    >
-                      Reviews
-                    </button>
-                  </li>
+                  {props.type === "Catcher" ?
+                    <li class="nav-item" role="presentation">
+                      <button
+                        class="nav-link"
+                        id="reviews-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#reviews-tab-pane"
+                        type="button"
+                        role="tab"
+                        aria-controls="reviews-tab-pane"
+                        aria-selected="false"
+                      >
+                        Reviews
+                      </button>
+                    </li>
+                    : null
+                  }
 
                 </ul>
                 {/* ------------------------ Overview tab ---------------------------- */}
@@ -1427,18 +1430,21 @@ export function NewViewUserProfile(props) {
                   </div>
 
                   {/* -------------------------- Feedback tab ------------------------------ */}
-                  <div
-                    class="tab-pane fade"
-                    id="reviews-tab-pane"
-                    role="tabpanel"
-                    aria-labelledby="documents-tab"
-                    tabindex="0"
-                  >
-                    <h5 class="mb-3">Feedback: </h5>
-                    <h5 class="mb-3">Previous Employers feedbacks & rating</h5>
-                    <MyFeedback id={props.userID} />
-                    <MyFeedback id={props.id} />
-                  </div>
+                  {props.type === "Catcher" ?
+                    <div
+                      class="tab-pane fade"
+                      id="reviews-tab-pane"
+                      role="tabpanel"
+                      aria-labelledby="documents-tab"
+                      tabindex="0"
+                    >
+                      <h5 class="mb-3">Feedback: </h5>
+                      <h5 class="mb-3">Previous Employers feedbacks & rating</h5>
+                      <MyFeedback id={props.userID} />
+                      <MyFeedback id={props.id} />
+                    </div>
+                    : null
+                  }
                 </div>
               </div>
             </div>
