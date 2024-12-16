@@ -146,3 +146,23 @@ body {
 .f-right {
   float: right;
 }
+
+.text-center-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+}
+
+.card-spacing {
+  margin-bottom: 15px;
+}
+
+.linkempcards {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5px;
+}
