@@ -230,6 +230,7 @@ export function ViewMap({ id }) {
     });
 
     map.current.addControl(new maplibregl.NavigationControl(), "top-right");
+    map.current.addControl(new maplibregl.GeolocateControl(), "top-right");
 
     //display the current coordinate of the errand
     fetchLoc().then((commissions) => {
