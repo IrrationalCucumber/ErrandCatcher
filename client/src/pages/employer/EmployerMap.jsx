@@ -4,6 +4,7 @@ import Map from "../../components/Map/Map.js";
 import { useAuth } from "../../components/AuthContext";
 import maplibregl from "maplibre-gl";
 import axios from "axios";
+import "./style.css";
 
 function CommissionMap() {
   const { user } = useAuth();
@@ -73,11 +74,13 @@ function CommissionMap() {
         .setLngLat([errand.commissionLong, errand.commissionLat])
         .setPopup(
           new maplibregl.Popup().setHTML(
-            `<h4>${errand.commissionStatus}</h4>
+            `<div class="map-popup">
+            <h5>${errand.commissionStatus}</h5>
           <h3>${errand.commissionTitle}</h3>
           <h5>${new Date(errand.DatePosted).toLocaleDateString()}</h5>
           <p>${errand.commissionDesc}</p>
-          <a href="/errand/view/${errand.commissionID}">View</a>`
+          <a href="/errand/view/${errand.commissionID}">View</a>
+          </div>`
           )
         )
         .addTo(map.current);
