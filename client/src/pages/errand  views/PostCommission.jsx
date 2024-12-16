@@ -147,6 +147,14 @@ const PostCommission = () => {
         DatePosted: currentDate,
         empID: userID,
       };
+
+      // Add end date validation
+      const isEndDateValid = 
+        !commission.comStart || 
+        !commission.comDeadline || 
+        new Date(commission.comDeadline) > new Date(commission.comStart);
+
+      
       if (
         !commission.comTitle ||
         !commission.comStart ||
@@ -161,7 +169,11 @@ const PostCommission = () => {
         setAlerMsg("Some fields are missing!");
         setShowAlert(true);
         handleScrollToTop();
-      } else if (commission.comPay < minimum) {
+      } else if (!isEndDateValid) {
+        setAlerMsg("End date must be after the start date!");
+        setShowAlert(true);
+        handleScrollToTop();
+      }else if (commission.comPay < minimum) {
         setAlerMsg("The salary is lower than the suggested payment!");
         setShowAlert(true);
         handleScrollToTop();
