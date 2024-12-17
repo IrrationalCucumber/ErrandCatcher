@@ -31,22 +31,38 @@ import ErrorIcon from "@mui/icons-material/Error";
 import ModalFeedback from "../../components/ModalFeedback";
 import LoadingBackdrop from "../../components/LoadingSpinner";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
-import { AmountDecimal } from "../../components/Display/DsiplayFunctions";
+import { AmountDecimal, Capitalize, CapitalizeAllLetters, } from "../../components/Display/DsiplayFunctions";
 
 function OngoingCardsNew(props) {
   const { status } = props;
 
   // Determine chip colour props based on status
-  const chipColor =
-    status === "Complete"
-      ? "success"
-      : status === "Complete Paid"
-      ? "primary"
+  // const chipColor =
+  //   status === "Complete"
+  //     ? "success"
+  //     : status === "Task Done"
+  //       ? "primary"
+  //       : status === "Ongoing"
+  //         ? "warning"
+  //         : status === "Cancelled"
+  //           ? "danger"
+  //           : "default";
+
+
+  // Determine custom background color based on status
+  const chipBackgroundColor =
+    status === "Task Done"
+      ? "#D6B84F"
       : status === "Ongoing"
-      ? "warning"
-      : status === "Cancelled"
-      ? "danger"
-      : "default";
+        ? "#F26B0F"
+        : status === "Complete"
+          ? "#5CB85C"
+          : status === "Cancelled"
+            ? "#D9534F"
+            : "#C0C0C0";
+
+  // White text for better contrast
+  const chipTextColor = "#FFFFFF";
 
   const { user } = useAuth();
   const userID = user.userID;
@@ -399,7 +415,7 @@ function OngoingCardsNew(props) {
         contentMes="You have successfully Rated a catcher."
         color="success"
         colorText="green"
-        // icon={ErrorIcon}
+      // icon={ErrorIcon}
       />
 
       <LoadingBackdrop
@@ -415,7 +431,7 @@ function OngoingCardsNew(props) {
         contentMes="You have successfully marked as completed"
         color="success"
         colorText="green"
-        // icon={ErrorIcon}
+      // icon={ErrorIcon}
       />
 
       <div class="cardnew">
@@ -423,7 +439,7 @@ function OngoingCardsNew(props) {
           <Box class="boxer">
             {/* commissionType props */}
             {props.icon === "HomeService - Indoor" ||
-            props.icon === "HomeService - Outdoor" ? (
+              props.icon === "HomeService - Outdoor" ? (
               <OtherHousesIcon sx={{ color: "#fff", fontSize: 100 }} />
             ) : props.icon === "Transportation" ? (
               <LocalShippingIcon sx={{ color: "#fff", fontSize: 100 }} />
@@ -437,7 +453,7 @@ function OngoingCardsNew(props) {
             {/* {props.title} */}
             <Typography level="h4" color="neutral" variant="plain">
               {/* {commission.commissionTitle} */}
-              {props.title}
+              {Capitalize(props.title)}
             </Typography>
           </span>
 
@@ -449,36 +465,56 @@ function OngoingCardsNew(props) {
           </Typography>
 
           {/* props.desc */}
-          <h7 className="cards__header__seven">Details: </h7>
-          <ul>
-            <li>
-              <Chip
-                sx={{
-                  fontSize: "1.1rem",
-                  height: "30px",
-                  padding: "0 10px",
-                }}
-                color={chipColor}
-                size="sm"
-                variant="solid"
-              >
-                {/* {commission.errandStatus} */}
-                {props.status}
-              </Chip>
-            </li>
-            <li>
-              <Typography className="ongoing__cards__txt" level="title-sm">
-                Payment:
-                <Typography color="success" level="title-sm" variant="outlined">
-                  {/* Php {commission.commissionPay} */}₱
-                  {AmountDecimal(props.pay)}
-                </Typography>
+          {/* <h7 className="cards__header__seven">Details:
+            <Chip
+              sx={{
+                fontSize: "0.92rem",
+                height: "30px",
+                padding: "0 10px",
+                marginLeft: "6px",
+              }}
+              color={chipColor}
+              size="sm"
+              variant="solid"
+            >
+             
+              {CapitalizeAllLetters(props.status)}
+            </Chip>
+          </h7> */}
+          <Chip
+            sx={{
+              fontSize: "0.92rem",
+              height: "30px",
+              padding: "0 10px",
+              marginLeft: "6px",
+              backgroundColor: chipBackgroundColor,
+              color: chipTextColor,
+              '&:hover': {
+                opacity: 0.9,
+              },
+            }}
+            size="sm"
+            variant="solid"
+          >
+            {CapitalizeAllLetters(props.status)}
+          </Chip>
+          {/* <ul> */}
+
+          <li>
+            <Typography className="ongoing__cards__txtpayment" level="title-lg">
+              Payment:
+              <Typography color="success" level="title-lg" variant="outlined">
+                {/* Php {commission.commissionPay} */}₱
+                {AmountDecimal(props.pay)}
               </Typography>
-            </li>
-          </ul>
+            </Typography>
+          </li>
+          {/* </ul> */}
 
           {/* View Errand */}
-          <Link to={props.path}>
+          <Link
+            style={{ marginTop: "4px", }}
+            to={props.path}>
             <a class="action" href="#">
               Find out more
               <span aria-hidden="true">→</span>
@@ -493,7 +529,7 @@ function OngoingCardsNew(props) {
                     CATCHER:
                   </Typography>
                   <Typography color="primary" level="title-md" variant="plain">
-                    {props.userFname} {props.userLname}
+                    {Capitalize(props.userFname)} {Capitalize(props.userLname)}
                   </Typography>
                   {/* {commission.userFirstname} {commission.userLastname} */}
                 </Typography>

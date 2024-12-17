@@ -884,15 +884,14 @@ export function NewUserProfileui(props) {
                           {account.password && (
                             <>
                               <div
-                                className={`password-strength ${
-                                  strength === "Weak"
-                                    ? "strength-weak"
-                                    : strength === "Medium"
+                                className={`password-strength ${strength === "Weak"
+                                  ? "strength-weak"
+                                  : strength === "Medium"
                                     ? "strength-medium"
                                     : strength === "Strong"
-                                    ? "strength-strong"
-                                    : ""
-                                }`}
+                                      ? "strength-strong"
+                                      : ""
+                                  }`}
                               >
                                 Password strength: {strength}
                               </div>
@@ -927,7 +926,7 @@ export function NewUserProfileui(props) {
                           <button
                             type="submit"
                             class="btn btn-primary"
-                            // className="form-submit-btn"
+                          // className="form-submit-btn"
                           >
                             Change Password
                           </button>
@@ -1043,7 +1042,10 @@ export function NewViewUserProfile(props) {
             <div class="row gy-4">
               <div class="col-12">
                 <div class="card widget-card border-light shadow-sm">
-                  <div class="card-header text-bg-primary">Profile Catcher</div>
+                  <div class="card-header text-bg-primary">
+                    Profile {props.type}
+                  </div>
+
                   <div class="card-body">
                     <div class="text-center mb-3">
                       {props.profileImg ? (
@@ -1059,6 +1061,14 @@ export function NewViewUserProfile(props) {
                     <h5 class="text-center mb-1">
                       {props.fname} {props.lname}
                     </h5>
+                    {props.type === "Employer" ?
+                      <p class="text-center text-secondary mb-4">
+                        Employer
+                      </p> : <p class="text-center text-secondary mb-4">
+                        Catcher
+                      </p>
+                    }
+
 
                     {/* --------------------- Rating --------------------- */}
                     {props.type === "Catcher" ? (
@@ -1068,7 +1078,7 @@ export function NewViewUserProfile(props) {
                           <span>
                             <StarRating rating={props.rate} />
                             <p>
-                              <i>{props.rate.toFixed(1)}</i>
+                              <i>{props.rate ? props.rate.toFixed(1) : null}</i>
                             </p>
                           </span>
                         </div>
@@ -1312,7 +1322,23 @@ export function NewViewUserProfile(props) {
                         Reviews
                       </button>
                     </li>
-                  ) : null}
+                  ) : null
+                  }
+                  {/* <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="reviews-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#reviews-tab-pane"
+                      type="button"
+                      role="tab"
+                      aria-controls="reviews-tab-pane"
+                      aria-selected="false"
+                    >
+                      Reviews
+                    </button>
+                  </li> */}
+
                 </ul>
                 {/* ------------------------ Overview tab ---------------------------- */}
                 <div class="tab-content pt-4" id="profileTabContent">
@@ -1467,7 +1493,23 @@ export function NewViewUserProfile(props) {
                       <MyFeedback id={props.userID} />
                       <MyFeedback id={props.id} />
                     </div>
-                  ) : null}
+                  ) : null
+                  }
+
+                  {/* <div
+                    class="tab-pane fade"
+                    id="reviews-tab-pane"
+                    role="tabpanel"
+                    aria-labelledby="documents-tab"
+                    tabindex="0"
+                  >
+                    <h5 class="mb-3">Feedback: </h5>
+                    <h5 class="mb-3">Previous Employers feedbacks & rating</h5>
+                    <MyFeedback id={props.userID} />
+                    <MyFeedback id={props.id} />
+                  </div> */}
+
+
                 </div>
               </div>
             </div>
