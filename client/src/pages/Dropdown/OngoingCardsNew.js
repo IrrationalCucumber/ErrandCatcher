@@ -31,7 +31,7 @@ import ErrorIcon from "@mui/icons-material/Error";
 import ModalFeedback from "../../components/ModalFeedback";
 import LoadingBackdrop from "../../components/LoadingSpinner";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
-import { AmountDecimal, Capitalize } from "../../components/Display/DsiplayFunctions";
+import { AmountDecimal, Capitalize, CapitalizeAllLetters, } from "../../components/Display/DsiplayFunctions";
 
 function OngoingCardsNew(props) {
   const { status } = props;
@@ -452,7 +452,7 @@ function OngoingCardsNew(props) {
           <h7 className="cards__header__seven">Details:
             <Chip
               sx={{
-                fontSize: "1.1rem",
+                fontSize: "0.92rem",
                 height: "30px",
                 padding: "0 10px",
                 marginLeft: "6px",
@@ -462,7 +462,7 @@ function OngoingCardsNew(props) {
               variant="solid"
             >
               {/* {commission.errandStatus} */}
-              {props.status}
+              {CapitalizeAllLetters(props.status)}
             </Chip>
           </h7>
           {/* <ul> */}
