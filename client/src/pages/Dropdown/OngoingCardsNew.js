@@ -37,16 +37,32 @@ function OngoingCardsNew(props) {
   const { status } = props;
 
   // Determine chip colour props based on status
-  const chipColor =
-    status === "Complete"
-      ? "success"
-      : status === "Task Done"
-        ? "primary"
-        : status === "Ongoing"
-          ? "warning"
+  // const chipColor =
+  //   status === "Complete"
+  //     ? "success"
+  //     : status === "Task Done"
+  //       ? "primary"
+  //       : status === "Ongoing"
+  //         ? "warning"
+  //         : status === "Cancelled"
+  //           ? "danger"
+  //           : "default";
+
+
+  // Determine custom background color based on status
+  const chipBackgroundColor =
+    status === "Task Done"
+      ? "#D6B84F"
+      : status === "Ongoing"
+        ? "#F26B0F"
+        : status === "Complete"
+          ? "#5CB85C"
           : status === "Cancelled"
-            ? "danger"
-            : "default";
+            ? "#D9534F"
+            : "#C0C0C0";
+
+  // White text for better contrast
+  const chipTextColor = "#FFFFFF";
 
   const { user } = useAuth();
   const userID = user.userID;
@@ -449,7 +465,7 @@ function OngoingCardsNew(props) {
           </Typography>
 
           {/* props.desc */}
-          <h7 className="cards__header__seven">Details:
+          {/* <h7 className="cards__header__seven">Details:
             <Chip
               sx={{
                 fontSize: "0.92rem",
@@ -461,10 +477,27 @@ function OngoingCardsNew(props) {
               size="sm"
               variant="solid"
             >
-              {/* {commission.errandStatus} */}
+             
               {CapitalizeAllLetters(props.status)}
             </Chip>
-          </h7>
+          </h7> */}
+          <Chip
+            sx={{
+              fontSize: "0.92rem",
+              height: "30px",
+              padding: "0 10px",
+              marginLeft: "6px",
+              backgroundColor: chipBackgroundColor,
+              color: chipTextColor,
+              '&:hover': {
+                opacity: 0.9,
+              },
+            }}
+            size="sm"
+            variant="solid"
+          >
+            {CapitalizeAllLetters(props.status)}
+          </Chip>
           {/* <ul> */}
 
           <li>
