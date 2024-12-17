@@ -73,7 +73,7 @@ const PostCommission = () => {
     // Handle specific fields that need to be parsed as numbers
     if (["comPay", "comDestLong", "comDestLat"].includes(name)) {
       // Parse as a float for these fields
-      setCommission((prev) => ({ ...prev, [name]: parseFloat(value) || 0 }));
+      setCommission((prev) => ({ ...prev, [name]: parseFloat(value) || null }));
     }
     // Handle dropdowns like "comType" and "method"
     else if (name === "comType" || name === "method") {
@@ -149,12 +149,12 @@ const PostCommission = () => {
       };
 
       // Add end date validation
-      const isEndDateValid = 
-        !commission.comStart || 
-        !commission.comDeadline || 
+      const isEndDateValid =
+        !commission.comStart ||
+        !commission.comDeadline ||
         new Date(commission.comDeadline) > new Date(commission.comStart);
 
-      
+
       if (
         !commission.comTitle ||
         !commission.comStart ||
@@ -173,7 +173,7 @@ const PostCommission = () => {
         setAlerMsg("End date must be after the start date!");
         setShowAlert(true);
         handleScrollToTop();
-      }else if (commission.comPay < minimum) {
+      } else if (commission.comPay < minimum) {
         setAlerMsg("The salary is lower than the suggested payment!");
         setShowAlert(true);
         handleScrollToTop();
@@ -267,7 +267,7 @@ const PostCommission = () => {
         contentMes="You have successfully posted an Errand"
         color="success"
         colorText="green"
-        // icon={ErrorIcon}
+      // icon={ErrorIcon}
       />
 
       <div className="errand-cont">
@@ -319,29 +319,29 @@ const PostCommission = () => {
             )}
           {(commission.comType === "Delivery" ||
             commission.comType === "Transportation") && (
-            <>
-              <PostMapBox
-                accessToken={accessToken}
-                getDistanceCallback={(
-                  distance,
-                  originCoordinates,
-                  destinationCoordinates
-                ) => {
-                  setDistance(distance);
-                  setCommission((prev) => ({
-                    ...prev,
-                    comLat: originCoordinates[1],
-                    comLong: originCoordinates[0],
-                    comDestLong: destinationCoordinates[0],
-                    comDestLat: destinationCoordinates[1],
-                  }));
-                }}
+              <>
+                <PostMapBox
+                  accessToken={accessToken}
+                  getDistanceCallback={(
+                    distance,
+                    originCoordinates,
+                    destinationCoordinates
+                  ) => {
+                    setDistance(distance);
+                    setCommission((prev) => ({
+                      ...prev,
+                      comLat: originCoordinates[1],
+                      comLong: originCoordinates[0],
+                      comDestLong: destinationCoordinates[0],
+                      comDestLat: destinationCoordinates[1],
+                    }));
+                  }}
                 // Sync input with Mapbox
                 // customOrigin={commission.comLocation}
                 // customDestination={commission.comTo}
-              />
-            </>
-          )}
+                />
+              </>
+            )}
           {/* {commission.comType === "Transportation" && (
             <>
               <PostMapBox
