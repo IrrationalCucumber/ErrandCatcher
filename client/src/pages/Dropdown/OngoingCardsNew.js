@@ -40,7 +40,7 @@ function OngoingCardsNew(props) {
   const chipColor =
     status === "Complete"
       ? "success"
-      : status === "Complete Paid"
+      : status === "Task Done"
         ? "primary"
         : status === "Ongoing"
           ? "warning"
