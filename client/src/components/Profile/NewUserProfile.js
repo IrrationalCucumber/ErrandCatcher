@@ -1078,7 +1078,7 @@ export function NewViewUserProfile(props) {
                           <span>
                             <StarRating rating={props.rate} />
                             <p>
-                              <i>{props.rate.toFixed(1)}</i>
+                              <i>{props.rate ? props.rate.toFixed(1) : null}</i>
                             </p>
                           </span>
                         </div>
