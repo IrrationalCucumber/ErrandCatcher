@@ -884,15 +884,14 @@ export function NewUserProfileui(props) {
                           {account.password && (
                             <>
                               <div
-                                className={`password-strength ${
-                                  strength === "Weak"
-                                    ? "strength-weak"
-                                    : strength === "Medium"
+                                className={`password-strength ${strength === "Weak"
+                                  ? "strength-weak"
+                                  : strength === "Medium"
                                     ? "strength-medium"
                                     : strength === "Strong"
-                                    ? "strength-strong"
-                                    : ""
-                                }`}
+                                      ? "strength-strong"
+                                      : ""
+                                  }`}
                               >
                                 Password strength: {strength}
                               </div>
@@ -927,7 +926,7 @@ export function NewUserProfileui(props) {
                           <button
                             type="submit"
                             class="btn btn-primary"
-                            // className="form-submit-btn"
+                          // className="form-submit-btn"
                           >
                             Change Password
                           </button>
@@ -1323,7 +1322,7 @@ export function NewViewUserProfile(props) {
                         Reviews
                       </button>
                     </li>
-                    : null
+                  ) : null
                   }
                   {/* <li class="nav-item" role="presentation">
                     <button
@@ -1494,7 +1493,7 @@ export function NewViewUserProfile(props) {
                       <MyFeedback id={props.userID} />
                       <MyFeedback id={props.id} />
                     </div>
-                    : null
+                  ) : null
                   }
 
                   {/* <div
