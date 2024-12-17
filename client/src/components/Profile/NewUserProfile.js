@@ -20,7 +20,7 @@ import {
   Sheet,
   Stack,
   Typography,
-  Alert
+  Alert,
 } from "@mui/joy";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -40,7 +40,6 @@ import WarningIcon from "@mui/icons-material/Warning";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { MyFeedback } from "../Dashbaord/Feedback";
 
-
 import PersonIcon from "@mui/icons-material/Person";
 import Person2Icon from "@mui/icons-material/Person2";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
@@ -52,8 +51,7 @@ import WcIcon from "@mui/icons-material/Wc";
 import CakeIcon from "@mui/icons-material/Cake";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import PendingIcon from "@mui/icons-material/Pending";
-import ErrorIcon from '@mui/icons-material/Error';
-
+import ErrorIcon from "@mui/icons-material/Error";
 
 export function NewUserProfileui(props) {
   const { user } = useAuth();
@@ -199,8 +197,7 @@ export function NewUserProfileui(props) {
         return "0";
     }
   };
-  console.log(account)
-
+  console.log(account);
 
   return (
     <>
@@ -229,30 +226,26 @@ export function NewUserProfileui(props) {
                       {props.fname} {props.lname}
                     </h5>
 
-                    {props.type === "Employer" ?
-                      <p class="text-center text-secondary mb-4">
-                        Employer
-                      </p> : <p class="text-center text-secondary mb-4">
-                        Catcher
-                      </p>
-                    }
+                    {props.type === "Employer" ? (
+                      <p class="text-center text-secondary mb-4">Employer</p>
+                    ) : (
+                      <p class="text-center text-secondary mb-4">Catcher</p>
+                    )}
 
                     {/* --------------------- Rating --------------------- */}
-                    {props.type === "Catcher" ?
+                    {props.type === "Catcher" ? (
                       <div class="text-center text-secondary mb-4">
                         <div className="rating">
                           Overall Rating:
                           <span>
                             <StarRating rating={props.rate} />
                             <p>
-                              <i>{AmountDecimal(props.rate)}</i>
+                              <i>{props.rate.toFixed(1)}</i>
                             </p>
                           </span>
                         </div>
                       </div>
-                      : null
-                    }
-
+                    ) : null}
                   </div>
                 </div>
               </div>
@@ -296,7 +289,8 @@ export function NewUserProfileui(props) {
                               variant="solid"
                               color="warning"
                             >
-                              <PendingIcon /> <i>{props.verStatus.toLocaleUpperCase()}</i>
+                              <PendingIcon />{" "}
+                              <i>{props.verStatus.toLocaleUpperCase()}</i>
                             </Chip>
                           </>
                         ) : (
@@ -323,7 +317,6 @@ export function NewUserProfileui(props) {
                       </>
                     )}
                   </div>
-
                 </div>
               </div>
 
@@ -490,56 +483,74 @@ export function NewUserProfileui(props) {
                     <h5 class="mb-3">Profile</h5>
                     <div class="row g-0">
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2"><PersonIcon /> First Name</div>
+                        <div class="p-2">
+                          <PersonIcon /> First Name
+                        </div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.fname}</div>
                       </div>
 
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2"><Person2Icon /> Last Name</div>
+                        <div class="p-2">
+                          <Person2Icon /> Last Name
+                        </div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.lname}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2"><HomeIcon /> Address</div>
+                        <div class="p-2">
+                          <HomeIcon /> Address
+                        </div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.address}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2"><EmailIcon /> Email</div>
+                        <div class="p-2">
+                          <EmailIcon /> Email
+                        </div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.email}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2"><AccountBoxIcon /> Username</div>
+                        <div class="p-2">
+                          <AccountBoxIcon /> Username
+                        </div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.username}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2"><PhoneIcon /> Contact</div>
+                        <div class="p-2">
+                          <PhoneIcon /> Contact
+                        </div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.contact}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2"><WcIcon /> Gender</div>
+                        <div class="p-2">
+                          <WcIcon /> Gender
+                        </div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.sex}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2"><PlusOneIcon /> Age</div>
+                        <div class="p-2">
+                          <PlusOneIcon /> Age
+                        </div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{GetUserAge(props.bday)}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2"><CakeIcon /> Birthdate</div>
+                        <div class="p-2">
+                          <CakeIcon /> Birthdate
+                        </div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.bday}</div>
@@ -582,16 +593,20 @@ export function NewUserProfileui(props) {
                                   onClick={handleDeleteImage}
                                   style={{
                                     border: "none",
-                                    backgroundColor: isHovered ? "#ffcccc" : "transparent",
+                                    backgroundColor: isHovered
+                                      ? "#ffcccc"
+                                      : "transparent",
                                     cursor: "pointer",
                                     transition: "background-color 0.3s ease",
                                   }}
                                 >
-                                  <DeleteIcon sx={{ fontSize: 30 }} color="error" />
+                                  <DeleteIcon
+                                    sx={{ fontSize: 30 }}
+                                    color="error"
+                                  />
                                 </button>
                               </>
                             ) : (
-
                               // If no preview, show existing profile image or default
                               <>
                                 {props.profileImg ? (
@@ -601,7 +616,10 @@ export function NewUserProfileui(props) {
                                     alt="ProfPic"
                                   />
                                 ) : (
-                                  <img src="/images/employer.png" alt="Profile Picture" />
+                                  <img
+                                    src="/images/employer.png"
+                                    alt="Profile Picture"
+                                  />
                                 )}
                               </>
                             )}
@@ -792,7 +810,9 @@ export function NewUserProfileui(props) {
                         bottom: 16,
                         right: 16,
                         zIndex: 9999,
-                        transform: showAlert ? "translateX(0)" : "translateX(100%)",
+                        transform: showAlert
+                          ? "translateX(0)"
+                          : "translateX(100%)",
                         transition: "transform 0.5s ease-in-out",
                       }}
                       color={alertColor}
@@ -822,9 +842,7 @@ export function NewUserProfileui(props) {
                     aria-labelledby="password-tab"
                     tabindex="0"
                   >
-                    <form
-                      onSubmit={changePassword}
-                    >
+                    <form onSubmit={changePassword}>
                       <div class="row gy-3 gy-xxl-4">
                         <div class="col-12">
                           <label for="currentPassword" class="form-label">
@@ -866,14 +884,15 @@ export function NewUserProfileui(props) {
                           {account.password && (
                             <>
                               <div
-                                className={`password-strength ${strength === "Weak"
-                                  ? "strength-weak"
-                                  : strength === "Medium"
+                                className={`password-strength ${
+                                  strength === "Weak"
+                                    ? "strength-weak"
+                                    : strength === "Medium"
                                     ? "strength-medium"
                                     : strength === "Strong"
-                                      ? "strength-strong"
-                                      : ""
-                                  }`}
+                                    ? "strength-strong"
+                                    : ""
+                                }`}
                               >
                                 Password strength: {strength}
                               </div>
@@ -889,7 +908,6 @@ export function NewUserProfileui(props) {
                               </div>
                             </>
                           )}
-
                         </div>
                         <div class="col-12">
                           <label for="confirmPassword" class="form-label">
@@ -903,13 +921,13 @@ export function NewUserProfileui(props) {
                             value={account.conPassword}
                             onChange={handleChange}
                             required
-
                           />
                         </div>
                         <div class="col-12">
-                          <button type="submit"
+                          <button
+                            type="submit"
                             class="btn btn-primary"
-                          // className="form-submit-btn"
+                            // className="form-submit-btn"
                           >
                             Change Password
                           </button>
@@ -961,7 +979,6 @@ export function NewUserProfileui(props) {
                         </>
                       ) : null
                     }
-
                   </div>
 
                   {/* -------------------------- Feedback tab ------------------------------ */}
@@ -974,15 +991,13 @@ export function NewUserProfileui(props) {
                   >
                     <h5 class="mb-3">Feedback: </h5>
                     <MyFeedback id={props.userID} />
-
-
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div >
+      </div>
     </>
   );
 }
@@ -1028,9 +1043,7 @@ export function NewViewUserProfile(props) {
             <div class="row gy-4">
               <div class="col-12">
                 <div class="card widget-card border-light shadow-sm">
-                  <div class="card-header text-bg-primary">
-                    Profile Catcher
-                  </div>
+                  <div class="card-header text-bg-primary">Profile Catcher</div>
                   <div class="card-body">
                     <div class="text-center mb-3">
                       {props.profileImg ? (
@@ -1047,23 +1060,20 @@ export function NewViewUserProfile(props) {
                       {props.fname} {props.lname}
                     </h5>
 
-
                     {/* --------------------- Rating --------------------- */}
-                    {props.type === "Catcher" ?
+                    {props.type === "Catcher" ? (
                       <div class="text-center text-secondary mb-4">
                         <div className="rating">
                           Overall Rating:
                           <span>
                             <StarRating rating={props.rate} />
                             <p>
-                              <i>{AmountDecimal(props.rate)}</i>
+                              <i>{props.rate.toFixed(1)}</i>
                             </p>
                           </span>
                         </div>
                       </div>
-                      : null
-                    }
-
+                    ) : null}
                   </div>
                 </div>
               </div>
@@ -1107,7 +1117,8 @@ export function NewViewUserProfile(props) {
                               variant="solid"
                               color="warning"
                             >
-                              <PendingIcon /> <i>{props.verStatus.toLocaleUpperCase()}</i>
+                              <PendingIcon />{" "}
+                              <i>{props.verStatus.toLocaleUpperCase()}</i>
                             </Chip>
                           </>
                         ) : (
@@ -1286,7 +1297,7 @@ export function NewViewUserProfile(props) {
                     </button>
                   </li>
 
-                  {props.type === "Catcher" ?
+                  {props.type === "Catcher" ? (
                     <li class="nav-item" role="presentation">
                       <button
                         class="nav-link"
@@ -1301,9 +1312,7 @@ export function NewViewUserProfile(props) {
                         Reviews
                       </button>
                     </li>
-                    : null
-                  }
-
+                  ) : null}
                 </ul>
                 {/* ------------------------ Overview tab ---------------------------- */}
                 <div class="tab-content pt-4" id="profileTabContent">
@@ -1322,63 +1331,80 @@ export function NewViewUserProfile(props) {
                     <h5 class="mb-3">Profile</h5>
                     <div class="row g-0">
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2"><PersonIcon /> First Name</div>
+                        <div class="p-2">
+                          <PersonIcon /> First Name
+                        </div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.fname}</div>
                       </div>
 
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2"><Person2Icon /> Last Name</div>
+                        <div class="p-2">
+                          <Person2Icon /> Last Name
+                        </div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.lname}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2"><HomeIcon /> Address</div>
+                        <div class="p-2">
+                          <HomeIcon /> Address
+                        </div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.address}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2"><EmailIcon /> Email</div>
+                        <div class="p-2">
+                          <EmailIcon /> Email
+                        </div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.email}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2"><AccountBoxIcon /> Username</div>
+                        <div class="p-2">
+                          <AccountBoxIcon /> Username
+                        </div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.username}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2"><PhoneIcon /> Contact</div>
+                        <div class="p-2">
+                          <PhoneIcon /> Contact
+                        </div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.contact}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2"><WcIcon /> Gender</div>
+                        <div class="p-2">
+                          <WcIcon /> Gender
+                        </div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.sex}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2"><PlusOneIcon /> Age</div>
+                        <div class="p-2">
+                          <PlusOneIcon /> Age
+                        </div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{GetUserAge(props.bday)}</div>
                       </div>
                       <div class="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                        <div class="p-2"><CakeIcon /> Birthdate</div>
+                        <div class="p-2">
+                          <CakeIcon /> Birthdate
+                        </div>
                       </div>
                       <div class="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                         <div class="p-2">{props.bday}</div>
                       </div>
                     </div>
                   </div>
-
 
                   {/* -------------------------- Documents tab ------------------------------ */}
                   <div
@@ -1423,11 +1449,10 @@ export function NewViewUserProfile(props) {
                         </>
                       ) : null
                     }
-
                   </div>
 
                   {/* -------------------------- Feedback tab ------------------------------ */}
-                  {props.type === "Catcher" ?
+                  {props.type === "Catcher" ? (
                     <div
                       class="tab-pane fade"
                       id="reviews-tab-pane"
@@ -1436,19 +1461,19 @@ export function NewViewUserProfile(props) {
                       tabindex="0"
                     >
                       <h5 class="mb-3">Feedback: </h5>
-                      <h5 class="mb-3">Previous Employers feedbacks & rating</h5>
+                      <h5 class="mb-3">
+                        Previous Employers feedbacks & rating
+                      </h5>
                       <MyFeedback id={props.userID} />
                       <MyFeedback id={props.id} />
                     </div>
-                    : null
-                  }
+                  ) : null}
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div >
-
+      </div>
     </>
   );
 }
