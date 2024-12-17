@@ -120,7 +120,32 @@ const UpdateCommission = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
+      const isEndDateValid =
+        !commission.comStart ||
+        !commission.comDeadline ||
+        new Date(commission.comDeadline) > new Date(commission.comStart);
+
       if (
+        !commission.comTitle ||
+        !commission.comStart ||
+        !commission.comDeadline ||
+        !commission.comLocation ||
+        !commission.comType ||
+        !commission.comPay ||
+        !commission.Contactno ||
+        !commission.comDeadline ||
+        !commission.comDescription
+      ) {
+        setAlerMsg("Some fields are missing!");
+        setShowAlert(true);
+        handleScrollToTop();
+        //End date must be after the start date. Error message
+      } else if (!isEndDateValid) {
+        setAlerMsg("End date must be after the start date!");
+        setShowAlert(true);
+        setAlrtColor("danger");
+        handleScrollToTop();
+      } else if (
         commission.commissionDeadline < Date.now() ||
         commission.comStart < Date.now()
       ) {
