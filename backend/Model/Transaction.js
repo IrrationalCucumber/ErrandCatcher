@@ -36,7 +36,7 @@ const Trans = {
         JOIN commission c ON t.transErrandID = c.commissionID
         JOIN useraccount ua ON c.employerID = ua.userID
          WHERE t.transCatcherID = ? AND t.errandStatus = ?
-         ORDER BY t.transactID ASC`,
+         ORDER BY t.transactID DESC`,
       [id, status],
       callback
     );
@@ -49,7 +49,7 @@ const Trans = {
     FROM errandtransaction t
     JOIN commission c ON t.transErrandID = c.commissionID
     JOIN useraccount ua ON t.transCatcherID = ua.userID
-    WHERE c.employerID = ?
+    WHERE c.employerID = ? ORDER BY t.transactID DESC
     `,
       [id],
       callback
@@ -63,7 +63,7 @@ const Trans = {
         FROM errandtransaction t
         JOIN commission c ON t.transErrandID = c.commissionID
         JOIN useraccount ua ON t.transCatcherID = ua.userID
-    WHERE c.employerID = ? AND t.transStatus = ?
+    WHERE c.employerID = ? AND t.transStatus = ? ORDER BY t.transactID DESC
     `,
       [id, status],
       callback
