@@ -332,9 +332,10 @@ app.get("/transactionsEmp/:empID", (req, res) => {
   const empID = req.params.empID;
   const q = `SELECT i.*, u.*, f.feedbackRate , f.feedbackComment
               FROM invoice i 
-              JOIN useraccount u ON i.invoiceCatcherID = u.userID 
-              JOIN feedbackcommission f ON i.invoiceErrandID = f.feedbackErrandID
-              WHERE i.invoiceemployerID = ?`;
+              LEFT JOIN useraccount u ON i.invoiceCatcherID = u.userID 
+              LEFT JOIN feedbackcommission f ON i.invoiceErrandID = f.feedbackErrandID
+              WHERE i.invoiceemployerID = ?
+              ORDER BY i.paid DESC `;
 
   // const q = "SELECT i.*, u.* FROM invoice i JOIN useraccount u ON i.invoiceCatcherID = u.userID WHERE i.invoiceemployerID = ?";
 
@@ -352,9 +353,10 @@ app.get("/transactionsCat/:id", (req, res) => {
   const id = req.params.id;
   const q = `SELECT i.*, u.*, f.feedbackRate , f.feedbackComment
     FROM invoice i 
-    JOIN useraccount u ON i.invoiceemployerID = u.userID 
-    JOIN feedbackcommission f ON i.invoiceErrandID = f.feedbackErrandID
-    WHERE i.invoiceCatcherID = ?`;
+    LEFT JOIN useraccount u ON i.invoiceemployerID = u.userID 
+    LEFT JOIN feedbackcommission f ON i.invoiceErrandID = f.feedbackErrandID
+    WHERE i.invoiceCatcherID = ?
+    ORDER BY i.paid DESC`;
 
   // const q = "SELECT i.*, u.* FROM invoice i JOIN useraccount u ON i.invoiceemployerID = u.userID WHERE i.invoiceCatcherID = ?";
 

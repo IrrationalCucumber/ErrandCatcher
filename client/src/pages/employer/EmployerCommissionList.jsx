@@ -33,6 +33,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import TimerOffIcon from "@mui/icons-material/TimerOff";
 import HandshakeIcon from "@mui/icons-material/Handshake";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
+import { Add } from "@mui/icons-material";
 
 const CommissionList = () => {
   const [commissions, setCommissions] = useState([]);
@@ -134,13 +135,13 @@ const CommissionList = () => {
   return (
     <div>
       <BannerEmployerPages
-        bannerMessage={`These is/are what you have posted so far, ${user.username.toUpperCase()}`}
+        bannerMessage={`These are what you have posted so far, ${user.username.toUpperCase()}`}
       />
       <div className="Commission-page-container">
         <div className="Commission-page">
           <div className="commissions">
             <div className="search-filter">
-              <div className="search">
+              <div className="employer__errand__search">
                 <input
                   type="text"
                   placeholder="Search..."
@@ -163,6 +164,16 @@ const CommissionList = () => {
                   <option value="Expired">Expired</option>
                   <option value="Caught">Caught</option>
                 </select>
+              </div>
+              <div className="employer__errand_list__add__btn">
+                <Button
+                  startDecorator={<Add />}
+                  size="lg"
+                  variant="solid"
+                  onClick={(e) => navigate(`/errand/post-errand`)}
+                >
+                  Add Errand
+                </Button>
               </div>
             </div>
 
@@ -305,12 +316,12 @@ const CommissionList = () => {
           />
         )}
       </div>
-      <button
+      {/* <button
         className="add-errand"
         onClick={(e) => navigate(`/errand/post-errand`)}
       >
         Add Errand
-      </button>
+      </button> */}
     </div>
   );
 };

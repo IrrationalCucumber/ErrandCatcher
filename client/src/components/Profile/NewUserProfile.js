@@ -21,6 +21,11 @@ import {
   Stack,
   Typography,
   Alert,
+  Modal,
+  ModalDialog,
+  ModalClose,
+  DialogTitle,
+  DialogContent,
 } from "@mui/joy";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -39,6 +44,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import WarningIcon from "@mui/icons-material/Warning";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { MyFeedback } from "../Dashbaord/Feedback";
+import { maxHeight } from "@mui/system";
 
 import PersonIcon from "@mui/icons-material/Person";
 import Person2Icon from "@mui/icons-material/Person2";
@@ -93,6 +99,15 @@ export function NewUserProfileui(props) {
   const [alertColor, setAlertColor] = useState("");
   const [iconlert, setIconLert] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
+  //modal for pics
+  //adrean 12/17/2024
+  const [showModal, setShowModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [filePath, setFilePath] = useState();
+  const handleOpenModalDocs = (docs) => {
+    setOpenModal(true);
+    setFilePath(docs);
+  };
 
   const [strength, setStrength] = useState("");
 
@@ -198,6 +213,15 @@ export function NewUserProfileui(props) {
     }
   };
   console.log(account);
+
+  const imageStyle = {
+    padding: "20px",
+    margin: "10px",
+    maxWidth: "95%",
+    borderRadius: "5px",
+    border: "1px solid #ccc",
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+  };
 
   return (
     <>
@@ -951,12 +975,22 @@ export function NewUserProfileui(props) {
                         <>
                           <div className="id_1">
                             <img
+                              onClick={() =>
+                                handleOpenModalDocs(
+                                  `http://localhost:8800/images/docu/${props.verFront}`
+                                )
+                              }
                               src={`http://localhost:8800/images/docu/${props.verFront}`}
                               alt="Front"
                             />
                           </div>
                           <div className="id_1">
                             <img
+                              onClick={() =>
+                                handleOpenModalDocs(
+                                  `http://localhost:8800/images/docu/${props.verBack}`
+                                )
+                              }
                               src={`http://localhost:8800/images/docu/${props.verBack}`}
                               alt="Back"
                             />
@@ -971,6 +1005,11 @@ export function NewUserProfileui(props) {
                         <>
                           <div className="id_1">
                             <img
+                              onClick={() =>
+                                handleOpenModalDocs(
+                                  `http://localhost:8800/images/docu/${props.verDoc1}`
+                                )
+                              }
                               src={`http://localhost:8800/images/docu/${props.verDoc1}`}
                               alt="License"
                             />
@@ -978,6 +1017,28 @@ export function NewUserProfileui(props) {
                         </>
                       ) : null
                     }
+
+                    <>
+                      <Modal
+                        open={openModal}
+                        onClose={() => setOpenModal(false)}
+                      >
+                        <ModalDialog layout="fullscreen">
+                          <ModalClose
+                            color="danger"
+                            variant="solid"
+                            size="lg"
+                          />
+                          <DialogContent>
+                            <img
+                              src={filePath}
+                              alt={`Doc Image`}
+                              style={imageStyle}
+                            />
+                          </DialogContent>
+                        </ModalDialog>
+                      </Modal>
+                    </>
                   </div>
 
                   {/* -------------------------- Feedback tab ------------------------------ */}
@@ -1034,6 +1095,24 @@ export function NewViewUserProfile(props) {
   const [buttonPopup1, setButtonPopup1] = useState(false);
   const [buttonPopup2, setButtonPopup2] = useState(false);
 
+  //modal for pics
+  //adrean 12/17/2024
+  const [showModal, setShowModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [filePath, setFilePath] = useState();
+  const handleOpenModalDocs = (docs) => {
+    setOpenModal(true);
+    setFilePath(docs);
+  };
+
+  const imageStyle = {
+    padding: "20px",
+    margin: "10px",
+    maxWidth: "95%",
+    borderRadius: "5px",
+    border: "1px solid #ccc",
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+  };
   return (
     <>
       <div class="container">
@@ -1448,12 +1527,22 @@ export function NewViewUserProfile(props) {
                         <>
                           <div className="id_1">
                             <img
+                              onClick={() =>
+                                handleOpenModalDocs(
+                                  `http://localhost:8800/images/docu/${props.verFront}`
+                                )
+                              }
                               src={`http://localhost:8800/images/docu/${props.verFront}`}
                               alt="Front"
                             />
                           </div>
                           <div className="id_1">
                             <img
+                              onClick={() =>
+                                handleOpenModalDocs(
+                                  `http://localhost:8800/images/docu/${props.verBack}`
+                                )
+                              }
                               src={`http://localhost:8800/images/docu/${props.verBack}`}
                               alt="Back"
                             />
@@ -1468,6 +1557,11 @@ export function NewViewUserProfile(props) {
                         <>
                           <div className="id_1">
                             <img
+                              onClick={() =>
+                                handleOpenModalDocs(
+                                  `http://localhost:8800/images/docu/${props.verDoc1}`
+                                )
+                              }
                               src={`http://localhost:8800/images/docu/${props.verDoc1}`}
                               alt="License"
                             />
@@ -1475,6 +1569,27 @@ export function NewViewUserProfile(props) {
                         </>
                       ) : null
                     }
+                    <>
+                      <Modal
+                        open={openModal}
+                        onClose={() => setOpenModal(false)}
+                      >
+                        <ModalDialog layout="fullscreen">
+                          <ModalClose
+                            color="danger"
+                            variant="solid"
+                            size="lg"
+                          />
+                          <DialogContent>
+                            <img
+                              src={filePath}
+                              alt={`Doc Image`}
+                              style={imageStyle}
+                            />
+                          </DialogContent>
+                        </ModalDialog>
+                      </Modal>
+                    </>
                   </div>
 
                   {/* -------------------------- Feedback tab ------------------------------ */}

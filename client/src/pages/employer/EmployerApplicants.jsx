@@ -344,8 +344,10 @@ const EmployerApplicants = () => {
       />
       <div className="applicants-container">
         <div className="applicants">
-          <div className="search">
-            <input type="text" placeholder="Search..." />
+          <div className="employer__applicants__search">
+            <Typography level="h1">Search:</Typography>
+            &nbsp; &nbsp;
+            <input type="text" placeholder="Enter name here..." />
           </div>
           <div className="applicants-table">
             <Table headers={headers} data={applicantData} />

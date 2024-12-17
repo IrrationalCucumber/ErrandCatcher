@@ -3,7 +3,7 @@
 //03-05-24 fetch&pulled, added the /:userID
 
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import {
   Chip,
@@ -29,7 +29,11 @@ function NavDropdown(props) {
 
   const location = useLocation();
   const { user } = useAuth();
-
+  const navigate = useNavigate();
+  const handleSignOut = () => {
+    navigate(signOutLink);
+    logout();
+  };
   const profileLink = `/profile/me`; // URL for the profile page
   const signOutLink = "/sign-in"; // URL for the sign out page
   const historyLink = "/history"; // URL for the history page
@@ -74,7 +78,7 @@ function NavDropdown(props) {
           gap: "22px",
         }}
       >
-        <MenuItem>
+        <MenuItem onClick={() => navigate(profileLink)}>
           <Link
             to={profileLink}
             style={{
@@ -88,7 +92,11 @@ function NavDropdown(props) {
           </Link>
         </MenuItem>
         {user.userType === "Catcher" ? (
-          <MenuItem>
+          <MenuItem
+            onClick={() => {
+              navigate("/dashboard/my-application");
+            }}
+          >
             <Link
               to={"/dashboard/my-application"}
               style={{
@@ -107,7 +115,7 @@ function NavDropdown(props) {
             </Link>
           </MenuItem>
         ) : null}
-        <MenuItem>
+        <MenuItem onClick={() => navigate(historyLink)}>
           <Link
             to={historyLink}
             style={{
@@ -120,7 +128,11 @@ function NavDropdown(props) {
             <HistoryIcon /> History
           </Link>
         </MenuItem>
-        <MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleSignOut();
+          }}
+        >
           <Link
             onClick={handleLogout}
             to={signOutLink}

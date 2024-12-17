@@ -93,24 +93,28 @@ function Navbar(props) {
             {click ? <Close /> : <More />}
           </div>
           <ul className={click ? "nav-menu active" : "nav-menu"}>
-            <li className="nav-item">
-              <Link
-                to={props.one}
-                className="nav-links"
-                onClick={closeMobileMenu}
-              >
-                {props.page1}
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                to={props.commissionList}
-                className="nav-links"
-                onClick={closeMobileMenu}
-              >
-                {props.page2}
-              </Link>
-            </li>
+            {props.one ? (
+              <li className="nav-item">
+                <Link
+                  to={props.one}
+                  className="nav-links"
+                  onClick={closeMobileMenu}
+                >
+                  {props.page1}
+                </Link>
+              </li>
+            ) : null}
+            {props.commissionList ? (
+              <li className="nav-item">
+                <Link
+                  to={props.commissionList}
+                  className="nav-links"
+                  onClick={closeMobileMenu}
+                >
+                  {props.page2}
+                </Link>
+              </li>
+            ) : null}
             <li className="nav-item">
               <Link
                 to={props.applicants}
