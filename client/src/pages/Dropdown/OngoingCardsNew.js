@@ -31,7 +31,7 @@ import ErrorIcon from "@mui/icons-material/Error";
 import ModalFeedback from "../../components/ModalFeedback";
 import LoadingBackdrop from "../../components/LoadingSpinner";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
-import { AmountDecimal } from "../../components/Display/DsiplayFunctions";
+import { AmountDecimal, Capitalize } from "../../components/Display/DsiplayFunctions";
 
 function OngoingCardsNew(props) {
   const { status } = props;
@@ -437,7 +437,7 @@ function OngoingCardsNew(props) {
             {/* {props.title} */}
             <Typography level="h4" color="neutral" variant="plain">
               {/* {commission.commissionTitle} */}
-              {props.title}
+              {Capitalize(props.title)}
             </Typography>
           </span>
 
@@ -496,7 +496,7 @@ function OngoingCardsNew(props) {
                     CATCHER:
                   </Typography>
                   <Typography color="primary" level="title-md" variant="plain">
-                    {props.userFname} {props.userLname}
+                    {Capitalize(props.userFname)} {Capitalize(props.userLname)}
                   </Typography>
                   {/* {commission.userFirstname} {commission.userLastname} */}
                 </Typography>
