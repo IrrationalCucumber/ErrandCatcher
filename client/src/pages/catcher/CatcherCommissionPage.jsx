@@ -26,7 +26,7 @@ import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
 import RotateRightOutlinedIcon from "@mui/icons-material/RotateRightOutlined";
 import { Box } from "@mui/material";
-import { Alert, IconButton } from "@mui/joy";
+import { Alert, IconButton, Tooltip } from "@mui/joy";
 import { CloseRounded } from "@mui/icons-material";
 
 function CommissionPage() {
@@ -232,30 +232,60 @@ function CommissionPage() {
             Errands you have <i>Caught</i>
           </h1>
           <div className="searcherrand">
-            <input
-              type="text"
-              placeholder="Search Errand title..."
-              name="term"
-              onChange={handleChange}
-            />
-            <input type="date" name="date" onChange={handleChange} />
-
-            <select
-              className="CLstatus"
-              onChange={handleChange}
-              value={searchTerm.status}
-              name="status"
+            <Tooltip
+              arrow
+              color="neutral"
+              variant="soft"
+              title="Errand Title"
+              size="sm"
             >
-              <option value="">Status</option>
-              <option value="Ongoing">Ongoing</option>
-              <option value="For Payment">For Payment</option>
-              <option value="Completed">Completed</option>
-              <option value="Cancelled">Cancelled</option>
-            </select>
+              <input
+                type="text"
+                placeholder="Search Errand title..."
+                name="term"
+                onChange={handleChange}
+              />
+            </Tooltip>
+            <Tooltip
+              arrow
+              color="neutral"
+              variant="soft"
+              title="Transaction status"
+              size="sm"
+            >
+              <select
+                className="CLstatus"
+                onChange={handleChange}
+                value={searchTerm.status}
+                name="status"
+              >
+                <option value="">Status</option>
+                <option value="Ongoing">Ongoing</option>
+                <option value="For Payment">For Payment</option>
+                <option value="Completed">Completed</option>
+                <option value="Cancelled">Cancelled</option>
+              </select>
+            </Tooltip>
+            DEADLINE
+            <Tooltip
+              arrow
+              color="neutral"
+              variant="soft"
+              title="Deadline"
+              size="sm"
+            >
+              <input
+                type="date"
+                name="date"
+                onChange={handleChange}
+                placeholder="Select deadline date..."
+              />
+            </Tooltip>
           </div>
           <h6>Catcher can see the status of the commission</h6>
           <Table
             headers={[
+              "ID",
               "EMPLOYER",
               "ERRAND TITLE",
               "START",
@@ -264,6 +294,7 @@ function CommissionPage() {
               "ACTION",
             ]}
             data={currentItems.map((commission, rowIndex) => [
+              commission.transactID,
               `${commission.userFirstname} ${commission.userLastname}`,
               commission.commissionTitle,
               // commission.commissionStart,

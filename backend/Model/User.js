@@ -72,6 +72,14 @@ const User = {
       callback
     );
   },
+  // Fetch the current password hash for validation
+  getPasswordById: (id, callback) => {
+    db.query(
+      `SELECT password FROM useraccount WHERE userID = ?`,
+      [id],
+      callback
+    );
+  },
   // change and reset password user
   putResetPasswordById: (id, userData, callback) => {
     const { password } = userData;
