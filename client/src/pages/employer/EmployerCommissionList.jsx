@@ -204,7 +204,7 @@ const CommissionList = () => {
                       <span> Transportation</span>
                     </>
                   ) : null,
-                  DisplayDate(commissionItem.DatePosted),
+                  DisplayDate(commissionItem.commissionStartDate),
                   DisplayDate(commissionItem.commissionDeadline),
                   // commissionItem.commissionStatus,
                   commissionItem.commissionStatus === "Pending" ? (
