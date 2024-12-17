@@ -353,7 +353,7 @@ function OngoingCardsNew(props) {
     const amount = pay;
     const errType = type;
     const name = fname + " " + lname;
-    const errand = id + " " + comTitle;
+    const errand = comTitle;
     const errandID = erID;
     const cateID = catID;
 
@@ -481,23 +481,25 @@ function OngoingCardsNew(props) {
               {CapitalizeAllLetters(props.status)}
             </Chip>
           </h7> */}
-          <Chip
-            sx={{
-              fontSize: "0.92rem",
-              height: "30px",
-              padding: "0 10px",
-              marginLeft: "6px",
-              backgroundColor: chipBackgroundColor,
-              color: chipTextColor,
-              '&:hover': {
-                opacity: 0.9,
-              },
-            }}
-            size="sm"
-            variant="solid"
-          >
-            {CapitalizeAllLetters(props.status)}
-          </Chip>
+          <h7 className="cards__header__seven">Details:
+            <Chip
+              sx={{
+                fontSize: "0.92rem",
+                height: "30px",
+                padding: "0 10px",
+                marginLeft: "6px",
+                backgroundColor: chipBackgroundColor,
+                color: chipTextColor,
+                '&:hover': {
+                  opacity: 0.9,
+                },
+              }}
+              size="sm"
+              variant="solid"
+            >
+              {CapitalizeAllLetters(props.status)}
+            </Chip>
+          </h7>
           {/* <ul> */}
 
           <li>
