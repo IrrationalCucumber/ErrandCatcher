@@ -264,7 +264,7 @@ export function NewUserProfileui(props) {
                           <span>
                             <StarRating rating={props.rate} />
                             <p>
-                              <i>{AmountDecimal(props.rate)}</i>
+                              <i>{props.rate.toFixed(1)}</i>
                             </p>
                           </span>
                         </div>
@@ -1147,7 +1147,7 @@ export function NewViewUserProfile(props) {
                           <span>
                             <StarRating rating={props.rate} />
                             <p>
-                              <i>{AmountDecimal(props.rate)}</i>
+                              <i>{props.rate.toFixed(1)}</i>
                             </p>
                           </span>
                         </div>
