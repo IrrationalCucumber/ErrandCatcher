@@ -239,6 +239,15 @@ const transConstroller = {
       res.json(invoice);
     });
   },
+  getAmountSum: (req, res) => {
+    Trans.getAmountSum((err, total) => {
+      if (err) {
+        console.error("Error total summation: ", err);
+        return;
+      }
+      res.json(total[0]);
+    });
+  },
 };
 
 module.exports = transConstroller;
