@@ -264,7 +264,9 @@ export function NewUserProfileui(props) {
                           <span>
                             <StarRating rating={props.rate} />
                             <p>
-                              <i>{props.rate.toFixed(1)}</i>
+                              <i>{props.rate
+                                  ? props.rate.toFixed(1)
+                                  : "No Rating"}</i>
                             </p>
                           </span>
                         </div>
