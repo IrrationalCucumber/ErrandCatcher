@@ -8,6 +8,7 @@ import OtherHousesIcon from "@mui/icons-material/OtherHouses";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CameraOutdoorIcon from "@mui/icons-material/CameraOutdoor";
+import SyncAltIcon from "@mui/icons-material/SyncAlt";
 
 import PendingIcon from "@mui/icons-material/Pending";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -26,6 +27,8 @@ const GenerateReport = () => {
         term: "",
         type: "",
         status: "",
+        minPay: "",
+        maxPay: "",
     });
     const location = useLocation();
     const userID = location.pathname.split("/")[2];
@@ -126,8 +129,20 @@ const GenerateReport = () => {
         //     .includes(searchTerm.term.toLowerCase() ?? "");
         // const status = invoice.commissionStatus.includes(searchTerm.status);
 
-        return type && (termMatch || termMatch2);
+        //if price range has been entered
+        let priceMatches = true;
+        if (searchTerm.minPay !== "" && searchTerm.maxPay !== "") {
+            priceMatches =
+                invoice.total >= searchTerm.minPay &&
+                invoice.total <= searchTerm.maxPay;
+        }
+
+        return type && (termMatch || termMatch2) && priceMatches;
     });
+
+    // convert to centavo
+    const amountInCents = (invoices.total / 100).toFixed(2);
+    const amountInCentsTotal = (totalinvoices.t / 100).toFixed(2);
 
     //Logic of Pagination
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -149,7 +164,7 @@ const GenerateReport = () => {
                     Generate Report
                 </h1>
                 <h1>
-                    Total Invoice: {totalinvoices.t ? totalinvoices.t : 0}
+                    Total Invoice: {amountInCentsTotal ? amountInCentsTotal : 0}
                 </h1>
                 <div
                     className="searchAdmin"
@@ -181,27 +196,7 @@ const GenerateReport = () => {
                         className="filter__admin__accountList"
                         style={{ display: "flex", alignItems: "center", width: "60%" }}
                     >
-                        <select
-                            className="CLstatus"
-                            name="status"
-                            onChange={handleChange}
-                            value={searchTerm.status}
-                        // style={{
-                        //   padding: "8px",
-                        //   fontSize: "12px",
-                        //   border: "1px solid #ccc",
-                        //   borderRadius: "4px",
-                        //   margin: "10px 20px",
-                        // }}
-                        >
-                            <option value="">Status</option>
-                            <option value="Pending">Pending</option>
-                            <option value="Completed">Completed</option>
-                            <option value="Cancelled">Cancelled</option>
-                            <option value="Expired">Expired</option>
-                            <option value="Caught">Caught</option>
-                            <option value="Available">Available</option>
-                        </select>
+
                         <select
                             className="CLtype"
                             onChange={handleChange}
@@ -220,6 +215,34 @@ const GenerateReport = () => {
                             <option value="Transportation">Transportation</option>
                             <option value="Delivery">Delivery</option>
                         </select>
+                    </div>
+
+                    <div className="Paylabel">
+                        <label htmlFor="">
+                            Payment Range:
+                            <input
+                                className="inputNum"
+                                type="number"
+                                placeholder="Minimum"
+                                name="minPay"
+                                onChange={handleChange}
+                                value={searchTerm.minPay}
+                            />
+                            <SyncAltIcon
+                                sx={{
+                                    color: "grey",
+                                    fontSize: 24,
+                                }}
+                            />
+                            <input
+                                className="inputNum"
+                                type="number"
+                                placeholder="Maximum"
+                                name="maxPay"
+                                onChange={handleChange}
+                                value={searchTerm.maxPay}
+                            />
+                        </label>
                     </div>
                 </div>
 
@@ -258,7 +281,7 @@ const GenerateReport = () => {
                             </>
                         ) : null,
                         DisplayDate(Invoice.paid),
-                        "Php " + Invoice.total,
+                        "Php " + (Invoice.total / 100).toFixed(2),
                     ])}
                 />
                 {/* Pagination controls */}
@@ -270,28 +293,6 @@ const GenerateReport = () => {
                     />
                 )}
             </div>
-            {/* onClick={handleAddCommission} logic for the button since this is a link inside a button */}
-            {/* <Link to="/post-commission" style={{ textDecoration: "none" }}>
-          <button
-            style={{
-              marginLeft: "20px",
-              padding: "8px 12px",
-              fontSize: "12px",
-              cursor: "pointer",
-              border: "none",
-              backgroundColor: "#CE9251",
-              color: "white",
-              borderRadius: "4px",
-              display: "inline-block",
-              textAlign: "center",
-              lineHeight: "1.5",
-              fontFamily:
-                "'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif",
-            }}
-          >
-            Add Errand
-          </button>
-        </Link> */}
         </div>
     );
 };
