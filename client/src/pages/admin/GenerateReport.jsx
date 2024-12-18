@@ -111,28 +111,28 @@ const GenerateReport = () => {
     };
 
     //filter
-    const filterErrands = commissions.filter((commission) => {
-        const type = commission.commissionType
+    const filterErrands = invoices.filter((invoice) => {
+        const type = invoice.type
             ?.toLowerCase()
             .includes(searchTerm.type.toLowerCase() ?? "");
-        const termMatch = commission.commissionTitle
+        const termMatch = invoice.description
             ?.toLowerCase()
             .includes(searchTerm.term.toLowerCase() ?? "");
-        const termMatch2 = commission.userFirstname
+        const termMatch2 = invoice.paid
             ?.toLowerCase()
             .includes(searchTerm.term.toLowerCase() ?? "");
-        const termMatch3 = commission.userLastname
-            ?.toLowerCase()
-            .includes(searchTerm.term.toLowerCase() ?? "");
-        const status = commission.commissionStatus.includes(searchTerm.status);
+        // const termMatch3 = invoice.total
+        //     ?.toLowerCase()
+        //     .includes(searchTerm.term.toLowerCase() ?? "");
+        // const status = invoice.commissionStatus.includes(searchTerm.status);
 
-        return type && (termMatch || termMatch2 || termMatch3) && status;
+        return type && (termMatch || termMatch2);
     });
 
     //Logic of Pagination
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = invoices.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = filterErrands.slice(indexOfFirstItem, indexOfLastItem);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
     return (
