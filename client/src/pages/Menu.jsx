@@ -60,7 +60,7 @@ const Menu = () => {
       <ModalFeedback
         open={open}
         handleClose={handleClose}
-        headerMes="Error Occurred!"
+        headerMes="Oppps!"
         contentMes="Please input your fields, please try again."
         color="error"
         colorText="error"
