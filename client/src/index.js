@@ -63,6 +63,7 @@ import History from "./pages/History";
 import PaymentCancel from "./pages/PaymentCancel";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import { ProtectedRoute } from "./components/ProtectedROute";
+import GenerateReport from "./pages/admin/GenerateReport";
 
 const router = createBrowserRouter([
   {
@@ -97,6 +98,10 @@ const router = createBrowserRouter([
           {
             path: "request",
             element: <RequestPage />,
+          },
+          {
+            path: "generate-report",
+            element: <GenerateReport />,
           },
         ],
       },
