@@ -20,5 +20,6 @@ router.put("/complete-trans/:id", transConstroller.putCompleteTrans); // fro emp
 router.put("/catcher/cancel/:id/:userID", transConstroller.putCancelErrand); //for catcher
 router.put("/catcher/complete/:id/:userID", transConstroller.putCompleteErrand); // for catch
 router.get("/all-invoice", transConstroller.getALlInvoice);
+router.get("/total-earnings", transConstroller.getAmountSum); //route for total of every invoice/transaction
 
 module.exports = router;
