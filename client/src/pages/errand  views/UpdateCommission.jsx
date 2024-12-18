@@ -8,6 +8,7 @@ import { useAuth } from "../../components/AuthContext";
 import { UpdateMapLibre, ViewMapBox } from "../../components/Map/Map";
 import { Alert, IconButton } from "@mui/joy";
 import { CloseRounded, Warning } from "@mui/icons-material";
+import ModalFeedback from "../../components/ModalFeedback";
 
 const UpdateCommission = () => {
   const [commission, setCommission] = useState({
@@ -44,6 +45,16 @@ const UpdateCommission = () => {
   // Add a state to track the marker's longitude and latitude
   // const [markerLngLat, setMarkerLngLat] = useState([123.8854, 10.3157]); // Default values
   // const [currentLocationMarker, setCurrentLocationMarker] = useState(null);
+
+  // modal message pop-up
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+
+  };
 
   //handle changes
   const handleChange = (e) => {
@@ -165,10 +176,17 @@ const UpdateCommission = () => {
           `http://localhost:8800/update-errand/${commissionID}`,
           commission
         );
-        setAlerMsg("Errand have been successfully updated");
-        setAlrtColor("success");
-        setShowAlert(true);
-        handleScrollToTop();
+        // popup update modal
+        setTimeout(() => {
+          // setLoading(false);
+          // modal will pop-up in half a seconds
+          handleOpen();
+        }, 500);
+
+        // setAlerMsg("Errand have been successfully updated");
+        // setAlrtColor("success");
+        // setShowAlert(true);
+        // handleScrollToTop();
       }
     } catch (err) {
       console.log(err);
@@ -186,6 +204,16 @@ const UpdateCommission = () => {
 
   return (
     <div>
+      <ModalFeedback
+        open={open}
+        handleClose={handleClose}
+        headerMes="Success"
+        contentMes="Errand have been successfully updated!"
+        color="success"
+        colorText="green"
+      // icon={CancelOutlinedIcon}
+      />
+
       {showAlert && (
         <Alert
           color={alrtColor}
