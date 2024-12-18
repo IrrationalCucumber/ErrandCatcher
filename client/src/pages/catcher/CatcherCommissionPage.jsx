@@ -28,6 +28,7 @@ import RotateRightOutlinedIcon from "@mui/icons-material/RotateRightOutlined";
 import { Box } from "@mui/material";
 import { Alert, IconButton, Tooltip } from "@mui/joy";
 import { CloseRounded } from "@mui/icons-material";
+import ModalFeedback from "../../components/ModalFeedback";
 
 function CommissionPage() {
   const headers = ["DATE", "EMPLOYER", "ERRAND TITLE", "STATUS"];
@@ -57,6 +58,16 @@ function CommissionPage() {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMesg, setAlerMsg] = useState("");
   const [alrtColor, setAlrtColor] = useState("");
+
+  // modal message pop-up
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+
+  };
 
   useEffect(() => {
     const fetchAllCommission = async () => {
@@ -174,9 +185,15 @@ function CommissionPage() {
       /**
        * ADD METHOD TO CHANGE ALSO THE STATUS OF ERRAND TO CANCELLED
        */
-      setAlerMsg("You have cancelled an errand.");
-      setShowAlert(true);
-      setAlrtColor("warning");
+      // popup cancel modal
+      setTimeout(() => {
+        // setLoading(false);
+        // modal will pop-up in 1 seconds
+        handleOpen();
+      }, 1000);
+      // setAlerMsg("You have cancelled an errand.");
+      // setShowAlert(true);
+      // setAlrtColor("warning");
       const interval = setInterval(fetchPending, 11000);
       return () => clearInterval(interval);
       // window.location.reload();
@@ -204,6 +221,16 @@ function CommissionPage() {
 
   return (
     <div>
+      <ModalFeedback
+        open={open}
+        handleClose={handleClose}
+        headerMes="Cancelled!"
+        contentMes="You have cancelled an errand."
+        color="error"
+        colorText="error"
+        icon={CancelOutlinedIcon}
+      />
+
       {showAlert && (
         <Alert
           color={alrtColor}
