@@ -21,6 +21,7 @@ import EventBusyOutlinedIcon from "@mui/icons-material/EventBusyOutlined";
 const GenerateReport = () => {
     const [commissions, setCommissions] = useState([]);
     const [invoices, setInvoices] = useState([]);
+    const [totalinvoices, settotalInvoices] = useState({});
     const [searchTerm, setSearchTerm] = useState({
         term: "",
         type: "",
@@ -66,6 +67,23 @@ const GenerateReport = () => {
             }
         };
         fetchAllInvoice();
+    }, []);
+
+
+    useEffect(() => {
+        const fetchTotalInvoice = async () => {
+            try {
+                // all-invoice
+                const res = await axios.get("http://localhost:8800/total-earnings");
+                //"http://localhost:8800/commission" - local computer
+                //"http://192.168.1.47:8800/commission" - netwrok
+                settotalInvoices(res.data);
+                console.log(totalinvoices, "total sum");
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchTotalInvoice();
     }, []);
 
     //funtion to delete commission
@@ -129,6 +147,9 @@ const GenerateReport = () => {
                     }}
                 >
                     Generate Report
+                </h1>
+                <h1>
+                    Total Invoice: {totalinvoices.t ? totalinvoices.t : 0}
                 </h1>
                 <div
                     className="searchAdmin"
@@ -209,7 +230,6 @@ const GenerateReport = () => {
                         "Errand Type",
                         "Paid Date",
                         "Total Payment",
-                        "View Errand Details",
                     ]}
                     data={currentItems.map((Invoice) => [
                         Invoice.invoiceID,
@@ -239,58 +259,6 @@ const GenerateReport = () => {
                         ) : null,
                         DisplayDate(Invoice.paid),
                         "Php " + Invoice.total,
-                        //Remove transaction complete date due to unable to display if no transaction yet
-                        // Commission.transDateComplete === null ? (
-                        //   <EventBusyOutlinedIcon
-                        //     style={{ color: "#c99f5a", marginLeft: "48px" }}
-                        //   />
-                        // ) : (
-                        //   DisplayDate(Commission.transDateComplete)
-                        // ),
-                        // Commission.commissionStatus,
-                        //===== break
-                        // Commission.commissionStatus === "Pending" ? (
-                        //     <>
-                        //         <PendingIcon style={{ color: "purple" }} />
-                        //         <span> Pending</span>
-                        //     </>
-                        // ) : Commission.commissionStatus === "Completed" ? (
-                        //     <>
-                        //         <CheckCircleIcon style={{ color: "green" }} />
-                        //         <span> Completed</span>
-                        //     </>
-                        // ) : Commission.commissionStatus === "Canceled" ? (
-                        //     <>
-                        //         <CancelIcon style={{ color: "orange" }} />
-                        //         <span> Canceled</span>
-                        //     </>
-                        // ) : Commission.commissionStatus === "Expired" ? (
-                        //     <>
-                        //         <TimerOffIcon style={{ color: "orange" }} />
-                        //         <span> Expired</span>
-                        //     </>
-                        // ) : Commission.commissionStatus === "Caught" ? (
-                        //     <>
-                        //         <HandshakeIcon style={{ color: "green" }} />
-                        //         <span> Caught</span>
-                        //     </>
-                        // ) : Commission.commissionStatus === "Available" ? (
-                        //     <>
-                        //         <EventAvailableIcon style={{ color: "darkgreen" }} />
-                        //         <span> Available</span>
-                        //     </>
-                        // ) : null,
-                        <>
-                            {/* <button onClick={() => handleDelete(Commission.commissionID)}>
-               
-                </button> */}
-                            {/* // sample hereee */}
-                            <button className="update">
-                                <Link to={`/errand/view/${invoices.invoiceErrandID}`}>
-                                    <RemoveRedEyeSharp />
-                                </Link>
-                            </button>
-                        </>,
                     ])}
                 />
                 {/* Pagination controls */}
