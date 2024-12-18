@@ -32,6 +32,7 @@ import PendingOutlinedIcon from "@mui/icons-material/PendingOutlined";
 import DoDisturbAltOutlinedIcon from "@mui/icons-material/DoDisturbAltOutlined";
 import { Capitalize } from "../../components/Display/DsiplayFunctions";
 import { CloseRounded, Warning } from "@mui/icons-material";
+import ModalFeedback from "../../components/ModalFeedback";
 
 function Application() {
   const { user } = useAuth();
@@ -62,6 +63,28 @@ function Application() {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMesg, setAlerMsg] = useState("");
   const [alrtColor, setAlrtColor] = useState("");
+
+  // modal message pop-up
+  // cancel state
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+
+  };
+  // delete state
+  const [openDel, setOpenDel] = useState(false);
+  const handleOpenDel = () => {
+    setOpenDel(true);
+  };
+  const handleCloseDel = () => {
+    setOpenDel(false);
+
+  };
+
+
   //data
   //useEffect to handle error
   const fetchAllAccount = async () => {
@@ -170,7 +193,7 @@ function Application() {
     ) : applicant.applicationStatus === "Denied" ? (
       <>
         <DoDisturbAltOutlinedIcon style={{ color: "red" }} />
-        <span> Pending</span>
+        <span> Denied</span>
       </>
     ) : null,
     applicant.applicationStatus === "Pending" ? (
@@ -299,11 +322,18 @@ function Application() {
       notif.notifDate = getTimeAndDate();
 
       await axios.post("http://localhost:8800/notify", notif);
-      //window.location.reload();
-      //navigate(`/my-application/${userID}`);
-      setAlerMsg("You have cancelled your Application");
-      setShowAlert(true);
-      setAlrtColor("warning");
+      // window.location.reload();
+      // navigate(`/my-application/${userID}`);
+
+      // popup cancel modal
+      setTimeout(() => {
+        // setLoading(false);
+        // modal will pop-up in 1 seconds
+        handleOpen();
+      }, 1000);
+      // setAlerMsg("You have cancelled your Application");
+      // setShowAlert(true);
+      // setAlrtColor("warning");
       const interval = setInterval(fetchAllAccount, 1000);
       return () => clearInterval(interval);
     } catch (err) {
@@ -316,9 +346,20 @@ function Application() {
       //"http://localhost:8800/commission" - local computer
       //"http://192.168.1.47:8800/commission" - netwrok
       await axios.delete(`http://localhost:8800/delete-apply/${applicationID}`);
-      setAlerMsg("You have deleted your Application");
-      setShowAlert(true);
-      setAlrtColor("danger");
+
+      // popup delete modal
+      setTimeout(() => {
+        // setLoading(false);
+        // modal will pop-up in 1 seconds
+        handleOpenDel();
+      }, 1000);
+
+      // close if click "yes" modal
+      setOpenDelete(false)
+
+      // setAlerMsg("You have deleted your Application");
+      // setShowAlert(true);
+      // setAlrtColor("danger");
       const interval = setInterval(fetchAllAccount, 1000);
       return () => clearInterval(interval);
     } catch (err) {
@@ -328,6 +369,26 @@ function Application() {
 
   return (
     <div>
+      <ModalFeedback
+        open={open}
+        handleClose={handleClose}
+        headerMes="Cancelled!"
+        contentMes="You have cancelled your Application"
+        color="error"
+        colorText="error"
+        icon={CancelOutlinedIcon}
+      />
+
+      <ModalFeedback
+        open={openDel}
+        handleClose={handleCloseDel}
+        headerMes="Deleted!"
+        contentMes="You have deleted your Application"
+        color="error"
+        colorText="error"
+        icon={CancelOutlinedIcon}
+      />
+
       {showAlert && (
         <Alert
           color={alrtColor}
