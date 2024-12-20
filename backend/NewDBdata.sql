@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: errandcatcher
 -- ------------------------------------------------------
--- Server version	8.0.36
+-- Server version	8.0.39
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,12 +28,13 @@ CREATE TABLE `application` (
   `catcherID` int DEFAULT NULL,
   `applicationDate` datetime DEFAULT CURRENT_TIMESTAMP,
   `applicationStatus` varchar(10) DEFAULT 'Pending',
+  `applicationQualification` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`applicationID`),
   KEY `userID_idx` (`catcherID`) /*!80000 INVISIBLE */,
   KEY `applicationErrandID_idx` (`applicationErrandID`),
   CONSTRAINT `applicationErrandID` FOREIGN KEY (`applicationErrandID`) REFERENCES `commission` (`commissionID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `catcherID` FOREIGN KEY (`catcherID`) REFERENCES `useraccount` (`userID`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +47,7 @@ DROP TABLE IF EXISTS `commission`;
 CREATE TABLE `commission` (
   `commissionID` int NOT NULL AUTO_INCREMENT,
   `employerID` int DEFAULT NULL,
-  `commissionTitle` varchar(20) DEFAULT NULL,
+  `commissionTitle` varchar(100) DEFAULT NULL,
   `commissionStartDate` date DEFAULT NULL,
   `commissionDeadline` date DEFAULT NULL,
   `commissionLocation` text,
@@ -61,12 +62,11 @@ CREATE TABLE `commission` (
   `commissionLat` double DEFAULT NULL,
   `commissionDestLong` double DEFAULT NULL,
   `commissionDestLat` double DEFAULT NULL,
-  `commissionPaymentMethod` varchar(50) DEFAULT NULL,
-  `commissionVehicle` varchar(45) DEFAULT NULL COMMENT 'Type of vehicle used',
+  `commissionCatcherNum` int DEFAULT NULL,
   PRIMARY KEY (`commissionID`),
   KEY `userID_idx` (`employerID`),
   CONSTRAINT `userID` FOREIGN KEY (`employerID`) REFERENCES `useraccount` (`userID`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,7 +90,7 @@ CREATE TABLE `errandtransaction` (
   KEY `transCatcherID_idx` (`transCatcherID`),
   CONSTRAINT `transCatcherID` FOREIGN KEY (`transCatcherID`) REFERENCES `useraccount` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `transErrandID` FOREIGN KEY (`transErrandID`) REFERENCES `commission` (`commissionID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,7 +105,7 @@ CREATE TABLE `feedbackcommission` (
   `feedbackPosterID` int DEFAULT NULL,
   `feedbackCatcherID` int DEFAULT NULL,
   `feedbackRate` int DEFAULT '0',
-  `feedbackDate` date DEFAULT NULL,
+  `feedbackDate` datetime DEFAULT CURRENT_TIMESTAMP,
   `feedbackComment` text,
   `feedbackErrandID` int DEFAULT NULL,
   PRIMARY KEY (`feedbackID`),
@@ -115,7 +115,7 @@ CREATE TABLE `feedbackcommission` (
   CONSTRAINT `feedbackCatcherID` FOREIGN KEY (`feedbackCatcherID`) REFERENCES `useraccount` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `feedbackCommissionID` FOREIGN KEY (`feedbackErrandID`) REFERENCES `commission` (`commissionID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `feedbackPosterID` FOREIGN KEY (`feedbackPosterID`) REFERENCES `useraccount` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=126 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -143,7 +143,7 @@ CREATE TABLE `invoice` (
   CONSTRAINT `invoiceCatcherID` FOREIGN KEY (`invoiceCatcherID`) REFERENCES `useraccount` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `invoiceemployerID` FOREIGN KEY (`invoiceemployerID`) REFERENCES `useraccount` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `invoiceErrandID` FOREIGN KEY (`invoiceErrandID`) REFERENCES `commission` (`commissionID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,16 +157,13 @@ CREATE TABLE `notification` (
   `notificationID` int NOT NULL AUTO_INCREMENT,
   `notifUserID` int DEFAULT NULL,
   `notificationType` varchar(50) DEFAULT NULL,
-  `catcherID` int DEFAULT NULL,
-  `employerID` int DEFAULT NULL,
-  `commissionID` int DEFAULT NULL,
   `notifDesc` text,
   `isRead` varchar(5) DEFAULT 'no',
   `notifDate` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`notificationID`),
   KEY `userID_idx` (`notifUserID`),
   CONSTRAINT `notifUserID` FOREIGN KEY (`notifUserID`) REFERENCES `useraccount` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=238 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -193,8 +190,11 @@ CREATE TABLE `useraccount` (
   `accountType` varchar(20) DEFAULT NULL,
   `dateCreated` datetime DEFAULT CURRENT_TIMESTAMP,
   `profileImage` varchar(100) DEFAULT NULL,
+  `userQualification` text,
+  `userHasErrand` varchar(10) DEFAULT 'false',
+  `userExperiences` text,
   PRIMARY KEY (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -211,11 +211,13 @@ CREATE TABLE `verification_request` (
   `id_picture_back` varchar(100) DEFAULT NULL,
   `docu_1` varchar(45) DEFAULT NULL,
   `docu_2` varchar(45) DEFAULT NULL,
+  `driversLicense1` varchar(45) DEFAULT NULL,
+  `driversLicense2` varchar(45) DEFAULT NULL,
   `requestStatus` varchar(45) DEFAULT 'Pending',
   PRIMARY KEY (`requestID`),
   KEY `requestUserID_idx` (`requestUserID`),
   CONSTRAINT `requestUserID` FOREIGN KEY (`requestUserID`) REFERENCES `useraccount` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -227,4 +229,4 @@ CREATE TABLE `verification_request` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-24 23:32:23
+-- Dump completed on 2024-12-20 11:13:33
