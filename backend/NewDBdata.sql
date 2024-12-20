@@ -63,6 +63,7 @@ CREATE TABLE `commission` (
   `commissionDestLong` double DEFAULT NULL,
   `commissionDestLat` double DEFAULT NULL,
   `commissionCatcherNum` int DEFAULT NULL,
+  `commissionTags` text,
   PRIMARY KEY (`commissionID`),
   KEY `userID_idx` (`employerID`),
   CONSTRAINT `userID` FOREIGN KEY (`employerID`) REFERENCES `useraccount` (`userID`) ON DELETE SET NULL ON UPDATE CASCADE
@@ -229,4 +230,4 @@ CREATE TABLE `verification_request` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-20 11:13:33
+-- Dump completed on 2024-12-20 19:56:39
