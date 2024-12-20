@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import Table from "../../components/Table.js";
 import Pagination from "../../components/Pagination.js";
@@ -9,18 +9,9 @@ import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CameraOutdoorIcon from "@mui/icons-material/CameraOutdoor";
 import SyncAltIcon from "@mui/icons-material/SyncAlt";
-
-import PendingIcon from "@mui/icons-material/Pending";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CancelIcon from "@mui/icons-material/Cancel";
-import TimerOffIcon from "@mui/icons-material/TimerOff";
-import HandshakeIcon from "@mui/icons-material/Handshake";
-import EventAvailableIcon from "@mui/icons-material/EventAvailable";
-import { PanoramaFishEye, RemoveRedEyeSharp } from "@mui/icons-material";
-import EventBusyOutlinedIcon from "@mui/icons-material/EventBusyOutlined";
+import PaymentsIcon from "@mui/icons-material/Payments";
 
 const GenerateReport = () => {
-    const [commissions, setCommissions] = useState([]);
     const [invoices, setInvoices] = useState([]);
     const [totalinvoices, settotalInvoices] = useState({});
     const [searchTerm, setSearchTerm] = useState({
@@ -39,22 +30,6 @@ const GenerateReport = () => {
     //Pagination --Ash
     //display data per page
     const [itemsPerPage] = useState(10);
-
-    //handle error
-    //rretrieve data
-    useEffect(() => {
-        const fetchAllCommission = async () => {
-            try {
-                const res = await axios.get("http://localhost:8800/errands");
-                //"http://localhost:8800/commission" - local computer
-                //"http://192.168.1.47:8800/commission" - netwrok
-                setCommissions(res.data);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-        fetchAllCommission();
-    }, []);
 
     useEffect(() => {
         const fetchAllInvoice = async () => {
@@ -88,18 +63,6 @@ const GenerateReport = () => {
         };
         fetchTotalInvoice();
     }, []);
-
-    //funtion to delete commission
-    const handleDelete = async (commissionID) => {
-        try {
-            //"http://localhost:8800/commission" - local computer
-            //"http://192.168.1.47:8800/commission" - netwrok
-            await axios.delete(`http://localhost:8800/commission/${commissionID}`);
-            window.location.reload();
-        } catch (err) {
-            console.log(err);
-        }
-    };
 
     const handleChange = (e) => {
         // For the 'gender' field, directly set the value without using spread syntax
@@ -137,7 +100,7 @@ const GenerateReport = () => {
                 invoice.total <= searchTerm.maxPay;
         }
 
-        return type && (termMatch || termMatch2) && priceMatches;
+        return type && (termMatch || termMatch2);
     });
 
     // convert to centavo
@@ -153,19 +116,22 @@ const GenerateReport = () => {
     return (
         <div>
             <div className="commissions">
-                <h1
-                    style={{
-                        marginTop: "10px",
-                        marginBottom: "10px",
-                        fontFamily:
-                            "'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif",
-                    }}
-                >
-                    Generate Report
-                </h1>
-                <h1>
-                    Total Invoice: {amountInCentsTotal ? amountInCentsTotal : 0}
-                </h1>
+                <div style={{ display: "flex", justifyContent: "center", marginTop: "4px" }}>
+                    <div class="col-md-4 col-xl-3 mb-3">
+                        <div class="card bg-c-blue order-card text-center">
+                            <div class="card-block">
+                                <h3 class="m-b-20 fw-semibold">
+                                    <PaymentsIcon sx={{ color: "white", fontSize: 24 }} /> Generate Report
+                                </h3>
+                                <h2 class="text-center">
+                                    <i class="fa fa-cart-plus f-left"></i>
+                                    <span>{amountInCentsTotal ? amountInCentsTotal : 0}</span>
+                                </h2>
+                                <p class="m-b-0">Total invoice trasaction</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div
                     className="searchAdmin"
                 // style={{
@@ -217,7 +183,7 @@ const GenerateReport = () => {
                         </select>
                     </div>
 
-                    <div className="Paylabel">
+                    {/* <div className="Paylabel">
                         <label htmlFor="">
                             Payment Range:
                             <input
@@ -243,7 +209,7 @@ const GenerateReport = () => {
                                 value={searchTerm.maxPay}
                             />
                         </label>
-                    </div>
+                    </div> */}
                 </div>
 
                 <Table
