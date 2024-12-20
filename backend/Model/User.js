@@ -161,6 +161,14 @@ const User = {
       callback
     );
   },
+  // update hasErrand if Catcher have or no errand
+  putCatcherHasErrand: (id, state, cb) => {
+    db.query(
+      `UPDATE useraccount SET userHasErrand = ? WHERE userID = ?`,
+      [state, id],
+      cb
+    );
+  },
 };
 
 module.exports = User;

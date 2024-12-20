@@ -385,6 +385,27 @@ const userController = {
       res.json(user[0]);
     });
   },
+  //catcher has caught an errand
+  putCatcherHasErrand: (req, res) => {
+    const id = req.params.id;
+    const state = "true";
+    User.putCatcherHasErrand(id, state, (err) => {
+      if (err) {
+        console.error("Error updating state:", err);
+        res
+          .status(500)
+          .json({ error: "An error occurred while updating state" });
+        return;
+      }
+      // Check if any rows were affected by the update operation
+      if (result.affectedRows === 0) {
+        res.status(404).json({ error: "User not found" });
+        return;
+      }
+      // User updated successfully
+      res.status(200).json({ message: "State updated successfully" });
+    });
+  },
 };
 
 module.exports = userController;
