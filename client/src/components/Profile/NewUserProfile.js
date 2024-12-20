@@ -21,6 +21,11 @@ import {
   Stack,
   Typography,
   Alert,
+  Modal,
+  ModalDialog,
+  ModalClose,
+  DialogTitle,
+  DialogContent,
 } from "@mui/joy";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -39,6 +44,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import WarningIcon from "@mui/icons-material/Warning";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { MyFeedback } from "../Dashbaord/Feedback";
+import { maxHeight } from "@mui/system";
 
 import PersonIcon from "@mui/icons-material/Person";
 import Person2Icon from "@mui/icons-material/Person2";
@@ -93,6 +99,15 @@ export function NewUserProfileui(props) {
   const [alertColor, setAlertColor] = useState("");
   const [iconlert, setIconLert] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
+  //modal for pics
+  //adrean 12/17/2024
+  const [showModal, setShowModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [filePath, setFilePath] = useState();
+  const handleOpenModalDocs = (docs) => {
+    setOpenModal(true);
+    setFilePath(docs);
+  };
 
   const [strength, setStrength] = useState("");
 
@@ -199,6 +214,15 @@ export function NewUserProfileui(props) {
   };
   console.log(account);
 
+  const imageStyle = {
+    padding: "20px",
+    margin: "10px",
+    maxWidth: "95%",
+    borderRadius: "5px",
+    border: "1px solid #ccc",
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+  };
+
   return (
     <>
       <div class="container">
@@ -240,7 +264,9 @@ export function NewUserProfileui(props) {
                           <span>
                             <StarRating rating={props.rate} />
                             <p>
-                              <i>{props.rate.toFixed(1)}</i>
+                              <i>{props.rate
+                                  ? props.rate.toFixed(1)
+                                  : "No Rating"}</i>
                             </p>
                           </span>
                         </div>
@@ -884,15 +910,14 @@ export function NewUserProfileui(props) {
                           {account.password && (
                             <>
                               <div
-                                className={`password-strength ${
-                                  strength === "Weak"
-                                    ? "strength-weak"
-                                    : strength === "Medium"
+                                className={`password-strength ${strength === "Weak"
+                                  ? "strength-weak"
+                                  : strength === "Medium"
                                     ? "strength-medium"
                                     : strength === "Strong"
-                                    ? "strength-strong"
-                                    : ""
-                                }`}
+                                      ? "strength-strong"
+                                      : ""
+                                  }`}
                               >
                                 Password strength: {strength}
                               </div>
@@ -927,7 +952,7 @@ export function NewUserProfileui(props) {
                           <button
                             type="submit"
                             class="btn btn-primary"
-                            // className="form-submit-btn"
+                          // className="form-submit-btn"
                           >
                             Change Password
                           </button>
@@ -952,12 +977,22 @@ export function NewUserProfileui(props) {
                         <>
                           <div className="id_1">
                             <img
+                              onClick={() =>
+                                handleOpenModalDocs(
+                                  `http://localhost:8800/images/docu/${props.verFront}`
+                                )
+                              }
                               src={`http://localhost:8800/images/docu/${props.verFront}`}
                               alt="Front"
                             />
                           </div>
                           <div className="id_1">
                             <img
+                              onClick={() =>
+                                handleOpenModalDocs(
+                                  `http://localhost:8800/images/docu/${props.verBack}`
+                                )
+                              }
                               src={`http://localhost:8800/images/docu/${props.verBack}`}
                               alt="Back"
                             />
@@ -972,6 +1007,11 @@ export function NewUserProfileui(props) {
                         <>
                           <div className="id_1">
                             <img
+                              onClick={() =>
+                                handleOpenModalDocs(
+                                  `http://localhost:8800/images/docu/${props.verDoc1}`
+                                )
+                              }
                               src={`http://localhost:8800/images/docu/${props.verDoc1}`}
                               alt="License"
                             />
@@ -979,6 +1019,28 @@ export function NewUserProfileui(props) {
                         </>
                       ) : null
                     }
+
+                    <>
+                      <Modal
+                        open={openModal}
+                        onClose={() => setOpenModal(false)}
+                      >
+                        <ModalDialog layout="fullscreen">
+                          <ModalClose
+                            color="danger"
+                            variant="solid"
+                            size="lg"
+                          />
+                          <DialogContent>
+                            <img
+                              src={filePath}
+                              alt={`Doc Image`}
+                              style={imageStyle}
+                            />
+                          </DialogContent>
+                        </ModalDialog>
+                      </Modal>
+                    </>
                   </div>
 
                   {/* -------------------------- Feedback tab ------------------------------ */}
@@ -1035,6 +1097,24 @@ export function NewViewUserProfile(props) {
   const [buttonPopup1, setButtonPopup1] = useState(false);
   const [buttonPopup2, setButtonPopup2] = useState(false);
 
+  //modal for pics
+  //adrean 12/17/2024
+  const [showModal, setShowModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [filePath, setFilePath] = useState();
+  const handleOpenModalDocs = (docs) => {
+    setOpenModal(true);
+    setFilePath(docs);
+  };
+
+  const imageStyle = {
+    padding: "20px",
+    margin: "10px",
+    maxWidth: "95%",
+    borderRadius: "5px",
+    border: "1px solid #ccc",
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+  };
   return (
     <>
       <div class="container">
@@ -1043,7 +1123,10 @@ export function NewViewUserProfile(props) {
             <div class="row gy-4">
               <div class="col-12">
                 <div class="card widget-card border-light shadow-sm">
-                  <div class="card-header text-bg-primary">Profile Catcher</div>
+                  <div class="card-header text-bg-primary">
+                    Profile {props.type}
+                  </div>
+
                   <div class="card-body">
                     <div class="text-center mb-3">
                       {props.profileImg ? (
@@ -1059,6 +1142,14 @@ export function NewViewUserProfile(props) {
                     <h5 class="text-center mb-1">
                       {props.fname} {props.lname}
                     </h5>
+                    {props.type === "Employer" ?
+                      <p class="text-center text-secondary mb-4">
+                        Employer
+                      </p> : <p class="text-center text-secondary mb-4">
+                        Catcher
+                      </p>
+                    }
+
 
                     {/* --------------------- Rating --------------------- */}
                     {props.type === "Catcher" ? (
@@ -1068,7 +1159,7 @@ export function NewViewUserProfile(props) {
                           <span>
                             <StarRating rating={props.rate} />
                             <p>
-                              <i>{props.rate.toFixed(1)}</i>
+                              <i>{props.rate ? props.rate.toFixed(1) : null}</i>
                             </p>
                           </span>
                         </div>
@@ -1312,7 +1403,23 @@ export function NewViewUserProfile(props) {
                         Reviews
                       </button>
                     </li>
-                  ) : null}
+                  ) : null
+                  }
+                  {/* <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="reviews-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#reviews-tab-pane"
+                      type="button"
+                      role="tab"
+                      aria-controls="reviews-tab-pane"
+                      aria-selected="false"
+                    >
+                      Reviews
+                    </button>
+                  </li> */}
+
                 </ul>
                 {/* ------------------------ Overview tab ---------------------------- */}
                 <div class="tab-content pt-4" id="profileTabContent">
@@ -1422,12 +1529,22 @@ export function NewViewUserProfile(props) {
                         <>
                           <div className="id_1">
                             <img
+                              onClick={() =>
+                                handleOpenModalDocs(
+                                  `http://localhost:8800/images/docu/${props.verFront}`
+                                )
+                              }
                               src={`http://localhost:8800/images/docu/${props.verFront}`}
                               alt="Front"
                             />
                           </div>
                           <div className="id_1">
                             <img
+                              onClick={() =>
+                                handleOpenModalDocs(
+                                  `http://localhost:8800/images/docu/${props.verBack}`
+                                )
+                              }
                               src={`http://localhost:8800/images/docu/${props.verBack}`}
                               alt="Back"
                             />
@@ -1442,6 +1559,11 @@ export function NewViewUserProfile(props) {
                         <>
                           <div className="id_1">
                             <img
+                              onClick={() =>
+                                handleOpenModalDocs(
+                                  `http://localhost:8800/images/docu/${props.verDoc1}`
+                                )
+                              }
                               src={`http://localhost:8800/images/docu/${props.verDoc1}`}
                               alt="License"
                             />
@@ -1449,6 +1571,27 @@ export function NewViewUserProfile(props) {
                         </>
                       ) : null
                     }
+                    <>
+                      <Modal
+                        open={openModal}
+                        onClose={() => setOpenModal(false)}
+                      >
+                        <ModalDialog layout="fullscreen">
+                          <ModalClose
+                            color="danger"
+                            variant="solid"
+                            size="lg"
+                          />
+                          <DialogContent>
+                            <img
+                              src={filePath}
+                              alt={`Doc Image`}
+                              style={imageStyle}
+                            />
+                          </DialogContent>
+                        </ModalDialog>
+                      </Modal>
+                    </>
                   </div>
 
                   {/* -------------------------- Feedback tab ------------------------------ */}
@@ -1467,7 +1610,23 @@ export function NewViewUserProfile(props) {
                       <MyFeedback id={props.userID} />
                       <MyFeedback id={props.id} />
                     </div>
-                  ) : null}
+                  ) : null
+                  }
+
+                  {/* <div
+                    class="tab-pane fade"
+                    id="reviews-tab-pane"
+                    role="tabpanel"
+                    aria-labelledby="documents-tab"
+                    tabindex="0"
+                  >
+                    <h5 class="mb-3">Feedback: </h5>
+                    <h5 class="mb-3">Previous Employers feedbacks & rating</h5>
+                    <MyFeedback id={props.userID} />
+                    <MyFeedback id={props.id} />
+                  </div> */}
+
+
                 </div>
               </div>
             </div>

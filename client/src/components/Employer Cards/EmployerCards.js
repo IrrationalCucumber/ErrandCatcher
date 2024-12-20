@@ -50,20 +50,20 @@ const EmployerCard = ({ employer }) => {
       <div style={{ marginTop: "32px", marginBottom: "16px" }}>
         <div class="container">
           <div class="row d-flex justify-content-center align-items-center gap-4">
-            <div class="col-md-4 col-xl-3">
-              <div class="card bg-c-blue order-card">
+            <div class="col-md-4 col-xl-3 mb-3">
+              <div class="card bg-c-blue order-card text-center">
                 <div class="card-block">
                   <Link
+                    className="linkempcards"
                     style={{ textDecoration: "none" }}
                     to={`/dashboard/errands`}
                   >
-                    {/* style={{ letterSpacing: "1px" }} */}
-                    <h3 class="m-b-20 fw-semibold" > <PostAddIcon sx={{ color: "white", fontSize: 24, }} /> Post</h3>
-                    <h2 class="text-right">
+                    <h3 class="m-b-20 fw-semibold">
+                      <PostAddIcon sx={{ color: "white", fontSize: 24 }} /> Posted
+                    </h3>
+                    <h2 class="text-center">
                       <i class="fa fa-cart-plus f-left"></i>
-                      <span>
-                        {counts.numPosts}
-                      </span>
+                      <span>{counts.numPosts}</span>
                     </h2>
                     <p class="m-b-0">See what you have post</p>
                   </Link>
@@ -71,19 +71,20 @@ const EmployerCard = ({ employer }) => {
               </div>
             </div>
 
-            <div class="col-md-4 col-xl-3">
-              <div class="card bg-c-green order-card">
+            <div class="col-md-4 col-xl-3 mb-3">
+              <div class="card bg-c-green order-card text-center">
                 <div class="card-block">
                   <Link
+                    className="linkempcards"
                     style={{ textDecoration: "none" }}
                     to={`/dashboard/applicants`}
                   >
-                    <h3 class="m-b-20 fw-semibold" > <GroupIcon sx={{ color: "white", fontSize: 24, }} /> Applicants</h3>
-                    <h2 class="text-right">
+                    <h3 class="m-b-20 fw-semibold">
+                      <GroupIcon sx={{ color: "white", fontSize: 24 }} /> Applicants
+                    </h3>
+                    <h2 class="text-center">
                       <i class="fa fa-rocket f-left"></i>
-                      <span>
-                        {counts.numApplicants}
-                      </span>
+                      <span>{counts.numApplicants}</span>
                     </h2>
                     <p class="m-b-0">View your applicants here</p>
                   </Link>
@@ -91,20 +92,20 @@ const EmployerCard = ({ employer }) => {
               </div>
             </div>
 
-            <div class="col-md-4 col-xl-3">
-              <div class="card bg-c-yellow order-card">
+            <div class="col-md-4 col-xl-3 mb-3">
+              <div class="card bg-c-yellow order-card text-center">
                 <div class="card-block">
                   <Link
+                    className="linkempcards"
                     style={{ textDecoration: "none" }}
-                    // to={`/dashboard/errands/${userID}`}
                     to={`/dashboard/ongoing`}
                   >
-                    <h3 class="m-b-20 fw-semibold"> <PendingActionsIcon sx={{ color: "white", fontSize: 24, }} /> Ongoing</h3>
-                    <h2 class="text-right">
+                    <h3 class="m-b-20 fw-semibold">
+                      <PendingActionsIcon sx={{ color: "white", fontSize: 24 }} /> Ongoing
+                    </h3>
+                    <h2 class="text-center">
                       <i class="fa fa-refresh f-left"></i>
-                      <span>
-                        {counts.numErrands}
-                      </span>
+                      <span>{counts.numErrands}</span>
                     </h2>
                     <p class="m-b-0">See who's still ongoing</p>
                   </Link>

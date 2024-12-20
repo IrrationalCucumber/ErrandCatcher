@@ -3,7 +3,7 @@
 //03-05-24 fetch&pulled, added the /:userID
 
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import {
   Chip,
@@ -29,10 +29,15 @@ function NavDropdown(props) {
 
   const location = useLocation();
   const { user } = useAuth();
-
+  const navigate = useNavigate();
+  const handleSignOut = () => {
+    navigate(signOutLink);
+    logout();
+  };
   const profileLink = `/profile/me`; // URL for the profile page
   const signOutLink = "/sign-in"; // URL for the sign out page
   const historyLink = "/history"; // URL for the history page
+  const generateReportLink = "/dashboard/admin/generate-report";
 
   const { logout } = useAuth();
   const handleLogout = () => {
@@ -74,7 +79,7 @@ function NavDropdown(props) {
           gap: "22px",
         }}
       >
-        <MenuItem>
+        <MenuItem onClick={() => navigate(profileLink)}>
           <Link
             to={profileLink}
             style={{
@@ -88,7 +93,11 @@ function NavDropdown(props) {
           </Link>
         </MenuItem>
         {user.userType === "Catcher" ? (
-          <MenuItem>
+          <MenuItem
+            onClick={() => {
+              navigate("/dashboard/my-application");
+            }}
+          >
             <Link
               to={"/dashboard/my-application"}
               style={{
@@ -107,20 +116,41 @@ function NavDropdown(props) {
             </Link>
           </MenuItem>
         ) : null}
-        <MenuItem>
-          <Link
-            to={historyLink}
-            style={{
-              // display: "block",
-              // padding: "12px 16px",
-              textDecoration: "none",
-              color: "#565360",
-            }}
-          >
-            <HistoryIcon /> History
-          </Link>
-        </MenuItem>
-        <MenuItem>
+        {/* admin history: generate report */}
+        {user.userType === "admin" ? (
+          <MenuItem onClick={() => navigate(generateReportLink)}>
+            <Link
+              to={historyLink}
+              style={{
+                // display: "block",
+                // padding: "12px 16px",
+                textDecoration: "none",
+                color: "#565360",
+              }}
+            >
+              <HistoryIcon /> Generate Report
+            </Link>
+          </MenuItem>) :
+          // employer & catcher history
+          <MenuItem onClick={() => navigate(historyLink)}>
+            <Link
+              to={historyLink}
+              style={{
+                // display: "block",
+                // padding: "12px 16px",
+                textDecoration: "none",
+                color: "#565360",
+              }}
+            >
+              <HistoryIcon /> History
+            </Link>
+          </MenuItem>
+        }
+        <MenuItem
+          onClick={() => {
+            handleSignOut();
+          }}
+        >
           <Link
             onClick={handleLogout}
             to={signOutLink}

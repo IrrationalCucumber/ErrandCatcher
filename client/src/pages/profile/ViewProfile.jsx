@@ -63,6 +63,7 @@ function ViewProfile(id) {
           profileImage: retrievedAccount.profileImage,
           status: retrievedAccount.accountStatus,
           skills: retrievedAccount.userQualification,
+          type: retrievedAccount.accountType,
           id: retrievedAccount.userID,
         });
       } catch (err) {

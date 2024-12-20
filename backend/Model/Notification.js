@@ -24,9 +24,9 @@ const Notif = {
   //add new notif
   postNotif: (notifData, callback) => {
     const { userID, notificationType, notifDesc, notifDate } = notifData;
-    values = [userID, notificationType, notifDesc, notifDate];
+    values = [userID, notificationType, notifDesc];
     db.query(
-      "INSERT INTO notification (`notifUserID`, `notificationType`, `notifDesc`, `notifDate`) VALUES (?)",
+      "INSERT INTO notification (`notifUserID`, `notificationType`, `notifDesc`, `notifDate`) VALUES (?, NOW())",
       [values],
       callback
     );

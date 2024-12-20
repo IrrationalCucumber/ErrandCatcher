@@ -14,7 +14,7 @@ function SearchPage() {
   // const navigate = useNavigate();
   //  const { user } = useAuth();
   const location = useLocation();
-  const term = location.pathname.split("/")[2];
+  const term = decodeURIComponent(location.pathname.split("/")[2]);
   const [message, setMessage] = useState("");
   // const [searchQuery, setSearchQuery] = useState("");
   //filter varibales

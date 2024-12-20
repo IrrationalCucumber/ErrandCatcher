@@ -17,17 +17,17 @@
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
-.search {
-  margin-bottom: 10px; /* Adjust margin as needed */
+.employer__applicants__search {
+  margin-bottom: 1rem; /* Adjust margin as needed */
   display: flex;
   align-items: center;
+  width: 35%;
 }
 
-.search input[type="text"],
-.search button {
+.employer__applicants__search input[type="text"],
+.employer__applicants__search button {
   padding: 8px;
   font-size: 16px;
-  margin-bottom: 20px;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   font-size: 12px;

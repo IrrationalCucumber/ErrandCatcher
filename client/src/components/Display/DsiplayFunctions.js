@@ -9,6 +9,11 @@ export function Capitalize(text) {
   return capitalizeThis.charAt(0).toUpperCase() + capitalizeThis.slice(1);
 }
 
+export function CapitalizeAllLetters(text) {
+  if (!text) return null;
+  return text.toUpperCase(); // Convert the entire string to uppercase
+}
+
 export function DisplayDate(theDate) {
   //Display format to date
   // months into words
