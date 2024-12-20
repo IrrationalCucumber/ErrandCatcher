@@ -20,7 +20,8 @@ const Signup = () => {
     gender: "",
     bday: "",
     email: "",
-    // contactNumber: "",
+    contact: "",
+    address: "",
     type: "",
     dateCreated: "",
   });
@@ -92,7 +93,12 @@ const Signup = () => {
     if (!account.gender) {
       newErrors.gender = "Gender is required";
     }
-
+    if (!account.contact) {
+      newErrors.contact = "Contact number is required";
+    }
+    if (!account.address) {
+      newErrors.address = "Address is required";
+    }
     if (!account.type) {
       newErrors.type = "Please select a type of User";
     }
@@ -136,7 +142,8 @@ const Signup = () => {
       bday: "",
       gender: "",
       email: "",
-      contactNumber: "",
+      contact: "",
+      address: "",
       type: "",
       dateCreated: "",
     });
@@ -226,28 +233,6 @@ const Signup = () => {
     return `${year}-${month < 10 ? "0" + month : month}-${
       day < 10 ? "0" + day : day
     }`;
-  };
-
-  const handleOptionChange = (e) => {
-    setSelectedOption(e.target.value);
-  };
-
-  const handleTypeChange = () => {
-    setSelectedType(selectedOption);
-    console.log(selectedOption);
-    if (selectedOption === "Catcher") {
-      // Checkbox is checked, store one value
-      setAccount((prev) => ({ ...prev, type: "Catcher" }));
-    } else {
-      // Checkbox is not checked, store another value
-      setAccount((prev) => ({ ...prev, type: "Employer" }));
-    }
-  };
-
-  const handleReset = () => {
-    setSelectedType("");
-    setSelectedOption("");
-    resetForm();
   };
 
   const handleChange = (e) => {
@@ -459,6 +444,57 @@ const Signup = () => {
                     )}
                   </div>
                 </div>{" "}
+                {/* start */}
+                <div
+                  className="SUrow"
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    margin: "0 -15px",
+                  }}
+                >
+                  <div className="col">
+                    <label className="SUlabel">Contact Number</label>
+                    <input
+                      // className={errorMessage ? "error" : ""}
+                      className={errors.contact ? "error" : ""}
+                      type="text"
+                      placeholder="Enter Contact number..."
+                      onChange={handleChange}
+                      name="contact"
+                      value={account.contact}
+                      autocomplete="off"
+                      required
+                    />
+                    <div className="err">
+                      {" "}
+                      {errors.contact && (
+                        <span style={{ color: "#f02849", fontSize: "14px" }}>
+                          {errors.contact}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="col">
+                    <label className="SUlabel">Address</label>
+                    <input
+                      // className={errorMessage ? "error" : ""}
+                      className={errors.address ? "error" : ""}
+                      type="text"
+                      placeholder="Enter Address..."
+                      onChange={handleChange}
+                      name="address"
+                      value={account.address}
+                      required
+                    />
+                    {errors.address && (
+                      <span style={{ color: "#f02849", fontSize: "14px" }}>
+                        {errors.address}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                {/* end */}
                 <div
                   className="SUrow"
                   style={{

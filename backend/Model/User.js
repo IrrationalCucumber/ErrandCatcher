@@ -88,10 +88,7 @@ const User = {
       `UPDATE useraccount
       SET password = ?
     WHERE userID = ?`,
-      [
-        password,
-        id,
-      ],
+      [password, id],
       callback
     );
   },
@@ -131,7 +128,7 @@ const User = {
       contact,
       //age,
       bday,
-      //address,
+      address,
       type,
       dateCreated,
     } = userData;
@@ -145,12 +142,12 @@ const User = {
       contact,
       //age,
       bday,
-      //address,
+      address,
       type,
       dateCreated,
     ];
     db.query(
-      "INSERT INTO useraccount (`username`, `password`, `userLastname`, `userFirstname`,`userGender`, `userEmail`,`userContactNum`, `userBirthday`, `accountType`, `dateCreated` ) VALUES (?)",
+      "INSERT INTO useraccount (`username`, `password`, `userLastname`, `userFirstname`,`userGender`, `userEmail`,`userContactNum`, `userBirthday`, `userAddress`, `accountType`, `dateCreated` ) VALUES (?)",
       [values],
       callback
     );
