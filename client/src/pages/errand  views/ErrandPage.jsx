@@ -303,28 +303,30 @@ const ErrandPage = () => {
             UPDATE
           </button>
         )}
-        {user.userType === "Catcher" && user.status === "Verified" && (
-          <div className="formButton">
-            <Button
-              className="formButton"
-              disabled={isApplied ? true : false}
-              size="lg"
-              variant="solid"
-              onClick={
-                isApplied
-                  ? null
-                  : (e) => {
-                      handleApply(true);
-                    }
-              }
-              style={{
-                backgroundColor: isApplied ? "none" : "",
-              }}
-            >
-              {isApplied ? "Applied" : "APPLY"}
-            </Button>
-          </div>
-        )}
+        {user.userType === "Catcher" &&
+          user.status === "Verified" &&
+          user.hasErrand === "false" && (
+            <div className="formButton">
+              <Button
+                className="formButton"
+                disabled={isApplied ? true : false}
+                size="lg"
+                variant="solid"
+                onClick={
+                  isApplied
+                    ? null
+                    : (e) => {
+                        handleApply(true);
+                      }
+                }
+                style={{
+                  backgroundColor: isApplied ? "none" : "",
+                }}
+              >
+                {isApplied ? "Applied" : "APPLY"}
+              </Button>
+            </div>
+          )}
 
         {/* <button className="formButton" onClick={handleClick}>
           UPDATE
