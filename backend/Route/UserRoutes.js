@@ -23,5 +23,6 @@ router.put(
 router.post("/sign-up/", userController.postSignUp);
 // Add more routes as needed...
 router.get("/search-user/", userController.getSearchByTerm);
+router.get("/check-has-errand/:id", userController.getCatcherHasErrand);
 
 module.exports = router;
