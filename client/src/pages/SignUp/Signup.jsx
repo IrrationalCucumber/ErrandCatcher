@@ -95,6 +95,8 @@ const Signup = () => {
     }
     if (!account.contact) {
       newErrors.contact = "Contact number is required";
+    } else if (account.contact < 11 || !/([0-9])/.test(account.contact)) {
+      newErrors.contact = "Contact number is incorrect";
     }
     if (!account.address) {
       newErrors.address = "Address is required";
