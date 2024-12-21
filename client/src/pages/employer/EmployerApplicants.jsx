@@ -302,9 +302,9 @@ const EmployerApplicants = () => {
         console.log("Other applications denied successfully.");
       }
       //set the errand status to caught
-      // await axios.put(
-      //   `http://localhost:8800/errand-taken/${applicationErrandID}`
-      // );
+      await axios.put(
+        `http://localhost:8800/errand-taken/${applicationErrandID}`
+      );
       //set catcher has errand
       await axios.put(`http://localhost:8800/has-errand/${catcherID}`);
     } catch (err) {
