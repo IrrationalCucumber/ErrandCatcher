@@ -84,8 +84,8 @@ const Trans = {
   putUpdateTransaction: (id, status, date, callback) => {
     const { dateComplete } = date;
     db.query(
-      `UPDATE errandTransaction SET transStatus = ?, transDateComplete = ? WHERE transactID = ?`,
-      [status, dateComplete, id],
+      `UPDATE errandTransaction SET transStatus = ?, transDateComplete = NOW() WHERE transactID = ?`,
+      [status, id],
       callback
     );
   },
