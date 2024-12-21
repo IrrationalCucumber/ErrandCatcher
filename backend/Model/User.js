@@ -161,14 +161,27 @@ const User = {
       callback
     );
   },
-  // update hasErrand if Catcher have or no errand
-  putCatcherHasErrand: (id, state, cb) => {
+  // update hasErrand if Catcher have or finish errand
+  putCatcherHasDoneErrand: (id, state, cb) => {
     db.query(
       `UPDATE useraccount SET userHasErrand = ? WHERE userID = ?`,
       [state, id],
       cb
     );
   },
+  //set catcher/s has finish errand
+  // putCatchersHasDoneErrand: (id, state, cb) => {
+  //   db.query(
+  //     `UPDATE useraccount
+  //       SET userHasErrand = 'false'
+  //       WHERE userID IN (
+  //       SELECT DISTINCT et.transCatcherID
+  //       FROM errandtransaction et
+  //       WHERE et.transErrandID = ?)`,
+  //     [id],
+  //     cb
+  //   );
+  // },
 };
 
 module.exports = User;

@@ -25,5 +25,6 @@ router.post("/sign-up/", userController.postSignUp);
 router.get("/search-user/", userController.getSearchByTerm);
 router.get("/check-has-errand/:id", userController.getCatcherHasErrand);
 router.put("/has-errand", userController.putCatcherHasErrand); // used for updating if errand is accepted
+router.put("/has-done-errand", userController.putCatcherHasDoneErrand); // used for updating if errand is done
 
 module.exports = router;
