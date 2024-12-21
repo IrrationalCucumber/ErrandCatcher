@@ -296,6 +296,8 @@ const EmployerApplicants = () => {
       await axios.put(
         `http://localhost:8800/errand-taken/${applicationErrandID}`
       );
+      //set catcher has errand
+      await axios.put(`http://localhost:8800/has-errand/${catcherID}`);
     } catch (err) {
       console.log(err);
     }
