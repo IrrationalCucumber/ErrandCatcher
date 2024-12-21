@@ -52,6 +52,7 @@ const Menu = () => {
   return (
     <>
       <SearchBar
+        hasErrand={user.hasErrand}
         value={searchQuery}
         onClick={handleSearch}
         onChange={(e) => setSearchQuery(e.target.value)}
@@ -73,22 +74,6 @@ const Menu = () => {
         icons={<HourglassBottomIcon />}
       />
 
-      {/* <div className="search-bar">
-        {/* <input
-          type="text"
-          placeholder="Search..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <button
-          onClick={(e) => {
-            navigate(`/search/${searchQuery}`);
-          }}
-          style={{ backgroundColor: "#1679AB" }}
-        >
-          Search
-        </button> 
-      </div> */}
       <section className="Menu" id="Menu">
         {/* bootstrap class applied */}
         <div className="box-container d-flex justify-content-center align-items-center">
@@ -143,12 +128,6 @@ const Menu = () => {
           </div>
         </div>
       </section>
-
-      {user.userType.toLocaleUpperCase() === "catcher" && (
-        <>
-          <Cards />
-        </>
-      )}
     </>
   );
 };
