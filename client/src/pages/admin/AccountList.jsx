@@ -48,18 +48,18 @@ const AccountList = () => {
   //display data per page
   const [itemsPerPage] = useState(10);
   //useEffect to handle error
+  const fetchAllAccount = async () => {
+    try {
+      const res = await axios.get("http://localhost:8800/users");
+      //http://localhost:8800/user - local
+      //http://192.168.1.47:8800/user - network
+      setAccounts(res.data);
+      //console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
-    const fetchAllAccount = async () => {
-      try {
-        const res = await axios.get("http://localhost:8800/users");
-        //http://localhost:8800/user - local
-        //http://192.168.1.47:8800/user - network
-        setAccounts(res.data);
-        //console.log(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
     fetchAllAccount();
   }, []);
   //view user details
@@ -281,6 +281,9 @@ const AccountList = () => {
       notif.notificationType = "Suspension";
       notif.notifDate = getTimeAndDate();
       await axios.post("http://localhost:8800/notify", notif);
+      //refresh list
+      const interval = setInterval(fetchAllAccount, 1000);
+      return () => clearInterval(interval);
     } catch (err) {
       console.log(err);
     }
@@ -296,6 +299,9 @@ const AccountList = () => {
       notif.notificationType = "Account Reactivation";
       notif.notifDate = getTimeAndDate();
       await axios.post("http://localhost:8800/notify", notif);
+      //refresh list
+      const interval = setInterval(fetchAllAccount, 1000);
+      return () => clearInterval(interval);
     } catch (err) {
       console.log(err);
     }
@@ -310,6 +316,9 @@ const AccountList = () => {
       notif.notificationType = "Account Deactivated";
       notif.notifDate = getTimeAndDate();
       await axios.post("http://localhost:8800/notify", notif);
+      //refresh list
+      const interval = setInterval(fetchAllAccount, 1000);
+      return () => clearInterval(interval);
     } catch (err) {
       console.log(err);
     }
