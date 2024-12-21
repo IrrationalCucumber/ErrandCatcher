@@ -170,18 +170,18 @@ const User = {
     );
   },
   //set catcher/s has finish errand
-  // putCatchersHasDoneErrand: (id, state, cb) => {
-  //   db.query(
-  //     `UPDATE useraccount
-  //       SET userHasErrand = 'false'
-  //       WHERE userID IN (
-  //       SELECT DISTINCT et.transCatcherID
-  //       FROM errandtransaction et
-  //       WHERE et.transErrandID = ?)`,
-  //     [id],
-  //     cb
-  //   );
-  // },
+  putCatchersHasDoneErrand: (id, cb) => {
+    db.query(
+      `UPDATE useraccount
+        SET userHasErrand = 'false'
+        WHERE userID IN (
+        SELECT DISTINCT et.transCatcherID
+        FROM errandtransaction et
+        WHERE et.transErrandID = ?)`,
+      [id],
+      cb
+    );
+  },
 };
 
 module.exports = User;

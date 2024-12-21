@@ -406,11 +406,31 @@ const userController = {
       res.status(200).json({ message: "State updated successfully" });
     });
   },
-  //catcher has finish an errand
+  //catcher has finish an errand and can apply again
   putCatcherHasDoneErrand: (req, res) => {
     const id = req.params.id;
     const state = "false";
     User.putCatcherHasDoneErrand(id, state, (err) => {
+      if (err) {
+        console.error("Error updating state:", err);
+        res
+          .status(500)
+          .json({ error: "An error occurred while updating state" });
+        return;
+      }
+      // Check if any rows were affected by the update operation
+      if (result.affectedRows === 0) {
+        res.status(404).json({ error: "User not found" });
+        return;
+      }
+      // User updated successfully
+      res.status(200).json({ message: "State updated successfully" });
+    });
+  },
+  //catchers has finish an errand and can apply again
+  putCatchersHasDoneErrand: (req, res) => {
+    const id = req.params.id;
+    User.putCatchersHasDoneErrand(id, (err) => {
       if (err) {
         console.error("Error updating state:", err);
         res
