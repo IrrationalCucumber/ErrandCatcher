@@ -666,20 +666,13 @@ function OngoingCardsNew(props) {
           {user.userType === "Catcher" && (
             <>
               <div className="ongoing__cardsNewCat__buttons">
-                <button
-                  className="ongoing__cardsNewCat__button__complete"
-                  onClick={() => handleOpenMarkModal()}
-                >
-                  Mark as Completed
-                </button>
-
-                <button
+                {/* <button
                   // onClick={() => cancel(commission.commissionID)}
                   onClick={handleOpenCancelModal}
                   className="ongoing__cardsNewCat__button__cancel"
                 >
                   Cancel
-                </button>
+                </button> */}
               </div>
 
               {/* marked as completed model */}
