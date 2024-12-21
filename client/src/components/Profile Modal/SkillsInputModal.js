@@ -155,7 +155,7 @@ function SkillsInputModal(props) {
 
                   {/* Custom skill input */}
 
-                  <FormLabel>
+                  {/* <FormLabel>
                     <Typography color="primary" level="body-md" variant="plain">
                       {user.userType === "Catcher"
                         ? "Or Add specific skills:"
@@ -181,7 +181,7 @@ function SkillsInputModal(props) {
                     >
                       Add
                     </Button>
-                  </Box>
+                  </Box> */}
 
                   {/* Display selected skills */}
                   <div>

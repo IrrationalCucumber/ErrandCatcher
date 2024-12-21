@@ -156,7 +156,7 @@ export function Step1({ onNext, details, setDetail }) {
 
               {/* Custom skill input */}
 
-              <FormLabel>
+              {/* <FormLabel>
                 <Typography color="primary" level="body-md" variant="plain">
                   {user.userType === "Catcher"
                     ? "Or Add specific skills:"
@@ -178,7 +178,7 @@ export function Step1({ onNext, details, setDetail }) {
                 >
                   Add
                 </Button>
-              </Box>
+              </Box> */}
 
               {/* Display selected skills */}
               <div>
