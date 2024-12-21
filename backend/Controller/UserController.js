@@ -391,7 +391,7 @@ const userController = {
     const state = "true";
     User.putCatcherHasErrand(id, state, (err) => {
       if (err) {
-        console.error("Error updating state:", err);
+        console.error("Error updating state:", err, result);
         res
           .status(500)
           .json({ error: "An error occurred while updating state" });
@@ -410,7 +410,7 @@ const userController = {
   putCatcherHasDoneErrand: (req, res) => {
     const id = req.params.id;
     const state = "false";
-    User.putCatcherHasDoneErrand(id, state, (err) => {
+    User.putCatcherHasDoneErrand(id, state, (err, result) => {
       if (err) {
         console.error("Error updating state:", err);
         res
