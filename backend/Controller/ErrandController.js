@@ -292,6 +292,27 @@ const ErrandController = {
       res.json(errands);
     });
   },
+  //update errand statis to disabled
+  updateStatusToDisabled: (req, res) => {
+    const comID = req.params.id;
+    const status = "Disabled";
+    Errand.updateErrandStatus(comID, status, (error, result) => {
+      if (error) {
+        console.error("Error updating errand:", error);
+        res
+          .status(500)
+          .json({ error: "An error occurred while updating errand" });
+        return;
+      }
+      // Check if any rows were affected by the update operation
+      if (result.affectedRows === 0) {
+        res.status(404).json({ error: "Errand not found" });
+        return;
+      }
+      // User updated successfully
+      res.status(200).json({ message: "Errand updated successfully" });
+    });
+  },
 };
 
 module.exports = ErrandController;
