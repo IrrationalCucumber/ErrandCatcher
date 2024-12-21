@@ -98,7 +98,14 @@ const EmployerApplicants = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = applicants.slice(indexOfFirstItem, indexOfLastItem);
 
-  const headers = ["DATE", "CATCHER", "SKILLS", "ERRAND TITLE", "ACTION", ""];
+  const headers = [
+    "DATE",
+    "CATCHER",
+    "AVAILABILITY",
+    "ERRAND TITLE",
+    "ACTION",
+    "",
+  ];
   const applicantData = applicants.map((applicant) => [
     //applicant.applicationID,
     // DisplayDate(applicant.applicationDate),
@@ -107,9 +114,7 @@ const EmployerApplicants = () => {
       {DisplayDate(applicant.applicationDate)}
     </Box>,
     `${applicant.userFirstname} ${applicant.userLastname}`,
-    applicant.userQualification
-      ? applicant.userQualification
-      : "No Skills provided",
+    applicant.userHasErrand === "true" ? "Unavailable" : "Available",
     // applicant.commissionTitle,
     <Box display="flex" alignItems="center" gap={1}>
       <BadgeOutlinedIcon sx={{ color: "#555" }} />
@@ -130,7 +135,11 @@ const EmployerApplicants = () => {
           variant="outlined"
           spacing="0"
         >
-          <Button color="success" onClick={() => handleOpenAcceptModal()}>
+          <Button
+            color="success"
+            onClick={() => handleOpenAcceptModal()}
+            disabled={applicant.userHasErrand === "false" ? true : false}
+          >
             Accept
           </Button>
           <Button color="danger" onClick={() => handleOpenDeclineModal()}>
