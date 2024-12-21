@@ -31,7 +31,11 @@ import ErrorIcon from "@mui/icons-material/Error";
 import ModalFeedback from "../../components/ModalFeedback";
 import LoadingBackdrop from "../../components/LoadingSpinner";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
-import { AmountDecimal, Capitalize, CapitalizeAllLetters, } from "../../components/Display/DsiplayFunctions";
+import {
+  AmountDecimal,
+  Capitalize,
+  CapitalizeAllLetters,
+} from "../../components/Display/DsiplayFunctions";
 
 function OngoingCardsNew(props) {
   const { status } = props;
@@ -48,18 +52,17 @@ function OngoingCardsNew(props) {
   //           ? "danger"
   //           : "default";
 
-
   // Determine custom background color based on status
   const chipBackgroundColor =
     status === "Task Done"
       ? "#D6B84F"
       : status === "Ongoing"
-        ? "#F26B0F"
-        : status === "Complete"
-          ? "#5CB85C"
-          : status === "Cancelled"
-            ? "#D9534F"
-            : "#C0C0C0";
+      ? "#F26B0F"
+      : status === "Complete"
+      ? "#5CB85C"
+      : status === "Cancelled"
+      ? "#D9534F"
+      : "#C0C0C0";
 
   // White text for better contrast
   const chipTextColor = "#FFFFFF";
@@ -303,26 +306,24 @@ function OngoingCardsNew(props) {
   };
 
   // complete transaction
-  const handleComplete = async (transactID, employerID) => {
+  const handleComplete = async (transactID, catcherID) => {
     try {
       //alert(employerID);
 
       // add a notification to the commission's employer
       notif.notifDesc = "A Catcher has mark completed an errand";
-      notif.userID = employerID;
+      notif.userID = catcherID;
       notif.notificationType = "Errand completed";
       notif.notifDate = getTimeAndDate();
 
-      await axios.post("http://localhost:8800/notify", notif);
+      //await axios.post("http://localhost:8800/notify", notif);
       //complete the transaction
       // await axios.put(`http://localhost:8800/complete-trans/${transactID}`, {
       //     params: { date: getTimeAndDate() },
       // });
 
       // catcher the one who marked as complete....
-      await axios.put(
-        `http://localhost:8800/catcher/complete/${transactID}/${userID}`
-      );
+      await axios.put(`http://localhost:8800/complete-trans/${transactID}`);
       console.log("status: completed", userID, transactID);
 
       // alert("Successfully marked errand as completed");
@@ -415,7 +416,7 @@ function OngoingCardsNew(props) {
         contentMes="You have successfully Rated a catcher."
         color="success"
         colorText="green"
-      // icon={ErrorIcon}
+        // icon={ErrorIcon}
       />
 
       <LoadingBackdrop
@@ -431,7 +432,7 @@ function OngoingCardsNew(props) {
         contentMes="You have successfully marked as completed"
         color="success"
         colorText="green"
-      // icon={ErrorIcon}
+        // icon={ErrorIcon}
       />
 
       <div class="cardnew">
@@ -439,7 +440,7 @@ function OngoingCardsNew(props) {
           <Box class="boxer">
             {/* commissionType props */}
             {props.icon === "HomeService - Indoor" ||
-              props.icon === "HomeService - Outdoor" ? (
+            props.icon === "HomeService - Outdoor" ? (
               <OtherHousesIcon sx={{ color: "#fff", fontSize: 100 }} />
             ) : props.icon === "Transportation" ? (
               <LocalShippingIcon sx={{ color: "#fff", fontSize: 100 }} />
@@ -481,7 +482,8 @@ function OngoingCardsNew(props) {
               {CapitalizeAllLetters(props.status)}
             </Chip>
           </h7> */}
-          <h7 className="cards__header__seven">Details:
+          <h7 className="cards__header__seven">
+            Details:
             <Chip
               sx={{
                 fontSize: "0.92rem",
@@ -490,7 +492,7 @@ function OngoingCardsNew(props) {
                 marginLeft: "6px",
                 backgroundColor: chipBackgroundColor,
                 color: chipTextColor,
-                '&:hover': {
+                "&:hover": {
                   opacity: 0.9,
                 },
               }}
@@ -514,9 +516,7 @@ function OngoingCardsNew(props) {
           {/* </ul> */}
 
           {/* View Errand */}
-          <Link
-            style={{ marginTop: "4px", }}
-            to={props.path}>
+          <Link style={{ marginTop: "4px" }} to={props.path}>
             <a class="action" href="#">
               Find out more
               <span aria-hidden="true">→</span>
@@ -539,35 +539,52 @@ function OngoingCardsNew(props) {
             )}
           </p>
 
-          {user.userType === "Employer" && props.status === "Complete" && (
+          {user.userType === "Employer" && (
             <>
               <div className="ongoing__cardsNew__buttons">
-                <button
-                  onClick={handleOpenModal} // props
-                  className="ongoing__cards__button__feedback"
-                  disabled={clickedFeedback[props.comID]} // Disable button if it's "Feedbacked"
-                >
-                  {clickedFeedback[props.comID] ? "Rated" : "Feedback"}
-                </button>
-                <button
-                  className="ongoing__cards__button"
-                  disabled={isPaymentDisabled}
-                  onClick={() => {
-                    // props
-                    handlePayment(
-                      props.pay,
-                      props.type,
-                      props.userFname,
-                      props.userLname,
-                      props.transID,
-                      props.title,
-                      props.comID,
-                      props.transCatID
-                    );
-                  }}
-                >
-                  Payment
-                </button>
+                {props.status === "Ongoing" ? (
+                  <>
+                    {" "}
+                    <button
+                      className="ongoing__cardsNewCat__button__complete"
+                      onClick={() => handleOpenMarkModal()}
+                    >
+                      Mark as Completed
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    {" "}
+                    <button
+                      onClick={handleOpenModal} // props
+                      className="ongoing__cards__button__feedback"
+                      disabled={clickedFeedback[props.comID]} // Disable button if it's "Feedbacked"
+                    >
+                      {clickedFeedback[props.comID] ? "Rated" : "Feedback"}
+                    </button>
+                    {isPaymentDisabled ? null : (
+                      <button
+                        className="ongoing__cards__button"
+                        disabled={isPaymentDisabled}
+                        onClick={() => {
+                          // props
+                          handlePayment(
+                            props.pay,
+                            props.type,
+                            props.userFname,
+                            props.userLname,
+                            props.transID,
+                            props.title,
+                            props.comID,
+                            props.transCatID
+                          );
+                        }}
+                      >
+                        Payment
+                      </button>
+                    )}
+                  </>
+                )}
               </div>
 
               {/* modal trigger if clicked */}
@@ -617,6 +634,42 @@ function OngoingCardsNew(props) {
                   </button>
                 </div>
               </Modals>
+              {/* marked as completed model */}
+              <Modal open={openMark} onClose={() => setOpenMark(false)}>
+                <ModalDialog>
+                  <DialogTitle>
+                    <WarningRoundedIcon />
+                    Confirmation
+                  </DialogTitle>
+                  <Divider />
+                  <DialogContent>
+                    Are you sure you want to Mark as Completed this errand?
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      variant="solid"
+                      color="success"
+                      onClick={() =>
+                        // markAsCompleted(commission.commissionID)
+                        handleComplete(
+                          // props
+                          props.transID,
+                          props.transCatID
+                        )
+                      }
+                    >
+                      Yes
+                    </Button>
+                    <Button
+                      variant="plain"
+                      color="neutral"
+                      onClick={() => setOpenMark(false)}
+                    >
+                      No
+                    </Button>
+                  </DialogActions>
+                </ModalDialog>
+              </Modal>
             </>
           )}
 
