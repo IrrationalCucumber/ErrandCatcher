@@ -68,6 +68,7 @@ const Errand = {
       comLat,
       comDestLong,
       comDestLat,
+      comTags,
     } = errandData;
     const values = [
       empID,
@@ -85,12 +86,13 @@ const Errand = {
       comLat,
       comDestLong,
       comDestLat,
+      comTags,
     ];
     db.query(
       "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionStartDate`," +
         " `commissionDeadline`, `commissionLocation`, `commissionTo`,`commissionType`," +
         " `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`, " +
-        "`commissionLong`, `commissionLat`, `commissionDestLong`, `commissionDestLat`) VALUES (?)",
+        "`commissionLong`, `commissionLat`, `commissionDestLong`, `commissionDestLat`, `commissionTags`) VALUES (?)",
       [values],
       callback
     );
@@ -112,12 +114,13 @@ const Errand = {
       comLat,
       comDestLong,
       comDestLat,
+      comTags,
     } = errandData;
     db.query(
       `UPDATE commission SET commissionTitle = ?, commissionStartDate = ?, 
       commissionDeadline = ?, commissionLocation = ?, commissionTo = ?,commissionType = ?,
        commissionDesc = ?, commissionPay = ?, commissionStatus = ?, ContactNumber = ?, commissionLong = ?, commissionLat
-        = ?,commissionDestLong = ?, commissionDestLat =? WHERE commissionID = ?`,
+        = ?,commissionDestLong = ?, commissionDestLat =?, commissionTags = ? WHERE commissionID = ?`,
       [
         comTitle,
         comStart,
@@ -133,6 +136,7 @@ const Errand = {
         comLat,
         comDestLong,
         comDestLat,
+        comTags,
         id,
       ],
       callback
