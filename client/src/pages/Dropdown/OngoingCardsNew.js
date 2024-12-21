@@ -264,12 +264,6 @@ function OngoingCardsNew(props) {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   };
 
-  // const markAsCompleted = (commissionId) => {
-  //   // Perform the logic to mark the commission as completed
-  //   console.log(`Commission ${commissionId} marked as completed`);
-  //   setOpenMark(false);
-  // };
-
   // const cancel = (commissionId) => {
   //   // Perform the logic to cancel the commission
   //   console.log(`Commission ${commissionId} cancelled`);
@@ -316,16 +310,12 @@ function OngoingCardsNew(props) {
       notif.notificationType = "Errand completed";
       notif.notifDate = getTimeAndDate();
 
-      //await axios.post("http://localhost:8800/notify", notif);
-      //complete the transaction
-      // await axios.put(`http://localhost:8800/complete-trans/${transactID}`, {
-      //     params: { date: getTimeAndDate() },
-      // });
-
+      await axios.post("http://localhost:8800/notify", notif);
       // catcher the one who marked as complete....
       await axios.put(`http://localhost:8800/complete-trans/${transactID}`);
       console.log("status: completed", userID, transactID);
-
+      // catcher has done the errand
+      await axios.put(`http://localhost:8800/has-done-errand/${catcherID}`);
       // alert("Successfully marked errand as completed");
       // window.location.reload();
       handleOpencom();
