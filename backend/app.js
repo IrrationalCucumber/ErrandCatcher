@@ -369,6 +369,36 @@ app.get("/transactionsCat/:id", (req, res) => {
   });
 });
 
+app.get("/get-username/", (req, res) => {
+  const name = req.params.name;
+  const q = `SELECT username FROM useraccount`;
+  //console.log(name);
+
+  db.query(q, [name], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+
+    return res.json(data);
+  });
+});
+
+app.get("/get-email/", (req, res) => {
+  const mail = req.params.mail;
+  const q = `SELECT userEmail FROM useraccount `;
+  //console.log(mail);
+
+  db.query(q, [mail], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+
+    return res.json(data);
+  });
+});
+
 // const bcrypt = require("bcrypt");
 
 // const plainPassword = "paul";
