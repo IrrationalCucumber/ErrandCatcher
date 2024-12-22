@@ -18,21 +18,10 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import DoNotDisturbIcon from "@mui/icons-material/DoNotDisturb";
 import WhereToVoteIcon from "@mui/icons-material/WhereToVote";
-import { Typography } from "@mui/joy";
+import { Autocomplete, Typography } from "@mui/joy";
 import { AmountDecimal } from "./Display/DsiplayFunctions";
 
 function ErrandInputs(props) {
-  const [startSuggestions, setStartSuggestions] = useState([]);
-  const [startQuery, setStartQuery] = useState(""); // For starting location input (props.location)
-  const [startCoordinates, setStartCoordinates] = useState(null); // For selected starting location coordinates
-
-  const [destSuggestions, setDestSuggestions] = useState([]);
-  const [destQuery, setDestQuery] = useState(props.toValue); // For destination input
-  const [destCoordinates, setDestCoordinates] = useState(null); // For selected destination coordinates
-
-  const [isStartSelected, setIsStartSelected] = useState(false); // New state to track if a suggestion was clicked
-  const [isDestSelected, setIsDestSelected] = useState(false); // Same for destination
-
   // Add a new state for tracking end date validation error
   const [endDateError, setEndDateError] = useState("");
 
@@ -53,13 +42,13 @@ function ErrandInputs(props) {
   // Modify the handleChange prop to include end date validation
   const modifiedHandleChange = (e) => {
     const { name, value } = e.target;
-    
+
     // If it's the start or end date, validate
     if (name === props.start || name === props.deadline) {
       // When start date changes, validate against existing end date
       if (name === props.start) {
         validateEndDate(value, props.dlValue);
-      } 
+      }
       // When end date changes, validate against existing start date
       else if (name === props.deadline) {
         validateEndDate(props.startValue, value);
@@ -69,143 +58,6 @@ function ErrandInputs(props) {
     // Call the original handleChange
     props.handleChange(e);
   };
-
-  // Fetch suggestions for start location from Mapbox API
-  // const fetchStartSuggestions = async (searchText) => {
-  //   if (!searchText) {
-  //     setStartSuggestions([]);
-  //     return;
-  //   }
-
-  //   try {
-  //     const response = await axios.get(
-  //       `https://api.mapbox.com/geocoding/v5/mapbox.places/${searchText}.json`,
-  //       {
-  //         params: {
-  //           access_token: props.accessToken, // Add your Mapbox access token
-  //           autocomplete: true,
-  //           limit: 5,
-  //           country: "PH", // Restrict oy Philippines
-  //         },
-  //       }
-  //     );
-  //     const features = response.data.features || [];
-  //     setStartSuggestions(
-  //       features.map((feature) => ({
-  //         place_name: feature.place_name,
-  //         coordinates: feature.geometry.coordinates,
-  //       }))
-  //     );
-  //   } catch (error) {
-  //     console.error("Error fetching start suggestions:", error);
-  //   }
-  // };
-
-  // Fetch suggestions for destination location from Mapbox API
-  // const fetchDestSuggestions = async (searchText) => {
-  //   if (!searchText) {
-  //     setDestSuggestions([]);
-  //     return;
-  //   }
-
-  //   try {
-  //     const response = await axios.get(
-  //       `https://api.mapbox.com/geocoding/v5/mapbox.places/${searchText}.json`,
-  //       {
-  //         params: {
-  //           access_token: props.accessToken, // Add your Mapbox access token
-  //           autocomplete: true,
-  //           limit: 5,
-  //           country: "PH",
-  //         },
-  //       }
-  //     );
-  //     const features = response.data.features || [];
-  //     setDestSuggestions(
-  //       features.map((feature) => ({
-  //         place_name: feature.place_name,
-  //         coordinates: feature.geometry.coordinates,
-  //       }))
-  //     );
-  //   } catch (error) {
-  //     console.error("Error fetching destination suggestions:", error);
-  //   }
-  // };
-
-  // Debounce for start suggestions
-  // useEffect(() => {
-  //   if (isStartSelected) return; // If a suggestion was clicked, skip fetching
-
-  //   const timeoutId = setTimeout(() => {
-  //     fetchStartSuggestions(startQuery);
-  //   }, 300); // Debounce time (300ms)
-
-  //   return () => clearTimeout(timeoutId);
-  // }, [startQuery]);
-
-  // Debounce for destination suggestions
-  // useEffect(() => {
-  //   if (isDestSelected) return; // If a suggestion was clicked, skip fetching
-
-  //   const timeoutId = setTimeout(() => {
-  //     fetchDestSuggestions(destQuery);
-  //   }, 300); // Debounce time (300ms)
-
-  //   return () => clearTimeout(timeoutId);
-  // }, [destQuery]);
-
-  // Handle start location suggestion click
-  // const handleStartSuggestionClick = (suggestion) => {
-  //   setStartQuery(suggestion.place_name);
-  //   setStartCoordinates(suggestion.coordinates);
-  //   setStartSuggestions([]); // Clear suggestions
-  //   setIsStartSelected(true); // Mark that a suggestion was clicked
-
-  //   // Sync with parent component
-  //   props.handleChange({
-  //     target: {
-  //       name: props.location,
-  //       value: suggestion.place_name,
-  //     },
-  //   });
-
-  //   if (props.onStartLocationSelect) {
-  //     props.onStartLocationSelect(suggestion.coordinates);
-  //   }
-  // };
-
-  // Reset the `isStartSelected` state when the user types
-  // const handleStartQueryChange = (e) => {
-  //   // onChange={(e) => setStartQuery(e.target.value)}
-  //   setStartQuery(e.target.value);
-  //   setIsStartSelected(false); // Reset the state when the user starts typing again
-  // };
-
-  // Handle destination location suggestion click
-  // const handleDestSuggestionClick = (suggestion) => {
-  //   setDestQuery(suggestion.place_name);
-  //   setDestCoordinates(suggestion.coordinates);
-  //   setDestSuggestions([]); // clear suggestions
-  //   setIsDestSelected(true); // Mark that a suggestion was clicked
-
-  //   // Sync with parent component
-  //   props.handleChange({
-  //     target: {
-  //       name: props.to,
-  //       value: suggestion.place_name,
-  //     },
-  //   });
-
-  //   if (props.onLocationSelect) {
-  //     props.onLocationSelect(suggestion.coordinates);
-  //   }
-  // };
-
-  // const handleDestQueryChange = (e) => {
-  //   // onChange={(e) => setStartQuery(e.target.value)}
-  //   setDestQuery(e.target.value);
-  //   setIsDestSelected(false); // Reset the state when the user starts typing again
-  // };
 
   return (
     <>
@@ -441,20 +293,6 @@ function ErrandInputs(props) {
               // value={startQuery} // Sync input value
               // name={props.location}
             />
-            {/* search suggestion */}
-            {/* {startSuggestions.length > 0 && (
-              <ul className="suggestions-list">
-                {startSuggestions.map((suggestion, index) => (
-                  <li
-                    key={index}
-                    onClick={() => handleStartSuggestionClick(suggestion)}
-                    className="suggestion-item"
-                  >
-                    {suggestion.place_name}
-                  </li>
-                ))}
-              </ul>
-            )} */}
           </div>
         )}
       </div>
@@ -479,23 +317,8 @@ function ErrandInputs(props) {
               name={props.to}
               onChange={props.handleChange}
               value={props.toValue} // Sync input value
-              // onChange={handleDestQueryChange}
-              // value={destQuery} // Sync input value
             />
-            {/* search suggestion */}
-            {/* {destSuggestions.length > 0 && (
-              <ul className="suggestions-list">
-                {destSuggestions.map((suggestion, index) => (
-                  <li
-                    key={index}
-                    onClick={() => handleDestSuggestionClick(suggestion)}
-                    className="suggestion-item"
-                  >
-                    {suggestion.place_name}
-                  </li>
-                ))}
-              </ul>
-            )} */}
+            \
           </div>
         </div>
       )}
@@ -539,29 +362,6 @@ function ErrandInputs(props) {
             value={props.payValue}
           />
         </div>
-
-        {/* PAYMENT METOD */}
-        {/* <div className="input-group">
-          <div className="col1">
-            <Typography level="title-lg" variant="plain">
-              Payment Method
-            </Typography>
-          </div>
-          <div className="col2">
-            <select
-              name={props.method}
-              onChange={props.handleChange}
-              value={props.methodValue}
-              disabled={props.readOnly}
-            >
-              <option value="">Choose method....</option>
-              <option value="g-cash">G-Cash</option>
-              <option value="paymaya">Paymaya</option>
-              <option value="on-hand">Cash on Hand</option>
-              <option value="credit card">Credit Card</option>
-            </select>
-          </div>
-        </div> */}
         {/* contact number */}
         <div
           className="col"
@@ -612,6 +412,51 @@ function ErrandInputs(props) {
           <Typography color="neutral" level="body-sm" variant="plain">
             5% Deduction as Plaftform fee
           </Typography>
+        </div>
+      </div>
+      {/* Tags Autocomplete */}
+      <div className="input-group">
+        <div className="col1">
+          <Typography level="title-lg" variant="plain">
+            Tags
+          </Typography>
+        </div>
+        <div className="col2">
+          <Autocomplete
+            multiple
+            value={props.tagValue ? props.tagValue.split(",") : []} // Ensure value is always an array
+            options={jobSkills}
+            readOnly={props.readOnly}
+            onChange={(event, newValue) => {
+              props.handleChange({
+                target: {
+                  name: props.tags,
+                  value: newValue.join(","), // Update tags as a comma-separated string
+                },
+              });
+            }}
+            renderTags={(value, getTagProps) =>
+              value.map((tag, index) => (
+                <Chip
+                  key={index}
+                  {...getTagProps({ index })}
+                  color="primary"
+                  variant="solid"
+                  size="md"
+                >
+                  {tag}
+                </Chip>
+              ))
+            }
+            renderInput={(params) => (
+              <Input
+                {...params}
+                placeholder="Add or select tags..."
+                variant="outlined"
+                size="md"
+              />
+            )}
+          />
         </div>
       </div>
 
@@ -669,3 +514,49 @@ function ErrandInputs(props) {
 }
 
 export default ErrandInputs;
+
+const jobSkills = [
+  "Plumbing",
+  "Electrical Work",
+  "House Cleaning",
+  "Gardening",
+  "Babysitting",
+  "Pet Sitting",
+  "Carpentry",
+  "Cooking",
+  "Personal Shopping",
+  "Event Planning",
+  "Photography",
+  "Graphic Design",
+  "Web Development",
+  "Content Writing",
+  "Translation",
+  "Digital Marketing",
+  "SEO Optimization",
+  "Video Editing",
+  "Music Lessons",
+  "Fitness Training",
+  "Tutoring",
+  "Legal Assistance",
+  "Accounting",
+  "Tax Preparation",
+  "Data Entry",
+  "Virtual Assistance",
+  "Social Media Management",
+  "Customer Support",
+  "IT Support",
+  "App Development",
+  "UX/UI Design",
+  "Landscaping",
+  "Moving Services",
+  "Laundry Services",
+  "Home Organization",
+  "Property Maintenance",
+  "Security Services",
+  "Interior Design",
+  "Real Estate Assistance",
+  "Automobile Repair",
+  "Bike Repair",
+  "Painting",
+  "Massage Therapy",
+];
