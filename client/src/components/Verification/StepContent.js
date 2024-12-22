@@ -111,7 +111,10 @@ export function Step1({ onNext, details, setDetail }) {
 
   return (
     <div className="step">
-      <h1 className="step__title">Basic Information</h1>
+      <h1 className="step__title">Basic Information {user.userType === "Catcher"
+        ? "Qualification skill"
+        : "Tags"}
+      </h1>
       {/*step 1 for input logic part is lacking where user input auto fill up */}
       <form onSubmit={handleSubmit} className="form-container">
         <div className="form-group">
@@ -165,6 +168,7 @@ export function Step1({ onNext, details, setDetail }) {
               </FormLabel>
 
               <Input
+                sx={{ border: "none" }}
                 type="text"
                 value={inputSkill}
                 onChange={(e) => setInputSkill(e.target.value)}
@@ -251,21 +255,6 @@ export function Step1({ onNext, details, setDetail }) {
             </Grow>
           )}
 
-          {ageLimit && (
-            <Grow className="step__grow" in={ageLimit}>
-              <Alert
-                variant="filled"
-                severity="error"
-                className="step__age__alert"
-                sx={{
-                  fontWeight: "bold",
-                }}
-                onClose={() => setAgeLimit(false)}
-              >
-                You must be at least 18 years old to proceed.
-              </Alert>
-            </Grow>
-          )}
         </div>
       </form>
     </div>
