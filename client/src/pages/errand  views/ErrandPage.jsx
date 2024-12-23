@@ -191,14 +191,14 @@ const ErrandPage = () => {
       application.catcherID = user.userID;
 
       console.log(application); // Check the updated commission object
-      // await axios.post("http://localhost:8800/apply", application);
+      await axios.post("http://localhost:8800/apply", application);
 
       //add a notification to the commission's employer
-      // notif.notifDesc = "A Catcher has applied to on of your errand";
-      // notif.userID = commission.employerID;
-      // notif.notificationType = "Errand Application";
+      notif.notifDesc = "A Catcher has applied to on of your errand";
+      notif.userID = commission.employerID;
+      notif.notificationType = "Errand Application";
 
-      // await axios.post("http://localhost:8800/notify", notif);
+      await axios.post("http://localhost:8800/notify", notif);
       // setAlerMsg("You have applied to this Errand!");
       // setShowAlert(true);
       // setAlrtColor("success");
