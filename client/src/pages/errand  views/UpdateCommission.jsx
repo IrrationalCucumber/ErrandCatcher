@@ -26,7 +26,7 @@ const UpdateCommission = () => {
     comLat: "",
     comDestLong: "",
     comDestLat: "",
-    method: "",
+    comTags: "",
   });
 
   const [distance, setDistance] = useState(0);
@@ -53,7 +53,6 @@ const UpdateCommission = () => {
   };
   const handleClose = () => {
     setOpen(false);
-
   };
 
   //handle changes
@@ -99,7 +98,7 @@ const UpdateCommission = () => {
           comLat: retrievedCommission.commissionLat,
           comDestLat: retrievedCommission.commissionDestLat,
           comDestLong: retrievedCommission.commissionDestLong,
-          method: retrievedCommission.commissionPaymentMethod,
+          comTags: retrievedCommission.commissionTags,
           comTo: retrievedCommission.commissionTo,
         });
       } catch (err) {
@@ -211,7 +210,7 @@ const UpdateCommission = () => {
         contentMes="Errand have been successfully updated!"
         color="success"
         colorText="green"
-      // icon={CancelOutlinedIcon}
+        // icon={CancelOutlinedIcon}
       />
 
       {showAlert && (
@@ -263,6 +262,8 @@ const UpdateCommission = () => {
               numValue={commission.Contactno}
               distance={distance}
               minimum={minimum}
+              tags="comTags"
+              tagValue={commission.comTags}
             />
           </div>
           {commission.comType !== "Delivery" &&

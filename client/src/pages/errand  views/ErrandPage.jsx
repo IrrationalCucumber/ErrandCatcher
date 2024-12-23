@@ -41,7 +41,7 @@ const ErrandPage = () => {
     first: "",
     destLng: "",
     destLat: "",
-    method: "",
+    tags: "",
   });
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -123,7 +123,7 @@ const ErrandPage = () => {
           first: retrievedCommission.userFirstname,
           destLat: retrievedCommission.commissionDestLat,
           destLng: retrievedCommission.commissionDestLong,
-          method: retrievedCommission.commissionPaymentMethod,
+          tags: retrievedCommission.commissionTags,
         });
       } catch (err) {
         console.log(err);
@@ -229,6 +229,7 @@ const ErrandPage = () => {
       <div className="errand-cont">
         <div className="input-cont">
           <div className="errand-inputs">
+            {commission.tags}
             <ErrandInputs
               employer="Employer"
               fname={commission.first}
@@ -249,6 +250,8 @@ const ErrandPage = () => {
               payValue={commission.comPay}
               numValue={commission.ContactNo}
               distance={distance}
+              tags="comTags"
+              tagValue={commission.tags}
             />
           </div>
           {commission.comType !== "Delivery" &&
