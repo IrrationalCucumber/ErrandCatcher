@@ -21,6 +21,8 @@ import {
 } from "@mui/joy";
 import { CheckCircle, CloseRounded } from "@mui/icons-material";
 import ModalFeedback from "../../components/ModalFeedback";
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
+import LoadingBackdrop from "../../components/LoadingSpinner";
 
 const ErrandPage = () => {
   const [commission, setCommission] = useState({
@@ -45,6 +47,7 @@ const ErrandPage = () => {
     method: "",
   });
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   // modal message pop-up
   const [openFeedmodal, setOpenFeedmodal] = useState(false);
   const handleOpen = () => {
@@ -201,12 +204,14 @@ const ErrandPage = () => {
       // setAlrtColor("success");
       // handleScrollToTop();
 
+      setLoading(true);
+
       setTimeout(() => {
         handleScrollToTop();
-        // setLoading(false);
-        // modal will pop-up in 1 seconds
+        setLoading(false);
+        // modal will pop-up in 2 seconds
         handleOpen();
-      }, 1000);
+      }, 2000);
 
 
 
@@ -247,6 +252,12 @@ const ErrandPage = () => {
           {alertMesg}
         </Alert>
       )}
+
+      <LoadingBackdrop
+        open={loading}
+        text="Loading... Please wait while Applying to Errand"
+        icons={<HourglassBottomIcon />}
+      />
 
       <ModalFeedback
         open={openFeedmodal}
