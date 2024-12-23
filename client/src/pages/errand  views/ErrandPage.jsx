@@ -20,6 +20,7 @@ import {
   Typography,
 } from "@mui/joy";
 import { CheckCircle, CloseRounded } from "@mui/icons-material";
+import ModalFeedback from "../../components/ModalFeedback";
 
 const ErrandPage = () => {
   const [commission, setCommission] = useState({
@@ -44,6 +45,16 @@ const ErrandPage = () => {
     method: "",
   });
   const [open, setOpen] = useState(false);
+  // modal message pop-up
+  const [openFeedmodal, setOpenFeedmodal] = useState(false);
+  const handleOpen = () => {
+    setOpenFeedmodal(true);
+  };
+  const handleClose = () => {
+    setOpenFeedmodal(false);
+    window.location.reload();
+  };
+
   const navigate = useNavigate();
   const location = useLocation();
   //pathname to array from
@@ -177,18 +188,28 @@ const ErrandPage = () => {
       application.catcherID = user.userID;
 
       console.log(application); // Check the updated commission object
-      await axios.post("http://localhost:8800/apply", application);
+      // await axios.post("http://localhost:8800/apply", application);
 
       //add a notification to the commission's employer
-      notif.notifDesc = "A Catcher has applied to on of your errand";
-      notif.userID = commission.employerID;
-      notif.notificationType = "Errand Application";
+      // notif.notifDesc = "A Catcher has applied to on of your errand";
+      // notif.userID = commission.employerID;
+      // notif.notificationType = "Errand Application";
 
-      await axios.post("http://localhost:8800/notify", notif);
-      setAlerMsg("You have applied to this Errand!");
-      setShowAlert(true);
-      setAlrtColor("success");
-      handleScrollToTop();
+      // await axios.post("http://localhost:8800/notify", notif);
+      // setAlerMsg("You have applied to this Errand!");
+      // setShowAlert(true);
+      // setAlrtColor("success");
+      // handleScrollToTop();
+
+      setTimeout(() => {
+        handleScrollToTop();
+        // setLoading(false);
+        // modal will pop-up in 1 seconds
+        handleOpen();
+      }, 1000);
+
+
+
       //alert(application.qualifications);
       //navigate(`/application/${userID}`);
       //console.log(notif); // check variables state
@@ -226,6 +247,16 @@ const ErrandPage = () => {
           {alertMesg}
         </Alert>
       )}
+
+      <ModalFeedback
+        open={openFeedmodal}
+        handleClose={handleClose}
+        headerMes="Success!"
+        contentMes="You have applied to this Errand!"
+        color="success"
+        colorText="green"
+      />
+
       <div className="errand-cont">
         <div className="input-cont">
           <div className="errand-inputs">
@@ -314,8 +345,8 @@ const ErrandPage = () => {
                 isApplied
                   ? null
                   : (e) => {
-                      handleApply(true);
-                    }
+                    handleApply(true);
+                  }
               }
               style={{
                 backgroundColor: isApplied ? "none" : "",
