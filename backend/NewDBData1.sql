@@ -164,7 +164,7 @@ CREATE TABLE `notification` (
   PRIMARY KEY (`notificationID`),
   KEY `userID_idx` (`notifUserID`),
   CONSTRAINT `notifUserID` FOREIGN KEY (`notifUserID`) REFERENCES `useraccount` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=247 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=245 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -209,8 +209,8 @@ CREATE TABLE `userexperience` (
   `expUserID` int DEFAULT NULL,
   `expJobTitle` varchar(45) DEFAULT NULL,
   `expEmployer` varchar(45) DEFAULT NULL,
-  `expStartDate` datetime DEFAULT NULL,
-  `expEndDate` datetime DEFAULT NULL,
+  `expStartDate` varchar(45) DEFAULT NULL,
+  `expEndDate` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`expID`),
   KEY `userID_idx` (`expUserID`),
   CONSTRAINT `expUserID` FOREIGN KEY (`expUserID`) REFERENCES `useraccount` (`userID`)
@@ -249,4 +249,4 @@ CREATE TABLE `verification_request` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-22 23:44:21
+-- Dump completed on 2024-12-23 10:20:41
