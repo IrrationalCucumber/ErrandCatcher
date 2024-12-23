@@ -114,7 +114,7 @@ const EmployerApplicants = () => {
       {DisplayDate(applicant.applicationDate)}
     </Box>,
     `${applicant.userFirstname} ${applicant.userLastname}`,
-    applicant.userHasErrand === "true" ? "Unavailable" : "Available",
+    applicant.userHasErrand === true ? "Unavailable" : "Available",
     // applicant.commissionTitle,
     <Box display="flex" alignItems="center" gap={1}>
       <BadgeOutlinedIcon sx={{ color: "#555" }} />
@@ -138,7 +138,7 @@ const EmployerApplicants = () => {
           <Button
             color="success"
             onClick={() => handleOpenAcceptModal()}
-            disabled={applicant.userHasErrand === "false" ? true : false}
+            disabled={applicant.userHasErrand === true ? true : false}
           >
             Accept
           </Button>
