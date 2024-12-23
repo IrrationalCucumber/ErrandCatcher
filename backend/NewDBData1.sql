@@ -211,6 +211,8 @@ CREATE TABLE `userexperience` (
   `expEmployer` varchar(45) DEFAULT NULL,
   `expStartDate` varchar(45) DEFAULT NULL,
   `expEndDate` varchar(45) DEFAULT NULL,
+  `expDesc` text,
+  `expLocation` text,
   PRIMARY KEY (`expID`),
   KEY `userID_idx` (`expUserID`),
   CONSTRAINT `expUserID` FOREIGN KEY (`expUserID`) REFERENCES `useraccount` (`userID`)
@@ -249,4 +251,4 @@ CREATE TABLE `verification_request` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-23 10:20:41
+-- Dump completed on 2024-12-23 11:47:03
