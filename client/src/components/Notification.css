@@ -16,6 +16,7 @@
   height: 70px;
   display: flex;
   align-items: center;
+  justify-content: start;
   padding: 10px;
 }
 
