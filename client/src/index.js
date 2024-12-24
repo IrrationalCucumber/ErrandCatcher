@@ -64,6 +64,7 @@ import PaymentCancel from "./pages/PaymentCancel";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import { ProtectedRoute } from "./components/ProtectedROute";
 import GenerateReport from "./pages/admin/GenerateReport";
+import VerificationSuccess from "./pages/VerificationSuceess";
 
 const router = createBrowserRouter([
   {
@@ -300,6 +301,7 @@ const router = createBrowserRouter([
     path: "*",
     element: <ErrorElement />,
   },
+  { path: "/verify-email", element: <VerificationSuccess /> },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
