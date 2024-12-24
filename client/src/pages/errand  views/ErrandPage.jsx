@@ -109,12 +109,30 @@ const ErrandPage = () => {
         );
         const retrievedCommission = res.data[0];
         //format date
+        // const formattedDate = new Date(retrievedCommission.commissionDeadline)
+        //   .toISOString()
+        //   .substr(0, 10);
+        // const formatStart = new Date(retrievedCommission.commissionStartDate)
+        //   .toISOString()
+        //   .substr(0, 10);
+
+        const options = { timeZone: "Asia/Manila", year: "numeric", month: "2-digit", day: "2-digit" };
+
+        // Format Deadline
         const formattedDate = new Date(retrievedCommission.commissionDeadline)
-          .toISOString()
-          .substr(0, 10);
+          .toLocaleDateString("en-CA", options) // Use "en-CA" for ISO-style YYYY-MM-DD
+          .split("/")
+          .reverse()
+          .join("-"); // Optional, to ensure consistent formatting
+
+        // Format Start Date
         const formatStart = new Date(retrievedCommission.commissionStartDate)
-          .toISOString()
-          .substr(0, 10);
+          .toLocaleDateString("en-CA", options) // Same as above
+          .split("/")
+          .reverse()
+          .join("-");
+
+
         // Update the state with retrieved account data
         setCommission({
           employerID: retrievedCommission.employerID,
