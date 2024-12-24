@@ -34,7 +34,7 @@ export function MyFeedback({ id }) {
       }
     };
     //refresh feedback every 1 seconds
-    const refresh = setInterval(fetchFeedback, 1000);
+    const refresh = setInterval(fetchFeedback, 30000);
     return () => clearInterval(refresh);
   }, []);
   return (

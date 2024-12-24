@@ -58,6 +58,7 @@ import CakeIcon from "@mui/icons-material/Cake";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import PendingIcon from "@mui/icons-material/Pending";
 import ErrorIcon from "@mui/icons-material/Error";
+import Experience, { ViewExperience } from "./Experience";
 
 export function NewUserProfileui(props) {
   const { user } = useAuth();
@@ -467,6 +468,23 @@ export function NewUserProfileui(props) {
                         aria-selected="false"
                       >
                         Reviews
+                      </button>
+                    </li>
+                  ) : null}
+
+                  {user.userType === "Catcher" ? (
+                    <li class="nav-item" role="presentation">
+                      <button
+                        class="nav-link"
+                        id="exp-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#exp-tab-pane"
+                        type="button"
+                        role="tab"
+                        aria-controls="exp-tab-pane"
+                        aria-selected="false"
+                      >
+                        Experience
                       </button>
                     </li>
                   ) : null}
@@ -1034,6 +1052,18 @@ export function NewUserProfileui(props) {
                     <h5 class="mb-3">Feedback: </h5>
                     <MyFeedback id={props.userID} />
                   </div>
+
+                  {/* -------------------------- Experience tab ------------------------------ */}
+                  <div
+                    class="tab-pane fade"
+                    id="exp-tab-pane"
+                    role="tabpanel"
+                    aria-labelledby="documents-tab"
+                    tabindex="0"
+                  >
+                    <h5 class="mb-3">Experience: </h5>
+                    <Experience id={props.userID} />
+                  </div>
                 </div>
               </div>
             </div>
@@ -1381,6 +1411,22 @@ export function NewViewUserProfile(props) {
                       </button>
                     </li>
                   ) : null}
+                  {props.type === "Catcher" ? (
+                    <li class="nav-item" role="presentation">
+                      <button
+                        class="nav-link"
+                        id="exp-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#exp-tab-pane"
+                        type="button"
+                        role="tab"
+                        aria-controls="exp-tab-pane"
+                        aria-selected="false"
+                      >
+                        Experience
+                      </button>
+                    </li>
+                  ) : null}
                   {/* <li class="nav-item" role="presentation">
                     <button
                       class="nav-link"
@@ -1584,6 +1630,20 @@ export function NewViewUserProfile(props) {
                       </h5>
                       <MyFeedback id={props.userID} />
                       <MyFeedback id={props.id} />
+                    </div>
+                  ) : null}
+                  {/* -------------------------- Experience tab ------------------------------ */}
+                  {props.type === "Catcher" ? (
+                    <div
+                      class="tab-pane fade"
+                      id="exp-tab-pane"
+                      role="tabpanel"
+                      aria-labelledby="documents-tab"
+                      tabindex="0"
+                    >
+                      <h5 class="mb-3">Experience: </h5>
+
+                      <ViewExperience id={props.id} />
                     </div>
                   ) : null}
 

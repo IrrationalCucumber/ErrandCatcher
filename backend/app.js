@@ -15,6 +15,7 @@ const ApplyRoutes = require("./Route/ApplicationRoute.js");
 const RatingRoutes = require("./Route/RatingRoute.js");
 const TransRoutes = require("./Route/TransactionRoute.js");
 const VerifyRoutes = require("./Route/VerifyRoutes.js");
+const ExperienceRoutes = require("./Route/ExperienceRoute");
 const db = require("./dbConfig.js");
 const cors = require("cors");
 
@@ -30,6 +31,7 @@ app.use("/", ApplyRoutes);
 app.use("/", RatingRoutes);
 app.use("/", TransRoutes);
 app.use("/", VerifyRoutes);
+app.use("/", ExperienceRoutes);
 
 // //api endpoint for upload
 // app.post("/upload/:id", upload.single("image"), (req, res) => {
