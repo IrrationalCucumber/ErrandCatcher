@@ -264,9 +264,11 @@ export function NewUserProfileui(props) {
                           <span>
                             <StarRating rating={props.rate} />
                             <p>
-                              <i>{props.rate
+                              <i>
+                                {props.rate
                                   ? props.rate.toFixed(1)
-                                  : "No Rating"}</i>
+                                  : "No Rating"}
+                              </i>
                             </p>
                           </span>
                         </div>
@@ -303,43 +305,20 @@ export function NewUserProfileui(props) {
                       </>
                     ) : (
                       <>
-                        {props.verStatus === "Pending" ? (
-                          <>
-                            <Chip
-                              sx={{
-                                fontSize: "1.1rem",
-                                height: "30px",
-                                padding: "20px 15px",
-                              }}
-                              size="sm"
-                              variant="solid"
-                              color="warning"
-                            >
-                              <PendingIcon />{" "}
-                              <i>{props.verStatus.toLocaleUpperCase()}</i>
-                            </Chip>
-                          </>
-                        ) : (
-                          <>
-                            <Chip
-                              sx={{
-                                fontSize: "1.1rem",
-                                height: "30px",
-                                padding: "20px 15px",
-                              }}
-                              size="sm"
-                              variant="solid"
-                              color="danger"
-                            >
-                              <Link
-                                to={`/profile/verification`}
-                                style={{ textDecoration: "none" }}
-                              >
-                                <ErrorIcon /> {props.status.toLocaleUpperCase()}
-                              </Link>
-                            </Chip>
-                          </>
-                        )}
+                        <>
+                          <Chip
+                            sx={{
+                              fontSize: "1.1rem",
+                              height: "30px",
+                              padding: "20px 15px",
+                            }}
+                            size="sm"
+                            variant="solid"
+                            color="danger"
+                          >
+                            <ErrorIcon /> {props.status.toLocaleUpperCase()}
+                          </Chip>
+                        </>
                       </>
                     )}
                   </div>
@@ -910,14 +889,15 @@ export function NewUserProfileui(props) {
                           {account.password && (
                             <>
                               <div
-                                className={`password-strength ${strength === "Weak"
-                                  ? "strength-weak"
-                                  : strength === "Medium"
+                                className={`password-strength ${
+                                  strength === "Weak"
+                                    ? "strength-weak"
+                                    : strength === "Medium"
                                     ? "strength-medium"
                                     : strength === "Strong"
-                                      ? "strength-strong"
-                                      : ""
-                                  }`}
+                                    ? "strength-strong"
+                                    : ""
+                                }`}
                               >
                                 Password strength: {strength}
                               </div>
@@ -952,7 +932,7 @@ export function NewUserProfileui(props) {
                           <button
                             type="submit"
                             class="btn btn-primary"
-                          // className="form-submit-btn"
+                            // className="form-submit-btn"
                           >
                             Change Password
                           </button>
@@ -1142,14 +1122,11 @@ export function NewViewUserProfile(props) {
                     <h5 class="text-center mb-1">
                       {props.fname} {props.lname}
                     </h5>
-                    {props.type === "Employer" ?
-                      <p class="text-center text-secondary mb-4">
-                        Employer
-                      </p> : <p class="text-center text-secondary mb-4">
-                        Catcher
-                      </p>
-                    }
-
+                    {props.type === "Employer" ? (
+                      <p class="text-center text-secondary mb-4">Employer</p>
+                    ) : (
+                      <p class="text-center text-secondary mb-4">Catcher</p>
+                    )}
 
                     {/* --------------------- Rating --------------------- */}
                     {props.type === "Catcher" ? (
@@ -1403,8 +1380,7 @@ export function NewViewUserProfile(props) {
                         Reviews
                       </button>
                     </li>
-                  ) : null
-                  }
+                  ) : null}
                   {/* <li class="nav-item" role="presentation">
                     <button
                       class="nav-link"
@@ -1419,7 +1395,6 @@ export function NewViewUserProfile(props) {
                       Reviews
                     </button>
                   </li> */}
-
                 </ul>
                 {/* ------------------------ Overview tab ---------------------------- */}
                 <div class="tab-content pt-4" id="profileTabContent">
@@ -1610,8 +1585,7 @@ export function NewViewUserProfile(props) {
                       <MyFeedback id={props.userID} />
                       <MyFeedback id={props.id} />
                     </div>
-                  ) : null
-                  }
+                  ) : null}
 
                   {/* <div
                     class="tab-pane fade"
@@ -1625,8 +1599,6 @@ export function NewViewUserProfile(props) {
                     <MyFeedback id={props.userID} />
                     <MyFeedback id={props.id} />
                   </div> */}
-
-
                 </div>
               </div>
             </div>
