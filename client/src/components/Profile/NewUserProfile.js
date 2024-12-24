@@ -58,6 +58,7 @@ import CakeIcon from "@mui/icons-material/Cake";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import PendingIcon from "@mui/icons-material/Pending";
 import ErrorIcon from "@mui/icons-material/Error";
+import Experience, { ViewExperience } from "./Experience";
 
 export function NewUserProfileui(props) {
   const { user } = useAuth();
@@ -264,9 +265,11 @@ export function NewUserProfileui(props) {
                           <span>
                             <StarRating rating={props.rate} />
                             <p>
-                              <i>{props.rate
+                              <i>
+                                {props.rate
                                   ? props.rate.toFixed(1)
-                                  : "No Rating"}</i>
+                                  : "No Rating"}
+                              </i>
                             </p>
                           </span>
                         </div>
@@ -488,6 +491,23 @@ export function NewUserProfileui(props) {
                         aria-selected="false"
                       >
                         Reviews
+                      </button>
+                    </li>
+                  ) : null}
+
+                  {user.userType === "Catcher" ? (
+                    <li class="nav-item" role="presentation">
+                      <button
+                        class="nav-link"
+                        id="exp-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#exp-tab-pane"
+                        type="button"
+                        role="tab"
+                        aria-controls="exp-tab-pane"
+                        aria-selected="false"
+                      >
+                        Experience
                       </button>
                     </li>
                   ) : null}
@@ -910,14 +930,15 @@ export function NewUserProfileui(props) {
                           {account.password && (
                             <>
                               <div
-                                className={`password-strength ${strength === "Weak"
-                                  ? "strength-weak"
-                                  : strength === "Medium"
+                                className={`password-strength ${
+                                  strength === "Weak"
+                                    ? "strength-weak"
+                                    : strength === "Medium"
                                     ? "strength-medium"
                                     : strength === "Strong"
-                                      ? "strength-strong"
-                                      : ""
-                                  }`}
+                                    ? "strength-strong"
+                                    : ""
+                                }`}
                               >
                                 Password strength: {strength}
                               </div>
@@ -952,7 +973,7 @@ export function NewUserProfileui(props) {
                           <button
                             type="submit"
                             class="btn btn-primary"
-                          // className="form-submit-btn"
+                            // className="form-submit-btn"
                           >
                             Change Password
                           </button>
@@ -1054,6 +1075,18 @@ export function NewUserProfileui(props) {
                     <h5 class="mb-3">Feedback: </h5>
                     <MyFeedback id={props.userID} />
                   </div>
+
+                  {/* -------------------------- Experience tab ------------------------------ */}
+                  <div
+                    class="tab-pane fade"
+                    id="exp-tab-pane"
+                    role="tabpanel"
+                    aria-labelledby="documents-tab"
+                    tabindex="0"
+                  >
+                    <h5 class="mb-3">Experience: </h5>
+                    <Experience id={props.userID} />
+                  </div>
                 </div>
               </div>
             </div>
@@ -1142,14 +1175,11 @@ export function NewViewUserProfile(props) {
                     <h5 class="text-center mb-1">
                       {props.fname} {props.lname}
                     </h5>
-                    {props.type === "Employer" ?
-                      <p class="text-center text-secondary mb-4">
-                        Employer
-                      </p> : <p class="text-center text-secondary mb-4">
-                        Catcher
-                      </p>
-                    }
-
+                    {props.type === "Employer" ? (
+                      <p class="text-center text-secondary mb-4">Employer</p>
+                    ) : (
+                      <p class="text-center text-secondary mb-4">Catcher</p>
+                    )}
 
                     {/* --------------------- Rating --------------------- */}
                     {props.type === "Catcher" ? (
@@ -1403,8 +1433,23 @@ export function NewViewUserProfile(props) {
                         Reviews
                       </button>
                     </li>
-                  ) : null
-                  }
+                  ) : null}
+                  {props.type === "Catcher" ? (
+                    <li class="nav-item" role="presentation">
+                      <button
+                        class="nav-link"
+                        id="exp-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#exp-tab-pane"
+                        type="button"
+                        role="tab"
+                        aria-controls="exp-tab-pane"
+                        aria-selected="false"
+                      >
+                        Experience
+                      </button>
+                    </li>
+                  ) : null}
                   {/* <li class="nav-item" role="presentation">
                     <button
                       class="nav-link"
@@ -1419,7 +1464,6 @@ export function NewViewUserProfile(props) {
                       Reviews
                     </button>
                   </li> */}
-
                 </ul>
                 {/* ------------------------ Overview tab ---------------------------- */}
                 <div class="tab-content pt-4" id="profileTabContent">
@@ -1610,8 +1654,21 @@ export function NewViewUserProfile(props) {
                       <MyFeedback id={props.userID} />
                       <MyFeedback id={props.id} />
                     </div>
-                  ) : null
-                  }
+                  ) : null}
+                  {/* -------------------------- Experience tab ------------------------------ */}
+                  {props.type === "Catcher" ? (
+                    <div
+                      class="tab-pane fade"
+                      id="exp-tab-pane"
+                      role="tabpanel"
+                      aria-labelledby="documents-tab"
+                      tabindex="0"
+                    >
+                      <h5 class="mb-3">Experience: </h5>
+
+                      <ViewExperience id={props.id} />
+                    </div>
+                  ) : null}
 
                   {/* <div
                     class="tab-pane fade"
@@ -1625,8 +1682,6 @@ export function NewViewUserProfile(props) {
                     <MyFeedback id={props.userID} />
                     <MyFeedback id={props.id} />
                   </div> */}
-
-
                 </div>
               </div>
             </div>

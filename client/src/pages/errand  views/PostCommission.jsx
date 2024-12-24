@@ -30,13 +30,12 @@ const PostCommission = () => {
     comDescription: "",
     comPay: 0,
     DatePosted: "",
-    //DateCompleted: "",
     Contactno: "",
     comLong: "",
     comLat: "",
     comDestLong: 0,
     comDestLat: 0,
-    method: "",
+    comTags: "",
   });
 
   const navigate = useNavigate();
@@ -59,6 +58,7 @@ const PostCommission = () => {
 
   // modal message pop-up
   const [open, setOpen] = useState(false);
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -73,7 +73,7 @@ const PostCommission = () => {
     // Handle specific fields that need to be parsed as numbers
     if (["comPay", "comDestLong", "comDestLat"].includes(name)) {
       // Parse as a float for these fields
-      setCommission((prev) => ({ ...prev, [name]: parseFloat(value) || null }));
+      setCommission((prev) => ({ ...prev, [name]: parseFloat(value) }));
     }
     // Handle dropdowns like "comType" and "method"
     else if (name === "comType" || name === "method") {
@@ -154,7 +154,6 @@ const PostCommission = () => {
         !commission.comDeadline ||
         new Date(commission.comDeadline) > new Date(commission.comStart);
 
-
       if (
         !commission.comTitle ||
         !commission.comStart ||
@@ -189,9 +188,6 @@ const PostCommission = () => {
         await axios.post("http://localhost:8800/commission", updatedCommission);
         await axios.post("http://localhost:8800/notify-catcher");
 
-        // alert("You have Posted an Errand!");
-        // navigate(`/dashboard/commissions`);
-
         setLoading(true);
 
         setTimeout(() => {
@@ -204,6 +200,7 @@ const PostCommission = () => {
       console.log(err);
     }
   };
+
   const handleScrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -239,7 +236,6 @@ const PostCommission = () => {
         open={opensnack}
         onClose={() => setOpenSnack(false)}
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        // autoHideDuration={5000}
         startDecorator={<PostAddIcon />}
         endDecorator={
           <Button
@@ -259,7 +255,6 @@ const PostCommission = () => {
         text="Loading... Please wait while Posting Your Errand"
         icons={<HourglassBottomIcon />}
       />
-
       <ModalFeedback
         open={open}
         handleClose={handleClose}
@@ -267,9 +262,7 @@ const PostCommission = () => {
         contentMes="You have successfully posted an Errand"
         color="success"
         colorText="green"
-      // icon={ErrorIcon}
       />
-
       <div className="errand-cont">
         <div className="input-cont">
           <div className="errand-inputs">
@@ -293,19 +286,19 @@ const PostCommission = () => {
               method="method"
               methodValue={commission.method}
               number="Contactno"
-              //mapContainer={mapContainer}
               long={commission.comLong}
               lat={commission.comLat}
               destlong={commission.comDestLong}
               destlat={commission.comDestLat}
               distance={distance}
               minimum={minimum}
+              tagValue={commission.comTags}
+              tags="comTags"
             />
           </div>
           {commission.comType !== "Delivery" &&
             commission.comType !== "Transportation" && (
               <div className="map--wrap">
-                {/* <div ref={mapContainer} className="map-small" /> */}
                 <MapLibre
                   getCoords={(lat, long) => {
                     setCommission((prev) => ({
@@ -319,43 +312,27 @@ const PostCommission = () => {
             )}
           {(commission.comType === "Delivery" ||
             commission.comType === "Transportation") && (
-              <>
-                <PostMapBox
-                  accessToken={accessToken}
-                  getDistanceCallback={(
-                    distance,
-                    originCoordinates,
-                    destinationCoordinates
-                  ) => {
-                    setDistance(distance);
-                    setCommission((prev) => ({
-                      ...prev,
-                      comLat: originCoordinates[1],
-                      comLong: originCoordinates[0],
-                      comDestLong: destinationCoordinates[0],
-                      comDestLat: destinationCoordinates[1],
-                    }));
-                  }}
-                // Sync input with Mapbox
-                // customOrigin={commission.comLocation}
-                // customDestination={commission.comTo}
-                />
-              </>
-            )}
-          {/* {commission.comType === "Transportation" && (
             <>
               <PostMapBox
                 accessToken={accessToken}
-                getDistanceCallback={(distance) => {
+                getDistanceCallback={(
+                  distance,
+                  originCoordinates,
+                  destinationCoordinates
+                ) => {
                   setDistance(distance);
+                  setCommission((prev) => ({
+                    ...prev,
+                    comLat: originCoordinates[1],
+                    comLong: originCoordinates[0],
+                    comDestLong: destinationCoordinates[0],
+                    comDestLat: destinationCoordinates[1],
+                  }));
                 }}
               />
             </>
-          )} */}
+          )}
         </div>
-        {/* <button onClick={handleClick} className="btn btn-yellow" style={{}}>
-          POST
-        </button> */}
         <div className="butonn">
           <Box sx={{ display: "flex", marginLeft: 2 }}>
             <Button

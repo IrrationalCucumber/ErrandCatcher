@@ -15,6 +15,7 @@ const ApplyRoutes = require("./Route/ApplicationRoute.js");
 const RatingRoutes = require("./Route/RatingRoute.js");
 const TransRoutes = require("./Route/TransactionRoute.js");
 const VerifyRoutes = require("./Route/VerifyRoutes.js");
+const ExperienceRoutes = require("./Route/ExperienceRoute");
 const db = require("./dbConfig.js");
 const cors = require("cors");
 
@@ -30,6 +31,7 @@ app.use("/", ApplyRoutes);
 app.use("/", RatingRoutes);
 app.use("/", TransRoutes);
 app.use("/", VerifyRoutes);
+app.use("/", ExperienceRoutes);
 
 // //api endpoint for upload
 // app.post("/upload/:id", upload.single("image"), (req, res) => {
@@ -365,6 +367,36 @@ app.get("/transactionsCat/:id", (req, res) => {
       console.error(err);
       return res.status(500).json({ error: "An error occurred" });
     }
+    return res.json(data);
+  });
+});
+
+app.get("/get-username/", (req, res) => {
+  const name = req.params.name;
+  const q = `SELECT username FROM useraccount`;
+  //console.log(name);
+
+  db.query(q, [name], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+
+    return res.json(data);
+  });
+});
+
+app.get("/get-email/", (req, res) => {
+  const mail = req.params.mail;
+  const q = `SELECT userEmail FROM useraccount `;
+  //console.log(mail);
+
+  db.query(q, [mail], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+
     return res.json(data);
   });
 });

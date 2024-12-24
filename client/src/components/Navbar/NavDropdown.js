@@ -37,6 +37,7 @@ function NavDropdown(props) {
   const profileLink = `/profile/me`; // URL for the profile page
   const signOutLink = "/sign-in"; // URL for the sign out page
   const historyLink = "/history"; // URL for the history page
+  const generateReportLink = "/dashboard/admin/generate-report";
 
   const { logout } = useAuth();
   const handleLogout = () => {
@@ -115,19 +116,36 @@ function NavDropdown(props) {
             </Link>
           </MenuItem>
         ) : null}
-        <MenuItem onClick={() => navigate(historyLink)}>
-          <Link
-            to={historyLink}
-            style={{
-              // display: "block",
-              // padding: "12px 16px",
-              textDecoration: "none",
-              color: "#565360",
-            }}
-          >
-            <HistoryIcon /> History
-          </Link>
-        </MenuItem>
+        {/* admin history: generate report */}
+        {user.userType === "admin" ? (
+          <MenuItem onClick={() => navigate(generateReportLink)}>
+            <Link
+              to={historyLink}
+              style={{
+                // display: "block",
+                // padding: "12px 16px",
+                textDecoration: "none",
+                color: "#565360",
+              }}
+            >
+              <HistoryIcon /> Generate Report
+            </Link>
+          </MenuItem>) :
+          // employer & catcher history
+          <MenuItem onClick={() => navigate(historyLink)}>
+            <Link
+              to={historyLink}
+              style={{
+                // display: "block",
+                // padding: "12px 16px",
+                textDecoration: "none",
+                color: "#565360",
+              }}
+            >
+              <HistoryIcon /> History
+            </Link>
+          </MenuItem>
+        }
         <MenuItem
           onClick={() => {
             handleSignOut();

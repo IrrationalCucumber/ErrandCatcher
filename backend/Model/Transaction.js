@@ -102,6 +102,10 @@ const Trans = {
   getAllInvoice: (cb) => {
     db.query(`SELECT * FROM invoice`, cb);
   },
+  //get the sum/total of every transaction invoice
+  getAmountSum: (cb) => {
+    db.query(`SELECT SUM(total) as 't' FROM INVOICE`, cb);
+  },
 };
 
 module.exports = Trans;

@@ -21,4 +21,5 @@ router.get("/search-available", errandController.getSearchAllAvailable); // get 
 router.get("/search-commission", errandController.getSearchAll); // search and display all errands based on serrch term
 router.get("/search/:type/", errandController.getSearchWithType); // search and display all errands based on serrch term
 router.get("/filter-myerrand/", errandController.getMyErrandStatus); // filter epmloyer errands based on status
+router.get("disable-errand/:id", errandController.updateStatusToDisabled); // disable the errand based on commissionID
 module.exports = router;
