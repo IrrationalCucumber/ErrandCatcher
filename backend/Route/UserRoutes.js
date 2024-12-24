@@ -24,4 +24,7 @@ router.post("/sign-up/", userController.postSignUp);
 // Add more routes as needed...
 router.get("/search-user/", userController.getSearchByTerm);
 
+// Verify email route
+router.get("/verify-email", userController.verifyEmail);
+
 module.exports = router;

@@ -242,6 +242,41 @@ const User = {
       db.query(`SELECT * FROM useraccount`, callback);
     }
   },
+  // Save verification token
+  saveVerificationToken: (userId, token, callback) => {
+    db.query(
+      "INSERT INTO email_verification_tokens (verUserID, token) VALUES (?, ?)",
+      [userId, token],
+      callback
+    );
+  },
+
+  // Verify token
+  verifyToken: (token, callback) => {
+    db.query(
+      "SELECT verUserID FROM email_verification_tokens WHERE token = ?",
+      [token],
+      callback
+    );
+  },
+
+  // Update user status
+  updateUserStatus: (userId, status, callback) => {
+    db.query(
+      "UPDATE useraccount SET accountStatus = ? WHERE userID = ?",
+      [status, userId],
+      callback
+    );
+  },
+
+  // Delete verification token
+  deleteVerificationToken: (token, callback) => {
+    db.query(
+      "DELETE FROM email_verification_tokens WHERE token = ?",
+      [token],
+      callback
+    );
+  },
 };
 
 module.exports = User;
