@@ -1,5 +1,5 @@
 .notification-container {
-  height: 100vh;
+  height: auto;
   position: relative;
 }
 
@@ -23,14 +23,18 @@
   font-size: 20px;
   font-weight: bold;
 }
-.notification-date, notification-item-info{
+
+.notification-date,
+notification-item-info {
   color: rgb(52, 52, 52);
 }
-.notification-date{
+
+.notification-date {
   font-size: 12px;
 }
 
-.icon, .check-icon {
+.icon,
+.check-icon {
   height: 20px;
   width: 20px;
   background: none;
@@ -52,9 +56,15 @@
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-   height: 100%; /* Set the height of the notification-item-container to match its parent container */
+  height: 100%;
+  /* Set the height of the notification-item-container to match its parent container */
   position: relative;
-  
+
+}
+
+
+.notification-item-container:hover {
+  border: 1.4px solid #378ce7;
 }
 
 .notification-item-info {
@@ -64,14 +74,18 @@
 .notification-type {
   margin: 0;
 }
-.notification-type{
+
+.notification-type {
   size: 14px;
 }
 
-.notification-desc, .notification-date {
+.notification-desc,
+.notification-date {
   margin: 0;
 }
-.notification-desc, .notification-type{
+
+.notification-desc,
+.notification-type {
   margin: -3px;
 }
 

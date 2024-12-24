@@ -7,7 +7,6 @@ function NotificationItem(props) {
       {props.isRead.toLowerCase() === "no" && (
         <div
           className="notification-item-container"
-          style={{ border: "2px solid #378ce7" }}
         >
           <h3 className="notification-type">{props.type}</h3>
           <div className="notification-item-info">
