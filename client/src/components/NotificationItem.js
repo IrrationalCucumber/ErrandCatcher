@@ -4,7 +4,7 @@ import React from "react";
 function NotificationItem(props) {
   return (
     <>
-      {props.isRead.toLowerCase() === "no" && (
+      {props.isRead === "no" && (
         <div
           className="notification-item-container"
         >
@@ -20,7 +20,7 @@ function NotificationItem(props) {
           </div>
         </div>
       )}
-      {props.isRead.toLowerCase() === "yes" && (
+      {props.isRead === "yes" && (
         <div className="notification-item-container">
           <h3 className="notification-type">{props.type}</h3>
           <div className="notification-item-info">

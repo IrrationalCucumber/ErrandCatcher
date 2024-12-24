@@ -68,7 +68,8 @@ function Notification() {
               style={{ paddingLeft: "20px" }}
             />
             <Button
-              //onClick={markAsRead}
+              // onClick={markAsRead}
+              onClick={handleMarkAllAsRead}
               startDecorator={<CheckIcon />}
               variant="outline"
               color="plain"
@@ -87,7 +88,7 @@ function Notification() {
                   date={DisplayDate(notif.notifDate)} // Format the date
                   isRead={notif.isRead}
                   markAsRead={() => markAsRead(notif.notificationID)}
-                  // style={{ border: "5px solid green" }}
+                // style={{ border: "5px solid green" }}
                 />
               </div>
             ))}
