@@ -10,7 +10,7 @@ import StarRating from "../Display/StarRating";
 import ViewFeedback from "./ViewFeedback";
 import Docu from "./Docu";
 import Resetpassword from "./Resetpassword";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -223,6 +223,8 @@ export function NewUserProfileui(props) {
     border: "1px solid #ccc",
     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
   };
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -991,7 +993,15 @@ export function NewUserProfileui(props) {
                     tabindex="0"
                   >
                     <h5 class="mb-3">Documents: </h5>
-
+                    {!props.verFront || !props.verBack ? (
+                      <>
+                        <Button
+                          onClick={() => navigate(`/profile/verification`)}
+                        >
+                          UPLOAD
+                        </Button>
+                      </>
+                    ) : null}
                     {
                       //display sumbitted IDs of user
                       props.verFront || props.verBack ? (
