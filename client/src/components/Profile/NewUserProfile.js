@@ -1024,7 +1024,37 @@ export function NewUserProfileui(props) {
                     {
                       //display sumbitted docs/additional ids of user
                       // driver license additional info fetch
-                      props.verDoc1 ? (
+                      props.verDR1 || props.verDR2 ? (
+                        <>
+                          <div className="id_1">
+                            <img
+                              onClick={() =>
+                                handleOpenModalDocs(
+                                  `http://localhost:8800/images/docu/${props.verDR1}`
+                                )
+                              }
+                              src={`http://localhost:8800/images/docu/${props.verDR2}`}
+                              alt="License"
+                            />
+                          </div>
+                          <div className="id_2">
+                            <img
+                              onClick={() =>
+                                handleOpenModalDocs(
+                                  `http://localhost:8800/images/docu/${props.verDR2}`
+                                )
+                              }
+                              src={`http://localhost:8800/images/docu/${props.verDR2}`}
+                              alt="License"
+                            />
+                          </div>
+                        </>
+                      ) : null
+                    }
+                    {
+                      //display sumbitted docs/additional ids of user
+                      // driver license additional info fetch
+                      props.verDoc1 || props.verDoc2 ? (
                         <>
                           <div className="id_1">
                             <img
@@ -1034,6 +1064,17 @@ export function NewUserProfileui(props) {
                                 )
                               }
                               src={`http://localhost:8800/images/docu/${props.verDoc1}`}
+                              alt="License"
+                            />
+                          </div>
+                          <div className="id_2">
+                            <img
+                              onClick={() =>
+                                handleOpenModalDocs(
+                                  `http://localhost:8800/images/docu/${props.verDoc2}`
+                                )
+                              }
+                              src={`http://localhost:8800/images/docu/${props.verDoc2}`}
                               alt="License"
                             />
                           </div>
