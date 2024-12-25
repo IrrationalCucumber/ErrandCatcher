@@ -151,7 +151,7 @@ function ViewProfile(id) {
         id={account.id}
         profileImg={account.profileImage}
         address={account.address}
-        cnum={account.contact}
+        contact={account.contact}
         email={account.email}
         rate={rating}
         type={account.type}
