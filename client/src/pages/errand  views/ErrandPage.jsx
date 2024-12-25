@@ -204,6 +204,41 @@ const ErrandPage = () => {
     });
   };
   // console.log(commission);
+
+  //check for matching skills
+  const [catcher, setCatcher] = useState([]);
+  const [matchSkillCount, setMatchSkillCount] = useState(0);
+  useEffect(() => {
+    const fetchSkills = async () => {
+      try {
+        const res = await axios(`http://localhost:8800/user/${user.userID}`);
+        const skillArray = res.data.map((skill) => skill.userQualification);
+        setCatcher(skillArray[0].split(",")); // Ensure catcher is an array
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchSkills();
+  }, [user.userID]);
+
+  useEffect(() => {
+    if (catcher.length > 0 && commission.tags) {
+      const commissionTagsArray = commission.tags.split(","); // Ensure commission.tags is an array
+      const matchedSkills = catcher.filter((skill) =>
+        commissionTagsArray.includes(skill)
+      );
+      setMatchSkillCount(matchedSkills.length);
+
+      if (matchedSkills.length > 0) {
+        setShowAlert(true);
+        setAlrtColor("success");
+      } else {
+        setShowAlert(true);
+        setAlrtColor("error");
+      }
+    }
+  }, [catcher, commission.tags]);
+  console.log(user);
   return (
     <>
       {showAlert && (
@@ -252,6 +287,7 @@ const ErrandPage = () => {
               distance={distance}
               tags="comTags"
               tagValue={commission.tags}
+              matchedSkills={matchSkillCount}
             />
           </div>
           {commission.comType !== "Delivery" &&
@@ -306,31 +342,48 @@ const ErrandPage = () => {
             UPDATE
           </button>
         )}
+
+        {user.hasErrand === "true" ? (
+          <Typography
+            level="body-sm"
+            sx={{ ml: "1.5rem", mt: ".5rem", mb: "0.5rem" }}
+          >
+            <i>You still have an Errand to do!</i>
+          </Typography>
+        ) : null}
+        <Typography
+          level="body-sm"
+          sx={{ ml: "1.5rem", mt: ".5rem", mb: "0.5rem" }}
+        >
+          Match Skills: {matchSkillCount}
+        </Typography>
         {user.userType === "Catcher" &&
           user.status === "Verified" &&
-          user.hasErrand === "false" && (
-            <div className="formButton">
-              <Button
-                className="formButton"
-                disabled={isApplied ? true : false}
-                size="lg"
-                variant="solid"
-                onClick={
-                  isApplied
-                    ? null
-                    : (e) => {
-                        handleApply(true);
-                      }
-                }
-                style={{
-                  backgroundColor: isApplied ? "none" : "",
-                }}
-              >
-                {isApplied ? "Applied" : "APPLY"}
-              </Button>
+          user.hasErrand === "false" &&
+          matchSkillCount < 0 && (
+            <div>
+              <div className="formButton">
+                <Button
+                  className="formButton"
+                  disabled={isApplied ? true : false}
+                  size="lg"
+                  variant="solid"
+                  onClick={
+                    isApplied
+                      ? null
+                      : (e) => {
+                          handleApply(true);
+                        }
+                  }
+                  style={{
+                    backgroundColor: isApplied ? "none" : "",
+                  }}
+                >
+                  {isApplied ? "Applied" : "APPLY"}
+                </Button>
+              </div>
             </div>
           )}
-
         {/* <button className="formButton" onClick={handleClick}>
           UPDATE
         </button> */}
