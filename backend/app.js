@@ -401,6 +401,25 @@ app.get("/get-email/", (req, res) => {
   });
 });
 
+// Check if there is a token for the given userID
+app.get("/check-token/:id", (req, res) => {
+  const id = req.params.id;
+  const q = `SELECT * FROM email_verification_tokens WHERE verUserID = ?`;
+
+  db.query(q, [id], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+
+    if (data.length > 0) {
+      return res.json({ exists: true });
+    } else {
+      return res.json({ exists: false });
+    }
+  });
+});
+
 // const bcrypt = require("bcrypt");
 
 // const plainPassword = "paul";
