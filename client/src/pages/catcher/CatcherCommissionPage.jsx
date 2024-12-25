@@ -66,7 +66,6 @@ function CommissionPage() {
   };
   const handleClose = () => {
     setOpen(false);
-
   };
 
   useEffect(() => {
@@ -318,7 +317,6 @@ function CommissionPage() {
               "START",
               "DEADLINE",
               "STATUS",
-              "ACTION",
             ]}
             data={currentItems.map((commission, rowIndex) => [
               commission.transactID,
@@ -332,7 +330,7 @@ function CommissionPage() {
                 {DisplayDate(commission.commissionDeadline)}
               </Box>,
               // commission.errandStatus,
-              commission.transStatus === "Completed" ? (
+              commission.transStatus === "Complete" ? (
                 <>
                   <AssignmentTurnedInOutlinedIcon style={{ color: "green" }} />
                   <span> Completed</span>
@@ -353,55 +351,6 @@ function CommissionPage() {
                   <span> Ongoing</span>
                 </>
               ) : null,
-              commission.transStatus === "Ongoing" ? (
-                <>
-                  <button
-                    className="cancel-btn"
-                    // onClick={() =>
-                    //   handleCancel(commission.transactID, commission.employerID)
-                    // }
-                    onClick={handleOpenCancelModal}
-                  >
-                    CANCEL
-                  </button>
-
-                  {/*cancel modal */}
-                  <Modal open={openCancel} onClose={() => setOpenCancel(false)}>
-                    <ModalDialog>
-                      <DialogTitle>
-                        <WarningRoundedIcon />
-                        Confirmation
-                      </DialogTitle>
-                      <Divider />
-                      <DialogContent>
-                        Are you sure you want to Cancel this errand?
-                      </DialogContent>
-                      <DialogActions>
-                        <Button
-                          variant="solid"
-                          color="danger"
-                          onClick={() => {
-                            handleCancel(
-                              commission.transactID,
-                              commission.employerID
-                            );
-                            setOpenCancel(false);
-                          }}
-                        >
-                          Yes
-                        </Button>
-                        <Button
-                          variant="plain"
-                          color="neutral"
-                          onClick={() => setOpenCancel(false)}
-                        >
-                          No
-                        </Button>
-                      </DialogActions>
-                    </ModalDialog>
-                  </Modal>
-                </>
-              ) : null,
             ])}
           />
         </div>
@@ -420,7 +369,7 @@ function CommissionPage() {
                 location={commission.commissionLocation}
                 desc={commission.commissionDesc}
                 pay={commission.commissionPay}
-                status={commission.errandStatus}
+                status={commission.transStatus}
                 path={`/errand/view/${commission.commissionID}`}
                 // Employer side
                 userFname={commission.userFirstname}
