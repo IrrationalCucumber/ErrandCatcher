@@ -38,6 +38,7 @@ const EmployerApplicants = () => {
   const userID = user.userID;
   //const [searchTerm, setSearchTerm] = useState('');
   const [applicants, setApplicants] = useState([]);
+  const [searchTerm, setSearchTerm] = useState({ term: "" });
 
   //current page state --Ash
   const [currentPage, setCurrentPage] = useState(1);
@@ -92,14 +93,36 @@ const EmployerApplicants = () => {
     fetchAllAccount();
   }, [userID]);
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setSearchTerm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const filterApplicants = applicants.filter((applicant) => {
+
+    console.log(applicant, "display data")
+
+    const termMatch = applicant.commissionTitle
+      ?.toLowerCase()
+      .includes(searchTerm.term?.toLowerCase() ?? "");
+    const termMatch2 = applicant.userFirstname
+      ?.toLowerCase()
+      .includes(searchTerm.term?.toLowerCase() ?? "");
+    const termMatch3 = applicant.userLastname
+      ?.toLowerCase()
+      .includes(searchTerm.term?.toLowerCase() ?? "");
+
+    return (termMatch || termMatch2 || termMatch3);
+  });
+
   // Pagination
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  const indexOfLastItem = currentPage + itemsPerPage;
+  const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = applicants.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filterApplicants.slice(indexOfFirstItem, indexOfLastItem);
 
   const headers = ["DATE", "CATCHER", "SKILLS", "ERRAND TITLE", "ACTION", ""];
-  const applicantData = applicants.map((applicant) => [
+  const applicantData = currentItems.map((applicant) => [
     //applicant.applicationID,
     // DisplayDate(applicant.applicationDate),
     <Box display="flex" alignItems="center" gap={1}>
@@ -336,7 +359,6 @@ const EmployerApplicants = () => {
         contentMes="You have accepted a Catcher!"
         color="success"
         colorText="green"
-        // icon={ErrorIcon}
       />
 
       <BannerEmployerPages
@@ -347,7 +369,13 @@ const EmployerApplicants = () => {
           <div className="employer__applicants__search">
             <Typography level="h1">Search:</Typography>
             &nbsp; &nbsp;
-            <input type="text" placeholder="Enter name here..." />
+            <input
+              type="text"
+              placeholder="Enter name here..."
+              name="term"
+              value={searchTerm.term}
+              onChange={handleInputChange}
+            />
           </div>
           <div className="applicants-table">
             <Table headers={headers} data={applicantData} />

@@ -346,7 +346,7 @@ select .display-data1 .error {
 
 /* Resetpassword component */
 .form-container {
-    max-width: 400px;
+    /* max-width: 400px; */
     background-color: #fff;
     padding: 32px 24px;
     font-size: 14px;
