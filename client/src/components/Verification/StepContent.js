@@ -80,7 +80,10 @@ export function Step1({ onNext, images, setImages }) {
 
   return (
     <div className="step">
-      <h1 className="step__title">Basic Information</h1>
+      <h1 className="step__title">
+        Basic Information{" "}
+        {user.userType === "Catcher" ? "Qualification skill" : "Tags"}
+      </h1>
       {/*step 1 for input logic part is lacking where user input auto fill up */}
       <form onSubmit={handleSubmit} className="form-container">
         <div className="form-group">

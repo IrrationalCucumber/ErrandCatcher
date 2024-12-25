@@ -47,6 +47,7 @@ function Notification() {
       setNotifs((prevNotifs) =>
         prevNotifs.map((notif) => ({ ...notif, isRead: true }))
       );
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -58,9 +59,11 @@ function Notification() {
       <div className="notification-container">
         <main className="notification-main">
           <div className="notification-header">
-            <p className="notification-title" style={{ paddingLeft: "30px" }}>
+            <h2 className="notification-title"
+              style={{ paddingLeft: "30px" }}
+            >
               Notifications
-            </p>
+            </h2>
             <img
               src="/images/notification_icon.svg"
               className="icon"
@@ -68,12 +71,18 @@ function Notification() {
               style={{ paddingLeft: "20px" }}
             />
             <Button
-              //onClick={markAsRead}
+              // onClick={markAsRead}
+              onClick={handleMarkAllAsRead}
               startDecorator={<CheckIcon />}
-              variant="outline"
-              color="plain"
+              variant="outlined"
+              color="primary"
               className="mark-read-button"
-              style={{ textAlign: "center" }}
+              style={{
+                textAlign: "center",
+                marginLeft: "20px",
+                fontSize: "14px",
+                fontWeight: 600,
+              }}
             >
               Mark all as Read
             </Button>
@@ -87,7 +96,7 @@ function Notification() {
                   date={DisplayDate(notif.notifDate)} // Format the date
                   isRead={notif.isRead}
                   markAsRead={() => markAsRead(notif.notificationID)}
-                  // style={{ border: "5px solid green" }}
+                // style={{ border: "5px solid green" }}
                 />
               </div>
             ))}
