@@ -121,14 +121,15 @@ export function ApplicantsCount(id) {
 //Application count forCather
 export function ApplicationCount(id) {
   const userID = id.id;
-  const [num, setNum] = useState();
+  const [num, setNum] = useState(null);
   useEffect(() => {
     const fetchCount = async () => {
       try {
         const res2 = await axios.get(
           `http://localhost:8800/application-count/${userID}`
         );
-        setNum(res2.data[0].c);
+        // setNum(res2.data[0]?.c || 0);
+        setNum(res2.data[0]?.c ?? null); // Treat `null` if no valid count
       } catch (err) {
         console.log(err);
       }
@@ -137,5 +138,11 @@ export function ApplicationCount(id) {
     const interval = setInterval(fetchCount, 10000); // 10 seconds refresh
     return () => clearInterval(interval);
   }, [userID, num]);
+
+ 
+  if (num === null || num === undefined) {
+    return null;
+  }
+
   return num;
 }
