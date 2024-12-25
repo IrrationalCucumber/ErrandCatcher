@@ -9,6 +9,7 @@ import SyncAltIcon from "@mui/icons-material/SyncAlt";
 import HomeWork from "@mui/icons-material/HomeWork";
 import CatCardsNew from "../../components/Cards/CatCardsNew";
 import { Slider, Box, Typography, TextField } from "@mui/material";
+import "./HomeServices.css";
 
 const HomeServices = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -151,9 +152,12 @@ const HomeServices = () => {
             <div class="col">
               <div className="Paylabel">
                 <label htmlFor="">
-                  <Typography variant="h6">Payment Range:</Typography>
+                  <Typography variant="h7">Payment Range:</Typography>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                     <input
+                      style={{
+                        padding: "4px 2px",
+                      }}
                       className="inputNum"
                       type="number"
                       placeholder="Minimum"
@@ -163,6 +167,10 @@ const HomeServices = () => {
                     />
                     <SyncAltIcon sx={{ color: "#fff", fontSize: 24 }} />
                     <input
+                      style={{
+                        // border: "solid",
+                        padding: "4px 2px",
+                      }}
                       className="inputNum"
                       type="number"
                       placeholder="Maximum"
