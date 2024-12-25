@@ -105,3 +105,8 @@
   transition: all 0.2s ease-in-out;
   height: 40px;
 }
+
+.group .buttonss:hover {
+  background: linear-gradient(135deg, #BFF0FA 0%, #2b87ff 100%);
+  opacity: 0.9;
+}
