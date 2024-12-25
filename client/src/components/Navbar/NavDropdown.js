@@ -22,6 +22,7 @@ import { ApplicationCount } from "../Display/DsiplayFunctions";
 
 function NavDropdown(props) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [numCount, setNumCount] = useState(null);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -108,10 +109,23 @@ function NavDropdown(props) {
               }}
             >
               <Typography>
-                <AssignmentOutlinedIcon /> Applications{" "}
-                <Chip color="danger" size="md" variant="soft">
-                  <ApplicationCount id={user.userID} />
-                </Chip>
+                <AssignmentOutlinedIcon /> Applications
+                {numCount !== null && numCount > 0 ? (
+                  <Chip
+                    color="danger"
+                    size="md"
+                    variant="solid">
+                    <ApplicationCount id={user.userID} />
+                  </Chip>
+                ) : (
+                  <Chip
+                    // color="success"
+                    color="danger"
+                    variant="soft">
+                    <ApplicationCount id={user.userID} />
+                  </Chip>
+                  // <ApplicationCount id={user.userID} />
+                )}
               </Typography>
             </Link>
           </MenuItem>

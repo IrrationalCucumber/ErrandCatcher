@@ -20,6 +20,9 @@ import {
   Typography,
 } from "@mui/joy";
 import { CheckCircle, CloseRounded } from "@mui/icons-material";
+import ModalFeedback from "../../components/ModalFeedback";
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
+import LoadingBackdrop from "../../components/LoadingSpinner";
 
 const ErrandPage = () => {
   const [commission, setCommission] = useState({
@@ -44,6 +47,17 @@ const ErrandPage = () => {
     tags: "",
   });
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  // modal message pop-up
+  const [openFeedmodal, setOpenFeedmodal] = useState(false);
+  const handleOpen = () => {
+    setOpenFeedmodal(true);
+  };
+  const handleClose = () => {
+    setOpenFeedmodal(false);
+    window.location.reload();
+  };
+
   const navigate = useNavigate();
   const location = useLocation();
   //pathname to array from
@@ -95,12 +109,34 @@ const ErrandPage = () => {
         );
         const retrievedCommission = res.data[0];
         //format date
+        // const formattedDate = new Date(retrievedCommission.commissionDeadline)
+        //   .toISOString()
+        //   .substr(0, 10);
+        // const formatStart = new Date(retrievedCommission.commissionStartDate)
+        //   .toISOString()
+        //   .substr(0, 10);
+
+        const options = {
+          timeZone: "Asia/Manila",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        };
+
+        // Format Deadline
         const formattedDate = new Date(retrievedCommission.commissionDeadline)
-          .toISOString()
-          .substr(0, 10);
+          .toLocaleDateString("en-CA", options) // Use "en-CA" for ISO-style YYYY-MM-DD
+          .split("/")
+          .reverse()
+          .join("-"); // Optional, to ensure consistent formatting
+
+        // Format Start Date
         const formatStart = new Date(retrievedCommission.commissionStartDate)
-          .toISOString()
-          .substr(0, 10);
+          .toLocaleDateString("en-CA", options) // Same as above
+          .split("/")
+          .reverse()
+          .join("-");
+
         // Update the state with retrieved account data
         setCommission({
           employerID: retrievedCommission.employerID,
@@ -185,10 +221,20 @@ const ErrandPage = () => {
       notif.notificationType = "Errand Application";
 
       await axios.post("http://localhost:8800/notify", notif);
-      setAlerMsg("You have applied to this Errand!");
-      setShowAlert(true);
-      setAlrtColor("success");
-      handleScrollToTop();
+      // setAlerMsg("You have applied to this Errand!");
+      // setShowAlert(true);
+      // setAlrtColor("success");
+      // handleScrollToTop();
+
+      setLoading(true);
+
+      setTimeout(() => {
+        handleScrollToTop();
+        setLoading(false);
+        // modal will pop-up in 2 seconds
+        handleOpen();
+      }, 2000);
+
       //alert(application.qualifications);
       //navigate(`/application/${userID}`);
       //console.log(notif); // check variables state
@@ -261,6 +307,22 @@ const ErrandPage = () => {
           {alertMesg}
         </Alert>
       )}
+
+      <LoadingBackdrop
+        open={loading}
+        text="Loading... Please wait while Applying to Errand"
+        icons={<HourglassBottomIcon />}
+      />
+
+      <ModalFeedback
+        open={openFeedmodal}
+        handleClose={handleClose}
+        headerMes="Success!"
+        contentMes="You have applied to this Errand!"
+        color="success"
+        colorText="green"
+      />
+
       <div className="errand-cont">
         <div className="input-cont">
           <div className="errand-inputs">

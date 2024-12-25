@@ -56,9 +56,15 @@ function Dashboard() {
                     <Badge
                       badgeContent={ApplicantsCount(user.userID)}
                       color="danger"
-                      size="sm"
-                      variant="soft"
-                      sx={{ p: 0.5 }}
+                      size="md"
+                      variant="solid"
+                      sx={{
+                        "& .MuiBadge-badge": {
+                          border: "none",
+                          boxShadow: "none",
+                        },
+                        p: 0.5,
+                      }}
                     >
                       APPLICANT
                     </Badge>
