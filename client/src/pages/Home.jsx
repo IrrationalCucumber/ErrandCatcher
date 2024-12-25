@@ -28,8 +28,9 @@ const Home = () => {
         const response = await axios.get(
           `http://localhost:8800/check-token/${userID}`
         );
-        if (response.data) {
+        if (response.data.exists) {
           setShowAlert(true);
+          console.log(response.data.exists);
         }
       } catch (error) {
         console.error("Error checking verification status:", error);
@@ -38,6 +39,7 @@ const Home = () => {
 
     checkVerificationStatus();
   }, [userID]);
+
   return (
     <>
       <div>
