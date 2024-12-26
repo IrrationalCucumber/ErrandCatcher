@@ -199,7 +199,7 @@ app.get("/success-payment/:id", (req, res) => {
   const currentTime = new Date().toISOString().slice(0, 19).replace("T", " ");
 
   const q1 = `UPDATE errandtransaction 
-            SET errandStatus = 'Task Done', transDateComplete = ? 
+            SET transStatus = 'Task Done', transDateComplete = ? 
             WHERE transactID = ?`;
 
   const q2 = `INSERT INTO invoice (total, type, description, checkoutId, paymentId, paid, invoiceErrandID, invoiceemployerID, invoiceCatcherID) VALUES ( ?, ?, ?, ?, ?, FROM_UNIXTIME(?), ?, ?, ? )`;
