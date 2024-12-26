@@ -274,14 +274,6 @@ const ErrandPage = () => {
         commissionTagsArray.includes(skill)
       );
       setMatchSkillCount(matchedSkills.length);
-
-      if (matchedSkills.length > 0) {
-        setShowAlert(true);
-        setAlrtColor("success");
-      } else {
-        setShowAlert(true);
-        setAlrtColor("error");
-      }
     }
   }, [catcher, commission.tags]);
   console.log(user);
@@ -326,7 +318,6 @@ const ErrandPage = () => {
       <div className="errand-cont">
         <div className="input-cont">
           <div className="errand-inputs">
-            {commission.tags}
             <ErrandInputs
               employer="Employer"
               fname={commission.first}
@@ -349,7 +340,6 @@ const ErrandPage = () => {
               distance={distance}
               tags="comTags"
               tagValue={commission.tags}
-              matchedSkills={matchSkillCount}
             />
           </div>
           {commission.comType !== "Delivery" &&
@@ -422,7 +412,7 @@ const ErrandPage = () => {
         {user.userType === "Catcher" &&
           user.status === "Verified" &&
           user.hasErrand === "false" &&
-          matchSkillCount < 0 && (
+          matchSkillCount > 0 && (
             <div>
               <div className="formButton">
                 <Button
