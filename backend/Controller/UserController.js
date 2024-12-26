@@ -389,7 +389,7 @@ const userController = {
   putCatcherHasErrand: (req, res) => {
     const id = req.params.id;
     const state = "true";
-    User.putCatcherHasErrand(id, state, (err) => {
+    User.putCatcherHasDoneErrand(id, state, (err, result) => {
       if (err) {
         console.error("Error updating state:", err, result);
         res
