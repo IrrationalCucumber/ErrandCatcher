@@ -151,8 +151,36 @@ const HomeServices = () => {
 
             <div class="col">
               <div className="Paylabel">
+                <div style={{ textAlign: "center" }} >
+                  <Typography color="#f5f5f5" variant="h6"
+                    sx={{
+                      fontSize: 18,
+                      fontWeight: 460,
+                      letterSpacing: "1.2px",
+                      // fontStyle: "italic"
+                    }}
+                  >
+                    Payment Range:
+                  </Typography>
+
+                  <Slider className="sliderpay"
+                    value={[
+                      Number(filter.minPay),
+                      Number(filter.maxPay)
+                    ]}
+                    onChange={handleSliderChange}
+                    // valueLabelDisplay="on"
+                    min={500}
+                    max={filter.maxPay}
+                    // step={100}
+                    sx={{
+                      marginTop: 2,
+                      color: "white",
+                    }}
+                  />
+                </div>
                 <label htmlFor="">
-                  <Typography variant="h7">Payment Range:</Typography>
+                  {/* <Typography variant="h7">Payment Range:</Typography> */}
                   <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                     <input
                       style={{
@@ -180,72 +208,7 @@ const HomeServices = () => {
                     />
                   </Box>
                 </label>
-                <div class="col">
-
-                  <Slider className="Paylabel"
-                    value={[
-                      Number(filter.minPay),
-                      Number(filter.maxPay)
-                    ]}
-                    onChange={handleSliderChange}
-                    // valueLabelDisplay="on"
-                    min={500}
-                    max={filter.maxPay}
-                    // step={100}
-                    sx={{
-                      marginTop: 2,
-                      color: "white",
-                    }}
-                  />
-                </div>
               </div>
-
-
-
-              {/* <Box >
-                <Typography variant="h6" gutterBottom>
-                  Payment Range:
-                </Typography>
-                <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                  <TextField
-                    label="Minimum"
-                    type="number"
-                    name="minPay"
-                    value={filter.minPay}
-                    onChange={handleChange}
-                    variant="outlined"
-                    size="small"
-                    sx={{ width: 120 }}
-                  />
-                  <SyncAltIcon sx={{ color: "#4caf50", fontSize: 24 }} />
-                  <TextField
-                    label="Maximum"
-                    type="number"
-                    name="maxPay"
-                    value={filter.maxPay}
-                    onChange={handleChange}
-                    variant="outlined"
-                    size="small"
-                    sx={{ width: 120 }}
-                  />
-                </Box>
-                <Slider
-                  value={[
-                    Number(filter.minPay) || 0,
-                    Number(filter.maxPay) || 1000, // Default max value
-                  ]}
-                  onChange={handleSliderChange}
-                  // valueLabelDisplay="on"
-                  min={0}
-                  max={5000} // Adjust range as needed
-                  step={100}
-                  sx={{ marginTop: 3, color: "#4caf50" }}
-                />
-              </Box> */}
-
-
-
-
             </div>
           </div>
         </div>
@@ -289,3 +252,45 @@ const HomeServices = () => {
 };
 
 export default HomeServices;
+
+
+{/* <Box >
+                <Typography variant="h6" gutterBottom>
+                  Payment Range:
+                </Typography>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                  <TextField
+                    label="Minimum"
+                    type="number"
+                    name="minPay"
+                    value={filter.minPay}
+                    onChange={handleChange}
+                    variant="outlined"
+                    size="small"
+                    sx={{ width: 120 }}
+                  />
+                  <SyncAltIcon sx={{ color: "#4caf50", fontSize: 24 }} />
+                  <TextField
+                    label="Maximum"
+                    type="number"
+                    name="maxPay"
+                    value={filter.maxPay}
+                    onChange={handleChange}
+                    variant="outlined"
+                    size="small"
+                    sx={{ width: 120 }}
+                  />
+                </Box>
+                <Slider
+                  value={[
+                    Number(filter.minPay) || 0,
+                    Number(filter.maxPay) || 1000, // Default max value
+                  ]}
+                  onChange={handleSliderChange}
+                  // valueLabelDisplay="on"
+                  min={0}
+                  max={5000} // Adjust range as needed
+                  step={100}
+                  sx={{ marginTop: 3, color: "#4caf50" }}
+                />
+              </Box> */}

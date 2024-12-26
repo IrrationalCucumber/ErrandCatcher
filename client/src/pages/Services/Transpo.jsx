@@ -147,36 +147,19 @@ const Transportation = () => {
 
             <div class="col">
               <div className="Paylabel">
-                <label htmlFor="">
-                  <Typography variant="h7">Payment Range:</Typography>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                    <input
-                      className="inputNum"
-                      type="number"
-                      placeholder="Minimum"
-                      name="minPay"
-                      onChange={handleChange}
-                      value={filter.minPay}
-                    />
-                    <SyncAltIcon
-                      sx={{
-                        color: "#fff",
-                        fontSize: 24,
-                      }}
-                    />
-                    <input
-                      className="inputNum"
-                      type="number"
-                      placeholder="Maximum"
-                      name="maxPay"
-                      onChange={handleChange}
-                      value={filter.maxPay}
-                    />
-                  </Box>
-                </label>
+                <div style={{ textAlign: "center" }} >
+                  <Typography color="#f5f5f5" variant="h6"
+                    sx={{
+                      fontSize: 18,
+                      fontWeight: 460,
+                      letterSpacing: "1.2px",
+                      // fontStyle: "italic"
+                    }}
+                  >
+                    Payment Range:
+                  </Typography>
 
-                <div class="col">
-                  <Slider className="Paylabel"
+                  <Slider className="sliderpay"
                     value={[
                       Number(filter.minPay),
                       Number(filter.maxPay)
@@ -192,6 +175,34 @@ const Transportation = () => {
                     }}
                   />
                 </div>
+                <label htmlFor="">
+                  {/* <Typography variant="h7">Payment Range:</Typography> */}
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                    <input
+                      style={{
+                        padding: "4px 2px",
+                      }}
+                      className="inputNum"
+                      type="number"
+                      placeholder="Minimum"
+                      name="minPay"
+                      onChange={handleChange}
+                      value={filter.minPay}
+                    />
+                    <SyncAltIcon sx={{ color: "#fff", fontSize: 24 }} />
+                    <input
+                      style={{
+                        padding: "4px 2px",
+                      }}
+                      className="inputNum"
+                      type="number"
+                      placeholder="Maximum"
+                      name="maxPay"
+                      onChange={handleChange}
+                      value={filter.maxPay}
+                    />
+                  </Box>
+                </label>
               </div>
             </div>
           </div>

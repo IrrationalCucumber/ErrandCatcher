@@ -64,6 +64,10 @@ select>.selected {
   gap: 20px;
 }
 
+.sliderpay {
+  margin-left: 12px;
+}
+
 @media screen and (max-width: 768px) {
   .search-barborder {
     display: flex;
