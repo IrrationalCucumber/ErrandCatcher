@@ -10,6 +10,8 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CameraOutdoorIcon from "@mui/icons-material/CameraOutdoor";
 import SyncAltIcon from "@mui/icons-material/SyncAlt";
 import PaymentsIcon from "@mui/icons-material/Payments";
+import { Slider, Box, Typography, TextField } from "@mui/material";
+
 
 const GenerateReport = () => {
     const [invoices, setInvoices] = useState([]);
@@ -76,6 +78,14 @@ const GenerateReport = () => {
         }
     };
 
+    const handleSliderChange = (event, newValue) => {
+        setSearchTerm((prev) => ({
+            ...prev,
+            minPay: newValue[0],
+            maxPay: newValue[1],
+        }));
+    };
+
     //filter
     const filterErrands = invoices.filter((invoice) => {
         const type = invoice.type
@@ -103,15 +113,17 @@ const GenerateReport = () => {
         //     .includes(searchTerm.term.toLowerCase() ?? "");
         // const status = invoice.commissionStatus.includes(searchTerm.status);
 
-        //if price range has been entered
         let priceMatches = true;
+
         if (searchTerm.minPay !== "" && searchTerm.maxPay !== "") {
-            priceMatches =
-                invoice.total >= searchTerm.minPay &&
-                invoice.total <= searchTerm.maxPay;
+            const total = invoice.total / 100;
+            const minPay = parseFloat(searchTerm.minPay);
+            const maxPay = parseFloat(searchTerm.maxPay);
+
+            priceMatches = total >= minPay && total <= maxPay;
         }
 
-        return type && (termMatch || termMatch2 || termMatchFullName);
+        return type && (termMatch || termMatch2 || termMatchFullName) && priceMatches;
     });
 
     // convert to centavo
@@ -127,7 +139,7 @@ const GenerateReport = () => {
     return (
         <div>
             <div className="commissions">
-                <div style={{ display: "flex", justifyContent: "center", marginTop: "4px" }}>
+                <div style={{ display: "flex", justifyContent: "center", marginTop: "4px", gap: "20px", alignItems: "stretch", }}>
                     <div class="col-md-4 col-xl-3 mb-3">
                         <div class="card bg-c-blue order-card text-center">
                             <div class="card-block">
@@ -142,6 +154,56 @@ const GenerateReport = () => {
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-md-4 col-xl-3 mb-3">
+                        <div class="card bg-c-green order-card text-center">
+                            {/* <div class="card bg-c-yellow order-card text-center"> */}
+                            <div class="card-block">
+                                <h3 class="m-b-20 fw-semibold">
+                                    <PaymentsIcon sx={{ color: "white", fontSize: 24 }} /> Payment range
+                                </h3>
+                                <h2 class="text-center">
+                                    <Box sx={{ display: "flex", alignItems: "center", gap: 2, marginTop: 2 }}>
+                                        <TextField
+                                            label="Minimum"
+                                            type="number"
+                                            name="minPay"
+                                            value={searchTerm.minPay}
+                                            onChange={handleChange}
+                                            variant="outlined"
+                                            size="small"
+                                            sx={{ width: 120 }}
+                                        />
+                                        <SyncAltIcon sx={{ color: "#1679ABs", fontSize: 24 }} />
+                                        <TextField
+                                            label="Maximum"
+                                            type="number"
+                                            name="maxPay"
+                                            value={searchTerm.maxPay}
+                                            onChange={handleChange}
+                                            variant="outlined"
+                                            size="small"
+                                            sx={{ width: 120 }}
+                                        />
+                                    </Box>
+                                    <Slider
+                                        value={[
+                                            Number(searchTerm.minPay),
+                                            Number(searchTerm.maxPay)
+                                        ]}
+                                        onChange={handleSliderChange}
+                                        // valueLabelDisplay="on"
+                                        min={500}
+                                        max={searchTerm.maxPay}
+                                        // step={100}
+                                        sx={{ marginTop: 2, color: "white" }}
+                                    />
+                                </h2>
+                                {/* <p class="m-b-0">Total invoice trasaction</p> */}
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div
                     className="searchAdmin"
@@ -194,33 +256,7 @@ const GenerateReport = () => {
                         </select>
                     </div>
 
-                    {/* <div className="Paylabel">
-                        <label htmlFor="">
-                            Payment Range:
-                            <input
-                                className="inputNum"
-                                type="number"
-                                placeholder="Minimum"
-                                name="minPay"
-                                onChange={handleChange}
-                                value={searchTerm.minPay}
-                            />
-                            <SyncAltIcon
-                                sx={{
-                                    color: "grey",
-                                    fontSize: 24,
-                                }}
-                            />
-                            <input
-                                className="inputNum"
-                                type="number"
-                                placeholder="Maximum"
-                                name="maxPay"
-                                onChange={handleChange}
-                                value={searchTerm.maxPay}
-                            />
-                        </label>
-                    </div> */}
+
                 </div>
 
                 <Table
