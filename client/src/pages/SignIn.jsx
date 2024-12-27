@@ -43,6 +43,7 @@ const SignIn = () => {
           userID: user.userID,
           userType: user.accountType,
           status: user.accountStatus,
+          hasErrand: user.userHasErrand,
         };
         setLoading(true);
         // 2 seconds cd

@@ -418,7 +418,7 @@ function ErrandInputs(props) {
       <div className="input-group">
         <div className="col1">
           <Typography level="title-lg" variant="plain">
-            Tags
+            Skill Requirement
           </Typography>
         </div>
         <div className="col2">
@@ -451,7 +451,7 @@ function ErrandInputs(props) {
             renderInput={(params) => (
               <Input
                 {...params}
-                placeholder="Add or select tags..."
+                placeholder="Select skills..."
                 variant="outlined"
                 size="md"
               />

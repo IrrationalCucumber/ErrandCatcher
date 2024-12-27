@@ -99,8 +99,7 @@ const EmployerApplicants = () => {
   };
 
   const filterApplicants = applicants.filter((applicant) => {
-
-    console.log(applicant, "display data")
+    console.log(applicant, "display data");
 
     const termMatch = applicant.commissionTitle
       ?.toLowerCase()
@@ -112,17 +111,27 @@ const EmployerApplicants = () => {
       ?.toLowerCase()
       .includes(searchTerm.term?.toLowerCase() ?? "");
 
-    return (termMatch || termMatch2 || termMatch3);
+    return termMatch || termMatch2 || termMatch3;
   });
 
   // Pagination
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filterApplicants.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filterApplicants.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
 
-  const headers = ["DATE", "CATCHER", "SKILLS", "ERRAND TITLE", "ACTION", ""];
-  const applicantData = currentItems.map((applicant) => [
+  const headers = [
+    "DATE",
+    "CATCHER",
+    "AVAILABILITY",
+    "ERRAND TITLE",
+    "ACTION",
+    "",
+  ];
+  const applicantData = applicants.map((applicant) => [
     //applicant.applicationID,
     // DisplayDate(applicant.applicationDate),
     <Box display="flex" alignItems="center" gap={1}>
@@ -130,9 +139,7 @@ const EmployerApplicants = () => {
       {DisplayDate(applicant.applicationDate)}
     </Box>,
     `${applicant.userFirstname} ${applicant.userLastname}`,
-    applicant.userQualification
-      ? applicant.userQualification
-      : "No Skills provided",
+    applicant.userHasErrand === true ? "Unavailable" : "Available",
     // applicant.commissionTitle,
     <Box display="flex" alignItems="center" gap={1}>
       <BadgeOutlinedIcon sx={{ color: "#555" }} />
@@ -153,7 +160,11 @@ const EmployerApplicants = () => {
           variant="outlined"
           spacing="0"
         >
-          <Button color="success" onClick={() => handleOpenAcceptModal()}>
+          <Button
+            color="success"
+            onClick={() => handleOpenAcceptModal()}
+            disabled={applicant.userHasErrand === true ? true : false}
+          >
             Accept
           </Button>
           <Button color="danger" onClick={() => handleOpenDeclineModal()}>
@@ -319,6 +330,8 @@ const EmployerApplicants = () => {
       await axios.put(
         `http://localhost:8800/errand-taken/${applicationErrandID}`
       );
+      //set catcher has errand
+      await axios.put(`http://localhost:8800/has-errand/${catcherID}`);
     } catch (err) {
       console.log(err);
     }
