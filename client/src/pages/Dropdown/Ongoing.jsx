@@ -79,7 +79,7 @@ function Ongoing() {
   const filterErrands = commissions.filter((commission) => {
     const type = searchTerm.type
       ? commission.commissionType?.toLowerCase() ===
-      searchTerm.type.toLowerCase()
+        searchTerm.type.toLowerCase()
       : true;
 
     const termMatch =
@@ -106,14 +106,14 @@ function Ongoing() {
 
       <div
         className="searchOngoing"
-      // style={{
-      //   marginTop: "10px",
-      //   marginBottom: "10px",
-      //   display: "flex",
-      //   alignItems: "center",
-      //   width: "50%",
-      //   marginLeft: "50px"
-      // }}
+        // style={{
+        //   marginTop: "10px",
+        //   marginBottom: "10px",
+        //   display: "flex",
+        //   alignItems: "center",
+        //   width: "50%",
+        //   marginLeft: "50px"
+        // }}
       >
         <input
           className="inputSearchAdmin"
@@ -122,13 +122,13 @@ function Ongoing() {
           placeholder="Search..."
           value={searchTerm.term}
           onChange={handleChange}
-        // style={{
-        //   padding: "8px",
-        //   fontSize: "12px",
-        //   border: "1px solid #ccc",
-        //   borderRadius: "4px",
-        //   margin: "10px 0px 10px 0px",
-        // }}
+          // style={{
+          //   padding: "8px",
+          //   fontSize: "12px",
+          //   border: "1px solid #ccc",
+          //   borderRadius: "4px",
+          //   margin: "10px 0px 10px 0px",
+          // }}
         />
         {/* <button
             type="submit"
@@ -157,13 +157,13 @@ function Ongoing() {
             name="status"
             onChange={handleChange}
             value={searchTerm.status}
-          // style={{
-          //   padding: "8px",
-          //   fontSize: "12px",
-          //   border: "1px solid #ccc",
-          //   borderRadius: "4px",
-          //   margin: "10px 20px",
-          // }}
+            // style={{
+            //   padding: "8px",
+            //   fontSize: "12px",
+            //   border: "1px solid #ccc",
+            //   borderRadius: "4px",
+            //   margin: "10px 20px",
+            // }}
           >
             <option value="">Status</option>
             <option value="Complete">Complete</option>
@@ -175,13 +175,13 @@ function Ongoing() {
             onChange={handleChange}
             value={searchTerm.type}
             name="type"
-          // style={{
-          //   padding: "8px 10px 8px 10px",
-          //   fontSize: "12px",
-          //   border: "1px solid #ccc",
-          //   borderRadius: "4px",
-          //   margin: "10px",
-          // }}
+            // style={{
+            //   padding: "8px 10px 8px 10px",
+            //   fontSize: "12px",
+            //   border: "1px solid #ccc",
+            //   borderRadius: "4px",
+            //   margin: "10px",
+            // }}
           >
             <option value="">Type</option>
             <option value="HomeService - Indoor">HomeService Indoor</option>
@@ -198,7 +198,7 @@ function Ongoing() {
           <div className="cards__items">
             {filterErrands.map((commission) => (
               <OngoingCardsNew
-                key={commission.commissionID}
+                //key={commission.commissionID}
                 icon={commission.commissionType}
                 title={commission.commissionTitle}
                 type={commission.commissionType}

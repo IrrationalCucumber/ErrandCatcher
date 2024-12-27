@@ -86,19 +86,6 @@ function OngoingCardsNew(props) {
   const [isPaymentDisabled, setPaymentDisabled] = useState(true);
   const [clickedFeedback, setClickedFeedback] = useState({}); // feedback or feedbacked render
 
-  // // Load state from local storage on component mount
-  useEffect(() => {
-    const storedFeedbackStatus =
-      JSON.parse(localStorage.getItem("clickedFeedback")) || {};
-    const storedPaymentStatus =
-      JSON.parse(localStorage.getItem("paymentStatus")) || {};
-
-    setClickedFeedback(storedFeedbackStatus);
-    if (storedPaymentStatus[props.comID]) {
-      setPaymentDisabled(false); // Enable payment button if stored as enabled
-    }
-  }, [props.comID]);
-
   //Alert feedback
   const [message, setMessage] = useState("");
   const [alertColor, setAlertColor] = useState("");
@@ -328,6 +315,25 @@ function OngoingCardsNew(props) {
       console.log(err);
     }
   };
+  const { transCatID, comID, empID } = props;
+  const [isPaid, setIsPaid] = useState(false);
+  useEffect(() => {
+    const checkPaymentStatus = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8800/invoice`, {
+          params: { transCatID, comID, userID },
+        });
+        if (response.data.paid) {
+          setPaymentDisabled(true);
+          setIsPaid(true);
+        }
+      } catch (error) {
+        console.error("Error checking payment status:", error);
+      }
+    };
+
+    checkPaymentStatus();
+  }, [transCatID, comID, empID]);
 
   const handlePayment = (
     pay,
@@ -444,10 +450,10 @@ function OngoingCardsNew(props) {
             {/* {props.title} */}
             <Typography level="h4" color="neutral" variant="plain">
               {/* {commission.commissionTitle} */}
-              {Capitalize(props.title)}
+              {Capitalize(props.title)} {props.comID}
             </Typography>
           </span>
-
+          {props.empID}
           {/* props.desc */}
           {/* {props.type} */}
           <Typography className="ongoing__cards__txt" level="body-sm">
@@ -521,7 +527,8 @@ function OngoingCardsNew(props) {
                     CATCHER:
                   </Typography>
                   <Typography color="primary" level="title-md" variant="plain">
-                    {Capitalize(props.userFname)} {Capitalize(props.userLname)}
+                    {Capitalize(props.userFname)} {Capitalize(props.userLname)}{" "}
+                    {transCatID}
                   </Typography>
                   {/* {commission.userFirstname} {commission.userLastname} */}
                 </Typography>
@@ -552,7 +559,14 @@ function OngoingCardsNew(props) {
                     >
                       {clickedFeedback[props.comID] ? "Rated" : "Feedback"}
                     </button>
-                    {isPaymentDisabled ? null : (
+                    {isPaymentDisabled ? (
+                      <button
+                        className="ongoing__cards__button"
+                        disabled={isPaid}
+                      >
+                        {isPaid ? "Paid" : "Pay"}
+                      </button>
+                    ) : (
                       <button
                         className="ongoing__cards__button"
                         disabled={isPaymentDisabled}
@@ -570,11 +584,12 @@ function OngoingCardsNew(props) {
                           );
                         }}
                       >
-                        Payment
+                        {isPaid ? "Paid" : "Pay"}
                       </button>
                     )}
                   </>
                 )}
+                {isPaid}
               </div>
 
               {/* modal trigger if clicked */}
