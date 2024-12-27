@@ -443,6 +443,83 @@ const userController = {
       });
     });
   },
+  getCatcherHasErrand: (req, res) => {
+    const id = req.params.id;
+    User.getCatcherHasErrand(id, (err, user) => {
+      if (err) {
+        console.error("Error fetching user:", err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      if (!user) {
+        res.status(404).send("User not found");
+        return;
+      }
+      res.json(user[0]);
+    });
+  },
+  //catcher has caught an errand, no more apply
+  putCatcherHasErrand: (req, res) => {
+    const id = req.params.id;
+    const state = "true";
+    User.putCatcherHasDoneErrand(id, state, (err, result) => {
+      if (err) {
+        console.error("Error updating state:", err, result);
+        res
+          .status(500)
+          .json({ error: "An error occurred while updating state" });
+        return;
+      }
+      // Check if any rows were affected by the update operation
+      if (result.affectedRows === 0) {
+        res.status(404).json({ error: "User not found" });
+        return;
+      }
+      // User updated successfully
+      res.status(200).json({ message: "State updated successfully" });
+    });
+  },
+  //catcher has finish an errand and can apply again
+  putCatcherHasDoneErrand: (req, res) => {
+    const id = req.params.id;
+    const state = "false";
+    User.putCatcherHasDoneErrand(id, state, (err, result) => {
+      if (err) {
+        console.error("Error updating state:", err);
+        res
+          .status(500)
+          .json({ error: "An error occurred while updating state" });
+        return;
+      }
+      // Check if any rows were affected by the update operation
+      if (result.affectedRows === 0) {
+        res.status(404).json({ error: "User not found" });
+        return;
+      }
+      // User updated successfully
+      res.status(200).json({ message: "State updated successfully" });
+    });
+  },
+  //catchers has finish an errand and can apply again
+  putCatchersHasDoneErrand: (req, res) => {
+    const id = req.params.id;
+    User.putCatchersHasDoneErrand(id, (err) => {
+      if (err) {
+        console.error("Error updating state:", err);
+        res
+          .status(500)
+          .json({ error: "An error occurred while updating state" });
+        return;
+      }
+      // Check if any rows were affected by the update operation
+      if (result.affectedRows === 0) {
+        res.status(404).json({ error: "User not found" });
+        return;
+      }
+      // User updated successfully
+      res.status(200).json({ message: "State updated successfully" });
+    });
+  },
 };
 
 module.exports = userController;

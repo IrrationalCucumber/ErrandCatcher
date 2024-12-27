@@ -215,6 +215,8 @@ const GenerateReport = () => {
                 <Table
                     headers={[
                         "Invoice ID",
+                        "Employer name",
+                        "Catcher name",
                         "Description",
                         "Errand Type",
                         "Paid Date",
@@ -222,6 +224,8 @@ const GenerateReport = () => {
                     ]}
                     data={currentItems.map((Invoice) => [
                         Invoice.invoiceID,
+                        `${Invoice.employerFirstName} ${Invoice.employerLastName}`,
+                        `${Invoice.catcherFirstName} ${Invoice.catcherLastName}`,
                         Invoice.description,
                         // `${Invoice.userFirstname} ${Invoice.userLastname}`,
                         // Invoice.commissionType,

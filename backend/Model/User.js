@@ -152,95 +152,35 @@ const User = {
       callback
     );
   },
-  /**
-   * SEARCH QUERY
-   */
-  //search by Name/email/
-  getSeatchByTerm: (searchTerms, type, status, callback) => {
-    if (searchTerms != "") {
-      //term only
-      if (status == "" && type == "") {
-        db.query(
-          `SELECT * FROM useraccount WHERE username LIKE ? OR userEmail LIKE ? OR userFirstname LIKE ? OR userLastname LIKE ?`,
-          [
-            `%${searchTerms}%`,
-            `%${searchTerms}%`,
-            `%${searchTerms}%`,
-            `%${searchTerms}%`,
-          ],
-          callback
-        );
-      } else if (status == "" && type != "") {
-        // if term and type only
-        db.query(
-          `SELECT * FROM useraccount WHERE (username LIKE ? OR userEmail LIKE ? OR userFirstname LIKE ? OR userLastname LIKE ?) AND accountType = ?`,
-          [
-            `%${searchTerms}%`,
-            `%${searchTerms}%`,
-            `%${searchTerms}%`,
-            `%${searchTerms}%`,
-            type,
-          ],
-          callback
-        );
-      } else if (type == "" && status != "") {
-        //if term and status
-        db.query(
-          `SELECT * FROM useraccount WHERE (username LIKE ? OR userEmail LIKE ? OR userFirstname LIKE ? OR userLastname LIKE ?) AND accountStatus = ?`,
-          [
-            `%${searchTerms}%`,
-            `%${searchTerms}%`,
-            `%${searchTerms}%`,
-            `%${searchTerms}%`,
-            status,
-          ],
-          callback
-        );
-      }
-    } else if (type != "") {
-      if (searchTerms == "" && status == "") {
-        //if type only
-        db.query(
-          `SELECT * FROM useraccount WHERE accountType = ?`,
-          [type],
-          callback
-        );
-      }
-      //type + status only
-      else if (type != "" && status != "") {
-        //if type only
-        db.query(
-          `SELECT * FROM useraccount WHERE accountType = ? and accountStatus = ?`,
-          [type, status],
-          callback
-        );
-      }
-    } else if (status != "") {
-      if (searchTerms == "" && type == "") {
-        //if type only
-        db.query(
-          `SELECT * FROM useraccount WHERE accountStatus = ?`,
-          [status],
-          callback
-        );
-      }
-    } else if (searchTerms != "" && type != "" && status != "") {
-      //all three
-      db.query(
-        `SELECT * FROM useraccount WHERE (username LIKE ? OR userEmail LIKE ? OR userFirstname LIKE ? OR userLastname LIKE ?) AND accountStatus = ? AND accountType = ?`,
-        [
-          `%${searchTerms}%`,
-          `%${searchTerms}%`,
-          `%${searchTerms}%`,
-          `%${searchTerms}%`,
-          status,
-          type,
-        ],
-        callback
-      );
-    } else {
-      db.query(`SELECT * FROM useraccount`, callback);
-    }
+
+  //fetch if catcher has errand
+  getCatcherHasErrand: (id, callback) => {
+    db.query(
+      "SELECT userHasErrand FROM useraccount WHERE accountType = 'Catcher' AND userID = ?",
+      [id],
+      callback
+    );
+  },
+  // update hasErrand if Catcher have or finish errand
+  putCatcherHasDoneErrand: (id, state, cb) => {
+    db.query(
+      `UPDATE useraccount SET userHasErrand = ? WHERE userID = ?`,
+      [state, id],
+      cb
+    );
+  },
+  //set catcher/s has finish errand
+  putCatchersHasDoneErrand: (id, cb) => {
+    db.query(
+      `UPDATE useraccount
+        SET userHasErrand = 'false'
+        WHERE userID IN (
+        SELECT DISTINCT et.transCatcherID
+        FROM errandtransaction et
+        WHERE et.transErrandID = ?)`,
+      [id],
+      cb
+    );
   },
   // Save verification token
   saveVerificationToken: (userId, token, callback) => {

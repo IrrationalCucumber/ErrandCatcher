@@ -10,7 +10,7 @@ import StarRating from "../Display/StarRating";
 import ViewFeedback from "./ViewFeedback";
 import Docu from "./Docu";
 import Resetpassword from "./Resetpassword";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -224,6 +224,8 @@ export function NewUserProfileui(props) {
     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
   };
 
+  const navigate = useNavigate();
+
   return (
     <>
       <div class="container">
@@ -326,68 +328,82 @@ export function NewUserProfileui(props) {
                 </div>
               </div>
 
-              <div class="col-12">
-                <div class="card widget-card border-light shadow-sm">
-                  <div class="card-header text-bg-primary">
-                    {props.type === "Catcher" ? "Skills" : "Tags"}
-                  </div>
-                  <div class="card-body">
-                    <Box
-                      sx={{
-                        flex: "1 1 auto",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 1,
-                      }}
-                    >
-                      {skillsArray.length > 0 ? ( // Check if there are any skills to display
-                        <>
-                          <Stack
-                            direction="row"
-                            flexWrap="wrap"
-                            sx={{ gap: 1 }} // Ensures spacing between items
-                          >
-                            {skillsArray.map((skill, index) => (
-                              <Chip
-                                key={index}
-                                variant="solid" // Gives a subtle background color
-                                color="primary" // Choose the color theme (primary, secondary, etc.)
-                                size="md" // Medium size for better visibility
-                              >
-                                {skill.trim()}{" "}
-                                {/* Trims any unnecessary whitespace */}
-                              </Chip>
-                            ))}
-                          </Stack>
-                          <Button
-                            size="lg"
-                            variant="soft"
-                            sx={{
-                              margin: 1,
-                              width: "100%",
-                              borderRadius: "8px",
-                            }}
-                            onClick={() => setOpen(true)}
-                          >
-                            UPDATE
-                          </Button>
-                        </>
-                      ) : (
-                        <>
-                          <Typography level="body2" color="neutral">
-                            No skills provided.
-                          </Typography>
-                        </>
-                      )}
-                      <SkillsInputModal
-                        skills={skillsArray}
-                        open={open}
-                        close={() => setOpen(false)}
-                      />
-                    </Box>
+              {user.userType === "Catcher" && (
+                <div class="col-12">
+                  <div class="card widget-card border-light shadow-sm">
+                    <div class="card-header text-bg-primary">
+                      {props.type === "Catcher" ? "Skills" : "Tags"}
+                    </div>
+                    <div class="card-body">
+                      <Box
+                        sx={{
+                          flex: "1 1 auto",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: 1,
+                        }}
+                      >
+                        {skillsArray.length > 0 ? ( // Check if there are any skills to display
+                          <>
+                            <Stack
+                              direction="row"
+                              flexWrap="wrap"
+                              sx={{ gap: 1 }} // Ensures spacing between items
+                            >
+                              {skillsArray.map((skill, index) => (
+                                <Chip
+                                  key={index}
+                                  variant="solid" // Gives a subtle background color
+                                  color="primary" // Choose the color theme (primary, secondary, etc.)
+                                  size="md" // Medium size for better visibility
+                                >
+                                  {skill.trim()}{" "}
+                                  {/* Trims any unnecessary whitespace */}
+                                </Chip>
+                              ))}
+                            </Stack>
+                            <Button
+                              size="lg"
+                              variant="soft"
+                              sx={{
+                                margin: 1,
+                                width: "100%",
+                                borderRadius: "8px",
+                              }}
+                              onClick={() => setOpen(true)}
+                            >
+                              UPDATE
+                            </Button>
+                          </>
+                        ) : (
+                          <>
+                            <Typography level="body2" color="neutral">
+                              No skills provided.
+                            </Typography>
+                            <Button
+                              size="lg"
+                              variant="soft"
+                              sx={{
+                                margin: 1,
+                                width: "100%",
+                                borderRadius: "8px",
+                              }}
+                              onClick={() => setOpen(true)}
+                            >
+                              ADD
+                            </Button>
+                          </>
+                        )}
+                        <SkillsInputModal
+                          skills={skillsArray}
+                          open={open}
+                          close={() => setOpen(false)}
+                        />
+                      </Box>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
 
@@ -968,7 +984,15 @@ export function NewUserProfileui(props) {
                     tabindex="0"
                   >
                     <h5 class="mb-3">Documents: </h5>
-
+                    {!props.verFront || !props.verBack ? (
+                      <>
+                        <Button
+                          onClick={() => navigate(`/profile/verification`)}
+                        >
+                          UPLOAD
+                        </Button>
+                      </>
+                    ) : null}
                     {
                       //display sumbitted IDs of user
                       props.verFront || props.verBack ? (
@@ -1001,7 +1025,37 @@ export function NewUserProfileui(props) {
                     {
                       //display sumbitted docs/additional ids of user
                       // driver license additional info fetch
-                      props.verDoc1 ? (
+                      props.verDR1 || props.verDR2 ? (
+                        <>
+                          <div className="id_1">
+                            <img
+                              onClick={() =>
+                                handleOpenModalDocs(
+                                  `http://localhost:8800/images/docu/${props.verDR1}`
+                                )
+                              }
+                              src={`http://localhost:8800/images/docu/${props.verDR2}`}
+                              alt="License"
+                            />
+                          </div>
+                          <div className="id_2">
+                            <img
+                              onClick={() =>
+                                handleOpenModalDocs(
+                                  `http://localhost:8800/images/docu/${props.verDR2}`
+                                )
+                              }
+                              src={`http://localhost:8800/images/docu/${props.verDR2}`}
+                              alt="License"
+                            />
+                          </div>
+                        </>
+                      ) : null
+                    }
+                    {
+                      //display sumbitted docs/additional ids of user
+                      // driver license additional info fetch
+                      props.verDoc1 || props.verDoc2 ? (
                         <>
                           <div className="id_1">
                             <img
@@ -1011,6 +1065,17 @@ export function NewUserProfileui(props) {
                                 )
                               }
                               src={`http://localhost:8800/images/docu/${props.verDoc1}`}
+                              alt="License"
+                            />
+                          </div>
+                          <div className="id_2">
+                            <img
+                              onClick={() =>
+                                handleOpenModalDocs(
+                                  `http://localhost:8800/images/docu/${props.verDoc2}`
+                                )
+                              }
+                              src={`http://localhost:8800/images/docu/${props.verDoc2}`}
                               alt="License"
                             />
                           </div>

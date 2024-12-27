@@ -53,6 +53,9 @@ const verifyController = {
         { name: "image1", maxCount: 1 }, // inique name of what is being append
         { name: "image2", maxCount: 1 }, //
         { name: "doc1", maxCount: 1 },
+        { name: "doc2", maxCount: 1 },
+        { name: "dr1", maxCount: 1 },
+        { name: "dr2", maxCount: 1 },
       ])(req, res, (err) => {
         if (err) {
           console.error("Error uploading images:", err);
@@ -62,16 +65,28 @@ const verifyController = {
         //This accesses the filename of the first uploaded file for the image1 field
         const image1 = req.files["image1"][0].filename;
         const image2 = req.files["image2"][0].filename;
-        const doc1 = req.files["doc1"] ? req.files["doc1"][0].filename : null; //for drivers license
-        Verify.postNewRequest(userID, image1, image2, doc1, (error) => {
-          if (error) {
-            console.error("Error posting new request:", error);
-            return res
-              .status(500)
-              .json({ message: "Error posting new request" });
+        const doc1 = req.files["doc1"] ? req.files["doc1"][0].filename : null; //for docs
+        const doc2 = req.files["doc2"] ? req.files["doc2"][0].filename : null; //for docs
+        const dr1 = req.files["dr1"] ? req.files["dr1"][0].filename : null; //for drivers license
+        const dr2 = req.files["dr2"] ? req.files["dr2"][0].filename : null; //for drivers license
+        Verify.postNewRequest(
+          userID,
+          image1,
+          image2,
+          doc1,
+          doc2,
+          dr1,
+          dr2,
+          (error) => {
+            if (error) {
+              console.error("Error posting new request:", error);
+              return res
+                .status(500)
+                .json({ message: "Error posting new request" });
+            }
+            return res.json({ status: "Success" });
           }
-          return res.json({ status: "Success" });
-        });
+        );
       });
     } catch (error) {
       console.log(error);

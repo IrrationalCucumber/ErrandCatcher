@@ -25,10 +25,16 @@ export default function StepperVer() {
   const [images, setImages] = useState({
     image1: null,
     image2: null,
+    dr1: null,
+    dr2: null,
     doc1: null,
-    preview1: "",
-    preview2: "",
-    preview3: "",
+    doc2: null,
+    preview1: "", //img1
+    preview2: "", //img2
+    preview3: "", //doc1
+    preview4: "", //doc
+    preview5: "", //dr
+    preview6: "", //dr2
   });
 
   const [haveLicense, setHaveLicense] = useState(false);
@@ -48,7 +54,14 @@ export default function StepperVer() {
     switch (step) {
       case 0:
         return (
-          <Step1 details={details} setDetail={setDetails} onNext={handleNext} />
+          <Step1
+            images={images}
+            setImages={setImages}
+            details={details}
+            haveLicense={haveLicense}
+            setHaveLicense={setHaveLicense}
+            onNext={handleNext}
+          />
         );
       case 1:
         return (

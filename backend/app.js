@@ -199,7 +199,7 @@ app.get("/success-payment/:id", (req, res) => {
   const currentTime = new Date().toISOString().slice(0, 19).replace("T", " ");
 
   const q1 = `UPDATE errandtransaction 
-            SET errandStatus = 'Task Done', transDateComplete = ? 
+            SET transStatus = 'Task Done', transDateComplete = ? 
             WHERE transactID = ?`;
 
   const q2 = `INSERT INTO invoice (total, type, description, checkoutId, paymentId, paid, invoiceErrandID, invoiceemployerID, invoiceCatcherID) VALUES ( ?, ?, ?, ?, ?, FROM_UNIXTIME(?), ?, ?, ? )`;
@@ -435,5 +435,24 @@ app.get("/check-token/:id", (req, res) => {
 //     console.log("Passwords do not match!");
 //   }
 // });
+
+// Get invoice by id and check if the user/employer has already paid
+app.get("/invoice", (req, res) => {
+  const { transCatID, comID, empID } = req.query;
+  const q = `SELECT * FROM invoice WHERE invoiceCatcherID = ? AND invoiceErrandID = ? `;
+
+  db.query(q, [transCatID, comID, empID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+
+    if (data.length === 0) {
+      return res.json({ paid: false, data: data });
+    }
+
+    return res.json({ paid: true, data: data });
+  });
+});
 
 module.exports;

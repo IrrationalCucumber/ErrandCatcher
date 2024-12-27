@@ -116,7 +116,12 @@ const ErrandPage = () => {
         //   .toISOString()
         //   .substr(0, 10);
 
-        const options = { timeZone: "Asia/Manila", year: "numeric", month: "2-digit", day: "2-digit" };
+        const options = {
+          timeZone: "Asia/Manila",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        };
 
         // Format Deadline
         const formattedDate = new Date(retrievedCommission.commissionDeadline)
@@ -131,7 +136,6 @@ const ErrandPage = () => {
           .split("/")
           .reverse()
           .join("-");
-
 
         // Update the state with retrieved account data
         setCommission({
@@ -231,8 +235,6 @@ const ErrandPage = () => {
         handleOpen();
       }, 2000);
 
-
-
       //alert(application.qualifications);
       //navigate(`/application/${userID}`);
       //console.log(notif); // check variables state
@@ -248,6 +250,33 @@ const ErrandPage = () => {
     });
   };
   // console.log(commission);
+
+  //check for matching skills
+  const [catcher, setCatcher] = useState([]);
+  const [matchSkillCount, setMatchSkillCount] = useState(0);
+  useEffect(() => {
+    const fetchSkills = async () => {
+      try {
+        const res = await axios(`http://localhost:8800/user/${user.userID}`);
+        const skillArray = res.data.map((skill) => skill.userQualification);
+        setCatcher(skillArray[0].split(",")); // Ensure catcher is an array
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchSkills();
+  }, [user.userID]);
+
+  useEffect(() => {
+    if (catcher.length > 0 && commission.tags) {
+      const commissionTagsArray = commission.tags.split(","); // Ensure commission.tags is an array
+      const matchedSkills = catcher.filter((skill) =>
+        commissionTagsArray.includes(skill)
+      );
+      setMatchSkillCount(matchedSkills.length);
+    }
+  }, [catcher, commission.tags]);
+  console.log(user);
   return (
     <>
       {showAlert && (
@@ -289,7 +318,6 @@ const ErrandPage = () => {
       <div className="errand-cont">
         <div className="input-cont">
           <div className="errand-inputs">
-            {commission.tags}
             <ErrandInputs
               employer="Employer"
               fname={commission.first}
@@ -366,29 +394,48 @@ const ErrandPage = () => {
             UPDATE
           </button>
         )}
-        {user.userType === "Catcher" && user.status === "Verified" && (
-          <div className="formButton">
-            <Button
-              className="formButton"
-              disabled={isApplied ? true : false}
-              size="lg"
-              variant="solid"
-              onClick={
-                isApplied
-                  ? null
-                  : (e) => {
-                    handleApply(true);
-                  }
-              }
-              style={{
-                backgroundColor: isApplied ? "none" : "",
-              }}
-            >
-              {isApplied ? "Applied" : "APPLY"}
-            </Button>
-          </div>
-        )}
 
+        {user.hasErrand === "true" ? (
+          <Typography
+            level="body-sm"
+            sx={{ ml: "1.5rem", mt: ".5rem", mb: "0.5rem" }}
+          >
+            <i>You still have an Errand to do!</i>
+          </Typography>
+        ) : null}
+        <Typography
+          level="body-sm"
+          sx={{ ml: "1.5rem", mt: ".5rem", mb: "0.5rem" }}
+        >
+          Match Skills: {matchSkillCount}
+        </Typography>
+        {user.userType === "Catcher" &&
+          user.status === "Verified" &&
+          user.hasErrand === "false" &&
+          matchSkillCount > 0 && (
+            <div>
+              <div className="formButton">
+                <Button
+                  className="formButton"
+                  disabled={isApplied ? true : false}
+                  size="lg"
+                  variant="solid"
+                  onClick={
+                    isApplied
+                      ? null
+                      : (e) => {
+                          handleApply(true);
+                        }
+                  }
+                  style={{
+                    backgroundColor: isApplied ? "none" : "",
+                  }}
+                >
+                  {isApplied ? "Applied" : "APPLY"}
+                </Button>
+              </div>
+            </div>
+          )}
         {/* <button className="formButton" onClick={handleClick}>
           UPDATE
         </button> */}
