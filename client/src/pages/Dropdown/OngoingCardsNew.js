@@ -463,10 +463,10 @@ function OngoingCardsNew(props) {
             {/* {props.title} */}
             <Typography level="h4" color="neutral" variant="plain">
               {/* {commission.commissionTitle} */}
-              {Capitalize(props.title)} {props.comID}
+              {Capitalize(props.title)}
             </Typography>
           </span>
-          {props.empID}
+
           {/* props.desc */}
           {/* {props.type} */}
           <Typography className="ongoing__cards__txt" level="body-sm">
@@ -540,8 +540,7 @@ function OngoingCardsNew(props) {
                     CATCHER:
                   </Typography>
                   <Typography color="primary" level="title-md" variant="plain">
-                    {Capitalize(props.userFname)} {Capitalize(props.userLname)}{" "}
-                    {transCatID}
+                    {Capitalize(props.userFname)} {Capitalize(props.userLname)}
                   </Typography>
                   {/* {commission.userFirstname} {commission.userLastname} */}
                 </Typography>
@@ -602,7 +601,6 @@ function OngoingCardsNew(props) {
                     )}
                   </>
                 )}
-                {isPaid}
               </div>
 
               {/* modal trigger if clicked */}
