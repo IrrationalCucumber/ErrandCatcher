@@ -87,6 +87,17 @@ const GenerateReport = () => {
         const termMatch2 = invoice.paid
             ?.toLowerCase()
             .includes(searchTerm.term.toLowerCase() ?? "");
+
+        const employerFullName =
+            `${invoice.employerFirstName} ${invoice.employerLastName}`
+                .toLowerCase();
+        const catcherFullName =
+            `${invoice.catcherFirstName} ${invoice.catcherLastName}`
+                .toLowerCase();
+
+        const termMatchFullName = employerFullName.includes(searchTerm.term.toLowerCase() ?? "") ||
+            catcherFullName.includes(searchTerm.term.toLowerCase() ?? "");
+
         // const termMatch3 = invoice.total
         //     ?.toLowerCase()
         //     .includes(searchTerm.term.toLowerCase() ?? "");
@@ -100,7 +111,7 @@ const GenerateReport = () => {
                 invoice.total <= searchTerm.maxPay;
         }
 
-        return type && (termMatch || termMatch2);
+        return type && (termMatch || termMatch2 || termMatchFullName);
     });
 
     // convert to centavo
@@ -215,8 +226,8 @@ const GenerateReport = () => {
                 <Table
                     headers={[
                         "Invoice ID",
-                        "Employer name",
-                        "Catcher name",
+                        "Employer Full Name",
+                        "Catcher Full Name",
                         "Description",
                         "Errand Type",
                         "Paid Date",
