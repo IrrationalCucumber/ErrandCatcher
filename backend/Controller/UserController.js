@@ -191,7 +191,7 @@ const userController = {
       if (err) {
         console.error("Error fetching current password:", err);
         return res.status(500).json({
-          error: "Error fetching current password"
+          error: "Error fetching current password",
         });
       }
 
@@ -207,26 +207,27 @@ const userController = {
       // Validate current password
       if (!isMatch) {
         return res.status(400).json({
-          error: "Current password is incorrect"
+          error: "Current password is incorrect",
         });
       }
 
       // Validate new password and confirm password
       if (password !== conPassword) {
         return res.status(400).json({
-          error: "New password and confirm password do not match"
+          error: "New password and confirm password do not match",
         });
       }
 
       if (password.length < 8) {
         return res.status(400).json({
-          error: "Password must be at least 8 characters long."
+          error: "Password must be at least 8 characters long.",
         });
       }
 
       if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(password)) {
         return res.status(400).json({
-          error: "Password must contain at least one uppercase letter, one lowercase letter, and one number."
+          error:
+            "Password must contain at least one uppercase letter, one lowercase letter, and one number.",
         });
       }
 
@@ -239,20 +240,26 @@ const userController = {
 
         // Update the password in the database
         const updatedData = { password: hashedPassword };
-        User.putResetPasswordById(userID, updatedData, (updateErr, updateResult) => {
-          if (updateErr) {
-            console.error("Error updating password:", updateErr);
+        User.putResetPasswordById(
+          userID,
+          updatedData,
+          (updateErr, updateResult) => {
+            if (updateErr) {
+              console.error("Error updating password:", updateErr);
+              return res.status(500).json({
+                error: "An error occurred while updating the password",
+              });
+            }
+
+            if (updateResult.affectedRows === 0) {
+              return res.status(404).json({ error: "User not found" });
+            }
+
             return res
-              .status(500)
-              .json({ error: "An error occurred while updating the password" });
+              .status(200)
+              .json({ message: "Password updated successfully" });
           }
-
-          if (updateResult.affectedRows === 0) {
-            return res.status(404).json({ error: "User not found" });
-          }
-
-          return res.status(200).json({ message: "Password updated successfully" });
-        });
+        );
       });
     });
   },
@@ -361,6 +368,83 @@ const userController = {
         return;
       }
       res.json(users);
+    });
+  },
+  getCatcherHasErrand: (req, res) => {
+    const id = req.params.id;
+    User.getCatcherHasErrand(id, (err, user) => {
+      if (err) {
+        console.error("Error fetching user:", err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      if (!user) {
+        res.status(404).send("User not found");
+        return;
+      }
+      res.json(user[0]);
+    });
+  },
+  //catcher has caught an errand, no more apply
+  putCatcherHasErrand: (req, res) => {
+    const id = req.params.id;
+    const state = "true";
+    User.putCatcherHasDoneErrand(id, state, (err, result) => {
+      if (err) {
+        console.error("Error updating state:", err, result);
+        res
+          .status(500)
+          .json({ error: "An error occurred while updating state" });
+        return;
+      }
+      // Check if any rows were affected by the update operation
+      if (result.affectedRows === 0) {
+        res.status(404).json({ error: "User not found" });
+        return;
+      }
+      // User updated successfully
+      res.status(200).json({ message: "State updated successfully" });
+    });
+  },
+  //catcher has finish an errand and can apply again
+  putCatcherHasDoneErrand: (req, res) => {
+    const id = req.params.id;
+    const state = "false";
+    User.putCatcherHasDoneErrand(id, state, (err, result) => {
+      if (err) {
+        console.error("Error updating state:", err);
+        res
+          .status(500)
+          .json({ error: "An error occurred while updating state" });
+        return;
+      }
+      // Check if any rows were affected by the update operation
+      if (result.affectedRows === 0) {
+        res.status(404).json({ error: "User not found" });
+        return;
+      }
+      // User updated successfully
+      res.status(200).json({ message: "State updated successfully" });
+    });
+  },
+  //catchers has finish an errand and can apply again
+  putCatchersHasDoneErrand: (req, res) => {
+    const id = req.params.id;
+    User.putCatchersHasDoneErrand(id, (err) => {
+      if (err) {
+        console.error("Error updating state:", err);
+        res
+          .status(500)
+          .json({ error: "An error occurred while updating state" });
+        return;
+      }
+      // Check if any rows were affected by the update operation
+      if (result.affectedRows === 0) {
+        res.status(404).json({ error: "User not found" });
+        return;
+      }
+      // User updated successfully
+      res.status(200).json({ message: "State updated successfully" });
     });
   },
 };

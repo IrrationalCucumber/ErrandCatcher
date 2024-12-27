@@ -53,6 +53,7 @@ const Menu = () => {
   return (
     <>
       <SearchBar
+        hasErrand={user.hasErrand}
         value={searchQuery}
         onClick={handleSearch}
         onChange={(e) => setSearchQuery(e.target.value)}
@@ -74,81 +75,61 @@ const Menu = () => {
         icons={<HourglassBottomIcon />}
       />
 
-      {/* <div className="search-bar">
-        {/* <input
-          type="text"
-          placeholder="Search..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <button
-          onClick={(e) => {
-            navigate(`/search/${searchQuery}`);
-          }}
-          style={{ backgroundColor: "#1679AB" }}
-        >
-          Search
-        </button> 
-      </div> */}
-      <section className="Menu" id="Menu">
-        {/* bootstrap class applied */}
-        <div className="box-container d-flex justify-content-center align-items-center">
-          <div class="container">
-            <div class="row">
-              <div class="col">
-                <div className="box">
-                  <Link to={`/service/HomeService/${"HomeService"}`}>
-                    <button style={{}}>
-                      {/* <img src="/images/img6.png" alt="" /> */}
-                      <OtherHousesIcon
-                        sx={{ color: "#0073aa", fontSize: 100 }}
-                      />
-                      <div className="content">
-                        <p style={{ paddingTop: "20px" }}>Home Service</p>
-                      </div>
-                    </button>
-                  </Link>
+      {user.hasErrand === "false" && (
+        <section className="Menu" id="Menu">
+          {/* bootstrap class applied */}
+          <div className="box-container d-flex justify-content-center align-items-center">
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <div className="box">
+                    <Link to={`/service/HomeService/${"HomeService"}`}>
+                      <button style={{}}>
+                        {/* <img src="/images/img6.png" alt="" /> */}
+                        <OtherHousesIcon
+                          sx={{ color: "#0073aa", fontSize: 100 }}
+                        />
+                        <div className="content">
+                          <p style={{ paddingTop: "20px" }}>Home Service</p>
+                        </div>
+                      </button>
+                    </Link>
+                  </div>
                 </div>
-              </div>
-              <div class="col">
-                <div className="box">
-                  <Link to={`/service/Transpo/${"Transport"}`}>
-                    <button style={{}}>
-                      {/* <img src="/images/img4.png" alt="" /> */}
-                      <DirectionsCarIcon
-                        sx={{ color: "#0073aa", fontSize: 100 }}
-                      />
-                      <div className="content">
-                        <p style={{ paddingTop: "20px" }}>Transportation</p>
-                      </div>
-                    </button>
-                  </Link>
+                <div class="col">
+                  <div className="box">
+                    <Link to={`/service/Transpo/${"Transport"}`}>
+                      <button style={{}}>
+                        {/* <img src="/images/img4.png" alt="" /> */}
+                        <DirectionsCarIcon
+                          sx={{ color: "#0073aa", fontSize: 100 }}
+                        />
+                        <div className="content">
+                          <p style={{ paddingTop: "20px" }}>Transportation</p>
+                        </div>
+                      </button>
+                    </Link>
+                  </div>
                 </div>
-              </div>
-              <div class="col">
-                <div className="box">
-                  <Link to={`/service/Delivery/${"Delivery"}`}>
-                    <button style={{}}>
-                      {/* <img src="/images/img5.png" alt="" /> */}
-                      <LocalShippingIcon
-                        sx={{ color: "#0073aa", fontSize: 100 }}
-                      />
-                      <div className="content">
-                        <p style={{ paddingTop: "20px" }}>Delivery</p>
-                      </div>
-                    </button>
-                  </Link>
+                <div class="col">
+                  <div className="box">
+                    <Link to={`/service/Delivery/${"Delivery"}`}>
+                      <button style={{}}>
+                        {/* <img src="/images/img5.png" alt="" /> */}
+                        <LocalShippingIcon
+                          sx={{ color: "#0073aa", fontSize: 100 }}
+                        />
+                        <div className="content">
+                          <p style={{ paddingTop: "20px" }}>Delivery</p>
+                        </div>
+                      </button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {user.userType.toLocaleUpperCase() === "catcher" && (
-        <>
-          <Cards />
-        </>
+        </section>
       )}
     </>
   );

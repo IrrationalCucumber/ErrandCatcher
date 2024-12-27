@@ -1,48 +1,44 @@
 import React from "react";
 import "./css/style.css";
-import SearchIcon from '@mui/icons-material/Search';
-
+import SearchIcon from "@mui/icons-material/Search";
+import { Button } from "@mui/joy";
+import { useNavigate } from "react-router-dom";
 
 function SearchBar(props) {
+  const navigate = useNavigate();
+
   return (
-    <>
-      <form
-        onSubmit={props.onClick}
-      >
-        <div className="search__bar__container">
-          <h1>Search what errands you want</h1>
-          {/* <div className="search__bar">
-        <input
-          type="text"
-          placeholder="Search..."
-          value={props.value}
-          onChange={props.onChange}
+    <div className="search__bar__container">
+      {props.hasErrand === "false" ? (
+        <h1>Search what errands you want</h1>
+      ) : (
+        <h1>You still have an Errands to do!</h1>
+      )}
+
+      {props.hasErrand === "false" ? (
+        <div className="group">
+          <SearchIcon className="icon" />
+          <input
+            className="inputsss"
+            type="text"
+            placeholder="Search"
+            value={props.value}
+            onChange={props.onChange}
           />
-          <button onClick={props.onClick} style={{ backgroundColor: "#1679AB" }}>
-          Search
+          <button className="buttonss" onClick={props.onClick}>
+            Search
           </button>
-          </div> */}
-          <div className="group">
-            <SearchIcon className="icon" />
-            <input
-              className="inputsss"
-              type="text"
-              placeholder="Search"
-              value={props.value}
-              onChange={props.onChange}
-            />
-            <button
-              className="buttonss"
-              type="submit"
-              id="searchBar"
-            // onClick={props.onClick}
-            >
-              Search
-            </button>
-          </div>
         </div>
-      </form>
-    </>
+      ) : (
+        <Button
+          onClick={() => navigate(`/dashboard/catcher-errands`)}
+          size="lg"
+          variant="soft"
+        >
+          VIEW ERRANDS
+        </Button>
+      )}
+    </div>
   );
 }
 

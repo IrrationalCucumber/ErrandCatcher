@@ -1,5 +1,6 @@
 import { Add } from "@mui/icons-material";
 import {
+  Autocomplete,
   Box,
   Button,
   Chip,
@@ -34,29 +35,91 @@ function SkillsInputModal(props) {
   }, [props.skills]);
 
   // Predefined list of skills (you can fetch this from the backend)
-  let availableSkills = [];
-  if (user.userType === "Employer") {
-    availableSkills = [
-      "Human Resources",
-      "Housewife/Househusband",
-      "Student",
-      "Government Agency",
-      "Self-Employed",
-    ];
-  } else {
-    availableSkills = [
-      "Communication",
-      "Teamwork",
-      "Problem Solving",
-      "Hardworking",
-      "Leadership",
-      "Time Management",
-      "Carpentry",
-      "Plumbing",
-      "Gadening",
-      "Programming",
-    ];
-  }
+  const availableSkills = [
+    "Plumbing",
+    "Electrical Work",
+    "House Cleaning",
+    "Gardening",
+    "Babysitting",
+    "Pet Sitting",
+    "Carpentry",
+    "Cooking",
+    "Personal Shopping",
+    "Event Planning",
+    "Photography",
+    "Graphic Design",
+    "Web Development",
+    "Content Writing",
+    "Translation",
+    "Digital Marketing",
+    "SEO Optimization",
+    "Video Editing",
+    "Music Lessons",
+    "Fitness Training",
+    "Tutoring",
+    "Legal Assistance",
+    "Accounting",
+    "Tax Preparation",
+    "Data Entry",
+    "Virtual Assistance",
+    "Social Media Management",
+    "Customer Support",
+    "IT Support",
+    "App Development",
+    "UX/UI Design",
+    "Landscaping",
+    "Moving Services",
+    "Laundry Services",
+    "Home Organization",
+    "Property Maintenance",
+    "Security Services",
+    "Interior Design",
+    "Real Estate Assistance",
+    "Automobile Repair",
+    "Bike Repair",
+    "Painting",
+    "Massage Therapy",
+    "Driver Services",
+    "Personal Training",
+    "Yoga Instructor",
+    "Dance Intructor",
+    "Language instructor",
+    "Art Lessons",
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "React",
+    "Vue",
+    "Angular",
+    "Node.js",
+    "SQL",
+    "C#",
+    "Python",
+    "Cargo Delivery",
+    "Food Delivery",
+    "Grocery Delivery",
+    "Medicine Delivery",
+    "Parcel Delivery",
+    "Courier Services",
+    "Furniture Delivery",
+    "Appliance Delivery",
+    "Vehicle Transport",
+    "Pet Transport",
+    "Motorcycle Transport",
+    "Maintenance Services",
+    "Repair Services",
+    "Installation Services",
+    "Assembly Services",
+    "Cleaning Services",
+    "Removal Services",
+    "Restoration Services",
+    "Renovation Services",
+    "Consulting Services",
+    "Training Services",
+    "Coaching Services",
+    "Therapy Services",
+    "Counseling Services",
+  ];
   // Function to add a skill to the selectedSkills array
   const handleAddSkill = (skill) => {
     if (!selectedSkills.includes(skill)) {
@@ -87,6 +150,10 @@ function SkillsInputModal(props) {
     }
     if (!qualificationsString) {
       setError("Please list your skills.");
+      return;
+    }
+    if (selectedSkills.length > 15) {
+      setError("Maximum of 15 skills only!");
       return;
     }
     // Clear errors if all checks pass
@@ -224,6 +291,9 @@ function SkillsInputModal(props) {
                         </Typography>
                       </FormLabel>
                     )}
+                    <Typography level="body-sm">
+                      <i>15 Skills Max</i>
+                    </Typography>
                   </div>
                   {error && (
                     <Typography color="danger" textAlign="center" marginTop={2}>
