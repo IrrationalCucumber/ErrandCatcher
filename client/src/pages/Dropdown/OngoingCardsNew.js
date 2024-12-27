@@ -86,6 +86,19 @@ function OngoingCardsNew(props) {
   const [isPaymentDisabled, setPaymentDisabled] = useState(true);
   const [clickedFeedback, setClickedFeedback] = useState({}); // feedback or feedbacked render
 
+  // // Load state from local storage on component mount
+  useEffect(() => {
+    const storedFeedbackStatus =
+      JSON.parse(localStorage.getItem("clickedFeedback")) || {};
+    const storedPaymentStatus =
+      JSON.parse(localStorage.getItem("paymentStatus")) || {};
+
+    setClickedFeedback(storedFeedbackStatus);
+    if (storedPaymentStatus[props.comID]) {
+      setPaymentDisabled(false); // Enable payment button if stored as enabled
+    }
+  }, [props.comID]);
+
   //Alert feedback
   const [message, setMessage] = useState("");
   const [alertColor, setAlertColor] = useState("");
