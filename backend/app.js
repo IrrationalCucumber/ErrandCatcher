@@ -417,4 +417,23 @@ app.get("/get-email/", (req, res) => {
 //   }
 // });
 
+// Get invoice by id and check if the user/employer has already paid
+app.get("/invoice", (req, res) => {
+  const { transCatID, comID, empID } = req.query;
+  const q = `SELECT * FROM invoice WHERE invoiceCatcherID = ? AND invoiceErrandID = ? `;
+
+  db.query(q, [transCatID, comID, empID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+
+    if (data.length === 0) {
+      return res.json({ paid: false, data: data });
+    }
+
+    return res.json({ paid: true, data: data });
+  });
+});
+
 module.exports;
