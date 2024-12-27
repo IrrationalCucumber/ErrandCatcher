@@ -3,6 +3,8 @@
 const User = require("../Model/User");
 //enryption
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
+const sendVerificationEmail = require("../sendEmail");
 const { error } = require("console");
 const saltRounds = 10;
 //profile upload
@@ -284,20 +286,21 @@ const userController = {
       res.status(200).json({ message: "Status updated successfully" });
     });
   },
-  //sign in/ add new user
+  // Sign up / add new user
   postSignUp: (req, res) => {
     const newUserData = req.body;
 
-    //hash/enrypt password
+    // Hash/encrypt password
     bcrypt.hash(newUserData.regPassword, saltRounds, (err, hash) => {
       if (err) {
-        console.error("Error hashign passowrd", err);
+        console.error("Error hashing password", err);
         res.status(500).json({ error: "Error processing password" });
         return;
-      } //replact text password to hashed password
+      }
+      // Replace text password with hashed password
       newUserData.regPassword = hash;
 
-      User.postNewUser(newUserData, (error) => {
+      User.postNewUser(newUserData, (error, result) => {
         if (error) {
           console.error("Error adding user:", error);
           res
@@ -305,8 +308,33 @@ const userController = {
             .json({ error: "An error occurred while adding new user" });
           return;
         }
-        // User added successfully
-        res.status(200).json({ message: "sign up successfully" });
+
+        // Generate a verification token
+        const verificationToken = crypto.randomBytes(32).toString("hex");
+
+        // Save the verification token to the database
+        User.saveVerificationToken(
+          result.insertId,
+          verificationToken,
+          (tokenError) => {
+            if (tokenError) {
+              console.error("Error saving verification token:", tokenError);
+              res.status(500).json({
+                error: "An error occurred while saving verification token",
+              });
+              return;
+            }
+
+            // Send verification email
+            sendVerificationEmail(newUserData.email, verificationToken);
+
+            // User added successfully
+            res.status(200).json({
+              message:
+                "Sign up successful! Please check your email to verify your account.",
+            });
+          }
+        );
       });
     });
   },
@@ -368,6 +396,51 @@ const userController = {
         return;
       }
       res.json(users);
+    });
+  },
+  // Verify email
+  verifyEmail: (req, res) => {
+    const { token } = req.query;
+
+    User.verifyToken(token, (err, result) => {
+      if (err) {
+        console.error("Error verifying token:", err);
+        res
+          .status(500)
+          .json({ error: "An error occurred while verifying token" });
+        return;
+      }
+
+      if (result.length === 0) {
+        res.status(400).json({ error: "Invalid or expired token" });
+        return;
+      }
+
+      const userId = result[0].verUserID;
+
+      // Update user status to verified
+      User.updateUserStatus(userId, "Verified", (updateError) => {
+        if (updateError) {
+          console.error("Error updating user status:", updateError);
+          res
+            .status(500)
+            .json({ error: "An error occurred while updating user status" });
+          return;
+        }
+
+        // Delete the verification token
+        User.deleteVerificationToken(token, (deleteError) => {
+          if (deleteError) {
+            console.error("Error deleting verification token:", deleteError);
+            res.status(500).json({
+              error: "An error occurred while deleting verification token",
+            });
+            return;
+          }
+
+          res.status(200).json({ message: "Email verified successfully!" });
+        });
+      });
     });
   },
   getCatcherHasErrand: (req, res) => {

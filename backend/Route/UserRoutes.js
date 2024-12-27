@@ -28,4 +28,7 @@ router.put("/has-errand/:id", userController.putCatcherHasErrand); // used for u
 router.put("/has-done-errand/:id", userController.putCatcherHasDoneErrand); // used for updating if errand is done
 router.put("/catchers-done/:id", userController.putCatchersHasDoneErrand); // used for updating catcher/s if errand is done
 
+// Verify email route
+router.get("/verify-email", userController.verifyEmail);
+
 module.exports = router;

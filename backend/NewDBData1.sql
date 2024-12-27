@@ -62,7 +62,6 @@ CREATE TABLE `commission` (
   `commissionLat` double DEFAULT NULL,
   `commissionDestLong` double DEFAULT NULL,
   `commissionDestLat` double DEFAULT NULL,
-  `commissionCatcherNumTag` varchar(20) DEFAULT NULL,
   `commissionTags` text,
   PRIMARY KEY (`commissionID`),
   KEY `userID_idx` (`employerID`),
@@ -85,7 +84,7 @@ CREATE TABLE `email_verification_tokens` (
   PRIMARY KEY (`verID`),
   KEY `verUserID_idx` (`verUserID`),
   CONSTRAINT `verUserID` FOREIGN KEY (`verUserID`) REFERENCES `useraccount` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -134,7 +133,7 @@ CREATE TABLE `feedbackcommission` (
   CONSTRAINT `feedbackCatcherID` FOREIGN KEY (`feedbackCatcherID`) REFERENCES `useraccount` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `feedbackCommissionID` FOREIGN KEY (`feedbackErrandID`) REFERENCES `commission` (`commissionID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `feedbackPosterID` FOREIGN KEY (`feedbackPosterID`) REFERENCES `useraccount` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -182,7 +181,7 @@ CREATE TABLE `notification` (
   PRIMARY KEY (`notificationID`),
   KEY `userID_idx` (`notifUserID`),
   CONSTRAINT `notifUserID` FOREIGN KEY (`notifUserID`) REFERENCES `useraccount` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=248 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=247 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -269,4 +268,4 @@ CREATE TABLE `verification_request` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-25 21:14:23
+-- Dump completed on 2024-12-26 15:07:43

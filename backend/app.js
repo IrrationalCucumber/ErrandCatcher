@@ -49,7 +49,7 @@ app.use("/", ExperienceRoutes);
 //   res.json("hello this is the backend");
 // });
 
-const PORT = process.env.PORT || 8800;
+const PORT = 8800;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
@@ -398,6 +398,25 @@ app.get("/get-email/", (req, res) => {
     }
 
     return res.json(data);
+  });
+});
+
+// Check if there is a token for the given userID
+app.get("/check-token/:id", (req, res) => {
+  const id = req.params.id;
+  const q = `SELECT * FROM email_verification_tokens WHERE verUserID = ?`;
+
+  db.query(q, [id], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+
+    if (data.length > 0) {
+      return res.json({ exists: true });
+    } else {
+      return res.json({ exists: false });
+    }
   });
 });
 

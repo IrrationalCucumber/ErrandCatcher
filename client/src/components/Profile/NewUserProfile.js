@@ -308,43 +308,20 @@ export function NewUserProfileui(props) {
                       </>
                     ) : (
                       <>
-                        {props.verStatus === "Pending" ? (
-                          <>
-                            <Chip
-                              sx={{
-                                fontSize: "1.1rem",
-                                height: "30px",
-                                padding: "20px 15px",
-                              }}
-                              size="sm"
-                              variant="solid"
-                              color="warning"
-                            >
-                              <PendingIcon />{" "}
-                              <i>{props.verStatus.toLocaleUpperCase()}</i>
-                            </Chip>
-                          </>
-                        ) : (
-                          <>
-                            <Chip
-                              sx={{
-                                fontSize: "1.1rem",
-                                height: "30px",
-                                padding: "20px 15px",
-                              }}
-                              size="sm"
-                              variant="solid"
-                              color="danger"
-                            >
-                              <Link
-                                to={`/profile/verification`}
-                                style={{ textDecoration: "none" }}
-                              >
-                                <ErrorIcon /> {props.status.toLocaleUpperCase()}
-                              </Link>
-                            </Chip>
-                          </>
-                        )}
+                        <>
+                          <Chip
+                            sx={{
+                              fontSize: "1.1rem",
+                              height: "30px",
+                              padding: "20px 15px",
+                            }}
+                            size="sm"
+                            variant="solid"
+                            color="danger"
+                          >
+                            <ErrorIcon /> {props.status.toLocaleUpperCase()}
+                          </Chip>
+                        </>
                       </>
                     )}
                   </div>
