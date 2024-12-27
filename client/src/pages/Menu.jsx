@@ -34,7 +34,8 @@ const Menu = () => {
     setSearchQuery(event.target.value);
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     // Trigger loading state
     if (searchQuery === "") {
       // alert("Please input your fields");
