@@ -145,7 +145,7 @@ const GenerateReport = () => {
             <div className="commissions">
                 <div style={{ display: "flex", justifyContent: "center", marginTop: "4px", gap: "20px", alignItems: "stretch", }}>
                     <div class="col-md-4 col-xl-3 mb-3">
-                        <div class="card bg-c-blue order-card text-center">
+                        <div class="card bg-c-blue order-card text-center" style={{ height: "200px" }}>
                             <div class="card-block">
                                 <h3 class="m-b-20 fw-semibold">
                                     <PaymentsIcon sx={{ color: "white", fontSize: 24 }} /> Generate Report
@@ -160,7 +160,7 @@ const GenerateReport = () => {
                     </div>
 
                     <div class="col-md-4 col-xl-3 mb-3">
-                        <div class="card bg-c-green order-card text-center">
+                        <div class="card bg-c-green order-card text-center" style={{ height: "200px" }}>
                             {/* <div class="card bg-c-yellow order-card text-center"> */}
                             <div class="card-block">
                                 <h3 class="m-b-20 fw-semibold">

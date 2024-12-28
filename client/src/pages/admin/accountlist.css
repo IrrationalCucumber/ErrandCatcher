@@ -10,13 +10,6 @@
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
-/* bootstrap */
-.card {
-  height: 82%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
 
 .accounts {
   margin: 20px;
