@@ -20,8 +20,8 @@ const GenerateReport = () => {
         term: "",
         type: "",
         status: "",
-        minPay: 0,
-        maxPay: 0,
+        minPay: "",
+        maxPay: "",
         date: "",
     });
     const location = useLocation();
@@ -111,16 +111,10 @@ const GenerateReport = () => {
 
         let deadline = true;
         if (searchTerm.date) {
-            deadline = invoice.commissionDeadline >= searchTerm.date;
+            deadline = invoice.paid >= searchTerm.date;
         }
 
-        // const termMatch3 = invoice.total
-        //     ?.toLowerCase()
-        //     .includes(searchTerm.term.toLowerCase() ?? "");
-        // const status = invoice.commissionStatus.includes(searchTerm.status);
-
         let priceMatches = true;
-
         if (searchTerm.minPay !== "" && searchTerm.maxPay !== "") {
             const total = invoice.total / 100;
             const minPay = parseFloat(searchTerm.minPay);
@@ -129,7 +123,8 @@ const GenerateReport = () => {
             priceMatches = total >= minPay && total <= maxPay;
         }
 
-        return type && (termMatch || termMatch2 || termMatchFullName) && priceMatches;
+        return (termMatch || termMatch2 || termMatchFullName)
+            && type && priceMatches && deadline;
     });
 
     // convert to centavo
@@ -192,7 +187,20 @@ const GenerateReport = () => {
                                             sx={{ width: 120 }}
                                         />
                                     </Box>
-                                   
+                                    <Slider
+                                        value={[
+                                            Number(searchTerm.minPay) || 0,
+                                            Number(searchTerm.maxPay) || 10000
+                                        ]}
+                                        onChange={handleSliderChange}
+                                        // valueLabelDisplay="on"
+                                        min={500}
+                                        max={5000}
+                                        // max={searchTerm.maxPay}
+                                        // step={100}
+                                        sx={{ marginTop: 2, color: "white" }}
+                                    />
+
                                 </h2>
                                 {/* <p class="m-b-0">Total invoice trasaction</p> */}
                             </div>
@@ -251,6 +259,19 @@ const GenerateReport = () => {
                         </select>
                     </div>
 
+                    <input
+                        style={{
+                            padding: "8px 10px 8px 10px",
+                            fontSize: "12px",
+                            border: "1px solid #ccc",
+                            borderRadius: "4px",
+                            margin: "10px",
+                        }}
+                        type="date"
+                        name="date"
+                        onChange={handleChange}
+                        placeholder="Select deadline date..."
+                    />
 
                 </div>
 
@@ -259,7 +280,7 @@ const GenerateReport = () => {
                         "Invoice ID",
                         "Employer Full Name",
                         "Catcher Full Name",
-                        "Description",
+                        "Errand Title",
                         "Errand Type",
                         "Paid Date",
                         "Total Payment",
