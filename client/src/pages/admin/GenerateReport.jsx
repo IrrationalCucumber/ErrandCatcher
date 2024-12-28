@@ -20,8 +20,9 @@ const GenerateReport = () => {
         term: "",
         type: "",
         status: "",
-        minPay: "",
-        maxPay: "",
+        minPay: 0,
+        maxPay: 0,
+        date: "",
     });
     const location = useLocation();
     const userID = location.pathname.split("/")[2];
@@ -108,6 +109,11 @@ const GenerateReport = () => {
         const termMatchFullName = employerFullName.includes(searchTerm.term.toLowerCase() ?? "") ||
             catcherFullName.includes(searchTerm.term.toLowerCase() ?? "");
 
+        let deadline = true;
+        if (searchTerm.date) {
+            deadline = invoice.commissionDeadline >= searchTerm.date;
+        }
+
         // const termMatch3 = invoice.total
         //     ?.toLowerCase()
         //     .includes(searchTerm.term.toLowerCase() ?? "");
@@ -186,18 +192,7 @@ const GenerateReport = () => {
                                             sx={{ width: 120 }}
                                         />
                                     </Box>
-                                    <Slider
-                                        value={[
-                                            Number(searchTerm.minPay),
-                                            Number(searchTerm.maxPay)
-                                        ]}
-                                        onChange={handleSliderChange}
-                                        // valueLabelDisplay="on"
-                                        min={500}
-                                        max={searchTerm.maxPay}
-                                        // step={100}
-                                        sx={{ marginTop: 2, color: "white" }}
-                                    />
+                                   
                                 </h2>
                                 {/* <p class="m-b-0">Total invoice trasaction</p> */}
                             </div>
