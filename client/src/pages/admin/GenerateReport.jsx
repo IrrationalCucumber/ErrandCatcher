@@ -109,9 +109,12 @@ const GenerateReport = () => {
         const termMatchFullName = employerFullName.includes(searchTerm.term.toLowerCase() ?? "") ||
             catcherFullName.includes(searchTerm.term.toLowerCase() ?? "");
 
-        let deadline = true;
+
+        let searchDate = true;
         if (searchTerm.date) {
-            deadline = invoice.paid >= searchTerm.date;
+            const selectedDate = new Date(searchTerm.date).toDateString();
+            const invoiceDate = new Date(invoice.paid).toDateString();
+            searchDate = selectedDate === invoiceDate;
         }
 
         let priceMatches = true;
@@ -124,7 +127,7 @@ const GenerateReport = () => {
         }
 
         return (termMatch || termMatch2 || termMatchFullName)
-            && type && priceMatches && deadline;
+            && type && priceMatches && searchDate;
     });
 
     // convert to centavo
