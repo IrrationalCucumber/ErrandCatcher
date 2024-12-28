@@ -52,10 +52,14 @@ const EmployerApplicants = () => {
   const [openAccept, setOpenAccept] = useState(false);
   const [openDecline, setOpenDecline] = useState(false);
   const [acceptMoreModal, setAcceptMoreModal] = useState(false);
+  const [selectedApplication, setSelectedApplication] = useState("");
+  const [selectedErrand, setSelectedErrand] = useState("");
 
   // modal message pop-up
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
+    //setSelectedApplicant(id);
+    console.log("selected shit id");
     setOpen(true);
   };
   const handleClose = () => {
@@ -65,12 +69,19 @@ const EmployerApplicants = () => {
     setAcceptMoreModal(true);
   };
 
-  const handleOpenAcceptModal = () => {
+  const handleOpenAcceptModal = (id, ApplyID, errandID) => {
     setOpenAccept(true);
+    setSelectedApplicant(id);
+    setSelectedApplication(ApplyID);
+    setSelectedErrand(errandID);
+    console.log("selectedapplicant", id);
   };
 
-  const handleOpenDeclineModal = () => {
+  const handleOpenDeclineModal = (id, ApplyID, errandID) => {
     setOpenDecline(true);
+    setSelectedApplicant(id);
+    setSelectedApplication(ApplyID);
+    setSelectedErrand(errandID);
   };
   //modal to view profile page of appicant
   const handleViewProfile = (id) => {
@@ -128,6 +139,7 @@ const EmployerApplicants = () => {
   );
 
   const headers = [
+    "ID",
     "DATE",
     "CATCHER",
     "AVAILABILITY",
@@ -136,13 +148,13 @@ const EmployerApplicants = () => {
     "",
   ];
   const applicantData = applicants.map((applicant) => [
-    //applicant.applicationID,
+    applicant.applicationID,
     // DisplayDate(applicant.applicationDate),
     <Box display="flex" alignItems="center" gap={1}>
       <CalendarMonthOutlinedIcon sx={{ color: "#555" }} />
       {DisplayDate(applicant.applicationDate)}
     </Box>,
-    `${applicant.userFirstname} ${applicant.userLastname}`,
+    ` ${applicant.userFirstname} ${applicant.userLastname}`,
     applicant.userHasErrand === "true" ? "Unavailable" : "Available",
     // applicant.commissionTitle,
     <Box display="flex" alignItems="center" gap={1}>
@@ -164,14 +176,31 @@ const EmployerApplicants = () => {
           variant="outlined"
           spacing="0"
         >
+          {/* code here */}
           <Button
             color="success"
-            onClick={() => handleOpenAcceptModal()}
+            onClick={() =>
+              handleOpenAcceptModal(
+                applicant.catcherID,
+                applicant.applicationID,
+                applicant.applicationErrandID
+              )
+            }
             disabled={applicant.userHasErrand === "true" ? true : false}
           >
             Accept
           </Button>
-          <Button color="danger" onClick={() => handleOpenDeclineModal()}>
+          {/* // code here */}
+          <Button
+            color="danger"
+            onClick={() =>
+              handleOpenDeclineModal(
+                applicant.catcherID,
+                applicant.applicationID,
+                applicant.applicationErrandID
+              )
+            }
+          >
             Decline
           </Button>
         </ButtonGroup>
@@ -185,7 +214,7 @@ const EmployerApplicants = () => {
             </DialogTitle>
             <Divider />
             <DialogContent>
-              Are you sure you want to accept this applicant?
+              Are you sure you want to accept this applicant?{" "}
             </DialogContent>
             <DialogActions>
               <Button
@@ -193,9 +222,9 @@ const EmployerApplicants = () => {
                 color="success"
                 onClick={() =>
                   handleAccept(
-                    applicant.applicationID,
-                    applicant.applicationErrandID,
-                    applicant.catcherID
+                    selectedApplicant,
+                    selectedApplication,
+                    selectedErrand
                   )
                 }
               >
@@ -228,9 +257,9 @@ const EmployerApplicants = () => {
                 color="danger"
                 onClick={() =>
                   handleDecline(
-                    applicant.applicationID,
-                    applicant.applicationErrandID,
-                    applicant.catcherID
+                    selectedApplicant,
+                    selectedApplication,
+                    selectedErrand
                   )
                 }
               >
@@ -272,10 +301,15 @@ const EmployerApplicants = () => {
               <Button
                 variant="contained"
                 color="secondary"
+                // selectedApplicant,
+                // selectedApplication,
+                // selectedErrand
                 onClick={() =>
                   handleDenyOther(
-                    applicant.applicationErrandID,
-                    applicant.catcherID
+                    // applicant.applicationErrandID,
+                    selectedErrand,
+                    // applicant.catcherID
+                    selectedApplicant
                   )
                 }
               >
@@ -330,15 +364,18 @@ const EmployerApplicants = () => {
     //reciept: "",
   });
   const handleAccept = async (
+    catcherID,
     applicationID,
-    applicationErrandID,
-    catcherID
+    applicationErrandID
   ) => {
     console.log(
       "Accepted application with id:",
       applicationID,
-      applicationErrandID
+      applicationErrandID,
+
+      "catcher numid"
     );
+
     // Add logic to handle accepting the application
     try {
       await axios.put(
@@ -349,29 +386,16 @@ const EmployerApplicants = () => {
 
       //transaction
       trans.comID = applicationErrandID;
-      trans.catcherID = catcherID;
+      trans.catcherID = selectedApplicant;
       trans.dateAccepted = getTimeAndDate();
       //console.log(catcherID);
       await axios.post("http://localhost:8800/add-trans/", trans);
       //add a notification to the commission's applicant
       notif.notifDesc = "Your Errand application has been Accepted";
-      notif.userID = catcherID;
+      notif.userID = selectedApplicant;
       notif.notificationType = "Application";
       notif.notifDate = getTimeAndDate();
       await axios.post("http://localhost:8800/notify", notif);
-      //DENY other applicants
-      // const denyResponse = await axios.put
-      //   `http://localhost:8800/deny-other-apply/${applicationErrandID}/${catcherID}`
-      // );
-      // if (denyResponse.data.message === "No other applications to deny") {
-      //   console.log("No other applications were found to deny.");
-      // } else {
-      //   console.log("Other applications denied successfully.");
-      // }
-      //set the errand status to caught
-      await axios.put(
-        `http://localhost:8800/errand-taken/${applicationErrandID}`
-      );
       //set catcher has errand
       await axios.put(`http://localhost:8800/has-errand/${catcherID}`);
     } catch (err) {
@@ -380,9 +404,9 @@ const EmployerApplicants = () => {
   };
 
   const handleDecline = async (
+    catcherID,
     applicationID,
-    applicationErrandID,
-    catcherID
+    applicationErrandID
   ) => {
     console.log("Declined application with id:", applicationID);
     // Add logic to handle declining the application
@@ -417,12 +441,14 @@ const EmployerApplicants = () => {
       } else {
         console.log("Other applications denied successfully.");
       }
+      //set the errand status to caught
+      await axios.put(`http://localhost:8800/errand-taken/${errandID}`);
     } catch (error) {
       console.log(error);
     }
     setAcceptMoreModal(false);
-    const interval = setInterval(fetchAllAccount, 1000);
-    return () => clearInterval(interval);
+    // const interval = setInterval(fetchAllAccount, 1000);
+    // return () => clearInterval(interval);
   };
   //refhresh table
   const handleRefresh = () => {
