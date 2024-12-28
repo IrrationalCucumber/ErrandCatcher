@@ -72,7 +72,7 @@ const Apply = {
   //Employer
   putDenyOther: (comID, id, callback) => {
     db.query(
-      `UPDATE application SET applicationStatus = 'Denied' WHERE applicationErrandID = ? AND catcherID != ?`,
+      `UPDATE application SET applicationStatus = 'Denied' WHERE applicationErrandID = ? AND catcherID != ? AND applicationStatus = 'Pending'`,
       [comID, id],
       callback
     );

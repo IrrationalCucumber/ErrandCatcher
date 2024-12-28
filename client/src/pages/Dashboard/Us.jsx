@@ -62,9 +62,7 @@ function Us() {
       )}
 
       <Outlet />
-      <Footer
-        footerUserType={`footer-container__${user.userType.toLocaleLowerCase()}`}
-      />
+      <Footer />
     </>
   );
 }

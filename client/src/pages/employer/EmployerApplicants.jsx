@@ -29,6 +29,7 @@ import ModalFeedback from "../../components/ModalFeedback";
 import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import { Box, Typography } from "@mui/material";
+import { Refresh } from "@mui/icons-material";
 
 const EmployerApplicants = () => {
   const navigate = useNavigate();
@@ -50,6 +51,7 @@ const EmployerApplicants = () => {
   const [selectedApplicant, setSelectedApplicant] = useState("");
   const [openAccept, setOpenAccept] = useState(false);
   const [openDecline, setOpenDecline] = useState(false);
+  const [acceptMoreModal, setAcceptMoreModal] = useState(false);
 
   // modal message pop-up
   const [open, setOpen] = useState(false);
@@ -59,7 +61,8 @@ const EmployerApplicants = () => {
   const handleClose = () => {
     setOpen(false);
     setOpenAccept(false);
-    window.location.reload();
+    //window.location.reload();
+    setAcceptMoreModal(true);
   };
 
   const handleOpenAcceptModal = () => {
@@ -77,19 +80,20 @@ const EmployerApplicants = () => {
   };
 
   //useEffect to handle error
+  const fetchAllAccount = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8800/applicants/${userID}` // show only pending
+      );
+      //http://localhost:8800/user - local
+      //http://192.168.1.47:8800/user - network
+      setApplicants(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
-    const fetchAllAccount = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:8800/applicants/${userID}` // show only pending
-        );
-        //http://localhost:8800/user - local
-        //http://192.168.1.47:8800/user - network
-        setApplicants(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
     fetchAllAccount();
   }, [userID]);
 
@@ -139,7 +143,7 @@ const EmployerApplicants = () => {
       {DisplayDate(applicant.applicationDate)}
     </Box>,
     `${applicant.userFirstname} ${applicant.userLastname}`,
-    applicant.userHasErrand === true ? "Unavailable" : "Available",
+    applicant.userHasErrand === "true" ? "Unavailable" : "Available",
     // applicant.commissionTitle,
     <Box display="flex" alignItems="center" gap={1}>
       <BadgeOutlinedIcon sx={{ color: "#555" }} />
@@ -163,7 +167,7 @@ const EmployerApplicants = () => {
           <Button
             color="success"
             onClick={() => handleOpenAcceptModal()}
-            disabled={applicant.userHasErrand === true ? true : false}
+            disabled={applicant.userHasErrand === "true" ? true : false}
           >
             Accept
           </Button>
@@ -241,6 +245,44 @@ const EmployerApplicants = () => {
               </Button>
             </DialogActions>
           </ModalDialog>
+        </Modal>
+
+        <Modal
+          open={acceptMoreModal}
+          aria-labelledby="confirm-modal-title"
+          aria-describedby="confirm-modal-description"
+        >
+          <Box sx={{ ...modalStyle }}>
+            <Typography id="confirm-modal-title" variant="h6" component="h2">
+              Accept Other Applicants?
+            </Typography>
+            <Typography id="confirm-modal-description" sx={{ mt: 2 }}>
+              Do you want to accept other applicants for this errand?
+            </Typography>
+            <Box
+              sx={{ mt: 2, display: "flex", justifyContent: "space-between" }}
+            >
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => setAcceptMoreModal(false)}
+              >
+                Yes, accept others
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() =>
+                  handleDenyOther(
+                    applicant.applicationErrandID,
+                    applicant.catcherID
+                  )
+                }
+              >
+                No, deny others
+              </Button>
+            </Box>
+          </Box>
         </Modal>
       </>
     ) : applicant.applicationStatus === "Accepted" ? (
@@ -363,6 +405,30 @@ const EmployerApplicants = () => {
     }
   };
   //console.log(applicants);
+  //deny otther applicants
+  const handleDenyOther = async (errandID, catcherID) => {
+    try {
+      //DENY other applicants
+      const denyResponse = await axios.put(
+        `http://localhost:8800/deny-other-apply/${errandID}/${catcherID}`
+      );
+      if (denyResponse.data.message === "No other applications to deny") {
+        console.log("No other applications were found to deny.");
+      } else {
+        console.log("Other applications denied successfully.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setAcceptMoreModal(false);
+    const interval = setInterval(fetchAllAccount, 1000);
+    return () => clearInterval(interval);
+  };
+  //refhresh table
+  const handleRefresh = () => {
+    const interval = setInterval(fetchAllAccount, 1000);
+    return () => clearInterval(interval);
+  };
   return (
     <>
       <ModalFeedback
@@ -389,6 +455,13 @@ const EmployerApplicants = () => {
               value={searchTerm.term}
               onChange={handleInputChange}
             />
+            <Button
+              variant="plain"
+              sx={{ ml: ".5rem" }}
+              onClick={() => handleRefresh()}
+            >
+              <Refresh />
+            </Button>
           </div>
           <div className="applicants-table">
             <Table headers={headers} data={applicantData} />
@@ -462,6 +535,17 @@ const style2 = {
     marginRight: "10px",
     textAlign: "center",
   },
+};
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
 };
 
 export default EmployerApplicants;
