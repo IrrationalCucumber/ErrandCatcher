@@ -52,7 +52,7 @@ const Home = () => {
               top: "80", // Adjust this value based on your navbar height
               left: 0,
               right: 0,
-              zIndex: 9999,
+              zIndex: 11,
               mb: 2,
               width: "100%",
             }}
