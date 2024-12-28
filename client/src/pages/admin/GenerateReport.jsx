@@ -192,13 +192,13 @@ const GenerateReport = () => {
                                     </Box>
                                     <Slider
                                         value={[
-                                            Number(searchTerm.minPay) || 0,
-                                            Number(searchTerm.maxPay) || 10000
+                                            Number(searchTerm.minPay),
+                                            Number(searchTerm.maxPay)
                                         ]}
                                         onChange={handleSliderChange}
                                         // valueLabelDisplay="on"
                                         min={500}
-                                        max={5000}
+                                        max={20000}
                                         // max={searchTerm.maxPay}
                                         // step={100}
                                         sx={{ marginTop: 2, color: "white" }}
