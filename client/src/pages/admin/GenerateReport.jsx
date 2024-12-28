@@ -10,6 +10,7 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CameraOutdoorIcon from "@mui/icons-material/CameraOutdoor";
 import SyncAltIcon from "@mui/icons-material/SyncAlt";
 import PaymentsIcon from "@mui/icons-material/Payments";
+import Filter9PlusOutlinedIcon from "@mui/icons-material/Filter9PlusOutlined";
 import { Slider, Box, Typography, TextField } from "@mui/material";
 
 
@@ -164,7 +165,7 @@ const GenerateReport = () => {
                             {/* <div class="card bg-c-yellow order-card text-center"> */}
                             <div class="card-block">
                                 <h3 class="m-b-20 fw-semibold">
-                                    <PaymentsIcon sx={{ color: "white", fontSize: 24 }} /> Payment range
+                                    <Filter9PlusOutlinedIcon sx={{ color: "white", fontSize: 24 }} /> Payment range
                                 </h3>
                                 <h2 class="text-center">
                                     <Box sx={{ display: "flex", alignItems: "center", gap: 2, marginTop: 2 }}>
@@ -176,7 +177,31 @@ const GenerateReport = () => {
                                             onChange={handleChange}
                                             variant="outlined"
                                             size="small"
-                                            sx={{ width: 120 }}
+                                            sx={{
+                                                width: 120,
+                                                fontWeight: 1000,
+                                                "& .MuiOutlinedInput-root": {
+                                                    "& fieldset": {
+                                                        borderColor: "white",
+                                                    },
+                                                    "&:hover fieldset": {
+                                                        borderColor: "white",
+                                                    },
+                                                    "&.Mui-focused fieldset": {
+                                                        borderColor: "white",
+                                                    },
+                                                    color: "white",
+                                                },
+                                                "& .MuiInputLabel-root": {
+                                                    color: "white",
+                                                    fontWeight: 670,
+                                                },
+                                                "& .MuiInputLabel-root.Mui-focused": {
+                                                    color: "white",
+                                                    fontWeight: 670,
+
+                                                },
+                                            }}
                                         />
                                         <SyncAltIcon sx={{ color: "#1679ABs", fontSize: 24 }} />
                                         <TextField
@@ -187,7 +212,30 @@ const GenerateReport = () => {
                                             onChange={handleChange}
                                             variant="outlined"
                                             size="small"
-                                            sx={{ width: 120 }}
+                                            sx={{
+                                                width: 120,
+                                                "& .MuiOutlinedInput-root": {
+                                                    "& fieldset": {
+                                                        borderColor: "white",
+                                                    },
+                                                    "&:hover fieldset": {
+                                                        borderColor: "white",
+                                                    },
+                                                    "&.Mui-focused fieldset": {
+                                                        borderColor: "white",
+                                                    },
+                                                    color: "white",
+                                                },
+                                                "& .MuiInputLabel-root": {
+                                                    color: "white",
+                                                    fontWeight: 670,
+                                                },
+                                                "& .MuiInputLabel-root.Mui-focused": {
+                                                    color: "white",
+                                                    fontWeight: 670,
+
+                                                },
+                                            }}
                                         />
                                     </Box>
                                     <Slider
@@ -198,7 +246,7 @@ const GenerateReport = () => {
                                         onChange={handleSliderChange}
                                         // valueLabelDisplay="on"
                                         min={500}
-                                        max={20000}
+                                        max={10000}
                                         // max={searchTerm.maxPay}
                                         // step={100}
                                         sx={{ marginTop: 2, color: "white" }}
