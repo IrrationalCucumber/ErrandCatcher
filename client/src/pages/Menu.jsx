@@ -54,6 +54,7 @@ const Menu = () => {
     <>
       <SearchBar
         hasErrand={user.hasErrand}
+        user={user.userType}
         value={searchQuery}
         onClick={handleSearch}
         onChange={(e) => setSearchQuery(e.target.value)}
