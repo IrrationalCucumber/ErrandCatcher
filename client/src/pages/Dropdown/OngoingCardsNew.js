@@ -57,12 +57,12 @@ function OngoingCardsNew(props) {
     status === "Task Done"
       ? "#D6B84F"
       : status === "Ongoing"
-      ? "#F26B0F"
-      : status === "Complete"
-      ? "#5CB85C"
-      : status === "Cancelled"
-      ? "#D9534F"
-      : "#C0C0C0";
+        ? "#F26B0F"
+        : status === "Complete"
+          ? "#5CB85C"
+          : status === "Cancelled"
+            ? "#D9534F"
+            : "#C0C0C0";
 
   // White text for better contrast
   const chipTextColor = "#FFFFFF";
@@ -282,13 +282,14 @@ function OngoingCardsNew(props) {
       notif.notifDate = getTimeAndDate();
 
       await axios.post("http://localhost:8800/notify", notif);
-      //cancel the transaction
-      // await axios.put(`http://localhost:8800/cancel-trans/${transactID}`, {
-      //     params: { date: getTimeAndDate() },
-      // });
-      await axios.put(
-        `http://localhost:8800/catcher/cancel/${transactID}/${userID}`
-      );
+      //cancel the transaction employer side
+      await axios.put(`http://localhost:8800/cancel-trans/${transactID}`, {
+        params: { date: getTimeAndDate() },
+      });
+      // for catcher side
+      // await axios.put(
+      //   `http://localhost:8800/catcher/cancel/${transactID}/${userID}`
+      // );
 
       console.log("new endpoint is run");
       alert("You have cancelled an errand.");
@@ -425,7 +426,7 @@ function OngoingCardsNew(props) {
         contentMes="You have successfully Rated a catcher."
         color="success"
         colorText="green"
-        // icon={ErrorIcon}
+      // icon={ErrorIcon}
       />
 
       <LoadingBackdrop
@@ -441,7 +442,7 @@ function OngoingCardsNew(props) {
         contentMes="You have successfully marked as completed"
         color="success"
         colorText="green"
-        // icon={ErrorIcon}
+      // icon={ErrorIcon}
       />
 
       <div class="cardnew">
@@ -449,7 +450,7 @@ function OngoingCardsNew(props) {
           <Box class="boxer">
             {/* commissionType props */}
             {props.icon === "HomeService - Indoor" ||
-            props.icon === "HomeService - Outdoor" ? (
+              props.icon === "HomeService - Outdoor" ? (
               <OtherHousesIcon sx={{ color: "#fff", fontSize: 100 }} />
             ) : props.icon === "Transportation" ? (
               <LocalShippingIcon sx={{ color: "#fff", fontSize: 100 }} />
@@ -551,6 +552,8 @@ function OngoingCardsNew(props) {
           {user.userType === "Employer" && (
             <>
               <div className="ongoing__cardsNew__buttons">
+                {/* reverse classname cuz userType */}
+                {/* <div className="ongoing__cardsNewCat__buttons"> */}
                 {props.status === "Ongoing" ? (
                   <>
                     {" "}
@@ -558,7 +561,15 @@ function OngoingCardsNew(props) {
                       className="ongoing__cardsNewCat__button__complete"
                       onClick={() => handleOpenMarkModal()}
                     >
-                      Mark as Completed
+                      Mark as done
+                    </button>
+
+                    <button
+                      // onClick={() => cancel(commission.commissionID)}
+                      onClick={handleOpenCancelModal}
+                      className="ongoing__cardsNewCat__button__cancel"
+                    >
+                      Cancel
                     </button>
                   </>
                 ) : (
@@ -636,6 +647,9 @@ function OngoingCardsNew(props) {
                 />
 
                 <div style={styles.buttonContainer}>
+                  <button style={styles.button} onClick={handleCloseModal}>
+                    Close
+                  </button>
                   <button
                     style={styles.button}
                     onClick={(e) =>
@@ -644,9 +658,6 @@ function OngoingCardsNew(props) {
                     }
                   >
                     Post
-                  </button>
-                  <button style={styles.button} onClick={handleCloseModal}>
-                    Close
                   </button>
                 </div>
               </Modals>
@@ -680,6 +691,43 @@ function OngoingCardsNew(props) {
                       variant="plain"
                       color="neutral"
                       onClick={() => setOpenMark(false)}
+                    >
+                      No
+                    </Button>
+                  </DialogActions>
+                </ModalDialog>
+              </Modal>
+
+              {/* cancel modal */}
+              <Modal open={openDelete} onClose={() => setOpenDelete(false)}>
+                <ModalDialog>
+                  <DialogTitle>
+                    <WarningRoundedIcon />
+                    Confirmation
+                  </DialogTitle>
+                  <Divider />
+                  <DialogContent>
+                    Are you sure you want to Cancel this errand?
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      variant="solid"
+                      color="danger"
+                      onClick={() =>
+                        // cancel(commission.commissionID)
+                        handleCancel(
+                          // props
+                          props.transID,
+                          props.empID
+                        )
+                      }
+                    >
+                      Yes
+                    </Button>
+                    <Button
+                      variant="plain"
+                      color="neutral"
+                      onClick={() => setOpenDelete(false)}
                     >
                       No
                     </Button>
