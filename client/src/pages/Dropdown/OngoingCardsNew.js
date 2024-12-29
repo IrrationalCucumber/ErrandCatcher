@@ -572,6 +572,9 @@ function OngoingCardsNew(props) {
                       Cancel
                     </button>
                   </>
+                ) : props.status === "Cancelled" ? (
+                  <>
+                  </>
                 ) : (
                   <>
                     {" "}
