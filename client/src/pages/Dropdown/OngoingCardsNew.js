@@ -248,6 +248,14 @@ function OngoingCardsNew(props) {
     notifDate: "", //time and date notif is added
   });
 
+  //set variables for notification
+  const [notifcat, setNotifcat] = useState({
+    userID: "", //this is the catcher/ userID of the commission
+    notificationType: "", //notif description
+    notifDesc: "", //contents of the notif
+    notifDate: "", //time and date notif is added
+  });
+
   //get current time and date for notif
   const getTimeAndDate = () => {
     const currentDate = new Date();
@@ -271,17 +279,26 @@ function OngoingCardsNew(props) {
   // };
 
   // cancel transaction
-  const handleCancel = async (transactID, employerID) => {
+  const handleCancel = async (transactID, employerID, catcherID) => {
     try {
       //alert(employerID);
 
       // add a notification to the commission's employer
-      notif.notifDesc = "A Catcher has cancelled in doing an errand";
+      notif.notifDesc = "You have been cancelled your errand.";
       notif.userID = employerID;
       notif.notificationType = "Errand Cancelled";
       notif.notifDate = getTimeAndDate();
 
+      // catcher notif
+      notifcat.notifDesc = "Your Employer has been cancelled their errand";
+      notifcat.userID = catcherID;
+      notifcat.notificationType = "Errand Cancelled";
+      notifcat.notifDate = getTimeAndDate();
+
+      // for employer
       await axios.post("http://localhost:8800/notify", notif);
+      // for catcher
+      await axios.post("http://localhost:8800/notify", notifcat);
       //cancel the transaction employer side
       await axios.put(`http://localhost:8800/cancel-trans/${transactID}`, {
         params: { date: getTimeAndDate() },
@@ -721,7 +738,8 @@ function OngoingCardsNew(props) {
                         handleCancel(
                           // props
                           props.transID,
-                          props.empID
+                          props.empID,
+                          props.transCatID
                         )
                       }
                     >
