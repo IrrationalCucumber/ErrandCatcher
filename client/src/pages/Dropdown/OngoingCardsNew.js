@@ -27,7 +27,7 @@ import "../../components/Cards/cardsNew.css";
 import { useAuth } from "../../components/AuthContext";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 import CloseIcon from "@mui/icons-material/Close";
-import ErrorIcon from "@mui/icons-material/Error";
+import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import ModalFeedback from "../../components/ModalFeedback";
 import LoadingBackdrop from "../../components/LoadingSpinner";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
@@ -121,6 +121,16 @@ function OngoingCardsNew(props) {
   };
   const handleClosecom = () => {
     setOpencom(false);
+    // setOpenMark(false);
+    window.location.reload();
+  };
+
+  const [opencan, setOpencan] = useState(false);
+  const handleOpencancel = () => {
+    setOpencan(true);
+  };
+  const handleClosecancel = () => {
+    setOpencan(false);
     // setOpenMark(false);
     window.location.reload();
   };
@@ -308,9 +318,13 @@ function OngoingCardsNew(props) {
       //   `http://localhost:8800/catcher/cancel/${transactID}/${userID}`
       // );
 
-      console.log("new endpoint is run");
-      alert("You have cancelled an errand.");
-      window.location.reload();
+      // setTimeout(() => {
+      //   // setLoading(false);
+      //   // modal will pop-up in 1 seconds
+      //   handleOpencancel();
+      // }, 1000);
+      
+      handleOpencancel();
       setOpenDelete(false);
     } catch (err) {
       console.log(err);
@@ -444,6 +458,16 @@ function OngoingCardsNew(props) {
         color="success"
         colorText="green"
       // icon={ErrorIcon}
+      />
+
+      <ModalFeedback
+        open={opencan}
+        handleClose={handleClosecancel}
+        headerMes="Cancelled!"
+        contentMes="You have cancelled an Errand"
+        color="error"
+        colorText="error"
+        icon={CancelOutlinedIcon}
       />
 
       <LoadingBackdrop
