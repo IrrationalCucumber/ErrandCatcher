@@ -35,6 +35,17 @@ const Signup = () => {
   const [errors, setErrors] = useState({});
   const [usernames, setUsernames] = useState([]);
   const [emails, setEmails] = useState([]);
+  const calculateAge = (birthDate) => {
+    const today = new Date();
+    const birth = new Date(birthDate);
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+    
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+      age--;
+    }
+    return age;
+  };
   //get username
   useEffect(() => {
     const fetchResp = async () => {
@@ -89,7 +100,16 @@ const Signup = () => {
     }
     if (!account.bday) {
       newErrors.bday = "Birthday is required";
-    }
+    } else {
+      const age = calculateAge(account.bday);
+      if (age < 18) {
+        newErrors.bday = "You must be at least 18 years old to register";
+      }
+      // Additional validation for future dates
+      if (new Date(account.bday) > new Date()) {
+        newErrors.bday = "Birthday cannot be a future date";
+      }
+    } 
     if (!account.gender) {
       newErrors.gender = "Gender is required";
     }
@@ -415,7 +435,13 @@ const Signup = () => {
                       required
                       name="bday"
                       value={account.bday}
-                      onChange={handleChange}
+                      onChange={(e) => {
+                        handleChange(e);
+                        // Clear the error when user starts typing
+                        if (errors.bday) {
+                          setErrors(prev => ({ ...prev, bday: "" }));
+                        }
+                      }}
                       max={getMaxDate()}
                     />
                     {errors.bday && (
