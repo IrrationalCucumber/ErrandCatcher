@@ -14,6 +14,7 @@ import {
   ModalOverflow,
   Typography,
 } from "@mui/joy";
+import { TextField } from '@mui/material';
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../AuthContext";
@@ -25,6 +26,7 @@ function SkillsInputModal(props) {
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [inputSkill, setInputSkill] = useState("");
   const [error, setError] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const [details, setDetails] = useState({
     skills: "",
   });
@@ -120,6 +122,15 @@ function SkillsInputModal(props) {
     "Therapy Services",
     "Counseling Services",
   ];
+
+  const filteredSkills = availableSkills.filter(skill =>
+    skill.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
   // Function to add a skill to the selectedSkills array
   const handleAddSkill = (skill) => {
     if (!selectedSkills.includes(skill)) {
@@ -180,6 +191,16 @@ function SkillsInputModal(props) {
               <>
                 {/* General (Indoor/Outdoor) Qualification */}
                 {/* General Experience */}
+                <Box sx={{ width: '600px', maxWidth: "80%", height: "auto", overflowY: 'auto' }}>
+                  <TextField
+                    label="Search Skills"
+                    variant="outlined"
+                    fullWidth
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    sx={{ marginBottom: 2, marginTop: 1.8 }}
+                  />
+                </Box>
 
                 <FormControl>
                   <FormLabel>
@@ -204,7 +225,7 @@ function SkillsInputModal(props) {
                   </FormLabel>
 
                   <div>
-                    {availableSkills.map((skill) => (
+                    {/* {availableSkills.map((skill) => (
                       <Chip
                         key={skill}
                         onClick={() => handleAddSkill(skill)}
@@ -217,6 +238,28 @@ function SkillsInputModal(props) {
                       >
                         {skill}
                       </Chip>
+                    ))} */}
+
+                    {filteredSkills.map((skill) => (
+                      <Box sx={{ display: "inline-block", margin: 0.4 }}>
+                        <Chip
+                          key={skill}
+                          onClick={() => handleAddSkill(skill)}
+                          color={
+                            selectedSkills.includes(skill)
+                              ? "success"
+                              : searchTerm && skill.toLowerCase().includes(searchTerm.toLowerCase())
+                                ? "primary"
+                                : "neutral"
+                          }
+                          variant="solid"
+                          size="lg"
+                          startDecorator={<Add />}
+                        >
+                          {skill}
+                        </Chip>
+                      </Box>
+
                     ))}
                   </div>
 
