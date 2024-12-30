@@ -4,6 +4,7 @@ import Map from "../../components/Map/Map.js";
 import { useAuth } from "../../components/AuthContext";
 import maplibregl from "maplibre-gl";
 import axios from "axios";
+import "./style.css";
 
 function CommissionMap() {
   const { user } = useAuth();
@@ -69,18 +70,41 @@ function CommissionMap() {
 
     // Add markers for filtered errands
     filterErrand.forEach((errand) => {
+      // Create a new popup for hover
+      const hoverPopup = new maplibregl.Popup({
+        closeButton: false,
+        closeOnClick: false,
+        offset: 15, // Optional: Position offset
+      }).setHTML(`<div class="map-popup">
+              <h2 class="map-popup__h2">${errand.commissionTitle}</h2>
+              <h4>Php ${errand.commissionPay}</h4>
+              <p>${errand.commissionDesc}</p>
+              <a href="/errand/view/${errand.commissionID}">View</a></div>`); // Simple hover content
+      //pop up
       const marker = new maplibregl.Marker({ color: "#FF0000" }) // Red marker for commissions
         .setLngLat([errand.commissionLong, errand.commissionLat])
         .setPopup(
           new maplibregl.Popup().setHTML(
-            `<h4>${errand.commissionStatus}</h4>
+            `<div class="map-popup">
+            <h5>${errand.commissionStatus}</h5>
           <h3>${errand.commissionTitle}</h3>
           <h5>${new Date(errand.DatePosted).toLocaleDateString()}</h5>
           <p>${errand.commissionDesc}</p>
-          <a href="/errand/view/${errand.commissionID}">View</a>`
+          <a href="/errand/view/${errand.commissionID}">View</a>
+          </div>`
           )
         )
         .addTo(map.current);
+      // Add hover event for the marker
+      marker.getElement().addEventListener("mouseenter", () => {
+        hoverPopup
+          .setLngLat([errand.commissionLong, errand.commissionLat])
+          .addTo(map.current);
+      });
+
+      marker.getElement().addEventListener("mouseleave", () => {
+        hoverPopup.remove(); // Remove popup on mouse leave
+      });
       markers.push(marker); // Add marker to markers array
     });
     // Store markers in the map object for future reference

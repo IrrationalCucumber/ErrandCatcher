@@ -16,6 +16,20 @@ export default function Map(props) {
       <div className="map-wrap">
         <div className="map__filter">
           <Filter onFilterChange={props.change} />
+          {props.prox ? (
+            <div style={{ margin: "5x" }}>
+              <label htmlFor="proximity">Proximity (in km): </label>
+              <input
+                type="range"
+                id="proximity"
+                min="1"
+                max="50"
+                value={props.prox}
+                onChange={props.setProximity}
+              />
+              <span>{props.prox} km</span>
+            </div>
+          ) : null}
         </div>
 
         <div ref={props.mapContainer} className="map" />
