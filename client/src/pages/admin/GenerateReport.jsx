@@ -153,7 +153,7 @@ const GenerateReport = () => {
                                 </h3>
                                 <h2 class="text-center">
                                     <i class="fa fa-cart-plus f-left"></i>
-                                    <span>{amountInCentsTotal ? amountInCentsTotal : 0}</span>
+                                    <span>₱{amountInCentsTotal ? amountInCentsTotal : 0}</span>
                                 </h2>
                                 <p class="m-b-0">Total invoice trasaction</p>
                             </div>
