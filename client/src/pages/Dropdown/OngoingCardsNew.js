@@ -27,7 +27,7 @@ import "../../components/Cards/cardsNew.css";
 import { useAuth } from "../../components/AuthContext";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 import CloseIcon from "@mui/icons-material/Close";
-import ErrorIcon from "@mui/icons-material/Error";
+import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import ModalFeedback from "../../components/ModalFeedback";
 import LoadingBackdrop from "../../components/LoadingSpinner";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
@@ -57,12 +57,12 @@ function OngoingCardsNew(props) {
     status === "Task Done"
       ? "#D6B84F"
       : status === "Ongoing"
-      ? "#F26B0F"
-      : status === "Complete"
-      ? "#5CB85C"
-      : status === "Cancelled"
-      ? "#D9534F"
-      : "#C0C0C0";
+        ? "#F26B0F"
+        : status === "Complete"
+          ? "#5CB85C"
+          : status === "Cancelled"
+            ? "#D9534F"
+            : "#C0C0C0";
 
   // White text for better contrast
   const chipTextColor = "#FFFFFF";
@@ -121,6 +121,16 @@ function OngoingCardsNew(props) {
   };
   const handleClosecom = () => {
     setOpencom(false);
+    // setOpenMark(false);
+    window.location.reload();
+  };
+
+  const [opencan, setOpencan] = useState(false);
+  const handleOpencancel = () => {
+    setOpencan(true);
+  };
+  const handleClosecancel = () => {
+    setOpencan(false);
     // setOpenMark(false);
     window.location.reload();
   };
@@ -248,6 +258,14 @@ function OngoingCardsNew(props) {
     notifDate: "", //time and date notif is added
   });
 
+  //set variables for notification
+  const [notifcat, setNotifcat] = useState({
+    userID: "", //this is the catcher/ userID of the commission
+    notificationType: "", //notif description
+    notifDesc: "", //contents of the notif
+    notifDate: "", //time and date notif is added
+  });
+
   //get current time and date for notif
   const getTimeAndDate = () => {
     const currentDate = new Date();
@@ -271,28 +289,42 @@ function OngoingCardsNew(props) {
   // };
 
   // cancel transaction
-  const handleCancel = async (transactID, employerID) => {
+  const handleCancel = async (transactID, employerID, catcherID) => {
     try {
       //alert(employerID);
 
       // add a notification to the commission's employer
-      notif.notifDesc = "A Catcher has cancelled in doing an errand";
+      notif.notifDesc = "You have been cancelled your errand.";
       notif.userID = employerID;
       notif.notificationType = "Errand Cancelled";
       notif.notifDate = getTimeAndDate();
 
-      await axios.post("http://localhost:8800/notify", notif);
-      //cancel the transaction
-      // await axios.put(`http://localhost:8800/cancel-trans/${transactID}`, {
-      //     params: { date: getTimeAndDate() },
-      // });
-      await axios.put(
-        `http://localhost:8800/catcher/cancel/${transactID}/${userID}`
-      );
+      // catcher notif
+      notifcat.notifDesc = "Your Employer has been cancelled their errand";
+      notifcat.userID = catcherID;
+      notifcat.notificationType = "Errand Cancelled";
+      notifcat.notifDate = getTimeAndDate();
 
-      console.log("new endpoint is run");
-      alert("You have cancelled an errand.");
-      window.location.reload();
+      // for employer
+      await axios.post("http://localhost:8800/notify", notif);
+      // for catcher
+      await axios.post("http://localhost:8800/notify", notifcat);
+      //cancel the transaction employer side
+      await axios.put(`http://localhost:8800/cancel-trans/${transactID}`, {
+        params: { date: getTimeAndDate() },
+      });
+      // for catcher side
+      // await axios.put(
+      //   `http://localhost:8800/catcher/cancel/${transactID}/${userID}`
+      // );
+
+      // setTimeout(() => {
+      //   // setLoading(false);
+      //   // modal will pop-up in 1 seconds
+      //   handleOpencancel();
+      // }, 1000);
+      
+      handleOpencancel();
       setOpenDelete(false);
     } catch (err) {
       console.log(err);
@@ -425,7 +457,17 @@ function OngoingCardsNew(props) {
         contentMes="You have successfully Rated a catcher."
         color="success"
         colorText="green"
-        // icon={ErrorIcon}
+      // icon={ErrorIcon}
+      />
+
+      <ModalFeedback
+        open={opencan}
+        handleClose={handleClosecancel}
+        headerMes="Cancelled!"
+        contentMes="You have cancelled an Errand"
+        color="error"
+        colorText="error"
+        icon={CancelOutlinedIcon}
       />
 
       <LoadingBackdrop
@@ -441,7 +483,7 @@ function OngoingCardsNew(props) {
         contentMes="You have successfully marked as completed"
         color="success"
         colorText="green"
-        // icon={ErrorIcon}
+      // icon={ErrorIcon}
       />
 
       <div class="cardnew">
@@ -449,7 +491,7 @@ function OngoingCardsNew(props) {
           <Box class="boxer">
             {/* commissionType props */}
             {props.icon === "HomeService - Indoor" ||
-            props.icon === "HomeService - Outdoor" ? (
+              props.icon === "HomeService - Outdoor" ? (
               <OtherHousesIcon sx={{ color: "#fff", fontSize: 100 }} />
             ) : props.icon === "Transportation" ? (
               <LocalShippingIcon sx={{ color: "#fff", fontSize: 100 }} />
@@ -551,6 +593,8 @@ function OngoingCardsNew(props) {
           {user.userType === "Employer" && (
             <>
               <div className="ongoing__cardsNew__buttons">
+                {/* reverse classname cuz userType */}
+                {/* <div className="ongoing__cardsNewCat__buttons"> */}
                 {props.status === "Ongoing" ? (
                   <>
                     {" "}
@@ -558,8 +602,19 @@ function OngoingCardsNew(props) {
                       className="ongoing__cardsNewCat__button__complete"
                       onClick={() => handleOpenMarkModal()}
                     >
-                      Mark as Completed
+                      Mark as done
                     </button>
+
+                    <button
+                      // onClick={() => cancel(commission.commissionID)}
+                      onClick={handleOpenCancelModal}
+                      className="ongoing__cardsNewCat__button__cancel"
+                    >
+                      Cancel
+                    </button>
+                  </>
+                ) : props.status === "Cancelled" ? (
+                  <>
                   </>
                 ) : (
                   <>
@@ -636,6 +691,9 @@ function OngoingCardsNew(props) {
                 />
 
                 <div style={styles.buttonContainer}>
+                  <button style={styles.button} onClick={handleCloseModal}>
+                    Close
+                  </button>
                   <button
                     style={styles.button}
                     onClick={(e) =>
@@ -644,9 +702,6 @@ function OngoingCardsNew(props) {
                     }
                   >
                     Post
-                  </button>
-                  <button style={styles.button} onClick={handleCloseModal}>
-                    Close
                   </button>
                 </div>
               </Modals>
@@ -680,6 +735,44 @@ function OngoingCardsNew(props) {
                       variant="plain"
                       color="neutral"
                       onClick={() => setOpenMark(false)}
+                    >
+                      No
+                    </Button>
+                  </DialogActions>
+                </ModalDialog>
+              </Modal>
+
+              {/* cancel modal */}
+              <Modal open={openDelete} onClose={() => setOpenDelete(false)}>
+                <ModalDialog>
+                  <DialogTitle>
+                    <WarningRoundedIcon />
+                    Confirmation
+                  </DialogTitle>
+                  <Divider />
+                  <DialogContent>
+                    Are you sure you want to Cancel this errand?
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      variant="solid"
+                      color="danger"
+                      onClick={() =>
+                        // cancel(commission.commissionID)
+                        handleCancel(
+                          // props
+                          props.transID,
+                          props.empID,
+                          props.transCatID
+                        )
+                      }
+                    >
+                      Yes
+                    </Button>
+                    <Button
+                      variant="plain"
+                      color="neutral"
+                      onClick={() => setOpenDelete(false)}
                     >
                       No
                     </Button>

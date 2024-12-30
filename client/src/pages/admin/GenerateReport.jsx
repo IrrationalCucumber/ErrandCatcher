@@ -10,6 +10,9 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CameraOutdoorIcon from "@mui/icons-material/CameraOutdoor";
 import SyncAltIcon from "@mui/icons-material/SyncAlt";
 import PaymentsIcon from "@mui/icons-material/Payments";
+import Filter9PlusOutlinedIcon from "@mui/icons-material/Filter9PlusOutlined";
+import { Slider, Box, Typography, TextField } from "@mui/material";
+
 
 const GenerateReport = () => {
     const [invoices, setInvoices] = useState([]);
@@ -20,6 +23,7 @@ const GenerateReport = () => {
         status: "",
         minPay: "",
         maxPay: "",
+        date: "",
     });
     const location = useLocation();
     const userID = location.pathname.split("/")[2];
@@ -76,6 +80,14 @@ const GenerateReport = () => {
         }
     };
 
+    const handleSliderChange = (event, newValue) => {
+        setSearchTerm((prev) => ({
+            ...prev,
+            minPay: newValue[0],
+            maxPay: newValue[1],
+        }));
+    };
+
     //filter
     const filterErrands = invoices.filter((invoice) => {
         const type = invoice.type
@@ -87,20 +99,36 @@ const GenerateReport = () => {
         const termMatch2 = invoice.paid
             ?.toLowerCase()
             .includes(searchTerm.term.toLowerCase() ?? "");
-        // const termMatch3 = invoice.total
-        //     ?.toLowerCase()
-        //     .includes(searchTerm.term.toLowerCase() ?? "");
-        // const status = invoice.commissionStatus.includes(searchTerm.status);
 
-        //if price range has been entered
-        let priceMatches = true;
-        if (searchTerm.minPay !== "" && searchTerm.maxPay !== "") {
-            priceMatches =
-                invoice.total >= searchTerm.minPay &&
-                invoice.total <= searchTerm.maxPay;
+        const employerFullName =
+            `${invoice.employerFirstName} ${invoice.employerLastName}`
+                .toLowerCase();
+        const catcherFullName =
+            `${invoice.catcherFirstName} ${invoice.catcherLastName}`
+                .toLowerCase();
+
+        const termMatchFullName = employerFullName.includes(searchTerm.term.toLowerCase() ?? "") ||
+            catcherFullName.includes(searchTerm.term.toLowerCase() ?? "");
+
+
+        let searchDate = true;
+        if (searchTerm.date) {
+            const selectedDate = new Date(searchTerm.date).toDateString();
+            const invoiceDate = new Date(invoice.paid).toDateString();
+            searchDate = selectedDate === invoiceDate;
         }
 
-        return type && (termMatch || termMatch2);
+        let priceMatches = true;
+        if (searchTerm.minPay !== "" && searchTerm.maxPay !== "") {
+            const total = invoice.total / 100;
+            const minPay = parseFloat(searchTerm.minPay);
+            const maxPay = parseFloat(searchTerm.maxPay);
+
+            priceMatches = total >= minPay && total <= maxPay;
+        }
+
+        return (termMatch || termMatch2 || termMatchFullName)
+            && type && priceMatches && searchDate;
     });
 
     // convert to centavo
@@ -116,21 +144,120 @@ const GenerateReport = () => {
     return (
         <div>
             <div className="commissions">
-                <div style={{ display: "flex", justifyContent: "center", marginTop: "4px" }}>
+                <div style={{ display: "flex", justifyContent: "center", marginTop: "4px", gap: "20px", alignItems: "stretch", }}>
                     <div class="col-md-4 col-xl-3 mb-3">
-                        <div class="card bg-c-blue order-card text-center">
+                        <div class="card bg-c-blue order-card text-center" style={{ height: "200px" }}>
                             <div class="card-block">
                                 <h3 class="m-b-20 fw-semibold">
                                     <PaymentsIcon sx={{ color: "white", fontSize: 24 }} /> Generate Report
                                 </h3>
                                 <h2 class="text-center">
                                     <i class="fa fa-cart-plus f-left"></i>
-                                    <span>{amountInCentsTotal ? amountInCentsTotal : 0}</span>
+                                    <span>₱{amountInCentsTotal ? amountInCentsTotal : 0}</span>
                                 </h2>
                                 <p class="m-b-0">Total invoice trasaction</p>
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-md-4 col-xl-3 mb-3">
+                        <div class="card bg-c-green order-card text-center" style={{ height: "200px" }}>
+                            {/* <div class="card bg-c-yellow order-card text-center"> */}
+                            <div class="card-block">
+                                <h3 class="m-b-20 fw-semibold">
+                                    <Filter9PlusOutlinedIcon sx={{ color: "white", fontSize: 24 }} /> Payment range
+                                </h3>
+                                <h2 class="text-center">
+                                    <Box sx={{ display: "flex", alignItems: "center", gap: 2, marginTop: 2 }}>
+                                        <TextField
+                                            label="Minimum"
+                                            type="number"
+                                            name="minPay"
+                                            value={searchTerm.minPay}
+                                            onChange={handleChange}
+                                            variant="outlined"
+                                            size="small"
+                                            sx={{
+                                                width: 120,
+                                                fontWeight: 1000,
+                                                "& .MuiOutlinedInput-root": {
+                                                    "& fieldset": {
+                                                        borderColor: "white",
+                                                    },
+                                                    "&:hover fieldset": {
+                                                        borderColor: "white",
+                                                    },
+                                                    "&.Mui-focused fieldset": {
+                                                        borderColor: "white",
+                                                    },
+                                                    color: "white",
+                                                },
+                                                "& .MuiInputLabel-root": {
+                                                    color: "white",
+                                                    fontWeight: 670,
+                                                },
+                                                "& .MuiInputLabel-root.Mui-focused": {
+                                                    color: "white",
+                                                    fontWeight: 670,
+
+                                                },
+                                            }}
+                                        />
+                                        <SyncAltIcon sx={{ color: "#1679ABs", fontSize: 24 }} />
+                                        <TextField
+                                            label="Maximum"
+                                            type="number"
+                                            name="maxPay"
+                                            value={searchTerm.maxPay}
+                                            onChange={handleChange}
+                                            variant="outlined"
+                                            size="small"
+                                            sx={{
+                                                width: 120,
+                                                "& .MuiOutlinedInput-root": {
+                                                    "& fieldset": {
+                                                        borderColor: "white",
+                                                    },
+                                                    "&:hover fieldset": {
+                                                        borderColor: "white",
+                                                    },
+                                                    "&.Mui-focused fieldset": {
+                                                        borderColor: "white",
+                                                    },
+                                                    color: "white",
+                                                },
+                                                "& .MuiInputLabel-root": {
+                                                    color: "white",
+                                                    fontWeight: 670,
+                                                },
+                                                "& .MuiInputLabel-root.Mui-focused": {
+                                                    color: "white",
+                                                    fontWeight: 670,
+
+                                                },
+                                            }}
+                                        />
+                                    </Box>
+                                    <Slider
+                                        value={[
+                                            Number(searchTerm.minPay),
+                                            Number(searchTerm.maxPay)
+                                        ]}
+                                        onChange={handleSliderChange}
+                                        // valueLabelDisplay="on"
+                                        min={500}
+                                        max={10000}
+                                        // max={searchTerm.maxPay}
+                                        // step={100}
+                                        sx={{ marginTop: 2, color: "white" }}
+                                    />
+
+                                </h2>
+                                {/* <p class="m-b-0">Total invoice trasaction</p> */}
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div
                     className="searchAdmin"
@@ -183,41 +310,28 @@ const GenerateReport = () => {
                         </select>
                     </div>
 
-                    {/* <div className="Paylabel">
-                        <label htmlFor="">
-                            Payment Range:
-                            <input
-                                className="inputNum"
-                                type="number"
-                                placeholder="Minimum"
-                                name="minPay"
-                                onChange={handleChange}
-                                value={searchTerm.minPay}
-                            />
-                            <SyncAltIcon
-                                sx={{
-                                    color: "grey",
-                                    fontSize: 24,
-                                }}
-                            />
-                            <input
-                                className="inputNum"
-                                type="number"
-                                placeholder="Maximum"
-                                name="maxPay"
-                                onChange={handleChange}
-                                value={searchTerm.maxPay}
-                            />
-                        </label>
-                    </div> */}
+                    <input
+                        style={{
+                            padding: "8px 10px 8px 10px",
+                            fontSize: "12px",
+                            border: "1px solid #ccc",
+                            borderRadius: "4px",
+                            margin: "10px",
+                        }}
+                        type="date"
+                        name="date"
+                        onChange={handleChange}
+                        placeholder="Select deadline date..."
+                    />
+
                 </div>
 
                 <Table
                     headers={[
                         "Invoice ID",
-                        "Employer name",
-                        "Catcher name",
-                        "Description",
+                        "Employer Full Name",
+                        "Catcher Full Name",
+                        "Errand Title",
                         "Errand Type",
                         "Paid Date",
                         "Total Payment",

@@ -23,8 +23,8 @@ import OngoingCardsNew from "../Dropdown/OngoingCardsNew";
 import DateRangeOutlinedIcon from "@mui/icons-material/DateRangeOutlined";
 import AssignmentTurnedInOutlinedIcon from "@mui/icons-material/AssignmentTurnedInOutlined";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
-import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
 import RotateRightOutlinedIcon from "@mui/icons-material/RotateRightOutlined";
+import ChecklistIcon from "@mui/icons-material/Checklist";
 import { Box } from "@mui/material";
 import { Alert, IconButton, Tooltip } from "@mui/joy";
 import { CloseRounded } from "@mui/icons-material";
@@ -287,8 +287,8 @@ function CommissionPage() {
               >
                 <option value="">Status</option>
                 <option value="Ongoing">Ongoing</option>
-                <option value="For Payment">For Payment</option>
-                <option value="Completed">Completed</option>
+                <option value="Task Done">Task Done</option>
+                <option value="Complete">Completed</option>
                 <option value="Cancelled">Cancelled</option>
               </select>
             </Tooltip>
@@ -337,13 +337,13 @@ function CommissionPage() {
                 </>
               ) : commission.transStatus === "Cancelled" ? (
                 <>
-                  <CancelOutlinedIcon style={{ color: "orange" }} />
+                  <CancelOutlinedIcon style={{ color: "red" }} />
                   <span> Canceled</span>
                 </>
-              ) : commission.transStatus === "For Payment" ? (
+              ) : commission.transStatus === "Task Done" ? (
                 <>
-                  <PaymentsOutlinedIcon style={{ color: "brown" }} />
-                  <span> For Payment</span>
+                  <ChecklistIcon style={{ color: "#1679ab" }} />
+                  <span> Task Done</span>
                 </>
               ) : commission.transStatus === "Ongoing" ? (
                 <>

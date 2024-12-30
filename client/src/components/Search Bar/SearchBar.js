@@ -10,7 +10,7 @@ function SearchBar(props) {
   return (
     <form onSubmit={props.onClick}>
       <div className="search__bar__container">
-        {props.hasErrand === "false" ? (
+        {props.hasErrand === "false" || props.user === "admin" ? (
           <>
             <h1>Search what errands you want</h1>
             <div className="group">

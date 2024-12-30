@@ -54,6 +54,7 @@ const Menu = () => {
     <>
       <SearchBar
         hasErrand={user.hasErrand}
+        user={user.userType}
         value={searchQuery}
         onClick={handleSearch}
         onChange={(e) => setSearchQuery(e.target.value)}
@@ -75,7 +76,7 @@ const Menu = () => {
         icons={<HourglassBottomIcon />}
       />
 
-      {user.hasErrand === "false" && (
+      {user.hasErrand === "false" || user.userType === "admin" || user.userType === "Catcher" ? (
         <section className="Menu" id="Menu">
           {/* bootstrap class applied */}
           <div className="box-container d-flex justify-content-center align-items-center">
@@ -130,7 +131,7 @@ const Menu = () => {
             </div>
           </div>
         </section>
-      )}
+      ) : null}
     </>
   );
 };

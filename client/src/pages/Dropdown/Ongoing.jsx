@@ -166,8 +166,9 @@ function Ongoing() {
             // }}
           >
             <option value="">Status</option>
-            <option value="Complete">Complete</option>
             <option value="Ongoing">Ongoing</option>
+            <option value="Complete">Complete</option>
+            <option value="Cancelled">Cancel</option>
             <option value="Task Done">Task Done</option>
           </select>
           <select

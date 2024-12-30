@@ -255,9 +255,12 @@ export function NewUserProfileui(props) {
 
                     {props.type === "Employer" ? (
                       <p class="text-center text-secondary mb-4">Employer</p>
-                    ) : (
+                    ) : props.type === "Catcher" ? (
                       <p class="text-center text-secondary mb-4">Catcher</p>
-                    )}
+                    ) : props.type === "admin" ? (
+                      <p class="text-center text-secondary mb-4">Admin</p>
+                    ) : null}
+
 
                     {/* --------------------- Rating --------------------- */}
                     {props.type === "Catcher" ? (
@@ -923,15 +926,14 @@ export function NewUserProfileui(props) {
                           {account.password && (
                             <>
                               <div
-                                className={`password-strength ${
-                                  strength === "Weak"
-                                    ? "strength-weak"
-                                    : strength === "Medium"
+                                className={`password-strength ${strength === "Weak"
+                                  ? "strength-weak"
+                                  : strength === "Medium"
                                     ? "strength-medium"
                                     : strength === "Strong"
-                                    ? "strength-strong"
-                                    : ""
-                                }`}
+                                      ? "strength-strong"
+                                      : ""
+                                  }`}
                               >
                                 Password strength: {strength}
                               </div>
@@ -966,7 +968,7 @@ export function NewUserProfileui(props) {
                           <button
                             type="submit"
                             class="btn btn-primary"
-                            // className="form-submit-btn"
+                          // className="form-submit-btn"
                           >
                             Change Password
                           </button>

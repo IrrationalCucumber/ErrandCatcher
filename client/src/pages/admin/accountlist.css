@@ -10,6 +10,7 @@
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
+
 .accounts {
   margin: 20px;
   display: flex;
@@ -126,16 +127,20 @@
 .search input[type="text"] {
   padding: 8px;
   font-size: 16px;
-  border: 1px solid #ccc; /* Add border for consistency */
-  border-radius: 4px; /* Add border radius for rounded corners */
+  border: 1px solid #ccc;
+  /* Add border for consistency */
+  border-radius: 4px;
+  /* Add border radius for rounded corners */
 }
 
 /* Dropdown */
 .search select {
   padding: 8px;
   font-size: 12px;
-  border: 1px solid #ccc; /* Add border for consistency */
-  border-radius: 4px; /* Add border radius for rounded corners */
+  border: 1px solid #ccc;
+  /* Add border for consistency */
+  border-radius: 4px;
+  /* Add border radius for rounded corners */
 }
 
 /* Search button */
@@ -144,12 +149,14 @@
   font-size: 16px;
   cursor: pointer;
   margin-bottom: 0;
-  border: none; /* Remove border for cleaner appearance */
+  border: none;
+  /* Remove border for cleaner appearance */
   background-color: rgb(22, 121, 171);
   /* background-color: #ce9251;  */
   /* Match the button color with the header */
   color: white;
-  border-radius: 4px; /* Add border radius for rounded corners */
+  border-radius: 4px;
+  /* Add border radius for rounded corners */
 }
 
 /* Search button hover effect */
@@ -163,16 +170,18 @@
   width: 600px;
   height: 400px;
 }
- /* Target the modal root class */
+
+/* Target the modal root class */
 @media (min-width: 768px) {
   .accList_modal {
-   
+
     width: 600px;
   }
 }
 
 @media (max-width: 767px) {
   .accList_modal {
-    width: 90%; /* Set width to 90% for smaller screens */
+    width: 90%;
+    /* Set width to 90% for smaller screens */
   }
 }
