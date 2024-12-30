@@ -24,6 +24,7 @@ import ModalFeedback from "../../components/ModalFeedback";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import LoadingBackdrop from "../../components/LoadingSpinner";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
+import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
 
 const ErrandPage = () => {
   const [commission, setCommission] = useState({
@@ -399,9 +400,15 @@ const ErrandPage = () => {
         {user.hasErrand === "true" ? (
           <Typography
             level="body-sm"
-            sx={{ ml: "1.5rem", mt: ".5rem", mb: "0.5rem" }}
+            sx={{
+              ml: "1.5rem",
+              mt: ".5rem",
+              mb: "0.5rem",
+              fontSize: "1.040rem",
+              fontWeight: 500,
+            }}
           >
-            <i>You still have an Errand to do!</i>
+            <WorkOutlineOutlinedIcon color="primary" /> <i>You still have an Errand to do!</i>
           </Typography>
         ) : null}
         <Typography
