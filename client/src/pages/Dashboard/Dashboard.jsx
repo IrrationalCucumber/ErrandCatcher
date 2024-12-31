@@ -24,9 +24,9 @@ function Dashboard() {
         };
 
         // Update user in the context
-        updateUser(updatedUserData);
+        // updateUser(updatedUserData);
 
-        console.log("Updated hasErrand:", res.data.userHasErrand);
+        // console.log("Updated hasErrand:", res.data.userHasErrand);
       } catch (error) {
         console.error("Error fetching hasErrand:", error);
       }
