@@ -28,10 +28,10 @@
   font-size: 16px;
   background-color: #ce9251;
   color: #fff;
-  /* box-shadow: 0 0 0 .2rem rgba(0, 0, 0, .1); */
+
   border: none;
   border-radius: 5px;
-  /* margin-right: 65%; */
+
   cursor: pointer;
 }
 
@@ -43,7 +43,7 @@
   font-weight: 700;
   line-height: 1.15;
   color: #f3f3f4;
-  /* letter-spacing: -0.022em; */
+
 }
 
 .group {
@@ -53,7 +53,7 @@
   position: relative;
   width: 80%;
   max-width: 700px;
-  /* width: 50%; */
+
 }
 
 .inputsss {
@@ -63,7 +63,7 @@
   padding: 0 1rem;
   padding-left: 2.5rem;
   border: 2px solid transparent;
-  /* border-radius: 8px; */
+
   border-top-left-radius: 16px;
   border-bottom-left-radius: 16px;
   outline: none;
@@ -93,7 +93,7 @@
 }
 
 .group .buttonss {
-  /* flex-basis: 25%; */
+
   padding: 0 1rem;
   background: linear-gradient(135deg, #BFF0FA 0%, #4998FF 100%);
   font-weight: 900;

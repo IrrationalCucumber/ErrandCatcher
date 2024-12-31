@@ -2,8 +2,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  /* justify-content: space-between; 
-    align-items: flex-start; */
+  
 }
 
 .application {
@@ -32,7 +31,7 @@
 }
 
 .searchApplication {
-  /* border: 1px solid red; */
+  
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -89,8 +88,7 @@
 }
 
 .application button.cancel {
-  /* background-color: #dc3545;
-    color: white; */
+
   padding: 10px 20px;
   font-size: 12px;
   background-color: rgb(217, 83, 79);
@@ -107,8 +105,7 @@
 }
 
 .application button.delete {
-  /* background-color: #dc3545;
-    color: white; */
+
   padding: 10px 20px;
   font-size: 12px;
   background-color: rgb(55, 140, 231);

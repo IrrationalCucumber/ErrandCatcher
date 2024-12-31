@@ -1,10 +1,7 @@
-/* .App {
-    font-family: sans-serif;
-    text-align: center;
-  } */
+
 
 body {
-  background-color: white; /* Set the background color for the entire page */
+  background-color: white; 
 }
 .btnn {
   margin: 20px;
@@ -30,7 +27,7 @@ body {
 
 .form-container label {
   color: black;
-  margin-bottom: 5px; /* Add margin between labels and inputs */
+  margin-bottom: 5px; 
 }
 
 .progress-line {
@@ -53,7 +50,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 300px; /* Set a maximum width for the step indicators */
+  max-width: 300px; 
   margin: 10px auto;
 }
 
@@ -94,13 +91,13 @@ body {
 }
 
 .label {
-  flex: 0 0 150px; /* Adjust label width as needed */
+  flex: 0 0 150px; 
   text-align: left;
   margin-right: 10px;
 }
 
 .input-rows .label {
-  margin-right: 10px; /* Adjust margin between label and input */
+  margin-right: 10px; 
   flex-shrink: 0;
 }
 
@@ -108,23 +105,23 @@ body {
 .input-rows input[type="number"],
 .input-rows select,
 .input-rows input[type="date"] {
-  flex: 1; /* Let the input fill the remaining space */
-  height: 40px; /* Set input height */
+  flex: 1; 
+  height: 40px;
 }
 
 .input-rows input[type="number"],
 .input-rows input[type="date"] {
-  margin-right: 10px; /* Adjust as needed */
+  margin-right: 10px; 
 }
 
 .input-rows .select {
-  flex-grow: 1; /* Let the select fill the remaining space */
-  height: 40px; /* Set the select height */
+  flex-grow: 1;
+  height: 40px;
 }
 
 .form-group1.input-rows {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
-  justify-content: center; /* Center align items horizontally */
+  justify-content: center; 
 }

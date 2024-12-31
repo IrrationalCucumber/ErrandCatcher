@@ -11,14 +11,14 @@ textarea {
 
 label {
   color: black;
-  /* font-size: 14px !important; */
+
   width: 100% !important;
 }
 
 .errand-cont {
   position: relative;
   width: 90%;
-  /* height: auto; */
+ 
   margin-left: 60px;
   padding-bottom: 10px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
@@ -34,7 +34,7 @@ label {
 
 .errand-inputs {
   border-radius: 5px;
-  /* background-color: #f2f2f2; */
+
   padding: 0px 0px 10px 20px;
   display: flex;
   flex-direction: column;
@@ -125,9 +125,7 @@ select {
 }
 
 @media screen and (min-width: 440px) {
-  /* label {
-    font-size: 14px !important;
-  } */
+
 
   .errand-cont {
     width: 95%;

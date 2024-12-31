@@ -1,6 +1,4 @@
-/*
-STEP 1
-*/
+
 .step h1 {
     text-align: center;
 }
@@ -27,7 +25,7 @@ STEP 1
     font-weight: bold;
 }
 
-/* STEP 2 */
+
 
 .label2 {
     margin-top: 5px;
@@ -62,7 +60,7 @@ STEP 1
     background-color: #f0f0f0;
 }
 
-/* image preview */
+
 .step2_img_preview,
 .step3__img__preview {
     max-width: 300px;
@@ -83,7 +81,7 @@ STEP 1
     font-weight: 900;
 }
 
-/* Step nav button */
+
 .step2__nav__button {
     margin: 10px;
 }
@@ -96,7 +94,7 @@ STEP 1
     color: white;
 }
 
-/* STEP 4 */
+
 .step4__box {
     display: flex;
     flex-direction: column;
@@ -116,17 +114,7 @@ STEP 1
 }
 
 
-/* .step {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 0 auto;
-  } */
+
 
 .step__title {
     font-size: 24px;
@@ -145,7 +133,7 @@ STEP 1
     grid-template-columns: 1fr;
     gap: 10px;
     margin-bottom: 20px;
-    /* text-align: start; */
+
     text-align: center
 }
 
@@ -173,7 +161,7 @@ STEP 1
     max-width: 90%;
     min-height: auto;
     
-    /* height: 120px; */
+
     border-radius: 5px;
     object-fit: cover;
     border: 1px solid #ddd;

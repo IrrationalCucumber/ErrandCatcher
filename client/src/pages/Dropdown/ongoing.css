@@ -13,14 +13,13 @@
 .Oncard {
     display: flex;
     flex-direction: column;
-    /* justify-content: space-around; */
+
     align-items: center;
     padding-top: 20px;
     max-width: 250px;
-    /* width: calc(30% - 25px); */
-    /* Adjust the width to fit 4 cards per row */
+
     height: auto;
-    /* height: 400px; */
+  
     margin-bottom: 20px;
     border-radius: 10px;
     box-shadow: none;
@@ -51,9 +50,9 @@
 
 @media screen and (max-width: 560px) {
     .Oncard {
-        /* margin-bottom: 2rem; */
+     
         border: groove;
-        /* width: 100%; */
+
         max-width: 90%;
         width: 250px;
         height: auto;
@@ -96,10 +95,8 @@
 .Oncard__info {
     padding: 10px 20px;
     text-align: center;
-    /* margin: 5px; */
-    /* display: flex;
-    flex-direction: column;
-    justify-content: center; */
+
+
 }
 
 .ongoing__cards__txt {
@@ -163,18 +160,17 @@
     background-color: #17a5e7;
     color: #fff;
     opacity: 0.90;
-    /* box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2); */
+ 
 }
 
 
 
 .ongoing__cards__button__feedback:disabled {
-    /* background-color: rgba(209, 168, 33, 0.6); */
+
     background-color: #e3effb;
     font-weight: 600;
     color: #0073aa;
-    /* color: #fff; */
-    /* border: solid 1px rgba(192, 192, 192, 0.6); */
+
     border: none;
     cursor: not-allowed;
     pointer-events: none;
@@ -183,12 +179,11 @@
 }
 
 .ongoing__cards__button:disabled {
-    /* background-color: rgba(209, 168, 33, 0.6); */
+ 
     background-color: #e3effb;
     font-weight: 600;
     color: #0073aa;
-    /* color: #fff; */
-    /* border: solid 1px rgba(192, 192, 192, 0.6); */
+
     border: none;
     cursor: not-allowed;
     pointer-events: none;
@@ -224,8 +219,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    /* padding: 10px 15px; */
-    /* margin: auto; */
+
     margin-bottom: 8px;
     margin-top: 2px;
 }
@@ -235,9 +229,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    /* align-items: center; */
-    /* padding: 10px 15px; */
-    /* margin: auto; */
+
     margin-bottom: 12px;
     margin-top: 2px;
 }
@@ -254,28 +246,25 @@
     display: block;
     width: 100%;
     color: #727070;
-    /* border: solid; */
+
 
 }
 
 .ongoing__cardsNewCat__button__complete {
-    /* background-color: #992ae4; */
-    /* background-color: #0073aa; */
+ 
     background-color: #378ce7;
     color: #fff;
 }
 
 .ongoing__cards__button:hover,
 .ongoing__cardsNewCat__button__complete:hover {
-    /* background-color: green; */
-    /* background-color: #378ce7; */
+  
     background-color: #0073aa;
     color: #ffff;
 }
 
 .ongoing__cardsNewCat__button__cancel {
-    /* background-color: red; */
-    /* color: #fff; */
+
     background-color: #e3effb;
     color: #12467b;
 }

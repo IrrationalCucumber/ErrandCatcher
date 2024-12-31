@@ -1,24 +1,24 @@
 .commissions-header {
   display: flex;
   align-items: center;
-  margin-bottom: 20px; /* Adjust margin as needed */
+  margin-bottom: 20px;
 }
 
 .commissions-header h1 {
-  margin-right: 10px; /* Adjust margin as needed */
+  margin-right: 10px;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
 .commissions {
-  margin: 20px; /* Adjust margin as needed */
+  margin: 20px; 
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
 .search {
-  margin-bottom: 10px; /* Adjust margin as needed */
+  margin-bottom: 10px; 
   display: flex;
   align-items: center;
 }
@@ -26,20 +26,20 @@
 .search-filter {
   display: flex;
   align-items: center;
-  margin-bottom: 20px; /* Adjust margin as needed */
+  margin-bottom: 20px; 
 }
 
 .filter select {
   padding: 8px;
-  font-size: 12px; /* Adjust font size as needed */
+  font-size: 12px; 
 }
 
 .filter {
-  margin-right: 30px; /* Push the filter to the right */
+  margin-right: 30px;
 }
 
 h1 {
-  margin-bottom: 10px; /* Adjust the bottom margin of the h1 */
+  margin-bottom: 10px; 
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
@@ -52,8 +52,8 @@ h1 {
 }
 
 .commissions-divider {
-  border-top: 1px solid #ccc; /* Adjust border color and style as needed */
-  margin: 20px 0; /* Adjust margin as needed */
+  border-top: 1px solid #ccc; 
+  margin: 20px 0; 
 }
 
 .commissions-divider .table-wrapper {
@@ -61,7 +61,7 @@ h1 {
 }
 
 .commissions table {
-  border-spacing: 0; /* Remove the gap between cells */
+  border-spacing: 0; 
   width: 100%;
 }
 
@@ -79,46 +79,45 @@ h1 {
 }
 
 .commissions th {
-  /* background-color: #ce9251;  */
-  /* Adjust background color as needed */
+
   background-color: #1679AB;
   color: #fff;
 }
 
 .commissions tr:last-child td {
-  border-bottom: none; /* Remove bottom border for the last row */
+  border-bottom: none; 
 }
 
 .commissions tr:hover {
-  background-color: #ddd; /* Adjust hover row color as needed */
+  background-color: #ddd; 
 }
 
 .commissions button {
   padding: 8px 12px;
-  font-size: 16px; /* Adjust font size as needed */
+  font-size: 16px; 
   cursor: pointer;
-  margin-right: 5px; /* Adjust margin as needed */
+  margin-right: 5px; 
 }
 
 .commissions .update button {
-  background-color: #28a745; /* Adjust button color as needed */
+  background-color: #28a745; 
   color: white;
 }
 
 .commissions .update button:hover {
-  background-color: #218838; /* Adjust hover color as needed */
+  background-color: #218838; 
 }
 
 .commissions button.delete {
-  background-color: #dc3545; /* Adjust button color as needed */
+  background-color: #dc3545; 
   color: white;
 }
 
 .commissions button.delete:hover {
-  background-color: #c82333; /* Adjust hover color as needed */
+  background-color: #c82333; 
 }
 
-/*Page design*/
+
 .pagination-container {
   display: flex;
   justify-content: center;
@@ -143,7 +142,7 @@ h1 {
 }
 
 .add-commission-button:hover {
-  background-color: #0056b3; /* Adjust hover color as needed */
+  background-color: #0056b3; 
 }
 
 .searchAdmin {
@@ -176,9 +175,7 @@ h1 {
   font-size: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  
-  /* margin: 10px 20px;
-  width: 150px; */
+
 }
 
 .CLtype{
@@ -187,8 +184,7 @@ h1 {
   border: 1px solid #ccc;
   border-radius: 4px;
 
-  /* margin: 10px;
-  width: 150px; */
+
 }
 
 .update {
@@ -201,7 +197,7 @@ h1 {
   border-radius: 8px; 
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
-  /* box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);  */
+
 }
 
 .update .iconSharp {
@@ -211,15 +207,14 @@ h1 {
 
 .update:hover {
   background-color: #ebf1fe; 
-  /* color: white;  */
-  /* transform: translateY(-2px);  */
+
   opacity: 0.9;
-  /* box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);  */
+ 
 }
 
 .update a {
   text-decoration: none;
-  /* color: inherit; */
+
   color: #1679ab;
   display: flex;
   align-items: center;
@@ -238,7 +233,7 @@ h1 {
 }
 
 
-/* Responsive */
+
 @media screen and (max-width: 888px) {
   .filter__admin__accountList{
     width: 800px;
@@ -254,7 +249,7 @@ h1 {
   }
 
   .searchAdmin{
-    /* border: solid; */
+  
     width: 100%;
   }
 

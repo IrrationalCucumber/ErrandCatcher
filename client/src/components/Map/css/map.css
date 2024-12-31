@@ -3,15 +3,12 @@
   width: 100%;
   min-height: 100vh;
   background: cover;
-  /* calculate height of the screen minus the heading */
-  /* height: calc(100vh - 77px); */
 }
 
 .map-post-wrap {
   position: relative;
   width: 100%;
   height: calc(100vh - 77px);
-  /* calculate height of the screen minus the heading */
 }
 
 .map__filter__display {
@@ -43,13 +40,11 @@
 }
 
 .map__filter__type {
-  /* border: 0.1px solid #636b74; */
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   background-color: #f0f4f8;
   border: none;
   font-size: 1.20rem;
   font-weight: 600;
-  /* font-style: italic; */
   cursor: pointer;
   color: #0b6bcb;
   letter-spacing: -0.025em;

@@ -8,14 +8,14 @@
   flex-wrap: wrap;
 }
 
-/* Container for profile information */
+
 .profile-info {
   display: flex;
   justify-content: space-between;
   width: 80%;
 }
 
-/* Container for description form */
+
 .description-form {
   background-color: white;
   padding: 20px;
@@ -34,13 +34,12 @@
   margin: 20px 0;
 }
 
-/* Container for user information form */
-/* transaction affected */
+
 .info-form {
   background-color: white;
   padding: 30px;
   margin: 10px;
-  /* display: flex; */
+
   flex-direction: column;
   justify-content: center;
   border-radius: 5px;
@@ -48,7 +47,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
-/* Styling for labels in the profile */
+
 .profile label {
   font-size: 16px;
   font-weight: bold;
@@ -76,14 +75,13 @@
   background-color: #1679ab;
   color: #fff;
   border: none;
-  /* margin-top: 10px; */
-  /* margin-right: 10px; */
+
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .upload-container {
   display: flex;
-  align-items: center; /* Align items vertically */
+  align-items: center; 
 }
 
 .upload-container button {
@@ -91,7 +89,7 @@
   height: 45px;
 }
 .upload-container input[type="file"] {
-  margin-right: 10px; /* Add margin between the file input and the button */
+  margin-right: 10px; 
 }
 
 .profile button:active {
@@ -123,7 +121,7 @@
 
 .toggle-button {
   display: flex;
-  margin-bottom: 20px; /* Add margin between the buttons and other content */
+  margin-bottom: 20px; 
 }
 
 .toggle-button span {
@@ -136,7 +134,7 @@
 }
 
 .toggle-button span:last-child {
-  margin-right: 0; /* Remove the right margin for the last tab */
+  margin-right: 0;
 }
 
 .toggle-button span.active {
@@ -146,7 +144,7 @@
 .input-row {
   display: flex;
   align-items: center;
-  /*justify-content: space-between;*/
+  
   margin-bottom: 5px;
 }
 
@@ -173,21 +171,6 @@
   resize: none;
 }
 
-/* profile page new test*/
-/* .display-data1 {
-  height: 4rem; 
-  width: 100%;
-  font-size: 18px;
-  padding: 12px;
-}
-
-.display-data1 .error {
-  height: 4rem;
-  width: 100%;
-  font-size: 18px;
-  padding: 12px;
-  border: 2px solid #dc3545;
-} */
 
 .file {
   display: none;
@@ -201,20 +184,20 @@
   height: 50px;
   width: 50px;
   border: 1px dashed;
-  margin: 0 auto 20px; /* Center horizontally and add margin-bottom */
+  margin: 0 auto 20px; 
 }
 
 .File label {
-  color: #888; /* Initial color: gray */
+  color: #888; 
 }
 
 .File label:hover {
-  color: #de0611; /* Hover color: red */
+  color: #de0611; 
 }
 
 .File input[type="file"]:focus + label,
 .File input[type="file"]:active + label {
-  color: #de0611; /* Clicked color: red */
+  color: #de0611;
 }
 
 .FileContainer {
@@ -275,7 +258,7 @@
   align-items: center;
 }
 
-/* Media queries for responsive font sizes */
+
 @media only screen and (max-width: 768px) {
   .about-label,
   .history-label {
@@ -284,11 +267,11 @@
 
   .description-form,
   .info-form {
-    width: 100%; /* Make forms take full width on smaller screens */
+    width: 100%;
   }
 }
 
-/* Responsive layout adjustments */
+
 @media only screen and (max-width: 768px) {
   .profile-info {
     flex-direction: column;
@@ -300,20 +283,9 @@
     align-items: center;
     position: relative;
   }
-  /* Positioning the image inside the label */
+  
   .image-container img {
-    /* position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 50%;
-    height: 100%;
-    padding: 20px; */
-    /* max-width: 100%;
-    max-height: 100%;
-    padding: 20px;
-    transform: translate(-50%, -50%); */
-    /* position: relative; */
+
     display: block;
     max-width: 100%;
     justify-items: center;
@@ -321,29 +293,29 @@
   }
 
   .Image-container {
-    position: relative; /* Ensure the container is a positioned parent */
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center; /* Center vertically */
+    align-items: center; 
     width: 100%;
     height: 100%;
   }
 
   .toggle-button span {
-    margin-bottom: 10px; /* Add space between toggle buttons on smaller screens */
+    margin-bottom: 10px; 
   }
 }
-/* Optional: Add a border or divider between the sections for better visual separation */
+
 .about-section {
-  border-top: 1px solid #ccc; /* Add a border below the About section */
-  padding-top: 20px; /* Add padding below the About section */
+  border-top: 1px solid #ccc; 
+  padding-top: 20px; 
   margin-top: 20px;
 }
 
 .history-section {
   border-top: 1px solid #ccc;
-  padding-top: 20px; /* Add padding above the History section */
+  padding-top: 20px;
   margin-top: 20px;
 }
 
@@ -351,5 +323,5 @@
 .history-label {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  font-size: 18px; /* Adjust the font size for the About label */
+  font-size: 18px; 
 }

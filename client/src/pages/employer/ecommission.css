@@ -1,7 +1,7 @@
-/*For the EmployerCommissionList UI*/
+
 .Commission-page-container {
   display: flex;
-  /* justify-content: space-between; Center content horizontally */
+ 
   align-items: center;
   flex-direction: column;
   min-height: 100vh;
@@ -26,9 +26,9 @@
 
 .Commission-page-divider {
   border-top: 1px solid #ccc;
-  /* Top border */
+
   margin: 20px 0;
-  /* Margin top and bottom */
+ 
 }
 
 .Commission-page-divider .table-wrapper {
@@ -56,7 +56,7 @@
 
 .Commission-page td .td-content .text {
   flex: 1;
-  /* Allow text to take available space */
+ 
 }
 
 .Commission-page th {
@@ -92,8 +92,8 @@
 .search-filter {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Push items to opposite sides */
-  width: 100%; /* Make the container take up full width */
+  justify-content: space-between; 
+  width: 100%; 
 }
 
 .employer__errand__search,
@@ -112,7 +112,7 @@
 }
 
 .employer__errand_list__add__btn {
-  margin-left: auto; /* Push the button to the far-right */
+  margin-left: auto; 
 }
 
 .employer__errand__search {
@@ -133,7 +133,7 @@
 
 
 
-/* Responsive */
+
 @media screen and (max-width: 888px) {
   .search-filter {
     flex-direction: column;
@@ -159,7 +159,7 @@
     text-align: center;
     border-bottom: 1px solid #ddd;
     border-right: 1px solid #ddd;
-    /* color: black; */
+  
     width: 140px;
     font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
       "Lucida Sans Unicode", Geneva, Verdana, sans-serif;

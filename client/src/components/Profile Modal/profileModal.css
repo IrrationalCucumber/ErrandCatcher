@@ -21,7 +21,7 @@
     cursor: pointer;
     float: right;
     font-size: 1.5rem;
-    color: #333; /* Adjust color as needed */
+    color: #333; 
   }
   
   .profile-modal-header {
@@ -62,15 +62,15 @@
     align-items: center;
     justify-content: center;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999; /* Ensure modal container is above other content */
+    z-index: 999; 
   }
   
   .profile-modal {
     border-radius: 5px;
     padding: 2rem;
-    background-color: white; /* Set background color to white */
+    background-color: white; 
     width: 30em;
-    z-index: 1000; /* Ensure modal is above modal container */
+    z-index: 1000;
   }
   
   .profile-modal .close-icon {
