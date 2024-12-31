@@ -17,10 +17,10 @@ main {
 
 .sidebarr {
     color: #fff;
-    height: 100vh; /* adjust */
+    height: 100vh; 
     width: 200px;
     transition: all 0.5s;
-    /* background-color: rgb(35 55 75 / 90%); */
+
     background: rgb(55,140,231);
     background: linear-gradient(346deg, rgba(55,140,231,1) 0%, rgba(164,192,246,1) 100%);
     padding: 6px 12px;
@@ -32,17 +32,15 @@ main {
     display: flex;
     flex-direction: column;
     gap: 50px;
-    /* justify-content: space-evenly; */
-    /* margin: 12px; */
+ 
     border-radius: 4px;
 }
 
 .top_section {
     display: flex;
-    /* justify-content: end; */
-    /* align-items:center; */
+ 
     padding: 20px 15px;
-    /* margin-top: 20px; */
+
 
 }
 
@@ -67,7 +65,7 @@ main {
 }
 
 .link:hover {
-    /* background: lightskyblue; */
+   
     color: #000;
     transition: all 0.5s;
 }

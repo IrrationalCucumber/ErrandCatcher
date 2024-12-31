@@ -1,20 +1,15 @@
 .cards {
-  /* padding: 4rem; */
   background-color: #fff;
   position: relative;
   padding: 20px 10px;
   margin: 10px;
 }
 
-/* h1 {
-  text-align: center;
-} */
 
 .cards__container {
   grid-template-columns: repeat(4, 1fr);
   display: flex;
   flex-wrap: wrap;
-  /* justify-content: center; */
   margin-left: 5rem;
 }
 
@@ -23,19 +18,15 @@
   margin: 50px 0 45px 0;
   grid-template-columns: repeat(auto-fit,
       minmax(300px, 1fr));
-  /* Adjust the minmax value as needed */
   grid-gap: 1rem;
 }
 
 .cards__items {
   display: flex;
-  /* grid-template-columns: repeat(4, 1fr); */
   flex-wrap: wrap;
   gap: 32px;
   justify-content: flex-start;
   list-style: none;
-  /*  margin: 0 -15px;
-  gap: 35px;*/
 }
 
 .cards__item {
@@ -45,16 +36,11 @@
 
   justify-content: flex-end;
   width: 400px;
-  /* Adjust the width as needed */
   height: 500px;
-  /* Adjust the height as needed */
   margin: 20px;
-  /* Adjust the margin between cards as needed */
   border-radius: 10px;
   box-shadow: none;
-  /* Add shadow for a card effect */
   transition: transform 0.3s ease;
-  /* Add transition for hover effect */
 }
 
 .cards__item__link {
@@ -72,7 +58,6 @@
   -webkit-filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
   filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
   border-radius: 10px;
-  /* border: 2px solid black; */
 
   overflow: hidden;
   text-decoration: none;
@@ -87,23 +72,15 @@
 .cards__item__pic-wrap {
   display: grid;
   place-items: center;
-  /* Center the image both horizontally and vertically */
   position: relative;
 
   width: 320px;
-  /* padding-top: 10px; */
-
   padding-bottom: 10px;
   overflow: hidden;
 }
 
-/* .fade-img {
-  animation-name: fade-img;
-  animation-duration: 2s;
-} */
 
 .cards__item__pic-wrap::after {
-  /* border: 3px solid black; */
   border-radius: 10px;
   place-items: center;
   box-shadow: 0 0 0 0.5rem rgba(0, 0, 0, 0.1);
@@ -126,7 +103,6 @@
   border-radius: 10px;
   background: transparent;
   float: left;
-  /* margin: 5px 2px 5px 5px; */
   font-size: 15px;
   text-align: left;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
@@ -143,7 +119,6 @@
 }
 
 .cards__item__info {
-  /* padding: 20px 10px 10px; */
   font-size: 12px;
   text-align: center;
 }

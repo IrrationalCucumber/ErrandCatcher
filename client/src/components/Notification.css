@@ -1,12 +1,11 @@
 .notification-container {
-  /* height: auto; */
-  /* min-height: 100vh; */
+
   position: relative;
 }
 
 .notification-main {
   height: 100%;
-  /* width: 100%; */
+
   padding: 20px 5%;
   background-color: rgb(233, 233, 233);
 }
@@ -64,7 +63,7 @@ notification-item-info {
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   height: 100%;
-  /* Set the height of the notification-item-container to match its parent container */
+
   position: relative;
 
 }

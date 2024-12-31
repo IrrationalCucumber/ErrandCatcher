@@ -18,8 +18,7 @@ video {
     object-fit: contain;
 }
 
-.hero-container > h1 {
-    /* color: #fff; */
+.hero-container>h1 {
     color: #f3f3f4;
     font-size: 75px;
     margin-top: -60px;
@@ -30,7 +29,7 @@ video {
         Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-.hero-container > p {
+.hero-container>p {
     margin-top: 5px;
     color: #fff;
     font-size: 25px;
@@ -49,7 +48,7 @@ video {
 
 
 @media screen and (max-width: 960px) {
-    .hero-container > h1 {
+    .hero-container>h1 {
         font-size: 50;
         margin-top: -30px;
     }
@@ -57,12 +56,12 @@ video {
 }
 
 @media screen and (max-width: 768px) {
-    .hero-container > h1 {
+    .hero-container>h1 {
         font-size: 45px;
         margin-top: -20px;
     }
 
-    .hero-container > p {
+    .hero-container>p {
         font-size: 20px;
     }
 }
@@ -76,24 +75,20 @@ video {
     width: 100%;
 }
 
-/* 
-    ONGOING HERO SECTION
-    adrean-26/09/24
-*/
+
 .ongoing-hero-container {
-    /* background: url('../../../public/images/banner_epmloyer.jpg') center center/cover no-repeat; */
+
     height: 25vh;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2); */
     object-fit: contain;
     background: linear-gradient(#378ce7, #609ddd, #adcdeea2)
 }
 
-.ongoing-hero-container > h1 {
+.ongoing-hero-container>h1 {
 
     color: #fff;
     font-size: 45px;
@@ -108,12 +103,11 @@ video {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2); */
     object-fit: contain;
     background: linear-gradient(#378ce7, #609ddd, #adcdeea2)
 }
 
-.employer__hero__container > h1 {
+.employer__hero__container>h1 {
     color: #fff;
     font-size: 45px;
     margin: -25px;

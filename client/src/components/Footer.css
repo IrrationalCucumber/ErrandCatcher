@@ -82,12 +82,11 @@
   transition: 0.3s ease-out;
 }
 
-/* Copyright */
+
 .website-rights {
   color: #fff;
   margin-bottom: 10px;
-  /* align-self: flex-start; */
-  /* Align copyright text to the start */
+ 
 }
 
 .footer-email-form h2 {
@@ -98,7 +97,7 @@
   color: #b1b1b1;
 }
 
-/*Social Icon*/
+
 .social-icon-link {
   color: #fff;
   font-size: 12px;
@@ -167,8 +166,7 @@
     display: flex;
     gap: 1px;
     margin-right: 12px;
-    /* justify-content: center;
-    align-items: center; */
+ 
   }
 
   .social-media {
@@ -186,7 +184,7 @@
   }
 
   .website-rights {
-    /* margin-bottom: 16px; */
+
     margin-top: 6px;
   }
 }

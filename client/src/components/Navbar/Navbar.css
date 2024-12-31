@@ -1,6 +1,5 @@
 .navbar__cont {
   background: #378ce7;;
- /* height: 80px; */
  display: flex;
  justify-content: center;
  align-items: center;
@@ -20,7 +19,7 @@
 
 .navbar__page {
   background: #378ce7;
-  /* height: 80px; */
+
   display: flex;
     justify-content: center;
     align-items: center;
@@ -175,12 +174,7 @@
     transition: all 0.2s ease-out;
   }
 
-  /* .navbar-logo {
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: translate(25%, 50%);
-  } */
+ 
 
   .menu-icon {
     display: block;
@@ -227,9 +221,9 @@
 .dropdown-content {
   position: absolute;
   top: 100%;
-  /* Position dropdown below the icon */
+
   right: 0;
-  /* Align dropdown to the right */
+
   min-width: 160px;
   background-color: #f9f9f9;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
@@ -240,14 +234,14 @@
 .logo-container {
   display: flex;
   align-items: center;
-  /*padding: 10px; /* Add padding as needed */
+
 }
 
 .logo-image {
   height: 40px;
-  /* Adjust the height of the image */
+ 
   margin-right: 10px;
-  /* Add margin between the image and text */
+
 }
 
 .logo-text {
@@ -266,7 +260,7 @@
 .sign-out-container {
   margin-right: 40px;
   margin-left: auto;
-  /* Pushes the sign-out button to the right */
+
 }
 
 .sign-out-button {
@@ -281,9 +275,9 @@
 
 .sign-out-button:hover {
   background-color: #ddd;
-  /* Change the background color on hover */
+
   border-radius: 5px;
-  /* Make the button circular on hover */
+
   width: 30px;
   height: 30px;
   color: #242424;
