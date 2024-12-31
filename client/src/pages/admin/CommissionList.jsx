@@ -19,7 +19,7 @@ import TimerOffIcon from "@mui/icons-material/TimerOff";
 import HandshakeIcon from "@mui/icons-material/Handshake";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import { PanoramaFishEye, RemoveRedEyeSharp } from "@mui/icons-material";
-import EventBusyOutlinedIcon from '@mui/icons-material/EventBusyOutlined';
+import EventBusyOutlinedIcon from "@mui/icons-material/EventBusyOutlined";
 
 const CommissionList = () => {
   const [commissions, setCommissions] = useState([]);
@@ -198,7 +198,6 @@ const CommissionList = () => {
             "Type",
             "Payment",
             "Date Posted",
-            "Date Completed",
             "Status",
             "Action",
           ]}
@@ -230,12 +229,14 @@ const CommissionList = () => {
             ) : null,
             "Php " + Commission.commissionPay,
             DisplayDate(Commission.DatePosted),
-            // Commission.DateCompleted === ""
-            //   ? DisplayDate(Commission.DateCompleted)
-            //   : "",
-            Commission.transDateComplete === null
-              ? <EventBusyOutlinedIcon style={{ color: "#c99f5a", marginLeft: "48px" }} />
-              : DisplayDate(Commission.transDateComplete),
+            //Remove transaction complete date due to unable to display if no transaction yet
+            // Commission.transDateComplete === null ? (
+            //   <EventBusyOutlinedIcon
+            //     style={{ color: "#c99f5a", marginLeft: "48px" }}
+            //   />
+            // ) : (
+            //   DisplayDate(Commission.transDateComplete)
+            // ),
             // Commission.commissionStatus,
             Commission.commissionStatus === "Pending" ? (
               <>
@@ -273,8 +274,21 @@ const CommissionList = () => {
              
               </button> */}
               <button className="update">
-                <Link to={`/errand/view/${Commission.commissionID}`}>
-                  <RemoveRedEyeSharp />
+                <Link to={`/errand/view/${Commission.commissionID}`}
+                  style={{
+                    textDecoration: "none",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "4px",
+                  }}
+                >
+                  <RemoveRedEyeSharp
+                    className="iconSharp"
+                    sx={{
+                      fontSize: 24,
+                      transition: "color 0.3s ease",
+                    }}
+                  /> View
                 </Link>
               </button>
             </>,

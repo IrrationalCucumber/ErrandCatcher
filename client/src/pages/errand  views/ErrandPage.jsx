@@ -10,6 +10,21 @@ import "./Commission.css"; // Import your CSS file
 import { useAuth } from "../../components/AuthContext";
 import { ViewMap, ViewMapBox } from "../../components/Map/Map";
 import ApplicationQualificationModal from "../../components/ApplicationModal/ApplicationQualificationModal";
+import {
+  Alert,
+  Button,
+  IconButton,
+  Modal,
+  ModalClose,
+  ModalDialog,
+  Typography,
+} from "@mui/joy";
+import { CheckCircle, CloseRounded } from "@mui/icons-material";
+import ModalFeedback from "../../components/ModalFeedback";
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
+import LoadingBackdrop from "../../components/LoadingSpinner";
+import HowToRegIcon from "@mui/icons-material/HowToReg";
+import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
 
 const ErrandPage = () => {
   const [commission, setCommission] = useState({
@@ -31,9 +46,20 @@ const ErrandPage = () => {
     first: "",
     destLng: "",
     destLat: "",
-    method: "",
+    tags: "",
   });
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  // modal message pop-up
+  const [openFeedmodal, setOpenFeedmodal] = useState(false);
+  const handleOpen = () => {
+    setOpenFeedmodal(true);
+  };
+  const handleClose = () => {
+    setOpenFeedmodal(false);
+    window.location.reload();
+  };
+
   const navigate = useNavigate();
   const location = useLocation();
   //pathname to array from
@@ -44,6 +70,10 @@ const ErrandPage = () => {
   const accessToken =
     "pk.eyJ1IjoibWlyYWthNDQiLCJhIjoiY20xcWVhejZ0MGVzdjJscTF5ZWVwaXBzdSJ9.aLYnU19L7neFq2Y7J_UXhQ";
   const [distance, setDistance] = useState();
+  //alert message
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMesg, setAlerMsg] = useState("");
+  const [alrtColor, setAlrtColor] = useState("");
 
   //APS - 19/03/24
   //CHeck if Catcher already applied
@@ -81,12 +111,34 @@ const ErrandPage = () => {
         );
         const retrievedCommission = res.data[0];
         //format date
+        // const formattedDate = new Date(retrievedCommission.commissionDeadline)
+        //   .toISOString()
+        //   .substr(0, 10);
+        // const formatStart = new Date(retrievedCommission.commissionStartDate)
+        //   .toISOString()
+        //   .substr(0, 10);
+
+        const options = {
+          timeZone: "Asia/Manila",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        };
+
+        // Format Deadline
         const formattedDate = new Date(retrievedCommission.commissionDeadline)
-          .toISOString()
-          .substr(0, 10);
+          .toLocaleDateString("en-CA", options) // Use "en-CA" for ISO-style YYYY-MM-DD
+          .split("/")
+          .reverse()
+          .join("-"); // Optional, to ensure consistent formatting
+
+        // Format Start Date
         const formatStart = new Date(retrievedCommission.commissionStartDate)
-          .toISOString()
-          .substr(0, 10);
+          .toLocaleDateString("en-CA", options) // Same as above
+          .split("/")
+          .reverse()
+          .join("-");
+
         // Update the state with retrieved account data
         setCommission({
           employerID: retrievedCommission.employerID,
@@ -109,7 +161,7 @@ const ErrandPage = () => {
           first: retrievedCommission.userFirstname,
           destLat: retrievedCommission.commissionDestLat,
           destLng: retrievedCommission.commissionDestLong,
-          method: retrievedCommission.commissionPaymentMethod,
+          tags: retrievedCommission.commissionTags,
         });
       } catch (err) {
         console.log(err);
@@ -171,7 +223,20 @@ const ErrandPage = () => {
       notif.notificationType = "Errand Application";
 
       await axios.post("http://localhost:8800/notify", notif);
-      alert("You have applied to this Errand!");
+      // setAlerMsg("You have applied to this Errand!");
+      // setShowAlert(true);
+      // setAlrtColor("success");
+      // handleScrollToTop();
+
+      setLoading(true);
+
+      setTimeout(() => {
+        handleScrollToTop();
+        setLoading(false);
+        // modal will pop-up in 2 seconds
+        handleOpen();
+      }, 2000);
+
       //alert(application.qualifications);
       //navigate(`/application/${userID}`);
       //console.log(notif); // check variables state
@@ -179,10 +244,79 @@ const ErrandPage = () => {
       console.log(err);
     }
   };
+  //scroll on top to see alert
+  const handleScrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // Makes the scrolling smooth
+    });
+  };
+  // console.log(commission);
 
-  console.log(commission);
+  //check for matching skills
+  const [catcher, setCatcher] = useState([]);
+  const [matchSkillCount, setMatchSkillCount] = useState(0);
+  useEffect(() => {
+    const fetchSkills = async () => {
+      try {
+        const res = await axios(`http://localhost:8800/user/${user.userID}`);
+        const skillArray = res.data.map((skill) => skill.userQualification);
+        setCatcher(skillArray[0].split(",")); // Ensure catcher is an array
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchSkills();
+  }, [user.userID]);
+
+  useEffect(() => {
+    if (catcher.length > 0 && commission.tags) {
+      const commissionTagsArray = commission.tags.split(","); // Ensure commission.tags is an array
+      const matchedSkills = catcher.filter((skill) =>
+        commissionTagsArray.includes(skill)
+      );
+      setMatchSkillCount(matchedSkills.length);
+    }
+  }, [catcher, commission.tags]);
+  console.log(user);
   return (
     <>
+      {showAlert && (
+        <Alert
+          color={alrtColor}
+          size="md"
+          variant="solid"
+          startDecorator={<CheckCircle />}
+          sx={{ borderRadius: "none" }}
+          endDecorator={
+            <IconButton
+              variant="soft"
+              color={alrtColor}
+              onClick={() => setShowAlert(false)}
+            >
+              <CloseRounded />
+            </IconButton>
+          }
+        >
+          {alertMesg}
+        </Alert>
+      )}
+
+      <LoadingBackdrop
+        open={loading}
+        text="Loading... Please wait while Applying to Errand"
+        icons={<HourglassBottomIcon />}
+      />
+
+      <ModalFeedback
+        open={openFeedmodal}
+        handleClose={handleClose}
+        headerMes="Success!"
+        contentMes="You have applied to this Errand!"
+        color="success"
+        colorText="green"
+      />
+
       <div className="errand-cont">
         <div className="input-cont">
           <div className="errand-inputs">
@@ -206,6 +340,8 @@ const ErrandPage = () => {
               payValue={commission.comPay}
               numValue={commission.ContactNo}
               distance={distance}
+              tags="comTags"
+              tagValue={commission.tags}
             />
           </div>
           {commission.comType !== "Delivery" &&
@@ -260,34 +396,65 @@ const ErrandPage = () => {
             UPDATE
           </button>
         )}
-        {user.userType === "Catcher" && user.status === "Verified" && (
-          <button
-            className="formButton"
-            onClick={
-              isApplied
-                ? null
-                : (e) => {
-                    handleApply(true);
-                  }
-            }
-            style={{
-              backgroundColor: isApplied ? "none" : "",
+
+        {user.hasErrand === "true" ? (
+          <Typography
+            level="body-sm"
+            sx={{
+              ml: "1.5rem",
+              mt: ".5rem",
+              mb: "0.5rem",
+              fontSize: "1.040rem",
+              fontWeight: 500,
             }}
           >
-            {isApplied ? "Applied" : "APPLY"}
-          </button>
-        )}
+            <WorkOutlineOutlinedIcon color="primary" /> <i>You still have an Errand to do!</i>
+          </Typography>
+        ) : null}
+        <Typography
+          level="body-sm"
+          sx={{
+            ml: "1.5rem",
+            mt: ".5rem",
+            mb: "0.5rem",
+            fontSize: "1.035rem",
+            fontWeight: 400,
+            fontStyle: "italic",
+            // color: "#1679ab",
+          }}
+        >
+          <HowToRegIcon color="primary" /> Match Skills: {matchSkillCount}
+        </Typography>
+        {user.userType === "Catcher" &&
+          user.status === "Verified" &&
+          user.hasErrand === "false" &&
+          matchSkillCount > 0 && (
+            <div>
+              <div className="formButton">
+                <Button
+                  className="formButton"
+                  disabled={isApplied ? true : false}
+                  size="lg"
+                  variant="solid"
+                  onClick={
+                    isApplied
+                      ? null
+                      : (e) => {
+                        handleApply(true);
+                      }
+                  }
+                  style={{
+                    backgroundColor: isApplied ? "none" : "",
+                  }}
+                >
+                  {isApplied ? "Applied" : "APPLY"}
+                </Button>
+              </div>
+            </div>
+          )}
         {/* <button className="formButton" onClick={handleClick}>
           UPDATE
         </button> */}
-        <ApplicationQualificationModal
-          employerID={commission.employerID}
-          userID={user.userID}
-          commissionID={commissionID}
-          open={open}
-          close={() => setOpen(false)}
-          type={commission.comType}
-        />
       </div>
     </>
   );

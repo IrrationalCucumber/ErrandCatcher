@@ -230,6 +230,24 @@ const transConstroller = {
       res.status(200).json({ message: "Errand Cancelled" });
     });
   },
+  getALlInvoice: (req, res) => {
+    Trans.getAllInvoice((err, invoice) => {
+      if (err) {
+        console.error("Error fetching inoives:", err);
+        return;
+      }
+      res.json(invoice);
+    });
+  },
+  getAmountSum: (req, res) => {
+    Trans.getAmountSum((err, total) => {
+      if (err) {
+        console.error("Error total summation: ", err);
+        return;
+      }
+      res.json(total[0]);
+    });
+  },
 };
 
 module.exports = transConstroller;

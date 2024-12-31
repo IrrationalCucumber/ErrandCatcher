@@ -20,7 +20,7 @@ export function BannerOngoingSection(props) {
   return (
     <div className="ongoing-hero-container">
       <h1>
-        Your currently <i>Catched</i> errands, {props.username}
+        Your currently <i>Caught</i> errands, {props.username.toUpperCase()}
       </h1>
     </div>
   );

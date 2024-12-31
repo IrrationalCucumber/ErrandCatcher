@@ -1,12 +1,12 @@
+import { Check } from "@mui/icons-material";
 import React from "react";
 
 function NotificationItem(props) {
   return (
     <>
-      {props.isRead.toLowerCase() === "no" && (
+      {props.isRead === "no" && (
         <div
           className="notification-item-container"
-          style={{ border: "5px solid green" }}
         >
           <h3 className="notification-type">{props.type}</h3>
           <div className="notification-item-info">
@@ -14,13 +14,13 @@ function NotificationItem(props) {
             <p className="notification-date">{props.date}</p>
             <div className="notification-button">
               <button onClick={props.markAsRead} className="read-button">
-                READ
+                <Check />
               </button>
             </div>
           </div>
         </div>
       )}
-      {props.isRead.toLowerCase() === "yes" && (
+      {props.isRead === "yes" && (
         <div className="notification-item-container">
           <h3 className="notification-type">{props.type}</h3>
           <div className="notification-item-info">

@@ -15,6 +15,7 @@ const ApplyRoutes = require("./Route/ApplicationRoute.js");
 const RatingRoutes = require("./Route/RatingRoute.js");
 const TransRoutes = require("./Route/TransactionRoute.js");
 const VerifyRoutes = require("./Route/VerifyRoutes.js");
+const ExperienceRoutes = require("./Route/ExperienceRoute");
 const db = require("./dbConfig.js");
 const cors = require("cors");
 
@@ -30,6 +31,7 @@ app.use("/", ApplyRoutes);
 app.use("/", RatingRoutes);
 app.use("/", TransRoutes);
 app.use("/", VerifyRoutes);
+app.use("/", ExperienceRoutes);
 
 // //api endpoint for upload
 // app.post("/upload/:id", upload.single("image"), (req, res) => {
@@ -47,7 +49,7 @@ app.use("/", VerifyRoutes);
 //   res.json("hello this is the backend");
 // });
 
-const PORT = process.env.PORT || 8800;
+const PORT = 8800;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
@@ -145,7 +147,7 @@ app.get("/post-and-applicant-count/:userID", (req, res) => {
   const q = `
     SELECT 
       (SELECT COUNT(*) FROM commission WHERE employerID = ?) AS postCount,
-      (SELECT COUNT(*) FROM commission e JOIN application a ON a.applicationErrandID = e.commissionID WHERE e.employerID = ?) AS applicantCount,
+      (SELECT COUNT(*) FROM commission e JOIN application a ON a.applicationErrandID = e.commissionID WHERE e.employerID = ? AND a.applicationStatus = 'Pending') AS applicantCount,
       (SELECT COUNT(*) FROM errandtransaction t JOIN commission c ON t.transErrandID = c.commissionID WHERE c.employerID = ? AND errandStatus = 'Ongoing' ) AS pending
   `;
 
@@ -197,7 +199,7 @@ app.get("/success-payment/:id", (req, res) => {
   const currentTime = new Date().toISOString().slice(0, 19).replace("T", " ");
 
   const q1 = `UPDATE errandtransaction 
-            SET errandStatus = 'Complete Paid', transDateComplete = ? 
+            SET transStatus = 'Task Done', transDateComplete = ? 
             WHERE transactID = ?`;
 
   const q2 = `INSERT INTO invoice (total, type, description, checkoutId, paymentId, paid, invoiceErrandID, invoiceemployerID, invoiceCatcherID) VALUES ( ?, ?, ?, ?, ?, FROM_UNIXTIME(?), ?, ?, ? )`;
@@ -332,9 +334,10 @@ app.get("/transactionsEmp/:empID", (req, res) => {
   const empID = req.params.empID;
   const q = `SELECT i.*, u.*, f.feedbackRate , f.feedbackComment
               FROM invoice i 
-              JOIN useraccount u ON i.invoiceCatcherID = u.userID 
-              JOIN feedbackcommission f ON i.invoiceErrandID = f.feedbackErrandID
-              WHERE i.invoiceemployerID = ?`;
+              LEFT JOIN useraccount u ON i.invoiceCatcherID = u.userID 
+              LEFT JOIN feedbackcommission f ON i.invoiceErrandID = f.feedbackErrandID
+              WHERE i.invoiceemployerID = ?
+              ORDER BY i.paid DESC `;
 
   // const q = "SELECT i.*, u.* FROM invoice i JOIN useraccount u ON i.invoiceCatcherID = u.userID WHERE i.invoiceemployerID = ?";
 
@@ -352,9 +355,10 @@ app.get("/transactionsCat/:id", (req, res) => {
   const id = req.params.id;
   const q = `SELECT i.*, u.*, f.feedbackRate , f.feedbackComment
     FROM invoice i 
-    JOIN useraccount u ON i.invoiceemployerID = u.userID 
-    JOIN feedbackcommission f ON i.invoiceErrandID = f.feedbackErrandID
-    WHERE i.invoiceCatcherID = ?`;
+    LEFT JOIN useraccount u ON i.invoiceemployerID = u.userID 
+    LEFT JOIN feedbackcommission f ON i.invoiceErrandID = f.feedbackErrandID
+    WHERE i.invoiceCatcherID = ?
+    ORDER BY i.paid DESC`;
 
   // const q = "SELECT i.*, u.* FROM invoice i JOIN useraccount u ON i.invoiceemployerID = u.userID WHERE i.invoiceCatcherID = ?";
 
@@ -364,6 +368,55 @@ app.get("/transactionsCat/:id", (req, res) => {
       return res.status(500).json({ error: "An error occurred" });
     }
     return res.json(data);
+  });
+});
+
+app.get("/get-username/", (req, res) => {
+  const name = req.params.name;
+  const q = `SELECT username FROM useraccount`;
+  //console.log(name);
+
+  db.query(q, [name], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+
+    return res.json(data);
+  });
+});
+
+app.get("/get-email/", (req, res) => {
+  const mail = req.params.mail;
+  const q = `SELECT userEmail FROM useraccount `;
+  //console.log(mail);
+
+  db.query(q, [mail], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+
+    return res.json(data);
+  });
+});
+
+// Check if there is a token for the given userID
+app.get("/check-token/:id", (req, res) => {
+  const id = req.params.id;
+  const q = `SELECT * FROM email_verification_tokens WHERE verUserID = ?`;
+
+  db.query(q, [id], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+
+    if (data.length > 0) {
+      return res.json({ exists: true });
+    } else {
+      return res.json({ exists: false });
+    }
   });
 });
 
@@ -382,5 +435,24 @@ app.get("/transactionsCat/:id", (req, res) => {
 //     console.log("Passwords do not match!");
 //   }
 // });
+
+// Get invoice by id and check if the user/employer has already paid
+app.get("/invoice", (req, res) => {
+  const { transCatID, comID, empID } = req.query;
+  const q = `SELECT * FROM invoice WHERE invoiceCatcherID = ? AND invoiceErrandID = ? `;
+
+  db.query(q, [transCatID, comID, empID], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+
+    if (data.length === 0) {
+      return res.json({ paid: false, data: data });
+    }
+
+    return res.json({ paid: true, data: data });
+  });
+});
 
 module.exports;

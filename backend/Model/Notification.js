@@ -24,9 +24,9 @@ const Notif = {
   //add new notif
   postNotif: (notifData, callback) => {
     const { userID, notificationType, notifDesc, notifDate } = notifData;
-    values = [userID, notificationType, notifDesc, notifDate];
+    values = [userID, notificationType, notifDesc];
     db.query(
-      "INSERT INTO notification (`notifUserID`, `notificationType`, `notifDesc`, `notifDate`) VALUES (?)",
+      "INSERT INTO notification (`notifUserID`, `notificationType`, `notifDesc`, `notifDate`) VALUES (?, NOW())",
       [values],
       callback
     );
@@ -66,6 +66,19 @@ const Notif = {
     db.query(
       "SELECT * FROM notification WHERE notifUserID = ? AND isRead = 'no' ORDER BY notifDate DESC",
       [id],
+      callback
+    );
+  },
+  //post notif to all admin if new request
+  postNotifToAdmin: (type, desc, callback) => {
+    db.query(
+      `
+      INSERT INTO notification (notifUserID, notifDesc, notificationType, notifDate)
+      SELECT userID, ?, ?, NOW() 
+      FROM useraccount 
+      WHERE accountType = 'admin';
+      `,
+      [desc, type],
       callback
     );
   },

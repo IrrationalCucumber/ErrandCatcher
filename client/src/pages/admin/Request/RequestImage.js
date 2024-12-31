@@ -8,23 +8,44 @@ const ImageModal = ({ request, handleClose }) => {
       <DialogContent>
         <>
           <div style={imageContainerStyle}>
-            <h2 style={header}>Documents:</h2>
+            <h2 style={header}>ID Picture:</h2>
+            <h7 style={header}>Front:</h7>
             <img
               src={`http://localhost:8800/images/docu/${request.id_picture_front}`}
               alt={`Image `}
               style={imageStyle}
             />
             <br></br>
+            <h7 style={header}>Back:</h7>
             <img
               src={`http://localhost:8800/images/docu/${request.id_picture_back}`}
               alt={`Image `}
               style={imageStyle}
             />
             <br></br>
-            <h2 style={header}>Driver License:</h2>
-            {/* driver license */}
+            <h2 style={header}>Documents:</h2>
+
             <img
               src={`http://localhost:8800/images/docu/${request.docu_1}`}
+              alt={`Image `}
+              style={imageStyle}
+            />
+            <br></br>
+            <img
+              src={`http://localhost:8800/images/docu/${request.docu_2}`}
+              alt={`Image `}
+              style={imageStyle}
+            />
+            <h2 style={header}>Driver License:</h2>
+            <h7 style={header}>Front:</h7>
+            <img
+              src={`http://localhost:8800/images/docu/${request.driversLicense1}`}
+              alt={`Image `}
+              style={imageStyle}
+            />
+            <h7 style={header}>Back:</h7>
+            <img
+              src={`http://localhost:8800/images/docu/${request.driversLicense2}`}
               alt={`Image `}
               style={imageStyle}
             />

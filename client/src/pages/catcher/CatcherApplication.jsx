@@ -21,7 +21,7 @@ import DialogActions from "@mui/joy/DialogActions";
 import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
-import { ModalClose } from "@mui/joy";
+import { Alert, IconButton, ModalClose } from "@mui/joy";
 import ViewProfile from "../profile/ViewProfile";
 
 import { Box } from "@mui/material";
@@ -30,6 +30,9 @@ import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutli
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import PendingOutlinedIcon from "@mui/icons-material/PendingOutlined";
 import DoDisturbAltOutlinedIcon from "@mui/icons-material/DoDisturbAltOutlined";
+import { Capitalize } from "../../components/Display/DsiplayFunctions";
+import { CloseRounded, Warning } from "@mui/icons-material";
+import ModalFeedback from "../../components/ModalFeedback";
 
 function Application() {
   const { user } = useAuth();
@@ -56,23 +59,48 @@ function Application() {
     setOpenDelete(true);
     console.log("2nd delete");
   };
+  //alert message
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMesg, setAlerMsg] = useState("");
+  const [alrtColor, setAlrtColor] = useState("");
+
+  // modal message pop-up
+  // cancel state
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+
+  };
+  // delete state
+  const [openDel, setOpenDel] = useState(false);
+  const handleOpenDel = () => {
+    setOpenDel(true);
+  };
+  const handleCloseDel = () => {
+    setOpenDel(false);
+
+  };
+
 
   //data
   //useEffect to handle error
+  const fetchAllAccount = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8800/your-application/${userID}`
+      );
+      //http://localhost:8800/user - local
+      //http://192.168.1.47:8800/user - network
+      setApply(res.data);
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
-    const fetchAllAccount = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:8800/your-application/${userID}`
-        );
-        //http://localhost:8800/user - local
-        //http://192.168.1.47:8800/user - network
-        setApply(res.data);
-        console.log(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
     fetchAllAccount();
   }, [userID]);
 
@@ -134,9 +162,7 @@ function Application() {
   const applicationData = currentItems.map((applicant) => [
     // DisplayDate(applicant.applicationDate),
     <Box display="flex" alignItems="center" gap={1}>
-      <EditCalendarOutlinedIcon
-        sx={{ color: "#555" }}
-      />
+      <EditCalendarOutlinedIcon sx={{ color: "#555" }} />
       {DisplayDate(applicant.applicationDate)}
     </Box>,
     // `${applicant.userFirstname} ${applicant.userLastname}`,
@@ -144,7 +170,8 @@ function Application() {
       variant="outlined"
       onClick={() => handleViewProfile(applicant.employerID)}
     >
-      {applicant.userFirstname} {applicant.userLastname}
+      {Capitalize(`${applicant.userFirstname}`) +
+        Capitalize(`${applicant.userLastname}`)}
     </Button>,
     applicant.commissionTitle,
     // applicant.applicationStatus,
@@ -166,7 +193,7 @@ function Application() {
     ) : applicant.applicationStatus === "Denied" ? (
       <>
         <DoDisturbAltOutlinedIcon style={{ color: "red" }} />
-        <span> Pending</span>
+        <span> Denied</span>
       </>
     ) : null,
     applicant.applicationStatus === "Pending" ? (
@@ -193,10 +220,10 @@ function Application() {
               <Button
                 variant="solid"
                 color="danger"
-                onClick={
-                  () => handleCancel(applicant.applicationID)
-                  // console.log("clicked cancel")
-                }
+                onClick={() => {
+                  handleCancel(applicant.applicationID);
+                  setOpenCancel(false);
+                }}
               >
                 Yes
               </Button>
@@ -286,7 +313,7 @@ function Application() {
       await axios.put(
         `http://localhost:8800/cancel-apply/${userID}/${applicationID}`
       );
-      alert("You have cancelled your Application");
+
       //add a notification to the commission's employer
       notif.notifDesc =
         "A Catcher has cancelled their application on of your errand";
@@ -295,8 +322,20 @@ function Application() {
       notif.notifDate = getTimeAndDate();
 
       await axios.post("http://localhost:8800/notify", notif);
-      window.location.reload();
-      //navigate(`/my-application/${userID}`);
+      // window.location.reload();
+      // navigate(`/my-application/${userID}`);
+
+      // popup cancel modal
+      setTimeout(() => {
+        // setLoading(false);
+        // modal will pop-up in 1 seconds
+        handleOpen();
+      }, 1000);
+      // setAlerMsg("You have cancelled your Application");
+      // setShowAlert(true);
+      // setAlrtColor("warning");
+      const interval = setInterval(fetchAllAccount, 1000);
+      return () => clearInterval(interval);
     } catch (err) {
       console.log(err);
     }
@@ -307,7 +346,22 @@ function Application() {
       //"http://localhost:8800/commission" - local computer
       //"http://192.168.1.47:8800/commission" - netwrok
       await axios.delete(`http://localhost:8800/delete-apply/${applicationID}`);
-      window.location.reload();
+
+      // popup delete modal
+      setTimeout(() => {
+        // setLoading(false);
+        // modal will pop-up in 1 seconds
+        handleOpenDel();
+      }, 1000);
+
+      // close if click "yes" modal
+      setOpenDelete(false)
+
+      // setAlerMsg("You have deleted your Application");
+      // setShowAlert(true);
+      // setAlrtColor("danger");
+      const interval = setInterval(fetchAllAccount, 1000);
+      return () => clearInterval(interval);
     } catch (err) {
       console.log(err);
     }
@@ -315,6 +369,46 @@ function Application() {
 
   return (
     <div>
+      <ModalFeedback
+        open={open}
+        handleClose={handleClose}
+        headerMes="Cancelled!"
+        contentMes="You have cancelled your Application"
+        color="error"
+        colorText="error"
+        icon={CancelOutlinedIcon}
+      />
+
+      <ModalFeedback
+        open={openDel}
+        handleClose={handleCloseDel}
+        headerMes="Deleted!"
+        contentMes="You have deleted your Application"
+        color="error"
+        colorText="error"
+        icon={CancelOutlinedIcon}
+      />
+
+      {showAlert && (
+        <Alert
+          color={alrtColor}
+          size="md"
+          variant="solid"
+          startDecorator={<Warning />}
+          sx={{ borderRadius: "none" }}
+          endDecorator={
+            <IconButton
+              variant="soft"
+              color={alrtColor}
+              onClick={() => setShowAlert(false)}
+            >
+              <CloseRounded />
+            </IconButton>
+          }
+        >
+          {alertMesg}
+        </Alert>
+      )}
       <div className="application-container">
         <div className="application">
           <h1>Application</h1>

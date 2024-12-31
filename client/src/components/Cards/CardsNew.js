@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom";
 import CardItemNew from "./CardsItemNew";
 import axios from "axios";
 import "./cardsNew.css";
+import { AmountDecimal } from "../Display/DsiplayFunctions";
 
 function CardsNew() {
   const [commissions, setCommissions] = useState([]);
@@ -45,7 +46,7 @@ function CardsNew() {
                 type={commission.commissionType}
                 location={commission.commissionLocation}
                 desc={commission.commissionDesc}
-                price={commission.commissionPay}
+                price={AmountDecimal(commission.commissionPay)}
                 path={`/errand/view/${commission.commissionID}`}
               />
             ))}

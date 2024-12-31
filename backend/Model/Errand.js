@@ -4,10 +4,9 @@ const Errand = {
   //get all errands
   getAllErrands: (callback) => {
     db.query(
-      `SELECT c.*, ua.username, ua.userFirstname, ua.userLastname, t.* 
+      `SELECT c.*, ua.username, ua.userFirstname, ua.userLastname
       FROM commission c
       JOIN useraccount ua ON c.employerID = ua.userID
-      JOIN errandtransaction t ON c.commissionID = t.transErrandID
       ORDER BY c.DatePosted DESC`,
       callback
     );
@@ -69,7 +68,7 @@ const Errand = {
       comLat,
       comDestLong,
       comDestLat,
-      comMethod,
+      comTags,
     } = errandData;
     const values = [
       empID,
@@ -87,13 +86,13 @@ const Errand = {
       comLat,
       comDestLong,
       comDestLat,
-      comMethod,
+      comTags,
     ];
     db.query(
       "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionStartDate`," +
         " `commissionDeadline`, `commissionLocation`, `commissionTo`,`commissionType`," +
         " `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`, " +
-        "`commissionLong`, `commissionLat`, `commissionDestLong`, `commissionDestLat`, `commissionPaymentMethod`) VALUES (?)",
+        "`commissionLong`, `commissionLat`, `commissionDestLong`, `commissionDestLat`, `commissionTags`) VALUES (?)",
       [values],
       callback
     );
@@ -115,13 +114,13 @@ const Errand = {
       comLat,
       comDestLong,
       comDestLat,
-      comMethod,
+      comTags,
     } = errandData;
     db.query(
       `UPDATE commission SET commissionTitle = ?, commissionStartDate = ?, 
       commissionDeadline = ?, commissionLocation = ?, commissionTo = ?,commissionType = ?,
        commissionDesc = ?, commissionPay = ?, commissionStatus = ?, ContactNumber = ?, commissionLong = ?, commissionLat
-        = ?,commissionDestLong = ?, commissionDestLat =?, commissionPaymentMethod = ? WHERE commissionID = ?`,
+        = ?,commissionDestLong = ?, commissionDestLat =?, commissionTags = ? WHERE commissionID = ?`,
       [
         comTitle,
         comStart,
@@ -137,7 +136,7 @@ const Errand = {
         comLat,
         comDestLong,
         comDestLat,
-        comMethod,
+        comTags,
         id,
       ],
       callback

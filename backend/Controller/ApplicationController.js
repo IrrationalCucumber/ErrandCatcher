@@ -165,6 +165,17 @@ const applyController = {
       res.json(count);
     });
   },
+  getApplicationCount: (req, res) => {
+    const userID = req.params.id;
+    Apply.getApplicationCount(userID, (err, count) => {
+      if (err) {
+        console.error("Error fetching Count:", err);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      res.json(count);
+    });
+  },
 };
 
 module.exports = applyController;

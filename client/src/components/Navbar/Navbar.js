@@ -93,32 +93,33 @@ function Navbar(props) {
             {click ? <Close /> : <More />}
           </div>
           <ul className={click ? "nav-menu active" : "nav-menu"}>
-            <li className="nav-item">
-              <Link
-                to={props.one}
-                className="nav-links"
-                onClick={closeMobileMenu}
-                style={{ fontSize: "15px" }}
-              >
-                {props.page1}
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                to={props.commissionList}
-                className="nav-links"
-                onClick={closeMobileMenu}
-                style={{ fontSize: "15px" }}
-              >
-                {props.page2}
-              </Link>
-            </li>
+            {props.one ? (
+              <li className="nav-item">
+                <Link
+                  to={props.one}
+                  className="nav-links"
+                  onClick={closeMobileMenu}
+                >
+                  {props.page1}
+                </Link>
+              </li>
+            ) : null}
+            {props.commissionList ? (
+              <li className="nav-item">
+                <Link
+                  to={props.commissionList}
+                  className="nav-links"
+                  onClick={closeMobileMenu}
+                >
+                  {props.page2}
+                </Link>
+              </li>
+            ) : null}
             <li className="nav-item">
               <Link
                 to={props.applicants}
                 className="nav-links"
                 onClick={closeMobileMenu}
-                style={{ fontSize: "15px" }}
               >
                 {props.page3}
               </Link>
@@ -128,7 +129,6 @@ function Navbar(props) {
                 to={props.map}
                 className="nav-links"
                 onClick={closeMobileMenu}
-                style={{ fontSize: "15px" }}
               >
                 {props.page4}
               </Link>

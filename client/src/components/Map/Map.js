@@ -16,6 +16,20 @@ export default function Map(props) {
       <div className="map-wrap">
         <div className="map__filter">
           <Filter onFilterChange={props.change} />
+          {props.prox ? (
+            <div style={{ margin: "5x" }}>
+              <label htmlFor="proximity">Proximity (in km): </label>
+              <input
+                type="range"
+                id="proximity"
+                min="1"
+                max="50"
+                value={props.prox}
+                onChange={props.setProximity}
+              />
+              <span>{props.prox} km</span>
+            </div>
+          ) : null}
         </div>
 
         <div ref={props.mapContainer} className="map" />
@@ -27,9 +41,9 @@ export default function Map(props) {
 export function LandingMap() {
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [lng] = useState(123.9260);
+  const [lng] = useState(123.926);
   const [lat] = useState(10.2892);
-  const [zoom] = useState(11.60);
+  const [zoom] = useState(11.6);
   // center: [123.8854, 10.3157],
   const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
   const [errands, setErrands] = useState([]);
@@ -113,9 +127,9 @@ export function LandingMap() {
 export function HomeMap(props) {
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [lng] = useState(123.9260);
+  const [lng] = useState(123.926);
   const [lat] = useState(10.2892);
-  const [zoom] = useState(11.60);
+  const [zoom] = useState(11.6);
   const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
   const [errands, setErrands] = useState([]);
 
@@ -217,7 +231,7 @@ export function ViewMap({ id }) {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
-  const [zoom] = useState(15);
+  const [zoom] = useState(10);
 
   useEffect(() => {
     if (map.current) return;
@@ -230,6 +244,7 @@ export function ViewMap({ id }) {
     });
 
     map.current.addControl(new maplibregl.NavigationControl(), "top-right");
+    map.current.addControl(new maplibregl.GeolocateControl(), "top-right");
 
     //display the current coordinate of the errand
     fetchLoc().then((commissions) => {

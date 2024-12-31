@@ -6,6 +6,9 @@ import ErrandInputs from "../../components/ErrandInputs";
 import "./Commission.css"; // Import your CSS file
 import { useAuth } from "../../components/AuthContext";
 import { UpdateMapLibre, ViewMapBox } from "../../components/Map/Map";
+import { Alert, IconButton } from "@mui/joy";
+import { CloseRounded, Warning } from "@mui/icons-material";
+import ModalFeedback from "../../components/ModalFeedback";
 
 const UpdateCommission = () => {
   const [commission, setCommission] = useState({
@@ -23,7 +26,7 @@ const UpdateCommission = () => {
     comLat: "",
     comDestLong: "",
     comDestLat: "",
-    method: "",
+    comTags: "",
   });
 
   const [distance, setDistance] = useState(0);
@@ -36,10 +39,21 @@ const UpdateCommission = () => {
   //get the id
   const commissionID = location.pathname.split("/")[3];
   const { user } = useAuth();
-  const userID = user.userID;
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMesg, setAlerMsg] = useState("");
+  const [alrtColor, setAlrtColor] = useState("");
   // Add a state to track the marker's longitude and latitude
   // const [markerLngLat, setMarkerLngLat] = useState([123.8854, 10.3157]); // Default values
   // const [currentLocationMarker, setCurrentLocationMarker] = useState(null);
+
+  // modal message pop-up
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   //handle changes
   const handleChange = (e) => {
@@ -63,12 +77,30 @@ const UpdateCommission = () => {
         );
         const retrievedCommission = res.data[0];
         //format date
+        // const formattedDate = new Date(retrievedCommission.commissionDeadline)
+        //   .toISOString()
+        //   .substr(0, 10);
+        // const formatStart = new Date(retrievedCommission.commissionStartDate)
+        //   .toISOString()
+        //   .substr(0, 10);
+
+        const options = { timeZone: "Asia/Manila", year: "numeric", month: "2-digit", day: "2-digit" };
+
+        // Format Deadline
         const formattedDate = new Date(retrievedCommission.commissionDeadline)
-          .toISOString()
-          .substr(0, 10);
+          .toLocaleDateString("en-CA", options) // Use "en-CA" for ISO-style YYYY-MM-DD
+          .split("/")
+          .reverse()
+          .join("-"); // Optional, to ensure consistent formatting
+
+        // Format Start Date
         const formatStart = new Date(retrievedCommission.commissionStartDate)
-          .toISOString()
-          .substr(0, 10);
+          .toLocaleDateString("en-CA", options) // Same as above
+          .split("/")
+          .reverse()
+          .join("-");
+
+
         // Update the state with retrieved account data
         setCommission({
           comTitle: retrievedCommission.commissionTitle,
@@ -84,7 +116,7 @@ const UpdateCommission = () => {
           comLat: retrievedCommission.commissionLat,
           comDestLat: retrievedCommission.commissionDestLat,
           comDestLong: retrievedCommission.commissionDestLong,
-          method: retrievedCommission.commissionPaymentMethod,
+          comTags: retrievedCommission.commissionTags,
           comTo: retrievedCommission.commissionTo,
         });
       } catch (err) {
@@ -116,14 +148,44 @@ const UpdateCommission = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
+      const isEndDateValid =
+        !commission.comStart ||
+        !commission.comDeadline ||
+        new Date(commission.comDeadline) > new Date(commission.comStart);
+
       if (
+        !commission.comTitle ||
+        !commission.comStart ||
+        !commission.comDeadline ||
+        !commission.comLocation ||
+        !commission.comType ||
+        !commission.comPay ||
+        !commission.Contactno ||
+        !commission.comDeadline ||
+        !commission.comDescription
+      ) {
+        setAlerMsg("Some fields are missing!");
+        setShowAlert(true);
+        handleScrollToTop();
+        //End date must be after the start date. Error message
+      } else if (!isEndDateValid) {
+        setAlerMsg("End date must be after the start date!");
+        setShowAlert(true);
+        setAlrtColor("danger");
+        handleScrollToTop();
+      } else if (
         commission.commissionDeadline < Date.now() ||
         commission.comStart < Date.now()
       ) {
-        alert("Please Update the Dates in your errands");
+        setAlerMsg("Please Update the Dates in your errands");
+        setShowAlert(true);
+        setAlrtColor("danger");
+        handleScrollToTop();
       } else if (commission.comPay < minimum) {
-        alert("The salary is lower than the suggested payment!");
-        //setShowAlert(true);
+        setAlerMsg("The salary is lower than the suggested payment!");
+        setShowAlert(true);
+        setAlrtColor("danger");
+        handleScrollToTop();
       } else {
         //account.dateCreated = getCurrentDate();
         commission.comStatus = "Available";
@@ -131,20 +193,64 @@ const UpdateCommission = () => {
           `http://localhost:8800/update-errand/${commissionID}`,
           commission
         );
-        alert("UPdate successful");
-        //console.log(commission);
+        // popup update modal
+        setTimeout(() => {
+          // setLoading(false);
+          // modal will pop-up in half a seconds
+          handleOpen();
+        }, 500);
 
-        //window.location.reload();
+        // setAlerMsg("Errand have been successfully updated");
+        // setAlrtColor("success");
+        // setShowAlert(true);
+        // handleScrollToTop();
       }
     } catch (err) {
       console.log(err);
     }
+  };
+  //scroll on top to see alert
+  const handleScrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // Makes the scrolling smooth
+    });
   };
 
   //console.log(commission);
 
   return (
     <div>
+      <ModalFeedback
+        open={open}
+        handleClose={handleClose}
+        headerMes="Success"
+        contentMes="Errand have been successfully updated!"
+        color="success"
+        colorText="green"
+        // icon={CancelOutlinedIcon}
+      />
+
+      {showAlert && (
+        <Alert
+          color={alrtColor}
+          size="md"
+          variant="solid"
+          startDecorator={<Warning />}
+          sx={{ borderRadius: "none" }}
+          endDecorator={
+            <IconButton
+              variant="soft"
+              color={alrtColor}
+              onClick={() => setShowAlert(false)}
+            >
+              <CloseRounded />
+            </IconButton>
+          }
+        >
+          {alertMesg}
+        </Alert>
+      )}
       <div className="errand-cont">
         <div className="input-cont">
           <div className="errand-inputs">
@@ -174,6 +280,8 @@ const UpdateCommission = () => {
               numValue={commission.Contactno}
               distance={distance}
               minimum={minimum}
+              tags="comTags"
+              tagValue={commission.comTags}
             />
           </div>
           {commission.comType !== "Delivery" &&

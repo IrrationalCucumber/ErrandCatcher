@@ -15,7 +15,7 @@ function CardItemNew(props) {
     return (
         <>
             {/* <Link to={props.path} /> */}
-            <div class="card">
+            <div class="cardnew">
                 <div class="iconcard">
                     <Box class="boxer">
                         {props.icon === "HomeService - Indoor" ||

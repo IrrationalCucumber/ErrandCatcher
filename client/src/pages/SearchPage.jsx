@@ -8,13 +8,15 @@ import Search from "@mui/icons-material/Search";
 import LocationOn from "@mui/icons-material/LocationOn";
 import CatCardsNew from "../components/Cards/CatCardsNew";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { Slider, Box, Typography } from "@mui/material";
+import SyncAltIcon from "@mui/icons-material/SyncAlt";
 
 function SearchPage() {
   const [commissions, setCommissions] = useState([]);
   // const navigate = useNavigate();
   //  const { user } = useAuth();
   const location = useLocation();
-  const term = location.pathname.split("/")[2];
+  const term = decodeURIComponent(location.pathname.split("/")[2]);
   const [message, setMessage] = useState("");
   // const [searchQuery, setSearchQuery] = useState("");
   //filter varibales
@@ -26,6 +28,15 @@ function SearchPage() {
     maxPay: "",
     location: "",
   });
+
+  const handleSliderChange = (event, newValue) => {
+    setFilter((prev) => ({
+      ...prev,
+      minPay: newValue[0],
+      maxPay: newValue[1],
+    }));
+  };
+
   //  rretrieve data
   useEffect(() => {
     //add condition if search term is empty
@@ -160,22 +171,62 @@ function SearchPage() {
             </div>
             <div class="col">
               <div className="Paylabel">
+                <div style={{ textAlign: "center" }} >
+                  <Typography color="#f5f5f5" variant="h6"
+                    sx={{
+                      fontSize: 18,
+                      fontWeight: 460,
+                      letterSpacing: "1.2px",
+                      // fontStyle: "italic"
+                    }}
+                  >
+                    Payment Range:
+                  </Typography>
+
+                  <Slider className="sliderpay"
+                    value={[
+                      Number(filter.minPay),
+                      Number(filter.maxPay)
+                    ]}
+                    onChange={handleSliderChange}
+                    // valueLabelDisplay="on"
+                    min={500}
+                    max={filter.maxPay}
+                    // step={100}
+                    sx={{
+                      marginTop: 2,
+                      color: "white",
+                    }}
+                  />
+                </div>
                 <label htmlFor="">
-                  Payment range
-                  <input
-                    type="number"
-                    placeholder="Starting range..."
-                    name="minPay"
-                    onChange={handleChange}
-                    value={filter.minPay}
-                  />
-                  <input
-                    type="number"
-                    placeholder="Maximum range..."
-                    name="maxPay"
-                    onChange={handleChange}
-                    value={filter.maxPay}
-                  />
+                  {/* <Typography variant="h7">Payment Range:</Typography> */}
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                    <input
+                      style={{
+                        padding: "4px 2px",
+                      }}
+                      className="inputNum"
+                      type="number"
+                      placeholder="Minimum"
+                      name="minPay"
+                      onChange={handleChange}
+                      value={filter.minPay}
+                    />
+                    <SyncAltIcon sx={{ color: "#fff", fontSize: 24 }} />
+                    <input
+                      style={{
+                        // border: "solid",
+                        padding: "4px 2px",
+                      }}
+                      className="inputNum"
+                      type="number"
+                      placeholder="Maximum"
+                      name="maxPay"
+                      onChange={handleChange}
+                      value={filter.maxPay}
+                    />
+                  </Box>
                 </label>
               </div>
             </div>

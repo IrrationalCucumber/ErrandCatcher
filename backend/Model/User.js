@@ -72,6 +72,14 @@ const User = {
       callback
     );
   },
+  // Fetch the current password hash for validation
+  getPasswordById: (id, callback) => {
+    db.query(
+      `SELECT password FROM useraccount WHERE userID = ?`,
+      [id],
+      callback
+    );
+  },
   // change and reset password user
   putResetPasswordById: (id, userData, callback) => {
     const { password } = userData;
@@ -80,10 +88,7 @@ const User = {
       `UPDATE useraccount
       SET password = ?
     WHERE userID = ?`,
-      [
-        password,
-        id,
-      ],
+      [password, id],
       callback
     );
   },
@@ -123,7 +128,7 @@ const User = {
       contact,
       //age,
       bday,
-      //address,
+      address,
       type,
       dateCreated,
     } = userData;
@@ -137,105 +142,80 @@ const User = {
       contact,
       //age,
       bday,
-      //address,
+      address,
       type,
       dateCreated,
     ];
     db.query(
-      "INSERT INTO useraccount (`username`, `password`, `userLastname`, `userFirstname`,`userGender`, `userEmail`,`userContactNum`, `userBirthday`, `accountType`, `dateCreated` ) VALUES (?)",
+      "INSERT INTO useraccount (`username`, `password`, `userLastname`, `userFirstname`,`userGender`, `userEmail`,`userContactNum`, `userBirthday`, `userAddress`, `accountType`, `dateCreated` ) VALUES (?)",
       [values],
       callback
     );
   },
-  /**
-   * SEARCH QUERY
-   */
-  //search by Name/email/
-  getSeatchByTerm: (searchTerms, type, status, callback) => {
-    if (searchTerms != "") {
-      //term only
-      if (status == "" && type == "") {
-        db.query(
-          `SELECT * FROM useraccount WHERE username LIKE ? OR userEmail LIKE ? OR userFirstname LIKE ? OR userLastname LIKE ?`,
-          [
-            `%${searchTerms}%`,
-            `%${searchTerms}%`,
-            `%${searchTerms}%`,
-            `%${searchTerms}%`,
-          ],
-          callback
-        );
-      } else if (status == "" && type != "") {
-        // if term and type only
-        db.query(
-          `SELECT * FROM useraccount WHERE (username LIKE ? OR userEmail LIKE ? OR userFirstname LIKE ? OR userLastname LIKE ?) AND accountType = ?`,
-          [
-            `%${searchTerms}%`,
-            `%${searchTerms}%`,
-            `%${searchTerms}%`,
-            `%${searchTerms}%`,
-            type,
-          ],
-          callback
-        );
-      } else if (type == "" && status != "") {
-        //if term and status
-        db.query(
-          `SELECT * FROM useraccount WHERE (username LIKE ? OR userEmail LIKE ? OR userFirstname LIKE ? OR userLastname LIKE ?) AND accountStatus = ?`,
-          [
-            `%${searchTerms}%`,
-            `%${searchTerms}%`,
-            `%${searchTerms}%`,
-            `%${searchTerms}%`,
-            status,
-          ],
-          callback
-        );
-      }
-    } else if (type != "") {
-      if (searchTerms == "" && status == "") {
-        //if type only
-        db.query(
-          `SELECT * FROM useraccount WHERE accountType = ?`,
-          [type],
-          callback
-        );
-      }
-      //type + status only
-      else if (type != "" && status != "") {
-        //if type only
-        db.query(
-          `SELECT * FROM useraccount WHERE accountType = ? and accountStatus = ?`,
-          [type, status],
-          callback
-        );
-      }
-    } else if (status != "") {
-      if (searchTerms == "" && type == "") {
-        //if type only
-        db.query(
-          `SELECT * FROM useraccount WHERE accountStatus = ?`,
-          [status],
-          callback
-        );
-      }
-    } else if (searchTerms != "" && type != "" && status != "") {
-      //all three
-      db.query(
-        `SELECT * FROM useraccount WHERE (username LIKE ? OR userEmail LIKE ? OR userFirstname LIKE ? OR userLastname LIKE ?) AND accountStatus = ? AND accountType = ?`,
-        [
-          `%${searchTerms}%`,
-          `%${searchTerms}%`,
-          `%${searchTerms}%`,
-          `%${searchTerms}%`,
-          status,
-          type,
-        ],
-        callback
-      );
-    } else {
-      db.query(`SELECT * FROM useraccount`, callback);
-    }
+
+  //fetch if catcher has errand
+  getCatcherHasErrand: (id, callback) => {
+    db.query(
+      "SELECT userHasErrand FROM useraccount WHERE accountType = 'Catcher' AND userID = ?",
+      [id],
+      callback
+    );
+  },
+  // update hasErrand if Catcher have or finish errand
+  putCatcherHasDoneErrand: (id, state, cb) => {
+    db.query(
+      `UPDATE useraccount SET userHasErrand = ? WHERE userID = ?`,
+      [state, id],
+      cb
+    );
+  },
+  //set catcher/s has finish errand
+  putCatchersHasDoneErrand: (id, cb) => {
+    db.query(
+      `UPDATE useraccount
+        SET userHasErrand = 'false'
+        WHERE userID IN (
+        SELECT DISTINCT et.transCatcherID
+        FROM errandtransaction et
+        WHERE et.transErrandID = ?)`,
+      [id],
+      cb
+    );
+  },
+  // Save verification token
+  saveVerificationToken: (userId, token, callback) => {
+    db.query(
+      "INSERT INTO email_verification_tokens (verUserID, token) VALUES (?, ?)",
+      [userId, token],
+      callback
+    );
+  },
+
+  // Verify token
+  verifyToken: (token, callback) => {
+    db.query(
+      "SELECT verUserID FROM email_verification_tokens WHERE token = ?",
+      [token],
+      callback
+    );
+  },
+
+  // Update user status
+  updateUserStatus: (userId, status, callback) => {
+    db.query(
+      "UPDATE useraccount SET accountStatus = ? WHERE userID = ?",
+      [status, userId],
+      callback
+    );
+  },
+
+  // Delete verification token
+  deleteVerificationToken: (token, callback) => {
+    db.query(
+      "DELETE FROM email_verification_tokens WHERE token = ?",
+      [token],
+      callback
+    );
   },
 };
 

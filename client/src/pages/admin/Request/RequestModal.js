@@ -186,7 +186,7 @@ const RequestModal = ({ request, handleClose }) => {
           <strong>Address:</strong> {request.userAddress}
         </p>
         <p>
-          <strong>Contact Number:</strong> {request.contactNumber}
+          <strong>Contact Number:</strong> {request.userContactNum}
         </p>
         <p>
           <strong>Email Address:</strong> {request.userEmail}

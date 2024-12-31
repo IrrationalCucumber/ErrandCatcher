@@ -75,20 +75,25 @@ function Ongoing() {
   //   return type && (termMatch || termMatch2 || termMatch3) && status;
   // });
 
-  // filter fix 
+  // filter fix
   const filterErrands = commissions.filter((commission) => {
     const type = searchTerm.type
-      ? commission.commissionType?.toLowerCase() === searchTerm.type.toLowerCase()
+      ? commission.commissionType?.toLowerCase() ===
+        searchTerm.type.toLowerCase()
       : true;
 
     const termMatch =
       searchTerm.term &&
-      [commission.commissionTitle, commission.userFirstname, commission.userLastname]
+      [
+        commission.commissionTitle,
+        commission.userFirstname,
+        commission.userLastname,
+      ]
         .map((field) => field?.toLowerCase() ?? "")
         .some((field) => field.includes(searchTerm.term.toLowerCase()));
 
     const status = searchTerm.status
-      ? commission.errandStatus === searchTerm.status
+      ? commission.transStatus === searchTerm.status
       : true;
 
     return type && (!searchTerm.term || termMatch) && status;
@@ -101,14 +106,14 @@ function Ongoing() {
 
       <div
         className="searchOngoing"
-      // style={{
-      //   marginTop: "10px",
-      //   marginBottom: "10px",
-      //   display: "flex",
-      //   alignItems: "center",
-      //   width: "50%",
-      //   marginLeft: "50px"
-      // }}
+        // style={{
+        //   marginTop: "10px",
+        //   marginBottom: "10px",
+        //   display: "flex",
+        //   alignItems: "center",
+        //   width: "50%",
+        //   marginLeft: "50px"
+        // }}
       >
         <input
           className="inputSearchAdmin"
@@ -117,13 +122,13 @@ function Ongoing() {
           placeholder="Search..."
           value={searchTerm.term}
           onChange={handleChange}
-        // style={{
-        //   padding: "8px",
-        //   fontSize: "12px",
-        //   border: "1px solid #ccc",
-        //   borderRadius: "4px",
-        //   margin: "10px 0px 10px 0px",
-        // }}
+          // style={{
+          //   padding: "8px",
+          //   fontSize: "12px",
+          //   border: "1px solid #ccc",
+          //   borderRadius: "4px",
+          //   margin: "10px 0px 10px 0px",
+          // }}
         />
         {/* <button
             type="submit"
@@ -152,33 +157,32 @@ function Ongoing() {
             name="status"
             onChange={handleChange}
             value={searchTerm.status}
-          // style={{
-          //   padding: "8px",
-          //   fontSize: "12px",
-          //   border: "1px solid #ccc",
-          //   borderRadius: "4px",
-          //   margin: "10px 20px",
-          // }}
+            // style={{
+            //   padding: "8px",
+            //   fontSize: "12px",
+            //   border: "1px solid #ccc",
+            //   borderRadius: "4px",
+            //   margin: "10px 20px",
+            // }}
           >
             <option value="">Status</option>
-            <option value="Taken">Pending</option>
+            <option value="Ongoing">Ongoing</option>
             <option value="Complete">Complete</option>
             <option value="Cancelled">Cancel</option>
-            <option value="Ongoing">Ongoing</option>
-            <option value="Complete Paid">Complete Paid</option>
+            <option value="Task Done">Task Done</option>
           </select>
           <select
             className="CLtype"
             onChange={handleChange}
             value={searchTerm.type}
             name="type"
-          // style={{
-          //   padding: "8px 10px 8px 10px",
-          //   fontSize: "12px",
-          //   border: "1px solid #ccc",
-          //   borderRadius: "4px",
-          //   margin: "10px",
-          // }}
+            // style={{
+            //   padding: "8px 10px 8px 10px",
+            //   fontSize: "12px",
+            //   border: "1px solid #ccc",
+            //   borderRadius: "4px",
+            //   margin: "10px",
+            // }}
           >
             <option value="">Type</option>
             <option value="HomeService - Indoor">HomeService Indoor</option>
@@ -195,14 +199,15 @@ function Ongoing() {
           <div className="cards__items">
             {filterErrands.map((commission) => (
               <OngoingCardsNew
-                key={commission.commissionID}
+                //key={commission.commissionID}
                 icon={commission.commissionType}
                 title={commission.commissionTitle}
                 type={commission.commissionType}
                 location={commission.commissionLocation}
                 desc={commission.commissionDesc}
                 pay={commission.commissionPay}
-                status={commission.errandStatus}
+                status={commission.transStatus}
+                // status={commission.errandStatus}
                 path={`/errand/view/${commission.commissionID}`}
                 // Employer side
                 userFname={commission.userFirstname}

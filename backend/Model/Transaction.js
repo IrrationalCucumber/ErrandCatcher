@@ -36,7 +36,7 @@ const Trans = {
         JOIN commission c ON t.transErrandID = c.commissionID
         JOIN useraccount ua ON c.employerID = ua.userID
          WHERE t.transCatcherID = ? AND t.errandStatus = ?
-         ORDER BY t.transactID ASC`,
+         ORDER BY t.transactID DESC`,
       [id, status],
       callback
     );
@@ -49,7 +49,7 @@ const Trans = {
     FROM errandtransaction t
     JOIN commission c ON t.transErrandID = c.commissionID
     JOIN useraccount ua ON t.transCatcherID = ua.userID
-    WHERE c.employerID = ?
+    WHERE c.employerID = ? ORDER BY t.transactID DESC
     `,
       [id],
       callback
@@ -63,7 +63,7 @@ const Trans = {
         FROM errandtransaction t
         JOIN commission c ON t.transErrandID = c.commissionID
         JOIN useraccount ua ON t.transCatcherID = ua.userID
-    WHERE c.employerID = ? AND t.transStatus = ?
+    WHERE c.employerID = ? AND t.transStatus = ? ORDER BY t.transactID DESC
     `,
       [id, status],
       callback
@@ -84,8 +84,8 @@ const Trans = {
   putUpdateTransaction: (id, status, date, callback) => {
     const { dateComplete } = date;
     db.query(
-      `UPDATE errandTransaction SET transStatus = ?, transDateComplete = ? WHERE transactID = ?`,
-      [status, dateComplete, id],
+      `UPDATE errandTransaction SET transStatus = ?, transDateComplete = NOW() WHERE transactID = ?`,
+      [status, id],
       callback
     );
   },
@@ -97,6 +97,21 @@ const Trans = {
       [status, transStatus, id, userID],
       callback
     );
+  },
+  //show all invoice with user info
+  getAllInvoice: (cb) => {
+    db.query(`SELECT i.*, 
+      ue.userFirstName AS employerFirstName,
+      ue.userLastName AS employerLastName,
+      uc.userFirstName AS catcherFirstName,
+      uc.userLastName AS catcherLastName 
+      FROM invoice i
+      LEFT JOIN useraccount ue ON i.invoiceemployerID = ue.userID
+      LEFT JOIN useraccount uc ON i.invoiceCatcherID = uc.userID;`, cb);
+  },
+  //get the sum/total of every transaction invoice
+  getAmountSum: (cb) => {
+    db.query(`SELECT SUM(total) as 't' FROM INVOICE`, cb);
   },
 };
 

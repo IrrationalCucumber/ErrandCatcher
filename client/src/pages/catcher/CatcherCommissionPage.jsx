@@ -23,9 +23,12 @@ import OngoingCardsNew from "../Dropdown/OngoingCardsNew";
 import DateRangeOutlinedIcon from "@mui/icons-material/DateRangeOutlined";
 import AssignmentTurnedInOutlinedIcon from "@mui/icons-material/AssignmentTurnedInOutlined";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
-import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
 import RotateRightOutlinedIcon from "@mui/icons-material/RotateRightOutlined";
+import ChecklistIcon from "@mui/icons-material/Checklist";
 import { Box } from "@mui/material";
+import { Alert, IconButton, Tooltip } from "@mui/joy";
+import { CloseRounded } from "@mui/icons-material";
+import ModalFeedback from "../../components/ModalFeedback";
 
 function CommissionPage() {
   const headers = ["DATE", "EMPLOYER", "ERRAND TITLE", "STATUS"];
@@ -51,6 +54,19 @@ function CommissionPage() {
   //getuserID
   const { user } = useAuth();
   const userID = user.userID;
+  //alert message
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMesg, setAlerMsg] = useState("");
+  const [alrtColor, setAlrtColor] = useState("");
+
+  // modal message pop-up
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     const fetchAllCommission = async () => {
@@ -71,21 +87,20 @@ function CommissionPage() {
   }, []);
   //for payment errand
   const [forPayment, setForPayment] = useState([]);
-  useEffect(() => {
-    const fetchPending = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:8800/catcher/ongoing/${userID}`
-        );
+  const fetchPending = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8800/catcher/ongoing/${userID}`
+      );
 
-        setForPayment(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+      setForPayment(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
     fetchPending();
-    // const interval = setInterval(fetchPending, 11000);
-    // return () => clearInterval(interval);
   }, []);
   const handleChange = (e) => {
     // For the 'gender' field, directly set the value without using spread syntax
@@ -169,8 +184,18 @@ function CommissionPage() {
       /**
        * ADD METHOD TO CHANGE ALSO THE STATUS OF ERRAND TO CANCELLED
        */
-      alert("You have cancelled an errand.");
-      window.location.reload();
+      // popup cancel modal
+      setTimeout(() => {
+        // setLoading(false);
+        // modal will pop-up in 1 seconds
+        handleOpen();
+      }, 1000);
+      // setAlerMsg("You have cancelled an errand.");
+      // setShowAlert(true);
+      // setAlrtColor("warning");
+      const interval = setInterval(fetchPending, 11000);
+      return () => clearInterval(interval);
+      // window.location.reload();
       setOpenCancel(false);
     } catch (err) {
       console.log(err);
@@ -195,127 +220,135 @@ function CommissionPage() {
 
   return (
     <div>
+      <ModalFeedback
+        open={open}
+        handleClose={handleClose}
+        headerMes="Cancelled!"
+        contentMes="You have cancelled an errand."
+        color="error"
+        colorText="error"
+        icon={CancelOutlinedIcon}
+      />
+
+      {showAlert && (
+        <Alert
+          color={alrtColor}
+          size="md"
+          variant="solid"
+          startDecorator={<WarningRoundedIcon />}
+          sx={{ borderRadius: "none" }}
+          endDecorator={
+            <IconButton
+              variant="soft"
+              color={alrtColor}
+              onClick={() => setShowAlert(false)}
+            >
+              <CloseRounded />
+            </IconButton>
+          }
+        >
+          {alertMesg}
+        </Alert>
+      )}
       <div className="Commission-page-container">
         <div className="Commission-page">
           {" "}
           {/* Apply Commission-page class here */}
           <h1>
-            Errands you have <i>Catched</i>
+            Errands you have <i>Caught</i>
           </h1>
           <div className="searcherrand">
-            <input
-              type="text"
-              placeholder="Search Errand title..."
-              name="term"
-              onChange={handleChange}
-            />
-            <input type="date" name="date" onChange={handleChange} />
-
-            <select
-              className="CLstatus"
-              onChange={handleChange}
-              value={searchTerm.status}
-              name="status"
+            <Tooltip
+              arrow
+              color="neutral"
+              variant="soft"
+              title="Errand Title"
+              size="sm"
             >
-              <option value="">Status</option>
-              <option value="Ongoing">Ongoing</option>
-              <option value="For Payment">For Payment</option>
-              <option value="Completed">Completed</option>
-              <option value="Cancelled">Cancelled</option>
-            </select>
+              <input
+                type="text"
+                placeholder="Search Errand title..."
+                name="term"
+                onChange={handleChange}
+              />
+            </Tooltip>
+            <Tooltip
+              arrow
+              color="neutral"
+              variant="soft"
+              title="Transaction status"
+              size="sm"
+            >
+              <select
+                className="CLstatus"
+                onChange={handleChange}
+                value={searchTerm.status}
+                name="status"
+              >
+                <option value="">Status</option>
+                <option value="Ongoing">Ongoing</option>
+                <option value="Task Done">Task Done</option>
+                <option value="Complete">Completed</option>
+                <option value="Cancelled">Cancelled</option>
+              </select>
+            </Tooltip>
+            DEADLINE
+            <Tooltip
+              arrow
+              color="neutral"
+              variant="soft"
+              title="Deadline"
+              size="sm"
+            >
+              <input
+                type="date"
+                name="date"
+                onChange={handleChange}
+                placeholder="Select deadline date..."
+              />
+            </Tooltip>
           </div>
           <h6>Catcher can see the status of the commission</h6>
           <Table
             headers={[
+              "ID",
               "EMPLOYER",
               "ERRAND TITLE",
               "START",
               "DEADLINE",
               "STATUS",
-              "ACTION",
             ]}
             data={currentItems.map((commission, rowIndex) => [
+              commission.transactID,
               `${commission.userFirstname} ${commission.userLastname}`,
               commission.commissionTitle,
               // commission.commissionStart,
               DisplayDate(commission.commissionStartDate),
               // DisplayDate(commission.commissionDeadline),
               <Box display="flex" alignItems="center" gap={1}>
-                < DateRangeOutlinedIcon
-                  sx={{ color: "#555" }}
-                />
+                <DateRangeOutlinedIcon sx={{ color: "#555" }} />
                 {DisplayDate(commission.commissionDeadline)}
               </Box>,
               // commission.errandStatus,
-              commission.transStatus === "Completed" ? (
+              commission.transStatus === "Complete" ? (
                 <>
                   <AssignmentTurnedInOutlinedIcon style={{ color: "green" }} />
                   <span> Completed</span>
                 </>
               ) : commission.transStatus === "Cancelled" ? (
                 <>
-                  <CancelOutlinedIcon style={{ color: "orange" }} />
+                  <CancelOutlinedIcon style={{ color: "red" }} />
                   <span> Canceled</span>
                 </>
-              ) : commission.transStatus === "For Payment" ? (
+              ) : commission.transStatus === "Task Done" ? (
                 <>
-                  <PaymentsOutlinedIcon style={{ color: "brown" }} />
-                  <span> For Payment</span>
+                  <ChecklistIcon style={{ color: "#1679ab" }} />
+                  <span> Task Done</span>
                 </>
               ) : commission.transStatus === "Ongoing" ? (
                 <>
                   <RotateRightOutlinedIcon style={{ color: "#378ce7" }} />
                   <span> Ongoing</span>
-                </>
-              ) : null,
-              commission.transStatus === "Ongoing" ? (
-                <>
-                  <button
-                    className="cancel-btn"
-                    // onClick={() =>
-                    //   handleCancel(commission.transactID, commission.employerID)
-                    // }
-                    onClick={handleOpenCancelModal}
-                  >
-                    CANCEL
-                  </button>
-
-                  {/*cancel modal */}
-                  <Modal open={openCancel} onClose={() => setOpenCancel(false)}>
-                    <ModalDialog>
-                      <DialogTitle>
-                        <WarningRoundedIcon />
-                        Confirmation
-                      </DialogTitle>
-                      <Divider />
-                      <DialogContent>
-                        Are you sure you want to Cancel this errand?
-                      </DialogContent>
-                      <DialogActions>
-                        <Button
-                          variant="solid"
-                          color="danger"
-                          onClick={
-                            () =>
-                              handleCancel(
-                                commission.transactID,
-                                commission.employerID
-                              )
-                            // console.log("cancel commission")
-                          }
-                        >
-                          Yes
-                        </Button>
-                        <Button
-                          variant="plain"
-                          color="neutral"
-                          onClick={() => setOpenCancel(false)}
-                        >
-                          No
-                        </Button>
-                      </DialogActions>
-                    </ModalDialog>
-                  </Modal>
                 </>
               ) : null,
             ])}
@@ -336,7 +369,7 @@ function CommissionPage() {
                 location={commission.commissionLocation}
                 desc={commission.commissionDesc}
                 pay={commission.commissionPay}
-                status={commission.errandStatus}
+                status={commission.transStatus}
                 path={`/errand/view/${commission.commissionID}`}
                 // Employer side
                 userFname={commission.userFirstname}

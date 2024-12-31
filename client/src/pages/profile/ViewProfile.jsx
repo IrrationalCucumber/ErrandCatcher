@@ -9,6 +9,7 @@ import "./profile.css";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { ViewUserProfile } from "../../components/Profile/UserProfile";
+import { NewViewUserProfile } from "../../components/Profile/NewUserProfile";
 
 function ViewProfile(id) {
   //get userID from url
@@ -32,6 +33,7 @@ function ViewProfile(id) {
     status: "",
     skills: "",
     type: "",
+    id: "",
   });
 
   //pre-fill the fields
@@ -61,6 +63,8 @@ function ViewProfile(id) {
           profileImage: retrievedAccount.profileImage,
           status: retrievedAccount.accountStatus,
           skills: retrievedAccount.userQualification,
+          type: retrievedAccount.accountType,
+          id: retrievedAccount.userID,
         });
       } catch (err) {
         console.log(err);
@@ -117,10 +121,37 @@ function ViewProfile(id) {
   }, [userID]);
   return (
     <div>
-      <ViewUserProfile
+      {/* <ViewUserProfile
+        id={account.id}
         profileImg={account.profileImage}
         address={account.address}
         cnum={account.contact}
+        email={account.email}
+        rate={rating}
+        type={account.type}
+        desc={account.desc}
+        //right hemisphere
+        username={account.username}
+        fname={account.fname}
+        lname={account.lname}
+        sex={account.gender}
+        age={account.age}
+        bday={account.bday}
+        status={account.status}
+        //verification details
+        verStatus={docs.requestStatus}
+        verFront={docs.frontID}
+        verBack={docs.backID}
+        verDoc1={docs.doc1}
+        verDoc2={docs.doc2}
+        skills={account.skills}
+      /> */}
+
+      <NewViewUserProfile
+        id={account.id}
+        profileImg={account.profileImage}
+        address={account.address}
+        contact={account.contact}
         email={account.email}
         rate={rating}
         type={account.type}

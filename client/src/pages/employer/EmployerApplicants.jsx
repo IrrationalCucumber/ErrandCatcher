@@ -19,7 +19,7 @@ import DialogTitle from "@mui/joy/DialogTitle";
 import DialogContent from "@mui/joy/DialogContent";
 import DialogActions from "@mui/joy/DialogActions";
 import Modal from "@mui/joy/Modal";
-import { ModalClose } from "@mui/joy";
+import { ButtonGroup, ModalClose } from "@mui/joy";
 import ModalDialog from "@mui/joy/ModalDialog";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 import { DisplayDate } from "../../components/DisplayDate";
@@ -29,6 +29,7 @@ import ModalFeedback from "../../components/ModalFeedback";
 import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import { Box, Typography } from "@mui/material";
+import { Refresh } from "@mui/icons-material";
 
 const EmployerApplicants = () => {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ const EmployerApplicants = () => {
   const userID = user.userID;
   //const [searchTerm, setSearchTerm] = useState('');
   const [applicants, setApplicants] = useState([]);
+  const [searchTerm, setSearchTerm] = useState({ term: "" });
 
   //current page state --Ash
   const [currentPage, setCurrentPage] = useState(1);
@@ -49,24 +51,37 @@ const EmployerApplicants = () => {
   const [selectedApplicant, setSelectedApplicant] = useState("");
   const [openAccept, setOpenAccept] = useState(false);
   const [openDecline, setOpenDecline] = useState(false);
+  const [acceptMoreModal, setAcceptMoreModal] = useState(false);
+  const [selectedApplication, setSelectedApplication] = useState("");
+  const [selectedErrand, setSelectedErrand] = useState("");
 
   // modal message pop-up
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
+    //setSelectedApplicant(id);
+    console.log("selected shit id");
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
     setOpenAccept(false);
-    window.location.reload();
+    //window.location.reload();
+    setAcceptMoreModal(true);
   };
 
-  const handleOpenAcceptModal = () => {
+  const handleOpenAcceptModal = (id, ApplyID, errandID) => {
     setOpenAccept(true);
+    setSelectedApplicant(id);
+    setSelectedApplication(ApplyID);
+    setSelectedErrand(errandID);
+    console.log("selectedapplicant", id);
   };
 
-  const handleOpenDeclineModal = () => {
+  const handleOpenDeclineModal = (id, ApplyID, errandID) => {
     setOpenDecline(true);
+    setSelectedApplicant(id);
+    setSelectedApplication(ApplyID);
+    setSelectedErrand(errandID);
   };
   //modal to view profile page of appicant
   const handleViewProfile = (id) => {
@@ -76,47 +91,71 @@ const EmployerApplicants = () => {
   };
 
   //useEffect to handle error
+  const fetchAllAccount = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8800/applicants/${userID}` // show only pending
+      );
+      //http://localhost:8800/user - local
+      //http://192.168.1.47:8800/user - network
+      setApplicants(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
-    const fetchAllAccount = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:8800/applicants/${userID}` // show only pending
-        );
-        //http://localhost:8800/user - local
-        //http://192.168.1.47:8800/user - network
-        setApplicants(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
     fetchAllAccount();
   }, [userID]);
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setSearchTerm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const filterApplicants = applicants.filter((applicant) => {
+    console.log(applicant, "display data");
+
+    const termMatch = applicant.commissionTitle
+      ?.toLowerCase()
+      .includes(searchTerm.term?.toLowerCase() ?? "");
+    const termMatch2 = applicant.userFirstname
+      ?.toLowerCase()
+      .includes(searchTerm.term?.toLowerCase() ?? "");
+    const termMatch3 = applicant.userLastname
+      ?.toLowerCase()
+      .includes(searchTerm.term?.toLowerCase() ?? "");
+
+    return termMatch || termMatch2 || termMatch3;
+  });
+
   // Pagination
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  const indexOfLastItem = currentPage + itemsPerPage;
+  const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = applicants.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filterApplicants.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
 
   const headers = [
+    "ID",
     "DATE",
     "CATCHER",
-    "QUALIFICATION",
+    "AVAILABILITY",
     "ERRAND TITLE",
     "ACTION",
     "",
   ];
   const applicantData = applicants.map((applicant) => [
-    //applicant.applicationID,
+    applicant.applicationID,
     // DisplayDate(applicant.applicationDate),
     <Box display="flex" alignItems="center" gap={1}>
       <CalendarMonthOutlinedIcon sx={{ color: "#555" }} />
       {DisplayDate(applicant.applicationDate)}
     </Box>,
-    `${applicant.userFirstname} ${applicant.userLastname}`,
-    applicant.userQualification
-      ? applicant.userQualification
-      : "No Skills provided",
+    ` ${applicant.userFirstname} ${applicant.userLastname}`,
+    applicant.userHasErrand === "true" ? "Unavailable" : "Available",
     // applicant.commissionTitle,
     <Box display="flex" alignItems="center" gap={1}>
       <BadgeOutlinedIcon sx={{ color: "#555" }} />
@@ -131,13 +170,41 @@ const EmployerApplicants = () => {
     </Box>,
     applicant.applicationStatus === "Pending" ? (
       <>
-        <button
-          style={styles.button}
-          className="accept action-btn"
-          onClick={() => handleOpenAcceptModal()}
+        <ButtonGroup
+          color="neutral"
+          orientation="horizontal"
+          variant="outlined"
+          spacing="0"
         >
-          Accept
-        </button>
+          {/* code here */}
+          <Button
+            color="success"
+            onClick={() =>
+              handleOpenAcceptModal(
+                applicant.catcherID,
+                applicant.applicationID,
+                applicant.applicationErrandID
+              )
+            }
+            disabled={applicant.userHasErrand === "true" ? true : false}
+          >
+            Accept
+          </Button>
+          {/* // code here */}
+          <Button
+            color="danger"
+            onClick={() =>
+              handleOpenDeclineModal(
+                applicant.catcherID,
+                applicant.applicationID,
+                applicant.applicationErrandID
+              )
+            }
+          >
+            Decline
+          </Button>
+        </ButtonGroup>
+
         {/* button accept modal */}
         <Modal open={openAccept} onClose={() => setOpenAccept(false)}>
           <ModalDialog>
@@ -147,7 +214,7 @@ const EmployerApplicants = () => {
             </DialogTitle>
             <Divider />
             <DialogContent>
-              Are you sure you want to accept this applicant?
+              Are you sure you want to accept this applicant?{" "}
             </DialogContent>
             <DialogActions>
               <Button
@@ -155,9 +222,9 @@ const EmployerApplicants = () => {
                 color="success"
                 onClick={() =>
                   handleAccept(
-                    applicant.applicationID,
-                    applicant.applicationErrandID,
-                    applicant.catcherID
+                    selectedApplicant,
+                    selectedApplication,
+                    selectedErrand
                   )
                 }
               >
@@ -173,13 +240,6 @@ const EmployerApplicants = () => {
             </DialogActions>
           </ModalDialog>
         </Modal>
-        <button
-          style={style1.button}
-          className="decline action-btn"
-          onClick={() => handleOpenDeclineModal()}
-        >
-          Decline
-        </button>
 
         <Modal open={openDecline} onClose={() => setOpenDecline(false)}>
           <ModalDialog variant="outlined" role="alertdialog">
@@ -197,9 +257,9 @@ const EmployerApplicants = () => {
                 color="danger"
                 onClick={() =>
                   handleDecline(
-                    applicant.applicationID,
-                    applicant.applicationErrandID,
-                    applicant.catcherID
+                    selectedApplicant,
+                    selectedApplication,
+                    selectedErrand
                   )
                 }
               >
@@ -214,6 +274,49 @@ const EmployerApplicants = () => {
               </Button>
             </DialogActions>
           </ModalDialog>
+        </Modal>
+
+        <Modal
+          open={acceptMoreModal}
+          aria-labelledby="confirm-modal-title"
+          aria-describedby="confirm-modal-description"
+        >
+          <Box sx={{ ...modalStyle }}>
+            <Typography id="confirm-modal-title" variant="h6" component="h2">
+              Accept Other Applicants?
+            </Typography>
+            <Typography id="confirm-modal-description" sx={{ mt: 2 }}>
+              Do you want to accept other applicants for this errand?
+            </Typography>
+            <Box
+              sx={{ mt: 2, display: "flex", justifyContent: "space-between" }}
+            >
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => setAcceptMoreModal(false)}
+              >
+                Yes, accept others
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                // selectedApplicant,
+                // selectedApplication,
+                // selectedErrand
+                onClick={() =>
+                  handleDenyOther(
+                    // applicant.applicationErrandID,
+                    selectedErrand,
+                    // applicant.catcherID
+                    selectedApplicant
+                  )
+                }
+              >
+                No, deny others
+              </Button>
+            </Box>
+          </Box>
         </Modal>
       </>
     ) : applicant.applicationStatus === "Accepted" ? (
@@ -261,15 +364,18 @@ const EmployerApplicants = () => {
     //reciept: "",
   });
   const handleAccept = async (
+    catcherID,
     applicationID,
-    applicationErrandID,
-    catcherID
+    applicationErrandID
   ) => {
     console.log(
       "Accepted application with id:",
       applicationID,
-      applicationErrandID
+      applicationErrandID,
+
+      "catcher numid"
     );
+
     // Add logic to handle accepting the application
     try {
       await axios.put(
@@ -280,38 +386,27 @@ const EmployerApplicants = () => {
 
       //transaction
       trans.comID = applicationErrandID;
-      trans.catcherID = catcherID;
+      trans.catcherID = selectedApplicant;
       trans.dateAccepted = getTimeAndDate();
       //console.log(catcherID);
       await axios.post("http://localhost:8800/add-trans/", trans);
       //add a notification to the commission's applicant
       notif.notifDesc = "Your Errand application has been Accepted";
-      notif.userID = catcherID;
+      notif.userID = selectedApplicant;
       notif.notificationType = "Application";
       notif.notifDate = getTimeAndDate();
       await axios.post("http://localhost:8800/notify", notif);
-      //DENY other applicants
-      const denyResponse = await axios.put(
-        `http://localhost:8800/deny-other-apply/${applicationErrandID}/${catcherID}`
-      );
-      if (denyResponse.data.message === "No other applications to deny") {
-        console.log("No other applications were found to deny.");
-      } else {
-        console.log("Other applications denied successfully.");
-      }
-      //set the errand status to caught
-      await axios.put(
-        `http://localhost:8800/errand-taken/${applicationErrandID}`
-      );
+      //set catcher has errand
+      await axios.put(`http://localhost:8800/has-errand/${catcherID}`);
     } catch (err) {
       console.log(err);
     }
   };
 
   const handleDecline = async (
+    catcherID,
     applicationID,
-    applicationErrandID,
-    catcherID
+    applicationErrandID
   ) => {
     console.log("Declined application with id:", applicationID);
     // Add logic to handle declining the application
@@ -334,25 +429,65 @@ const EmployerApplicants = () => {
     }
   };
   //console.log(applicants);
+  //deny otther applicants
+  const handleDenyOther = async (errandID, catcherID) => {
+    try {
+      //DENY other applicants
+      const denyResponse = await axios.put(
+        `http://localhost:8800/deny-other-apply/${errandID}/${catcherID}`
+      );
+      if (denyResponse.data.message === "No other applications to deny") {
+        console.log("No other applications were found to deny.");
+      } else {
+        console.log("Other applications denied successfully.");
+      }
+      //set the errand status to caught
+      await axios.put(`http://localhost:8800/errand-taken/${errandID}`);
+    } catch (error) {
+      console.log(error);
+    }
+    setAcceptMoreModal(false);
+    // const interval = setInterval(fetchAllAccount, 1000);
+    // return () => clearInterval(interval);
+  };
+  //refhresh table
+  const handleRefresh = () => {
+    const interval = setInterval(fetchAllAccount, 1000);
+    return () => clearInterval(interval);
+  };
   return (
     <>
       <ModalFeedback
         open={open}
         handleClose={handleClose}
         headerMes="Success!"
-        contentMes="You have accepted a Cather!"
+        contentMes="You have accepted a Catcher!"
         color="success"
         colorText="green"
-        // icon={ErrorIcon}
       />
 
       <BannerEmployerPages
-        bannerMessage={`Here are your Applicants, ${user.username}`}
+        bannerMessage={`Here are your Applicants, ${user.username.toUpperCase()}`}
       />
       <div className="applicants-container">
         <div className="applicants">
-          <div className="search">
-            <input type="text" placeholder="Search..." />
+          <div className="employer__applicants__search">
+            <Typography level="h1">Search:</Typography>
+            &nbsp; &nbsp;
+            <input
+              type="text"
+              placeholder="Enter name here..."
+              name="term"
+              value={searchTerm.term}
+              onChange={handleInputChange}
+            />
+            <Button
+              variant="plain"
+              sx={{ ml: ".5rem" }}
+              onClick={() => handleRefresh()}
+            >
+              <Refresh />
+            </Button>
           </div>
           <div className="applicants-table">
             <Table headers={headers} data={applicantData} />
@@ -426,6 +561,17 @@ const style2 = {
     marginRight: "10px",
     textAlign: "center",
   },
+};
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
 };
 
 export default EmployerApplicants;

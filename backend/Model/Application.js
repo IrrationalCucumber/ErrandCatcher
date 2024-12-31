@@ -6,12 +6,14 @@ const Apply = {
   // show only pending
   getApplicants: (id, callback) => {
     db.query(
-      `SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname, ua.userQualification
+      `SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname, ua.userQualification, ua.userHasErrand
         FROM Application a 
-        JOIN commission c ON a.applicationErrandID = c.commissionID
-        JOIN useraccount ua ON a.catcherID = ua.userID 
+        LEFT JOIN commission c ON a.applicationErrandID = c.commissionID
+        LEFT JOIN useraccount ua ON a.catcherID = ua.userID 
         WHERE a.applicationErrandID IN (SELECT commissionID FROM commission WHERE employerID = ?)
         AND a.applicationStatus = 'Pending'`,
+      //AND NOT ua.userHasErrand = 'false'
+      //add to not include catcher with ongoing errand
       [id],
       callback
     );
@@ -70,7 +72,7 @@ const Apply = {
   //Employer
   putDenyOther: (comID, id, callback) => {
     db.query(
-      `UPDATE application SET applicationStatus = 'Denied' WHERE applicationErrandID = ? AND catcherID != ?`,
+      `UPDATE application SET applicationStatus = 'Denied' WHERE applicationErrandID = ? AND catcherID != ? AND applicationStatus = 'Pending'`,
       [comID, id],
       callback
     );
@@ -89,7 +91,18 @@ const Apply = {
       `select count(*) as 'c'
       from commission e 
       JOIN application a ON a.applicationErrandID = e.commissionID 
-      where employerID = ?`,
+      where employerID = ? AND a.applicationStatus = 'Pending'`,
+      [id],
+      callback
+    );
+  },
+  //get application count
+  getApplicationCount: (id, callback) => {
+    db.query(
+      `select count(*) as 'c'
+      from commission e 
+      JOIN application a ON a.applicationErrandID = e.commissionID 
+      where a.catcherID = ? AND a.applicationStatus ='Pending'`,
       [id],
       callback
     );

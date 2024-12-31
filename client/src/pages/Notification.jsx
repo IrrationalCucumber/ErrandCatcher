@@ -14,26 +14,44 @@ function Notification() {
   const userID = user.userID;
 
   // Display all notifications
+  const fetchNotif = async () => {
+    try {
+      const res = await axios.get(`http://localhost:8800/my-notif/${userID}`);
+      setNotifs(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
-    const fetchNotif = async () => {
-      try {
-        const res = await axios.get(`http://localhost:8800/my-notif/${userID}`);
-        setNotifs(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
     fetchNotif();
   }, []);
 
   // When user clicks 'mark as read', update db notif isRead to Yes
-  // const markAsRead = async (notificationID) => {
-  //   try {
-  //     await axios.post(`http://localhost:8800/read-notif/${notificationID}/${userID}`);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const markAsRead = async (notificationID) => {
+    try {
+      await axios.put(
+        `http://localhost:8800/read-notif/${notificationID}/${userID}`
+      );
+      const intervalNotif = setInterval(fetchNotif, 1000);
+      return () => clearInterval(intervalNotif);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // Function to mark all notifications as read
+  const handleMarkAllAsRead = async () => {
+    try {
+      await axios.put(`http://localhost:8800/read-all/${user.userID}`);
+      // Update the notification list in the UI
+      setNotifs((prevNotifs) =>
+        prevNotifs.map((notif) => ({ ...notif, isRead: true }))
+      );
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -41,9 +59,11 @@ function Notification() {
       <div className="notification-container">
         <main className="notification-main">
           <div className="notification-header">
-            <p className="notification-title" style={{ paddingLeft: "30px" }}>
+            <h2 className="notification-title"
+              style={{ paddingLeft: "30px" }}
+            >
               Notifications
-            </p>
+            </h2>
             <img
               src="/images/notification_icon.svg"
               className="icon"
@@ -51,12 +71,18 @@ function Notification() {
               style={{ paddingLeft: "20px" }}
             />
             <Button
-              //onClick={markAsRead}
+              // onClick={markAsRead}
+              onClick={handleMarkAllAsRead}
               startDecorator={<CheckIcon />}
-              variant="outline"
-              color="plain"
+              variant="outlined"
+              color="primary"
               className="mark-read-button"
-              style={{ textAlign: "center" }}
+              style={{
+                textAlign: "center",
+                marginLeft: "20px",
+                fontSize: "14px",
+                fontWeight: 600,
+              }}
             >
               Mark all as Read
             </Button>
@@ -69,8 +95,8 @@ function Notification() {
                   desc={notif.notifDesc}
                   date={DisplayDate(notif.notifDate)} // Format the date
                   isRead={notif.isRead}
-                  // markAsRead={()=>markAsRead(notif.notificationID)}
-                  // style={{ border: "5px solid green" }}
+                  markAsRead={() => markAsRead(notif.notificationID)}
+                // style={{ border: "5px solid green" }}
                 />
               </div>
             ))}

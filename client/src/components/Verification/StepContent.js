@@ -31,239 +31,217 @@ export default function StepContent() {
 }
 // STEP 1
 //Basin info
-export function Step1({ onNext, details, setDetail }) {
+export function Step1({ onNext, images, setImages }) {
   const { user } = useAuth();
   const userID = user.userID;
-  const [error, setError] = useState("");
-  //SKill tags
-  // State to hold the selected skills
-  const [selectedSkills, setSelectedSkills] = useState([]);
-  const [inputSkill, setInputSkill] = useState("");
-
-  // Predefined list of skills (you can fetch this from the backend)
-  let availableSkills = [];
-  if (user.userType === "Employer") {
-    availableSkills = [
-      "Human Resources",
-      "Housewife/Househusband",
-      "Student",
-      "Government Agency",
-      "Self-Employed",
-    ];
-  } else {
-    availableSkills = [
-      "Communication",
-      "Teamwork",
-      "Problem Solving",
-      "Hardworking",
-      "Leadership",
-      "Time Management",
-      "Carpentry",
-      "Plumbing",
-      "Gadening",
-      "Programming",
-    ];
-  }
-
-  // Function to add a skill to the selectedSkills array
-  const handleAddSkill = (skill) => {
-    if (!selectedSkills.includes(skill)) {
-      setSelectedSkills([...selectedSkills, skill]);
-    }
-  };
-
-  // Function to add a custom skill from input
-  const handleAddCustomSkill = () => {
-    if (inputSkill && !selectedSkills.includes(inputSkill)) {
-      setSelectedSkills([...selectedSkills, inputSkill]);
-      setInputSkill(""); // Clear the input
-    }
-  };
-
-  // Function to remove a skill from the selectedSkills array
-  const handleRemoveSkill = (skillToRemove) => {
-    setSelectedSkills(
-      selectedSkills.filter((skill) => skill !== skillToRemove)
-    );
-  };
-
+  const [alertOpen, setAlertOpen] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(details);
-    if (details === null) {
-      setAlertOpen(true);
-    } else {
-      if (!selectedSkills) {
-        setError("Please list your skills.");
-        return;
-      }
-      // Clear errors if all checks pass
-      setError("");
-      // Create a combined string for qualifications (general job)
-      const qualificationsString = `${selectedSkills}`;
-      details.skills = qualificationsString;
-      onNext(); // Move to the next step
-    }
+    onNext(); // move next
   };
-
-  const [alertOpen, setAlertOpen] = useState(false);
-  const [ageLimit, setAgeLimit] = useState(false);
+  function handleImage(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const previewPic = URL.createObjectURL(file);
+      if (e.target.name === "image1") {
+        setImages((prevImages) => ({
+          ...prevImages,
+          image1: file,
+          preview1: previewPic,
+        }));
+      } else if (e.target.name === "image2") {
+        setImages((prevImages) => ({
+          ...prevImages,
+          image2: file,
+          preview2: previewPic,
+        }));
+      }
+    }
+  }
+  function handleDelete(image) {
+    if (image === "image1") {
+      setImages((prevImages) => ({
+        ...prevImages,
+        image1: null,
+        preview1: "",
+      }));
+    } else if (image === "image2") {
+      setImages((prevImages) => ({
+        ...prevImages,
+        image2: null,
+        preview2: "",
+      }));
+    }
+  }
+  const [open, setOpen] = useState(false); // modal
+  const handleOpenModal = () => {
+    setOpen(true);
+  };
 
   return (
     <div className="step">
-      <h1 className="step__title">Basic Information</h1>
+      <h1 className="step__title">
+        Basic Information{" "}
+        {user.userType === "Catcher" ? "Qualification skill" : "Tags"}
+      </h1>
       {/*step 1 for input logic part is lacking where user input auto fill up */}
       <form onSubmit={handleSubmit} className="form-container">
         <div className="form-group">
-          <>
-            {/* General (Indoor/Outdoor) Qualification */}
-            {/* General Experience */}
-
-            <FormControl>
-              <FormLabel>
-                <Typography color="neutral" level="title-lg" variant="plain">
-                  {user.userType === "Catcher"
-                    ? "Please Select or Add your skill"
-                    : "Please Select or Add your tags"}
-                </Typography>
-              </FormLabel>
-
-              {/* Predefined skills list */}
-              <FormLabel>
-                <Typography color="primary" level="body-md" variant="plain">
-                  {user.userType === "Catcher"
-                    ? "Select skills here:"
-                    : "Select tags here:"}
-                </Typography>
-              </FormLabel>
-
-              <div>
-                {availableSkills.map((skill) => (
-                  <Chip
-                    key={skill}
-                    onClick={() => handleAddSkill(skill)}
-                    color="success"
-                    variant="solid"
-                    size="lg"
-                    startDecorator={<Add />}
-                  >
-                    {skill}
-                  </Chip>
-                ))}
-              </div>
-
-              {/* Custom skill input */}
-
-              <FormLabel>
-                <Typography color="primary" level="body-md" variant="plain">
-                  {user.userType === "Catcher"
-                    ? "Or Add specific skills:"
-                    : "Or Add specific tags:"}
-                </Typography>
-              </FormLabel>
-
-              <Input
-                type="text"
-                value={inputSkill}
-                onChange={(e) => setInputSkill(e.target.value)}
-                placeholder="Enter a skill"
-              />
-              <Box margin={1} textAlign="e">
-                <Button
-                  onClick={handleAddCustomSkill}
-                  size="md"
-                  variant="outlined"
-                >
-                  Add
-                </Button>
-              </Box>
-
-              {/* Display selected skills */}
-              <div>
-                <FormLabel>
-                  <Typography color="neutral" level="title-lg" variant="plain">
-                    {user.userType === "Catcher"
-                      ? "Skills selected:"
-                      : "Tags selected: "}
-                  </Typography>
-                </FormLabel>
-
-                {selectedSkills.length > 0 ? (
-                  selectedSkills.map((skill) => (
-                    <Chip
-                      key={skill}
-                      color="primary"
-                      variant="solid"
-                      size="lg"
-                      endDecorator={
-                        <ChipDelete onDelete={() => handleRemoveSkill(skill)} />
-                      }
-                    >
-                      {skill}
-                    </Chip>
-                  ))
-                ) : (
-                  <FormLabel>
-                    <Typography
-                      color="warning"
-                      level="body-md"
-                      variant="outlined"
-                    >
-                      None selected.
-                    </Typography>
-                  </FormLabel>
-                )}
-              </div>
-
-              {/* Comma-separated string of selected skills */}
-              {/* <div>
-                      <h4>Skills as Comma-Separated String:</h4>
-                      <p>{selectedSkills.join(",")}</p>
-                    </div> */}
-            </FormControl>
-          </>
-          <div className="step__button">
-            <button className="btnn" type="submit">
-              Next
-            </button>
+          <div className="input-rows2">
+            <label
+              className="label2"
+              style={{ marginTop: "20px" }}
+              htmlFor="fileInput2"
+            >
+              Upload your image here
+            </label>
+            <p>Upload your identification card here</p>
           </div>
-          {/* alert error handling */}
-          {alertOpen && (
-            <Grow className="step__grow" in={alertOpen}>
-              <Alert
-                variant="filled"
-                severity="error"
-                className="step__alert"
-                sx={{
-                  position: "fixed",
-                  right: "16px",
-                  top: "90px",
-                  fontSize: "15px",
-                  // fontWeight: "bold",
-                  color: "white",
-                }}
-                onClose={() => setAlertOpen(false)}
-              >
-                Please fill in all the required fields.
-              </Alert>
-            </Grow>
-          )}
+          <div className="input-rows2">
+            <input
+              type="file"
+              id="fileInput1"
+              name="image1"
+              accept="image/*"
+              onChange={handleImage}
+              required
+              style={{
+                //  i set into display: none because i use label as htmlFor attribute
+                display: "none",
+              }}
+            />
+            {!images.preview1 ? (
+              <label htmlFor="fileInput1" className="step__img__input">
+                <Image />
+                Choose Image File
+              </label>
+            ) : null}
 
-          {ageLimit && (
-            <Grow className="step__grow" in={ageLimit}>
-              <Alert
-                variant="filled"
-                severity="error"
-                className="step__age__alert"
+            {images.preview1 && (
+              <div className="image-preview">
+                <img
+                  src={images.preview1}
+                  alt="Preview"
+                  className="step2_img_preview"
+                />
+                <button
+                  type="button"
+                  onClick={() => handleDelete("image1")}
+                  className="step2_img_preview_btn"
+                >
+                  X
+                </button>
+              </div>
+            )}
+
+            <input
+              type="file"
+              id="fileInput2"
+              name="image2"
+              accept="image/*"
+              onChange={handleImage}
+              required
+              style={{
+                //  i set into display: none because i use label as htmlFor attribute
+                display: "none",
+              }}
+            />
+            {!images.preview2 ? (
+              <label htmlFor="fileInput2" className="step__img__input">
+                <Image />
+                Choose Image File
+              </label>
+            ) : null}
+
+            {images.preview2 && (
+              <div className="image-preview">
+                <img
+                  src={images.preview2}
+                  alt="Preview"
+                  className="step2_img_preview"
+                />
+                <button
+                  type="button"
+                  onClick={() => handleDelete("image2")}
+                  className="step2_img_preview_btn"
+                >
+                  X
+                </button>
+              </div>
+            )}
+          </div>
+          <div className="step__button">
+            {alertOpen && (
+              <Grow in={alertOpen} style={{ transformOrigin: "center" }}>
+                <Alert
+                  variant="filled"
+                  severity="error"
+                  className="step2__alert__error"
+                  sx={{
+                    fontWeight: "bold",
+                  }}
+                  onClose={() => setAlertOpen(false)}
+                >
+                  Please upload both images before submitting.
+                </Alert>
+              </Grow>
+            )}
+            <ButtonGroup aria-label="spacing button group">
+              <Button
+                variant="outlined"
+                color="green"
+                className="step2__nav__btn__sbmt"
                 sx={{
-                  fontWeight: "bold",
+                  // Custom color
+                  backgroundColor: "",
+                  "&:hover": {
+                    backgroundColor: "#1A97DE", // Darker green on hover
+                  },
+                  margin: "20px",
+                  padding: "10px",
+                  width: "100px",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                  backgroundColor: "#1679ab",
+                  color: "#fff",
+                  border: "none",
+                  fontSize: "13px",
                 }}
-                onClose={() => setAgeLimit(false)}
+                onClick={() => handleOpenModal()}
               >
-                You must be at least 18 years old to proceed.
-              </Alert>
-            </Grow>
-          )}
+                Next
+              </Button>
+              <Modal open={open} onClose={() => setOpen(false)}>
+                <ModalDialog variant="outlined" role="alertdialog">
+                  <DialogTitle>
+                    <WarningRounded />
+                    Confirmation
+                  </DialogTitle>
+                  <Divider />
+                  <DialogContent>
+                    Are you sure you want to submit this IDs?
+                    {/* Display the current ID from state */}
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      variant="solid"
+                      color="primary"
+                      onClick={onNext} // Upload the file if Yes
+                    >
+                      Yes
+                    </Button>
+                    <Button
+                      variant="plain"
+                      color="neutral"
+                      onClick={() => setOpen(false)}
+                    >
+                      Cancel
+                    </Button>
+                  </DialogActions>
+                </ModalDialog>
+              </Modal>
+            </ButtonGroup>
+          </div>
         </div>
       </form>
     </div>
@@ -297,46 +275,58 @@ export function Step2({
     const file = e.target.files[0];
     if (file) {
       const previewPic = URL.createObjectURL(file);
-      if (e.target.name === "image1") {
+      if (e.target.name === "dr1") {
         setImages((prevImages) => ({
           ...prevImages,
-          image1: file,
-          preview1: previewPic,
+          dr1: file,
+          preview3: previewPic,
         }));
-      } else if (e.target.name === "image2") {
+      } else if (e.target.name === "dr2") {
         setImages((prevImages) => ({
           ...prevImages,
-          image2: file,
-          preview2: previewPic,
+          dr2: file,
+          preview4: previewPic,
         }));
       } else if (e.target.name === "doc1") {
         setImages((prevImages) => ({
           ...prevImages,
           doc1: file,
-          preview3: previewPic,
+          preview5: previewPic,
+        }));
+      } else if (e.target.name === "doc2") {
+        setImages((prevImages) => ({
+          ...prevImages,
+          doc2: file,
+          preview6: previewPic,
         }));
       }
     }
   }
 
   function handleDelete(image) {
-    if (image === "image1") {
+    if (image === "dr1") {
       setImages((prevImages) => ({
         ...prevImages,
-        image1: null,
-        preview1: "",
+        dr1: null,
+        preview3: "",
       }));
-    } else if (image === "image2") {
+    } else if (image === "dr2") {
       setImages((prevImages) => ({
         ...prevImages,
-        image2: null,
-        preview2: "",
+        dr2: null,
+        preview4: "",
       }));
     } else if (image === "doc1") {
       setImages((prevImages) => ({
         ...prevImages,
         doc1: null,
-        preview3: "",
+        preview5: "",
+      }));
+    } else if (image === "doc2") {
+      setImages((prevImages) => ({
+        ...prevImages,
+        doc2: null,
+        preview6: "",
       }));
     }
   }
@@ -347,101 +337,20 @@ export function Step2({
         <h1 className="step__title">Valid Documents</h1>
         <div className="form-group1">
           <form className="form-container" onSubmit={handleSubmit}>
-            <div className="input-rows2">
-              <label
-                className="label2"
-                style={{ marginTop: "20px" }}
-                htmlFor="fileInput2"
-              >
-                Upload your image here
-              </label>
-              <p>Upload your identification card here</p>
-            </div>
-            <div className="input-rows2">
-              <input
-                type="file"
-                id="fileInput1"
-                name="image1"
-                accept="image/*"
-                onChange={handleImage}
-                required
-                style={{
-                  //  i set into display: none because i use label as htmlFor attribute
-                  display: "none",
-                }}
-              />
-              {!images.preview1 ? (
-                <label htmlFor="fileInput1" className="step__img__input">
-                  <Image />
-                  Choose Image File
-                </label>
-              ) : null}
-
-              {images.preview1 && (
-                <div className="image-preview">
-                  <img
-                    src={images.preview1}
-                    alt="Preview"
-                    className="step2_img_preview"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => handleDelete("image1")}
-                    className="step2_img_preview_btn"
-                  >
-                    X
-                  </button>
-                </div>
-              )}
-
-              <input
-                type="file"
-                id="fileInput2"
-                name="image2"
-                accept="image/*"
-                onChange={handleImage}
-                required
-                style={{
-                  //  i set into display: none because i use label as htmlFor attribute
-                  display: "none",
-                }}
-              />
-              {!images.preview2 ? (
-                <label htmlFor="fileInput2" className="step__img__input">
-                  <Image />
-                  Choose Image File
-                </label>
-              ) : null}
-
-              {images.preview2 && (
-                <div className="image-preview">
-                  <img
-                    src={images.preview2}
-                    alt="Preview"
-                    className="step2_img_preview"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => handleDelete("image2")}
-                    className="step2_img_preview_btn"
-                  >
-                    X
-                  </button>
-                </div>
-              )}
-            </div>
             {user.userType === "Catcher" && (
               <>
                 {" "}
                 <div className="input-rows2">
                   <label>
-                    Have License?
+                    Do you have A Driver's License? Or any certificates you want
+                    to add?
                     <input
                       type="checkbox"
                       onClick={(e) => setHaveLicense(e.target.checked)}
                     />
                     YES
                   </label>
+                  <label>If No, You can skip this part!</label>
                 </div>
                 {/* UPLOAD LICESNE IF USER HAVE IT */}
                 {/* Upload license section if the user has a license */}
@@ -451,14 +360,99 @@ export function Step2({
                       <label className="label2" htmlFor="fileInput">
                         Please upload your Driver's License here:
                       </label>
-                      <p>Select your file below:</p>
                     </div>
 
                     <div className="input-rows2">
                       <input
                         type="file"
+                        name="dr1"
+                        id="fileInput1"
+                        onChange={handleImage}
+                        accept="image/*"
+                        style={{
+                          display: "none", // Hide the input
+                        }}
+                      />
+
+                      {!images.dr1 ? (
+                        <label
+                          htmlFor="fileInput1"
+                          className="step__img__input"
+                        >
+                          <Image />
+                          <span>Choose Image File</span>
+                        </label>
+                      ) : null}
+
+                      {/* Preview the uploaded driver’s license */}
+                      {images.dr1 && (
+                        <div className="image-preview">
+                          <img
+                            src={images.preview3}
+                            alt="Driver's License Preview"
+                            className="step2_img_preview"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => handleDelete("dr1")}
+                            className="step2_img_preview_btn"
+                          >
+                            X
+                          </button>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="input-rows2">
+                      <input
+                        type="file"
+                        name="dr2"
+                        id="fileInput2"
+                        onChange={handleImage}
+                        accept="image/*"
+                        style={{
+                          display: "none", // Hide the input
+                        }}
+                      />
+
+                      {!images.dr2 ? (
+                        <label
+                          htmlFor="fileInput2"
+                          className="step__img__input"
+                        >
+                          <Image />
+                          <span>Choose Image File</span>
+                        </label>
+                      ) : null}
+
+                      {/* Preview the uploaded driver’s license */}
+                      {images.dr2 && (
+                        <div className="image-preview">
+                          <img
+                            src={images.preview4}
+                            alt="Driver's License Preview"
+                            className="step2_img_preview"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => handleDelete("dr2")}
+                            className="step2_img_preview_btn"
+                          >
+                            X
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    <div className="input-rows2">
+                      <label className="label2" htmlFor="fileInput">
+                        Please upload your upto 2 certificates here:
+                      </label>
+                    </div>
+                    <div className="input-rows2">
+                      <input
+                        type="file"
                         name="doc1"
-                        id="fileInput"
+                        id="fileInput3"
                         onChange={handleImage}
                         accept="image/*"
                         style={{
@@ -467,7 +461,10 @@ export function Step2({
                       />
 
                       {!images.doc1 ? (
-                        <label htmlFor="fileInput" className="step__img__input">
+                        <label
+                          htmlFor="fileInput3"
+                          className="step__img__input"
+                        >
                           <Image />
                           <span>Choose Image File</span>
                         </label>
@@ -477,13 +474,53 @@ export function Step2({
                       {images.doc1 && (
                         <div className="image-preview">
                           <img
-                            src={images.preview3}
-                            alt="Driver's License Preview"
+                            src={images.preview5}
+                            alt="Certificates"
                             className="step2_img_preview"
                           />
                           <button
                             type="button"
                             onClick={() => handleDelete("doc1")}
+                            className="step2_img_preview_btn"
+                          >
+                            X
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    <div className="input-rows2">
+                      <input
+                        type="file"
+                        name="doc2"
+                        id="fileInput4"
+                        onChange={handleImage}
+                        accept="image/*"
+                        style={{
+                          display: "none", // Hide the input
+                        }}
+                      />
+
+                      {!images.doc2 ? (
+                        <label
+                          htmlFor="fileInput4"
+                          className="step__img__input"
+                        >
+                          <Image />
+                          <span>Choose Image File</span>
+                        </label>
+                      ) : null}
+
+                      {/* Preview the uploaded driver’s license */}
+                      {images.doc2 && (
+                        <div className="image-preview">
+                          <img
+                            src={images.preview6}
+                            alt="Certificates"
+                            className="step2_img_preview"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => handleDelete("doc2")}
                             className="step2_img_preview_btn"
                           >
                             X
@@ -501,81 +538,11 @@ export function Step2({
                 <button className="btnn" type="button" onClick={onPrev}>
                   Prev
                 </button>
-                {/* <button className="btnn" type="submit" style={{}}>
+                <button className="btnn" type="button" onClick={onNext}>
                   Next
-                </button> */}
+                </button>
               </div>
-              {/* alert error handling */}
-              {alertOpen && (
-                <Grow in={alertOpen} style={{ transformOrigin: "center" }}>
-                  <Alert
-                    variant="filled"
-                    severity="error"
-                    className="step2__alert__error"
-                    sx={{
-                      fontWeight: "bold",
-                    }}
-                    onClose={() => setAlertOpen(false)}
-                  >
-                    Please upload both images before submitting.
-                  </Alert>
-                </Grow>
-              )}
-              <ButtonGroup aria-label="spacing button group">
-                <Button
-                  variant="outlined"
-                  color="green"
-                  className="step2__nav__btn__sbmt"
-                  sx={{
-                    // Custom color
-                    backgroundColor: "",
-                    "&:hover": {
-                      backgroundColor: "#1A97DE", // Darker green on hover
-                    },
-                    margin: "20px",
-                    padding: "10px",
-                    width: "100px",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                    backgroundColor: "#1679ab",
-                    color: "#fff",
-                    border: "none",
-                    fontSize: "13px",
-                  }}
-                  onClick={() => handleOpenModal()}
-                >
-                  Submit file
-                </Button>
-                <Modal open={open} onClose={() => setOpen(false)}>
-                  <ModalDialog variant="outlined" role="alertdialog">
-                    <DialogTitle>
-                      <WarningRounded />
-                      Confirmation
-                    </DialogTitle>
-                    <Divider />
-                    <DialogContent>
-                      Are you sure you want to submit this valid documents?
-                      {/* Display the current ID from state */}
-                    </DialogContent>
-                    <DialogActions>
-                      <Button
-                        variant="solid"
-                        color="primary"
-                        onClick={onNext} // Upload the file if Yes
-                      >
-                        Yes
-                      </Button>
-                      <Button
-                        variant="plain"
-                        color="neutral"
-                        onClick={() => setOpen(false)}
-                      >
-                        Cancel
-                      </Button>
-                    </DialogActions>
-                  </ModalDialog>
-                </Modal>
-              </ButtonGroup>
+
               {/* </div>
               <button className="btnn" onClick={handleUpload}>SUBMIT</button>
               <div className="input-rows" style={{ justifyContent: "center" }}>
@@ -604,13 +571,6 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
   const handleOpenModal = () => {
     setOpen(true);
   };
-  //FOR NOTIFICATION
-  //set variables for notification
-  const [notif, setNotif] = useState({
-    userID: "", //this is the employer/ userID of the commission
-    notificationType: "", //notif description
-    notifDesc: "", //contents of the notif
-  });
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -637,7 +597,10 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
 
       formData.append("image1", images.image1);
       formData.append("image2", images.image2);
+      formData.append("dr1", images.dr1);
+      formData.append("dr2", images.dr2);
       formData.append("doc1", images.doc1);
+      formData.append("doc2", images.doc2);
 
       // console.log(formData);
       console.log("info successfully sent to server");
@@ -647,13 +610,9 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
       //update accound data
-      await axios.put("http://localhost:8800/update-info/" + userID, details);
-      //add a notification to the admin
-      notif.notifDesc = `${user.userID}
-        has submitted a Verification request`;
-      notif.userID = 1;
-      notif.notificationType = "Verification Request";
-      await axios.post("http://localhost:8800/notify", notif);
+      //await axios.put("http://localhost:8800/update-info/" + userID, details); //update skills in db
+      //add notif of request
+      await axios.post("http://localhost:8800/notify-admin"); // notify all admin
     } catch (error) {
       console.log(error);
     }
@@ -663,12 +622,6 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
       <h1 className="step__title">Summary</h1>
 
       <div className="form-container">
-        <div className="form-details">
-          <p>
-            <strong>Skills:</strong> <p>{details.skills}</p>
-          </p>
-        </div>
-
         <div className="image-previews">
           <strong>Identification</strong>
           {images.preview1 && (
@@ -685,11 +638,31 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
               alt="Preview 2"
             />
           )}
-          {images.preview3 && (
+          {(images.preview3 || images.preview4) && (
             <>
               <strong>Driver's License</strong>
               <img
                 src={images.preview3}
+                className="step__img__preview"
+                alt="Preview 3"
+              />
+              <img
+                src={images.preview4}
+                className="step__img__preview"
+                alt="Preview 3"
+              />
+            </>
+          )}
+          {(images.preview5 || images.preview6) && (
+            <>
+              <strong>Certificates</strong>
+              <img
+                src={images.preview5}
+                className="step__img__preview"
+                alt="Preview 3"
+              />
+              <img
+                src={images.preview6}
                 className="step__img__preview"
                 alt="Preview 3"
               />
