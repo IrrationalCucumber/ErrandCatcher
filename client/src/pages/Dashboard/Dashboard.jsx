@@ -18,10 +18,10 @@ function Dashboard() {
         );
 
         // Create a new object with updated `hasErrand` but keeping other fields the same
-        const updatedUserData = {
-          ...user, // Spread the existing user data
-          hasErrand: res.data.userHasErrand, // Update only `hasErrand`
-        };
+        // const updatedUserData = {
+        //   ...user, // Spread the existing user data
+        //   hasErrand: res.data.userHasErrand, // Update only `hasErrand`
+        // };
 
         if (user.hasErrand !== res.data.userHasErrand) {
 
