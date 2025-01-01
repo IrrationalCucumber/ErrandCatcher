@@ -23,8 +23,18 @@ function Dashboard() {
           hasErrand: res.data.userHasErrand, // Update only `hasErrand`
         };
 
-        // Update user in the context
-        updateUser(updatedUserData);
+        if (user.hasErrand !== res.data.userHasErrand) {
+
+          const updatedUserData = {
+            ...user,
+            hasErrand: res.data.userHasErrand,
+          };
+
+          updateUser(updatedUserData);
+        }
+
+        // // Update user in the context
+        // updateUser(updatedUserData);
 
         // console.log("Updated hasErrand:", res.data.userHasErrand);
       } catch (error) {
