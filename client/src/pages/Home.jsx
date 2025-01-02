@@ -45,7 +45,7 @@ const Home = () => {
       <div>
         {showAlert && (
           <Alert
-            color="warning"
+            color="danger"
             variant="solid"
             sx={{
               position: "fixed",
@@ -55,6 +55,10 @@ const Home = () => {
               zIndex: 11,
               mb: 2,
               width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              fontSize: "1rem",
+
             }}
             action={
               <Button
