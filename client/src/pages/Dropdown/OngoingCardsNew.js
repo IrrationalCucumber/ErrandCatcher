@@ -313,7 +313,9 @@ function OngoingCardsNew(props) {
       await axios.put(`http://localhost:8800/cancel-trans/${transactID}`, {
         params: { date: getTimeAndDate() },
       });
-      // for catcher side
+      await axios.put(`http://localhost:8800/has-cancel-errand/${catcherID}`);
+      console.log(employerID, catcherID, "emp ID: cat ID")
+      // for catcher sides
       // await axios.put(
       //   `http://localhost:8800/catcher/cancel/${transactID}/${userID}`
       // );
@@ -323,7 +325,7 @@ function OngoingCardsNew(props) {
       //   // modal will pop-up in 1 seconds
       //   handleOpencancel();
       // }, 1000);
-      
+
       handleOpencancel();
       setOpenDelete(false);
     } catch (err) {
