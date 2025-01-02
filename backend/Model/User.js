@@ -169,6 +169,14 @@ const User = {
       cb
     );
   },
+  // update hasErrand if Employer cancel & catcher can apply again
+  putEmployerHasCancelErrand: (id, state, cb) => {
+    db.query(
+      `UPDATE useraccount SET userHasErrand = ? WHERE userID = ?`,
+      [state, id],
+      cb
+    );
+  },
   //set catcher/s has finish errand
   putCatchersHasDoneErrand: (id, cb) => {
     db.query(
