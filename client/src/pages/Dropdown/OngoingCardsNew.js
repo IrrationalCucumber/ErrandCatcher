@@ -334,17 +334,28 @@ function OngoingCardsNew(props) {
   };
 
   // complete transaction
-  const handleComplete = async (transactID, catcherID) => {
+  const handleComplete = async (transactID, employerID, catcherID) => {
     try {
       //alert(employerID);
 
       // add a notification to the commission's employer
-      notif.notifDesc = "A Catcher has mark completed an errand";
-      notif.userID = catcherID;
-      notif.notificationType = "Errand completed";
+      // employer notif
+      notif.notifDesc = "You have marked your errand as completed";
+      notif.userID = employerID;
+      notif.notificationType = "Errand Completed";
       notif.notifDate = getTimeAndDate();
 
+      // catcher notif
+      notifcat.notifDesc = "Your employer has marked their errand completed";
+      notifcat.userID = catcherID;
+      notifcat.notificationType = "Errand Completed";
+      notifcat.notifDate = getTimeAndDate();
+
+
+      // for employer
       await axios.post("http://localhost:8800/notify", notif);
+      // for catcher
+      await axios.post("http://localhost:8800/notify", notifcat);
       // catcher the one who marked as complete....
       await axios.put(`http://localhost:8800/complete-trans/${transactID}`);
       console.log("status: completed", userID, transactID);
@@ -727,6 +738,7 @@ function OngoingCardsNew(props) {
                         handleComplete(
                           // props
                           props.transID,
+                          props.empID,
                           props.transCatID
                         )
                       }
