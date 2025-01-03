@@ -14,7 +14,10 @@ export default function Map(props) {
   return (
     <>
       <div className="map-wrap">
-        <div className="map__filter">
+        {/* <div className="map__filter"> */}
+        <div
+          className={props.userType === "Catcher" ? "map__filterCat" : "map__filter"}
+        >
           <Filter onFilterChange={props.change} />
           {props.prox ? (
             <div style={{ margin: "5x" }}>
