@@ -18,15 +18,25 @@ function Dashboard() {
         );
 
         // Create a new object with updated `hasErrand` but keeping other fields the same
-        const updatedUserData = {
-          ...user, // Spread the existing user data
-          hasErrand: res.data.userHasErrand, // Update only `hasErrand`
-        };
+        // const updatedUserData = {
+        //   ...user, // Spread the existing user data
+        //   hasErrand: res.data.userHasErrand, // Update only `hasErrand`
+        // };
 
-        // Update user in the context
-        updateUser(updatedUserData);
+        if (user.hasErrand !== res.data.userHasErrand) {
 
-        console.log("Updated hasErrand:", res.data.userHasErrand);
+          const updatedUserData = {
+            ...user,
+            hasErrand: res.data.userHasErrand,
+          };
+
+          updateUser(updatedUserData);
+        }
+
+        // // Update user in the context
+        // updateUser(updatedUserData);
+
+        // console.log("Updated hasErrand:", res.data.userHasErrand);
       } catch (error) {
         console.error("Error fetching hasErrand:", error);
       }

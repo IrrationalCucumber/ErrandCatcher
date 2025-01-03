@@ -313,7 +313,9 @@ function OngoingCardsNew(props) {
       await axios.put(`http://localhost:8800/cancel-trans/${transactID}`, {
         params: { date: getTimeAndDate() },
       });
-      // for catcher side
+      await axios.put(`http://localhost:8800/has-cancel-errand/${catcherID}`);
+      console.log(employerID, catcherID, "emp ID: cat ID")
+      // for catcher sides
       // await axios.put(
       //   `http://localhost:8800/catcher/cancel/${transactID}/${userID}`
       // );
@@ -323,7 +325,7 @@ function OngoingCardsNew(props) {
       //   // modal will pop-up in 1 seconds
       //   handleOpencancel();
       // }, 1000);
-      
+
       handleOpencancel();
       setOpenDelete(false);
     } catch (err) {
@@ -332,17 +334,28 @@ function OngoingCardsNew(props) {
   };
 
   // complete transaction
-  const handleComplete = async (transactID, catcherID) => {
+  const handleComplete = async (transactID, employerID, catcherID) => {
     try {
       //alert(employerID);
 
       // add a notification to the commission's employer
-      notif.notifDesc = "A Catcher has mark completed an errand";
-      notif.userID = catcherID;
-      notif.notificationType = "Errand completed";
+      // employer notif
+      notif.notifDesc = "You have marked your errand as completed";
+      notif.userID = employerID;
+      notif.notificationType = "Errand Completed";
       notif.notifDate = getTimeAndDate();
 
+      // catcher notif
+      notifcat.notifDesc = "Your employer has marked their errand completed";
+      notifcat.userID = catcherID;
+      notifcat.notificationType = "Errand Completed";
+      notifcat.notifDate = getTimeAndDate();
+
+
+      // for employer
       await axios.post("http://localhost:8800/notify", notif);
+      // for catcher
+      await axios.post("http://localhost:8800/notify", notifcat);
       // catcher the one who marked as complete....
       await axios.put(`http://localhost:8800/complete-trans/${transactID}`);
       console.log("status: completed", userID, transactID);
@@ -725,6 +738,7 @@ function OngoingCardsNew(props) {
                         handleComplete(
                           // props
                           props.transID,
+                          props.empID,
                           props.transCatID
                         )
                       }

@@ -1,16 +1,53 @@
-.map-popup{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
+.map-popup {
+    background-color: #ffffff;
+    border-radius: 16px;
     padding: 5px 10px 10px 5px;
+    width: auto;
+    font-family: Arial, sans-serif;
+    gap: 8px;
 }
 
-.maplibregl-popup-content{
-    width: 15rem;
+.map-popup__h2 {
+    font-size: 1.30rem;
+    font-weight: 600;
+    color: #1679ab;
+    margin: 0 0 8px 0;
+
 }
 
-.maplibregl-popup-close-button{
+.map-popup h4 {
+    font-size: 1.12rem;
+    color: green;
+    font-weight: 400;
+    margin: 0 0 8px 0;
+}
+
+.map-popup p {
+    font-size: 1.015rem;
+    color: #6b7280;
+    margin: 0 0 12px 0;
+    line-height: 20px;
+}
+
+.map-popup a {
+    display: inline-block;
+    font-size: 14px;
+    color: white;
+    background-color: #1679ab;
+    padding: 8px 12px;
+    text-decoration: none;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.map-popup a:hover {
+    background-color: #1086c1;
+    transition: background-color 0.2s ease;
+}
+
+
+.maplibregl-popup-close-button {
     font-size: 2rem;
     padding: 2px;
     background-color: red;
@@ -18,6 +55,7 @@
     border-radius: 10px;
 }
 
-.map-popup h4{
-    color: green
+.maplibregl-popup-close-button:hover {
+    background-color: #f55252;
+    color: #ffff;
 }

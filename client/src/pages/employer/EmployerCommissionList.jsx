@@ -189,9 +189,6 @@ const CommissionList = () => {
                     value={searchTerm.status}
                   >
                     <option value="">All Status</option>
-                    <option value="Taken">Pending</option>
-                    <option value="Completed">Completed</option>
-                    <option value="Cancelled">Cancelled</option>
                     <option value="Available">Available</option>
                     <option value="Expired">Expired</option>
                     <option value="Caught">Caught</option>

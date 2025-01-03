@@ -63,9 +63,9 @@ function CatcherMap() {
     const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.cos(toRad(lat1)) *
-        Math.cos(toRad(lat2)) *
-        Math.sin(dLng / 2) *
-        Math.sin(dLng / 2);
+      Math.cos(toRad(lat2)) *
+      Math.sin(dLng / 2) *
+      Math.sin(dLng / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c; // Distance in km
   };
@@ -130,7 +130,7 @@ function CatcherMap() {
         offset: 15, // Optional: Position offset
       }).setHTML(`<div class="map-popup">
         <h2 class="map-popup__h2">${errand.commissionTitle}</h2>
-        <h4>Php ${errand.commissionPay}</h4>
+        <h4>₱${errand.commissionPay}</h4>
         <p>${errand.commissionDesc}</p>
         <a href="/errand/view/${errand.commissionID}">View</a></div>`); // Simple hover content
       //pop up
@@ -173,6 +173,7 @@ function CatcherMap() {
         prox={proximity}
         setProximity={(e) => setProximity(Number(e.target.value))}
         change={(value) => setFilter(value)} // Pass filter change handler
+        userType={user.userType}
       />
     </>
   );

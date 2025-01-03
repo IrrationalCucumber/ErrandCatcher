@@ -77,6 +77,21 @@
   align-items: center;
 }
 
+.map__filterCat {
+  position: fixed;
+  width: 200px;
+  margin: auto;
+  padding: 10px;
+  top: 147px;
+  left: 20px;
+  z-index: 11;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .map__filter:hover {
   background-color: aliceblue;
   border-radius: 10px;

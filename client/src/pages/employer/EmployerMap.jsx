@@ -77,7 +77,7 @@ function CommissionMap() {
         offset: 15, // Optional: Position offset
       }).setHTML(`<div class="map-popup">
               <h2 class="map-popup__h2">${errand.commissionTitle}</h2>
-              <h4>Php ${errand.commissionPay}</h4>
+              <h4>₱${errand.commissionPay}</h4>
               <p>${errand.commissionDesc}</p>
               <a href="/errand/view/${errand.commissionID}">View</a></div>`); // Simple hover content
       //pop up
