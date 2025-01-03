@@ -309,7 +309,17 @@ const EmployerApplicants = () => {
           aria-describedby="confirm-modal-description"
         >
           <Box sx={{ ...modalStyle }}>
-            <Typography id="confirm-modal-title" variant="h6" component="h2">
+            <Typography
+              id="confirm-modal-title"
+              variant="h6"
+              component="h2"
+              sx={{
+                textAlign: "center",
+                fontWeight: 540,
+                fontSize: "1.4rem",
+                color: "#000",
+              }}
+            >
               Accept Other Applicants?
             </Typography>
             <Typography id="confirm-modal-description" sx={{ mt: 2 }}>
@@ -321,7 +331,6 @@ const EmployerApplicants = () => {
               <Button
                 variant="solid"
                 color="primary"
-                // onClick={() => setAcceptMoreModal(false)}
                 onClick={handleAcceptMore}
 
               >
@@ -330,14 +339,9 @@ const EmployerApplicants = () => {
               <Button
                 variant="outlined"
                 color="danger"
-                // selectedApplicant,
-                // selectedApplication,
-                // selectedErrand
                 onClick={() =>
                   handleDenyOther(
-                    // applicant.applicationErrandID,
                     selectedErrand,
-                    // applicant.catcherID
                     selectedApplicant
                   )
                 }
@@ -463,13 +467,7 @@ const EmployerApplicants = () => {
   //deny otther applicants
 
 
-  // const handleAcceptMore = () => {
-  //   setMessage("Successfully you have accept more applicants");
-  //   setAlertColor("success");
-  //   setIconLert(<CheckCircleOutlineIcon />);
-  //   setShowAlert(true);
-  //   setAcceptMoreModal(false);
-  // };
+
 
   const handleDenyOther = async (errandID, catcherID) => {
     try {
@@ -653,6 +651,8 @@ const modalStyle = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
+  maxWidth: "95%",
+  height: "auto",
   bgcolor: "background.paper",
   // border: "2px solid #000",
   borderRadius: "4px",
