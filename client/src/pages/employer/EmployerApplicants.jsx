@@ -30,6 +30,9 @@ import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import { Box, Typography } from "@mui/material";
 import { Refresh } from "@mui/icons-material";
+import { Alert } from "@mui/joy";
+import CloseIcon from "@mui/icons-material/Close";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 const EmployerApplicants = () => {
   const navigate = useNavigate();
@@ -54,6 +57,13 @@ const EmployerApplicants = () => {
   const [acceptMoreModal, setAcceptMoreModal] = useState(false);
   const [selectedApplication, setSelectedApplication] = useState("");
   const [selectedErrand, setSelectedErrand] = useState("");
+
+
+  //Alert feedback
+  const [message, setMessage] = useState("");
+  const [alertColor, setAlertColor] = useState("");
+  const [iconlert, setIconLert] = useState(null);
+  const [showAlert, setShowAlert] = useState(false);
 
   // modal message pop-up
   const [open, setOpen] = useState(false);
@@ -137,6 +147,15 @@ const EmployerApplicants = () => {
     indexOfFirstItem,
     indexOfLastItem
   );
+
+
+  const handleAcceptMore = () => {
+    setMessage("Successfully you have accept more applicants");
+    setAlertColor("success");
+    setIconLert(<CheckCircleOutlineIcon />);
+    setShowAlert(true);
+    setAcceptMoreModal(false);
+  };
 
   const headers = [
     "ID",
@@ -292,15 +311,17 @@ const EmployerApplicants = () => {
               sx={{ mt: 2, display: "flex", justifyContent: "space-between" }}
             >
               <Button
-                variant="contained"
+                variant="solid"
                 color="primary"
-                onClick={() => setAcceptMoreModal(false)}
+                // onClick={() => setAcceptMoreModal(false)}
+                onClick={handleAcceptMore}
+
               >
                 Yes, accept others
               </Button>
               <Button
-                variant="contained"
-                color="secondary"
+                variant="outlined"
+                color="danger"
                 // selectedApplicant,
                 // selectedApplication,
                 // selectedErrand
@@ -363,6 +384,8 @@ const EmployerApplicants = () => {
     //dateCompleted: "",
     //reciept: "",
   });
+
+  // do code here
   const handleAccept = async (
     catcherID,
     applicationID,
@@ -378,9 +401,9 @@ const EmployerApplicants = () => {
 
     // Add logic to handle accepting the application
     try {
-      await axios.put(
-        `http://localhost:8800/accept-apply/${applicationErrandID}/${applicationID}`
-      );
+      // await axios.put(
+      //   `http://localhost:8800/accept-apply/${applicationErrandID}/${applicationID}`
+      // );
 
       handleOpen();
 
@@ -389,15 +412,15 @@ const EmployerApplicants = () => {
       trans.catcherID = selectedApplicant;
       trans.dateAccepted = getTimeAndDate();
       //console.log(catcherID);
-      await axios.post("http://localhost:8800/add-trans/", trans);
-      //add a notification to the commission's applicant
-      notif.notifDesc = "Your Errand application has been Accepted";
-      notif.userID = selectedApplicant;
-      notif.notificationType = "Application";
-      notif.notifDate = getTimeAndDate();
-      await axios.post("http://localhost:8800/notify", notif);
-      //set catcher has errand
-      await axios.put(`http://localhost:8800/has-errand/${catcherID}`);
+      // await axios.post("http://localhost:8800/add-trans/", trans);
+      // //add a notification to the commission's applicant
+      // notif.notifDesc = "Your Errand application has been Accepted";
+      // notif.userID = selectedApplicant;
+      // notif.notificationType = "Application";
+      // notif.notifDate = getTimeAndDate();
+      // await axios.post("http://localhost:8800/notify", notif);
+      // //set catcher has errand
+      // await axios.put(`http://localhost:8800/has-errand/${catcherID}`);
     } catch (err) {
       console.log(err);
     }
@@ -415,11 +438,11 @@ const EmployerApplicants = () => {
         `http://localhost:8800/deny-apply/${applicationErrandID}/${applicationID}`
       );
       //add a notification to the commission's applicant
-      notif.notifDesc = "Your Errand application has been Denied";
-      notif.userID = catcherID;
-      notif.notificationType = "Application";
-      notif.notifDate = getTimeAndDate();
-      await axios.post("http://localhost:8800/notify", notif);
+      // notif.notifDesc = "Your Errand application has been Denied";
+      // notif.userID = catcherID;
+      // notif.notificationType = "Application";
+      // notif.notifDate = getTimeAndDate();
+      // await axios.post("http://localhost:8800/notify", notif);
       //  alert("You have Posted an Errand!");
       window.location.reload();
       setShowProfileModal(false);
@@ -430,6 +453,16 @@ const EmployerApplicants = () => {
   };
   //console.log(applicants);
   //deny otther applicants
+
+
+  // const handleAcceptMore = () => {
+  //   setMessage("Successfully you have accept more applicants");
+  //   setAlertColor("success");
+  //   setIconLert(<CheckCircleOutlineIcon />);
+  //   setShowAlert(true);
+  //   setAcceptMoreModal(false);
+  // };
+
   const handleDenyOther = async (errandID, catcherID) => {
     try {
       //DENY other applicants
@@ -438,8 +471,10 @@ const EmployerApplicants = () => {
       );
       if (denyResponse.data.message === "No other applications to deny") {
         console.log("No other applications were found to deny.");
+
       } else {
         console.log("Other applications denied successfully.");
+
       }
       //set the errand status to caught
       await axios.put(`http://localhost:8800/errand-taken/${errandID}`);
@@ -447,6 +482,13 @@ const EmployerApplicants = () => {
       console.log(error);
     }
     setAcceptMoreModal(false);
+
+    setMessage("Successfully you have deny others applicants");
+    setAlertColor("warning");
+    setIconLert(<CheckCircleOutlineIcon />);
+    setShowAlert(true);
+
+
     // const interval = setInterval(fetchAllAccount, 1000);
     // return () => clearInterval(interval);
   };
@@ -457,6 +499,40 @@ const EmployerApplicants = () => {
   };
   return (
     <>
+
+      {/* alert handling */}
+      {showAlert && (
+        <Alert
+          sx={{
+            position: "fixed",
+            bottom: 16,
+            right: 16,
+            zIndex: 9999,
+            transform: showAlert
+              ? "translateX(0)"
+              : "translateX(100%)",
+            transition: "transform 0.5s ease-in-out",
+          }}
+          color={alertColor}
+          size="lg"
+          variant="solid"
+          // icon={iconlert}
+          startDecorator={iconlert}
+          endDecorator={
+            <Button
+              size="sm"
+              variant="solid"
+              color={alertColor}
+              onClick={(e) => setShowAlert(false)}
+            >
+              <CloseIcon />
+            </Button>
+          }
+        >
+          {message}
+        </Alert>
+      )}
+
       <ModalFeedback
         open={open}
         handleClose={handleClose}
@@ -569,7 +645,8 @@ const modalStyle = {
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  // border: "2px solid #000",
+  borderRadius: "4px",
   boxShadow: 24,
   p: 4,
 };
