@@ -173,6 +173,7 @@ function CatcherMap() {
         prox={proximity}
         setProximity={(e) => setProximity(Number(e.target.value))}
         change={(value) => setFilter(value)} // Pass filter change handler
+        userType={user.userType}
       />
     </>
   );
