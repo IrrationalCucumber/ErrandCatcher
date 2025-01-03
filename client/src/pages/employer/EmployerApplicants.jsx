@@ -124,7 +124,7 @@ const EmployerApplicants = () => {
   };
 
   const filterApplicants = applicants.filter((applicant) => {
-    console.log(applicant, "display data");
+    // console.log(applicant, "display data");
 
     const termMatch = applicant.commissionTitle
       ?.toLowerCase()
@@ -136,13 +136,20 @@ const EmployerApplicants = () => {
       ?.toLowerCase()
       .includes(searchTerm.term?.toLowerCase() ?? "");
 
-    return termMatch || termMatch2 || termMatch3;
+    const applicantsFullName =
+      `${applicant.userFirstname} ${applicant.userLastname}`
+        .toLowerCase();
+
+    const termMatchFullName = applicantsFullName.includes(searchTerm.term.toLowerCase() ?? "")
+
+    return termMatch || termMatch2 || termMatch3 || termMatchFullName;
   });
 
   // Pagination
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
   const currentItems = filterApplicants.slice(
     indexOfFirstItem,
     indexOfLastItem
@@ -166,7 +173,8 @@ const EmployerApplicants = () => {
     "ACTION",
     "",
   ];
-  const applicantData = applicants.map((applicant) => [
+
+  const applicantData = filterApplicants.map((applicant) => [
     applicant.applicationID,
     // DisplayDate(applicant.applicationDate),
     <Box display="flex" alignItems="center" gap={1}>
@@ -566,6 +574,7 @@ const EmployerApplicants = () => {
             </Button>
           </div>
           <div className="applicants-table">
+            {/* data={applicantData} */}
             <Table headers={headers} data={applicantData} />
           </div>
 
