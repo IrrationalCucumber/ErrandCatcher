@@ -170,7 +170,7 @@ function Application() {
       variant="outlined"
       onClick={() => handleViewProfile(applicant.employerID)}
     >
-      {Capitalize(`${applicant.userFirstname}`) +
+      {Capitalize(`${applicant.userFirstname}`) + " " +
         Capitalize(`${applicant.userLastname}`)}
     </Button>,
     applicant.commissionTitle,
