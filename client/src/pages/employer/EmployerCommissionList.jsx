@@ -199,8 +199,10 @@ const CommissionList = () => {
                     startDecorator={<Add />}
                     size="lg"
                     variant="solid"
+                    disabled={user.status === "Unverified" ? true : false}
                     onClick={(e) => navigate(`/errand/post-errand`)}
                   >
+                    {/* {user.status} */}
                     Add Errand
                   </Button>
                 </div>
