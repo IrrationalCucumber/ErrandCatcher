@@ -12,8 +12,7 @@ import SyncAltIcon from "@mui/icons-material/SyncAlt";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import Filter9PlusOutlinedIcon from "@mui/icons-material/Filter9PlusOutlined";
 import { Slider, Box, Typography, TextField } from "@mui/material";
-import { jsPDF } from "jspdf";
-import html2canvas from "html2canvas";
+import GeneratePDF from "../../components/GeneratePDF.js";
 
 const GenerateReport = () => {
     const [invoices, setInvoices] = useState([]);
@@ -169,19 +168,6 @@ const GenerateReport = () => {
     const currentItems = filterErrands.slice(indexOfFirstItem, indexOfLastItem);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-    const handleGeneratePDF = async () => {
-        const content = contentRef.current;
-        const canvas = await html2canvas(content);
-        const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF();
-        const imgProps = pdf.getImageProperties(imgData);
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-        pdf.save("generated_report.pdf");
-    };
 
     return (
         <div ref={contentRef}>
@@ -494,15 +480,12 @@ const GenerateReport = () => {
                     />
                 )}
             </div>
-            <button
-                onClick={handleGeneratePDF}
-                style={{
-                    padding: "10px 20px",
-                    fontSize: "16px",
-                    marginTop: "20px"
-                }}>
-                Generate PDF
-            </button>
+
+            <GeneratePDF
+                contentRef={contentRef}
+                buttonLabel="Generate PDF"
+            />
+
         </div>
     );
 };
