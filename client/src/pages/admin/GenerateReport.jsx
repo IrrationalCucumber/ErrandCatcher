@@ -80,6 +80,10 @@ const GenerateReport = () => {
         }
     };
 
+    const [month, setMonth] = useState('January');
+    const [year, setYear] = useState(new Date().getFullYear());
+    const [totalInvoice, setTotalInvoice] = useState(0);
+
     const handleSliderChange = (event, newValue) => {
         setSearchTerm((prev) => ({
             ...prev,
@@ -87,6 +91,27 @@ const GenerateReport = () => {
             maxPay: newValue[1],
         }));
     };
+
+    // DisplayDate(Invoice.paid),
+
+    // Filter invoices based on month and year
+    const filterInvoices = invoices.filter((invoice) => {
+        const invoiceDate = new Date(invoice.paid); //.date
+        const invoiceMonth = invoiceDate.toLocaleString('default', { month: 'long' });
+        const invoiceYear = invoiceDate.getFullYear();
+
+
+        const monthMatch = invoiceMonth === month;
+        const yearMatch = invoiceYear === parseInt(year);
+
+        return monthMatch && yearMatch;
+    });
+
+    useEffect(() => {
+        // Calculate the total invoice amount based on the filtered invoices
+        const total = filterInvoices.reduce((acc, invoice) => acc + invoice.total, 0);
+        setTotalInvoice(total);
+    }, [month, year, invoices]);
 
     //filter
     const filterErrands = invoices.filter((invoice) => {
@@ -258,6 +283,51 @@ const GenerateReport = () => {
                         </div>
                     </div>
 
+
+
+
+                    {/* Generate Report Within This Month */}
+                    <div class="col-md-4 col-xl-3 mb-3">
+                        <div class="card bg-c-blue order-card text-center" style={{ height: "400px" }}>
+                            <div class="card-block">
+                                <h3 class="m-b-20 fw-semibold">
+                                    <PaymentsIcon sx={{ color: "white", fontSize: 24 }} /> Generate Report Within This Month
+                                </h3>
+                                <div class="dropdown">
+                                    <label for="month">Month:</label>
+                                    <select id="month" name="month" value={month} onChange={(e) => setMonth(e.target.value)}>
+                                        <option value="January">January</option>
+                                        <option value="February">February</option>
+                                        <option value="March">March</option>
+                                        <option value="April">April</option>
+                                        <option value="May">May</option>
+                                        <option value="June">June</option>
+                                        <option value="July">July</option>
+                                        <option value="August">August</option>
+                                        <option value="September">September</option>
+                                        <option value="October">October</option>
+                                        <option value="November">November</option>
+                                        <option value="December">December</option>
+                                    </select>
+                                </div>
+                                <div class="dropdown">
+                                    <label for="year">Year:</label>
+                                    <select id="year" name="year" value={year} onChange={(e) => setYear(e.target.value)}>
+                                        {Array.from(new Array(10), (v, i) => (
+                                            <option key={i} value={new Date().getFullYear() - i}>
+                                                {new Date().getFullYear() - i}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <h2 class="text-center">
+                                    <i class="fa fa-cart-plus f-left"></i>
+                                    <span>₱{totalInvoice}</span>
+                                </h2>
+                                <p class="m-b-0">Total invoice transaction within this month</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div
                     className="searchAdmin"
@@ -364,6 +434,7 @@ const GenerateReport = () => {
                                 <span> Transportation</span>
                             </>
                         ) : null,
+                        // date paid
                         DisplayDate(Invoice.paid),
                         "Php " + (Invoice.total / 100).toFixed(2),
                     ])}
