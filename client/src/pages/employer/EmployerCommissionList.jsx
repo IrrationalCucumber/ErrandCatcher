@@ -8,7 +8,6 @@ import Table from "../../components/Table.js";
 import Pagination from "../../components/Pagination.js";
 import Button from "@mui/joy/Button";
 import ButtonGroup from "@mui/joy/ButtonGroup";
-import IconButton from "@mui/joy/IconButton";
 import Divider from "@mui/joy/Divider";
 import DialogTitle from "@mui/joy/DialogTitle";
 import DialogContent from "@mui/joy/DialogContent";
@@ -26,7 +25,6 @@ import OtherHousesIcon from "@mui/icons-material/OtherHouses";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CameraOutdoorIcon from "@mui/icons-material/CameraOutdoor";
-
 import PendingIcon from "@mui/icons-material/Pending";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -70,7 +68,6 @@ const CommissionList = () => {
   };
   const handleCloseDel = () => {
     setOpenDel(false);
-
   };
 
   //handle error
@@ -164,7 +161,6 @@ const CommissionList = () => {
         icon={CancelOutlinedIcon}
       />
 
-
       <div>
         <BannerEmployerPages
           bannerMessage={`These are what you have posted so far, ${user.username.toUpperCase()}`}
@@ -198,6 +194,7 @@ const CommissionList = () => {
                   <Button
                     startDecorator={<Add />}
                     size="lg"
+                    disabled={user.status !== "Verified" ? true : false}
                     variant="solid"
                     onClick={(e) => navigate(`/errand/post-errand`)}
                   >
@@ -296,8 +293,9 @@ const CommissionList = () => {
                             </DialogTitle>
                             <Divider />
                             <DialogContent>
-                              Are you sure you want to discard Errand {currentId}{" "}
-                              ?{/* Display the current ID from state */}
+                              Are you sure you want to discard Errand{" "}
+                              {currentId} ?
+                              {/* Display the current ID from state */}
                             </DialogContent>
                             <DialogActions>
                               <Button
