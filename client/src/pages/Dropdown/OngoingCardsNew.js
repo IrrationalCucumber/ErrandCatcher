@@ -115,6 +115,8 @@ function OngoingCardsNew(props) {
     setOpen(false);
   };
 
+
+  // openmodal (mark as complete)
   const [opencom, setOpencom] = useState(false);
   const handleOpencom = () => {
     setOpencom(true);
@@ -334,9 +336,24 @@ function OngoingCardsNew(props) {
   };
 
   // complete transaction
-  const handleComplete = async (transactID, employerID, catcherID) => {
+  const handleComplete = async (transactID,
+    employerID,
+    catcherID,
+    pay,
+    type,
+    fname,
+    lname,
+    comTitle,
+    erID
+  ) => {
     try {
       //alert(employerID);
+      const amount = pay;
+      const errType = type;
+      const name = fname + " " + lname;
+      const errand = comTitle;
+      const errandID = erID;
+      const cateID = catcherID;
 
       // add a notification to the commission's employer
       // employer notif
@@ -364,7 +381,28 @@ function OngoingCardsNew(props) {
       // alert("Successfully marked errand as completed");
       // window.location.reload();
       handleOpencom();
+
       setOpenMark(false);
+
+      //payment
+      const paymentUrl = `http://localhost:8800/process-payment/${userID}`;
+      axios
+        .post(paymentUrl, {
+          pay: amount,
+          type: errType,
+          name: name,
+          errand: errand,
+          id: transactID, // transactionID
+          employerID: userID,
+          errandID: errandID,
+          catID: cateID,
+        })
+        .then((response) => {
+          window.open(response.data.url);
+        })
+        .catch((error) => {
+          console.error("There was an error processing the payment!", error);
+        });
 
       // setTimeout(() => {
       //     window.location.reload();
@@ -489,6 +527,7 @@ function OngoingCardsNew(props) {
         icons={<HourglassBottomIcon />}
       />
 
+      {/* trigger complete */}
       <ModalFeedback
         open={opencom}
         handleClose={handleClosecom}
@@ -739,7 +778,14 @@ function OngoingCardsNew(props) {
                           // props
                           props.transID,
                           props.empID,
-                          props.transCatID
+                          props.transCatID,
+                          props.pay,
+                          props.type,
+                          props.userFname,
+                          props.userLname,
+                          props.title,
+                          props.comID,
+
                         )
                       }
                     >
