@@ -25,6 +25,7 @@ import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import LoadingBackdrop from "../../components/LoadingSpinner";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
+import { DisplayDate } from "../../components/Display/DsiplayFunctions";
 
 const ErrandPage = () => {
   const [commission, setCommission] = useState({
@@ -279,6 +280,27 @@ const ErrandPage = () => {
     }
   }, [catcher, commission.tags]);
   console.log(user);
+  const [date, setDate] = useState({
+    start: "",
+    end: "",
+  });
+  useEffect(() => {
+    const fetchDate = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8800/ongoing-date/${userID}`
+        );
+        const date = res.data[0];
+        setDate({
+          start: date.commissionStartDate,
+          end: date.commissionDeadline,
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchDate();
+  }, [userID]);
   return (
     <>
       {showAlert && (
@@ -408,7 +430,27 @@ const ErrandPage = () => {
               fontWeight: 500,
             }}
           >
-            <WorkOutlineOutlinedIcon color="primary" /> <i>You still have an Errand to do!</i>
+            <WorkOutlineOutlinedIcon color="primary" />{" "}
+            <i>You still have an Errand to do!</i>
+          </Typography>
+        ) : null}
+        {commission.comStart < date.start &&
+        commission.comDeadline > date.end ? (
+          <Typography
+            level="body-sm"
+            sx={{
+              ml: "1.5rem",
+              mt: ".5rem",
+              mb: "0.5rem",
+              fontSize: "1.040rem",
+              fontWeight: 500,
+            }}
+          >
+            <WorkOutlineOutlinedIcon color="primary" />{" "}
+            <i>
+              You have an ongoing Errand within {DisplayDate(date.start)}-
+              {DisplayDate(date.end)}
+            </i>
           </Typography>
         ) : null}
         <Typography
@@ -427,7 +469,8 @@ const ErrandPage = () => {
         </Typography>
         {user.userType === "Catcher" &&
           user.status === "Verified" &&
-          user.hasErrand === "false" &&
+          commission.comStart < date.start &&
+          commission.comDeadline > date.end &&
           matchSkillCount > 0 && (
             <div>
               <div className="formButton">
@@ -440,8 +483,8 @@ const ErrandPage = () => {
                     isApplied
                       ? null
                       : (e) => {
-                        handleApply(true);
-                      }
+                          handleApply(true);
+                        }
                   }
                   style={{
                     backgroundColor: isApplied ? "none" : "",
