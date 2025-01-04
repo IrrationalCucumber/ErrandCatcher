@@ -322,7 +322,9 @@ const GenerateReport = () => {
                                 </div>
                                 <h2 class="text-center">
                                     <i class="fa fa-cart-plus f-left"></i>
-                                    <span>₱{totalInvoice}</span>
+                                    <span>
+                                        ₱{(totalInvoice / 100).toFixed(2)}
+                                    </span>
                                 </h2>
                                 <p class="m-b-0">Total invoice transaction within this month</p>
                             </div>
