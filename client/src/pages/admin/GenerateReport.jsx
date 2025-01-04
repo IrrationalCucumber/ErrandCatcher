@@ -294,8 +294,21 @@ const GenerateReport = () => {
                                     <PaymentsIcon sx={{ color: "white", fontSize: 24 }} /> Generate Report Within This Month
                                 </h3>
                                 <div class="dropdown">
-                                    <label for="month">Month:</label>
-                                    <select id="month" name="month" value={month} onChange={(e) => setMonth(e.target.value)}>
+                                    <label
+                                        for="month"
+                                        style={{
+                                            color: "white",
+                                            fontSize: "1rem",
+                                            fontWeight: "500",
+                                        }}>
+                                        Month:
+                                    </label>
+                                    <select
+                                        id="month"
+                                        name="month"
+                                        value={month}
+                                        onChange={(e) => setMonth(e.target.value)}
+                                    >
                                         <option value="January">January</option>
                                         <option value="February">February</option>
                                         <option value="March">March</option>
@@ -311,8 +324,22 @@ const GenerateReport = () => {
                                     </select>
                                 </div>
                                 <div class="dropdown">
-                                    <label for="year">Year:</label>
-                                    <select id="year" name="year" value={year} onChange={(e) => setYear(e.target.value)}>
+                                    <label
+                                        for="year"
+                                        style={{
+                                            color: "white",
+                                            fontSize: "1rem",
+                                            fontWeight: "500",
+                                        }}
+                                    >
+                                        Year:
+                                    </label>
+                                    <select
+                                        id="year"
+                                        name="year"
+                                        value={year}
+                                        onChange={(e) => setYear(e.target.value)}
+                                    >
                                         {Array.from(new Array(10), (v, i) => (
                                             <option key={i} value={new Date().getFullYear() - i}>
                                                 {new Date().getFullYear() - i}
