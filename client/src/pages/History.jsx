@@ -12,6 +12,7 @@ import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined
 import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
 import StarRating from "../components/Display/StarRating";
 import { Star } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 const History = () => {
   const { user } = useAuth();
@@ -100,6 +101,23 @@ const History = () => {
         >
           Transaction History
         </h1>
+        {/* user.userType === "Employer" */}
+        {user.userType === "Catcher" ?
+          (
+            <>
+              <Link
+                style={{ marginTop: "4px", textDecoration: "none" }}
+                to={`/catcher-greports`}
+
+              >
+                <a class="action" href="#">
+                  Generate Report
+                  <span aria-hidden="true">→</span>
+                </a>
+              </Link>
+
+            </>
+          ) : null}
 
         {/* apply testing data */}
         {/* {sampletran.length > 0 ? (
