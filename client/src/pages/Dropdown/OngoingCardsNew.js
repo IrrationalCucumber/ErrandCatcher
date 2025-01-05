@@ -10,6 +10,7 @@ import Modals from "../../components/Modals";
 import OtherHousesIcon from "@mui/icons-material/OtherHouses";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import { Call } from "@mui/icons-material";
 import { Box } from "@mui/joy";
 import {
   Button,
@@ -40,29 +41,17 @@ import {
 function OngoingCardsNew(props) {
   const { status } = props;
 
-  // Determine chip colour props based on status
-  // const chipColor =
-  //   status === "Complete"
-  //     ? "success"
-  //     : status === "Task Done"
-  //       ? "primary"
-  //       : status === "Ongoing"
-  //         ? "warning"
-  //         : status === "Cancelled"
-  //           ? "danger"
-  //           : "default";
-
   // Determine custom background color based on status
   const chipBackgroundColor =
     status === "Task Done"
       ? "#D6B84F"
       : status === "Ongoing"
-        ? "#F26B0F"
-        : status === "Complete"
-          ? "#5CB85C"
-          : status === "Cancelled"
-            ? "#D9534F"
-            : "#C0C0C0";
+      ? "#F26B0F"
+      : status === "Complete"
+      ? "#5CB85C"
+      : status === "Cancelled"
+      ? "#D9534F"
+      : "#C0C0C0";
 
   // White text for better contrast
   const chipTextColor = "#FFFFFF";
@@ -114,7 +103,6 @@ function OngoingCardsNew(props) {
   const handleClose = () => {
     setOpen(false);
   };
-
 
   // openmodal (mark as complete)
   const [opencom, setOpencom] = useState(false);
@@ -284,12 +272,6 @@ function OngoingCardsNew(props) {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   };
 
-  // const cancel = (commissionId) => {
-  //   // Perform the logic to cancel the commission
-  //   console.log(`Commission ${commissionId} cancelled`);
-  //   setOpenDelete(false);
-  // };
-
   // cancel transaction
   const handleCancel = async (transactID, employerID, catcherID) => {
     try {
@@ -316,17 +298,7 @@ function OngoingCardsNew(props) {
         params: { date: getTimeAndDate() },
       });
       await axios.put(`http://localhost:8800/has-cancel-errand/${catcherID}`);
-      console.log(employerID, catcherID, "emp ID: cat ID")
-      // for catcher sides
-      // await axios.put(
-      //   `http://localhost:8800/catcher/cancel/${transactID}/${userID}`
-      // );
-
-      // setTimeout(() => {
-      //   // setLoading(false);
-      //   // modal will pop-up in 1 seconds
-      //   handleOpencancel();
-      // }, 1000);
+      console.log(employerID, catcherID, "emp ID: cat ID");
 
       handleOpencancel();
       setOpenDelete(false);
@@ -334,83 +306,7 @@ function OngoingCardsNew(props) {
       console.log(err);
     }
   };
-
-  // complete transaction
-  const handleComplete = async (transactID,
-    employerID,
-    catcherID,
-    pay,
-    type,
-    fname,
-    lname,
-    comTitle,
-    erID
-  ) => {
-    try {
-      //alert(employerID);
-      const amount = pay;
-      const errType = type;
-      const name = fname + " " + lname;
-      const errand = comTitle;
-      const errandID = erID;
-      const cateID = catcherID;
-
-      // add a notification to the commission's employer
-      // employer notif
-      notif.notifDesc = "You have marked your errand as completed";
-      notif.userID = employerID;
-      notif.notificationType = "Errand Completed";
-      notif.notifDate = getTimeAndDate();
-
-      // catcher notif
-      notifcat.notifDesc = "Your employer has marked their errand completed";
-      notifcat.userID = catcherID;
-      notifcat.notificationType = "Errand Completed";
-      notifcat.notifDate = getTimeAndDate();
-
-
-      // for employer
-      await axios.post("http://localhost:8800/notify", notif);
-      // for catcher
-      await axios.post("http://localhost:8800/notify", notifcat);
-      // catcher the one who marked as complete....
-      await axios.put(`http://localhost:8800/complete-trans/${transactID}`);
-      console.log("status: completed", userID, transactID);
-      // catcher has done the errand
-      await axios.put(`http://localhost:8800/has-done-errand/${catcherID}`);
-      // alert("Successfully marked errand as completed");
-      // window.location.reload();
-      handleOpencom();
-
-      setOpenMark(false);
-
-      //payment
-      const paymentUrl = `http://localhost:8800/process-payment/${userID}`;
-      axios
-        .post(paymentUrl, {
-          pay: amount,
-          type: errType,
-          name: name,
-          errand: errand,
-          id: transactID, // transactionID
-          employerID: userID,
-          errandID: errandID,
-          catID: cateID,
-        })
-        .then((response) => {
-          window.open(response.data.url);
-        })
-        .catch((error) => {
-          console.error("There was an error processing the payment!", error);
-        });
-
-      // setTimeout(() => {
-      //     window.location.reload();
-      // }, 5000);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //checking if already payed
   const { transCatID, comID, empID } = props;
   const [isPaid, setIsPaid] = useState(false);
   useEffect(() => {
@@ -430,44 +326,117 @@ function OngoingCardsNew(props) {
 
     checkPaymentStatus();
   }, [transCatID, comID, empID]);
-
-  const handlePayment = (
+  // complete transaction
+  const handleComplete = async (
+    transactID,
+    employerID,
+    catcherID,
     pay,
     type,
     fname,
     lname,
-    id,
     comTitle,
     erID,
-    catID
+    cnum,
+    cemail
   ) => {
-    const paymentUrl = `http://localhost:8800/process-payment/${userID}`;
-    // Change the amount
-    const amount = pay;
-    const errType = type;
-    const name = fname + " " + lname;
-    const errand = comTitle;
-    const errandID = erID;
-    const cateID = catID;
+    try {
+      //alert(employerID);
+      const amount = pay;
+      const errType = type;
+      const name = fname + " " + lname;
+      const errand = comTitle;
+      const errandID = erID;
+      const cateID = catcherID;
 
-    axios
-      .post(paymentUrl, {
-        pay: amount,
-        type: errType,
-        name: name,
-        errand: errand,
-        id: id, // transactionID
-        employerID: userID,
-        errandID: errandID,
-        catID: cateID,
-      })
-      .then((response) => {
-        window.open(response.data.url);
-      })
-      .catch((error) => {
-        console.error("There was an error processing the payment!", error);
-      });
+      // add a notification to the commission's employer
+      // employer notif
+      notif.notifDesc = "You have marked your errand as completed";
+      notif.userID = employerID;
+      notif.notificationType = "Errand Completed";
+      notif.notifDate = getTimeAndDate();
+      // catcher notif
+      notifcat.notifDesc = "Your employer has marked their errand completed";
+      notifcat.userID = catcherID;
+      notifcat.notificationType = "Errand Completed";
+      notifcat.notifDate = getTimeAndDate();
+      //payment
+      const paymentUrl = `http://localhost:8800/process-payment/${userID}`;
+      axios
+        .post(paymentUrl, {
+          pay: amount,
+          type: errType,
+          name: name,
+          errand: errand,
+          id: transactID, // transactionID
+          employerID: userID,
+          errandID: errandID,
+          catID: cateID,
+          cnum: cnum,
+          email: cemail,
+        })
+        .then((response) => {
+          window.open(response.data.url);
+        })
+        .catch((error) => {
+          console.error("There was an error processing the payment!", error);
+        });
+
+      if (isPaid === false) {
+        // for employer
+        // await axios.post("http://localhost:8800/notify", notif);
+        // for catcher
+        await axios.post("http://localhost:8800/notify", notifcat);
+        // catcher has done the errand
+        await axios.put(`http://localhost:8800/has-done-errand/${catcherID}`);
+      }
+      handleOpencom();
+      setOpenMark(false);
+      // setTimeout(() => {
+      //     window.location.reload();
+      // }, 5000);
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  // const handlePayment = (
+  //   pay,
+  //   type,
+  //   fname,
+  //   lname,
+  //   id,
+  //   comTitle,
+  //   erID,
+  //   catID
+  // ) => {
+  //   const paymentUrl = `http://localhost:8800/process-payment/${userID}`;
+  //   // Change the amount
+  //   const amount = pay;
+  //   const errType = type;
+  //   const name = fname + " " + lname;
+  //   const errand = comTitle;
+  //   const errandID = erID;
+  //   const cateID = catID;
+
+  //   axios
+  //     .post(paymentUrl, {
+  //       pay: amount,
+  //       type: errType,
+  //       name: name,
+  //       errand: errand,
+  //       id: id, // transactionID
+  //       employerID: userID,
+  //       errandID: errandID,
+  //       catID: cateID,
+  //     })
+  //     .then((response) => {
+  //       window.open(response.data.url);
+  //     })
+  //     .catch((error) => {
+  //       console.error("There was an error processing the payment!", error);
+  //     });
+  // };
 
   return (
     <>
@@ -508,7 +477,7 @@ function OngoingCardsNew(props) {
         contentMes="You have successfully Rated a catcher."
         color="success"
         colorText="green"
-      // icon={ErrorIcon}
+        // icon={ErrorIcon}
       />
 
       <ModalFeedback
@@ -535,7 +504,7 @@ function OngoingCardsNew(props) {
         contentMes="You have successfully marked as completed"
         color="success"
         colorText="green"
-      // icon={ErrorIcon}
+        // icon={ErrorIcon}
       />
 
       <div class="cardnew">
@@ -543,7 +512,7 @@ function OngoingCardsNew(props) {
           <Box class="boxer">
             {/* commissionType props */}
             {props.icon === "HomeService - Indoor" ||
-              props.icon === "HomeService - Outdoor" ? (
+            props.icon === "HomeService - Outdoor" ? (
               <OtherHousesIcon sx={{ color: "#fff", fontSize: 100 }} />
             ) : props.icon === "Transportation" ? (
               <LocalShippingIcon sx={{ color: "#fff", fontSize: 100 }} />
@@ -554,37 +523,14 @@ function OngoingCardsNew(props) {
         </div>
         <div class="contentcard">
           <span class="title">
-            {/* {props.title} */}
             <Typography level="h4" color="neutral" variant="plain">
-              {/* {commission.commissionTitle} */}
               {Capitalize(props.title)}
             </Typography>
           </span>
-
-          {/* props.desc */}
-          {/* {props.type} */}
           <Typography className="ongoing__cards__txt" level="body-sm">
             {/* {commission.commissionType} */}
             {props.type}
           </Typography>
-
-          {/* props.desc */}
-          {/* <h7 className="cards__header__seven">Details:
-            <Chip
-              sx={{
-                fontSize: "0.92rem",
-                height: "30px",
-                padding: "0 10px",
-                marginLeft: "6px",
-              }}
-              color={chipColor}
-              size="sm"
-              variant="solid"
-            >
-             
-              {CapitalizeAllLetters(props.status)}
-            </Chip>
-          </h7> */}
           <h7 className="cards__header__seven">
             Details:
             <Chip
@@ -636,7 +582,38 @@ function OngoingCardsNew(props) {
                   <Typography color="primary" level="title-md" variant="plain">
                     {Capitalize(props.userFname)} {Capitalize(props.userLname)}
                   </Typography>
-                  {/* {commission.userFirstname} {commission.userLastname} */}
+                </Typography>
+                <Typography>
+                  <Typography
+                    startDecorator={<Call />}
+                    color="plain"
+                    level="body-md"
+                    variant="plain"
+                  >
+                    #{props.cnum}
+                  </Typography>
+                </Typography>
+              </>
+            )}
+            {user.userType === "Catcher" && (
+              <>
+                <Typography style={{ marginBottom: "4px" }}>
+                  <Typography color="neutral" level="title-sm" variant="plain">
+                    EMPLOYER:
+                  </Typography>
+                  <Typography color="primary" level="title-md" variant="plain">
+                    {Capitalize(props.userFname)} {Capitalize(props.userLname)}
+                  </Typography>
+                </Typography>
+                <Typography>
+                  <Typography
+                    startDecorator={<Call />}
+                    color="plain"
+                    level="body-md"
+                    variant="plain"
+                  >
+                    #{props.empCnum}
+                  </Typography>
                 </Typography>
               </>
             )}
@@ -645,18 +622,14 @@ function OngoingCardsNew(props) {
           {user.userType === "Employer" && (
             <>
               <div className="ongoing__cardsNew__buttons">
-                {/* reverse classname cuz userType */}
-                {/* <div className="ongoing__cardsNewCat__buttons"> */}
-                {props.status === "Ongoing" ? (
+                {props.status === "Ongoing" && isPaid === false ? (
                   <>
-                    {" "}
                     <button
                       className="ongoing__cardsNewCat__button__complete"
                       onClick={() => handleOpenMarkModal()}
                     >
                       Mark as done
                     </button>
-
                     <button
                       // onClick={() => cancel(commission.commissionID)}
                       onClick={handleOpenCancelModal}
@@ -666,11 +639,9 @@ function OngoingCardsNew(props) {
                     </button>
                   </>
                 ) : props.status === "Cancelled" ? (
-                  <>
-                  </>
+                  <></>
                 ) : (
                   <>
-                    {" "}
                     <button
                       onClick={handleOpenModal} // props
                       className="ongoing__cards__button__feedback"
@@ -678,7 +649,7 @@ function OngoingCardsNew(props) {
                     >
                       {clickedFeedback[props.comID] ? "Rated" : "Feedback"}
                     </button>
-                    {isPaymentDisabled ? (
+                    {/* {isPaymentDisabled ? (
                       <button
                         className="ongoing__cards__button"
                         disabled={isPaid}
@@ -705,7 +676,7 @@ function OngoingCardsNew(props) {
                       >
                         {isPaid ? "Paid" : "Pay"}
                       </button>
-                    )}
+                    )} */}
                   </>
                 )}
               </div>
@@ -785,7 +756,8 @@ function OngoingCardsNew(props) {
                           props.userLname,
                           props.title,
                           props.comID,
-
+                          props.cnum,
+                          props.cEmail
                         )
                       }
                     >

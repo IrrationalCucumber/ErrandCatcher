@@ -2,24 +2,13 @@
 //
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Navbar from "../../components/Navbar/Navbar";
 import Table from "../../components/Table";
 import Pagination from "../../components/Pagination";
 import "./commissionpage.css";
-import { useLocation } from "react-router-dom";
 import { useAuth } from "../../components/AuthContext";
-import OngoingCards from "../Dropdown/OngoingCards";
 import { DisplayDate } from "../../components/DisplayDate";
-import Button from "@mui/joy/Button";
-import Divider from "@mui/joy/Divider";
-import DialogTitle from "@mui/joy/DialogTitle";
-import DialogContent from "@mui/joy/DialogContent";
-import DialogActions from "@mui/joy/DialogActions";
-import Modal from "@mui/joy/Modal";
-import ModalDialog from "@mui/joy/ModalDialog";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 import OngoingCardsNew from "../Dropdown/OngoingCardsNew";
-
 import DateRangeOutlinedIcon from "@mui/icons-material/DateRangeOutlined";
 import AssignmentTurnedInOutlinedIcon from "@mui/icons-material/AssignmentTurnedInOutlined";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
@@ -387,6 +376,8 @@ function CommissionPage() {
                 // marked complete and cancel
                 // transID={commission.transactID}
                 empID={commission.employerID}
+                empCnum={commission.userContactNum}
+                empEmail={commission.userEmail}
               />
             ))}
           </div>
