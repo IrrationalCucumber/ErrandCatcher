@@ -121,7 +121,7 @@ const Trans = {
     db.query(
       `SELECT c.commissionStartDate, c.commissionDeadline FROM commission c
         LEFT JOIN errandtransaction t ON c.commissionID = t.transErrandID 
-        WHERE t.transCatcherID = ? AND t.errandStatus = 'Ongoing'`,
+        WHERE t.transCatcherID = ? AND t.transStatus = 'Ongoing'`,
       [id],
       callback
     );
