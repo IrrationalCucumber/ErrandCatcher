@@ -13,6 +13,7 @@ import PaymentsIcon from "@mui/icons-material/Payments";
 import Filter9PlusOutlinedIcon from "@mui/icons-material/Filter9PlusOutlined";
 import { Slider, Box, Typography, TextField } from "@mui/material";
 import GeneratePDF from "../components/GeneratePDF";
+import { useAuth } from "../components/AuthContext";
 
 const GenerateRepCatcher = () => {
     const [invoices, setInvoices] = useState([]);
@@ -28,7 +29,9 @@ const GenerateRepCatcher = () => {
         year: "",
     });
     const location = useLocation();
-    const userID = location.pathname.split("/")[2];
+    // const userID = location.pathname.split("/")[2];
+    const { user } = useAuth();
+    const userID = user.userID;
 
     //current page state --Ash
     const [currentPage, setCurrentPage] = useState(1);
@@ -39,21 +42,6 @@ const GenerateRepCatcher = () => {
 
     const contentRef = useRef();
 
-    useEffect(() => {
-        const fetchAllInvoice = async () => {
-            try {
-                // all-invoice
-                const res = await axios.get("http://localhost:8800/all-invoice");
-                //"http://localhost:8800/commission" - local computer
-                //"http://192.168.1.47:8800/commission" - netwrok
-                setInvoices(res.data);
-                console.log(invoices)
-            } catch (err) {
-                console.log(err);
-            }
-        };
-        fetchAllInvoice();
-    }, []);
 
 
     useEffect(() => {
@@ -65,7 +53,7 @@ const GenerateRepCatcher = () => {
                 //"http://192.168.1.47:8800/commission" - netwrok
                 const res = await axios.get(`http://localhost:8800/all-transcat/${userID}`);
                 setInvoices(res.data);
-                console.log(invoices)
+                console.log(invoices, "all invoice", userID);
             } catch (err) {
                 console.log(err);
             }
@@ -74,22 +62,6 @@ const GenerateRepCatcher = () => {
     }, []);
 
 
-
-    // useEffect(() => {
-    //     const fetchTotalInvoice = async () => {
-    //         try {
-    //             // all-invoice
-    //             const res = await axios.get("http://localhost:8800/total-earnings");
-    //             //"http://localhost:8800/commission" - local computer
-    //             //"http://192.168.1.47:8800/commission" - netwrok
-    //             settotalInvoices(res.data);
-    //             console.log(totalinvoices, "total sum");
-    //         } catch (err) {
-    //             console.log(err);
-    //         }
-    //     };
-    //     fetchTotalInvoice();
-    // }, []);
 
 
     // /all-invoice-catcher/:id
