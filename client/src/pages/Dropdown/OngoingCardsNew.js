@@ -272,12 +272,6 @@ function OngoingCardsNew(props) {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   };
 
-  // const cancel = (commissionId) => {
-  //   // Perform the logic to cancel the commission
-  //   console.log(`Commission ${commissionId} cancelled`);
-  //   setOpenDelete(false);
-  // };
-
   // cancel transaction
   const handleCancel = async (transactID, employerID, catcherID) => {
     try {
@@ -305,16 +299,6 @@ function OngoingCardsNew(props) {
       });
       await axios.put(`http://localhost:8800/has-cancel-errand/${catcherID}`);
       console.log(employerID, catcherID, "emp ID: cat ID");
-      // for catcher sides
-      // await axios.put(
-      //   `http://localhost:8800/catcher/cancel/${transactID}/${userID}`
-      // );
-
-      // setTimeout(() => {
-      //   // setLoading(false);
-      //   // modal will pop-up in 1 seconds
-      //   handleOpencancel();
-      // }, 1000);
 
       handleOpencancel();
       setOpenDelete(false);
@@ -322,83 +306,7 @@ function OngoingCardsNew(props) {
       console.log(err);
     }
   };
-
-  // complete transaction
-  const handleComplete = async (
-    transactID,
-    employerID,
-    catcherID,
-    pay,
-    type,
-    fname,
-    lname,
-    comTitle,
-    erID
-  ) => {
-    try {
-      //alert(employerID);
-      const amount = pay;
-      const errType = type;
-      const name = fname + " " + lname;
-      const errand = comTitle;
-      const errandID = erID;
-      const cateID = catcherID;
-
-      // add a notification to the commission's employer
-      // employer notif
-      notif.notifDesc = "You have marked your errand as completed";
-      notif.userID = employerID;
-      notif.notificationType = "Errand Completed";
-      notif.notifDate = getTimeAndDate();
-
-      // catcher notif
-      notifcat.notifDesc = "Your employer has marked their errand completed";
-      notifcat.userID = catcherID;
-      notifcat.notificationType = "Errand Completed";
-      notifcat.notifDate = getTimeAndDate();
-
-      // for employer
-      await axios.post("http://localhost:8800/notify", notif);
-      // for catcher
-      await axios.post("http://localhost:8800/notify", notifcat);
-      // catcher the one who marked as complete....
-      await axios.put(`http://localhost:8800/complete-trans/${transactID}`);
-      console.log("status: completed", userID, transactID);
-      // catcher has done the errand
-      await axios.put(`http://localhost:8800/has-done-errand/${catcherID}`);
-      // alert("Successfully marked errand as completed");
-      // window.location.reload();
-      handleOpencom();
-
-      setOpenMark(false);
-
-      //payment
-      const paymentUrl = `http://localhost:8800/process-payment/${userID}`;
-      axios
-        .post(paymentUrl, {
-          pay: amount,
-          type: errType,
-          name: name,
-          errand: errand,
-          id: transactID, // transactionID
-          employerID: userID,
-          errandID: errandID,
-          catID: cateID,
-        })
-        .then((response) => {
-          window.open(response.data.url);
-        })
-        .catch((error) => {
-          console.error("There was an error processing the payment!", error);
-        });
-
-      // setTimeout(() => {
-      //     window.location.reload();
-      // }, 5000);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //checking if already payed
   const { transCatID, comID, empID } = props;
   const [isPaid, setIsPaid] = useState(false);
   useEffect(() => {
@@ -418,44 +326,117 @@ function OngoingCardsNew(props) {
 
     checkPaymentStatus();
   }, [transCatID, comID, empID]);
-
-  const handlePayment = (
+  // complete transaction
+  const handleComplete = async (
+    transactID,
+    employerID,
+    catcherID,
     pay,
     type,
     fname,
     lname,
-    id,
     comTitle,
     erID,
-    catID
+    cnum,
+    cemail
   ) => {
-    const paymentUrl = `http://localhost:8800/process-payment/${userID}`;
-    // Change the amount
-    const amount = pay;
-    const errType = type;
-    const name = fname + " " + lname;
-    const errand = comTitle;
-    const errandID = erID;
-    const cateID = catID;
+    try {
+      //alert(employerID);
+      const amount = pay;
+      const errType = type;
+      const name = fname + " " + lname;
+      const errand = comTitle;
+      const errandID = erID;
+      const cateID = catcherID;
 
-    axios
-      .post(paymentUrl, {
-        pay: amount,
-        type: errType,
-        name: name,
-        errand: errand,
-        id: id, // transactionID
-        employerID: userID,
-        errandID: errandID,
-        catID: cateID,
-      })
-      .then((response) => {
-        window.open(response.data.url);
-      })
-      .catch((error) => {
-        console.error("There was an error processing the payment!", error);
-      });
+      // add a notification to the commission's employer
+      // employer notif
+      notif.notifDesc = "You have marked your errand as completed";
+      notif.userID = employerID;
+      notif.notificationType = "Errand Completed";
+      notif.notifDate = getTimeAndDate();
+      // catcher notif
+      notifcat.notifDesc = "Your employer has marked their errand completed";
+      notifcat.userID = catcherID;
+      notifcat.notificationType = "Errand Completed";
+      notifcat.notifDate = getTimeAndDate();
+      //payment
+      const paymentUrl = `http://localhost:8800/process-payment/${userID}`;
+      axios
+        .post(paymentUrl, {
+          pay: amount,
+          type: errType,
+          name: name,
+          errand: errand,
+          id: transactID, // transactionID
+          employerID: userID,
+          errandID: errandID,
+          catID: cateID,
+          cnum: cnum,
+          email: cemail,
+        })
+        .then((response) => {
+          window.open(response.data.url);
+        })
+        .catch((error) => {
+          console.error("There was an error processing the payment!", error);
+        });
+
+      if (isPaid === false) {
+        // for employer
+        // await axios.post("http://localhost:8800/notify", notif);
+        // for catcher
+        await axios.post("http://localhost:8800/notify", notifcat);
+        // catcher has done the errand
+        await axios.put(`http://localhost:8800/has-done-errand/${catcherID}`);
+      }
+      handleOpencom();
+      setOpenMark(false);
+      // setTimeout(() => {
+      //     window.location.reload();
+      // }, 5000);
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  // const handlePayment = (
+  //   pay,
+  //   type,
+  //   fname,
+  //   lname,
+  //   id,
+  //   comTitle,
+  //   erID,
+  //   catID
+  // ) => {
+  //   const paymentUrl = `http://localhost:8800/process-payment/${userID}`;
+  //   // Change the amount
+  //   const amount = pay;
+  //   const errType = type;
+  //   const name = fname + " " + lname;
+  //   const errand = comTitle;
+  //   const errandID = erID;
+  //   const cateID = catID;
+
+  //   axios
+  //     .post(paymentUrl, {
+  //       pay: amount,
+  //       type: errType,
+  //       name: name,
+  //       errand: errand,
+  //       id: id, // transactionID
+  //       employerID: userID,
+  //       errandID: errandID,
+  //       catID: cateID,
+  //     })
+  //     .then((response) => {
+  //       window.open(response.data.url);
+  //     })
+  //     .catch((error) => {
+  //       console.error("There was an error processing the payment!", error);
+  //     });
+  // };
 
   return (
     <>
@@ -542,15 +523,10 @@ function OngoingCardsNew(props) {
         </div>
         <div class="contentcard">
           <span class="title">
-            {/* {props.title} */}
             <Typography level="h4" color="neutral" variant="plain">
-              {/* {commission.commissionTitle} */}
               {Capitalize(props.title)}
             </Typography>
           </span>
-
-          {/* props.desc */}
-          {/* {props.type} */}
           <Typography className="ongoing__cards__txt" level="body-sm">
             {/* {commission.commissionType} */}
             {props.type}
@@ -646,11 +622,8 @@ function OngoingCardsNew(props) {
           {user.userType === "Employer" && (
             <>
               <div className="ongoing__cardsNew__buttons">
-                {/* reverse classname cuz userType */}
-                {/* <div className="ongoing__cardsNewCat__buttons"> */}
-                {props.status === "Ongoing" ? (
+                {props.status === "Ongoing" && isPaid === false ? (
                   <>
-                    {" "}
                     <button
                       className="ongoing__cardsNewCat__button__complete"
                       onClick={() => handleOpenMarkModal()}
@@ -669,7 +642,6 @@ function OngoingCardsNew(props) {
                   <></>
                 ) : (
                   <>
-                    {" "}
                     <button
                       onClick={handleOpenModal} // props
                       className="ongoing__cards__button__feedback"
@@ -783,7 +755,9 @@ function OngoingCardsNew(props) {
                           props.userFname,
                           props.userLname,
                           props.title,
-                          props.comID
+                          props.comID,
+                          props.cnum,
+                          props.cEmail
                         )
                       }
                     >

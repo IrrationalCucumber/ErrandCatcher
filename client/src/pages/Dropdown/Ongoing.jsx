@@ -164,6 +164,7 @@ function Ongoing() {
                 userFname={commission.userFirstname}
                 userLname={commission.userLastname}
                 cnum={commission.userContactNum}
+                cEmail={commission.userEmail}
                 // handle payment
                 // pay={commission.commissionPay}
                 // type={commission.commissionType}
