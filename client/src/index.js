@@ -65,6 +65,7 @@ import PaymentSuccess from "./pages/PaymentSuccess";
 import { ProtectedRoute } from "./components/ProtectedROute";
 import GenerateReport from "./pages/admin/GenerateReport";
 import VerificationSuccess from "./pages/VerificationSuceess";
+import GenerateRepCatcher from "./pages/GenerateRepCatcher";
 
 const router = createBrowserRouter([
   {
@@ -269,7 +270,19 @@ const router = createBrowserRouter([
     path: "sign-up",
     element: <SignUp />,
   },
-  { path: "/history", element: <History /> },
+
+
+  {
+    path: "/history/",
+    element: <History />,
+  },
+
+  {
+    path: "catcher-greports",
+    element: <GenerateRepCatcher />,
+  },
+
+
 
   // PROCESS PAYMENTS
   {
