@@ -24,6 +24,8 @@ const GenerateReport = () => {
         minPay: "",
         maxPay: "",
         date: "",
+        month: "",
+        year: "",
     });
     const location = useLocation();
     const userID = location.pathname.split("/")[2];
@@ -82,8 +84,8 @@ const GenerateReport = () => {
         }
     };
 
-    const [month, setMonth] = useState('January');
-    const [year, setYear] = useState(new Date().getFullYear());
+    // const [month, setMonth] = useState('January');
+    // const [year, setYear] = useState(new Date().getFullYear());
     const [totalInvoice, setTotalInvoice] = useState(0);
 
     const handleSliderChange = (event, newValue) => {
@@ -99,21 +101,36 @@ const GenerateReport = () => {
     // Filter invoices based on month and year
     const filterInvoices = invoices.filter((invoice) => {
         const invoiceDate = new Date(invoice.paid); //.date
-        const invoiceMonth = invoiceDate.toLocaleString('default', { month: 'long' });
+        // const invoiceMonth = invoiceDate.toLocaleString('default', { month: 'long' });
+        // const invoiceMonth = new Date(invoice.paid).toLocaleString('default', { month: 'long' });
+        // const invoiceMonth = new Date(invoice.paid).toLocaleString('default', { month: 'long', timeZone: 'UTC' });
+        const invoiceMonth = new Date(invoice.paid).toLocaleString('default', { month: 'long', timeZone: 'Asia/Manila' });
+
         const invoiceYear = invoiceDate.getFullYear();
 
+        const monthMatch = invoiceMonth === searchTerm.month;
+        const yearMatch = invoiceYear === parseInt(searchTerm.year);
 
-        const monthMatch = invoiceMonth === month;
-        const yearMatch = invoiceYear === parseInt(year);
+
+        console.log(`Invoice Month: "${invoiceMonth}"`);
+        console.log(`Search Term Month: "${searchTerm.month}"`);
+
 
         return monthMatch && yearMatch;
     });
+
+
+
+    // invoices.forEach((invoice) => {
+    //     console.log("Raw invoice date:", invoice.paid);
+    //     console.log("Parsed invoice date:", new Date(invoice.paid));
+    // });
 
     useEffect(() => {
         // Calculate the total invoice amount based on the filtered invoices
         const total = filterInvoices.reduce((acc, invoice) => acc + invoice.total, 0);
         setTotalInvoice(total);
-    }, [month, year, invoices]);
+    }, [searchTerm.month, searchTerm.year, invoices]);
 
     //filter
     const filterErrands = invoices.filter((invoice) => {
@@ -145,6 +162,29 @@ const GenerateReport = () => {
             searchDate = selectedDate === invoiceDate;
         }
 
+        // // Added month filter logic
+        let searchMonth = true;
+        if (searchTerm.month) {
+            const selectedMonth = searchTerm.month; // Use the raw month string
+            const invoiceMonth = new Date(invoice.paid).toLocaleString('default', { month: 'long', timeZone: 'Asia/Manila' });
+
+            searchMonth = selectedMonth === invoiceMonth;
+
+            console.log(`Selected Month: ${selectedMonth}`);
+            console.log(`Invoice Month: ${invoiceMonth}`);
+            console.log(`Month Match: ${searchMonth}`);
+        }
+
+
+
+        // Added year filter logic
+        let searchYear = true;
+        if (searchTerm.year) {
+            const selectedYear = parseInt(searchTerm.year);
+            const invoiceYear = new Date(invoice.paid).getFullYear();
+            searchYear = selectedYear === invoiceYear;
+        }
+
         let priceMatches = true;
         if (searchTerm.minPay !== "" && searchTerm.maxPay !== "") {
             const total = invoice.total / 100;
@@ -155,7 +195,7 @@ const GenerateReport = () => {
         }
 
         return (termMatch || termMatch2 || termMatchFullName)
-            && type && priceMatches && searchDate;
+            && type && priceMatches && searchDate && (searchMonth && searchYear);
     });
 
     // convert to centavo
@@ -309,9 +349,10 @@ const GenerateReport = () => {
                                     <select
                                         id="month"
                                         name="month"
-                                        value={month}
-                                        onChange={(e) => setMonth(e.target.value)}
+                                        value={searchTerm.month}
+                                        onChange={(e) => setSearchTerm((prev) => ({ ...prev, month: e.target.value }))}
                                     >
+                                        <option value="">Select Month</option>
                                         <option value="January">January</option>
                                         <option value="February">February</option>
                                         <option value="March">March</option>
@@ -340,9 +381,10 @@ const GenerateReport = () => {
                                     <select
                                         id="year"
                                         name="year"
-                                        value={year}
-                                        onChange={(e) => setYear(e.target.value)}
+                                        value={searchTerm.year} // Updated to use searchTerm.year
+                                        onChange={(e) => setSearchTerm((prev) => ({ ...prev, year: e.target.value }))}
                                     >
+                                        <option value="">Select Year</option>
                                         {Array.from(new Array(10), (v, i) => (
                                             <option key={i} value={new Date().getFullYear() - i}>
                                                 {new Date().getFullYear() - i}
