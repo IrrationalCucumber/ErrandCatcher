@@ -41,18 +41,6 @@ import {
 function OngoingCardsNew(props) {
   const { status } = props;
 
-  // Determine chip colour props based on status
-  // const chipColor =
-  //   status === "Complete"
-  //     ? "success"
-  //     : status === "Task Done"
-  //       ? "primary"
-  //       : status === "Ongoing"
-  //         ? "warning"
-  //         : status === "Cancelled"
-  //           ? "danger"
-  //           : "default";
-
   // Determine custom background color based on status
   const chipBackgroundColor =
     status === "Task Done"
@@ -627,6 +615,28 @@ function OngoingCardsNew(props) {
                     variant="plain"
                   >
                     #{props.cnum}
+                  </Typography>
+                </Typography>
+              </>
+            )}
+            {user.userType === "Catcher" && (
+              <>
+                <Typography style={{ marginBottom: "4px" }}>
+                  <Typography color="neutral" level="title-sm" variant="plain">
+                    EMPLOYER:
+                  </Typography>
+                  <Typography color="primary" level="title-md" variant="plain">
+                    {Capitalize(props.userFname)} {Capitalize(props.userLname)}
+                  </Typography>
+                </Typography>
+                <Typography>
+                  <Typography
+                    startDecorator={<Call />}
+                    color="plain"
+                    level="body-md"
+                    variant="plain"
+                  >
+                    #{props.empCnum}
                   </Typography>
                 </Typography>
               </>
