@@ -104,17 +104,7 @@ function Ongoing() {
       {/* No user ID */}
       <BannerOngoingSection username={user.username} />
 
-      <div
-        className="searchOngoing"
-        // style={{
-        //   marginTop: "10px",
-        //   marginBottom: "10px",
-        //   display: "flex",
-        //   alignItems: "center",
-        //   width: "50%",
-        //   marginLeft: "50px"
-        // }}
-      >
+      <div className="searchOngoing">
         <input
           className="inputSearchAdmin"
           type="text"
@@ -122,31 +112,7 @@ function Ongoing() {
           placeholder="Search..."
           value={searchTerm.term}
           onChange={handleChange}
-          // style={{
-          //   padding: "8px",
-          //   fontSize: "12px",
-          //   border: "1px solid #ccc",
-          //   borderRadius: "4px",
-          //   margin: "10px 0px 10px 0px",
-          // }}
         />
-        {/* <button
-            type="submit"
-            //onClick={fetchSearchResults}
-            style={{
-              padding: "8px",
-              fontSize: "12px",
-              cursor: "pointer",
-              border: "none",
-              backgroundColor: "#CE9251",
-              color: "white",
-              borderRadius: "4px",
-              marginBottom: "10px",
-              marginRight: "10px",
-            }}
-          >
-            
-          </button> */}
 
         <div
           className="filter__admin__accountList"
@@ -157,13 +123,6 @@ function Ongoing() {
             name="status"
             onChange={handleChange}
             value={searchTerm.status}
-            // style={{
-            //   padding: "8px",
-            //   fontSize: "12px",
-            //   border: "1px solid #ccc",
-            //   borderRadius: "4px",
-            //   margin: "10px 20px",
-            // }}
           >
             <option value="">Status</option>
             <option value="Ongoing">Ongoing</option>
@@ -176,13 +135,6 @@ function Ongoing() {
             onChange={handleChange}
             value={searchTerm.type}
             name="type"
-            // style={{
-            //   padding: "8px 10px 8px 10px",
-            //   fontSize: "12px",
-            //   border: "1px solid #ccc",
-            //   borderRadius: "4px",
-            //   margin: "10px",
-            // }}
           >
             <option value="">Type</option>
             <option value="HomeService - Indoor">HomeService Indoor</option>
@@ -192,7 +144,6 @@ function Ongoing() {
           </select>
         </div>
       </div>
-      {/* <OngoingCards commissions={filterErrands} to={`/view-errand/${userID}`} /> */}
 
       <div className="cards__container">
         <div className="cards__wrapper">
@@ -212,11 +163,10 @@ function Ongoing() {
                 // Employer side
                 userFname={commission.userFirstname}
                 userLname={commission.userLastname}
+                cnum={commission.userContactNum}
                 // handle payment
                 // pay={commission.commissionPay}
                 // type={commission.commissionType}
-                // userFname={commission.userFirstname}
-                // userLname={commission.userLastname}
                 transID={commission.transactID}
                 // title={commission.commissionTitle}
                 comID={commission.commissionID}

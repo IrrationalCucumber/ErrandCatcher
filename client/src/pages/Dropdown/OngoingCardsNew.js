@@ -10,6 +10,7 @@ import Modals from "../../components/Modals";
 import OtherHousesIcon from "@mui/icons-material/OtherHouses";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import { Call } from "@mui/icons-material";
 import { Box } from "@mui/joy";
 import {
   Button,
@@ -57,12 +58,12 @@ function OngoingCardsNew(props) {
     status === "Task Done"
       ? "#D6B84F"
       : status === "Ongoing"
-        ? "#F26B0F"
-        : status === "Complete"
-          ? "#5CB85C"
-          : status === "Cancelled"
-            ? "#D9534F"
-            : "#C0C0C0";
+      ? "#F26B0F"
+      : status === "Complete"
+      ? "#5CB85C"
+      : status === "Cancelled"
+      ? "#D9534F"
+      : "#C0C0C0";
 
   // White text for better contrast
   const chipTextColor = "#FFFFFF";
@@ -114,7 +115,6 @@ function OngoingCardsNew(props) {
   const handleClose = () => {
     setOpen(false);
   };
-
 
   // openmodal (mark as complete)
   const [opencom, setOpencom] = useState(false);
@@ -316,7 +316,7 @@ function OngoingCardsNew(props) {
         params: { date: getTimeAndDate() },
       });
       await axios.put(`http://localhost:8800/has-cancel-errand/${catcherID}`);
-      console.log(employerID, catcherID, "emp ID: cat ID")
+      console.log(employerID, catcherID, "emp ID: cat ID");
       // for catcher sides
       // await axios.put(
       //   `http://localhost:8800/catcher/cancel/${transactID}/${userID}`
@@ -336,7 +336,8 @@ function OngoingCardsNew(props) {
   };
 
   // complete transaction
-  const handleComplete = async (transactID,
+  const handleComplete = async (
+    transactID,
     employerID,
     catcherID,
     pay,
@@ -367,7 +368,6 @@ function OngoingCardsNew(props) {
       notifcat.userID = catcherID;
       notifcat.notificationType = "Errand Completed";
       notifcat.notifDate = getTimeAndDate();
-
 
       // for employer
       await axios.post("http://localhost:8800/notify", notif);
@@ -508,7 +508,7 @@ function OngoingCardsNew(props) {
         contentMes="You have successfully Rated a catcher."
         color="success"
         colorText="green"
-      // icon={ErrorIcon}
+        // icon={ErrorIcon}
       />
 
       <ModalFeedback
@@ -535,7 +535,7 @@ function OngoingCardsNew(props) {
         contentMes="You have successfully marked as completed"
         color="success"
         colorText="green"
-      // icon={ErrorIcon}
+        // icon={ErrorIcon}
       />
 
       <div class="cardnew">
@@ -543,7 +543,7 @@ function OngoingCardsNew(props) {
           <Box class="boxer">
             {/* commissionType props */}
             {props.icon === "HomeService - Indoor" ||
-              props.icon === "HomeService - Outdoor" ? (
+            props.icon === "HomeService - Outdoor" ? (
               <OtherHousesIcon sx={{ color: "#fff", fontSize: 100 }} />
             ) : props.icon === "Transportation" ? (
               <LocalShippingIcon sx={{ color: "#fff", fontSize: 100 }} />
@@ -567,24 +567,6 @@ function OngoingCardsNew(props) {
             {/* {commission.commissionType} */}
             {props.type}
           </Typography>
-
-          {/* props.desc */}
-          {/* <h7 className="cards__header__seven">Details:
-            <Chip
-              sx={{
-                fontSize: "0.92rem",
-                height: "30px",
-                padding: "0 10px",
-                marginLeft: "6px",
-              }}
-              color={chipColor}
-              size="sm"
-              variant="solid"
-            >
-             
-              {CapitalizeAllLetters(props.status)}
-            </Chip>
-          </h7> */}
           <h7 className="cards__header__seven">
             Details:
             <Chip
@@ -636,7 +618,16 @@ function OngoingCardsNew(props) {
                   <Typography color="primary" level="title-md" variant="plain">
                     {Capitalize(props.userFname)} {Capitalize(props.userLname)}
                   </Typography>
-                  {/* {commission.userFirstname} {commission.userLastname} */}
+                </Typography>
+                <Typography>
+                  <Typography
+                    startDecorator={<Call />}
+                    color="plain"
+                    level="body-md"
+                    variant="plain"
+                  >
+                    #{props.cnum}
+                  </Typography>
                 </Typography>
               </>
             )}
@@ -656,7 +647,6 @@ function OngoingCardsNew(props) {
                     >
                       Mark as done
                     </button>
-
                     <button
                       // onClick={() => cancel(commission.commissionID)}
                       onClick={handleOpenCancelModal}
@@ -666,8 +656,7 @@ function OngoingCardsNew(props) {
                     </button>
                   </>
                 ) : props.status === "Cancelled" ? (
-                  <>
-                  </>
+                  <></>
                 ) : (
                   <>
                     {" "}
@@ -678,7 +667,7 @@ function OngoingCardsNew(props) {
                     >
                       {clickedFeedback[props.comID] ? "Rated" : "Feedback"}
                     </button>
-                    {isPaymentDisabled ? (
+                    {/* {isPaymentDisabled ? (
                       <button
                         className="ongoing__cards__button"
                         disabled={isPaid}
@@ -705,7 +694,7 @@ function OngoingCardsNew(props) {
                       >
                         {isPaid ? "Paid" : "Pay"}
                       </button>
-                    )}
+                    )} */}
                   </>
                 )}
               </div>
@@ -784,8 +773,7 @@ function OngoingCardsNew(props) {
                           props.userFname,
                           props.userLname,
                           props.title,
-                          props.comID,
-
+                          props.comID
                         )
                       }
                     >
