@@ -113,6 +113,27 @@ const Trans = {
   getAmountSum: (cb) => {
     db.query(`SELECT SUM(total) as 't' FROM INVOICE`, cb);
   },
+  // get catcher total earnings
+  getAmountSumCat: (id, cb) => {
+    db.query(`SELECT SUM(total) as 't' FROM INVOICE WHERE invoiceCatcherID = ?`, [id], cb);
+  },
+  //get catcher all invoice info
+  getAllTransCat: (id, cb) => {
+    //   db.query(`SELECT i.*, 
+    //     ue.userFirstName AS employerFirstName,
+    //     ue.userLastName AS employerLastName,
+    //     uc.userFirstName AS catcherFirstName,
+    //     uc.userLastName AS catcherLastName 
+    //     FROM invoice i
+    //     LEFT JOIN useraccount ue ON i.invoiceemployerID = ue.userID
+    //     LEFT JOIN useraccount uc ON i.invoiceCatcherID = uc.userID;
+    //     WHERE useraccount = ?`, [id], cb);
+    // },
+
+    db.query("SELECT * FROM  invoice WHERE invoiceCatcherID = ?", [id], cb);
+  },
+
+
 };
 
 module.exports = Trans;
