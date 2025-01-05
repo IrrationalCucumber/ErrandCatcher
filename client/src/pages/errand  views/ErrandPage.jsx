@@ -9,16 +9,7 @@ import ErrandInputs from "../../components/ErrandInputs";
 import "./Commission.css"; // Import your CSS file
 import { useAuth } from "../../components/AuthContext";
 import { ViewMap, ViewMapBox } from "../../components/Map/Map";
-import ApplicationQualificationModal from "../../components/ApplicationModal/ApplicationQualificationModal";
-import {
-  Alert,
-  Button,
-  IconButton,
-  Modal,
-  ModalClose,
-  ModalDialog,
-  Typography,
-} from "@mui/joy";
+import { Alert, Button, IconButton, Typography } from "@mui/joy";
 import { CheckCircle, CloseRounded } from "@mui/icons-material";
 import ModalFeedback from "../../components/ModalFeedback";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
@@ -49,7 +40,6 @@ const ErrandPage = () => {
     destLat: "",
     tags: "",
   });
-  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   // modal message pop-up
   const [openFeedmodal, setOpenFeedmodal] = useState(false);
@@ -73,8 +63,8 @@ const ErrandPage = () => {
   const [distance, setDistance] = useState();
   //alert message
   const [showAlert, setShowAlert] = useState(false);
-  const [alertMesg, setAlerMsg] = useState("");
-  const [alrtColor, setAlrtColor] = useState("");
+  const [alertMesg] = useState("");
+  const [alrtColor] = useState("");
 
   //APS - 19/03/24
   //CHeck if Catcher already applied
@@ -185,14 +175,14 @@ const ErrandPage = () => {
 
   //apply for errand
   // Application state
-  const [application, setApplication] = useState({
+  const [application] = useState({
     catcherID: "",
     comID: "",
     applicationDate: "",
   });
 
   //set variables for notification
-  const [notif, setNotif] = useState({
+  const [notif] = useState({
     userID: "", //this is the employer/ userID of the commission
     notificationType: "", //notif description
     notifDesc: "", //contents of the notif
@@ -284,6 +274,7 @@ const ErrandPage = () => {
     start: "",
     end: "",
   });
+  const [isConflict, setIsConflict] = useState(false);
   useEffect(() => {
     const fetchDate = async () => {
       try {
@@ -292,15 +283,27 @@ const ErrandPage = () => {
         );
         const date = res.data[0];
         setDate({
-          start: date.commissionStartDate,
-          end: date.commissionDeadline,
+          start: new Date(date.commissionStartDate),
+          end: new Date(date.commissionDeadline),
         });
+        const commissionStart = new Date(commission.comStart);
+        const commissionEnd = new Date(commission.comDeadline);
+        const userStart = new Date(date.commissionStartDate);
+        const userEnd = new Date(date.commissionDeadline);
+        if (
+          (commissionStart >= userStart && commissionStart <= userEnd) ||
+          (commissionEnd >= userStart && commissionEnd <= userEnd) ||
+          (commissionStart <= userStart && commissionEnd >= userEnd)
+        ) {
+          setIsConflict(true);
+        }
       } catch (err) {
         console.log(err);
       }
     };
     fetchDate();
-  }, [userID]);
+  }, [userID, commission.comStart]);
+
   return (
     <>
       {showAlert && (
@@ -434,8 +437,7 @@ const ErrandPage = () => {
             <i>You still have an Errand to do!</i>
           </Typography>
         ) : null}
-        {commission.comStart < date.start &&
-        commission.comDeadline > date.end ? (
+        {isConflict ? (
           <Typography
             level="body-sm"
             sx={{
@@ -469,8 +471,7 @@ const ErrandPage = () => {
         </Typography>
         {user.userType === "Catcher" &&
           user.status === "Verified" &&
-          commission.comStart < date.start &&
-          commission.comDeadline > date.end &&
+          isConflict === false &&
           matchSkillCount > 0 && (
             <div>
               <div className="formButton">
