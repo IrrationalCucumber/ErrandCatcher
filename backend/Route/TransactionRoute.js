@@ -22,4 +22,7 @@ router.put("/catcher/complete/:id/:userID", transConstroller.putCompleteErrand);
 router.get("/all-invoice", transConstroller.getALlInvoice);
 router.get("/total-earnings", transConstroller.getAmountSum); //route for total of every invoice/transaction
 
+router.get("/all-invoice-catcher/:id", transConstroller.getALlInvoiceCatcher);
+router.get("/all-transcat/:id", transConstroller.getALlTransCatcher);
+
 module.exports = router;
