@@ -209,8 +209,8 @@ const GenerateRepCatcher = () => {
 
     return (
         <>
+            <NavbarPage />
             <div ref={contentRef}>
-                <NavbarPage />
                 <div className="commissions">
                     <div style={{ display: "flex", justifyContent: "center", marginTop: "4px", gap: "20px", alignItems: "stretch", }}>
                         <div class="col-md-4 col-xl-3 mb-3">
