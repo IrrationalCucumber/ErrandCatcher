@@ -119,18 +119,19 @@ const Trans = {
   },
   //get catcher all invoice info
   getAllTransCat: (id, cb) => {
-    //   db.query(`SELECT i.*, 
-    //     ue.userFirstName AS employerFirstName,
-    //     ue.userLastName AS employerLastName,
-    //     uc.userFirstName AS catcherFirstName,
-    //     uc.userLastName AS catcherLastName 
-    //     FROM invoice i
-    //     LEFT JOIN useraccount ue ON i.invoiceemployerID = ue.userID
-    //     LEFT JOIN useraccount uc ON i.invoiceCatcherID = uc.userID;
-    //     WHERE useraccount = ?`, [id], cb);
-    // },
-
-    db.query("SELECT * FROM  invoice WHERE invoiceCatcherID = ?", [id], cb);
+    db.query(
+      `SELECT i.*, 
+        ue.userFirstName AS employerFirstName,
+        ue.userLastName AS employerLastName,
+        uc.userFirstName AS catcherFirstName,
+        uc.userLastName AS catcherLastName
+      FROM invoice i
+      LEFT JOIN useraccount ue ON i.invoiceemployerID = ue.userID
+      LEFT JOIN useraccount uc ON i.invoiceCatcherID = uc.userID
+      WHERE i.invoiceCatcherID = ?`,
+      [id],
+      cb
+    );
   },
 
 
