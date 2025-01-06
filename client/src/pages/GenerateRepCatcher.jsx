@@ -145,7 +145,24 @@ const GenerateRepCatcher = () => {
       ?.toLowerCase()
       .includes(searchTerm.term.toLowerCase() ?? "");
 
-    return (termMatch || termMatch2) && type;
+    let searchMonth = true;
+    if (searchTerm.month) {
+      const selectedMonth = searchTerm.month;
+      const invoiceMonth = new Date(invoice.paid).toLocaleString("default", {
+        month: "long",
+        timeZone: "Asia/Manila",
+      });
+
+      searchMonth = selectedMonth === invoiceMonth;
+    }
+    let searchYear = true;
+    if (searchTerm.year) {
+      const selectedYear = parseInt(searchTerm.year);
+      const invoiceYear = new Date(invoice.paid).getFullYear();
+      searchYear = selectedYear === invoiceYear;
+    }
+
+    return (termMatch || termMatch2) && type && searchMonth && searchYear;
   });
 
   // convert to centavo

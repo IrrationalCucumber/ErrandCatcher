@@ -22,23 +22,45 @@ const GeneratePDF = ({ contentRef, buttonLabel }) => {
   };
 
   return (
-    <Button
-      variant="outlined"
-      color="primary"
-      startIcon={<FileDownloadIcon />}
+    // <Button
+    //   color="primary"
+    //   startIcon={<FileDownloadIcon />}
+    //   onClick={handleGeneratePDF}
+    //   className="report__buton"
+    //   sx={{
+    //     mt: 2,
+    //     textTransform: "none",
+    //     fontSize: "14px",
+    //     padding: "8px 16px",
+    //     mb: 2,
+    //     ml: 0.5,
+    //     display: isGenerating ? "none" : "block",
+    //   }}
+    // >
+    //   {buttonLabel}
+    // </Button>
+    <button
       onClick={handleGeneratePDF}
-      className="generate_report__button"
-      sx={{
-        mt: 2,
-        textTransform: "none",
+      style={{
+        display: isGenerating ? "none" : "block",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "8px",
+        padding: "8px 16px",
         fontSize: "14px",
-        padding: "8px 20px",
-        mb: 2,
-        ml: 0.5,
+        color: "#fff",
+        backgroundColor: "#007BFF",
+        border: "none",
+        borderRadius: "4px",
+        cursor: "pointer",
+        transition: "background-color 0.3s ease",
       }}
+      onMouseOver={(e) => (e.target.style.backgroundColor = "#0056b3")}
+      onMouseOut={(e) => (e.target.style.backgroundColor = "#007BFF")}
     >
+      <FileDownloadIcon style={{ fontSize: "18px" }} />
       {buttonLabel}
-    </Button>
+    </button>
   );
 };
 
