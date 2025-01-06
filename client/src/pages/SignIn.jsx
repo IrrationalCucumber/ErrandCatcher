@@ -160,7 +160,7 @@ const SignIn = () => {
         </p>
       </form>
       <div className="contman cont-tawo">
-        <img src="http://localhost:3000/images/tawo.png" alt="" />
+        <img src="/images/tawo.png" alt="" />
       </div>
       <LoadingBackdrop
         open={loading}
