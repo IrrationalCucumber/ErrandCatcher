@@ -1,48 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import Button from "@mui/material/Button";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 
 const GeneratePDF = ({ contentRef, buttonLabel }) => {
-    const handleGeneratePDF = async () => {
-        const content = contentRef.current;
-        const canvas = await html2canvas(content);
-        const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF();
-        const imgProps = pdf.getImageProperties(imgData);
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+  const [isGenerating, setIsGenerating] = useState(false);
+  const handleGeneratePDF = async () => {
+    setIsGenerating(true);
+    const content = contentRef.current;
+    const canvas = await html2canvas(content);
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF();
+    const imgProps = pdf.getImageProperties(imgData);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-        pdf.save("generated_report.pdf");
-    };
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    pdf.save("generated_report.pdf");
+    setIsGenerating(false);
+  };
 
-    return (
-        <Button
-            variant="outlined"
-            color="primary"
-            startIcon={<FileDownloadIcon />}
-            onClick={handleGeneratePDF}
-            sx={{
-                mt: 2,
-                textTransform: "none",
-                fontSize: "14px",
-                padding: "8px 16px",
-                mb: 2,
-                ml: 4,
-            }}
-        >
-            {buttonLabel}
-        </Button>
-    );
+  return (
+    <Button
+      variant="outlined"
+      color="primary"
+      startIcon={<FileDownloadIcon />}
+      onClick={handleGeneratePDF}
+      className="generate_report__button"
+      sx={{
+        mt: 2,
+        textTransform: "none",
+        fontSize: "14px",
+        padding: "8px 20px",
+        mb: 2,
+        ml: 0.5,
+      }}
+    >
+      {buttonLabel}
+    </Button>
+  );
 };
 
 export default GeneratePDF;
-
-
-
-
 
 // <button
 //     onClick={handleGeneratePDF}

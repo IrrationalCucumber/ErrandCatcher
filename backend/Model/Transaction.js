@@ -100,14 +100,17 @@ const Trans = {
   },
   //show all invoice with user info
   getAllInvoice: (cb) => {
-    db.query(`SELECT i.*, 
+    db.query(
+      `SELECT i.*, 
       ue.userFirstName AS employerFirstName,
       ue.userLastName AS employerLastName,
       uc.userFirstName AS catcherFirstName,
       uc.userLastName AS catcherLastName 
       FROM invoice i
       LEFT JOIN useraccount ue ON i.invoiceemployerID = ue.userID
-      LEFT JOIN useraccount uc ON i.invoiceCatcherID = uc.userID;`, cb);
+      LEFT JOIN useraccount uc ON i.invoiceCatcherID = uc.userID;`,
+      cb
+    );
   },
   //get the sum/total of every transaction invoice
   getAmountSum: (cb) => {
@@ -115,26 +118,22 @@ const Trans = {
   },
   // get catcher total earnings
   getAmountSumCat: (id, cb) => {
-    db.query(`SELECT SUM(total) as 't' FROM INVOICE WHERE invoiceCatcherID = ?`, [id], cb);
+    db.query(
+      `SELECT SUM(total) as 't' FROM INVOICE WHERE invoiceCatcherID = ?`,
+      [id],
+      cb
+    );
   },
   //get catcher all invoice info
   getAllTransCat: (id, cb) => {
     db.query(
-      `SELECT i.*, 
-        ue.userFirstName AS employerFirstName,
-        ue.userLastName AS employerLastName,
-        uc.userFirstName AS catcherFirstName,
-        uc.userLastName AS catcherLastName
-      FROM invoice i
-      LEFT JOIN useraccount ue ON i.invoiceemployerID = ue.userID
-      LEFT JOIN useraccount uc ON i.invoiceCatcherID = uc.userID
+      `SELECT i.*, ua.userFirstname, ua.userLastname FROM  invoice i
+      LEFT JOIN useraccount ua ON i.invoiceemployerID = ua.userID
       WHERE i.invoiceCatcherID = ?`,
       [id],
       cb
     );
   },
-
-
 };
 
 module.exports = Trans;
