@@ -1,6 +1,8 @@
 import React from "react";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
+import Button from "@mui/material/Button";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 
 const GeneratePDF = ({ contentRef, buttonLabel }) => {
     const handleGeneratePDF = async () => {
@@ -17,10 +19,50 @@ const GeneratePDF = ({ contentRef, buttonLabel }) => {
     };
 
     return (
-        <button onClick={handleGeneratePDF} style={{ padding: "10px 20px", fontSize: "16px", marginTop: "20px" }}>
+        <Button
+            variant="outlined"
+            color="primary"
+            startIcon={<FileDownloadIcon />}
+            onClick={handleGeneratePDF}
+            sx={{
+                mt: 2,
+                textTransform: "none",
+                fontSize: "14px",
+                padding: "8px 16px",
+                mb: 2,
+                ml: 4,
+            }}
+        >
             {buttonLabel}
-        </button>
+        </Button>
     );
 };
 
 export default GeneratePDF;
+
+
+
+
+
+// <button
+//     onClick={handleGeneratePDF}
+//     style={{
+//         display: "flex",
+//         alignItems: "center",
+//         justifyContent: "center",
+//         gap: "8px",
+//         padding: "8px 16px",
+//         fontSize: "14px",
+//         color: "#fff",
+//         backgroundColor: "#007BFF",
+//         border: "none",
+//         borderRadius: "4px",
+//         cursor: "pointer",
+//         transition: "background-color 0.3s ease",
+//     }}
+//     onMouseOver={(e) => (e.target.style.backgroundColor = "#0056b3")}
+//     onMouseOut={(e) => (e.target.style.backgroundColor = "#007BFF")}
+// >
+//     <FileDownloadIcon style={{ fontSize: "18px" }} />
+//     {buttonLabel}
+// </button>

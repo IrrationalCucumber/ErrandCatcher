@@ -525,7 +525,7 @@ const GenerateRepCatcher = () => {
 
                 <GeneratePDF
                     contentRef={contentRef}
-                    buttonLabel="Generate PDF"
+                    buttonLabel="Download Report"
                 />
 
             </div>
