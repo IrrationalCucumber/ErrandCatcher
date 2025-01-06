@@ -165,7 +165,7 @@ function OngoingCardsNew(props) {
         setShowAlert(true);
         return;
       } else {
-        //"http://localhost:8800/commission" - local computer
+        //"https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission" - local computer
         //"http://192.168.1.47:8800/commission" - netwrok
         feedback.feedbackDate = getCurrentDate();
         feedback.catcherID = catcherID;
@@ -214,7 +214,7 @@ function OngoingCardsNew(props) {
 
         //feedback.commissionID = fetchLoc().commissionID;
         const response = await axios.post(
-          "http://localhost:8800/rate",
+          "https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/rate",
           feedback
         );
         setSuccessMsg(response.data);
@@ -290,14 +290,14 @@ function OngoingCardsNew(props) {
       notifcat.notifDate = getTimeAndDate();
 
       // for employer
-      await axios.post("http://localhost:8800/notify", notif);
+      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notif);
       // for catcher
-      await axios.post("http://localhost:8800/notify", notifcat);
+      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notifcat);
       //cancel the transaction employer side
-      await axios.put(`http://localhost:8800/cancel-trans/${transactID}`, {
+      await axios.put(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/cancel-trans/${transactID}`, {
         params: { date: getTimeAndDate() },
       });
-      await axios.put(`http://localhost:8800/has-cancel-errand/${catcherID}`);
+      await axios.put(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/has-cancel-errand/${catcherID}`);
       console.log(employerID, catcherID, "emp ID: cat ID");
 
       handleOpencancel();
@@ -312,7 +312,7 @@ function OngoingCardsNew(props) {
   useEffect(() => {
     const checkPaymentStatus = async () => {
       try {
-        const response = await axios.get(`http://localhost:8800/invoice`, {
+        const response = await axios.get(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/invoice`, {
           params: { transCatID, comID, userID },
         });
         if (response.data.paid) {
@@ -361,7 +361,7 @@ function OngoingCardsNew(props) {
       notifcat.notificationType = "Errand Completed";
       notifcat.notifDate = getTimeAndDate();
       //payment
-      const paymentUrl = `http://localhost:8800/process-payment/${userID}`;
+      const paymentUrl = `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/process-payment/${userID}`;
       axios
         .post(paymentUrl, {
           pay: amount,
@@ -384,11 +384,11 @@ function OngoingCardsNew(props) {
 
       if (isPaid === false) {
         // for employer
-        // await axios.post("http://localhost:8800/notify", notif);
+        // await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notif);
         // for catcher
-        await axios.post("http://localhost:8800/notify", notifcat);
+        await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notifcat);
         // catcher has done the errand
-        await axios.put(`http://localhost:8800/has-done-errand/${catcherID}`);
+        await axios.put(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/has-done-errand/${catcherID}`);
       }
       handleOpencom();
       setOpenMark(false);
@@ -410,7 +410,7 @@ function OngoingCardsNew(props) {
   //   erID,
   //   catID
   // ) => {
-  //   const paymentUrl = `http://localhost:8800/process-payment/${userID}`;
+  //   const paymentUrl = `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/process-payment/${userID}`;
   //   // Change the amount
   //   const amount = pay;
   //   const errType = type;

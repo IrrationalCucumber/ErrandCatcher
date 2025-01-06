@@ -30,7 +30,7 @@ const SignIn = () => {
       return;
     }
     try {
-      const res = await axios.get("http://localhost:8800/sign-in", {
+      const res = await axios.get("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/sign-in", {
         params: { username: username, password: password },
       });
       //console.log("Response from server:", res.data); //debug

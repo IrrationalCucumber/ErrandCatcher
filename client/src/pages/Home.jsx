@@ -26,7 +26,7 @@ const Home = () => {
     const checkVerificationStatus = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8800/check-token/${userID}`
+          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/check-token/${userID}`
         );
         if (response.data.exists) {
           setShowAlert(true);

@@ -43,8 +43,8 @@ const CommissionList = () => {
   useEffect(() => {
     const fetchAllCommission = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/errands");
-        //"http://localhost:8800/commission" - local computer
+        const res = await axios.get("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/errands");
+        //"https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission" - local computer
         //"http://192.168.1.47:8800/commission" - netwrok
         setCommissions(res.data);
       } catch (err) {
@@ -57,9 +57,9 @@ const CommissionList = () => {
   //funtion to delete commission
   const handleDelete = async (commissionID) => {
     try {
-      //"http://localhost:8800/commission" - local computer
+      //"https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission" - local computer
       //"http://192.168.1.47:8800/commission" - netwrok
-      await axios.delete(`http://localhost:8800/commission/${commissionID}`);
+      await axios.delete(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission/${commissionID}`);
       window.location.reload();
     } catch (err) {
       console.log(err);

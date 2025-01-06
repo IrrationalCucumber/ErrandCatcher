@@ -606,13 +606,13 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
       console.log("info successfully sent to server");
       //upload docs to server
       await axios
-        .post(`http://localhost:8800/upload/${userID}`, formData)
+        .post(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/upload/${userID}`, formData)
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
       //update accound data
-      //await axios.put("http://localhost:8800/update-info/" + userID, details); //update skills in db
+      //await axios.put("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/update-info/" + userID, details); //update skills in db
       //add notif of request
-      await axios.post("http://localhost:8800/notify-admin"); // notify all admin
+      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify-admin"); // notify all admin
     } catch (error) {
       console.log(error);
     }

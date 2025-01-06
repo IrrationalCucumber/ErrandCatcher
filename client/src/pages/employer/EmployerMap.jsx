@@ -21,7 +21,7 @@ function CommissionMap() {
     const fetchErrand = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8800/your-commission/" + user.userID
+          "https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/your-commission/" + user.userID
         );
         setErrands(response.data);
       } catch (error) {

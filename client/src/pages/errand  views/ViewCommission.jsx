@@ -47,9 +47,9 @@ const ViewCommission = () => {
   //funtion to delete commission
   // const handleDelete = async (commissionID) =>{
   //     try {
-  //           //"http://localhost:8800/commission" - local computer
+  //           //"https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission" - local computer
   //           //"http://192.168.1.47:8800/commission" - netwrok
-  //       await axios.delete(`http://localhost:8800/commission/${commissionID}`)
+  //       await axios.delete(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission/${commissionID}`)
   //       window.location.reload()
   //     } catch (err) {
   //       console.log(err)
@@ -61,7 +61,7 @@ const ViewCommission = () => {
     const fetchCommission = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/commission/${commissionID}`
+          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission/${commissionID}`
         );
         const retrievedCommission = res.data[0];
         //format date
@@ -97,7 +97,7 @@ const ViewCommission = () => {
     try {
       //account.dateCreated = getCurrentDate();
       await axios.put(
-        "http://localhost:8800/update-commission/" + commissionID,
+        "https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/update-commission/" + commissionID,
         commission
       );
       navigate("/commission-list");

@@ -151,14 +151,14 @@ function ApplicationQualificationModal(props) {
       application.qualifications = qualificationsString;
 
       console.log(application); // Check the updated commission object
-      await axios.post("http://localhost:8800/apply", application);
+      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/apply", application);
 
       //add a notification to the commission's employer
       notif.notifDesc = "A Catcher has applied to on of your errand";
       notif.userID = props.employerID;
       notif.notificationType = "Errand Application";
 
-      await axios.post("http://localhost:8800/notify", notif);
+      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notif);
       alert("You have applied to this Errand!");
       //alert(application.qualifications);
       //navigate(`/application/${userID}`);

@@ -30,9 +30,9 @@ function Ongoing() {
     const fetchAllCommission = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/pending-errands/${userID}`
+          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/pending-errands/${userID}`
         );
-        //"http://localhost:8800/commission" - local computer
+        //"https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission" - local computer
         //"http://192.168.1.47:8800/commission" - netwrok
         setCommissions(res.data);
       } catch (err) {

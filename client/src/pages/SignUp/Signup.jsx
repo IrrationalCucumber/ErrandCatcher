@@ -50,7 +50,7 @@ const Signup = () => {
   useEffect(() => {
     const fetchResp = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/get-username/`);
+        const res = await axios.get(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/get-username/`);
         const usernameArray = res.data.map((user) => user.username);
         setUsernames(usernameArray);
       } catch (error) {
@@ -63,7 +63,7 @@ const Signup = () => {
   useEffect(() => {
     const fetchResp2 = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/get-email/`);
+        const res = await axios.get(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/get-email/`);
         const emailArray = res.data.map((email) => email.userEmail);
         setEmails(emailArray);
       } catch (error) {
@@ -289,7 +289,7 @@ const Signup = () => {
 
       try {
         account.dateCreated = getCurrentDate();
-        await axios.post("http://localhost:8800/sign-up", account); // new enpoint
+        await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/sign-up", account); // new enpoint
         // alert("Success");
         // navigate("/sign-in");
         // modal popup message

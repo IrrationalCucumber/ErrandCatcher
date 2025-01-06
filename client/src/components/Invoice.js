@@ -21,7 +21,7 @@ const Invoice = ({ open, onClose, userID }) => {
       const fetchTransactions = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:8800/transactions/${userID}`
+            `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/transactions/${userID}`
           );
           setTransactions(response.data);
           setLoading(false);

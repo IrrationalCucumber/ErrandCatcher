@@ -48,7 +48,7 @@ const UpdateAccount = () => {
     const fetchStatus = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/user-verify/${userID}`
+          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/user-verify/${userID}`
         );
         console.log(res.data[0].accountStatus);
         setStatus(res.data[0].accountStatus);
@@ -63,7 +63,7 @@ const UpdateAccount = () => {
   useEffect(() => {
     const fetchAccount = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/user/${userID}`);
+        const res = await axios.get(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/user/${userID}`);
         const retrievedAccount = res.data[0];
         //format date
         const formattedDate = new Date(retrievedAccount.userBirthday)
@@ -101,7 +101,7 @@ const UpdateAccount = () => {
     e.preventDefault();
     try {
       await axios.put(
-        "http://localhost:8800/update-account/" + userID,
+        "https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/update-account/" + userID,
         account
       );
       navigate("/accounts");
@@ -115,7 +115,7 @@ const UpdateAccount = () => {
     //refresh the page when button is clicked
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8800/verify-account/${userID}`);
+      await axios.put(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/verify-account/${userID}`);
       navigate("/accounts");
     } catch (err) {
       console.log(err);
@@ -127,7 +127,7 @@ const UpdateAccount = () => {
     //refresh the page when button is clicked
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8800/deactivate-account/${userID}`);
+      await axios.put(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/deactivate-account/${userID}`);
       navigate("/accounts");
     } catch (err) {
       console.log(err);

@@ -22,7 +22,7 @@ function CatcherMap() {
   useEffect(() => {
     const fetchErrands = async () => {
       try {
-        const response = await axios.get("http://localhost:8800/available/");
+        const response = await axios.get("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/available/");
         setErrands(response.data);
       } catch (error) {
         console.error(error);

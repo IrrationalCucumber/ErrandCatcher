@@ -97,8 +97,8 @@ function Resetpassword(props) {
 
         try {
             // endpoint route
-            await axios.put("http://localhost:8800/resetpassword/" + userID, account);
-            // await axios.put("http://localhost:8800/update/" + userID, account);
+            await axios.put("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/resetpassword/" + userID, account);
+            // await axios.put("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/update/" + userID, account);
             console.log("send hopefully to newendpoint", account)
             alert("Your new password is successfully changed!");
             window.location.reload();

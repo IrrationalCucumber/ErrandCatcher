@@ -43,8 +43,8 @@ const GenerateReport = () => {
         const fetchAllInvoice = async () => {
             try {
                 // all-invoice
-                const res = await axios.get("http://localhost:8800/all-invoice");
-                //"http://localhost:8800/commission" - local computer
+                const res = await axios.get("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/all-invoice");
+                //"https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission" - local computer
                 //"http://192.168.1.47:8800/commission" - netwrok
                 setInvoices(res.data);
                 console.log(invoices)
@@ -60,8 +60,8 @@ const GenerateReport = () => {
         const fetchTotalInvoice = async () => {
             try {
                 // all-invoice
-                const res = await axios.get("http://localhost:8800/total-earnings");
-                //"http://localhost:8800/commission" - local computer
+                const res = await axios.get("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/total-earnings");
+                //"https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission" - local computer
                 //"http://192.168.1.47:8800/commission" - netwrok
                 settotalInvoices(res.data);
                 console.log(totalinvoices, "total sum");

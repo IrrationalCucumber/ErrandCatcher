@@ -17,7 +17,7 @@ function CardsRecentErrands() {
   useEffect(() => {
     const fetchErrands = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/recent");
+        const res = await axios.get("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/recent");
         setRecentErrands(res.data);
       } catch (error) {
         console.log(error);

@@ -10,7 +10,7 @@ export default function TopCatcher() {
   useEffect(() => {
     const fetchCatchers = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/top-rated");
+        const res = await axios.get("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/top-rated");
         setCatchers(res.data);
       } catch (error) {
         console.error("Error fetching top rated catchers:", error);
@@ -38,7 +38,7 @@ export default function TopCatcher() {
                   <img
                     src={
                       catcher.profileImage
-                        ? `http://localhost:8800/images/profile/${catcher.profileImage}`
+                        ? `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/profile/${catcher.profileImage}`
                         : "/images/catcher.png"
                     }
                     alt="Catcher Profile"

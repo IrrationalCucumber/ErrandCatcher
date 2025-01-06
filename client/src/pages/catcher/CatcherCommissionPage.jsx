@@ -61,9 +61,9 @@ function CommissionPage() {
     const fetchAllCommission = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/accepted-errand/${userID}`
+          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/accepted-errand/${userID}`
         );
-        //"http://localhost:8800/commission" - local computer
+        //"https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission" - local computer
         //"http://192.168.1.47:8800/commission" - netwrok
         setCommissions(res.data);
       } catch (err) {
@@ -79,7 +79,7 @@ function CommissionPage() {
   const fetchPending = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8800/catcher/ongoing/${userID}`
+        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/catcher/ongoing/${userID}`
       );
 
       setForPayment(res.data);
@@ -165,10 +165,10 @@ function CommissionPage() {
       notif.userID = employerID;
       notif.notificationType = "Errand Cancelled";
       notif.notifDate = getTimeAndDate();
-      await axios.post("http://localhost:8800/notify", notif);
+      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notif);
       //cancel the transaction
       await axios.put(
-        `http://localhost:8800/catcher/cancel/${transactID}/${userID}`
+        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/catcher/cancel/${transactID}/${userID}`
       );
       /**
        * ADD METHOD TO CHANGE ALSO THE STATUS OF ERRAND TO CANCELLED
@@ -197,10 +197,10 @@ function CommissionPage() {
       notif.userID = empID;
       notif.notificationType = "Errand Completed";
       notif.notifDate = getTimeAndDate();
-      await axios.post("http://localhost:8800/notify", notif);
+      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notif);
       //cancel the transaction
       await axios.put(
-        `http://localhost:8800/catcher/complete/${transID}/${userID}`
+        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/catcher/complete/${transID}/${userID}`
       );
     } catch (error) {
       console.log(error);

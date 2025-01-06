@@ -50,8 +50,8 @@ const AccountList = () => {
   //useEffect to handle error
   const fetchAllAccount = async () => {
     try {
-      const res = await axios.get("http://localhost:8800/users");
-      //http://localhost:8800/user - local
+      const res = await axios.get("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/users");
+      //https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/user - local
       //http://192.168.1.47:8800/user - network
       setAccounts(res.data);
       //console.log(res.data);
@@ -83,7 +83,7 @@ const AccountList = () => {
   useEffect(() => {
     const fetchAccount = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/user/${currentId}`);
+        const res = await axios.get(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/user/${currentId}`);
         const retrievedAccount = res.data[0];
         // Update the state with retrieved account data
         setAccount({
@@ -114,7 +114,7 @@ const AccountList = () => {
     const fetchRating = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/user-rating/${currentId}`
+          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/user-rating/${currentId}`
         );
         if (!!res.data) {
           setRating(res.data[0].c);
@@ -273,14 +273,14 @@ const AccountList = () => {
   const onSuspend = async (id) => {
     try {
       const status = "Suspended";
-      await axios.put(`http://localhost:8800/change-status/${id}/${status}`);
+      await axios.put(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/change-status/${id}/${status}`);
       //console.log("Request verified:", request);
       //add a notification to the request user
       notif.notifDesc = "Your account has been suspended";
       notif.userID = id;
       notif.notificationType = "Suspension";
       notif.notifDate = getTimeAndDate();
-      await axios.post("http://localhost:8800/notify", notif);
+      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notif);
       //refresh list
       const interval = setInterval(fetchAllAccount, 1000);
       return () => clearInterval(interval);
@@ -292,13 +292,13 @@ const AccountList = () => {
   const onReactivate = async (id) => {
     try {
       const status = "Verified";
-      await axios.put(`http://localhost:8800/change-status/${id}/${status}`);
+      await axios.put(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/change-status/${id}/${status}`);
       //add a notification to the request user
       notif.notifDesc = "Your account has been reactivated";
       notif.userID = id;
       notif.notificationType = "Account Reactivation";
       notif.notifDate = getTimeAndDate();
-      await axios.post("http://localhost:8800/notify", notif);
+      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notif);
       //refresh list
       const interval = setInterval(fetchAllAccount, 1000);
       return () => clearInterval(interval);
@@ -309,13 +309,13 @@ const AccountList = () => {
   const onDeactivate = async (id) => {
     try {
       const status = "Deactivated";
-      await axios.put(`http://localhost:8800/change-status/${id}/${status}`);
+      await axios.put(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/change-status/${id}/${status}`);
       //add a notification to the request user
       notif.notifDesc = "Your account has been deactivated";
       notif.userID = id;
       notif.notificationType = "Account Deactivated";
       notif.notifDate = getTimeAndDate();
-      await axios.post("http://localhost:8800/notify", notif);
+      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notif);
       //refresh list
       const interval = setInterval(fetchAllAccount, 1000);
       return () => clearInterval(interval);
