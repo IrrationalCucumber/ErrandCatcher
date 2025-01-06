@@ -39,7 +39,7 @@ const Transportation = () => {
     const fetchAllCommission = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/type/Transportation`
+          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/type/Transportation`
         );
         setCommissions(res.data);
       } catch (err) {

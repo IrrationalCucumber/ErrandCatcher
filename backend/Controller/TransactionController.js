@@ -248,6 +248,28 @@ const transConstroller = {
       res.json(total[0]);
     });
   },
+  getALlInvoiceCatcher: (req, res) => {
+    const id = req.params.id;
+    Trans.getAmountSumCat(id, (err, total) => {
+      if (err) {
+        console.error("Error total summation: ", err);
+        return;
+      }
+      res.json(total[0]);
+    });
+  },
+
+  getALlTransCatcher: (req, res) => {
+    const id = req.params.id;
+    Trans.getAllTransCat(id, (err, invoice) => {
+      if (err) {
+        console.error("Error fetching inoives:", err);
+        return;
+      }
+      res.json(invoice);
+    });
+  },
+
 };
 
 module.exports = transConstroller;

@@ -12,6 +12,7 @@ import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined
 import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
 import StarRating from "../components/Display/StarRating";
 import { Star } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 const History = () => {
   const { user } = useAuth();
@@ -66,7 +67,7 @@ const History = () => {
     const fetchTransactions = async () => {
       try {
         // const response = await axios.get(
-        //   `http://localhost:8800/transactions/${userID}`
+        //   `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/transactions/${userID}`
         // );
         // setTransactions(response.data);
         // setLoading(false);
@@ -74,8 +75,8 @@ const History = () => {
         // choose if the user is Employer otherwise Catcher
         const endpoint =
           user.userType === "Employer"
-            ? `http://localhost:8800/transactionsEmp/${userID}`
-            : `http://localhost:8800/transactionsCat/${userID}`;
+            ? `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/transactionsEmp/${userID}`
+            : `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/transactionsCat/${userID}`;
 
         const response = await axios.get(endpoint);
         setTransactions(response.data);
@@ -100,6 +101,23 @@ const History = () => {
         >
           Transaction History
         </h1>
+        {/* user.userType === "Employer" */}
+        {user.userType === "Catcher" ?
+          (
+            <>
+              <Link
+                style={{ marginTop: "4px", textDecoration: "none" }}
+                to={`/catcher-greports`}
+
+              >
+                <a class="action" href="#">
+                  Generate Report
+                  <span aria-hidden="true">→</span>
+                </a>
+              </Link>
+
+            </>
+          ) : null}
 
         {/* apply testing data */}
         {/* {sampletran.length > 0 ? (

@@ -57,7 +57,7 @@ export function LandingMap() {
     //change api endpoint to "/available/" for available only
     const fetchErrands = async () => {
       try {
-        const response = await axios.get("http://localhost:8800/errands/");
+        const response = await axios.get("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/errands/");
         setErrands(response.data);
       } catch (error) {
         console.error(error);
@@ -143,7 +143,7 @@ export function HomeMap(props) {
     const fetchErrands = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8800/your-commission/" + props.id
+          "https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/your-commission/" + props.id
         );
         setErrands(response.data);
       } catch (error) {
@@ -220,7 +220,7 @@ export function ViewMap({ id }) {
   //get the coordinates of the cerrand
   const fetchLoc = async () => {
     try {
-      const response = await fetch(`http://localhost:8800/errand/${id}`);
+      const response = await fetch(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/errand/${id}`);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -341,7 +341,7 @@ export function UpdateMapLibre({ getCoords, id }) {
   useEffect(() => {
     const fetchLoc = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/errand/${id}`);
+        const res = await axios.get(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/errand/${id}`);
         if (res.data[0]) {
           setCoords({
             lat: res.data[0].commissionLat,

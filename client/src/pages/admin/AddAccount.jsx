@@ -46,7 +46,7 @@ const AddAccount = () => {
     e.preventDefault();
     try {
       account.dateCreated = getCurrentDate();
-      await axios.post("http://localhost:8800/sign-up", account);
+      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/sign-up", account);
       navigate("/dashboard/admin/accounts");
     } catch (err) {
       console.log(err);

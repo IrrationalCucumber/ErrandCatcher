@@ -33,7 +33,7 @@ function RequestPage() {
     // Simulate fetching data (you can replace this with actual API calls)
     const fetchData = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/requests`);
+        const res = await axios.get(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/requests`);
         setRequests(res.data);
       } catch (err) {
         console.log(err);

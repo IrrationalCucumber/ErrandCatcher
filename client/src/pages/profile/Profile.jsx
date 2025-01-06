@@ -55,7 +55,7 @@ const Profile = () => {
     const fetchDetails = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/ver-details/${userID}`
+          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/ver-details/${userID}`
         );
         setDocs({
           requestStatus: res.data[0].requestStatus,
@@ -100,7 +100,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchAccount = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/user/${userID}`);
+        const res = await axios.get(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/user/${userID}`);
         const retrievedAccount = res.data[0];
         //format date
         const formattedDate = new Date(retrievedAccount.userBirthday)
@@ -174,7 +174,7 @@ const Profile = () => {
     const fetchRating = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/user-rating/${userID}`
+          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/user-rating/${userID}`
         );
         //console.log(res.data[0].c);
         setRating(res.data[0].c);
@@ -212,7 +212,7 @@ const Profile = () => {
       window.location.reload();
 
       await axios
-        .post(`http://localhost:8800/update-pic/${userID}`, formData)
+        .post(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/update-pic/${userID}`, formData)
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
     }
@@ -280,7 +280,7 @@ const Profile = () => {
         setAccount(tempAccount); // Save changes to the actual account
         setIsEditing(false); // Exit edit mode
         // await axios
-        //   .post(`http://localhost:8800/update-pic/${userID}`, formData)
+        //   .post(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/update-pic/${userID}`, formData)
         //   .then((res) => console.log(res))
         //   .catch((err) => console.log(err));
 
@@ -291,7 +291,7 @@ const Profile = () => {
         setSnacMess("Profile details have been updated.");
         setSnacColor("success");
         setOpenSnack(true);
-        await axios.put("http://localhost:8800/update/" + userID, tempAccount);
+        await axios.put("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/update/" + userID, tempAccount);
         // setShowAlert(true);
       }
       window.scrollTo({

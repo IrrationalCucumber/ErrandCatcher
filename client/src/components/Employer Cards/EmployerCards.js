@@ -22,7 +22,7 @@ const EmployerCard = ({ employer }) => {
       const fetchCount = async () => {
         try {
           const res2 = await axios.get(
-            `http://localhost:8800/post-and-applicant-count/${userID}`
+            `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/post-and-applicant-count/${userID}`
           );
           setCounts({
             numPosts: res2.data[0].postCount,

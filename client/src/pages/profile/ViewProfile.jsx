@@ -40,7 +40,7 @@ function ViewProfile(id) {
   useEffect(() => {
     const fetchAccount = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/user/${userID}`);
+        const res = await axios.get(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/user/${userID}`);
         const retrievedAccount = res.data[0];
         //format date
         const formattedDate = new Date(retrievedAccount.userBirthday)
@@ -80,7 +80,7 @@ function ViewProfile(id) {
     const fetchRating = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/user-rating/${userID}`
+          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/user-rating/${userID}`
         );
         //console.log(res.data[0].c);
         setRating(res.data[0].c);
@@ -104,7 +104,7 @@ function ViewProfile(id) {
     const fetchDetails = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/ver-details/${userID}`
+          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/ver-details/${userID}`
         );
         setDocs({
           requestStatus: res.data[0].requestStatus,

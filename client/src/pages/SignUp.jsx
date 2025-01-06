@@ -118,7 +118,7 @@ const SignUp = () => {
     e.preventDefault();
     try {
       account.dateCreated = getCurrentDate();
-      await axios.post("http://localhost:8800/sign-up/", account); // new enpoint
+      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/sign-up/", account); // new enpoint
       navigate("/sign-in");
     } catch (err) {
       console.log(err);

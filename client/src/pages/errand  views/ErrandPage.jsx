@@ -85,7 +85,7 @@ const ErrandPage = () => {
       const fetchApp = async () => {
         try {
           const res = await axios.get(
-            `http://localhost:8800/get-apply/${userID}/${commissionID}`
+            `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/get-apply/${userID}/${commissionID}`
           );
           console.log(res.data[0]);
           if (!!res.data[0]) {
@@ -107,7 +107,7 @@ const ErrandPage = () => {
     const fetchCommission = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/errand/${commissionID}`
+          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/errand/${commissionID}`
         );
         const retrievedCommission = res.data[0];
         //format date
@@ -215,14 +215,14 @@ const ErrandPage = () => {
       application.catcherID = user.userID;
 
       console.log(application); // Check the updated commission object
-      await axios.post("http://localhost:8800/apply", application);
+      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/apply", application);
 
       //add a notification to the commission's employer
       notif.notifDesc = "A Catcher has applied to on of your errand";
       notif.userID = commission.employerID;
       notif.notificationType = "Errand Application";
 
-      await axios.post("http://localhost:8800/notify", notif);
+      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notif);
       // setAlerMsg("You have applied to this Errand!");
       // setShowAlert(true);
       // setAlrtColor("success");
@@ -259,7 +259,7 @@ const ErrandPage = () => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const res = await axios(`http://localhost:8800/user/${user.userID}`);
+        const res = await axios(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/user/${user.userID}`);
         const skillArray = res.data.map((skill) => skill.userQualification);
         setCatcher(skillArray[0].split(",")); // Ensure catcher is an array
       } catch (error) {

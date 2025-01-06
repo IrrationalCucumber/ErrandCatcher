@@ -18,7 +18,7 @@ function CommissionMap() {
   useEffect(() => {
     const fetchCommissions = async () => {
       try {
-        const response = await axios.get("http://localhost:8800/errands/");
+        const response = await axios.get("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/errands/");
         setErrands(response.data);
       } catch (error) {
         console.error(error);

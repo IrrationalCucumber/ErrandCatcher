@@ -14,7 +14,7 @@ function Dashboard() {
     const fetchHasErrand = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/check-has-errand/${user.userID}`
+          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/check-has-errand/${user.userID}`
         );
 
         // Create a new object with updated `hasErrand` but keeping other fields the same

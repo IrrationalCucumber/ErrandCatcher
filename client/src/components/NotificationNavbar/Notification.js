@@ -25,7 +25,7 @@ function Notification(props) {
     const fetchNotif = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/unread-notifs/${user.userID}`
+          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/unread-notifs/${user.userID}`
         );
         setNotifs(res.data);
       } catch (err) {
@@ -40,7 +40,7 @@ function Notification(props) {
   // Function to mark all notifications as read
   const handleMarkAllAsRead = async () => {
     try {
-      await axios.put(`http://localhost:8800/read-all/${user.userID}`);
+      await axios.put(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/read-all/${user.userID}`);
       // Update the notification list in the UI
       setNotifs((prevNotifs) =>
         prevNotifs.map((notif) => ({ ...notif, isRead: true }))

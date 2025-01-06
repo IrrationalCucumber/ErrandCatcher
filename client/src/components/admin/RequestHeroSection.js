@@ -10,7 +10,7 @@ function RequestHeroSection() {
   useEffect(() => {
     const fetchRequestCount = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/request-count/`);
+        const res = await axios.get(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/request-count/`);
         setRequest(res.data[0].c);
       } catch (error) {
         console.log(error);

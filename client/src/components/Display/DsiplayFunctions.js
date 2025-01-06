@@ -104,7 +104,7 @@ export function ApplicantsCount(id) {
     const fetchCount = async () => {
       try {
         const res2 = await axios.get(
-          `http://localhost:8800/post-and-applicant-count/${id}`
+          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/post-and-applicant-count/${id}`
         );
         setNum(res2.data[0].applicantCount);
       } catch (err) {
@@ -126,7 +126,7 @@ export function ApplicationCount(id) {
     const fetchCount = async () => {
       try {
         const res2 = await axios.get(
-          `http://localhost:8800/application-count/${userID}`
+          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/application-count/${userID}`
         );
         // setNum(res2.data[0]?.c || 0);
         setNum(res2.data[0]?.c ?? null); // Treat `null` if no valid count

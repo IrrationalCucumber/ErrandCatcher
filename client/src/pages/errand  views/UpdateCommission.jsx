@@ -73,7 +73,7 @@ const UpdateCommission = () => {
     const fetchCommission = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/errand/${commissionID}`
+          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/errand/${commissionID}`
         );
         const retrievedCommission = res.data[0];
         //format date
@@ -190,7 +190,7 @@ const UpdateCommission = () => {
         //account.dateCreated = getCurrentDate();
         commission.comStatus = "Available";
         await axios.put(
-          `http://localhost:8800/update-errand/${commissionID}`,
+          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/update-errand/${commissionID}`,
           commission
         );
         // popup update modal

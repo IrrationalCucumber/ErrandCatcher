@@ -27,7 +27,7 @@ export function MyFeedback({ id }) {
     //fetch data in backend
     const fetchFeedback = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/my-feedbacks/${id}`);
+        const res = await axios.get(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/my-feedbacks/${id}`);
         setMyFeedback(res.data);
       } catch (error) {
         console.log(error);
@@ -84,7 +84,7 @@ export function MyPostedFeedback() {
     const fetchFeedback = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/posted-feedbacks/${user.userID}`
+          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/posted-feedbacks/${user.userID}`
         );
         setFeedback(res.data);
       } catch (error) {

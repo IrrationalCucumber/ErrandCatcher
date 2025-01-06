@@ -31,7 +31,7 @@ function Experience(props) {
   const fetch = async () => {
     try {
       const response = await axios(
-        `http://localhost:8800/experience/${props.id}`
+        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/experience/${props.id}`
       );
       const data = await response.data;
       setExperience(data);
@@ -53,7 +53,7 @@ function Experience(props) {
     newExperience.userID = props.id;
     newExperience.startDate = `${newExperience.startMonth} ${newExperience.startYear}`;
     newExperience.endDate = `${newExperience.endMonth} ${newExperience.endYear}`;
-    await axios.post(`http://localhost:8800/experience`, newExperience);
+    await axios.post(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/experience`, newExperience);
     console.log(newExperience);
     setShowForm(false);
     //refresh experience display
@@ -64,7 +64,7 @@ function Experience(props) {
   //delete experience
   const deleteExperience = async (id) => {
     try {
-      await axios.delete(`http://localhost:8800/delete-experience/${id}`);
+      await axios.delete(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/delete-experience/${id}`);
       //refresh experience display
       const interval = setInterval(fetch, 1000);
       return () => clearInterval(interval);
@@ -296,7 +296,7 @@ export function ViewExperience(props) {
   const fetch = async () => {
     try {
       const response = await axios(
-        `http://localhost:8800/experience/${props.id}`
+        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/experience/${props.id}`
       );
       const data = await response.data;
       setExperience(data);

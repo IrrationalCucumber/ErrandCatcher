@@ -79,7 +79,7 @@ const CommissionList = () => {
   const fetchAllCommission = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8800/your-commission/${userID}`
+        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/your-commission/${userID}`
       );
       setCommissions(response.data);
     } catch (err) {
@@ -96,9 +96,9 @@ const CommissionList = () => {
   //funtion to delete commission
   const handleDelete = async (commissionID) => {
     try {
-      //"http://localhost:8800/commission" - local computer
+      //"https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission" - local computer
       //"http://192.168.1.47:8800/commission" - netwrok
-      await axios.delete(`http://localhost:8800/delete-errand/${commissionID}`);
+      await axios.delete(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/delete-errand/${commissionID}`);
 
       // popup delete modal
       setTimeout(() => {
@@ -199,8 +199,10 @@ const CommissionList = () => {
                     startDecorator={<Add />}
                     size="lg"
                     variant="solid"
+                    disabled={user.status === "Unverified" ? true : false}
                     onClick={(e) => navigate(`/errand/post-errand`)}
                   >
+                    {/* {user.status} */}
                     Add Errand
                   </Button>
                 </div>
