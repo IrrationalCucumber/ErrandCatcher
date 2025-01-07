@@ -35,7 +35,7 @@ function SkillsInputModal(props) {
       setSelectedSkills(props.skills);
     }
   }, [props.skills]);
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   // Predefined list of skills (you can fetch this from the backend)
   const availableSkills = [
     "Plumbing",

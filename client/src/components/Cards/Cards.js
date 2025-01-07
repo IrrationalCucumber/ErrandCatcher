@@ -6,7 +6,8 @@ import "./Cards.css";
 
 function Cards() {
   const [commissions, setCommissions] = useState([]);
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
+  console.log(apiURL);
   //rretrieve data
   useEffect(() => {
     const fetchAllCommission = async () => {
@@ -20,7 +21,7 @@ function Cards() {
       }
     };
     fetchAllCommission();
-  }, []);
+  }, [apiURL]);
   const location = useLocation();
   //pathname to array from
   //get the id

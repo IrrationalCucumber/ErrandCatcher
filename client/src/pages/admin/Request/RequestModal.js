@@ -59,7 +59,7 @@ const RequestModal = ({ request, handleClose }) => {
     // Create a string representing the current date and time
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   };
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   const handleVerify = async (requestUserID, requestID) => {
     try {
       const status = "Verified";

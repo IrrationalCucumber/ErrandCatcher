@@ -10,7 +10,7 @@ import axios from "axios";
 
 function Dashboard() {
   const { user, updateUser } = useAuth();
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   useEffect(() => {
     const fetchHasErrand = async () => {
       try {

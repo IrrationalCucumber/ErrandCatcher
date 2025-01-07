@@ -13,7 +13,7 @@ import "./Cards.css";
 function CatCards({ commissions }) {
   const [commissionslist, setCommissionslist] = useState([]);
   const location = useLocation();
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   //pathname to array from
   //get the id
   const userID = location.pathname.split("/")[2];
@@ -31,7 +31,7 @@ function CatCards({ commissions }) {
       }
     };
     fetchAllCommission();
-  }, [type]);
+  }, [type, apiURL]);
   return (
     <div className="cards">
       {/* <h1>Check out this epic Destination!</h1> */}

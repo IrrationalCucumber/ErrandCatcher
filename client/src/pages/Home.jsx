@@ -21,7 +21,7 @@ const Home = () => {
   const { user } = useAuth();
   const userID = user.userID;
   const [showAlert, setShowAlert] = useState(false);
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   useEffect(() => {
     const checkVerificationStatus = async () => {
       try {
@@ -36,7 +36,7 @@ const Home = () => {
     };
 
     checkVerificationStatus();
-  }, [userID]);
+  }, [userID, apiURL]);
 
   return (
     <>

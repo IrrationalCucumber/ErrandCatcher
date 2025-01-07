@@ -12,7 +12,7 @@ function Notification() {
   const [notifs, setNotifs] = useState([]);
   const { user } = useAuth();
   const userID = user.userID;
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   // Display all notifications
   const fetchNotif = async () => {
     try {
@@ -24,7 +24,7 @@ function Notification() {
   };
   useEffect(() => {
     fetchNotif();
-  }, []);
+  }, [apiURL]);
 
   // When user clicks 'mark as read', update db notif isRead to Yes
   const markAsRead = async (notificationID) => {

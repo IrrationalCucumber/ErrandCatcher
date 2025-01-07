@@ -16,7 +16,7 @@ const EmployerCard = ({ employer }) => {
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
   const userID = user.userID;
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   useEffect(() => {
     // Simulate fetching counts from backend API, be removed
     setTimeout(() => {
@@ -44,7 +44,7 @@ const EmployerCard = ({ employer }) => {
       //   setCounts(simulatedCounts);
       setLoading(false);
     }, 100); // Simulate 1 second delay
-  }, [counts, userID]);
+  }, [counts, userID, apiURL]);
 
   return (
     <>

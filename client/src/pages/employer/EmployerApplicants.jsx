@@ -98,7 +98,7 @@ const EmployerApplicants = () => {
     console.log(id);
     setShowProfileModal(true);
   };
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   //useEffect to handle error
   const fetchAllAccount = async () => {
     try {

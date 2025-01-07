@@ -15,7 +15,7 @@ function ViewProfile(id) {
   //get userID from url
   const userID = id.id;
   console.log(id.id);
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   //variable for account details
   const [account, setAccount] = useState({
     username: "",

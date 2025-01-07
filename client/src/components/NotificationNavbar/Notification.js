@@ -19,7 +19,7 @@ function Notification(props) {
   const [notifs, setNotifs] = useState([]);
   const { user } = useAuth();
   const navigate = useNavigate();
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   // Fetch and display all user's unread notifications
   useEffect(() => {
     const fetchNotif = async () => {
@@ -33,7 +33,7 @@ function Notification(props) {
     fetchNotif();
     const intervalNotif = setInterval(fetchNotif, 1000);
     return () => clearInterval(intervalNotif);
-  }, [user.userID]);
+  }, [user.userID, apiURL]);
 
   // Function to mark all notifications as read
   const handleMarkAllAsRead = async () => {

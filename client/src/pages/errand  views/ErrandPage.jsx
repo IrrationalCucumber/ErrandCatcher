@@ -74,7 +74,7 @@ const ErrandPage = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMesg, setAlerMsg] = useState("");
   const [alrtColor, setAlrtColor] = useState("");
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   //APS - 19/03/24
   //CHeck if Catcher already applied
   //setState if applies

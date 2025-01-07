@@ -21,7 +21,7 @@ export default Feedback;
  */
 export function MyFeedback({ id }) {
   const [myFeedback, setMyFeedback] = useState([]);
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   const { user } = useAuth();
   //get all the feedback of user
   useEffect(() => {
@@ -79,7 +79,7 @@ export function MyFeedback({ id }) {
 export function MyPostedFeedback() {
   const { user } = useAuth();
   const [feedback, setFeedback] = useState([]);
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   //fetch posted feedback of employer
   useEffect(() => {
     const fetchFeedback = async () => {
@@ -95,7 +95,7 @@ export function MyPostedFeedback() {
     //refresh list every 5 sec
     const refresh = setInterval(fetchFeedback, 5000);
     return () => clearInterval(refresh);
-  }, []);
+  }, [apiURL]);
   return (
     <>
       {feedback.map((fb) => {

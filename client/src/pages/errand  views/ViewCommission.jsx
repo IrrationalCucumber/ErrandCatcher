@@ -43,7 +43,7 @@ const ViewCommission = () => {
       setCommission((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     }
   };
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   //funtion to delete commission
   // const handleDelete = async (commissionID) =>{
   //     try {

@@ -24,7 +24,7 @@ function Ongoing() {
     type: "",
     status: "",
   });
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   //rretrieve data
   useEffect(() => {
     const fetchAllCommission = async () => {

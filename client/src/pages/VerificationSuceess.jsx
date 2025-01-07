@@ -9,7 +9,7 @@ function VerificationSuccess() {
   const navigate = useNavigate();
   const location = useLocation();
   const [message, setMessage] = useState("");
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   useEffect(() => {
     const verifyEmail = async () => {
       const params = new URLSearchParams(location.search);
@@ -26,7 +26,7 @@ function VerificationSuccess() {
     };
 
     verifyEmail();
-  }, [location.search]);
+  }, [location.search, apiURL]);
 
   const homebutton = () => {
     navigate("/dashboard/home");

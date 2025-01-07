@@ -55,7 +55,7 @@ const PostCommission = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [loading, setLoading] = useState(false);
   const [opensnack, setOpenSnack] = useState(false);
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   // modal message pop-up
   const [open, setOpen] = useState(false);
 

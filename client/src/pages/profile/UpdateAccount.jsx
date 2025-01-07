@@ -23,7 +23,7 @@ const UpdateAccount = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   const userID = location.pathname.split("/")[2];
   //pathname to array from
   //get the id

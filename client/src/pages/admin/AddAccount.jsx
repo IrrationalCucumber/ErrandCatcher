@@ -26,7 +26,7 @@ const AddAccount = () => {
   };
 
   const navigate = useNavigate();
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   const handleChange = (e) => {
     // For the 'gender' field, directly set the value without using spread syntax
     if (e.target.name === "gender") {

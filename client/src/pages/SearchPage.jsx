@@ -36,7 +36,7 @@ function SearchPage() {
       maxPay: newValue[1],
     }));
   };
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   //  rretrieve data
   useEffect(() => {
     //add condition if search term is empty
@@ -59,7 +59,7 @@ function SearchPage() {
     // }
     //add 'term' as dependencies
     // to trigger if its empty
-  }, [term]);
+  }, [term, apiURL]);
 
   // Search commmissions using JS filter method //
   const filteredCommissions = commissions.filter((commission) => {

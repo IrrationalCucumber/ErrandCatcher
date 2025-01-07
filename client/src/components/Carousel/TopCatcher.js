@@ -6,7 +6,7 @@ import "./topcat.css";
 
 export default function TopCatcher() {
   const [catchers, setCatchers] = useState([]);
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   //fetch top rated catchers
   useEffect(() => {
     const fetchCatchers = async () => {
@@ -18,7 +18,7 @@ export default function TopCatcher() {
       }
     };
     fetchCatchers();
-  }, []);
+  }, [apiURL]);
 
   return (
     <>

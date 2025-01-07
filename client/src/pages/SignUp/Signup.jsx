@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import RadioInputs from "./RadioInputs";
 //import "./Error.css";
 import "./passignup.css";
 import ModalFeedback from "../../components/ModalFeedback";
@@ -25,7 +24,7 @@ const Signup = () => {
     type: "",
     dateCreated: "",
   });
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   const [strength, setStrength] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -74,7 +73,7 @@ const Signup = () => {
       }
     };
     fetchResp2();
-  }, [account.email]);
+  }, [account.email, apiURL]);
 
   console.log(emails);
 
@@ -157,25 +156,6 @@ const Signup = () => {
   // const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
-  const resetForm = () => {
-    setAccount({
-      regUsername: "",
-      regPassword: "",
-      firstName: "",
-      lastName: "",
-      regPassword2: "",
-      bday: "",
-      gender: "",
-      email: "",
-      contact: "",
-      address: "",
-      type: "",
-      dateCreated: "",
-    });
-    // setEmployerErrorMessage("");
-    // setCatcherErrorMessage("");
-    // setErrorMessage("");
-  };
 
   function evaluatePasswordStrength(password) {
     let score = 0;
@@ -240,13 +220,6 @@ const Signup = () => {
     return `${year}-${month}-${day}`;
   };
 
-  const [selectedType, setSelectedType] = useState("");
-  const [selectedOption, setSelectedOption] = useState("");
-  const options = [
-    { label: "Employer", value: "Employer" },
-    { label: "Catcher", value: "Catcher" },
-  ];
-
   // Get the current date and calculate the date (18 years ago)
   const getMaxDate = () => {
     const today = new Date();
@@ -292,7 +265,7 @@ const Signup = () => {
 
       try {
         account.dateCreated = getCurrentDate();
-        await axios.post(`${apiURL}/sign-up`, account); // new enpoint
+        await axios.post(`http://localhost:8800/sign-up`, account); // new enpoint
         // alert("Success");
         // navigate("/sign-in");
         // modal popup message

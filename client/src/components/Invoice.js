@@ -11,7 +11,7 @@ const Invoice = ({ open, onClose, userID }) => {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   const handleClose = () => {
     onClose();
   };
@@ -31,7 +31,7 @@ const Invoice = ({ open, onClose, userID }) => {
       };
       fetchTransactions();
     }
-  }, [open, userID]);
+  }, [open, userID, apiURL]);
 
   if (loading && open) {
     return <div>Loading...</div>;

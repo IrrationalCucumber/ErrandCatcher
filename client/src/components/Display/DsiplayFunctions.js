@@ -98,7 +98,7 @@ export function AmountDecimal(amount, separator = ",") {
 //Applicant count for employer
 export function ApplicantsCount(id) {
   const [num, setNum] = useState();
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   useEffect(() => {
     // Simulate fetching counts from backend API, be removed
 
@@ -115,7 +115,7 @@ export function ApplicantsCount(id) {
     fetchCount();
     const interval = setInterval(fetchCount, 10000); // 10 seconds refresh
     return () => clearInterval(interval);
-  }, [id, num]);
+  }, [id, num, apiURL]);
   return num;
 }
 
@@ -123,7 +123,7 @@ export function ApplicantsCount(id) {
 export function ApplicationCount(id) {
   const userID = id.id;
   const [num, setNum] = useState(null);
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   useEffect(() => {
     const fetchCount = async () => {
       try {

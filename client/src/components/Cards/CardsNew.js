@@ -12,7 +12,7 @@ import { AmountDecimal } from "../Display/DsiplayFunctions";
 
 function CardsNew() {
   const [commissions, setCommissions] = useState([]);
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   //rretrieve data
   useEffect(() => {
     const fetchAllCommission = async () => {
@@ -26,7 +26,7 @@ function CardsNew() {
       }
     };
     fetchAllCommission();
-  }, []);
+  }, [apiURL]);
   const location = useLocation();
   //pathname to array from
   //get the id

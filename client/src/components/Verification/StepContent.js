@@ -567,7 +567,7 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
   const [open, setOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   const handleOpenModal = () => {
     setOpen(true);
   };

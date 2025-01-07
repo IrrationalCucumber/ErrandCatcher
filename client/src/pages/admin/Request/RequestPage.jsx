@@ -28,7 +28,7 @@ function RequestPage() {
     type: "",
     status: "",
   });
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   useEffect(() => {
     // Simulate fetching data (you can replace this with actual API calls)
     const fetchData = async () => {
@@ -41,7 +41,7 @@ function RequestPage() {
     };
 
     fetchData();
-  }, []);
+  }, [apiURL]);
 
   const handleClick = (request) => {
     setSelectedRequest(request); // Set selected request

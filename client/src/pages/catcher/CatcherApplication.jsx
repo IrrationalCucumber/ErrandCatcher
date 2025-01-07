@@ -82,7 +82,7 @@ function Application() {
     setOpenDel(false);
   };
 
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   //data
   //useEffect to handle error
   const fetchAllAccount = async () => {

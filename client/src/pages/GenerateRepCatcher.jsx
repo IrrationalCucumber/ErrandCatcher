@@ -34,7 +34,7 @@ const GenerateRepCatcher = () => {
   // const userID = location.pathname.split("/")[2];
   const { user } = useAuth();
   const userID = user.userID;
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   //current page state --Ash
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -56,7 +56,7 @@ const GenerateRepCatcher = () => {
       }
     };
     fetchAllInvoice();
-  }, []);
+  }, [apiURL]);
 
   // /all-invoice-catcher/:id
   useEffect(() => {
@@ -73,7 +73,7 @@ const GenerateRepCatcher = () => {
       }
     };
     fetchTotalInvoice();
-  }, []);
+  }, [apiURL]);
 
   const handleChange = (e) => {
     // For the 'gender' field, directly set the value without using spread syntax

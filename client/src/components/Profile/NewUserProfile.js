@@ -109,7 +109,7 @@ export function NewUserProfileui(props) {
     setOpenModal(true);
     setFilePath(docs);
   };
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   const [strength, setStrength] = useState("");
 
   const handleChange = (event) => {
@@ -1148,7 +1148,7 @@ export function NewViewUserProfile(props) {
   const [image, setImage] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
   const [open, setOpen] = useState(false);
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   const [buttonPopup3, setButtonPopup3] = useState(false);
 
   const handleImage = (e) => {

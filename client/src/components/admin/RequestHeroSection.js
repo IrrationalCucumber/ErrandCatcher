@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 function RequestHeroSection() {
   const [request, setRequest] = useState();
   const navigate = useNavigate();
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   useEffect(() => {
     const fetchRequestCount = async () => {
       try {
@@ -18,7 +18,7 @@ function RequestHeroSection() {
       }
     };
     fetchRequestCount();
-  }, [request]);
+  }, [request, apiURL]);
   return (
     <div className="request__hero__section">
       <h2

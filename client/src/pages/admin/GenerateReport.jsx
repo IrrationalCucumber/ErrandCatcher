@@ -36,7 +36,7 @@ const GenerateReport = () => {
   //Pagination --Ash
   //display data per page
   const [itemsPerPage] = useState(10);
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   const contentRef = useRef();
 
   useEffect(() => {
@@ -53,7 +53,7 @@ const GenerateReport = () => {
       }
     };
     fetchAllInvoice();
-  }, []);
+  }, [apiURL]);
 
   useEffect(() => {
     const fetchTotalInvoice = async () => {
@@ -69,7 +69,7 @@ const GenerateReport = () => {
       }
     };
     fetchTotalInvoice();
-  }, []);
+  }, [apiURL]);
 
   const handleChange = (e) => {
     // For the 'gender' field, directly set the value without using spread syntax

@@ -37,7 +37,7 @@ const CommissionList = () => {
   //Pagination --Ash
   //display data per page
   const [itemsPerPage] = useState(10);
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   //handle error
   //rretrieve data
   useEffect(() => {
@@ -52,7 +52,7 @@ const CommissionList = () => {
       }
     };
     fetchAllCommission();
-  }, []);
+  }, [apiURL]);
 
   //funtion to delete commission
   const handleDelete = async (commissionID) => {

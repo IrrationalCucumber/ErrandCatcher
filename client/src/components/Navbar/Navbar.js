@@ -39,7 +39,7 @@ function Navbar(props) {
   //carry id to other page
   //pathname to array from
   const userID = user.userID;
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   const [notifCount, setNotifCount] = useState("");
   useEffect(() => {
     const fetchNotif = async () => {
@@ -53,7 +53,7 @@ function Navbar(props) {
     fetchNotif();
     const intervalNotif = setInterval(fetchNotif, 1000);
     return () => clearInterval(intervalNotif);
-  }, [userID]);
+  }, [userID, apiURL]);
 
   return (
     <>

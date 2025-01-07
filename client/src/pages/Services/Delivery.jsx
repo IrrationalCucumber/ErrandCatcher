@@ -22,7 +22,7 @@ const Delivery = () => {
     maxPay: "",
     location: "",
   });
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   const handleSliderChange = (event, newValue) => {
     setFilter((prev) => ({
       ...prev,

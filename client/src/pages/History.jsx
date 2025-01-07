@@ -18,7 +18,7 @@ const History = () => {
   const { user } = useAuth();
   const userID = user.userID;
   const [transactions, setTransactions] = useState([]);
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   // tesing data
   const sampletran = [
     {
@@ -85,7 +85,7 @@ const History = () => {
       }
     };
     fetchTransactions();
-  }, [userID, user.userType]);
+  }, [userID, user.userType, apiURL]);
 
   return (
     <>

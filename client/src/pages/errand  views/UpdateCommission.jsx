@@ -45,7 +45,7 @@ const UpdateCommission = () => {
   // Add a state to track the marker's longitude and latitude
   // const [markerLngLat, setMarkerLngLat] = useState([123.8854, 10.3157]); // Default values
   // const [currentLocationMarker, setCurrentLocationMarker] = useState(null);
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   // modal message pop-up
   const [open, setOpen] = useState(false);
   const handleOpen = () => {

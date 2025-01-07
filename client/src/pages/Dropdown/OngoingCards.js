@@ -62,7 +62,7 @@ function OngoingCards({ commissions, to }) {
     // Update feedbackCount based on the star rating clicked
     setFeedback({ ...feedback, feedbackCount: rating });
   };
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   const handleSubmit = async (commissionID, catcherID) => {
     // setIsClicked(true);
     // Add any other logic you want to perform when the button is clicked

@@ -41,7 +41,7 @@ const AccountList = () => {
     setShowProfileModal(true);
     setCurrentId(id); // Set the ID in state
   };
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   //pagination --Ash
   const [currentPage, setCurrentPage] = useState(1);
   //Pagination --Ash
@@ -61,7 +61,7 @@ const AccountList = () => {
   };
   useEffect(() => {
     fetchAllAccount();
-  }, []);
+  }, [apiURL]);
   //view user details
   const [account, setAccount] = useState({
     username: "",

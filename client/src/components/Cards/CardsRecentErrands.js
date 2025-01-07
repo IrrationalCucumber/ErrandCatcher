@@ -13,7 +13,7 @@ import "./cardsNew.css";
 
 function CardsRecentErrands() {
   const [recentErrands, setRecentErrands] = useState([]);
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   //get recently posted available errands
   useEffect(() => {
     const fetchErrands = async () => {
@@ -25,7 +25,7 @@ function CardsRecentErrands() {
       }
     };
     fetchErrands();
-  }, []);
+  }, [apiURL]);
   return (
     <div className="cards">
       <div className="cards__container">

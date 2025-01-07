@@ -37,7 +37,7 @@ function UserProfile(props) {
   const [buttonPopup1, setButtonPopup1] = useState(false);
   const [buttonPopup2, setButtonPopup2] = useState(false);
   const [buttonPopup3, setButtonPopup3] = useState(false);
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   const handleImage = (e) => {
     const file = e.target.files[0];
     setImage(file);
@@ -516,7 +516,7 @@ export function ViewUserProfile(props) {
   const skillsArray = props.skills ? props.skills.split(",") : [];
   const [buttonPopup1, setButtonPopup1] = useState(false);
   const [buttonPopup2, setButtonPopup2] = useState(false);
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   return (
     <>
       <div className="profile-page-container">

@@ -58,7 +58,7 @@ function OngoingCardsNew(props) {
 
   const { user } = useAuth();
   const userID = user.userID;
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   const [feedback, setFeedback] = useState({
     catcherID: "",
     commissionID: "",

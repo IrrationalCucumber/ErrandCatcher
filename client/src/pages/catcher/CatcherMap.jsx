@@ -17,7 +17,7 @@ function CatcherMap() {
   const [userLocation, setUserLocation] = useState({ lat: 0, lng: 0 });
   const [proximity, setProximity] = useState(10); // Proximity in kilometers
   const [filter, setFilter] = useState(""); // State for type filter
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   // Fetch errands from the API
   useEffect(() => {
     const fetchErrands = async () => {

@@ -88,7 +88,7 @@ function ApplicationQualificationModal(props) {
   const [generalExperience, setGeneralExperience] = useState("");
   const [skills, setSkills] = useState("");
   const [error, setError] = useState("");
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   //click event for apply
   const handleApply = async (e) => {
     e.preventDefault();

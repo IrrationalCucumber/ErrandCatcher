@@ -52,7 +52,7 @@ export function LandingMap() {
   // center: [123.8854, 10.3157],
   const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
   const [errands, setErrands] = useState([]);
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   useEffect(() => {
     //fetch all errands
     //regardless of status
@@ -137,7 +137,7 @@ export function HomeMap(props) {
   const [zoom] = useState(11.6);
   const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
   const [errands, setErrands] = useState([]);
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   useEffect(() => {
     //fetch all errands
     //regardless of status
@@ -219,7 +219,7 @@ export function HomeMap(props) {
 export function ViewMap({ id }) {
   const [long, setLong] = useState(null);
   const [lat, setLat] = useState(null);
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   //get the coordinates of the cerrand
   const fetchLoc = async () => {
     try {
@@ -339,7 +339,7 @@ export function MapLibre({ getCoords }) {
 //HouseService
 export function UpdateMapLibre({ getCoords, id }) {
   const [coords, setCoords] = useState(null); // Start as null to delay map initialization
-  const apiURL = process.env.API_URL;
+  const apiURL = process.env.REACT_APP_API_BASE_URL;
   // Fetch location data from the backend
   useEffect(() => {
     const fetchLoc = async () => {
@@ -356,7 +356,7 @@ export function UpdateMapLibre({ getCoords, id }) {
       }
     };
     fetchLoc();
-  }, [id]);
+  }, [id.apiURL]);
 
   // Map initialization
   const mapContainer = useRef(null);
