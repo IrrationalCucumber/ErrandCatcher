@@ -248,6 +248,19 @@ const transConstroller = {
       res.json(total[0]);
     });
   },
+
+  //get errand date of ongoing errand
+  getErrandDate: (req, res) => {
+    const id = req.params.id; //catcherID
+    Trans.getErrandDate(id, (err, date) => {
+      if (err) {
+        console.error("Error fetch: ", err);
+        return;
+      }
+      res.json(date);
+    });
+  },
+
   getALlInvoiceCatcher: (req, res) => {
     const id = req.params.id;
     Trans.getAmountSumCat(id, (err, total) => {
@@ -269,6 +282,7 @@ const transConstroller = {
       res.json(invoice);
     });
   },
+
 
 };
 

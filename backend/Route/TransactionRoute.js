@@ -21,6 +21,7 @@ router.put("/catcher/cancel/:id/:userID", transConstroller.putCancelErrand); //f
 router.put("/catcher/complete/:id/:userID", transConstroller.putCompleteErrand); // for catch
 router.get("/all-invoice", transConstroller.getALlInvoice);
 router.get("/total-earnings", transConstroller.getAmountSum); //route for total of every invoice/transaction
+router.get("/ongoing-date/:id", transConstroller.getErrandDate);
 
 router.get("/all-invoice-catcher/:id", transConstroller.getALlInvoiceCatcher);
 router.get("/all-transcat/:id", transConstroller.getALlTransCatcher);

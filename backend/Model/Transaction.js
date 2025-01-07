@@ -116,6 +116,17 @@ const Trans = {
   getAmountSum: (cb) => {
     db.query(`SELECT SUM(total) as 't' FROM INVOICE`, cb);
   },
+
+  //get errand date of ongoing errand of catcher
+  getErrandDate: (id, callback) => {
+    db.query(
+      `SELECT c.commissionStartDate, c.commissionDeadline FROM commission c
+        LEFT JOIN errandtransaction t ON c.commissionID = t.transErrandID 
+        WHERE t.transCatcherID = ? AND t.transStatus = 'Ongoing'`,
+      [id],
+      callback
+ );
+  },
   // get catcher total earnings
   getAmountSumCat: (id, cb) => {
     db.query(
@@ -132,6 +143,7 @@ const Trans = {
       WHERE i.invoiceCatcherID = ?`,
       [id],
       cb
+
     );
   },
 };
