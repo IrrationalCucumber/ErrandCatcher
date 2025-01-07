@@ -109,7 +109,7 @@ export function NewUserProfileui(props) {
     setOpenModal(true);
     setFilePath(docs);
   };
-
+  const apiURL = process.env.API_URL;
   const [strength, setStrength] = useState("");
 
   const handleChange = (event) => {
@@ -126,14 +126,11 @@ export function NewUserProfileui(props) {
 
     try {
       // Make API request to update password
-      const response = await axios.put(
-        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/resetpassword/${userID}`,
-        {
-          currentpass: account.currentpass,
-          password: account.password,
-          conPassword: account.conPassword,
-        }
-      );
+      const response = await axios.put(`${apiURL}/resetpassword/${userID}`, {
+        currentpass: account.currentpass,
+        password: account.password,
+        conPassword: account.conPassword,
+      });
 
       // Show success message
       setMessage(response.data.message);
@@ -242,7 +239,7 @@ export function NewUserProfileui(props) {
                       {props.profileImg ? (
                         <img
                           className="user_profile_pic"
-                          src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/profile/${props.profileImg}`}
+                          src={`${apiURL}/images/profile/${props.profileImg}`}
                           alt="ProfPic"
                         />
                       ) : (
@@ -260,7 +257,6 @@ export function NewUserProfileui(props) {
                     ) : props.type === "admin" ? (
                       <p class="text-center text-secondary mb-4">Admin</p>
                     ) : null}
-
 
                     {/* --------------------- Rating --------------------- */}
                     {props.type === "Catcher" ? (
@@ -926,14 +922,15 @@ export function NewUserProfileui(props) {
                           {account.password && (
                             <>
                               <div
-                                className={`password-strength ${strength === "Weak"
-                                  ? "strength-weak"
-                                  : strength === "Medium"
+                                className={`password-strength ${
+                                  strength === "Weak"
+                                    ? "strength-weak"
+                                    : strength === "Medium"
                                     ? "strength-medium"
                                     : strength === "Strong"
-                                      ? "strength-strong"
-                                      : ""
-                                  }`}
+                                    ? "strength-strong"
+                                    : ""
+                                }`}
                               >
                                 Password strength: {strength}
                               </div>
@@ -968,7 +965,7 @@ export function NewUserProfileui(props) {
                           <button
                             type="submit"
                             class="btn btn-primary"
-                          // className="form-submit-btn"
+                            // className="form-submit-btn"
                           >
                             Change Password
                           </button>
@@ -1003,10 +1000,10 @@ export function NewUserProfileui(props) {
                             <img
                               onClick={() =>
                                 handleOpenModalDocs(
-                                  `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${props.verFront}`
+                                  `${apiURL}/images/docu/${props.verFront}`
                                 )
                               }
-                              src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${props.verFront}`}
+                              src={`${apiURL}/images/docu/${props.verFront}`}
                               alt="Front"
                             />
                           </div>
@@ -1014,10 +1011,10 @@ export function NewUserProfileui(props) {
                             <img
                               onClick={() =>
                                 handleOpenModalDocs(
-                                  `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${props.verBack}`
+                                  `${apiURL}/images/docu/${props.verBack}`
                                 )
                               }
-                              src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${props.verBack}`}
+                              src={`${apiURL}/images/docu/${props.verBack}`}
                               alt="Back"
                             />
                           </div>
@@ -1033,10 +1030,10 @@ export function NewUserProfileui(props) {
                             <img
                               onClick={() =>
                                 handleOpenModalDocs(
-                                  `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${props.verDR1}`
+                                  `${apiURL}/images/docu/${props.verDR1}`
                                 )
                               }
-                              src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${props.verDR2}`}
+                              src={`${apiURL}/images/docu/${props.verDR2}`}
                               alt="License"
                             />
                           </div>
@@ -1044,10 +1041,10 @@ export function NewUserProfileui(props) {
                             <img
                               onClick={() =>
                                 handleOpenModalDocs(
-                                  `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${props.verDR2}`
+                                  `${apiURL}/images/docu/${props.verDR2}`
                                 )
                               }
-                              src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${props.verDR2}`}
+                              src={`${apiURL}/images/docu/${props.verDR2}`}
                               alt="License"
                             />
                           </div>
@@ -1063,10 +1060,10 @@ export function NewUserProfileui(props) {
                             <img
                               onClick={() =>
                                 handleOpenModalDocs(
-                                  `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${props.verDoc1}`
+                                  `${apiURL}/images/docu/${props.verDoc1}`
                                 )
                               }
-                              src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${props.verDoc1}`}
+                              src={`${apiURL}/images/docu/${props.verDoc1}`}
                               alt="License"
                             />
                           </div>
@@ -1074,10 +1071,10 @@ export function NewUserProfileui(props) {
                             <img
                               onClick={() =>
                                 handleOpenModalDocs(
-                                  `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${props.verDoc2}`
+                                  `${apiURL}/images/docu/${props.verDoc2}`
                                 )
                               }
-                              src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${props.verDoc2}`}
+                              src={`${apiURL}/images/docu/${props.verDoc2}`}
                               alt="License"
                             />
                           </div>
@@ -1151,7 +1148,7 @@ export function NewViewUserProfile(props) {
   const [image, setImage] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
   const [open, setOpen] = useState(false);
-
+  const apiURL = process.env.API_URL;
   const [buttonPopup3, setButtonPopup3] = useState(false);
 
   const handleImage = (e) => {
@@ -1209,7 +1206,7 @@ export function NewViewUserProfile(props) {
                       {props.profileImg ? (
                         <img
                           className="user_profile_pic"
-                          src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/profile/${props.profileImg}`}
+                          src={`${apiURL}/images/profile/${props.profileImg}`}
                           alt="ProfPic"
                         />
                       ) : (
@@ -1619,10 +1616,10 @@ export function NewViewUserProfile(props) {
                             <img
                               onClick={() =>
                                 handleOpenModalDocs(
-                                  `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${props.verFront}`
+                                  `${apiURL}/images/docu/${props.verFront}`
                                 )
                               }
-                              src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${props.verFront}`}
+                              src={`${apiURL}/images/docu/${props.verFront}`}
                               alt="Front"
                             />
                           </div>
@@ -1630,10 +1627,10 @@ export function NewViewUserProfile(props) {
                             <img
                               onClick={() =>
                                 handleOpenModalDocs(
-                                  `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${props.verBack}`
+                                  `${apiURL}/images/docu/${props.verBack}`
                                 )
                               }
-                              src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${props.verBack}`}
+                              src={`${apiURL}/images/docu/${props.verBack}`}
                               alt="Back"
                             />
                           </div>
@@ -1649,10 +1646,10 @@ export function NewViewUserProfile(props) {
                             <img
                               onClick={() =>
                                 handleOpenModalDocs(
-                                  `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${props.verDoc1}`
+                                  `${apiURL}/images/docu/${props.verDoc1}`
                                 )
                               }
-                              src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${props.verDoc1}`}
+                              src={`${apiURL}/images/docu/${props.verDoc1}`}
                               alt="License"
                             />
                           </div>

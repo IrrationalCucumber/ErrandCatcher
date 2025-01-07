@@ -9,7 +9,7 @@ function VerificationSuccess() {
   const navigate = useNavigate();
   const location = useLocation();
   const [message, setMessage] = useState("");
-
+  const apiURL = process.env.API_URL;
   useEffect(() => {
     const verifyEmail = async () => {
       const params = new URLSearchParams(location.search);
@@ -17,7 +17,7 @@ function VerificationSuccess() {
 
       try {
         const response = await axios.get(
-          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/verify-email?token=${token}`
+          `${apiURL}/verify-email?token=${token}`
         );
         setMessage(response.data.message);
       } catch (error) {

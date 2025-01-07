@@ -26,7 +26,7 @@ const AddAccount = () => {
   };
 
   const navigate = useNavigate();
-
+  const apiURL = process.env.API_URL;
   const handleChange = (e) => {
     // For the 'gender' field, directly set the value without using spread syntax
     if (e.target.name === "gender") {
@@ -46,7 +46,7 @@ const AddAccount = () => {
     e.preventDefault();
     try {
       account.dateCreated = getCurrentDate();
-      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/sign-up", account);
+      await axios.post(`${apiURL}/sign-up`, account);
       navigate("/dashboard/admin/accounts");
     } catch (err) {
       console.log(err);

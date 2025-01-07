@@ -15,7 +15,7 @@ function ViewProfile(id) {
   //get userID from url
   const userID = id.id;
   console.log(id.id);
-
+  const apiURL = process.env.API_URL;
   //variable for account details
   const [account, setAccount] = useState({
     username: "",
@@ -40,7 +40,7 @@ function ViewProfile(id) {
   useEffect(() => {
     const fetchAccount = async () => {
       try {
-        const res = await axios.get(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/user/${userID}`);
+        const res = await axios.get(`${apiURL}/user/${userID}`);
         const retrievedAccount = res.data[0];
         //format date
         const formattedDate = new Date(retrievedAccount.userBirthday)
@@ -79,9 +79,7 @@ function ViewProfile(id) {
   useEffect(() => {
     const fetchRating = async () => {
       try {
-        const res = await axios.get(
-          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/user-rating/${userID}`
-        );
+        const res = await axios.get(`${apiURL}/user-rating/${userID}`);
         //console.log(res.data[0].c);
         setRating(res.data[0].c);
       } catch (err) {
@@ -103,9 +101,7 @@ function ViewProfile(id) {
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const res = await axios.get(
-          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/ver-details/${userID}`
-        );
+        const res = await axios.get(`${apiURL}/ver-details/${userID}`);
         setDocs({
           requestStatus: res.data[0].requestStatus,
           frontID: res.data[0].id_picture_front,

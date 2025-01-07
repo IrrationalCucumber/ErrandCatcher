@@ -10,11 +10,12 @@ import axios from "axios";
 
 function Dashboard() {
   const { user, updateUser } = useAuth();
+  const apiURL = process.env.API_URL;
   useEffect(() => {
     const fetchHasErrand = async () => {
       try {
         const res = await axios.get(
-          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/check-has-errand/${user.userID}`
+          `${apiURL}/check-has-errand/${user.userID}`
         );
 
         // Create a new object with updated `hasErrand` but keeping other fields the same
@@ -24,7 +25,6 @@ function Dashboard() {
         // };
 
         if (user.hasErrand !== res.data.userHasErrand) {
-
           const updatedUserData = {
             ...user,
             hasErrand: res.data.userHasErrand,

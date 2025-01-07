@@ -72,7 +72,6 @@ function Application() {
   };
   const handleClose = () => {
     setOpen(false);
-
   };
   // delete state
   const [openDel, setOpenDel] = useState(false);
@@ -81,18 +80,15 @@ function Application() {
   };
   const handleCloseDel = () => {
     setOpenDel(false);
-
   };
 
-
+  const apiURL = process.env.API_URL;
   //data
   //useEffect to handle error
   const fetchAllAccount = async () => {
     try {
-      const res = await axios.get(
-        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/your-application/${userID}`
-      );
-      //https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/user - local
+      const res = await axios.get(`${apiURL}/your-application/${userID}`);
+      //${apiURL}/user - local
       //http://192.168.1.47:8800/user - network
       setApply(res.data);
       console.log(res.data);
@@ -170,7 +166,8 @@ function Application() {
       variant="outlined"
       onClick={() => handleViewProfile(applicant.employerID)}
     >
-      {Capitalize(`${applicant.userFirstname}`) + " " +
+      {Capitalize(`${applicant.userFirstname}`) +
+        " " +
         Capitalize(`${applicant.userLastname}`)}
     </Button>,
     applicant.commissionTitle,
@@ -310,9 +307,7 @@ function Application() {
     //e.preventDefault();
 
     try {
-      await axios.put(
-        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/cancel-apply/${userID}/${applicationID}`
-      );
+      await axios.put(`${apiURL}/cancel-apply/${userID}/${applicationID}`);
 
       //add a notification to the commission's employer
       notif.notifDesc =
@@ -321,7 +316,7 @@ function Application() {
       notif.notificationType = "Application Cancelled";
       notif.notifDate = getTimeAndDate();
 
-      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notif);
+      await axios.post(`${apiURL}/notify`, notif);
       // window.location.reload();
       // navigate(`/my-application/${userID}`);
 
@@ -343,9 +338,9 @@ function Application() {
   // delete application
   const handleDelete = async (applicationID) => {
     try {
-      //"https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission" - local computer
+      //"${apiURL}/commission" - local computer
       //"http://192.168.1.47:8800/commission" - netwrok
-      await axios.delete(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/delete-apply/${applicationID}`);
+      await axios.delete(`${apiURL}/delete-apply/${applicationID}`);
 
       // popup delete modal
       setTimeout(() => {
@@ -355,7 +350,7 @@ function Application() {
       }, 1000);
 
       // close if click "yes" modal
-      setOpenDelete(false)
+      setOpenDelete(false);
 
       // setAlerMsg("You have deleted your Application");
       // setShowAlert(true);

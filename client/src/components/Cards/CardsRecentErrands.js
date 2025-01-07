@@ -13,11 +13,12 @@ import "./cardsNew.css";
 
 function CardsRecentErrands() {
   const [recentErrands, setRecentErrands] = useState([]);
+  const apiURL = process.env.API_URL;
   //get recently posted available errands
   useEffect(() => {
     const fetchErrands = async () => {
       try {
-        const res = await axios.get("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/recent");
+        const res = await axios.get(`${apiURL}/recent`);
         setRecentErrands(res.data);
       } catch (error) {
         console.log(error);

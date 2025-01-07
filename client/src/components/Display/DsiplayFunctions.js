@@ -98,13 +98,14 @@ export function AmountDecimal(amount, separator = ",") {
 //Applicant count for employer
 export function ApplicantsCount(id) {
   const [num, setNum] = useState();
+  const apiURL = process.env.API_URL;
   useEffect(() => {
     // Simulate fetching counts from backend API, be removed
 
     const fetchCount = async () => {
       try {
         const res2 = await axios.get(
-          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/post-and-applicant-count/${id}`
+          `${apiURL}/post-and-applicant-count/${id}`
         );
         setNum(res2.data[0].applicantCount);
       } catch (err) {
@@ -122,12 +123,11 @@ export function ApplicantsCount(id) {
 export function ApplicationCount(id) {
   const userID = id.id;
   const [num, setNum] = useState(null);
+  const apiURL = process.env.API_URL;
   useEffect(() => {
     const fetchCount = async () => {
       try {
-        const res2 = await axios.get(
-          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/application-count/${userID}`
-        );
+        const res2 = await axios.get(`${apiURL}/application-count/${userID}`);
         // setNum(res2.data[0]?.c || 0);
         setNum(res2.data[0]?.c ?? null); // Treat `null` if no valid count
       } catch (err) {
@@ -139,7 +139,6 @@ export function ApplicationCount(id) {
     return () => clearInterval(interval);
   }, [userID, num]);
 
- 
   if (num === null || num === undefined) {
     return null;
   }

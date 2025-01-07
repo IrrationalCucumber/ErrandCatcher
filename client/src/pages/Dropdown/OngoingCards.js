@@ -62,13 +62,13 @@ function OngoingCards({ commissions, to }) {
     // Update feedbackCount based on the star rating clicked
     setFeedback({ ...feedback, feedbackCount: rating });
   };
-
+  const apiURL = process.env.API_URL;
   const handleSubmit = async (commissionID, catcherID) => {
     // setIsClicked(true);
     // Add any other logic you want to perform when the button is clicked
     //e.preventDefault();
     try {
-      //"https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission" - local computer
+      //"${apiURL}/commission" - local computer
       //"http://192.168.1.47:8800/commission" - netwrok
       feedback.feedbackDate = getCurrentDate();
       feedback.catcherID = catcherID;
@@ -77,7 +77,7 @@ function OngoingCards({ commissions, to }) {
       //feedback.employerID = commission.
 
       //feedback.commissionID = fetchLoc().commissionID;
-      const response = await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/rate", feedback);
+      const response = await axios.post(`${apiURL}/rate`, feedback);
       setSuccessMsg(response.data);
     } catch (err) {
       console.log(err);
@@ -147,9 +147,9 @@ function OngoingCards({ commissions, to }) {
       notif.notificationType = "Errand Cancelled";
       notif.notifDate = getTimeAndDate();
 
-      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notif);
+      await axios.post(`${apiURL}/notify`, notif);
       //cancel the transaction
-      await axios.put(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/cancel-trans/${transactID}`, {
+      await axios.put(`${apiURL}/cancel-trans/${transactID}`, {
         params: { date: getTimeAndDate() },
       });
 
@@ -170,10 +170,10 @@ function OngoingCards({ commissions, to }) {
       notif.notificationType = "Errand completed";
       notif.notifDate = getTimeAndDate();
 
-      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notif);
+      await axios.post(`${apiURL}/notify`, notif);
       //complete the transaction
       await axios.put(
-        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/catcher/complete/${transactID}/${user.userID}`
+        `${apiURL}/catcher/complete/${transactID}/${user.userID}`
       );
       console.log("status: completed");
 
@@ -193,7 +193,7 @@ function OngoingCards({ commissions, to }) {
     erID,
     catID
   ) => {
-    const paymentUrl = `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/process-payment/${userID}`;
+    const paymentUrl = `${apiURL}/process-payment/${userID}`;
     // Change the amount
     const amount = pay;
     const errType = type;

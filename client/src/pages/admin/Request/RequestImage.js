@@ -1,6 +1,7 @@
 import { DialogContent, DialogTitle, ModalClose } from "@mui/joy";
 
 const ImageModal = ({ request, handleClose }) => {
+  const apiURL = process.env.API_URL;
   return (
     <>
       <ModalClose />
@@ -11,14 +12,14 @@ const ImageModal = ({ request, handleClose }) => {
             <h2 style={header}>ID Picture:</h2>
             <h7 style={header}>Front:</h7>
             <img
-              src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${request.id_picture_front}`}
+              src={`${apiURL}/images/docu/${request.id_picture_front}`}
               alt={`Image `}
               style={imageStyle}
             />
             <br></br>
             <h7 style={header}>Back:</h7>
             <img
-              src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${request.id_picture_back}`}
+              src={`${apiURL}/images/docu/${request.id_picture_back}`}
               alt={`Image `}
               style={imageStyle}
             />
@@ -26,26 +27,26 @@ const ImageModal = ({ request, handleClose }) => {
             <h2 style={header}>Documents:</h2>
 
             <img
-              src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${request.docu_1}`}
+              src={`${apiURL}/images/docu/${request.docu_1}`}
               alt={`Image `}
               style={imageStyle}
             />
             <br></br>
             <img
-              src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${request.docu_2}`}
+              src={`${apiURL}/images/docu/${request.docu_2}`}
               alt={`Image `}
               style={imageStyle}
             />
             <h2 style={header}>Driver License:</h2>
             <h7 style={header}>Front:</h7>
             <img
-              src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${request.driversLicense1}`}
+              src={`${apiURL}/images/docu/${request.driversLicense1}`}
               alt={`Image `}
               style={imageStyle}
             />
             <h7 style={header}>Back:</h7>
             <img
-              src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${request.driversLicense2}`}
+              src={`${apiURL}/images/docu/${request.driversLicense2}`}
               alt={`Image `}
               style={imageStyle}
             />
@@ -61,12 +62,12 @@ const ImageModal = ({ request, handleClose }) => {
     //     <h2 style={{ margin: "20px" }}>Images</h2>
     //     <div className="scroll-container" style={scrollContainerStyle}>
     //       <img
-    //         src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${request.id_picture_front}`}
+    //         src={`${apiURL}/images/docu/${request.id_picture_front}`}
     //         alt={`Image `}
     //         style={imageStyle}
     //       />
     //       <img
-    //         src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${request.id_picture_back}`}
+    //         src={`${apiURL}/images/docu/${request.id_picture_back}`}
     //         alt={`Image `}
     //         style={imageStyle}
     //       />
@@ -82,7 +83,7 @@ const header = {
   color: "#333",
   marginBottom: "10px",
   marginLeft: "16px",
-}
+};
 
 const modalStyle = {
   display: "block",

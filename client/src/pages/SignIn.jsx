@@ -23,14 +23,14 @@ const SignIn = () => {
   };
   //go-to-page function
   const navigate = useNavigate();
-
+  const apiURL = process.env.API_URL;
   const handleClick = async () => {
     if (!username || !password) {
       setErrorMessage("Please fill in both username/password.");
       return;
     }
     try {
-      const res = await axios.get("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/sign-in", {
+      const res = await axios.get(`${apiURL}/sign-in`, {
         params: { username: username, password: password },
       });
       //console.log("Response from server:", res.data); //debug

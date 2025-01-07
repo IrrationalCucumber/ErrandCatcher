@@ -22,7 +22,7 @@ const Transportation = () => {
     maxPay: "",
     location: "",
   });
-
+  const apiURL = process.env.API_URL;
   const handleSliderChange = (event, newValue) => {
     setFilter((prev) => ({
       ...prev,
@@ -38,9 +38,7 @@ const Transportation = () => {
   useEffect(() => {
     const fetchAllCommission = async () => {
       try {
-        const res = await axios.get(
-          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/type/Transportation`
-        );
+        const res = await axios.get(`${apiURL}/type/Transportation`);
         setCommissions(res.data);
       } catch (err) {
         console.log(err);
@@ -147,8 +145,10 @@ const Transportation = () => {
 
             <div class="col">
               <div className="Paylabel">
-                <div style={{ textAlign: "center" }} >
-                  <Typography color="#f5f5f5" variant="h6"
+                <div style={{ textAlign: "center" }}>
+                  <Typography
+                    color="#f5f5f5"
+                    variant="h6"
                     sx={{
                       fontSize: 18,
                       fontWeight: 460,
@@ -159,11 +159,9 @@ const Transportation = () => {
                     Payment Range:
                   </Typography>
 
-                  <Slider className="sliderpay"
-                    value={[
-                      Number(filter.minPay),
-                      Number(filter.maxPay)
-                    ]}
+                  <Slider
+                    className="sliderpay"
+                    value={[Number(filter.minPay), Number(filter.maxPay)]}
                     onChange={handleSliderChange}
                     // valueLabelDisplay="on"
                     min={500}
@@ -227,16 +225,20 @@ const Transportation = () => {
               alignContent: "center",
             }}
           >
-            <h1 style={{ fontWeight: "600" }}>
-              Opps!
-            </h1>
-            <h2 style={{ textAlign: "center" }} >
+            <h1 style={{ fontWeight: "600" }}>Opps!</h1>
+            <h2 style={{ textAlign: "center" }}>
               No errand found
-              <span style={{
-                fontStyle: "italic",
-                fontWeight: "600",
-                // color: "#378ce7",
-              }}> "Transportation"</span> as of now..
+              <span
+                style={{
+                  fontStyle: "italic",
+                  fontWeight: "600",
+                  // color: "#378ce7",
+                }}
+              >
+                {" "}
+                "Transportation"
+              </span>{" "}
+              as of now..
             </h2>
           </div>
         </>

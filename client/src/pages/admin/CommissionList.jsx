@@ -37,14 +37,14 @@ const CommissionList = () => {
   //Pagination --Ash
   //display data per page
   const [itemsPerPage] = useState(10);
-
+  const apiURL = process.env.API_URL;
   //handle error
   //rretrieve data
   useEffect(() => {
     const fetchAllCommission = async () => {
       try {
-        const res = await axios.get("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/errands");
-        //"https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission" - local computer
+        const res = await axios.get(`${apiURL}/errands`);
+        //"${apiURL}/commission" - local computer
         //"http://192.168.1.47:8800/commission" - netwrok
         setCommissions(res.data);
       } catch (err) {
@@ -57,9 +57,9 @@ const CommissionList = () => {
   //funtion to delete commission
   const handleDelete = async (commissionID) => {
     try {
-      //"https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission" - local computer
+      //"${apiURL}/commission" - local computer
       //"http://192.168.1.47:8800/commission" - netwrok
-      await axios.delete(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission/${commissionID}`);
+      await axios.delete(`${apiURL}/commission/${commissionID}`);
       window.location.reload();
     } catch (err) {
       console.log(err);
@@ -120,13 +120,13 @@ const CommissionList = () => {
         </h1>
         <div
           className="searchAdmin"
-        // style={{
-        //   marginTop: "10px",
-        //   marginBottom: "10px",
-        //   display: "flex",
-        //   alignItems: "center",
-        //   width: "50%",
-        // }}
+          // style={{
+          //   marginTop: "10px",
+          //   marginBottom: "10px",
+          //   display: "flex",
+          //   alignItems: "center",
+          //   width: "50%",
+          // }}
         >
           <input
             className="inputSearchAdmin"
@@ -135,13 +135,13 @@ const CommissionList = () => {
             placeholder="Search..."
             value={searchTerm.term}
             onChange={handleChange}
-          // style={{
-          //   padding: "8px",
-          //   fontSize: "12px",
-          //   border: "1px solid #ccc",
-          //   borderRadius: "4px",
-          //   margin: "10px 0px 10px 0px",
-          // }}
+            // style={{
+            //   padding: "8px",
+            //   fontSize: "12px",
+            //   border: "1px solid #ccc",
+            //   borderRadius: "4px",
+            //   margin: "10px 0px 10px 0px",
+            // }}
           />
 
           <div
@@ -153,13 +153,13 @@ const CommissionList = () => {
               name="status"
               onChange={handleChange}
               value={searchTerm.status}
-            // style={{
-            //   padding: "8px",
-            //   fontSize: "12px",
-            //   border: "1px solid #ccc",
-            //   borderRadius: "4px",
-            //   margin: "10px 20px",
-            // }}
+              // style={{
+              //   padding: "8px",
+              //   fontSize: "12px",
+              //   border: "1px solid #ccc",
+              //   borderRadius: "4px",
+              //   margin: "10px 20px",
+              // }}
             >
               <option value="">Status</option>
               <option value="Pending">Pending</option>
@@ -174,13 +174,13 @@ const CommissionList = () => {
               onChange={handleChange}
               value={searchTerm.type}
               name="type"
-            // style={{
-            //   padding: "8px 10px 8px 10px",
-            //   fontSize: "12px",
-            //   border: "1px solid #ccc",
-            //   borderRadius: "4px",
-            //   margin: "10px",
-            // }}
+              // style={{
+              //   padding: "8px 10px 8px 10px",
+              //   fontSize: "12px",
+              //   border: "1px solid #ccc",
+              //   borderRadius: "4px",
+              //   margin: "10px",
+              // }}
             >
               <option value="">Type</option>
               <option value="Home">Home</option>
@@ -274,7 +274,8 @@ const CommissionList = () => {
              
               </button> */}
               <button className="update">
-                <Link to={`/errand/view/${Commission.commissionID}`}
+                <Link
+                  to={`/errand/view/${Commission.commissionID}`}
                   style={{
                     textDecoration: "none",
                     display: "flex",
@@ -288,7 +289,8 @@ const CommissionList = () => {
                       fontSize: 24,
                       transition: "color 0.3s ease",
                     }}
-                  /> View
+                  />{" "}
+                  View
                 </Link>
               </button>
             </>,

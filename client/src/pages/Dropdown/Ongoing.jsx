@@ -24,15 +24,13 @@ function Ongoing() {
     type: "",
     status: "",
   });
-
+  const apiURL = process.env.API_URL;
   //rretrieve data
   useEffect(() => {
     const fetchAllCommission = async () => {
       try {
-        const res = await axios.get(
-          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/pending-errands/${userID}`
-        );
-        //"https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission" - local computer
+        const res = await axios.get(`${apiURL}/pending-errands/${userID}`);
+        //"${apiURL}/commission" - local computer
         //"http://192.168.1.47:8800/commission" - netwrok
         setCommissions(res.data);
       } catch (err) {

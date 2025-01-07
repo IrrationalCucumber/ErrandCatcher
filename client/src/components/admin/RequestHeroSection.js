@@ -7,10 +7,11 @@ import { useNavigate } from "react-router-dom";
 function RequestHeroSection() {
   const [request, setRequest] = useState();
   const navigate = useNavigate();
+  const apiURL = process.env.API_URL;
   useEffect(() => {
     const fetchRequestCount = async () => {
       try {
-        const res = await axios.get(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/request-count/`);
+        const res = await axios.get(`${apiURL}/request-count/`);
         setRequest(res.data[0].c);
       } catch (error) {
         console.log(error);
@@ -26,8 +27,10 @@ function RequestHeroSection() {
           fontFamily: "system-ui",
           fontWeight: "700",
           letterSpacing: "1px",
-        }}>
-        Total number of Account Verification request:</h2>
+        }}
+      >
+        Total number of Account Verification request:
+      </h2>
       <h1>{request}</h1>
       <div className="hero-btns">
         <Button onClick={(e) => navigate(`/dashboard/admin/request`)}>

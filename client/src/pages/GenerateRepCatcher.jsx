@@ -34,7 +34,7 @@ const GenerateRepCatcher = () => {
   // const userID = location.pathname.split("/")[2];
   const { user } = useAuth();
   const userID = user.userID;
-
+  const apiURL = process.env.API_URL;
   //current page state --Ash
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -48,9 +48,7 @@ const GenerateRepCatcher = () => {
     const fetchAllInvoice = async () => {
       try {
         // all-invoice
-        const res = await axios.get(
-          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/all-transcat/${userID}`
-        );
+        const res = await axios.get(`${apiURL}/all-transcat/${userID}`);
         setInvoices(res.data);
         console.log(invoices, "all invoice", userID);
       } catch (err) {
@@ -65,9 +63,7 @@ const GenerateRepCatcher = () => {
     const fetchTotalInvoice = async () => {
       try {
         // all-invoice
-        const res = await axios.get(
-          "https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/all-invoice-catcher/" + userID
-        );
+        const res = await axios.get(`${apiURL}/all-invoice-catcher/` + userID);
         //"https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission" - local computer
         //"http://192.168.1.47:8800/commission" - netwrok
         settotalInvoices(res.data);

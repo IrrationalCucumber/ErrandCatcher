@@ -59,13 +59,11 @@ const RequestModal = ({ request, handleClose }) => {
     // Create a string representing the current date and time
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   };
-
+  const apiURL = process.env.API_URL;
   const handleVerify = async (requestUserID, requestID) => {
     try {
       const status = "Verified";
-      await axios.put(
-        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/change-status/${requestUserID}/${status}`
-      );
+      await axios.put(`${apiURL}/change-status/${requestUserID}/${status}`);
       console.log("Request verified:", request);
       setIsButtonClicked(true);
       //add a notification to the request user
@@ -73,9 +71,9 @@ const RequestModal = ({ request, handleClose }) => {
       notif.userID = requestUserID;
       notif.notificationType = "Verification";
       notif.notifDate = getTimeAndDate();
-      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notif);
+      await axios.post(`${apiURL}/notify`, notif);
       //update request to complete
-      await axios.put(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/done-request/${requestID}`);
+      await axios.put(`${apiURL}/done-request/${requestID}`);
 
       setLoading(true);
       // 2 seconds cd
@@ -103,9 +101,7 @@ const RequestModal = ({ request, handleClose }) => {
     // You can implement the logic to mark the request as unverified here
     try {
       const status = "Suspended";
-      await axios.put(
-        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/change-status/${requestUserID}/${status}`
-      );
+      await axios.put(`${apiURL}/change-status/${requestUserID}/${status}`);
       console.log("Request verified:", request);
       setIsButtonClicked(true);
       //add a notification to the request user
@@ -113,9 +109,9 @@ const RequestModal = ({ request, handleClose }) => {
       notif.userID = requestUserID;
       notif.notificationType = "Suspension";
       notif.notifDate = getTimeAndDate();
-      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notif);
+      await axios.post(`${apiURL}/notify`, notif);
       //update request to complete
-      await axios.put(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/done-request/${requestID}`);
+      await axios.put(`${apiURL}/done-request/${requestID}`);
       // handleClose();
 
       setLoading(true);

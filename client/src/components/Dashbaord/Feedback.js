@@ -21,13 +21,14 @@ export default Feedback;
  */
 export function MyFeedback({ id }) {
   const [myFeedback, setMyFeedback] = useState([]);
+  const apiURL = process.env.API_URL;
   const { user } = useAuth();
   //get all the feedback of user
   useEffect(() => {
     //fetch data in backend
     const fetchFeedback = async () => {
       try {
-        const res = await axios.get(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/my-feedbacks/${id}`);
+        const res = await axios.get(`${apiURL}/my-feedbacks/${id}`);
         setMyFeedback(res.data);
       } catch (error) {
         console.log(error);
@@ -78,13 +79,13 @@ export function MyFeedback({ id }) {
 export function MyPostedFeedback() {
   const { user } = useAuth();
   const [feedback, setFeedback] = useState([]);
-
+  const apiURL = process.env.API_URL;
   //fetch posted feedback of employer
   useEffect(() => {
     const fetchFeedback = async () => {
       try {
         const res = await axios.get(
-          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/posted-feedbacks/${user.userID}`
+          `${apiURL}/posted-feedbacks/${user.userID}`
         );
         setFeedback(res.data);
       } catch (error) {

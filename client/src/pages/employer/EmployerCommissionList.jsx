@@ -70,17 +70,14 @@ const CommissionList = () => {
   };
   const handleCloseDel = () => {
     setOpenDel(false);
-
   };
-
+  const apiURL = process.env.API_URL;
   //handle error
   //rretrieve data
   // Frontend code
   const fetchAllCommission = async () => {
     try {
-      const response = await axios.get(
-        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/your-commission/${userID}`
-      );
+      const response = await axios.get(`${apiURL}/your-commission/${userID}`);
       setCommissions(response.data);
     } catch (err) {
       console.log("Error fetching commissions:", err);
@@ -96,9 +93,9 @@ const CommissionList = () => {
   //funtion to delete commission
   const handleDelete = async (commissionID) => {
     try {
-      //"https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission" - local computer
+      //"${apiURL}/commission" - local computer
       //"http://192.168.1.47:8800/commission" - netwrok
-      await axios.delete(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/delete-errand/${commissionID}`);
+      await axios.delete(`${apiURL}/delete-errand/${commissionID}`);
 
       // popup delete modal
       setTimeout(() => {
@@ -163,7 +160,6 @@ const CommissionList = () => {
         colorText="error"
         icon={CancelOutlinedIcon}
       />
-
 
       <div>
         <BannerEmployerPages
@@ -298,8 +294,9 @@ const CommissionList = () => {
                             </DialogTitle>
                             <Divider />
                             <DialogContent>
-                              Are you sure you want to discard Errand {currentId}{" "}
-                              ?{/* Display the current ID from state */}
+                              Are you sure you want to discard Errand{" "}
+                              {currentId} ?
+                              {/* Display the current ID from state */}
                             </DialogContent>
                             <DialogActions>
                               <Button

@@ -16,7 +16,7 @@
     "axios": "^1.4.0",
     "bootstrap": "^5.3.3",
     "date-fns": "^2.30.0",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.4.7",
     "jspdf": "^2.5.2",
     "mapbox-gl": "^3.3.0",
     "maplibre-gl": "^3.3.0",

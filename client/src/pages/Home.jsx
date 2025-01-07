@@ -21,13 +21,11 @@ const Home = () => {
   const { user } = useAuth();
   const userID = user.userID;
   const [showAlert, setShowAlert] = useState(false);
-
+  const apiURL = process.env.API_URL;
   useEffect(() => {
     const checkVerificationStatus = async () => {
       try {
-        const response = await axios.get(
-          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/check-token/${userID}`
-        );
+        const response = await axios.get(`${apiURL}/check-token/${userID}`);
         if (response.data.exists && user.status === "Unverified") {
           setShowAlert(true);
           console.log(response.data.exists);

@@ -13,6 +13,7 @@ import "./Cards.css";
 function CatCards({ commissions }) {
   const [commissionslist, setCommissionslist] = useState([]);
   const location = useLocation();
+  const apiURL = process.env.API_URL;
   //pathname to array from
   //get the id
   const userID = location.pathname.split("/")[2];
@@ -21,7 +22,7 @@ function CatCards({ commissions }) {
   useEffect(() => {
     const fetchAllCommission = async () => {
       try {
-        const res = await axios.get(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/type/${type}`);
+        const res = await axios.get(`${apiURL}/type/${type}`);
         //"https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission" - local computer
         //"http://192.168.1.47:8800/commission" - netwrok
         setCommissionslist(res.data);

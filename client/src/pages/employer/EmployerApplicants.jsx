@@ -58,7 +58,6 @@ const EmployerApplicants = () => {
   const [selectedApplication, setSelectedApplication] = useState("");
   const [selectedErrand, setSelectedErrand] = useState("");
 
-
   //Alert feedback
   const [message, setMessage] = useState("");
   const [alertColor, setAlertColor] = useState("");
@@ -99,14 +98,14 @@ const EmployerApplicants = () => {
     console.log(id);
     setShowProfileModal(true);
   };
-
+  const apiURL = process.env.API_URL;
   //useEffect to handle error
   const fetchAllAccount = async () => {
     try {
       const res = await axios.get(
-        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/applicants/${userID}` // show only pending
+        `${apiURL}/applicants/${userID}` // show only pending
       );
-      //https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/user - local
+      //${apiURL}/user - local
       //http://192.168.1.47:8800/user - network
       setApplicants(res.data);
     } catch (err) {
@@ -137,10 +136,11 @@ const EmployerApplicants = () => {
       .includes(searchTerm.term?.toLowerCase() ?? "");
 
     const applicantsFullName =
-      `${applicant.userFirstname} ${applicant.userLastname}`
-        .toLowerCase();
+      `${applicant.userFirstname} ${applicant.userLastname}`.toLowerCase();
 
-    const termMatchFullName = applicantsFullName.includes(searchTerm.term.toLowerCase() ?? "")
+    const termMatchFullName = applicantsFullName.includes(
+      searchTerm.term.toLowerCase() ?? ""
+    );
 
     return termMatch || termMatch2 || termMatch3 || termMatchFullName;
   });
@@ -154,7 +154,6 @@ const EmployerApplicants = () => {
     indexOfFirstItem,
     indexOfLastItem
   );
-
 
   const handleAcceptMore = () => {
     setMessage("Successfully you have accept more applicants");
@@ -332,7 +331,6 @@ const EmployerApplicants = () => {
                 variant="solid"
                 color="primary"
                 onClick={handleAcceptMore}
-
               >
                 Yes, accept others
               </Button>
@@ -340,10 +338,7 @@ const EmployerApplicants = () => {
                 variant="outlined"
                 color="danger"
                 onClick={() =>
-                  handleDenyOther(
-                    selectedErrand,
-                    selectedApplicant
-                  )
+                  handleDenyOther(selectedErrand, selectedApplicant)
                 }
               >
                 No, deny others
@@ -414,7 +409,7 @@ const EmployerApplicants = () => {
     // Add logic to handle accepting the application
     try {
       await axios.put(
-        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/accept-apply/${applicationErrandID}/${applicationID}`
+        `${apiURL}/accept-apply/${applicationErrandID}/${applicationID}`
       );
 
       handleOpen();
@@ -424,15 +419,15 @@ const EmployerApplicants = () => {
       trans.catcherID = selectedApplicant;
       trans.dateAccepted = getTimeAndDate();
       //console.log(catcherID);
-      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/add-trans/", trans);
+      await axios.post(`${apiURL}/add-trans/`, trans);
       // //add a notification to the commission's applicant
       notif.notifDesc = "Your Errand application has been Accepted";
       notif.userID = selectedApplicant;
       notif.notificationType = "Application";
       notif.notifDate = getTimeAndDate();
-      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notif);
+      await axios.post(`${apiURL}/notify`, notif);
       // //set catcher has errand
-      await axios.put(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/has-errand/${catcherID}`);
+      await axios.put(`${apiURL}/has-errand/${catcherID}`);
     } catch (err) {
       console.log(err);
     }
@@ -447,14 +442,14 @@ const EmployerApplicants = () => {
     // Add logic to handle declining the application
     try {
       await axios.put(
-        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/deny-apply/${applicationErrandID}/${applicationID}`
+        `${apiURL}/deny-apply/${applicationErrandID}/${applicationID}`
       );
       //add a notification to the commission's applicant
       notif.notifDesc = "Your Errand application has been Denied";
       notif.userID = catcherID;
       notif.notificationType = "Application";
       notif.notifDate = getTimeAndDate();
-      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notif);
+      await axios.post(`${apiURL}/notify`, notif);
       //  alert("You have Posted an Errand!");
       window.location.reload();
       setShowProfileModal(false);
@@ -466,24 +461,19 @@ const EmployerApplicants = () => {
   //console.log(applicants);
   //deny otther applicants
 
-
-
-
   const handleDenyOther = async (errandID, catcherID) => {
     try {
       //DENY other applicants
       const denyResponse = await axios.put(
-        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/deny-other-apply/${errandID}/${catcherID}`
+        `${apiURL}/deny-other-apply/${errandID}/${catcherID}`
       );
       if (denyResponse.data.message === "No other applications to deny") {
         console.log("No other applications were found to deny.");
-
       } else {
         console.log("Other applications denied successfully.");
-
       }
       //set the errand status to caught
-      await axios.put(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/errand-taken/${errandID}`);
+      await axios.put(`${apiURL}/errand-taken/${errandID}`);
     } catch (error) {
       console.log(error);
     }
@@ -493,7 +483,6 @@ const EmployerApplicants = () => {
     setAlertColor("warning");
     setIconLert(<CheckCircleOutlineIcon />);
     setShowAlert(true);
-
 
     // const interval = setInterval(fetchAllAccount, 1000);
     // return () => clearInterval(interval);
@@ -505,7 +494,6 @@ const EmployerApplicants = () => {
   };
   return (
     <>
-
       {/* alert handling */}
       {showAlert && (
         <Alert
@@ -514,9 +502,7 @@ const EmployerApplicants = () => {
             bottom: 16,
             right: 16,
             zIndex: 9999,
-            transform: showAlert
-              ? "translateX(0)"
-              : "translateX(100%)",
+            transform: showAlert ? "translateX(0)" : "translateX(100%)",
             transition: "transform 0.5s ease-in-out",
           }}
           color={alertColor}

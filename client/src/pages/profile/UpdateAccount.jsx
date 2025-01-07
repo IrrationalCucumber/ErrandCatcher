@@ -23,7 +23,7 @@ const UpdateAccount = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-
+  const apiURL = process.env.API_URL;
   const userID = location.pathname.split("/")[2];
   //pathname to array from
   //get the id
@@ -47,9 +47,7 @@ const UpdateAccount = () => {
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const res = await axios.get(
-          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/user-verify/${userID}`
-        );
+        const res = await axios.get(`${apiURL}/user-verify/${userID}`);
         console.log(res.data[0].accountStatus);
         setStatus(res.data[0].accountStatus);
       } catch (err) {
@@ -63,7 +61,7 @@ const UpdateAccount = () => {
   useEffect(() => {
     const fetchAccount = async () => {
       try {
-        const res = await axios.get(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/user/${userID}`);
+        const res = await axios.get(`${apiURL}/user/${userID}`);
         const retrievedAccount = res.data[0];
         //format date
         const formattedDate = new Date(retrievedAccount.userBirthday)
@@ -100,10 +98,7 @@ const UpdateAccount = () => {
     //refresh the page when button is clicked
     e.preventDefault();
     try {
-      await axios.put(
-        "https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/update-account/" + userID,
-        account
-      );
+      await axios.put(`${apiURL}/update-account/` + userID, account);
       navigate("/accounts");
     } catch (err) {
       console.log(err);
@@ -115,7 +110,7 @@ const UpdateAccount = () => {
     //refresh the page when button is clicked
     e.preventDefault();
     try {
-      await axios.put(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/verify-account/${userID}`);
+      await axios.put(`${apiURL}/verify-account/${userID}`);
       navigate("/accounts");
     } catch (err) {
       console.log(err);
@@ -127,7 +122,7 @@ const UpdateAccount = () => {
     //refresh the page when button is clicked
     e.preventDefault();
     try {
-      await axios.put(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/deactivate-account/${userID}`);
+      await axios.put(`${apiURL}/deactivate-account/${userID}`);
       navigate("/accounts");
     } catch (err) {
       console.log(err);

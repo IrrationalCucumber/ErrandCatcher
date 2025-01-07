@@ -567,7 +567,7 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
   const [open, setOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const apiURL = process.env.API_URL;
   const handleOpenModal = () => {
     setOpen(true);
   };
@@ -606,13 +606,13 @@ export function Step3({ details, images, haveLicense, onPrev, onNext }) {
       console.log("info successfully sent to server");
       //upload docs to server
       await axios
-        .post(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/upload/${userID}`, formData)
+        .post(`${apiURL}/upload/${userID}`, formData)
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
       //update accound data
       //await axios.put("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/update-info/" + userID, details); //update skills in db
       //add notif of request
-      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify-admin"); // notify all admin
+      await axios.post(`${apiURL}/notify-admin`); // notify all admin
     } catch (error) {
       console.log(error);
     }

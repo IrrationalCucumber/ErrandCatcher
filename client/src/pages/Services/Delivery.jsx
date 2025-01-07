@@ -22,7 +22,7 @@ const Delivery = () => {
     maxPay: "",
     location: "",
   });
-
+  const apiURL = process.env.API_URL;
   const handleSliderChange = (event, newValue) => {
     setFilter((prev) => ({
       ...prev,
@@ -38,7 +38,7 @@ const Delivery = () => {
   useEffect(() => {
     const fetchAllCommission = async () => {
       try {
-        const res = await axios.get(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/type/Delivery`);
+        const res = await axios.get(`${apiURL}/type/Delivery`);
         setCommissions(res.data);
       } catch (err) {
         console.log(err);
@@ -145,8 +145,10 @@ const Delivery = () => {
 
             <div class="col">
               <div className="Paylabel">
-                <div style={{ textAlign: "center" }} >
-                  <Typography color="#f5f5f5" variant="h6"
+                <div style={{ textAlign: "center" }}>
+                  <Typography
+                    color="#f5f5f5"
+                    variant="h6"
                     sx={{
                       fontSize: 18,
                       fontWeight: 460,
@@ -157,11 +159,9 @@ const Delivery = () => {
                     Payment Range:
                   </Typography>
 
-                  <Slider className="sliderpay"
-                    value={[
-                      Number(filter.minPay),
-                      Number(filter.maxPay)
-                    ]}
+                  <Slider
+                    className="sliderpay"
+                    value={[Number(filter.minPay), Number(filter.maxPay)]}
                     onChange={handleSliderChange}
                     // valueLabelDisplay="on"
                     min={500}
@@ -210,38 +210,39 @@ const Delivery = () => {
       {/* <CatCards commissions={filteredCommissions} /> */}
       {/* <CatCardsNew commissions={filteredCommissions} /> */}
 
-      {
-        filteredCommissions && filteredCommissions.length > 0 ? (
-          <>
-            <CatCardsNew commissions={filteredCommissions} />
-          </>
-        ) : (
-          <>
-            <div
-              style={{
-                height: "50vh",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignContent: "center",
-              }}
-            >
-              <h1 style={{ fontWeight: "600" }}>
-                Opps!
-              </h1>
-              <h2 style={{ textAlign: "center" }} >
-                No errand found
-                <span style={{
+      {filteredCommissions && filteredCommissions.length > 0 ? (
+        <>
+          <CatCardsNew commissions={filteredCommissions} />
+        </>
+      ) : (
+        <>
+          <div
+            style={{
+              height: "50vh",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignContent: "center",
+            }}
+          >
+            <h1 style={{ fontWeight: "600" }}>Opps!</h1>
+            <h2 style={{ textAlign: "center" }}>
+              No errand found
+              <span
+                style={{
                   fontStyle: "italic",
                   fontWeight: "600",
                   // color: "#378ce7",
-                }}> "Delivery"</span> as of now..
-              </h2>
-
-            </div>
-          </>
-        )
-      }
+                }}
+              >
+                {" "}
+                "Delivery"
+              </span>{" "}
+              as of now..
+            </h2>
+          </div>
+        </>
+      )}
     </>
   );
 };

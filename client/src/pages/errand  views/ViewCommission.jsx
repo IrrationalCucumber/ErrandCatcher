@@ -43,13 +43,13 @@ const ViewCommission = () => {
       setCommission((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     }
   };
-
+  const apiURL = process.env.API_URL;
   //funtion to delete commission
   // const handleDelete = async (commissionID) =>{
   //     try {
-  //           //"https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission" - local computer
+  //           //"${apiURL}/commission" - local computer
   //           //"http://192.168.1.47:8800/commission" - netwrok
-  //       await axios.delete(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission/${commissionID}`)
+  //       await axios.delete(`${apiURL}/commission/${commissionID}`)
   //       window.location.reload()
   //     } catch (err) {
   //       console.log(err)
@@ -60,9 +60,7 @@ const ViewCommission = () => {
   useEffect(() => {
     const fetchCommission = async () => {
       try {
-        const res = await axios.get(
-          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission/${commissionID}`
-        );
+        const res = await axios.get(`${apiURL}/commission/${commissionID}`);
         const retrievedCommission = res.data[0];
         //format date
         const formattedDate = new Date(retrievedCommission.commissionDeadline)
@@ -97,7 +95,7 @@ const ViewCommission = () => {
     try {
       //account.dateCreated = getCurrentDate();
       await axios.put(
-        "https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/update-commission/" + commissionID,
+        `${apiURL}/update-commission/` + commissionID,
         commission
       );
       navigate("/commission-list");

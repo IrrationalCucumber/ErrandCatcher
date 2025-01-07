@@ -56,14 +56,12 @@ function CommissionPage() {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const apiURL = process.env.API_URL;
   useEffect(() => {
     const fetchAllCommission = async () => {
       try {
-        const res = await axios.get(
-          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/accepted-errand/${userID}`
-        );
-        //"https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission" - local computer
+        const res = await axios.get(`${apiURL}/accepted-errand/${userID}`);
+        //"${apiURL}/commission" - local computer
         //"http://192.168.1.47:8800/commission" - netwrok
         setCommissions(res.data);
       } catch (err) {
@@ -78,9 +76,7 @@ function CommissionPage() {
   const [forPayment, setForPayment] = useState([]);
   const fetchPending = async () => {
     try {
-      const res = await axios.get(
-        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/catcher/ongoing/${userID}`
-      );
+      const res = await axios.get(`${apiURL}/catcher/ongoing/${userID}`);
 
       setForPayment(res.data);
     } catch (err) {
@@ -165,11 +161,9 @@ function CommissionPage() {
       notif.userID = employerID;
       notif.notificationType = "Errand Cancelled";
       notif.notifDate = getTimeAndDate();
-      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notif);
+      await axios.post(`${apiURL}/notify`, notif);
       //cancel the transaction
-      await axios.put(
-        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/catcher/cancel/${transactID}/${userID}`
-      );
+      await axios.put(`${apiURL}/catcher/cancel/${transactID}/${userID}`);
       /**
        * ADD METHOD TO CHANGE ALSO THE STATUS OF ERRAND TO CANCELLED
        */
@@ -197,11 +191,9 @@ function CommissionPage() {
       notif.userID = empID;
       notif.notificationType = "Errand Completed";
       notif.notifDate = getTimeAndDate();
-      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notif);
+      await axios.post(`${apiURL}/notify`, notif);
       //cancel the transaction
-      await axios.put(
-        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/catcher/complete/${transID}/${userID}`
-      );
+      await axios.put(`${apiURL}/catcher/complete/${transID}/${userID}`);
     } catch (error) {
       console.log(error);
     }

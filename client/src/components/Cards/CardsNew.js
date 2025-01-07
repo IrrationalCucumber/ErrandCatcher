@@ -12,12 +12,12 @@ import { AmountDecimal } from "../Display/DsiplayFunctions";
 
 function CardsNew() {
   const [commissions, setCommissions] = useState([]);
-
+  const apiURL = process.env.API_URL;
   //rretrieve data
   useEffect(() => {
     const fetchAllCommission = async () => {
       try {
-        const res = await axios.get("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/available");
+        const res = await axios.get(`${apiURL}/available`);
         //"https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission" - local computer
         //"http://192.168.1.47:8800/commission" - netwrok
         setCommissions(res.data);

@@ -12,11 +12,11 @@ function Notification() {
   const [notifs, setNotifs] = useState([]);
   const { user } = useAuth();
   const userID = user.userID;
-
+  const apiURL = process.env.API_URL;
   // Display all notifications
   const fetchNotif = async () => {
     try {
-      const res = await axios.get(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/my-notif/${userID}`);
+      const res = await axios.get(`${apiURL}/my-notif/${userID}`);
       setNotifs(res.data);
     } catch (err) {
       console.log(err);
@@ -29,9 +29,7 @@ function Notification() {
   // When user clicks 'mark as read', update db notif isRead to Yes
   const markAsRead = async (notificationID) => {
     try {
-      await axios.put(
-        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/read-notif/${notificationID}/${userID}`
-      );
+      await axios.put(`${apiURL}/read-notif/${notificationID}/${userID}`);
       const intervalNotif = setInterval(fetchNotif, 1000);
       return () => clearInterval(intervalNotif);
     } catch (err) {
@@ -42,7 +40,7 @@ function Notification() {
   // Function to mark all notifications as read
   const handleMarkAllAsRead = async () => {
     try {
-      await axios.put(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/read-all/${user.userID}`);
+      await axios.put(`$${apiURL}/read-all/${user.userID}`);
       // Update the notification list in the UI
       setNotifs((prevNotifs) =>
         prevNotifs.map((notif) => ({ ...notif, isRead: true }))
@@ -59,9 +57,7 @@ function Notification() {
       <div className="notification-container">
         <main className="notification-main">
           <div className="notification-header">
-            <h2 className="notification-title"
-              style={{ paddingLeft: "30px" }}
-            >
+            <h2 className="notification-title" style={{ paddingLeft: "30px" }}>
               Notifications
             </h2>
             <img
@@ -96,7 +92,7 @@ function Notification() {
                   date={DisplayDate(notif.notifDate)} // Format the date
                   isRead={notif.isRead}
                   markAsRead={() => markAsRead(notif.notificationID)}
-                // style={{ border: "5px solid green" }}
+                  // style={{ border: "5px solid green" }}
                 />
               </div>
             ))}

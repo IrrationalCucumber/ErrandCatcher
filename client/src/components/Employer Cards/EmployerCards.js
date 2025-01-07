@@ -16,13 +16,14 @@ const EmployerCard = ({ employer }) => {
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
   const userID = user.userID;
+  const apiURL = process.env.API_URL;
   useEffect(() => {
     // Simulate fetching counts from backend API, be removed
     setTimeout(() => {
       const fetchCount = async () => {
         try {
           const res2 = await axios.get(
-            `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/post-and-applicant-count/${userID}`
+            `${apiURL}/post-and-applicant-count/${userID}`
           );
           setCounts({
             numPosts: res2.data[0].postCount,
@@ -59,7 +60,8 @@ const EmployerCard = ({ employer }) => {
                     to={`/dashboard/errands`}
                   >
                     <h3 class="m-b-20 fw-semibold">
-                      <PostAddIcon sx={{ color: "white", fontSize: 24 }} /> Posted
+                      <PostAddIcon sx={{ color: "white", fontSize: 24 }} />{" "}
+                      Posted
                     </h3>
                     <h2 class="text-center">
                       <i class="fa fa-cart-plus f-left"></i>
@@ -80,7 +82,8 @@ const EmployerCard = ({ employer }) => {
                     to={`/dashboard/applicants`}
                   >
                     <h3 class="m-b-20 fw-semibold">
-                      <GroupIcon sx={{ color: "white", fontSize: 24 }} /> Applicants
+                      <GroupIcon sx={{ color: "white", fontSize: 24 }} />{" "}
+                      Applicants
                     </h3>
                     <h2 class="text-center">
                       <i class="fa fa-rocket f-left"></i>
@@ -101,7 +104,10 @@ const EmployerCard = ({ employer }) => {
                     to={`/dashboard/ongoing`}
                   >
                     <h3 class="m-b-20 fw-semibold">
-                      <PendingActionsIcon sx={{ color: "white", fontSize: 24 }} /> Ongoing
+                      <PendingActionsIcon
+                        sx={{ color: "white", fontSize: 24 }}
+                      />{" "}
+                      Ongoing
                     </h3>
                     <h2 class="text-center">
                       <i class="fa fa-refresh f-left"></i>
@@ -119,9 +125,6 @@ const EmployerCard = ({ employer }) => {
   );
 };
 export default EmployerCard;
-
-
-
 
 // old version employer cards
 // {/* <div className="employer-card">

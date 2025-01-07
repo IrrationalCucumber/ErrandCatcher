@@ -14,7 +14,7 @@ import {
   ModalOverflow,
   Typography,
 } from "@mui/joy";
-import { TextField } from '@mui/material';
+import { TextField } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../AuthContext";
@@ -35,7 +35,7 @@ function SkillsInputModal(props) {
       setSelectedSkills(props.skills);
     }
   }, [props.skills]);
-
+  const apiURL = process.env.API_URL;
   // Predefined list of skills (you can fetch this from the backend)
   const availableSkills = [
     "Plumbing",
@@ -123,7 +123,7 @@ function SkillsInputModal(props) {
     "Counseling Services",
   ];
 
-  const filteredSkills = availableSkills.filter(skill =>
+  const filteredSkills = availableSkills.filter((skill) =>
     skill.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -173,10 +173,7 @@ function SkillsInputModal(props) {
     //update accound data
     // alert(qualificationsString);
     // alert(details.skills);
-    await axios.put(
-      "https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/update-info/" + user.userID,
-      details
-    );
+    await axios.put(`${apiURL}/update-info/` + user.userID, details);
     props.close();
     window.location.reload();
   };
@@ -191,7 +188,14 @@ function SkillsInputModal(props) {
               <>
                 {/* General (Indoor/Outdoor) Qualification */}
                 {/* General Experience */}
-                <Box sx={{ width: '600px', maxWidth: "80%", height: "auto", overflowY: 'auto' }}>
+                <Box
+                  sx={{
+                    width: "600px",
+                    maxWidth: "80%",
+                    height: "auto",
+                    overflowY: "auto",
+                  }}
+                >
                   <TextField
                     label="Search Skills"
                     variant="outlined"
@@ -248,9 +252,12 @@ function SkillsInputModal(props) {
                           color={
                             selectedSkills.includes(skill)
                               ? "success"
-                              : searchTerm && skill.toLowerCase().includes(searchTerm.toLowerCase())
-                                ? "primary"
-                                : "neutral"
+                              : searchTerm &&
+                                skill
+                                  .toLowerCase()
+                                  .includes(searchTerm.toLowerCase())
+                              ? "primary"
+                              : "neutral"
                           }
                           variant="solid"
                           size="lg"
@@ -259,7 +266,6 @@ function SkillsInputModal(props) {
                           {skill}
                         </Chip>
                       </Box>
-
                     ))}
                   </div>
 

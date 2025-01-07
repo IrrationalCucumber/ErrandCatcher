@@ -45,7 +45,7 @@ const UpdateCommission = () => {
   // Add a state to track the marker's longitude and latitude
   // const [markerLngLat, setMarkerLngLat] = useState([123.8854, 10.3157]); // Default values
   // const [currentLocationMarker, setCurrentLocationMarker] = useState(null);
-
+  const apiURL = process.env.API_URL;
   // modal message pop-up
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
@@ -72,9 +72,7 @@ const UpdateCommission = () => {
   useEffect(() => {
     const fetchCommission = async () => {
       try {
-        const res = await axios.get(
-          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/errand/${commissionID}`
-        );
+        const res = await axios.get(`${apiURL}/errand/${commissionID}`);
         const retrievedCommission = res.data[0];
         //format date
         // const formattedDate = new Date(retrievedCommission.commissionDeadline)
@@ -84,7 +82,12 @@ const UpdateCommission = () => {
         //   .toISOString()
         //   .substr(0, 10);
 
-        const options = { timeZone: "Asia/Manila", year: "numeric", month: "2-digit", day: "2-digit" };
+        const options = {
+          timeZone: "Asia/Manila",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        };
 
         // Format Deadline
         const formattedDate = new Date(retrievedCommission.commissionDeadline)
@@ -99,7 +102,6 @@ const UpdateCommission = () => {
           .split("/")
           .reverse()
           .join("-");
-
 
         // Update the state with retrieved account data
         setCommission({
@@ -189,10 +191,7 @@ const UpdateCommission = () => {
       } else {
         //account.dateCreated = getCurrentDate();
         commission.comStatus = "Available";
-        await axios.put(
-          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/update-errand/${commissionID}`,
-          commission
-        );
+        await axios.put(`${apiURL}/update-errand/${commissionID}`, commission);
         // popup update modal
         setTimeout(() => {
           // setLoading(false);

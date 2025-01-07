@@ -78,7 +78,7 @@ const SignUp = () => {
       setAccount((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     }
   };
-
+  const apiURL = process.env.API_URL;
   //save the data into db
   const handleClick = async (e) => {
     //if fileds are empty
@@ -118,7 +118,7 @@ const SignUp = () => {
     e.preventDefault();
     try {
       account.dateCreated = getCurrentDate();
-      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/sign-up/", account); // new enpoint
+      await axios.post(`${apiURL}/sign-up/`, account); // new enpoint
       navigate("/sign-in");
     } catch (err) {
       console.log(err);

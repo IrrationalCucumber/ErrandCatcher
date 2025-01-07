@@ -39,12 +39,12 @@ function Navbar(props) {
   //carry id to other page
   //pathname to array from
   const userID = user.userID;
-
+  const apiURL = process.env.API_URL;
   const [notifCount, setNotifCount] = useState("");
   useEffect(() => {
     const fetchNotif = async () => {
       try {
-        const res = await axios.get(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/count/${userID}`);
+        const res = await axios.get(`${apiURL}/count/${userID}`);
         setNotifCount(res.data[0].c);
       } catch (err) {
         console.log(err);

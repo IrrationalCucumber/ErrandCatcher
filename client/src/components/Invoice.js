@@ -11,7 +11,7 @@ const Invoice = ({ open, onClose, userID }) => {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const apiURL = process.env.API_URL;
   const handleClose = () => {
     onClose();
   };
@@ -20,9 +20,7 @@ const Invoice = ({ open, onClose, userID }) => {
     if (open) {
       const fetchTransactions = async () => {
         try {
-          const response = await axios.get(
-            `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/transactions/${userID}`
-          );
+          const response = await axios.get(`${apiURL}/transactions/${userID}`);
           setTransactions(response.data);
           setLoading(false);
         } catch (err) {

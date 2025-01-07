@@ -18,7 +18,7 @@ const History = () => {
   const { user } = useAuth();
   const userID = user.userID;
   const [transactions, setTransactions] = useState([]);
-
+  const apiURL = process.env.API_URL;
   // tesing data
   const sampletran = [
     {
@@ -75,8 +75,8 @@ const History = () => {
         // choose if the user is Employer otherwise Catcher
         const endpoint =
           user.userType === "Employer"
-            ? `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/transactionsEmp/${userID}`
-            : `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/transactionsCat/${userID}`;
+            ? `${apiURL}/transactionsEmp/${userID}`
+            : `${apiURL}/transactionsCat/${userID}`;
 
         const response = await axios.get(endpoint);
         setTransactions(response.data);
@@ -102,22 +102,19 @@ const History = () => {
           Transaction History
         </h1>
         {/* user.userType === "Employer" */}
-        {user.userType === "Catcher" ?
-          (
-            <>
-              <Link
-                style={{ marginTop: "4px", textDecoration: "none" }}
-                to={`/catcher-greports`}
-
-              >
-                <a class="action" href="#">
-                  Generate Report
-                  <span aria-hidden="true">→</span>
-                </a>
-              </Link>
-
-            </>
-          ) : null}
+        {user.userType === "Catcher" ? (
+          <>
+            <Link
+              style={{ marginTop: "4px", textDecoration: "none" }}
+              to={`/catcher-greports`}
+            >
+              <a class="action" href="#">
+                Generate Report
+                <span aria-hidden="true">→</span>
+              </a>
+            </Link>
+          </>
+        ) : null}
 
         {/* apply testing data */}
         {/* {sampletran.length > 0 ? (

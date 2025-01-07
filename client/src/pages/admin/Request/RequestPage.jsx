@@ -6,11 +6,11 @@ import axios from "axios";
 import RequestImages from "./RequestImage";
 import "../Request/request.css";
 import { Modal, ModalDialog } from "@mui/joy";
-import VerifiedIcon from '@mui/icons-material/Verified';
-import PendingIcon from '@mui/icons-material/Pending';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-import HailIcon from '@mui/icons-material/Hail';
-import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import VerifiedIcon from "@mui/icons-material/Verified";
+import PendingIcon from "@mui/icons-material/Pending";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import HailIcon from "@mui/icons-material/Hail";
+import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 
 function RequestPage() {
   // Mock list of verification requests
@@ -28,12 +28,12 @@ function RequestPage() {
     type: "",
     status: "",
   });
-
+  const apiURL = process.env.API_URL;
   useEffect(() => {
     // Simulate fetching data (you can replace this with actual API calls)
     const fetchData = async () => {
       try {
-        const res = await axios.get(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/requests`);
+        const res = await axios.get(`${apiURL}/requests`);
         setRequests(res.data);
       } catch (err) {
         console.log(err);
@@ -186,16 +186,44 @@ function RequestPage() {
         </div>
         <div style={{ overflow: "auto" }}>
           <table
-            style={{ margin: "0 auto", width: "80%", borderCollapse: "collapse" }}
+            style={{
+              margin: "0 auto",
+              width: "80%",
+              borderCollapse: "collapse",
+            }}
           >
             <thead>
               <tr style={{ background: "#1679AB" }}>
                 <th style={{ ...tableHeaderStyle, width: "10%" }}>ID</th>
                 <th style={{ ...tableHeaderStyle, width: "30%" }}>User</th>
                 <th style={{ ...tableHeaderStyle, width: "25%" }}>Type</th>
-                <th style={{ ...tableHeaderStyle, width: "10%", textAlign: "center" }}>Status</th>
-                <th style={{ ...tableHeaderStyle, width: "20%", textAlign: "center" }}>Documents</th>
-                <th style={{ ...tableHeaderStyle, width: "25%", textAlign: "center" }}>Action</th>
+                <th
+                  style={{
+                    ...tableHeaderStyle,
+                    width: "10%",
+                    textAlign: "center",
+                  }}
+                >
+                  Status
+                </th>
+                <th
+                  style={{
+                    ...tableHeaderStyle,
+                    width: "20%",
+                    textAlign: "center",
+                  }}
+                >
+                  Documents
+                </th>
+                <th
+                  style={{
+                    ...tableHeaderStyle,
+                    width: "25%",
+                    textAlign: "center",
+                  }}
+                >
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -234,17 +262,23 @@ function RequestPage() {
                   </td>
                   {/* <td style={tableCellStyle}>{request.requestStatus}</td> */}
                   <td style={tableCellStyle}>
-                    {request.requestStatus === "Complete" ?
-                      <VerifiedIcon color="success"
+                    {request.requestStatus === "Complete" ? (
+                      <VerifiedIcon
+                        color="success"
                         sx={{
                           paddingRight: "2px",
                           fontSize: "large",
-                        }} /> :
-                      <PendingIcon color="error"
+                        }}
+                      />
+                    ) : (
+                      <PendingIcon
+                        color="error"
                         sx={{
                           paddingRight: "2px",
                           fontSize: "large",
-                        }} />}
+                        }}
+                      />
+                    )}
                     {request.requestStatus}
                   </td>
                   <td style={{ tableCellStyle, textAlign: "center" }}>
@@ -312,7 +346,7 @@ const tableCellStyle = {
   borderBottom: "1px solid #ddd",
   fontSize: "12px",
   color: "black",
-  border: "1px solid #ddd"
+  border: "1px solid #ddd",
 };
 
 const tableRowStyle = {

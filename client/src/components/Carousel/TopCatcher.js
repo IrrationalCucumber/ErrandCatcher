@@ -6,11 +6,12 @@ import "./topcat.css";
 
 export default function TopCatcher() {
   const [catchers, setCatchers] = useState([]);
+  const apiURL = process.env.API_URL;
   //fetch top rated catchers
   useEffect(() => {
     const fetchCatchers = async () => {
       try {
-        const res = await axios.get("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/top-rated");
+        const res = await axios.get(`${apiURL}/top-rated`);
         setCatchers(res.data);
       } catch (error) {
         console.error("Error fetching top rated catchers:", error);
@@ -38,7 +39,7 @@ export default function TopCatcher() {
                   <img
                     src={
                       catcher.profileImage
-                        ? `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/profile/${catcher.profileImage}`
+                        ? `${apiURL}/images/profile/${catcher.profileImage}`
                         : "/images/catcher.png"
                     }
                     alt="Catcher Profile"
@@ -58,7 +59,10 @@ export default function TopCatcher() {
             data-bs-target="#carouselExampleIndicators"
             data-bs-slide="prev"
           >
-            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span
+              className="carousel-control-prev-icon"
+              aria-hidden="true"
+            ></span>
             <span className="visually-hidden">Previous</span>
           </button>
           <button
@@ -67,7 +71,10 @@ export default function TopCatcher() {
             data-bs-target="#carouselExampleIndicators"
             data-bs-slide="next"
           >
-            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+            <span
+              className="carousel-control-next-icon"
+              aria-hidden="true"
+            ></span>
             <span className="visually-hidden">Next</span>
           </button>
         </div>

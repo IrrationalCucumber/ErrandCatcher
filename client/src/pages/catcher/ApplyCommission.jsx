@@ -78,14 +78,12 @@ const ApplyCommission = () => {
     // Create a string representing the current date and time
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   };
-
+  const apiURL = process.env.API_URL;
   //pre-fill the fields
   useEffect(() => {
     const fetchCommission = async () => {
       try {
-        const res = await axios.get(
-          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission/${commissionID}`
-        );
+        const res = await axios.get(`${apiURL}/commission/${commissionID}`);
         const retrievedCommission = res.data[0];
         //format date
         const formattedDate = new Date(retrievedCommission.commissionDeadline)
@@ -126,7 +124,7 @@ const ApplyCommission = () => {
       application.catcherID = userID;
 
       console.log(application); // Check the updated commission object
-      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/apply", application);
+      await axios.post(`${apiURL}/apply`, application);
 
       //add a notification to the commission's employer
       notif.notifDesc = "A Catcher has applied to on of your errand";
@@ -134,7 +132,7 @@ const ApplyCommission = () => {
       notif.notificationType = "Errand Application";
       notif.notifDate = getTimeAndDate();
 
-      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notif);
+      await axios.post(`${apiURL}/notify`, notif);
       navigate(`/application/${userID}`);
       console.log(notif); // check variables state
     } catch (err) {

@@ -55,7 +55,7 @@ const PostCommission = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [loading, setLoading] = useState(false);
   const [opensnack, setOpenSnack] = useState(false);
-
+  const apiURL = process.env.API_URL;
   // modal message pop-up
   const [open, setOpen] = useState(false);
 
@@ -185,8 +185,8 @@ const PostCommission = () => {
         setShowAlert(true);
         handleScrollToTop();
       } else {
-        await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission", updatedCommission);
-        await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify-catcher");
+        await axios.post(`${apiURL}/commission`, updatedCommission);
+        await axios.post(`${apiURL}/notify-catcher`);
 
         setLoading(true);
 

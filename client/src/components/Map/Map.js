@@ -16,7 +16,9 @@ export default function Map(props) {
       <div className="map-wrap">
         {/* <div className="map__filter"> */}
         <div
-          className={props.userType === "Catcher" ? "map__filterCat" : "map__filter"}
+          className={
+            props.userType === "Catcher" ? "map__filterCat" : "map__filter"
+          }
         >
           <Filter onFilterChange={props.change} />
           {props.prox ? (
@@ -50,14 +52,14 @@ export function LandingMap() {
   // center: [123.8854, 10.3157],
   const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
   const [errands, setErrands] = useState([]);
-
+  const apiURL = process.env.API_URL;
   useEffect(() => {
     //fetch all errands
     //regardless of status
     //change api endpoint to "/available/" for available only
     const fetchErrands = async () => {
       try {
-        const response = await axios.get("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/errands/");
+        const response = await axios.get(`${apiURL}/errands/`);
         setErrands(response.data);
       } catch (error) {
         console.error(error);
@@ -135,7 +137,7 @@ export function HomeMap(props) {
   const [zoom] = useState(11.6);
   const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
   const [errands, setErrands] = useState([]);
-
+  const apiURL = process.env.API_URL;
   useEffect(() => {
     //fetch all errands
     //regardless of status
@@ -143,7 +145,7 @@ export function HomeMap(props) {
     const fetchErrands = async () => {
       try {
         const response = await axios.get(
-          "https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/your-commission/" + props.id
+          `${apiURL}/your-commission/` + props.id
         );
         setErrands(response.data);
       } catch (error) {
@@ -217,10 +219,11 @@ export function HomeMap(props) {
 export function ViewMap({ id }) {
   const [long, setLong] = useState(null);
   const [lat, setLat] = useState(null);
+  const apiURL = process.env.API_URL;
   //get the coordinates of the cerrand
   const fetchLoc = async () => {
     try {
-      const response = await fetch(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/errand/${id}`);
+      const response = await fetch(`${apiURL}/errand/${id}`);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -336,12 +339,12 @@ export function MapLibre({ getCoords }) {
 //HouseService
 export function UpdateMapLibre({ getCoords, id }) {
   const [coords, setCoords] = useState(null); // Start as null to delay map initialization
-
+  const apiURL = process.env.API_URL;
   // Fetch location data from the backend
   useEffect(() => {
     const fetchLoc = async () => {
       try {
-        const res = await axios.get(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/errand/${id}`);
+        const res = await axios.get(`${apiURL}/errand/${id}`);
         if (res.data[0]) {
           setCoords({
             lat: res.data[0].commissionLat,

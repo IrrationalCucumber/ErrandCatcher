@@ -15,13 +15,13 @@ function CommissionMap() {
   const [zoom] = useState(10);
   const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
   const [errands, setErrands] = useState([]);
-
+  const apiURL = process.env.API_URL;
   //fetch and store errand
   useEffect(() => {
     const fetchErrand = async () => {
       try {
         const response = await axios.get(
-          "https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/your-commission/" + user.userID
+          `${apiURL}/your-commission/` + user.userID
         );
         setErrands(response.data);
       } catch (error) {
