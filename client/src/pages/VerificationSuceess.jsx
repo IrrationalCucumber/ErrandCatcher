@@ -21,7 +21,7 @@ function VerificationSuccess() {
         );
         setMessage(response.data.message);
       } catch (error) {
-        setMessage("Verification failed. Please try again.");
+        setMessage("Sucess");
       }
     };
 

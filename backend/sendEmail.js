@@ -15,7 +15,7 @@ async function sendVerificationEmail(userEmail, verificationToken) {
     to: userEmail,
     subject: "Email Verification",
     text: `Please verify your email by clicking the following link: 
-     http://localhost:3000/verify-email?token=${verificationToken}`, // Point to frontend route
+     https://errand-catcher.vercel.app/verify-email?token=${verificationToken}`, // Point to frontend route
     //http://localhost:8800/verify-email?token=${verificationToken}`, //create page for this
   };
   console.log(userEmail);

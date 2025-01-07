@@ -28,7 +28,7 @@ const Home = () => {
         const response = await axios.get(
           `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/check-token/${userID}`
         );
-        if (response.data.exists) {
+        if (response.data.exists && user.status === "Unverified") {
           setShowAlert(true);
           console.log(response.data.exists);
         }
@@ -58,7 +58,6 @@ const Home = () => {
               display: "flex",
               justifyContent: "center",
               fontSize: "1rem",
-
             }}
             action={
               <Button
