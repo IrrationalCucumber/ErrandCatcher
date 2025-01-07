@@ -1,4 +1,8 @@
 
+build/
 node_modules/
 ./backend/dbConfig.js
 .env
+.DS_Store
+.idea
+.aider*
