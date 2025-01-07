@@ -17,7 +17,7 @@ function VerificationSuccess() {
 
       try {
         const response = await axios.get(
-          `http://localhost:8800/verify-email?token=${token}`
+          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/verify-email?token=${token}`
         );
         setMessage(response.data.message);
       } catch (error) {

@@ -93,7 +93,7 @@ function UserProfile(props) {
               {props.profileImg ? (
                 <img
                   className="user_profile_pic"
-                  src={`http://localhost:8800/images/profile/${props.profileImg}`}
+                  src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/profile/${props.profileImg}`}
                   alt="ProfPic"
                 />
               ) : (
@@ -325,13 +325,13 @@ function UserProfile(props) {
                 <>
                   <div className="id_1">
                     <img
-                      src={`http://localhost:8800/images/docu/${props.verFront}`}
+                      src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${props.verFront}`}
                       alt="Front"
                     />
                   </div>
                   <div className="id_1">
                     <img
-                      src={`http://localhost:8800/images/docu/${props.verBack}`}
+                      src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${props.verBack}`}
                       alt="Back"
                     />
                   </div>
@@ -344,7 +344,7 @@ function UserProfile(props) {
                 <>
                   <div className="id_1">
                     <img
-                      src={`http://localhost:8800/images/docu/${props.doc1}`}
+                      src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${props.doc1}`}
                       alt="License"
                     />
                   </div>
@@ -527,7 +527,7 @@ export function ViewUserProfile(props) {
             {props.profileImg ? (
               <img
                 className="user_profile_pic"
-                src={`http://localhost:8800/images/profile/${props.profileImg}`}
+                src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/profile/${props.profileImg}`}
                 alt="ProfPic"
               />
             ) : (
@@ -681,13 +681,13 @@ export function ViewUserProfile(props) {
                 <>
                   <div className="id_1">
                     <img
-                      src={`http://localhost:8800/images/docu/${props.verFront}`}
+                      src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${props.verFront}`}
                       alt="Front"
                     />
                   </div>
                   <div className="id_1">
                     <img
-                      src={`http://localhost:8800/images/docu/${props.verBack}`}
+                      src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${props.verBack}`}
                       alt="Back"
                     />
                   </div>
@@ -701,7 +701,7 @@ export function ViewUserProfile(props) {
                 <>
                   <div className="id_1">
                     <img
-                      src={`http://localhost:8800/images/docu/${props.verDoc1}`}
+                      src={`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/images/docu/${props.verDoc1}`}
                       alt="License"
                     />
                   </div>

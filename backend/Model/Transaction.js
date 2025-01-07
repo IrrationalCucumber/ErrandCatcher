@@ -116,6 +116,7 @@ const Trans = {
   getAmountSum: (cb) => {
     db.query(`SELECT SUM(total) as 't' FROM INVOICE`, cb);
   },
+
   //get errand date of ongoing errand of catcher
   getErrandDate: (id, callback) => {
     db.query(
@@ -124,6 +125,25 @@ const Trans = {
         WHERE t.transCatcherID = ? AND t.transStatus = 'Ongoing'`,
       [id],
       callback
+ );
+  },
+  // get catcher total earnings
+  getAmountSumCat: (id, cb) => {
+    db.query(
+      `SELECT SUM(total) as 't' FROM INVOICE WHERE invoiceCatcherID = ?`,
+      [id],
+      cb
+    );
+  },
+  //get catcher all invoice info
+  getAllTransCat: (id, cb) => {
+    db.query(
+      `SELECT i.*, ua.userFirstname, ua.userLastname FROM  invoice i
+      LEFT JOIN useraccount ua ON i.invoiceemployerID = ua.userID
+      WHERE i.invoiceCatcherID = ?`,
+      [id],
+      cb
+
     );
   },
 };

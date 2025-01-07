@@ -90,9 +90,9 @@ function Application() {
   const fetchAllAccount = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8800/your-application/${userID}`
+        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/your-application/${userID}`
       );
-      //http://localhost:8800/user - local
+      //https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/user - local
       //http://192.168.1.47:8800/user - network
       setApply(res.data);
       console.log(res.data);
@@ -311,7 +311,7 @@ function Application() {
 
     try {
       await axios.put(
-        `http://localhost:8800/cancel-apply/${userID}/${applicationID}`
+        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/cancel-apply/${userID}/${applicationID}`
       );
 
       //add a notification to the commission's employer
@@ -321,7 +321,7 @@ function Application() {
       notif.notificationType = "Application Cancelled";
       notif.notifDate = getTimeAndDate();
 
-      await axios.post("http://localhost:8800/notify", notif);
+      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notif);
       // window.location.reload();
       // navigate(`/my-application/${userID}`);
 
@@ -343,9 +343,9 @@ function Application() {
   // delete application
   const handleDelete = async (applicationID) => {
     try {
-      //"http://localhost:8800/commission" - local computer
+      //"https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission" - local computer
       //"http://192.168.1.47:8800/commission" - netwrok
-      await axios.delete(`http://localhost:8800/delete-apply/${applicationID}`);
+      await axios.delete(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/delete-apply/${applicationID}`);
 
       // popup delete modal
       setTimeout(() => {

@@ -38,7 +38,7 @@ const Delivery = () => {
   useEffect(() => {
     const fetchAllCommission = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/type/Delivery`);
+        const res = await axios.get(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/type/Delivery`);
         setCommissions(res.data);
       } catch (err) {
         console.log(err);

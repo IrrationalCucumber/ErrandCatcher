@@ -174,7 +174,7 @@ function SkillsInputModal(props) {
     // alert(qualificationsString);
     // alert(details.skills);
     await axios.put(
-      "http://localhost:8800/update-info/" + user.userID,
+      "https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/update-info/" + user.userID,
       details
     );
     props.close();

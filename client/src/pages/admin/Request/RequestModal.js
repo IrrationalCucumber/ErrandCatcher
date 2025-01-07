@@ -64,7 +64,7 @@ const RequestModal = ({ request, handleClose }) => {
     try {
       const status = "Verified";
       await axios.put(
-        `http://localhost:8800/change-status/${requestUserID}/${status}`
+        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/change-status/${requestUserID}/${status}`
       );
       console.log("Request verified:", request);
       setIsButtonClicked(true);
@@ -73,9 +73,9 @@ const RequestModal = ({ request, handleClose }) => {
       notif.userID = requestUserID;
       notif.notificationType = "Verification";
       notif.notifDate = getTimeAndDate();
-      await axios.post("http://localhost:8800/notify", notif);
+      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notif);
       //update request to complete
-      await axios.put(`http://localhost:8800/done-request/${requestID}`);
+      await axios.put(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/done-request/${requestID}`);
 
       setLoading(true);
       // 2 seconds cd
@@ -104,7 +104,7 @@ const RequestModal = ({ request, handleClose }) => {
     try {
       const status = "Suspended";
       await axios.put(
-        `http://localhost:8800/change-status/${requestUserID}/${status}`
+        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/change-status/${requestUserID}/${status}`
       );
       console.log("Request verified:", request);
       setIsButtonClicked(true);
@@ -113,9 +113,9 @@ const RequestModal = ({ request, handleClose }) => {
       notif.userID = requestUserID;
       notif.notificationType = "Suspension";
       notif.notifDate = getTimeAndDate();
-      await axios.post("http://localhost:8800/notify", notif);
+      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notif);
       //update request to complete
-      await axios.put(`http://localhost:8800/done-request/${requestID}`);
+      await axios.put(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/done-request/${requestID}`);
       // handleClose();
 
       setLoading(true);

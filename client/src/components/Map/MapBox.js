@@ -80,7 +80,7 @@ export default function Map({ accessToken, getDistanceCallback }) {
 // Function to handle onClick button events, e.g when the user wants to pay
 export function handlePayment(distance) {
   // backend route to receive and process payment
-  const paymentUrl = "http://localhost:8800/process-payment";
+  const paymentUrl = "https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/process-payment";
 
   // Change the amount
   const amount = 100;

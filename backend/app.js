@@ -199,7 +199,7 @@ app.get("/success-payment/:id", (req, res) => {
   const currentTime = new Date().toISOString().slice(0, 19).replace("T", " ");
 
   const q1 = `UPDATE errandtransaction 
-            SET transStatus = 'Task Done', transDateComplete = ? 
+            SET transStatus = 'Complete', transDateComplete = ? 
             WHERE transactID = ?`;
 
   const q2 = `INSERT INTO invoice (total, type, description, checkoutId, paymentId, paid, invoiceErrandID, invoiceemployerID, invoiceCatcherID) VALUES ( ?, ?, ?, ?, ?, FROM_UNIXTIME(?), ?, ?, ? )`;
@@ -258,7 +258,7 @@ app.post("/process-payment/:employerID", async (req, res) => {
   // const distance = req.body.distance / 1000;
   const amount = req.body.pay;
   const type = req.body.type;
-  // const name = req.body.name;
+  const name = req.body.name;
   // times 100 to proply display as default is centavo
   const total = amount * 100;
   const description = req.body.errand;
@@ -267,6 +267,8 @@ app.post("/process-payment/:employerID", async (req, res) => {
   const employerid = req.body.employerID;
   const errandID = req.body.errandID;
   const catcherid = req.body.catID;
+  const email = req.body.email;
+  const phone = req.body.cnum;
 
   // const total = Math.round(distance) * 15 + baseAmount;
   // Paymongo api key in base64, convert api key to base64
@@ -274,7 +276,9 @@ app.post("/process-payment/:employerID", async (req, res) => {
   const checkout = await processPayment(
     authKey,
     total,
-    // name,
+    name,
+    email,
+    phone,
     type,
     description,
     // `Total distance: ${distance.toFixed(2)}km`,

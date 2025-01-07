@@ -185,8 +185,8 @@ const PostCommission = () => {
         setShowAlert(true);
         handleScrollToTop();
       } else {
-        await axios.post("http://localhost:8800/commission", updatedCommission);
-        await axios.post("http://localhost:8800/notify-catcher");
+        await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission", updatedCommission);
+        await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify-catcher");
 
         setLoading(true);
 

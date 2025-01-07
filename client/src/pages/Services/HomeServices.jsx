@@ -38,7 +38,7 @@ const HomeServices = () => {
   useEffect(() => {
     const fetchAllCommission = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/type/HomeService`);
+        const res = await axios.get(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/type/HomeService`);
         setCommissions(res.data);
       } catch (err) {
         console.log(err);
