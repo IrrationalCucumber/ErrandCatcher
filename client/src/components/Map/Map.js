@@ -1,12 +1,13 @@
 import React, { useRef, useEffect, useState } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
+import mapboxgl from "mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
+import MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
 import "./css/map.css";
+import "./css/MapBox.css";
 import Filter from "./Filter";
 import axios from "axios";
-import mapboxgl from "mapbox-gl";
-import MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
-import "./css/MapBox.css";
 import { LoadingMap } from "../Display/DsiplayFunctions";
 
 //for map pages
