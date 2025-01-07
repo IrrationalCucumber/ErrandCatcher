@@ -12,7 +12,7 @@ function CatcherMap() {
   const [lng, setLng] = useState(123.8854);
   const [lat, setLat] = useState(10.3157);
   const [zoom] = useState(10);
-  const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
+  const [API_KEY] = useState("3MASu2fXHMqsE8voC6f1");
   const [errands, setErrands] = useState([]);
   const [userLocation, setUserLocation] = useState({ lat: 0, lng: 0 });
   const [proximity, setProximity] = useState(10); // Proximity in kilometers
@@ -22,7 +22,9 @@ function CatcherMap() {
   useEffect(() => {
     const fetchErrands = async () => {
       try {
-        const response = await axios.get("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/available/");
+        const response = await axios.get(
+          "https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/available/"
+        );
         setErrands(response.data);
       } catch (error) {
         console.error(error);
@@ -63,9 +65,9 @@ function CatcherMap() {
     const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.cos(toRad(lat1)) *
-      Math.cos(toRad(lat2)) *
-      Math.sin(dLng / 2) *
-      Math.sin(dLng / 2);
+        Math.cos(toRad(lat2)) *
+        Math.sin(dLng / 2) *
+        Math.sin(dLng / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c; // Distance in km
   };

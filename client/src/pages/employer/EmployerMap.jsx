@@ -13,7 +13,7 @@ function CommissionMap() {
   const [lng] = useState(123.8854);
   const [lat] = useState(10.3157);
   const [zoom] = useState(10);
-  const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
+  const [API_KEY] = useState("3MASu2fXHMqsE8voC6f1");
   const [errands, setErrands] = useState([]);
 
   //fetch and store errand
@@ -21,7 +21,8 @@ function CommissionMap() {
     const fetchErrand = async () => {
       try {
         const response = await axios.get(
-          "https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/your-commission/" + user.userID
+          "https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/your-commission/" +
+            user.userID
         );
         setErrands(response.data);
       } catch (error) {

@@ -50,7 +50,7 @@ export function LandingMap() {
   const [lng] = useState(123.926);
   const [lat] = useState(10.2892);
   const [zoom] = useState(11.6);
-  const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
+  const [API_KEY] = useState("3MASu2fXHMqsE8voC6f1");
   const [errands, setErrands] = useState([]);
   const [isMapLoaded, setIsMapLoaded] = useState(false);
   const [filter, setFilter] = useState([]); // State to store filtered errands
@@ -60,7 +60,7 @@ export function LandingMap() {
     const fetchErrands = async () => {
       try {
         const response = await axios.get(
-          "https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/errands/",
+          "https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/errands/"
         );
         setErrands(response.data);
       } catch (error) {
@@ -120,8 +120,8 @@ export function LandingMap() {
             .setLngLat([errand.commissionLong, errand.commissionLat])
             .setPopup(
               new maplibregl.Popup().setHTML(
-                `<h3>${errand.commissionTitle}</h3><p>${errand.commissionDesc}</p><a href="/errand/view/${errand.commissionID}">View</a>`,
-              ),
+                `<h3>${errand.commissionTitle}</h3><p>${errand.commissionDesc}</p><a href="/errand/view/${errand.commissionID}">View</a>`
+              )
             )
             .addTo(map.current);
         } catch (error) {
@@ -151,7 +151,7 @@ export function HomeMap(props) {
   const [lng] = useState(123.926);
   const [lat] = useState(10.2892);
   const [zoom] = useState(11.6);
-  const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
+  const [API_KEY] = useState("3MASu2fXHMqsE8voC6f1");
   const [errands, setErrands] = useState([]);
 
   useEffect(() => {
@@ -162,7 +162,7 @@ export function HomeMap(props) {
       try {
         const response = await axios.get(
           "https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/your-commission/" +
-            props.id,
+            props.id
         );
         setErrands(response.data);
       } catch (error) {
@@ -210,8 +210,8 @@ export function HomeMap(props) {
         .setLngLat([errand.commissionLong, errand.commissionLat])
         .setPopup(
           new maplibregl.Popup().setHTML(
-            `<h3>${errand.commissionTitle}</h3><p>${errand.commissionDesc}</p><a href="/errand/view/${errand.commissionID}">View</a>`,
-          ),
+            `<h3>${errand.commissionTitle}</h3><p>${errand.commissionDesc}</p><a href="/errand/view/${errand.commissionID}">View</a>`
+          )
         )
         .addTo(map.current);
 
@@ -240,7 +240,7 @@ export function ViewMap({ id }) {
   const fetchLoc = async () => {
     try {
       const response = await fetch(
-        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/errand/${id}`,
+        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/errand/${id}`
       );
       const data = await response.json();
       return data;
@@ -254,7 +254,7 @@ export function ViewMap({ id }) {
   //variables for map
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
+  const [API_KEY] = useState("3MASu2fXHMqsE8voC6f1");
   const [zoom] = useState(10);
 
   useEffect(() => {
@@ -283,7 +283,7 @@ export function ViewMap({ id }) {
         }) // Red marker for commissions
           .setLngLat([currentLng, currentLat])
           .setPopup(
-            new maplibregl.Popup().setHTML(`<h3>The Errand is here!</h3>`),
+            new maplibregl.Popup().setHTML(`<h3>The Errand is here!</h3>`)
           )
           .addTo(map.current);
       });
@@ -307,7 +307,7 @@ export function MapLibre({ getCoords }) {
   //variables for map
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
+  const [API_KEY] = useState("3MASu2fXHMqsE8voC6f1");
   const [zoom] = useState(10);
 
   useEffect(() => {
@@ -363,7 +363,7 @@ export function UpdateMapLibre({ getCoords, id }) {
     const fetchLoc = async () => {
       try {
         const res = await axios.get(
-          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/errand/${id}`,
+          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/errand/${id}`
         );
         if (res.data[0]) {
           setCoords({
@@ -381,7 +381,7 @@ export function UpdateMapLibre({ getCoords, id }) {
   // Map initialization
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [API_KEY] = useState("ZQyqv6eWtI6zNE29SPDd");
+  const [API_KEY] = useState("3MASu2fXHMqsE8voC6f1");
   const [zoom] = useState(15);
 
   useEffect(() => {
@@ -404,7 +404,7 @@ export function UpdateMapLibre({ getCoords, id }) {
     })
       .setLngLat([coords.lng, coords.lat]) // Use fetched coordinates
       .setPopup(
-        new maplibregl.Popup().setHTML("<h3>Drag to update location</h3>"),
+        new maplibregl.Popup().setHTML("<h3>Drag to update location</h3>")
       )
       .addTo(map.current);
 
@@ -496,7 +496,7 @@ export function ViewMapBox({
           getDistanceCallback(
             distance,
             originCoordinates,
-            destinationCoordinates,
+            destinationCoordinates
           );
         }
       });
@@ -578,7 +578,7 @@ export function PostMapBox({
       getDistanceCallback(
         route.distance,
         originCoordinates,
-        destinationCoordinates,
+        destinationCoordinates
       );
 
       // console.log("Origin Coordinates:", originCoordinates);
@@ -598,7 +598,7 @@ export function PostMapBox({
       getDistanceCallback(
         route.distance,
         originCoordinates,
-        destinationCoordinates,
+        destinationCoordinates
       );
     });
   }, [accessToken]);
