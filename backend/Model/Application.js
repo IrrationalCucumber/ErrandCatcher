@@ -7,7 +7,7 @@ const Apply = {
   getApplicants: (id, callback) => {
     db.query(
       `SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname, ua.userQualification, ua.userHasErrand
-        FROM Application a 
+        FROM application a 
         LEFT JOIN commission c ON a.applicationErrandID = c.commissionID
         LEFT JOIN useraccount ua ON a.catcherID = ua.userID 
         WHERE a.applicationErrandID IN (SELECT commissionID FROM commission WHERE employerID = ?)
@@ -23,9 +23,9 @@ const Apply = {
   getApplication: (id, callback) => {
     db.query(
       `SELECT a.*, c.commissionTitle, ua.userEmail, ua.userContactNum, ua.userLastname, ua.userFirstname, c.employerID
-     FROM Application a 
-     JOIN commission c ON a.applicationErrandID = c.commissionID
-     JOIN useraccount ua ON c.employerID = ua.userID
+     FROM application a 
+     LEFT JOIN commission c ON a.applicationErrandID = c.commissionID
+     LEFT JOIN useraccount ua ON c.employerID = ua.userID
      WHERE a.catcherID IN (SELECT userID FROM useraccount WHERE userID = ?)`,
       [id],
       callback
