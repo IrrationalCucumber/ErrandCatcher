@@ -28,7 +28,7 @@ function CommissionMap() {
     };
     fetchCommissions();
     //refresh map for 5 sec
-    const interval = setInterval(fetchCommissions, 5000);
+    const interval = setInterval(fetchCommissions, 60000);
     return () => clearInterval(interval);
   }, []);
   //filter

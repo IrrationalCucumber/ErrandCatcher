@@ -27,14 +27,16 @@ export function MyFeedback({ id }) {
     //fetch data in backend
     const fetchFeedback = async () => {
       try {
-        const res = await axios.get(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/my-feedbacks/${id}`);
+        const res = await axios.get(
+          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/my-feedbacks/${id}`
+        );
         setMyFeedback(res.data);
       } catch (error) {
         console.log(error);
       }
     };
     //refresh feedback every 1 seconds
-    const refresh = setInterval(fetchFeedback, 1000);
+    const refresh = setInterval(fetchFeedback, 60000);
     return () => clearInterval(refresh);
   }, []);
   return (
@@ -92,7 +94,7 @@ export function MyPostedFeedback() {
       }
     };
     //refresh list every 5 sec
-    const refresh = setInterval(fetchFeedback, 5000);
+    const refresh = setInterval(fetchFeedback, 60000);
     return () => clearInterval(refresh);
   }, []);
   return (

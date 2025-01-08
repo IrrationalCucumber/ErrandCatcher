@@ -97,7 +97,7 @@ const ErrandPage = () => {
         }
       };
       fetchApp();
-      const interval = setInterval(fetchApp, 3000);
+      const interval = setInterval(fetchApp, 60000);
       return () => clearInterval(interval);
     }
   }, [isApplied, user.userType, userID, commissionID]);
@@ -215,14 +215,20 @@ const ErrandPage = () => {
       application.catcherID = user.userID;
 
       console.log(application); // Check the updated commission object
-      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/apply", application);
+      await axios.post(
+        "https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/apply",
+        application
+      );
 
       //add a notification to the commission's employer
       notif.notifDesc = "A Catcher has applied to on of your errand";
       notif.userID = commission.employerID;
       notif.notificationType = "Errand Application";
 
-      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notif);
+      await axios.post(
+        "https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify",
+        notif
+      );
       // setAlerMsg("You have applied to this Errand!");
       // setShowAlert(true);
       // setAlrtColor("success");
@@ -259,7 +265,9 @@ const ErrandPage = () => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const res = await axios(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/user/${user.userID}`);
+        const res = await axios(
+          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/user/${user.userID}`
+        );
         const skillArray = res.data.map((skill) => skill.userQualification);
         setCatcher(skillArray[0].split(",")); // Ensure catcher is an array
       } catch (error) {
@@ -408,7 +416,8 @@ const ErrandPage = () => {
               fontWeight: 500,
             }}
           >
-            <WorkOutlineOutlinedIcon color="primary" /> <i>You still have an Errand to do!</i>
+            <WorkOutlineOutlinedIcon color="primary" />{" "}
+            <i>You still have an Errand to do!</i>
           </Typography>
         ) : null}
         <Typography
@@ -440,8 +449,8 @@ const ErrandPage = () => {
                     isApplied
                       ? null
                       : (e) => {
-                        handleApply(true);
-                      }
+                          handleApply(true);
+                        }
                   }
                   style={{
                     backgroundColor: isApplied ? "none" : "",

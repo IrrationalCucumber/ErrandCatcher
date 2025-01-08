@@ -71,7 +71,7 @@ function CommissionPage() {
       }
     };
     fetchAllCommission();
-    const interval = setInterval(fetchAllCommission, 5000);
+    const interval = setInterval(fetchAllCommission, 60000);
     return () => clearInterval(interval);
   }, []);
   //for payment errand
@@ -165,7 +165,10 @@ function CommissionPage() {
       notif.userID = employerID;
       notif.notificationType = "Errand Cancelled";
       notif.notifDate = getTimeAndDate();
-      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notif);
+      await axios.post(
+        "https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify",
+        notif
+      );
       //cancel the transaction
       await axios.put(
         `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/catcher/cancel/${transactID}/${userID}`
@@ -182,8 +185,8 @@ function CommissionPage() {
       // setAlerMsg("You have cancelled an errand.");
       // setShowAlert(true);
       // setAlrtColor("warning");
-      const interval = setInterval(fetchPending, 11000);
-      return () => clearInterval(interval);
+      // const interval = setInterval(fetchPending, 11000);
+      // return () => clearInterval(interval);
       // window.location.reload();
       setOpenCancel(false);
     } catch (err) {
@@ -197,7 +200,10 @@ function CommissionPage() {
       notif.userID = empID;
       notif.notificationType = "Errand Completed";
       notif.notifDate = getTimeAndDate();
-      await axios.post("https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify", notif);
+      await axios.post(
+        "https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/notify",
+        notif
+      );
       //cancel the transaction
       await axios.put(
         `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/catcher/complete/${transID}/${userID}`

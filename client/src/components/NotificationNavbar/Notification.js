@@ -33,14 +33,16 @@ function Notification(props) {
       }
     };
     fetchNotif();
-    const intervalNotif = setInterval(fetchNotif, 1000);
+    const intervalNotif = setInterval(fetchNotif, 60000);
     return () => clearInterval(intervalNotif);
   }, [user.userID]);
 
   // Function to mark all notifications as read
   const handleMarkAllAsRead = async () => {
     try {
-      await axios.put(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/read-all/${user.userID}`);
+      await axios.put(
+        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/read-all/${user.userID}`
+      );
       // Update the notification list in the UI
       setNotifs((prevNotifs) =>
         prevNotifs.map((notif) => ({ ...notif, isRead: true }))
@@ -54,7 +56,9 @@ function Notification(props) {
     <div>
       <Dropdown>
         <MenuButton variant="primary" size="sm">
-          <Badge color="danger" badgeContent={props.count}
+          <Badge
+            color="danger"
+            badgeContent={props.count}
             sx={{
               "& .MuiBadge-badge": {
                 border: "none",

@@ -31,7 +31,7 @@ function CommissionMap() {
     };
     fetchErrand();
     //refresh map for 5 sec
-    const interval = setInterval(fetchErrand, 5000);
+    const interval = setInterval(fetchErrand, 60000);
     return () => clearInterval(interval);
   }, [user.userID]);
   /**

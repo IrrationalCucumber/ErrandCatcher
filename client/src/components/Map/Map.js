@@ -68,7 +68,7 @@ export function LandingMap() {
       }
     };
     fetchErrands();
-    const interval = setInterval(fetchErrands, 5000);
+    const interval = setInterval(fetchErrands, 12000);
     return () => clearInterval(interval);
   }, []);
 
@@ -171,7 +171,7 @@ export function HomeMap(props) {
     };
     fetchErrands();
     //refresh map for 5 sec
-    const interval = setInterval(fetchErrands, 5000);
+    const interval = setInterval(fetchErrands, 12000);
     return () => clearInterval(interval);
   }, []);
   //filter

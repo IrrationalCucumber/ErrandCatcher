@@ -70,7 +70,6 @@ const CommissionList = () => {
   };
   const handleCloseDel = () => {
     setOpenDel(false);
-
   };
 
   //handle error
@@ -88,7 +87,7 @@ const CommissionList = () => {
   };
   useEffect(() => {
     fetchAllCommission(); // Initial fetch
-    const intervalId = setInterval(fetchAllCommission, 5000); // Fetch every 5 seconds
+    const intervalId = setInterval(fetchAllCommission, 60000); // Fetch every 5 seconds
     // Cleanup function to clear the interval when the component unmounts
     return () => clearInterval(intervalId);
   }, []);
@@ -98,7 +97,9 @@ const CommissionList = () => {
     try {
       //"https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/commission" - local computer
       //"http://192.168.1.47:8800/commission" - netwrok
-      await axios.delete(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/delete-errand/${commissionID}`);
+      await axios.delete(
+        `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/delete-errand/${commissionID}`
+      );
 
       // popup delete modal
       setTimeout(() => {
@@ -163,7 +164,6 @@ const CommissionList = () => {
         colorText="error"
         icon={CancelOutlinedIcon}
       />
-
 
       <div>
         <BannerEmployerPages
@@ -298,8 +298,9 @@ const CommissionList = () => {
                             </DialogTitle>
                             <Divider />
                             <DialogContent>
-                              Are you sure you want to discard Errand {currentId}{" "}
-                              ?{/* Display the current ID from state */}
+                              Are you sure you want to discard Errand{" "}
+                              {currentId} ?
+                              {/* Display the current ID from state */}
                             </DialogContent>
                             <DialogActions>
                               <Button

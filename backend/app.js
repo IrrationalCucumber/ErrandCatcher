@@ -132,7 +132,7 @@ const updateExpiredRecords = () => {
 // };
 
 // Schedule the update function to run every minute
-const scheduler = setInterval(updateExpiredRecords, 60 * 1000);
+const scheduler = setInterval(updateExpiredRecords, 120 * 1000);
 //const transScheduler = setInterval(updateExpiredTrans, 60 * 1000); //every min
 
 // Stop the scheduler after a certain duration (optional)

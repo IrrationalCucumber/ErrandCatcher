@@ -112,7 +112,7 @@ export function ApplicantsCount(id) {
       }
     };
     fetchCount();
-    const interval = setInterval(fetchCount, 10000); // 10 seconds refresh
+    const interval = setInterval(fetchCount, 60000); // 10 seconds refresh
     return () => clearInterval(interval);
   }, [id, num]);
   return num;
@@ -135,11 +135,10 @@ export function ApplicationCount(id) {
       }
     };
     fetchCount();
-    const interval = setInterval(fetchCount, 10000); // 10 seconds refresh
+    const interval = setInterval(fetchCount, 60000); // 10 seconds refresh
     return () => clearInterval(interval);
   }, [userID, num]);
 
- 
   if (num === null || num === undefined) {
     return null;
   }

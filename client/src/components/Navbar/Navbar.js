@@ -44,14 +44,16 @@ function Navbar(props) {
   useEffect(() => {
     const fetchNotif = async () => {
       try {
-        const res = await axios.get(`https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/count/${userID}`);
+        const res = await axios.get(
+          `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/count/${userID}`
+        );
         setNotifCount(res.data[0].c);
       } catch (err) {
         console.log(err);
       }
     };
     fetchNotif();
-    const intervalNotif = setInterval(fetchNotif, 1000);
+    const intervalNotif = setInterval(fetchNotif, 60000);
     return () => clearInterval(intervalNotif);
   }, [userID]);
 
