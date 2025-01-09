@@ -236,7 +236,7 @@ app.get("/success-payment/:id", (req, res) => {
 
         // return res.send("Payment successful and details saved.");
         // path: "/paymentsuccess",
-        return res.redirect("http://localhost:3000/paymentsuccess");
+        return res.redirect("https://errand-catcher.vercel.app/paymentsuccess");
       }
     );
   });
@@ -249,7 +249,7 @@ app.get("/cancel-payment", (req, res) => {
   // return res.send("cancel");
   // return res.json({ message: "Payment has been cancelled." });
   // path: "/paymentcancel",
-  return res.redirect("http://localhost:3000/paymentcancel");
+  return res.redirect("https://errand-catcher.vercel.app/paymentcancel");
 });
 
 // Route to process payment
@@ -282,8 +282,8 @@ app.post("/process-payment/:employerID", async (req, res) => {
     type,
     description,
     // `Total distance: ${distance.toFixed(2)}km`,
-    `http://localhost:8800/success-payment/${id}`,
-    "http://localhost:8800/cancel-payment"
+    `https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/success-payment/${id}`,
+    "https://errand-catcher-backend-git-f68eb5a02ca4.herokuapp.com/cancel-payment"
   );
   console.log(checkout.data);
 
