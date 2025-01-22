@@ -204,7 +204,7 @@ function SkillsInputModal(props) {
 
                 <FormControl>
                   <FormLabel>
-                    <Typography
+                    {/* <Typography
                       color="neutral"
                       level="title-lg"
                       variant="plain"
@@ -212,7 +212,7 @@ function SkillsInputModal(props) {
                       {user.userType === "Catcher"
                         ? "Select or Add skill"
                         : "Select or Add tags"}
-                    </Typography>
+                    </Typography> */}
                   </FormLabel>
 
                   {/* Predefined skills list */}
@@ -248,7 +248,10 @@ function SkillsInputModal(props) {
                           color={
                             selectedSkills.includes(skill)
                               ? "success"
-                              : searchTerm && skill.toLowerCase().includes(searchTerm.toLowerCase())
+                              : searchTerm &&
+                                skill
+                                  .toLowerCase()
+                                  .includes(searchTerm.toLowerCase())
                                 ? "primary"
                                 : "neutral"
                           }
@@ -265,7 +268,7 @@ function SkillsInputModal(props) {
 
                   {/* Custom skill input */}
 
-                  {/* <FormLabel>
+                  <FormLabel>
                     <Typography color="primary" level="body-md" variant="plain">
                       {user.userType === "Catcher"
                         ? "Or Add specific skills:"
@@ -291,7 +294,7 @@ function SkillsInputModal(props) {
                     >
                       Add
                     </Button>
-                  </Box> */}
+                  </Box>
 
                   {/* Display selected skills */}
                   <div>
