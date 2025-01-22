@@ -126,6 +126,21 @@ const PostCommission = () => {
     }
   }, [commission.comType, distance]);
 
+  const [titles, setTitles] = useState([]);
+  useEffect(() => {
+    const fetctTitle = async () => {
+      try {
+        const res = await axios.get(`${apiURL}/get-titles`);
+        const titleArray = res.data.map((errand) => errand.commissionTitle);
+        setTitles(titleArray);
+        console.log(titleArray);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetctTitle();
+  }, [userID]);
+
   //pull the local time of the pc
   const getCurrentDate = () => {
     const currentDate = new Date();
@@ -182,6 +197,10 @@ const PostCommission = () => {
         (!commission.comDestLat || !commission.comDestLong || !commission.comTo)
       ) {
         setAlerMsg("Some fields are missing!");
+        setShowAlert(true);
+        handleScrollToTop();
+      } else if (titles.includes(commission.comTitle)) {
+        setAlerMsg("Title is already taken!");
         setShowAlert(true);
         handleScrollToTop();
       } else {

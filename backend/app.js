@@ -459,4 +459,19 @@ app.get("/invoice", (req, res) => {
   });
 });
 
+app.get("/get-titles", (req, res) => {
+  const id = req.params.id;
+  const q = `SELECT commissionTitle FROM commission`;
+  //console.log(name);
+
+  db.query(q, [id], (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "An error occurred" });
+    }
+
+    return res.json(data);
+  });
+});
+
 module.exports;
