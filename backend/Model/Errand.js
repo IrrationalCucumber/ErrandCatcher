@@ -27,7 +27,7 @@ const Errand = {
   //getType
   getType: (type, callback) => {
     db.query(
-      "SELECT * FROM commission WHERE commissionType LIKE ? AND commissionStatus = 'Available'",
+      `SELECT * FROM commission WHERE commissionType LIKE ? AND commissionStatus = 'Available' ORDER BY commissionID DESC`,
       [`%${type}%`],
       callback
     );
@@ -90,9 +90,9 @@ const Errand = {
     ];
     db.query(
       "INSERT INTO commission (`employerID`,`commissionTitle`, `commissionStartDate`," +
-        " `commissionDeadline`, `commissionLocation`, `commissionTo`,`commissionType`," +
-        " `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`, " +
-        "`commissionLong`, `commissionLat`, `commissionDestLong`, `commissionDestLat`, `commissionTags`) VALUES (?)",
+      " `commissionDeadline`, `commissionLocation`, `commissionTo`,`commissionType`," +
+      " `commissionDesc`, `commissionPay`, `DatePosted`, `ContactNumber`, " +
+      "`commissionLong`, `commissionLat`, `commissionDestLong`, `commissionDestLat`, `commissionTags`) VALUES (?)",
       [values],
       callback
     );
