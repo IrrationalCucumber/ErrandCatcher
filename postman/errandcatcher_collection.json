@@ -1,0 +1,1646 @@
+{
+  "info": {
+    "_postman_id": "b3429763-5e6a-4c4a-83e8-885c6e93f37f",
+    "name": "Errand Catcher - Local",
+    "description": "API test for errand catcher where it can only run by localhost  \nSet up first database in MySQL in order to proceed API testing  \nAfter successfully sign up/register new user, add new request GET /verify-email  \nParams tab:\n\n| Key | Value |\n| --- | --- |\n| `token` | the actual token from your database |\n\n**To get the token:**  \nRun this in MySQL Workbench:\n\nSELECT token FROM email_verification_tokens;\n\nCopy one of the tokens and paste it as the value in Postman.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "33446562"
+  },
+  "item": [
+    {
+      "name": "Users Sign Up and Sign In",
+      "item": [
+        {
+          "name": "Sign Up User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const gender = Math.random() < 0.5 ? \"Male\" : \"Female\";\r",
+                  "const type = Math.random() < 0.5 ? \"Employer\" : \"Catcher\";\r",
+                  "pm.environment.set(\"gender\", gender);\r",
+                  "pm.environment.set(\"type\", type);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"regUsername\": \"{{$randomUserName}}\",\r\n  \"regPassword\": \"Secure456\",//Password123\r\n  \"lastName\": \"{{$randomLastName}}\",\r\n  \"firstName\": \"{{$randomFirstName}}\",\r\n  \"gender\": \"{{gender}}\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"contact\": \"{{$randomPhoneNumber}}\",\r\n  \"bday\": \"1998-05-22\",\r\n  \"address\": \"{{$randomCity}}\",\r\n  \"type\": \"{{type}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8800/sign-up",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8800",
+              "path": [
+                "sign-up"
+              ]
+            },
+            "description": "This is the Happy Path for successfully sign up user"
+          },
+          "response": []
+        },
+        {
+          "name": "Validate required missing fields",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "//all missing fields for example",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8800/sign-up",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8800",
+              "path": [
+                "sign-up"
+              ]
+            },
+            "description": "Negative test for one or more missing field"
+          },
+          "response": []
+        },
+        {
+          "name": "Sign Up Invalidate Password",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const gender = Math.random() < 0.5 ? \"Male\" : \"Female\";\r",
+                  "const type = Math.random() < 0.5 ? \"Employer\" : \"Catcher\";\r",
+                  "pm.environment.set(\"gender\", gender);\r",
+                  "pm.environment.set(\"type\", type);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"regUsername\": \"{{$randomUserName}}\",\r\n  \"regPassword\": \"Securety\", //invalid Password\r\n  \"lastName\": \"{{$randomLastName}}\",\r\n  \"firstName\": \"{{$randomFirstName}}\",\r\n  \"gender\": \"{{gender}}\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"contact\": \"{{$randomPhoneNumber}}\",\r\n  \"bday\": \"1998-05-22\",\r\n  \"address\": \"{{$randomCity}}\",\r\n  \"type\": \"{{type}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8800/sign-up",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8800",
+              "path": [
+                "sign-up"
+              ]
+            },
+            "description": "Negative test for invalid password in sign up"
+          },
+          "response": []
+        },
+        {
+          "name": "Verify Username Exist",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 409\", function () {\r",
+                  "    pm.response.to.have.status(409);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const gender = Math.random() < 0.5 ? \"Male\" : \"Female\";\r",
+                  "const type = Math.random() < 0.5 ? \"Employer\" : \"Catcher\";\r",
+                  "pm.environment.set(\"gender\", gender);\r",
+                  "pm.environment.set(\"type\", type);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"regUsername\": \"maria_santos\", //username already exist\r\n  \"regPassword\": \"Secure456\",\r\n  \"lastName\": \"{{$randomLastName}}\",\r\n  \"firstName\": \"{{$randomFirstName}}\",\r\n  \"gender\": \"{{gender}}\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"contact\": \"{{$randomPhoneNumber}}\",\r\n  \"bday\": \"1998-05-22\",\r\n  \"address\": \"{{$randomCity}}\",\r\n  \"type\": \"{{type}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8800/sign-up",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8800",
+              "path": [
+                "sign-up"
+              ]
+            },
+            "description": "Go to mysql and run query this  \nSELECT \\* FROM errandcathcernew.useraccount;\n\nChoose one username and copy"
+          },
+          "response": []
+        },
+        {
+          "name": "Verify Email Exist",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 409\", function () {\r",
+                  "    pm.response.to.have.status(409);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const gender = Math.random() < 0.5 ? \"Male\" : \"Female\";\r",
+                  "const type = Math.random() < 0.5 ? \"Employer\" : \"Catcher\";\r",
+                  "pm.environment.set(\"gender\", gender);\r",
+                  "pm.environment.set(\"type\", type);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"regUsername\": \"{{$randomUserName}}\",\r\n  \"regPassword\": \"Secure456\",//Password123\r\n  \"lastName\": \"{{$randomLastName}}\",\r\n  \"firstName\": \"{{$randomFirstName}}\",\r\n  \"gender\": \"{{gender}}\",\r\n  \"email\": \"maria.santos@example.com\", //email already registered\r\n  \"contact\": \"{{$randomPhoneNumber}}\",\r\n  \"bday\": \"1998-05-22\",\r\n  \"address\": \"{{$randomCity}}\",\r\n  \"type\": \"{{type}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8800/sign-up",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8800",
+              "path": [
+                "sign-up"
+              ]
+            },
+            "description": "Go to mysql and run query this  \nSELECT \\* FROM errandcathcernew.useraccount;\n\nChoose one email and copy"
+          },
+          "response": []
+        },
+        {
+          "name": "Invalid birthday",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const gender = Math.random() < 0.5 ? \"Male\" : \"Female\";\r",
+                  "const type = Math.random() < 0.5 ? \"Employer\" : \"Catcher\";\r",
+                  "pm.environment.set(\"gender\", gender);\r",
+                  "pm.environment.set(\"type\", type);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"regUsername\": \"{{$randomUserName}}\",\r\n  \"regPassword\": \"Secure456\",\r\n  \"lastName\": \"{{$randomLastName}}\",\r\n  \"firstName\": \"{{$randomFirstName}}\",\r\n  \"gender\": \"{{gender}}\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"contact\": \"{{$randomPhoneNumber}}\",\r\n  \"bday\": \"2010-06-15\", //age is 15\r\n  \"address\": \"{{$randomCity}}\",\r\n  \"type\": \"{{type}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8800/sign-up",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8800",
+              "path": [
+                "sign-up"
+              ]
+            },
+            "description": "Negative testing for attempting to sign up below age 18"
+          },
+          "response": []
+        },
+        {
+          "name": "Sign In Employer User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Username is match\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    var expectedUsername = pm.variables.get(\"employerUsername\");\r",
+                  "    pm.expect(jsonData.username).to.eql(expectedUsername);\r",
+                  "});\r",
+                  "\r",
+                  "var data = pm.response.json();\r",
+                  "pm.environment.set(\"userID\", data.userID);\r",
+                  "pm.environment.set(\"employerID\", data.userID);\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8800/sign-in?username={{employerUsername}}&password={{employerPassword}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8800",
+              "path": [
+                "sign-in"
+              ],
+              "query": [
+                {
+                  "key": "username",
+                  "value": "{{employerUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{employerPassword}}"
+                }
+              ]
+            },
+            "description": "Sign In as Employer"
+          },
+          "response": []
+        },
+        {
+          "name": "Sign In Catcher User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Username is match\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    var expectedUsername = pm.variables.get(\"catcherUsername\");\r",
+                  "    pm.expect(jsonData.username).to.eql(expectedUsername);\r",
+                  "});\r",
+                  "\r",
+                  "var data = pm.response.json();\r",
+                  "pm.environment.set(\"catcherID\", data.userID);\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8800/sign-in?username={{catcherUsername}}&password={{catcherPassword}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8800",
+              "path": [
+                "sign-in"
+              ],
+              "query": [
+                {
+                  "key": "username",
+                  "value": "{{catcherUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{catcherPassword}}"
+                }
+              ]
+            },
+            "description": "Sign in as Catcher"
+          },
+          "response": []
+        },
+        {
+          "name": "Update User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"new_username\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8800/update/109",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8800",
+              "path": [
+                "update",
+                "109"
+              ]
+            },
+            "description": "Go to mysql and run query this  \nSELECT \\* FROM errandcathcernew.useraccount;\n\nChoose one user ID and copy then replace the ID"
+          },
+          "response": []
+        },
+        {
+          "name": "User Upload Profile Picture",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response has success message\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.message).to.eql(\"User updated successfully\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "uuid": "f4b1b3a1-5200-4ef5-b853-8323696199f3",
+                  "src": "/C:/Users/User/Pictures/Screenshots/color hunt.png"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8800/update-pic/109",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8800",
+              "path": [
+                "update-pic",
+                "109"
+              ]
+            },
+            "description": "Go to mysql and run query this  \nSELECT \\* FROM errandcathcernew.useraccount;\n\nChoose one user ID and copy then replace the ID"
+          },
+          "response": []
+        }
+      ],
+      "description": "Sign up or register as a new user and then proceed to sign in"
+    },
+    {
+      "name": "Employer Create Errands",
+      "item": [
+        {
+          "name": "Get Errands",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "\r",
+                  "\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8800/errands",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8800",
+              "path": [
+                "errands"
+              ]
+            },
+            "description": "Gets all errands"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Available Errands",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8800/available",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8800",
+              "path": [
+                "available"
+              ]
+            },
+            "description": "Get all available errands"
+          },
+          "response": []
+        },
+        {
+          "name": "Post Errand",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Commission types\r",
+                  "const types = [\r",
+                  "  \"HomeService - Indoor\",\r",
+                  "  \"HomeService - Outdoor\",\r",
+                  "  \"Delivery\",\r",
+                  "  \"Transportation\"\r",
+                  "];\r",
+                  "const comType = types[Math.floor(Math.random() * types.length)];\r",
+                  "\r",
+                  "// Tags based on type\r",
+                  "const tagMap = {\r",
+                  "  \"HomeService - Indoor\": [\"plumbing\", \"electrical\", \"painting\", \"carpentry\", \"cleaning\", \"aircon repair\"],\r",
+                  "  \"HomeService - Outdoor\": [\"gardening\", \"roofing\", \"fence repair\", \"exterior painting\", \"lawn mowing\"],\r",
+                  "  \"Delivery\": [\"package delivery\", \"food delivery\", \"courier\", \"drop off\", \"pick up and deliver\"],\r",
+                  "  \"Transportation\": [\"driving\", \"ride service\", \"airport transfer\", \"cargo transport\", \"vehicle for hire\"]\r",
+                  "};\r",
+                  "\r",
+                  "const tagList = tagMap[comType];\r",
+                  "const comTags = tagList[Math.floor(Math.random() * tagList.length)];\r",
+                  "\r",
+                  "// Cebu City area coordinates (realistic)\r",
+                  "const cebuLocations = [\r",
+                  "  { name: \"Cebu City\", long: 123.9094, lat: 10.3157 },\r",
+                  "  { name: \"Mandaue City\", long: 123.9347, lat: 10.3236 },\r",
+                  "  { name: \"Lapu-Lapu City\", long: 124.0058, lat: 10.3103 },\r",
+                  "  { name: \"Talisay City\", long: 123.8500, lat: 10.2447 },\r",
+                  "  { name: \"Consolacion\", long: 123.9594, lat: 10.3736 },\r",
+                  "  { name: \"Liloan\", long: 124.0022, lat: 10.3994 },\r",
+                  "];\r",
+                  "\r",
+                  "// Haversine formula to calculate distance in km\r",
+                  "function haversineDistance(lat1, lon1, lat2, lon2) {\r",
+                  "  const R = 6371;\r",
+                  "  const dLat = (lat2 - lat1) * Math.PI / 180;\r",
+                  "  const dLon = (lon2 - lon1) * Math.PI / 180;\r",
+                  "  const a = Math.sin(dLat/2) * Math.sin(dLat/2) +\r",
+                  "    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *\r",
+                  "    Math.sin(dLon/2) * Math.sin(dLon/2);\r",
+                  "  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));\r",
+                  "  return R * c;\r",
+                  "}\r",
+                  "\r",
+                  "// Pick random start location\r",
+                  "const startIndex = Math.floor(Math.random() * cebuLocations.length);\r",
+                  "const startLocation = cebuLocations[startIndex];\r",
+                  "\r",
+                  "// Dates\r",
+                  "const today = new Date();\r",
+                  "const comStart = today.toISOString().split(\"T\")[0];\r",
+                  "const deadlineDays = Math.floor(Math.random() * 5) + 1;\r",
+                  "const deadline = new Date(today);\r",
+                  "deadline.setDate(today.getDate() + deadlineDays);\r",
+                  "const comDeadline = deadline.toISOString().split(\"T\")[0];\r",
+                  "\r",
+                  "// Set common variables\r",
+                  "pm.environment.set(\"comType\", comType);\r",
+                  "pm.environment.set(\"comTags\", comTags);\r",
+                  "pm.environment.set(\"comStart\", comStart);\r",
+                  "pm.environment.set(\"comDeadline\", comDeadline);\r",
+                  "pm.environment.set(\"comLocation\", startLocation.name);\r",
+                  "pm.environment.set(\"comLong\", startLocation.long);\r",
+                  "pm.environment.set(\"comLat\", startLocation.lat);\r",
+                  "\r",
+                  "// Handle destination and payment based on type\r",
+                  "if (comType === \"Delivery\" || comType === \"Transportation\") {\r",
+                  "  // Pick a different destination\r",
+                  "  let destIndex;\r",
+                  "  do {\r",
+                  "    destIndex = Math.floor(Math.random() * cebuLocations.length);\r",
+                  "  } while (destIndex === startIndex);\r",
+                  "\r",
+                  "  const destLocation = cebuLocations[destIndex];\r",
+                  "\r",
+                  "  // Calculate distance and payment\r",
+                  "  const distance = haversineDistance(\r",
+                  "    startLocation.lat, startLocation.long,\r",
+                  "    destLocation.lat, destLocation.long\r",
+                  "  );\r",
+                  "\r",
+                  "  // 50 pesos per km, minimum 150\r",
+                  "  const comPay = Math.max(150, Math.round(distance * 50));\r",
+                  "\r",
+                  "  pm.environment.set(\"comTo\", destLocation.name);\r",
+                  "  pm.environment.set(\"comDestLong\", destLocation.long);\r",
+                  "  pm.environment.set(\"comDestLat\", destLocation.lat);\r",
+                  "  pm.environment.set(\"comPay\", comPay);\r",
+                  "\r",
+                  "} else {\r",
+                  "  // Indoor/Outdoor — same location, dest is 0\r",
+                  "  // Random pay between 500 and 2000\r",
+                  "  const comPay = Math.floor(Math.random() * 1500) + 500;\r",
+                  "\r",
+                  "  pm.environment.set(\"comTo\", \"\");\r",
+                  "  pm.environment.set(\"comDestLong\", 0);\r",
+                  "  pm.environment.set(\"comDestLat\", 0);\r",
+                  "  pm.environment.set(\"comPay\", comPay);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Respond has a success message\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.message).to.eql(\"Errand added successfully\");\r",
+                  "});\r",
+                  "\r",
+                  "var data = pm.response.json();\r",
+                  "pm.environment.set(\"commissionID\", data.errand[0].commissionID);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"empID\": \"{{employerID}}\",\r\n  \"comTitle\": \"{{$randomCatchPhrase}}\",\r\n  \"comStart\": \"{{comStart}}\",\r\n  \"comDeadline\": \"{{comDeadline}}\",\r\n  \"comLocation\": \"{{comLocation}}\",\r\n  \"comTo\": \"{{comTo}}\",\r\n  \"comType\": \"{{comType}}\",\r\n  \"comDescription\": \"{{$randomLoremSentence}}\",\r\n  \"comPay\": \"{{comPay}}\",\r\n  \"Contactno\": \"{{$randomPhoneNumber}}\",\r\n  \"DatePosted\": \"{{comStart}}\",\r\n  \"comLong\": \"{{comLong}}\",\r\n  \"comLat\": \"{{comLat}}\",\r\n  \"comDestLong\": \"{{comDestLong}}\",\r\n  \"comDestLat\": \"{{comDestLat}}\",\r\n  \"comTags\": \"{{comTags}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8800/commission",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8800",
+              "path": [
+                "commission"
+              ]
+            },
+            "description": "The request where Employer create/post errands"
+          },
+          "response": []
+        }
+      ],
+      "description": "This is where Employers create errands"
+    },
+    {
+      "name": "Catcher Apply",
+      "item": [
+        {
+          "name": "Catcher Apply Errand",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "var data = pm.response.json();\r",
+                  "pm.environment.set(\"applyID\", data.application[0].applicationID);\r",
+                  "pm.environment.set(\"commissionID\", data.application[0].applicationErrandID);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"catcherID\": {{catcherID}},\r\n    \"comID\": {{commissionID}}\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8800/apply",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8800",
+              "path": [
+                "apply"
+              ]
+            },
+            "description": "After sign in as catcher, the ID will be set here at json\n\nAfter employer post errand, the commission ID will be set at json"
+          },
+          "response": []
+        }
+      ],
+      "description": "Catcher apply on posted errand"
+    },
+    {
+      "name": "Employer Errand Actions",
+      "item": [
+        {
+          "name": "Accept Application",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8800/accept-apply/{{commissionID}}/{{applyID}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8800",
+              "path": [
+                "accept-apply",
+                "{{commissionID}}",
+                "{{applyID}}"
+              ]
+            },
+            "description": "Gets the id of the errand that is posted and the id of catcher that applied the errand in order to proceed accept application"
+          },
+          "response": []
+        },
+        {
+          "name": "Errand Status to Done",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8800/errand-taken/{{commissionID}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8800",
+              "path": [
+                "errand-taken",
+                "{{commissionID}}"
+              ]
+            },
+            "description": "Makes the errand status to done"
+          },
+          "response": []
+        },
+        {
+          "name": "Errand Transaction",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "var data = pm.response.json();\r",
+                  "pm.environment.set(\"transID\", data.transID);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"comID\": \"{{commissionID}}\",\r\n  \"catcherID\": \"{{catcherID}}\",\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8800/add-trans",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8800",
+              "path": [
+                "add-trans"
+              ]
+            },
+            "description": "Employer will proceed to add transaction when errand is done"
+          },
+          "response": []
+        },
+        {
+          "name": "Employer Give Feedback",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const feedbackCount = Math.floor(Math.random() * 5) + 1;\r",
+                  "pm.environment.set(\"feedbackCount\", feedbackCount);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "var data = pm.response.json();\r",
+                  "pm.environment.set(\"feedbackID\", data.feedbackID);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"commissionID\": \"{{commissionID}}\",\r\n  \"catcherID\": \"{{catcherID}}\",\r\n  \"feedbackComment\": \"{{$randomLoremSentence}}\",\r\n  \"feedbackCount\": {{feedbackCount}},\r\n  \"feedbackPosterID\": \"{{employerID}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8800/rate",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8800",
+              "path": [
+                "rate"
+              ]
+            },
+            "description": "Employer can give feedback to the catcher"
+          },
+          "response": []
+        }
+      ],
+      "description": "This is where Employer accept catcher's application"
+    },
+    {
+      "name": "CRUD Folder",
+      "item": [
+        {
+          "name": "Post Errand Copy",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Commission types\r",
+                  "const types = [\r",
+                  "  \"HomeService - Indoor\",\r",
+                  "  \"HomeService - Outdoor\",\r",
+                  "  \"Delivery\",\r",
+                  "  \"Transportation\"\r",
+                  "];\r",
+                  "const comType = types[Math.floor(Math.random() * types.length)];\r",
+                  "\r",
+                  "// Tags based on type\r",
+                  "const tagMap = {\r",
+                  "  \"HomeService - Indoor\": [\"plumbing\", \"electrical\", \"painting\", \"carpentry\", \"cleaning\", \"aircon repair\"],\r",
+                  "  \"HomeService - Outdoor\": [\"gardening\", \"roofing\", \"fence repair\", \"exterior painting\", \"lawn mowing\"],\r",
+                  "  \"Delivery\": [\"package delivery\", \"food delivery\", \"courier\", \"drop off\", \"pick up and deliver\"],\r",
+                  "  \"Transportation\": [\"driving\", \"ride service\", \"airport transfer\", \"cargo transport\", \"vehicle for hire\"]\r",
+                  "};\r",
+                  "\r",
+                  "const tagList = tagMap[comType];\r",
+                  "const comTags = tagList[Math.floor(Math.random() * tagList.length)];\r",
+                  "\r",
+                  "// Cebu City area coordinates (realistic)\r",
+                  "const cebuLocations = [\r",
+                  "  { name: \"Cebu City\", long: 123.9094, lat: 10.3157 },\r",
+                  "  { name: \"Mandaue City\", long: 123.9347, lat: 10.3236 },\r",
+                  "  { name: \"Lapu-Lapu City\", long: 124.0058, lat: 10.3103 },\r",
+                  "  { name: \"Talisay City\", long: 123.8500, lat: 10.2447 },\r",
+                  "  { name: \"Consolacion\", long: 123.9594, lat: 10.3736 },\r",
+                  "  { name: \"Liloan\", long: 124.0022, lat: 10.3994 },\r",
+                  "];\r",
+                  "\r",
+                  "// Haversine formula to calculate distance in km\r",
+                  "function haversineDistance(lat1, lon1, lat2, lon2) {\r",
+                  "  const R = 6371;\r",
+                  "  const dLat = (lat2 - lat1) * Math.PI / 180;\r",
+                  "  const dLon = (lon2 - lon1) * Math.PI / 180;\r",
+                  "  const a = Math.sin(dLat/2) * Math.sin(dLat/2) +\r",
+                  "    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *\r",
+                  "    Math.sin(dLon/2) * Math.sin(dLon/2);\r",
+                  "  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));\r",
+                  "  return R * c;\r",
+                  "}\r",
+                  "\r",
+                  "// Pick random start location\r",
+                  "const startIndex = Math.floor(Math.random() * cebuLocations.length);\r",
+                  "const startLocation = cebuLocations[startIndex];\r",
+                  "\r",
+                  "// Dates\r",
+                  "const today = new Date();\r",
+                  "const comStart = today.toISOString().split(\"T\")[0];\r",
+                  "const deadlineDays = Math.floor(Math.random() * 5) + 1;\r",
+                  "const deadline = new Date(today);\r",
+                  "deadline.setDate(today.getDate() + deadlineDays);\r",
+                  "const comDeadline = deadline.toISOString().split(\"T\")[0];\r",
+                  "\r",
+                  "// Set common variables\r",
+                  "pm.environment.set(\"comType\", comType);\r",
+                  "pm.environment.set(\"comTags\", comTags);\r",
+                  "pm.environment.set(\"comStart\", comStart);\r",
+                  "pm.environment.set(\"comDeadline\", comDeadline);\r",
+                  "pm.environment.set(\"comLocation\", startLocation.name);\r",
+                  "pm.environment.set(\"comLong\", startLocation.long);\r",
+                  "pm.environment.set(\"comLat\", startLocation.lat);\r",
+                  "\r",
+                  "// Handle destination and payment based on type\r",
+                  "if (comType === \"Delivery\" || comType === \"Transportation\") {\r",
+                  "  // Pick a different destination\r",
+                  "  let destIndex;\r",
+                  "  do {\r",
+                  "    destIndex = Math.floor(Math.random() * cebuLocations.length);\r",
+                  "  } while (destIndex === startIndex);\r",
+                  "\r",
+                  "  const destLocation = cebuLocations[destIndex];\r",
+                  "\r",
+                  "  // Calculate distance and payment\r",
+                  "  const distance = haversineDistance(\r",
+                  "    startLocation.lat, startLocation.long,\r",
+                  "    destLocation.lat, destLocation.long\r",
+                  "  );\r",
+                  "\r",
+                  "  // 50 pesos per km, minimum 150\r",
+                  "  const comPay = Math.max(150, Math.round(distance * 50));\r",
+                  "\r",
+                  "  pm.environment.set(\"comTo\", destLocation.name);\r",
+                  "  pm.environment.set(\"comDestLong\", destLocation.long);\r",
+                  "  pm.environment.set(\"comDestLat\", destLocation.lat);\r",
+                  "  pm.environment.set(\"comPay\", comPay);\r",
+                  "\r",
+                  "} else {\r",
+                  "  // Indoor/Outdoor — same location, dest is 0\r",
+                  "  // Random pay between 500 and 2000\r",
+                  "  const comPay = Math.floor(Math.random() * 1500) + 500;\r",
+                  "\r",
+                  "  pm.environment.set(\"comTo\", \"\");\r",
+                  "  pm.environment.set(\"comDestLong\", 0);\r",
+                  "  pm.environment.set(\"comDestLat\", 0);\r",
+                  "  pm.environment.set(\"comPay\", comPay);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Respond has a success message\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.message).to.eql(\"Errand added successfully\");\r",
+                  "});\r",
+                  "\r",
+                  "var data = pm.response.json();\r",
+                  "pm.environment.set(\"commissionID\", data.errand[0].commissionID);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"empID\": \"{{employerID}}\",\r\n  \"comTitle\": \"{{$randomCatchPhrase}}\",\r\n  \"comStart\": \"{{comStart}}\",\r\n  \"comDeadline\": \"{{comDeadline}}\",\r\n  \"comLocation\": \"{{comLocation}}\",\r\n  \"comTo\": \"{{comTo}}\",\r\n  \"comType\": \"{{comType}}\",\r\n  \"comDescription\": \"{{$randomLoremSentence}}\",\r\n  \"comPay\": \"{{comPay}}\",\r\n  \"Contactno\": \"{{$randomPhoneNumber}}\",\r\n  \"DatePosted\": \"{{comStart}}\",\r\n  \"comLong\": \"{{comLong}}\",\r\n  \"comLat\": \"{{comLat}}\",\r\n  \"comDestLong\": \"{{comDestLong}}\",\r\n  \"comDestLat\": \"{{comDestLat}}\",\r\n  \"comTags\": \"{{comTags}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8800/commission",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8800",
+              "path": [
+                "commission"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Errand",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Commission types\r",
+                  "const types = [\r",
+                  "  \"HomeService - Indoor\",\r",
+                  "  \"HomeService - Outdoor\",\r",
+                  "  \"Delivery\",\r",
+                  "  \"Transportation\"\r",
+                  "];\r",
+                  "const comType = types[Math.floor(Math.random() * types.length)];\r",
+                  "\r",
+                  "// Tags based on type\r",
+                  "const tagMap = {\r",
+                  "  \"HomeService - Indoor\": [\"plumbing\", \"electrical\", \"painting\", \"carpentry\", \"cleaning\", \"aircon repair\"],\r",
+                  "  \"HomeService - Outdoor\": [\"gardening\", \"roofing\", \"fence repair\", \"exterior painting\", \"lawn mowing\"],\r",
+                  "  \"Delivery\": [\"package delivery\", \"food delivery\", \"courier\", \"drop off\", \"pick up and deliver\"],\r",
+                  "  \"Transportation\": [\"driving\", \"ride service\", \"airport transfer\", \"cargo transport\", \"vehicle for hire\"]\r",
+                  "};\r",
+                  "\r",
+                  "const tagList = tagMap[comType];\r",
+                  "const comTags = tagList[Math.floor(Math.random() * tagList.length)];\r",
+                  "\r",
+                  "// Cebu City area coordinates (realistic)\r",
+                  "const cebuLocations = [\r",
+                  "  { name: \"Cebu City\", long: 123.9094, lat: 10.3157 },\r",
+                  "  { name: \"Mandaue City\", long: 123.9347, lat: 10.3236 },\r",
+                  "  { name: \"Lapu-Lapu City\", long: 124.0058, lat: 10.3103 },\r",
+                  "  { name: \"Talisay City\", long: 123.8500, lat: 10.2447 },\r",
+                  "  { name: \"Consolacion\", long: 123.9594, lat: 10.3736 },\r",
+                  "  { name: \"Liloan\", long: 124.0022, lat: 10.3994 },\r",
+                  "];\r",
+                  "\r",
+                  "// Haversine formula to calculate distance in km\r",
+                  "function haversineDistance(lat1, lon1, lat2, lon2) {\r",
+                  "  const R = 6371;\r",
+                  "  const dLat = (lat2 - lat1) * Math.PI / 180;\r",
+                  "  const dLon = (lon2 - lon1) * Math.PI / 180;\r",
+                  "  const a = Math.sin(dLat/2) * Math.sin(dLat/2) +\r",
+                  "    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *\r",
+                  "    Math.sin(dLon/2) * Math.sin(dLon/2);\r",
+                  "  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));\r",
+                  "  return R * c;\r",
+                  "}\r",
+                  "\r",
+                  "// Pick random start location\r",
+                  "const startIndex = Math.floor(Math.random() * cebuLocations.length);\r",
+                  "const startLocation = cebuLocations[startIndex];\r",
+                  "\r",
+                  "// Dates\r",
+                  "const today = new Date();\r",
+                  "const comStart = today.toISOString().split(\"T\")[0];\r",
+                  "const deadlineDays = Math.floor(Math.random() * 5) + 1;\r",
+                  "const deadline = new Date(today);\r",
+                  "deadline.setDate(today.getDate() + deadlineDays);\r",
+                  "const comDeadline = deadline.toISOString().split(\"T\")[0];\r",
+                  "\r",
+                  "// Set common variables\r",
+                  "pm.environment.set(\"comType\", comType);\r",
+                  "pm.environment.set(\"comTags\", comTags);\r",
+                  "pm.environment.set(\"comStart\", comStart);\r",
+                  "pm.environment.set(\"comDeadline\", comDeadline);\r",
+                  "pm.environment.set(\"comLocation\", startLocation.name);\r",
+                  "pm.environment.set(\"comLong\", startLocation.long);\r",
+                  "pm.environment.set(\"comLat\", startLocation.lat);\r",
+                  "\r",
+                  "// Handle destination and payment based on type\r",
+                  "if (comType === \"Delivery\" || comType === \"Transportation\") {\r",
+                  "  // Pick a different destination\r",
+                  "  let destIndex;\r",
+                  "  do {\r",
+                  "    destIndex = Math.floor(Math.random() * cebuLocations.length);\r",
+                  "  } while (destIndex === startIndex);\r",
+                  "\r",
+                  "  const destLocation = cebuLocations[destIndex];\r",
+                  "\r",
+                  "  // Calculate distance and payment\r",
+                  "  const distance = haversineDistance(\r",
+                  "    startLocation.lat, startLocation.long,\r",
+                  "    destLocation.lat, destLocation.long\r",
+                  "  );\r",
+                  "\r",
+                  "  // 50 pesos per km, minimum 150\r",
+                  "  const comPay = Math.max(150, Math.round(distance * 50));\r",
+                  "\r",
+                  "  pm.environment.set(\"comTo\", destLocation.name);\r",
+                  "  pm.environment.set(\"comDestLong\", destLocation.long);\r",
+                  "  pm.environment.set(\"comDestLat\", destLocation.lat);\r",
+                  "  pm.environment.set(\"comPay\", comPay);\r",
+                  "\r",
+                  "} else {\r",
+                  "  // Indoor/Outdoor — same location, dest is 0\r",
+                  "  // Random pay between 500 and 2000\r",
+                  "  const comPay = Math.floor(Math.random() * 1500) + 500;\r",
+                  "\r",
+                  "  pm.environment.set(\"comTo\", \"\");\r",
+                  "  pm.environment.set(\"comDestLong\", 0);\r",
+                  "  pm.environment.set(\"comDestLat\", 0);\r",
+                  "  pm.environment.set(\"comPay\", comPay);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Respond has a success message\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.message).to.eql(\"Errand updated successfully\");\r",
+                  "});\r",
+                  "\r",
+                  "\r",
+                  "\r",
+                  "\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"comTitle\": \"{{$randomCatchPhrase}}\",\r\n  \"comStart\": \"{{comStart}}\",\r\n  \"comDeadline\": \"{{comDeadline}}\",\r\n  \"comLocation\": \"{{comLocation}}\",\r\n  \"comTo\": \"{{comTo}}\",\r\n  \"comType\": \"{{comType}}\",\r\n  \"comDescription\": \"{{$randomLoremSentence}}\",\r\n  \"comPay\": \"{{comPay}}\",\r\n  \"comStatus\": \"Available\",\r\n  \"Contactno\": \"{{$randomPhoneNumber}}\",\r\n  \"comLong\": \"{{comLong}}\",\r\n  \"comLat\": \"{{comLat}}\",\r\n  \"comDestLong\": \"{{comDestLong}}\",\r\n  \"comDestLat\": \"{{comDestLat}}\",\r\n  \"comTags\": \"{{comTags}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8800/update-errand/{{commissionID}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8800",
+              "path": [
+                "update-errand",
+                "{{commissionID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Errand",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response has success message\", function () {\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.message).to.eql(\"Errand deleted successfully\");\r",
+                  "}); "
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8800/delete-errand/{{commissionID}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8800",
+              "path": [
+                "delete-errand",
+                "{{commissionID}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "This is Create, Update, Delete of errands"
+    },
+    {
+      "name": "List Users",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8800/users",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8800",
+          "path": [
+            "users"
+          ]
+        },
+        "description": "List all users"
+      },
+      "response": []
+    },
+    {
+      "name": "Get User Type",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8800/get-type/{{userID}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8800",
+          "path": [
+            "get-type",
+            "{{userID}}"
+          ]
+        },
+        "description": "List the user type"
+      },
+      "response": []
+    },
+    {
+      "name": "Get UserID Status",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8800/status/{{userID}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8800",
+          "path": [
+            "status",
+            "{{userID}}"
+          ]
+        },
+        "description": "List the status of user"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Username",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8800/username/{{userID}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8800",
+          "path": [
+            "username",
+            "{{userID}}"
+          ]
+        },
+        "description": "Gets the username"
+      },
+      "response": []
+    },
+    {
+      "name": "Get all Invoice",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "http://localhost:8800/all-invoice",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8800",
+          "path": [
+            "all-invoice"
+          ]
+        },
+        "description": "List all invoice"
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}

@@ -183,6 +183,20 @@ const userController = {
       });
     }
   },
+  patchUpdateUser: (req, res) => {
+    const id = req.params.id;
+    const userData = req.body;
+
+    if (Object.keys(userData).length === 0) {
+      return res.status(400).json({ error: "No fields to update" });
+    }
+
+    User.patchUpdateUserById(id, userData, (error, result) => {
+      if (error) return res.status(500).json({ error: "Error updating user" });
+      if (result.affectedRows === 0) return res.status(404).json({ error: "User not found" });
+      res.status(200).json({ message: "User updated successfully" });
+    });
+  },
   // Change password
   putResetPassword: (req, res) => {
     const userID = req.params.id;
@@ -289,6 +303,63 @@ const userController = {
   // Sign up / add new user
   postSignUp: (req, res) => {
     const newUserData = req.body;
+    
+    // Validate required fields
+    const requiredFields = [
+      "regUsername", "regPassword", "lastName", "firstName",
+      "gender", "email", "contact", "bday", "address", "type"
+    ];
+
+    const missingFields = requiredFields.filter(field => !newUserData[field]);
+
+    if (missingFields.length > 0) {
+      return res.status(400).json({ error: "Missing required fields", missing: missingFields });
+    }
+
+    // Validate password
+    if (newUserData.regPassword.length < 8) {
+      return res.status(400).json({
+        Error: "Password must be at least 8 characters long.",
+      });
+    }
+
+    // Validate age must be over 18
+    const birthDate = new Date(newUserData.bday);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;    
+    }
+
+    if (age < 18) {
+      return res.status(400).json({ error: "Age must be over 18" });
+    }
+
+    if (
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(
+        newUserData.regPassword
+      )
+    ) {
+      return res.status(400).json({
+        error:
+          "Password must contain at least one uppercase letter, one lowercase letter, and one number.",
+      });
+    }
+
+    //Validate username and email already exist
+    User.checkUserExists(newUserData.regUsername, newUserData.email, (error, results) => {
+      if (error) {
+        return res.status(500).json({ error: "Database error" });
+      }
+
+      if (results.length > 0) {
+        const foundUser = results[0];
+        const isUsernameTaken = foundUser.username === newUserData.regUsername;
+        
+        return res.status(409).json({
+          error: isUsernameTaken ? "Username is already taken" : "Email is already registered"});
+      }
 
     // Hash/encrypt password
     bcrypt.hash(newUserData.regPassword, saltRounds, (err, hash) => {
@@ -337,6 +408,7 @@ const userController = {
         );
       });
     });
+  });
   },
 
   // Add more controller functions as needed...

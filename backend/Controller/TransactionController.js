@@ -147,15 +147,15 @@ const transConstroller = {
    */
   postNewTrans: (req, res) => {
     const transData = req.body;
-    Trans.postNewTrans(transData, (error) => {
+    Trans.postNewTrans(transData, (error, result) => {
       if (error) {
-        console.error("Error adding feedback:", error);
+        console.error("Error adding transaction:", error);
         res
           .status(500)
           .json({ error: "An error occurred while adding new transaction" });
         return;
       }
-      res.status(200).json({ message: "Transaction added successfully" });
+      res.status(200).json({ message: "Transaction added successfully", transID: result.insertId });
     });
   },
   /**

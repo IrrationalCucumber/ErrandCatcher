@@ -41,7 +41,7 @@ const applyController = {
   // add an application
   postApply: (req, res) => {
     const applyData = req.body;
-    Apply.postApply(applyData, (error) => {
+    Apply.postApply(applyData, (error, result) => {
       if (error) {
         console.error("Error adding application:", error);
         res
@@ -49,7 +49,14 @@ const applyController = {
           .json({ error: "An error occurred while adding new application" });
         return;
       }
-      res.status(200).json({ message: "Application added successfully" });
+
+        // Fetch the newly created application details
+        Apply.getApplicationById(result.insertId, (err, application) => {
+          if (err) {
+            return res.status(500).json({ error: "Error fetching application details" });
+          }
+          res.status(200).json({ message: "Application added successfully", application: application});
+        });
     });
   },
   //Deny applicant

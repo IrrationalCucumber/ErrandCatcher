@@ -80,8 +80,20 @@ const ErrandController = {
   },
   //post new errand
   postErrand: (req, res) => {
-    const errnadData = req.body;
-    Errand.postErrand(errnadData, (error) => {
+    const errandData = req.body;
+
+    //Validate minimum pay for Indoor/Outdoor
+    if (
+      (errandData.comType === "HomeService - Indoor" || 
+      errandData.comType === "HomeService - Outdoor") &&
+      errandData.comPay < 500
+    ) {
+      return res.status(400).json({
+        error: "Minimum payment for HomeService is 500"
+      });
+    }
+
+    Errand.postErrand(errandData, (error, result) => {
       if (error) {
         console.error("Error adding erand:", error);
         res
@@ -89,8 +101,18 @@ const ErrandController = {
           .json({ error: "An error occurred while adding new errand" });
         return;
       }
-      // User added successfully
-      res.status(200).json({ message: "errand added successfully" });
+
+        // Fetch the newly created errand details
+        Errand.getErrandById(result.insertId, (err, errand) => {
+          if (err) {
+            return res.status(500).json({ error: "Error fetching errand details" });
+          }
+          // User added successfully
+        res.status(200).json({ 
+          message: "Errand added successfully",
+          errand: errand
+        });  
+      });
     });
   },
   //update errnad data by comID
@@ -186,7 +208,7 @@ const ErrandController = {
         res.status(500).send("Internal Server Error");
         return;
       }
-      res.json(errand);
+      res.status(200).json({ message: "Errand deleted successfully" });
     });
   },
   /**

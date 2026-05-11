@@ -1,0 +1,50 @@
+{
+	"id": "3ef12e34-874e-40b3-95b3-424bf01ddc6b",
+	"name": "ErrandCatcher",
+	"values": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8800",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "catcherUsername",
+			"value": "Moses.Jacobi",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "catcherPassword",
+			"value": "Secure456",
+			"type": "default",
+			"description": "dummy password",
+			"enabled": true
+		},
+		{
+			"key": "employerUsername",
+			"value": "juan_dela_cruz",
+			"type": "default",
+			"description": "dummy username",
+			"enabled": true
+		},
+		{
+			"key": "employerEmail",
+			"value": "tetico7135@inraud.com",
+			"type": "default",
+			"description": "dummy email",
+			"enabled": true
+		},
+		{
+			"key": "employerPassword",
+			"value": "Password123",
+			"type": "default",
+			"description": "dummy ",
+			"enabled": true
+		}
+	],
+	"color": null,
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2026-05-11T11:40:26.444Z",
+	"_postman_exported_using": "Postman/12.10.0"
+}

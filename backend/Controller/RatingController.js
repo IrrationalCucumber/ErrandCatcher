@@ -53,7 +53,7 @@ const ratingController = {
   //add new employer feedback
   postNewFeedback: (req, res) => {
     const feedData = req.body;
-    Rating.postNewFeedback(feedData, (error) => {
+    Rating.postNewFeedback(feedData, (error, result) => {
       if (error) {
         console.error("Error adding feedback:", error);
         res
@@ -61,7 +61,7 @@ const ratingController = {
           .json({ error: "An error occurred while adding new Feedback" });
         return;
       }
-      res.status(200).json({ message: "Feedback added successfully" });
+      res.status(200).json({ message: "Feedback added successfully", feedbackID: result.insertId });
     });
   },
   //update feedback made by employer

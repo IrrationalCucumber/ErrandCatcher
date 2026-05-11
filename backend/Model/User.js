@@ -49,11 +49,11 @@ const User = {
       //profileImage,
     } = userData;
     //, profileImage = ?
-    db.query(
-      `UPDATE useraccount
-      SET username = ?, userLastname = ?, userFirstname = ?, userGender =?, userEmail = ?,
-      userContactNum =?, userAge =?, userBirthday = ?, userAddress = ?, userDesc = ?
-    WHERE userID = ?`,
+      db.query(
+        `UPDATE useraccount
+        SET username = ?, userLastname = ?, userFirstname = ?, userGender =?, userEmail = ?,
+        userContactNum =?, userAge =?, userBirthday = ?, userAddress = ?, userDesc = ?
+      WHERE userID = ?`,
       [
         username,
         // password,
@@ -69,6 +69,37 @@ const User = {
         //profileImage,
         id,
       ],
+      callback
+    );
+  },
+  patchUpdateUserById: (id, userData, callback) => {
+    const allowedFields = {
+      username: "username",
+      lname: "userLastname",
+      fname: "userFirstname",
+      gender: "userGender",
+      email: "userGender",
+      contact: "userContactNum",
+      age: "userAge",
+      bday: "userBirthday",
+      address: "userAddress",
+      desc: "userDesc"
+    };
+
+    const fields = [];
+    const values = [];
+
+    Object.keys(allowedFields).forEach(key => {
+      if (userData[key]) {
+        fields.push(`${allowedFields[key]} = ?`);
+        values.push(userData[key]);
+      }
+    });
+
+    values.push(id);
+    db.query(
+      `UPDATE useraccount SET ${fields.join(", ")} WHERE userID = ?`,
+      values,
       callback
     );
   },
@@ -130,7 +161,7 @@ const User = {
       bday,
       address,
       type,
-      dateCreated,
+      //dateCreated,
     } = userData;
     values = [
       regUsername,
@@ -144,10 +175,10 @@ const User = {
       bday,
       address,
       type,
-      dateCreated,
+      //dateCreated,
     ];
     db.query(
-      "INSERT INTO useraccount (`username`, `password`, `userLastname`, `userFirstname`,`userGender`, `userEmail`,`userContactNum`, `userBirthday`, `userAddress`, `accountType`, `dateCreated` ) VALUES (?)",
+      "INSERT INTO useraccount (`username`, `password`, `userLastname`, `userFirstname`,`userGender`, `userEmail`,`userContactNum`, `userBirthday`, `userAddress`, `accountType` ) VALUES (?)",
       [values],
       callback
     );
@@ -190,6 +221,20 @@ const User = {
       cb
     );
   },
+
+  // check if username or email already exists
+  checkUserExists: (username, email, callback) => {
+  const query = "SELECT username, userEmail FROM useraccount WHERE username = ? OR userEmail = ?";
+    db.query(
+      query,
+      [username, email],
+      (error, results) => {
+        // We pass the error and results back to the controller
+        callback(error, results);
+      }
+    );
+  },
+
   // Save verification token
   saveVerificationToken: (userId, token, callback) => {
     db.query(
